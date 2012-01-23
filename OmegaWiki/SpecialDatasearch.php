@@ -82,8 +82,7 @@ class SpecialDatasearch extends SpecialPage {
 	}
 
 	function go( $searchText ) {
-		global
-			$wgScript, $wgOut;
+		global $wgOut;
 
 		$expressionMeaningIds = getExpressionMeaningIds( $searchText );
 
