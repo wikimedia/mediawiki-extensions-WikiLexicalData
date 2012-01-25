@@ -11232,6 +11232,7 @@ $messages['rif'] = array(
  * @author Firilacroco
  * @author KlaudiuMihaila
  * @author Mihai
+ * @author Minisarm
  */
 $messages['ro'] = array(
 	'langman_title' => 'Codul limbii',
@@ -11373,7 +11374,7 @@ Poate ați ajuns la această pagină direct? În mod normal nu ar trebui să fi�
 	'ow_create' => 'Creează',
 	'ow_suggest_previous' => 'Anterior',
 	'ow_suggest_next' => 'Următorul',
-	'ow_suggest_clear' => 'Şterge',
+	'ow_suggest_clear' => 'Șterge',
 	'ow_shown_datasets' => 'Dataset-uri afișate',
 );
 
