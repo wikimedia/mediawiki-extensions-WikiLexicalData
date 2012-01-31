@@ -9382,6 +9382,7 @@ $messages['nds'] = array(
 
 /** Nepali (नेपाली)
  * @author Bhawani Gautam
+ * @author RajeshPandey
  */
 $messages['ne'] = array(
 	'langman_langname' => 'भाषा नाम:',
@@ -9399,6 +9400,7 @@ $messages['ne'] = array(
 	'datasearch_language' => 'भाषा:',
 	'datasearch_found_word' => 'शव्द पाइयो',
 	'datasearch_meaning' => 'अर्थ',
+	'ow_transaction_user' => 'प्रयोगकर्ता नाम:',
 );
 
 /** Dutch (Nederlands)
