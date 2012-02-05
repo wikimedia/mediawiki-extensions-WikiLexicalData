@@ -10151,6 +10151,7 @@ $messages['pdc'] = array(
 	'datasearch_within_words' => 'In Wadde drin:',
 	'ow_importtsv_nothing_added' => 'Nix dezu geduh.',
 	'ow_exporttsv_languages' => 'Schprooche:',
+	'ow_save' => 'Beilege',
 	'ow_history' => 'Gschicht',
 	'ow_transaction_user' => 'Yuuser-Naame:',
 	'ow_dm_OK' => 'OK',
