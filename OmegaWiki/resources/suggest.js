@@ -81,6 +81,27 @@ window.updateSuggestions = function (suggestPrefix) {
 			//alert(http.responseText);
 			if (http.responseText != '') {
 				newTable.innerHTML = leftTrim(http.responseText);
+				
+				// put the searched text in bold within the returned string
+				if ( suggestTextVal != "" ) {
+					var langnames = newTable.getElementsByTagName('td') ;
+					var searchTxt = new String ( suggestTextVal ) ;
+					// normalizeText removes diacritics (cf. omegawiki-ajax.js)
+					searchTxt = normalizeText ( searchTxt.toLowerCase() ) ;
+
+					for ( i=0 ; i < langnames.length ; i++ ) {
+						var searchInTxt = normalizeText ( langnames[i].innerHTML.toLowerCase() ) ;
+						var position = searchInTxt.indexOf( searchTxt );
+						if ( position >= 0 ) {
+							langnames[i].innerHTML = langnames[i].innerHTML.substr(0,position)
+							+ "<b>"
+							+ langnames[i].innerHTML.substr( position, searchTxt.length)
+							+ "</b>"
+							+ langnames[i].innerHTML.substr( position + searchTxt.length ) ;
+						}
+					}
+				}
+				
 				table.parentNode.replaceChild(newTable.firstChild, table);
 			}
 			suggestText.className = "";
@@ -226,9 +247,12 @@ window.suggestRowClicked = function (event, suggestRow) {
 	for (var i = 0; i < displayLabelColumnIndices.length; i++) {
 		var columnValue = suggestRow.getElementsByTagName('td')[displayLabelColumnIndices[i]].innerHTML;
 		
-		if (columnValue != "")
+		if (columnValue != "") {
+			columnValue = columnValue.replace ("<b>","");
+			columnValue = columnValue.replace ("</b>","");
 			labels.push(columnValue);
-	} 
+		}
+	}
 	
 	var idColumns = 1;
 	

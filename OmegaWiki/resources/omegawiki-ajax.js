@@ -11,6 +11,17 @@ jQuery(function() {
 	}, function(){  //On Hover Out 
 		$(this).parent().find("ul.wd-dropdownlist").hide();
 	});
+	
+	// sticky explang
+	var explangUrl = document.URL.match( /explang=\d+/gi ) ;
+	if ( explangUrl!=null ) {
+		var explangNb = explangUrl[0].replace("explang=","") ;
+		$("#ca-edit, #ca-history, #ca-view").find("a").attr( "href", function(i, val) {
+			var bigoudi = '&' ;
+			if ( val.match( /\?/gi ) == null ) bigoudi = '?' ;
+			return val + bigoudi + 'explang=' + explangNb ;
+		});
+	}
 }); // jQuery
 
 //TODO: convert the functions below to jQuery...
