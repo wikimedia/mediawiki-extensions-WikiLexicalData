@@ -584,6 +584,13 @@ class OptionAttributeOptionsController extends DefaultUpdateController {
 	}
 }
 
+class IncomingRelationsController extends DefaultUpdateController {
+	public function remove( $keyPath ) {
+		$valueId = $keyPath->peek( 0 )->relationId;
+		removeRelationWithId( $valueId );
+	}
+}
+
 class AlternativeDefinitionsPermissionController implements PermissionController {
 	public function allowUpdateOfAttribute( $attribute ) {
 		return true;

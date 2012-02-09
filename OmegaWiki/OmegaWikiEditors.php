@@ -582,12 +582,19 @@ function getDefinedMeaningAttributeValuesEditor( ViewInformation $viewInformatio
 }
 
 function getDefinedMeaningReciprocalRelationsEditor( ViewInformation $viewInformation ) {
-	global
-		$relationsObjectAttributesEditor, $relationMeaningName;
+	global $relationsObjectAttributesEditor, $relationMeaningName;
 
 	$o = OmegaWikiAttributes::getInstance();
 
-	$editor = new RecordSetTableEditor( $o->reciprocalRelations, new SimplePermissionController( false ), new ShowEditFieldChecker( true ), new AllowAddController( false ), false, false, null );
+	$permissionController = new SimplePermissionController( true );
+	$showEditFieldChecker = new ShowEditFieldChecker( true );
+	$allowAddController = new AllowAddController( false );
+	$allowRemove = true;
+	$isAddField = false;
+	$updateController = new IncomingRelationsController() ;
+
+	$editor = new RecordSetTableEditor( $o->reciprocalRelations, $permissionController, $showEditFieldChecker, $allowAddController, $allowRemove, $isAddField, $updateController );
+
 	$editor->addEditor( new DefinedMeaningReferenceEditor( $o->otherDefinedMeaning, new SimplePermissionController( false ), true ) );
 	$editor->addEditor( new RelationTypeReferenceEditor( $o->relationType, new SimplePermissionController( false ), true ) );
 	
@@ -606,7 +613,8 @@ function getDefinedMeaningReciprocalRelationsEditor( ViewInformation $viewInform
 function getDefinedMeaningClassMembershipEditor( ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
 
-	$editor = new RecordSetTableEditor( $o->classMembership, new SimplePermissionController( true ), new ShowEditFieldChecker( true ), new AllowAddController( true ), true, false, new DefinedMeaningClassMembershipController() );
+	$allowRemove = true;
+	$editor = new RecordSetTableEditor( $o->classMembership, new SimplePermissionController( true ), new ShowEditFieldChecker( true ), new AllowAddController( true ), $allowRemove, false, new DefinedMeaningClassMembershipController() );
 	$editor->addEditor( new ClassReferenceEditor( $o->class, new SimplePermissionController( false ), true ) );
 
 	addTableMetadataEditors( $editor, $viewInformation );
