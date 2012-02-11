@@ -15001,6 +15001,7 @@ $messages['zh-hans'] = array(
  * @author Alexsh
  * @author Liangent
  * @author Mark85296341
+ * @author Oapbtommy
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
@@ -15069,7 +15070,7 @@ $messages['zh-hant'] = array(
 	'ow_uipref_datasets' => '預設視圖：',
 	'ow_uiprefs' => 'Wiki 資料',
 	'ow_none_selected' => '未選擇',
-	'ow_transaction_count' => '計數：',
+	'ow_transaction_count' => '數量：',
 	'ow_transaction_user' => '使用者名稱：',
 	'ow_transaction_show_rollback' => '顯示回滾控制：',
 	'ow_transaction_rollback_button' => '回滾',
@@ -15157,7 +15158,7 @@ $messages['zh-hant'] = array(
 	'ow_Property' => '屬性',
 	'ow_Value' => '值',
 	'ow_added' => '已新增',
-	'ow_removed' => '已移除',
+	'ow_removed' => '已被移除',
 	'ow_meaningsoftitle' => '「$1」的含義',
 	'ow_meaningsofsubtitle' => '<em>Wiki 連結：</em>[[$1]]',
 	'ow_Permission_denied' => '<h2>沒有權限</h2>',
