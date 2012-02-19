@@ -10182,6 +10182,7 @@ $messages['pfl'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Derbeth
  * @author Masti
  * @author Sp5uhe
@@ -10209,7 +10210,7 @@ $messages['pl'] = array(
 	'importlangnames_added' => 'Nazwy języków dla „$1” zostały dodane.',
 	'importlangnames_not_found' => '<strong>Nie odnaleziono języka „$1”!</strong>',
 	'datasearch' => 'Wikidata: Wyszukiwanie danych',
-	'datasearch_language' => 'Język',
+	'datasearch_language' => 'Język:',
 	'datasearch_found_word' => 'Odnalezione słowo',
 	'datasearch_meaning' => 'Znaczenie',
 	'datasearch_ext_identifier' => 'Zewnętrzny identyfikator',
