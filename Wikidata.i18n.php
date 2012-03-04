@@ -2027,7 +2027,7 @@ Dibabit un dastumad da enporzhiañ. E prenestr testenn ar yezhoù, merkit ur rol
 	'ow_TranslatedText' => 'Testenn troet',
 	'ow_TranslatedTextAttributeValue' => 'Testenn',
 	'ow_TranslatedTextAttributeValues' => 'Testennoù da dreiñ',
-	'ow_Label' => 'Label',
+	'ow_Label' => 'Tikedenn',
 	'ow_Link' => 'Liamm',
 	'ow_LinkAttribute' => 'Perzh',
 	'ow_LinkAttributeValues' => 'Liammoù',
