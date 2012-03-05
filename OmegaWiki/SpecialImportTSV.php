@@ -225,12 +225,5 @@ class SpecialImportTSV extends SpecialPage {
 		}
 
 	}
-	
-	
-	/* HELPER METHODS START HERE */
-	
-	function getLanguage( $columnName ) {
-		
-	}
-	
+
 }

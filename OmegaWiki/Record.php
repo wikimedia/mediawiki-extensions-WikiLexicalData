@@ -88,8 +88,11 @@ class ArrayRecord implements Record {
 	 */
 	public function setAttributeValuesByOrder( $values ) {
 		$atts = $this->structure->getAttributes();
-		for ( $i = 0; $i < count( $atts ); $i++ )
-			$this->values[$atts[$i]->id] = $values[$i];
+		for ( $i = 0; $i < count( $atts ); $i++ ) {
+			if ( array_key_exists ( $i, $values ) ) {
+				$this->values[$atts[$i]->id] = $values[$i];
+			}
+		}
 	}
 	
 	/*

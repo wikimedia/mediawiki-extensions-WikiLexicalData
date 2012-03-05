@@ -184,6 +184,9 @@ class SynonymTranslationController extends DefaultUpdateController {
 	}
 	
 	public function add( IdStack $idPath, $record ) {
+		if ( ! $record->expression ) {
+			return;
+		}
 		$definedMeaningId = $idPath->getKeyStack()->peek( 0 )->definedMeaningId;
 		$expressionValue = $record->expression;
 		
@@ -308,6 +311,11 @@ class ExpressionMeaningController extends DefaultUpdateController {
 	}
 }
 
+/*
+ * Controller to add a new expression directly
+ * i.e. not by translating an existing DM,
+ * but by adding a new word + language + definition
+ */
 class ExpressionController extends DefaultUpdateController {
 	protected $spelling;
 	protected $filterLanguageId;
@@ -319,6 +327,9 @@ class ExpressionController extends DefaultUpdateController {
 
 	public function add( IdStack $idPath, $record ) {
 		if ( $this->filterLanguageId == 0 ) {
+			if ( ! $record->expression ) {
+				return;
+			}
 			$expressionLanguageId = $record->expression->language;
 		} else {
 			$expressionLanguageId = $this->filterLanguageId;
@@ -433,6 +444,9 @@ class LinkAttributeValuesController extends ObjectAttributeValuesController {
 	}
 	
 	public function add( IdStack $idPath, $record )  {
+		if ( ! $record->link ) {
+			return;
+		}
 		$objectId = $this->objectIdFetcher->fetch( $idPath->getKeyStack() );
 		$linkAttributeId = $this->determineAttributeId( $idPath, "URL", $record->linkAttribute );
 		$linkValue = $record->link;
