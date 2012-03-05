@@ -110,7 +110,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 	
 	public function history() {
 		global
-			$wgOut, $wgTitle, $wgDefinedMeaning ;
+			$wgOut, $wgTitle ;
 
 		parent::history();
 
@@ -118,7 +118,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$dmModel = new DefinedMeaningModel( $definedMeaningId, $this->viewInformation );
 		$wgOut->addHTML(
 			getDefinedMeaningEditor( $this->viewInformation )->view(
-				new IdStack( $wgDefinedMeaning ),
+				new IdStack( WD_DEFINED_MEANING ),
 				$dmModel->getRecord()
 			)
 		);
@@ -147,13 +147,12 @@ class DefinedMeaning extends DefaultWikidataApplication {
 	protected function getIdStack( $definedMeaningId ) {
 
 		$o = OmegaWikiAttributes::getInstance();
-		global $wgDefinedMeaning ;
 
 		$definedMeaningIdStructure = new Structure( $o->definedMeaningId );
 		$definedMeaningIdRecord = new ArrayRecord( $definedMeaningIdStructure, $definedMeaningIdStructure );
 		$definedMeaningIdRecord->definedMeaningId = $definedMeaningId;
 		
-		$idStack = new IdStack( $wgDefinedMeaning );
+		$idStack = new IdStack( WD_DEFINED_MEANING );
 		$idStack->pushKey( $definedMeaningIdRecord );
 		
 		return $idStack;

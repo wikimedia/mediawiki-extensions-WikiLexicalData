@@ -15,6 +15,8 @@
  * 3) Table: represents a specific table in the database, meant as a base class for specific tables        
  */
 
+require_once( "Wikidata.php" );
+
 interface DatabaseExpression {
 	public function toExpression();
 }
@@ -332,7 +334,7 @@ class ClassAttributesTable extends VersionedTable {
 	
 	public function __construct( $name ) {
 		parent::__construct( $name );
-	
+
 		$this->objectId = $this->createColumn( "object_id" );
 		$this->classMid = $this->createColumn( "class_mid" );
 		$this->levelMid = $this->createColumn( "level_mid" );
@@ -732,12 +734,9 @@ class WikiDataSet {
 	}
 }
 
-global
-	$dataSet;
+global $wgWikidataDataSet;
+$wgWikidataDataSet = new WikiDataSet( wdGetDataSetContext() );
 
-require_once( "Wikidata.php" );
-
-$dataSet = new WikiDataSet( wdGetDataSetContext() );
 
 function genericSelect( $selectCommand, array $expressions, array $tables, array $restrictions ) {
 	$result = $selectCommand . " " . $expressions[0]->toExpression();
@@ -833,5 +832,3 @@ function sqlOr( $expression1, $expression2 ) {
 function sqlAnd( $expression1, $expression2 ) {
 	return new DefaultDatabaseExpression( '(' . expressionToSQL( $expression1 ) . ') AND (' . expressionToSQL( $expression2 ) . ')' );
 }
-
-?>

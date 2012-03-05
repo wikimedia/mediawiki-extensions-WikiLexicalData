@@ -45,9 +45,7 @@ class Search extends DefaultWikidataApplication {
 function getSearchResultAsRecordSet( $queryResult ) {
 
 	$o = OmegaWikiAttributes::getInstance();
-	global
-		$definedMeaningReferenceType,
-		$wgDefinedMeaning;
+	global $definedMeaningReferenceType ;
 
 	$dbr = wfGetDB( DB_SLAVE );
 	$spellingAttribute = new Attribute( "found-word", "Found word", "short-text" );
@@ -56,7 +54,7 @@ function getSearchResultAsRecordSet( $queryResult ) {
 	$expressionStructure = new Structure( $spellingAttribute, $languageAttribute );
 	$expressionAttribute = new Attribute( "expression", "Expression", $expressionStructure );
 	
-	$definedMeaningAttribute = new Attribute( $wgDefinedMeaning, "Defined meaning", $definedMeaningReferenceType );
+	$definedMeaningAttribute = new Attribute( WD_DEFINED_MEANING, "Defined meaning", $definedMeaningReferenceType );
 	$definitionAttribute = new Attribute( "definition", "Definition", "definition" );
 	
 	$meaningStructure = new Structure( $definedMeaningAttribute, $definitionAttribute );

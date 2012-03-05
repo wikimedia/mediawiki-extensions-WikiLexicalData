@@ -231,21 +231,16 @@ function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identica
 }
 
 function expressionIsBoundToDefinedMeaning( $definedMeaningId, $expressionId ) {
-	global $dataSet;
-	
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
 	
-	$queryResult = $dbr->query(
-		selectLatest(
-			array( $dataSet->syntrans->expressionId ),
-			array( $dataSet->syntrans ),
-			array(
-				equals( $dataSet->syntrans->definedMeaningId, $definedMeaningId ),
-				equals( $dataSet->syntrans->expressionId, $expressionId )
-			)
-		)
-	);
+	$query = "SELECT * FROM {$dc}_syntrans "
+		. " WHERE defined_meaning_id = $definedMeaningId "
+		. " AND expression_id = $expressionId "
+		. " AND remove_transaction_id IS NULL"
+		. " LIMIT 1" ;
+
+	$queryResult = $dbr->query( $query );
 	
 	return $dbr->numRows( $queryResult ) > 0;
 }
@@ -407,6 +402,7 @@ function addClassAttribute( $classMeaningId, $levelMeaningId, $attributeMeaningI
 function classAttributeExists( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
+
 	$queryResult = $dbr->query( "SELECT object_id FROM {$dc}_class_attributes" .
 								" WHERE class_mid=$classMeaningId AND level_mid=$levelMeaningId AND attribute_mid=$attributeMeaningId AND attribute_type = " . $dbr->addQuotes( $attributeType ) .
 								' AND ' . getLatestTransactionRestriction( "{$dc}_class_attributes" ) . " LIMIT 1" );
@@ -432,6 +428,7 @@ function createClassAttribute( $classMeaningId, $levelMeaningId, $attributeMeani
 function getClassAttributeId( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
+
 	$queryResult = $dbr->query( "SELECT object_id FROM {$dc}_class_attributes " .
 								"WHERE class_mid=$classMeaningId AND level_mid =$levelMeaningId AND attribute_mid=$attributeMeaningId AND attribute_type = " . $dbr->addQuotes( $attributeType ) );
 
@@ -1166,6 +1163,10 @@ function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLang
 
 }
 
+/**
+ * Returns true if the concept corresponding to the
+ * definedMeaningID $objectId is a class
+ */
 function isClass( $objectId ) {
 	global $wgDefaultClassMids;
 
@@ -1178,13 +1179,13 @@ function isClass( $objectId ) {
 			"SELECT {$dc}_collection.collection_id " .
 			" FROM ({$dc}_collection_contents INNER JOIN {$dc}_collection ON {$dc}_collection.collection_id = {$dc}_collection_contents.collection_id) " .
 			" WHERE {$dc}_collection_contents.member_mid = $objectId AND {$dc}_collection.collection_type = 'CLAS' " .
-			" AND " . getLatestTransactionRestriction( "{$dc}_collection_contents" ) . " " .
-			" AND " . getLatestTransactionRestriction( "{$dc}_collection" ) . " LIMIT 1" ;
+			" AND {$dc}_collection_contents.remove_transaction_id is NULL" .
+			" AND {$dc}_collection.remove_transaction_id is NULL LIMIT 1" ;
 		$queryResult = $dbr->query( $query );
 	
 		$result = $dbr->numRows( $queryResult ) > 0;
 	}
-	
+
 	return $result;
 }
 
@@ -1205,15 +1206,15 @@ function findCollection( $name ) {
 }
 
 function getCollectionContents( $collectionId ) {
-	global $dataSet;
+	global $wgWikidataDataSet;
 	
 	$dc = wdGetDataSetContext();
 	$dbr = & wfGetDB( DB_SLAVE );
 	$queryResult = $dbr->query(
 		selectLatest(
-			array( $dataSet->collectionMemberships->memberMid, $dataSet->collectionMemberships->internalMemberId ),
-			array( $dataSet->collectionMemberships ),
-			array( equals( $dataSet->collectionMemberships->collectionId, $collectionId ) )
+			array( $wgWikidataDataSet->collectionMemberships->memberMid, $wgWikidataDataSet->collectionMemberships->internalMemberId ),
+			array( $wgWikidataDataSet->collectionMemberships ),
+			array( equals( $wgWikidataDataSet->collectionMemberships->collectionId, $collectionId ) )
 		)
 	);
 	
@@ -1775,32 +1776,51 @@ class ClassAttributes {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 
-		global
-			$wgDefaultClassMids, $dataSet;
+		global $wgDefaultClassMids, $wgWikidataDataSet;
 
-		$queryResult = $dbr->query(
-			SelectLatestDistinct(
-				array(
-					$dataSet->classAttributes->attributeMid,
-					$dataSet->classAttributes->attributeType,
-					$dataSet->bootstrappedDefinedMeanings->name
-				),
-				array( $dataSet->classAttributes, $dataSet->bootstrappedDefinedMeanings ),
-				array(
-					equals( $dataSet->classAttributes->levelMid, $dataSet->bootstrappedDefinedMeanings->definedMeaningId ),
-					sqlOr(
-						in( $dataSet->classAttributes->classMid,
-							selectLatest(
-								array( $dataSet->classMemberships->classMid ),
-								array( $dataSet->classMemberships ),
-								array( equals( $dataSet->classMemberships->classMemberMid, $definedMeaningId ) )
-							)
-						),
-						inArray( $dataSet->classAttributes->classMid, $wgDefaultClassMids )
-					)
+/*
+		$query = SelectLatestDistinct(
+			array(
+				$wgWikidataDataSet->classAttributes->attributeMid,
+				$wgWikidataDataSet->classAttributes->attributeType,
+				$wgWikidataDataSet->bootstrappedDefinedMeanings->name
+			),
+			array( $wgWikidataDataSet->classAttributes, $wgWikidataDataSet->bootstrappedDefinedMeanings ),
+			array(
+				equals( $wgWikidataDataSet->classAttributes->levelMid, $wgWikidataDataSet->bootstrappedDefinedMeanings->definedMeaningId ),
+				sqlOr(
+					in( $wgWikidataDataSet->classAttributes->classMid,
+						selectLatest(
+							array( $wgWikidataDataSet->classMemberships->classMid ),
+							array( $wgWikidataDataSet->classMemberships ),
+							array( equals( $wgWikidataDataSet->classMemberships->classMemberMid, $definedMeaningId ) )
+						)
+					),
+					inArray( $wgWikidataDataSet->classAttributes->classMid, $wgDefaultClassMids )
 				)
 			)
-		);
+		) ;
+
+		generates something like this:
+SELECT DISTINCT uw_class_attributes.attribute_mid, uw_class_attributes.attribute_type, uw_bootstrapped_defined_meanings.name
+FROM uw_class_attributes, uw_bootstrapped_defined_meanings
+WHERE ((uw_class_attributes.level_mid) = (uw_bootstrapped_defined_meanings.defined_meaning_id))
+AND ((uw_class_attributes.class_mid IN (SELECT uw_class_membership.class_mid FROM uw_class_membership
+WHERE ((uw_class_membership.class_member_mid) = (37)) AND (uw_class_membership.remove_transaction_id IS NULL)))
+OR (uw_class_attributes.class_mid IN (37))) AND (uw_class_attributes.remove_transaction_id IS NULL)
+
+FIXME: the above query does not take into account language specific annotations
+(i.e. existing annotations are not shown).
+the query below is more simple (and faster), but might show annotations that are empty
+when one clicks on the combobox.
+*/
+		$query = "SELECT DISTINCT {$dc}_class_attributes.attribute_mid, "
+			. " {$dc}_class_attributes.attribute_type, {$dc}_bootstrapped_defined_meanings.name "
+			. " FROM {$dc}_class_attributes, {$dc}_bootstrapped_defined_meanings "
+			. " WHERE {$dc}_class_attributes.level_mid = {$dc}_bootstrapped_defined_meanings.defined_meaning_id "
+			. " AND {$dc}_class_attributes.remove_transaction_id IS NULL ";
+
+		$queryResult = $dbr->query($query);
 
 		$this->classAttributes = array();
 		

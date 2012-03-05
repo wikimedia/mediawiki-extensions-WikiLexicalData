@@ -23,8 +23,7 @@ class DefaultWikidataApplication {
 	protected $showDataSetPanel = false;
 
 	public function __construct() {
-		global
-			$wgFilterLanguageId,
+		global $wgFilterLanguageId,
 			$wgShowClassicPageTitles,
 			$wgPropertyToColumnFilters;
 			
@@ -269,91 +268,8 @@ class DefaultWikidataApplication {
 			
 		return $wgTitle->getText();
 	}
-
 }
 
-
-# Global context override. This is an evil hack to allow saving, basically.
-global $wdCurrentContext;
-$wdCurrentContext = null;
-
-/**
- * A Wikidata application can manage multiple data sets.
- * The current "context" is dependent on multiple factors:
- * - the URL can have a dataset parameter
- * - there is a global default
- * - there can be defaults for different user groups
- * @param $dc	optional, for convenience.
- *		if the dataset context is already set, will
-		return that value, else will find the relevant value
- * @return prefix (without underscore)
-**/
-function wdGetDataSetContext( $dc = null ) {
-	global $wgRequest, $wdDefaultViewDataSet, $wdGroupDefaultView, $wgUser,
-		$wdCurrentContext;
-
-	# overrides
-	if ( !is_null( $dc ) )
-		return $dc; # local override
-	if ( !is_null( $wdCurrentContext ) )
-		return $wdCurrentContext; # global override
-
-	$datasets = wdGetDataSets();
-	$groups = $wgUser->getGroups();
-	$dbs = wfGetDB( DB_SLAVE );
-	$pref = $wgUser->getOption( 'ow_uipref_datasets' );
-
-	$trydefault = '';
-	foreach ( $groups as $group ) {
-		if ( isset( $wdGroupDefaultView[$group] ) ) {
-			# We don't know yet if this prefix is valid.
-			$trydefault = $wdGroupDefaultView[$group];
-		}
-	}
-
-	# URL parameter takes precedence over all else
-	if ( ( $ds = $wgRequest->getText( 'dataset' ) ) && array_key_exists( $ds, $datasets ) && $dbs->tableExists( $ds . "_transactions" ) ) {
-		return $datasets[$ds];
-	# User preference
-	} elseif ( !empty( $pref ) && array_key_exists( $pref, $datasets ) ) {
-		return $datasets[$pref];
-	}
-	# Group preference
-	 elseif ( !empty( $trydefault ) && array_key_exists( $trydefault, $datasets ) ) {
-		return $datasets[$trydefault];
-	} else {
-		return $datasets[$wdDefaultViewDataSet];
-	}
-}
-
-
-/**
- * Load dataset definitions from the database if necessary.
- *
- * @return an array of all available datasets
-**/
-function &wdGetDataSets() {
-
-	static $datasets, $wgGroupPermissions;
-	if ( empty( $datasets ) ) {
-		// Load defs from the DB
-		$dbs = wfGetDB( DB_SLAVE );
-		$res = $dbs->select( 'wikidata_sets', array( 'set_prefix' ) );
-
-		while ( $row = $dbs->fetchObject( $res ) ) {
-
-			$dc = new DataSet();
-			$dc->setPrefix( $row->set_prefix );
-			if ( $dc->isValidPrefix() ) {
-				$datasets[$row->set_prefix] = $dc;
-				wfDebug( "Imported data set: " . $dc->fetchName() . "\n" );
-			} else {
-				wfDebug( $row->set_prefix . " does not appear to be a valid dataset!\n" );
-			}
-		}
-	}
-	return $datasets;
-}
 
 class DataSet {
 

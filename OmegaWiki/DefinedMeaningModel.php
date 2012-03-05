@@ -221,13 +221,12 @@ class DefinedMeaningModel {
 	 */
 	protected function getIdStack( $definedMeaningId ) {
 		$o = OmegaWikiAttributes::getInstance();
-		global $wgDefinedMeaning ;
 
 		$definedMeaningIdStructure = new Structure( $o->definedMeaningId );
 		$definedMeaningIdRecord = new ArrayRecord( $definedMeaningIdStructure, $definedMeaningIdStructure );
 		$definedMeaningIdRecord->definedMeaningId = $definedMeaningId;
 		
-		$idStack = new IdStack( $wgDefinedMeaning );
+		$idStack = new IdStack( WD_DEFINED_MEANING );
 		$idStack->pushKey( $definedMeaningIdRecord );
 		
 		return $idStack;

@@ -294,7 +294,7 @@ function initializeObjectAttributeEditors( ViewInformation $viewInformation ) {
 	$linkValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $viewInformation, $annotationMeaningName, $leftOverAttributeIdFilter );
 	$translatedTextValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $viewInformation, $annotationMeaningName, $leftOverAttributeIdFilter );
 	$optionValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $viewInformation, $annotationMeaningName, $leftOverAttributeIdFilter );
-	
+
 	foreach ( $definedMeaningValueObjectAttributesEditors as $definedMeaningValueObjectAttributesEditor )
 		addObjectAttributesEditors( $definedMeaningValueObjectAttributesEditor, $viewInformation, new ObjectIdFetcher( 0, $o->relationType ) );
 
@@ -371,7 +371,6 @@ function getDefinitionEditor( ViewInformation $viewInformation ) {
 	
 	foreach ( $viewInformation->getPropertyToColumnFilters() as $propertyToColumnFilter ) {
 		$attribute = $propertyToColumnFilter->getAttribute();
-		
 		$editor->addEditor( new PopUpEditor(
 			createDefinitionObjectAttributesEditor(
 				$viewInformation,
@@ -385,7 +384,7 @@ function getDefinitionEditor( ViewInformation $viewInformation ) {
 			$attribute->name
 		) );
 	}
-		
+
 	$editor->addEditor( new PopUpEditor(
 		createDefinitionObjectAttributesEditor( $viewInformation, $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $o->definedMeaningId, $definitionMeaningName, $viewInformation->getLeftOverAttributeFilter() ),
 		wfMsgSc( "PopupAnnotation" )
@@ -440,7 +439,7 @@ function getTranslatedTextEditor( Attribute $attribute, UpdateController $update
 function addObjectAttributesEditors( ObjectAttributeValuesEditor $objectAttributesEditor, ViewInformation $viewInformation, ContextFetcher $annotatedObjectIdFetcher ) {
 	$attributeIDFilter = $objectAttributesEditor->getAttributeIDfilter();
 	$annotationLevelName = $objectAttributesEditor->getLevelName();
-	
+
 	$objectAttributesEditor->addEditor( getDefinedMeaningAttributeValuesEditor( $viewInformation, new DefinedMeaningAttributeValuesController( $annotatedObjectIdFetcher, $annotationLevelName, $attributeIDFilter ), $annotationLevelName, $attributeIDFilter ) );
 	$objectAttributesEditor->addEditor( getTextAttributeValuesEditor( $viewInformation, new TextAttributeValuesController( $annotatedObjectIdFetcher, $annotationLevelName, $attributeIDFilter ), $annotationLevelName, $attributeIDFilter ) );
 	$objectAttributesEditor->addEditor( getTranslatedTextAttributeValuesEditor( $viewInformation, new TranslatedTextAttributeValuesController( $annotatedObjectIdFetcher, $annotationLevelName, $attributeIDFilter, $viewInformation->filterLanguageId ), $annotationLevelName, $attributeIDFilter ) );
@@ -513,9 +512,9 @@ function getExpressionTableCellEditor( Attribute $attribute, ViewInformation $vi
 		$editor->addEditor( new LanguageEditor( $o->language, new SimplePermissionController( false ), true ) );
 		$editor->addEditor( new SpellingEditor( $o->spelling, new SimplePermissionController( false ), true ) );
 	}
-	else
+	else {
 		$editor = new SpellingEditor( $attribute, new SimplePermissionController( false ), true );
-	
+	}
 	return $editor;
 }
 
@@ -552,7 +551,8 @@ function getSynonymsAndTranslationsEditor( ViewInformation $viewInformation ) {
 	$tableEditor->addEditor( new BooleanEditor( $o->identicalMeaning, new SimplePermissionController( true ), true, true ) );
 	
 	addPropertyToColumnFilterEditors( $tableEditor, $viewInformation, $o->syntransId, $synTransMeaningName );
-	
+
+	// Add annotation editor on the rightmost column.
 	$tableEditor->addEditor( new PopUpEditor(
 		createObjectAttributesEditor( $viewInformation, $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $o->syntransId, $synTransMeaningName, $viewInformation->getLeftOverAttributeFilter() ),
 		wfMsgSc( "PopupAnnotation" )
@@ -663,8 +663,7 @@ function getTextAttributeValuesEditor( ViewInformation $viewInformation, UpdateC
 }
 
 function getLinkAttributeValuesEditor( ViewInformation $viewInformation, UpdateController $controller, $levelDefinedMeaningName, AttributeIDFilter $attributeIDFilter ) {
-	global
-		$linkValueObjectAttributesEditors;
+	global $linkValueObjectAttributesEditors;
 
 	$o = OmegaWikiAttributes::getInstance();
 

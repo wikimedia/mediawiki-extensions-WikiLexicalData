@@ -9,9 +9,7 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgLang, $wgRequest, $IP,
-			$wgDefinedMeaning, $wgDefinedMeaningAttributes,
-			$wgOptionAttribute, $wgLinkAttribute;
+		global $wgOut, $wgLang, $wgRequest, $IP;
 
 		$wgOut->disable();
 		require_once( "$IP/includes/Setup.php" );
@@ -55,7 +53,7 @@ class SpecialSuggest extends SpecialPage {
 				// so : not using it. The English fall back has been included in the SQL query
 				$sql = $this->getSQLForClasses( $langCode );
 				break;
-			case $wgDefinedMeaningAttributes:
+			case WD_DEFINED_MEANING_ATTRIBUTES:
 				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'DM' );
 				break;
 			case 'text-attribute':
@@ -64,10 +62,10 @@ class SpecialSuggest extends SpecialPage {
 			case 'translated-text-attribute':
 				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'TRNS' );
 				break;
-			case $wgLinkAttribute:
+			case WD_LINK_ATTRIBUTE:
 				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'URL' );
 				break;
-			case $wgOptionAttribute:
+			case WD_OPTION_ATTRIBUTE:
 				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'OPTN' );
 				break;
 			case 'language':
@@ -75,7 +73,7 @@ class SpecialSuggest extends SpecialPage {
 				$sql = getSQLForLanguageNames( $langCode );
 				$rowText = 'language_name';
 				break;
-			case $wgDefinedMeaning:
+			case WD_DEFINED_MEANING:
 				$sql =
 					"SELECT {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id " .
 					" FROM {$dc}_expression, {$dc}_syntrans " .
@@ -109,9 +107,9 @@ class SpecialSuggest extends SpecialPage {
 			elseif ( $query == 'class' ) {
 				$searchCondition = " AND $rowText LIKE " . $dbr->addQuotes( "$search%" );
 			}
-			elseif ( $query == "$wgDefinedMeaningAttributes" or // should be 'relation-type' in html, there is a bug I cannot find
-				$query == "$wgLinkAttribute" or
-				$query == "$wgOptionAttribute" or
+			elseif ( $query == WD_DEFINED_MEANING_ATTRIBUTES or // should be 'relation-type' in html, there is a bug I cannot find
+				$query == WD_LINK_ATTRIBUTE or
+				$query == WD_OPTION_ATTRIBUTE or
 				$query == 'translated-text-attribute' or
 				$query == 'text-attribute' )
 			{
@@ -159,7 +157,7 @@ class SpecialSuggest extends SpecialPage {
 			case 'class':
 				list( $recordSet, $editor ) = $this->getClassAsRecordSet( $queryResult );
 				break;
-			case "$wgDefinedMeaningAttributes":
+			case WD_DEFINED_MEANING_ATTRIBUTES:
 				list( $recordSet, $editor ) = $this->getDefinedMeaningAttributeAsRecordSet( $queryResult );
 				break;
 			case 'text-attribute':
@@ -168,13 +166,13 @@ class SpecialSuggest extends SpecialPage {
 			case 'translated-text-attribute':
 				list( $recordSet, $editor ) = $this->getTranslatedTextAttributeAsRecordSet( $queryResult );
 				break;
-			case "$wgLinkAttribute":
+			case WD_LINK_ATTRIBUTE:
 				list( $recordSet, $editor ) = $this->getLinkAttributeAsRecordSet( $queryResult );
 				break;
-			case "$wgOptionAttribute":
+			case WD_OPTION_ATTRIBUTE:
 				list( $recordSet, $editor ) = $this->getOptionAttributeAsRecordSet( $queryResult );
 				break;
-			case "$wgDefinedMeaning":
+			case WD_DEFINED_MEANING:
 				list( $recordSet, $editor ) = $this->getDefinedMeaningAsRecordSet( $queryResult );
 				break;
 			case 'class-attributes-level':
@@ -236,8 +234,7 @@ class SpecialSuggest extends SpecialPage {
 	 * @param $language the 2 letter wikimedia code
 	 */
 	private function getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, $attributesType ) {
-		global $wgDefaultClassMids, $wgLang;
-
+		global $wgDefaultClassMids, $wgLang, $wgIso639_3CollectionId;
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 
@@ -251,7 +248,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$classMids = $wgDefaultClassMids ;
 
-		if ( $syntransId != 0 ) {
+		if ( ( $syntransId != 0 ) && ( !is_null($wgIso639_3CollectionId)) ) {
 			// find the language of the syntrans and add attributes of that language by adding the language DM to the list of default classes
 			// this first query returns the language_id
 			$sql = 'SELECT language_id' .
@@ -262,10 +259,9 @@ class SpecialSuggest extends SpecialPage {
 			$language_id = $dbr->fetchObject( $lang_res )->language_id;
 
 			// this second query finds the DM number for a given language_id
-			// 145264 is the collection_id of the "ISO 639-3 codes" collection
 			$sql = "SELECT member_mid FROM {$dc}_collection_contents, language" .
 				" WHERE language.language_id = $language_id" .
-				" AND {$dc}_collection_contents.collection_id = 145264" .
+				" AND {$dc}_collection_contents.collection_id = $wgIso639_3CollectionId" .
 				" AND language.iso639_3 = {$dc}_collection_contents.internal_member_id" .
 				' AND ' . getLatestTransactionRestriction( "{$dc}_collection_contents" ) .
 				' LIMIT 1 ' ;
@@ -330,35 +326,38 @@ class SpecialSuggest extends SpecialPage {
 
 	private function getPropertyToColumnFilterForAttribute( $annotationAttributeId ) {
 		global $wgPropertyToColumnFilters;
-	
+
 		$i = 0;
 		$result = null;
 	
-		while ( $result == null && $i < count( $wgPropertyToColumnFilters ) )
-			if ( $wgPropertyToColumnFilters[$i]->getAttribute()->id == $annotationAttributeId )
+		while ( $result == null && $i < count( $wgPropertyToColumnFilters ) ) {
+			if ( $wgPropertyToColumnFilters[$i]->getAttribute()->id == $annotationAttributeId ) {
 				$result = $wgPropertyToColumnFilters[$i];
-			else
+			} else {
 				$i++;
-
+			}
+		}
 		return $result;
 	}
 
 	private function getFilteredAttributes( $annotationAttributeId ) {
 		$propertyToColumnFilter = $this->getPropertyToColumnFilterForAttribute( $annotationAttributeId );
 	
-		if ( $propertyToColumnFilter != null )
+		if ( $propertyToColumnFilter != null ) {
 			return $propertyToColumnFilter->attributeIDs;
-		else
+		} else {
 			return array();
+		}
 	}
 
 	private function getAllFilteredAttributes() {
 		global $wgPropertyToColumnFilters;
 
 		$result = array();
-	
-		foreach ( $wgPropertyToColumnFilters as $propertyToColumnFilter )
+
+		foreach ( $wgPropertyToColumnFilters as $propertyToColumnFilter ) {
 			$result = array_merge( $result, $propertyToColumnFilter->attributeIDs );
+		}
 	
 		return $result;
 	}
@@ -371,18 +370,20 @@ class SpecialSuggest extends SpecialPage {
 		if ( $propertyToColumnFilter != null ) {
 			$filteredAttributes = $propertyToColumnFilter->attributeIDs;
 
-			if ( count( $filteredAttributes ) > 0 )
+			if ( count( $filteredAttributes ) > 0 ) {
 				$result = " AND {$dc}_class_attributes.attribute_mid IN (" . join( $filteredAttributes, ", " ) . ")";
-			else
+			} else {
 				$result = " AND 0 ";
+			}
 		}
 		else {
 			$allFilteredAttributes = $this->getAllFilteredAttributes();
 
-			if ( count( $allFilteredAttributes ) > 0 )
+			if ( count( $allFilteredAttributes ) > 0 ) {
 				$result = " AND {$dc}_class_attributes.attribute_mid NOT IN (" . join( $allFilteredAttributes, ", " ) . ")";
-			else
+			} else {
 				$result = "";
+			}
 		}
 
 		return $result;
@@ -484,18 +485,18 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	private function getSQLForLevels( $language = "<ANY>" ) {
-		global $classAttributeLevels, $dataSet;
+		global $classAttributeLevels, $wgWikidataDataSet;
 
 		$o = OmegaWikiAttributes::getInstance();
 		// TO DO: Add support for multiple languages here
 		return
 			selectLatest(
-				array( $dataSet->bootstrappedDefinedMeanings->definedMeaningId, $dataSet->expression->spelling ),
-				array( $dataSet->definedMeaning, $dataSet->expression, $dataSet->bootstrappedDefinedMeanings ),
+				array( $wgWikidataDataSet->bootstrappedDefinedMeanings->definedMeaningId, $wgWikidataDataSet->expression->spelling ),
+				array( $wgWikidataDataSet->definedMeaning, $wgWikidataDataSet->expression, $wgWikidataDataSet->bootstrappedDefinedMeanings ),
 				array(
 					'name IN (' . implodeFixed( $classAttributeLevels ) . ')',
-					equals( $dataSet->definedMeaning->definedMeaningId, $dataSet->bootstrappedDefinedMeanings->definedMeaningId ),
-					equals( $dataSet->definedMeaning->expressionId, $dataSet->expression->expressionId )
+					equals( $wgWikidataDataSet->definedMeaning->definedMeaningId, $wgWikidataDataSet->bootstrappedDefinedMeanings->definedMeaningId ),
+					equals( $wgWikidataDataSet->definedMeaning->expressionId, $wgWikidataDataSet->expression->expressionId )
 				)
 			);
 	}
@@ -550,13 +551,11 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	private function getDefinedMeaningAttributeAsRecordSet( $queryResult ) {
-		global $wgDefinedMeaningAttributes;
-
 		$o = OmegaWikiAttributes::getInstance();
 
 		$dbr = wfGetDB( DB_SLAVE );
 	
-		$definedMeaningAttributeAttribute = new Attribute( $wgDefinedMeaningAttributes, wfMsgSc( "DefinedMeaningAttributes" ), "short-text" );
+		$definedMeaningAttributeAttribute = new Attribute( WD_DEFINED_MEANING_ATTRIBUTES, wfMsgSc( "DefinedMeaningAttributes" ), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $definedMeaningAttributeAttribute ), new Structure( $o->id ) );
 	
 		while ( $row = $dbr->fetchObject( $queryResult ) )
@@ -587,13 +586,11 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	private function getLinkAttributeAsRecordSet( $queryResult ) {
-		global $wgLinkAttribute;
-
 		$o = OmegaWikiAttributes::getInstance();
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$linkAttributeAttribute = new Attribute( $wgLinkAttribute, wfMsg( 'ow_LinkAttributeHeader' ), "short-text" );
+		$linkAttributeAttribute = new Attribute( WD_LINK_ATTRIBUTE, wfMsg( 'ow_LinkAttributeHeader' ), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $linkAttributeAttribute ), new Structure( $o->id ) );
 
 		while ( $row = $dbr->fetchObject( $queryResult ) )
@@ -624,13 +621,11 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	private function getOptionAttributeAsRecordSet( $queryResult ) {
-		global $wgOptionAttribute;
-
 		$o = OmegaWikiAttributes::getInstance();
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$optionAttributeAttribute = new Attribute( $wgOptionAttribute, wfMsg( 'ow_OptionAttributeHeader' ), "short-text" );
+		$optionAttributeAttribute = new Attribute( WD_OPTION_ATTRIBUTE, wfMsg( 'ow_OptionAttributeHeader' ), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $optionAttributeAttribute ), new Structure( $o->id ) );
 
 		while ( $row = $dbr->fetchObject( $queryResult ) )
@@ -643,15 +638,13 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	private function getDefinedMeaningAsRecordSet( $queryResult ) {
-		global $wgDefinedMeaning ;
-
 		$o = OmegaWikiAttributes::getInstance();
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$spellingAttribute = new Attribute( "spelling", wfMsg( 'ow_Spelling' ), "short-text" );
 		$languageAttribute = new Attribute( "language", wfMsg( 'ow_Language' ), "language" );
 
-		$expressionStructure = new Structure( $wgDefinedMeaning, $spellingAttribute, $languageAttribute );
+		$expressionStructure = new Structure( WD_DEFINED_MEANING, $spellingAttribute, $languageAttribute );
 		$definedMeaningAttribute = new Attribute( null, wfMsg( 'ow_DefinedMeaning' ), $expressionStructure );
 		$definitionAttribute = new Attribute( "definition", wfMsg( 'ow_Definition' ), "definition" );
 

@@ -100,8 +100,7 @@ class OmegaWiki extends DefaultWikidataApplication {
 	}
 
 	protected function getIdStack() {
-		global $wgExpression ;
-		return new IdStack( $wgExpression );
+		return new IdStack( WD_EXPRESSION );
 	}
 }
 

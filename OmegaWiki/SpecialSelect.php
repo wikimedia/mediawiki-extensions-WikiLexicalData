@@ -13,12 +13,12 @@ class SpecialSelect extends SpecialPage {
 	function execute( $par ) {
 		require_once( 'languages.php' );
 		require_once( 'Transaction.php' );
-		global $wgOut, $wgLang, $wgRequest, $wgOptionAttribute;
+		global $wgOut, $wgLang, $wgRequest;
 
 		$wgOut->disable();
 
 		$dc = wdGetDataSetContext();
-		$optionAttribute = $wgRequest->getVal( $wgOptionAttribute );
+		$optionAttribute = $wgRequest->getVal( WD_OPTION_ATTRIBUTE );
 		$attributeObject = $wgRequest->getVal( 'attribute-object' );
 		$lang_code = $wgLang->getCode();
 

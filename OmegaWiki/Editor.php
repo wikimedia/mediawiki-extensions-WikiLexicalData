@@ -1464,8 +1464,7 @@ abstract class SuggestEditor extends ScalarEditor {
 
 class DefinedMeaningReferenceEditor extends SuggestEditor {
 	protected function suggestType() {
-		global $wgDefinedMeaning;
-		return $wgDefinedMeaning;
+		return WD_DEFINED_MEANING;
 	}
 
 	public function getViewHTML( IdStack $idPath, $value ) {
@@ -1603,8 +1602,7 @@ class AttributeEditor extends DefinedMeaningReferenceEditor {
 
 class DefinedMeaningAttributeEditor extends AttributeEditor {
 	protected function suggestType() {
-		global $wgDefinedMeaningAttributes;
-		return $wgDefinedMeaningAttributes;
+		return WD_DEFINED_MEANING_ATTRIBUTES;
 	}
 }
 
@@ -1622,19 +1620,16 @@ class TranslatedTextAttributeEditor extends AttributeEditor {
 
 class LinkAttributeEditor extends AttributeEditor {
 	protected function suggestType() {
-		global $wgLinkAttribute;
-		return $wgLinkAttribute;
+		return WD_LINK_ATTRIBUTE;
 	}
 }
 
 class OptionAttributeEditor extends AttributeEditor {
 	protected function suggestType() {
-		global $wgOptionAttribute;
-		return $wgOptionAttribute;
+		return WD_OPTION_ATTRIBUTE;
 	}
 
 	public function add( IdStack $idPath ) {
-		global $wgOptionSuffix;
 		if ( $this->isAddField ) {
 			$syntransId = $idPath->getKeyStack()->peek( 0 )->syntransId;
 			if ( ! $syntransId ) $syntransId = 0 ; // in the case of a DM option attribute, there is no syntrans in the PathId
@@ -1645,7 +1640,7 @@ class OptionAttributeEditor extends AttributeEditor {
 				"definedMeaningId" => $idPath->getDefinedMeaningId(),
 				"syntransId" => $syntransId,
 				"annotationAttributeId" => $idPath->getAnnotationAttribute()->getId(),
-				"onUpdate" => 'updateSelectOptions(\'' . $this->addId( $idPath->getId() ) . $wgOptionSuffix . '\',' . $syntransId
+				"onUpdate" => 'updateSelectOptions(\'' . $this->addId( $idPath->getId() ) . WD_OPTION_SUFFIX . '\',' . $syntransId
 			);
 			return getSuggest( $this->addId( $idPath->getId() ), $this->suggestType(), $parameters );
 		}
@@ -1653,11 +1648,10 @@ class OptionAttributeEditor extends AttributeEditor {
 	}
 
 	public function getEditHTML( IdStack $idPath, $value ) {
-		global $wgOptionSuffix;
 		// note: it is normal that the "updateSelectOptions(" has no closing parenthesis. An additional parameter and ')' is added by the function updateSuggestValue (suggest.js)
 		$parameters = array(
 			"level" => $this->attributesLevelName,
-			"onUpdate" => 'updateSelectOptions(\'' . $this->updateId( $idPath->getId() ) . $wgOptionSuffix . '\''
+			"onUpdate" => 'updateSelectOptions(\'' . $this->updateId( $idPath->getId() ) . WD_OPTION_SUFFIX . '\''
 		);
 
 		return getSuggest( $this->updateId( $idPath->getId() ), $this->suggestType(), $parameters );
