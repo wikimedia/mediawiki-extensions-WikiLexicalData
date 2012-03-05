@@ -187,4 +187,8 @@ $wgHooks['CustomEditor'][] = 'WikidataHooks::onCustomEditor';
 $wgHooks['MediaWikiPerformAction'][] = 'WikidataHooks::onMediaWikiPerformAction';
 $wgHooks['AbortMove'][] = 'WikidataHooks::onAbortMove';
 
-require_once( "{$IP}/extensions/Wikidata/LocalApp.php" );
+// LocalApp.php is optional. Its function is like LocalSettings.php,
+// if you want to separate the MediaWiki configuration from the Wikidata configuration
+if ( file_exists ( "{$IP}/extensions/Wikidata/LocalApp.php" )) {
+	require_once( "{$IP}/extensions/Wikidata/LocalApp.php" );
+}
