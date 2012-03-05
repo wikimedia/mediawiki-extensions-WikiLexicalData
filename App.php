@@ -96,14 +96,20 @@ $wgAvailableRights[] = 'deletewikidata-uw';
 $wgAvailableRights[] = 'wikidata-copy';
 $wgAvailableRights[] = 'languagenames';
 $wgAvailableRights[] = 'addcollection';
+$wgAvailableRights[] = 'editClassAttributes';
 $wgAvailableRights[] = 'exporttsv';
 $wgAvailableRights[] = 'importtsv';
+
+$wgGroupPermissions['*']['editClassAttributes'] = false;  
+
 $wgGroupPermissions['wikidata-omega']['editwikidata-uw'] = true;
 $wgGroupPermissions['wikidata-omega']['deletewikidata-uw'] = true;
 $wgGroupPermissions['wikidata-copy']['wikidata-copy'] = true;
 $wgGroupPermissions['wikidata-omega']['wikidata-copy'] = true;
+
 $wgGroupPermissions['bureaucrat']['languagenames'] = true;
 $wgGroupPermissions['bureaucrat']['addcollection'] = true;
+$wgGroupPermissions['bureaucrat']['editClassAttributes'] = true;
 $wgGroupPermissions['bureaucrat']['exporttsv'] = true;
 $wgGroupPermissions['bureaucrat']['importtsv'] = true;
 
@@ -149,13 +155,6 @@ $wdCopyDryRunOnly = false;
 $wgShowClassicPageTitles = false;
 $wgDefinedMeaningPageTitlePrefix = '';
 $wgExpressionPageTitlePrefix = 'Multiple meanings';
-
-// Hacks?
-$wgDefaultGoPrefix = 'Expression:';
-$wgDefaultClassMids = array( 402295 );
-
-require_once( $dir . 'OmegaWiki/GotoSourceTemplate.php' );
-$wgGotoSourceTemplates = array( 5 => $swissProtGotoSourceTemplate );
 
 # The site prefix allows us to have multiple sets of customized
 # messages (for different, typically site-specific UIs)

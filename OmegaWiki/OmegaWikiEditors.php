@@ -809,13 +809,12 @@ function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 function getDefinedMeaningEditor( ViewInformation $viewInformation ) {
 	global
 		$wdDefinedMeaningAttributesOrder,  $definedMeaningMeaningName,
-		$relationMeaningName;
+		$relationMeaningName, $wgUser;
 		
 	$o = OmegaWikiAttributes::getInstance();
 	
 	$definitionEditor = getDefinitionEditor( $viewInformation );
 	$alternativeDefinitionsEditor = getAlternativeDefinitionsEditor( $viewInformation );
-	$classAttributesEditor = getClassAttributesEditor( $viewInformation );
 	$synonymsAndTranslationsEditor = getSynonymsAndTranslationsEditor( $viewInformation );
 	$reciprocalRelationsEditor = getDefinedMeaningReciprocalRelationsEditor( $viewInformation );
 	$classMembershipEditor = getDefinedMeaningClassMembershipEditor( $viewInformation );
@@ -824,7 +823,12 @@ function getDefinedMeaningEditor( ViewInformation $viewInformation ) {
 	$availableEditors = new AttributeEditorMap();
 	$availableEditors->addEditor( $definitionEditor );
 	$availableEditors->addEditor( $alternativeDefinitionsEditor );
-	$availableEditors->addEditor( $classAttributesEditor );
+
+	if ( $wgUser->isAllowed( 'editClassAttributes' ) ) {
+		$classAttributesEditor = getClassAttributesEditor( $viewInformation );
+		$availableEditors->addEditor( $classAttributesEditor );
+	}
+
 	$availableEditors->addEditor( $synonymsAndTranslationsEditor );
 	$availableEditors->addEditor( $reciprocalRelationsEditor );
 	$availableEditors->addEditor( $classMembershipEditor );
