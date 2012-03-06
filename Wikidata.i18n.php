@@ -13448,8 +13448,10 @@ Sprowdź eli jeij adres je poprawny.',
 /** Tamil (தமிழ்)
  * @author Logicwiki
  * @author Trengarasu
+ * @author செல்வா
  */
 $messages['ta'] = array(
+	'languages' => 'Wikidata: மொழி மேலாளர்',
 	'ow_importtsv_test_run' => 'சோதனை ஒட்டம்:',
 	'ow_save' => 'சேமி',
 	'ow_history' => 'வரலாறு',
