@@ -14104,6 +14104,7 @@ Makipagugnayan sa isang tagapamalakad/tagapagpatakbo ng serbidor o tagapangasiwa
 );
 
 /** Turkish (Türkçe)
+ * @author InfoCan
  * @author Joseph
  * @author Karduelis
  * @author Nyasar
@@ -14182,6 +14183,7 @@ $messages['tr'] = array(
 	'ow_AddHint' => 'Eklenecek yeni satır girin',
 	'ow_AlternativeDefinition' => 'Alternatif tanım',
 	'ow_AlternativeDefinitions' => 'Alternatif tanımlar',
+	'ow_Annotation' => 'Ek açıklama',
 	'ow_ApproximateMeanings' => 'Yaklaşık anlamlar',
 	'ow_Class' => 'Sınıf',
 	'ow_ClassAttributes' => 'Sınıf değerleri',
@@ -14213,7 +14215,7 @@ $messages['tr'] = array(
 	'ow_RelationType' => 'İlişki türü',
 	'ow_Remove' => 'Kaldır',
 	'ow_RemoveHint' => 'Kaldırılacak sıraları işaretle',
-	'ow_Spelling' => 'Heceleme',
+	'ow_Spelling' => 'Yazım',
 	'ow_SuggestHint' => 'Seçimi değiştirmek için tıklayın',
 	'ow_Synonyms' => 'Eş anlamlılar',
 	'ow_SynonymsAndTranslations' => 'Eşanlamlılar ve çeviriler',
