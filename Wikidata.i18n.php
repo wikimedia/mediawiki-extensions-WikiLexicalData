@@ -406,6 +406,15 @@ $messages['tly'] = array(
 	'ow_history' => 'Тарых',
 );
 
+/** Ṫuroyo (Ṫuroyo)
+ * @author Ariyo
+ */
+$messages['tru'] = array(
+	'datasearch_language' => 'Leşono:',
+	'ow_exporttsv_languages' => 'Leşone:',
+	'ow_Language' => 'Leşono',
+);
+
 /** Abkhazian (Аҧсуа)
  * @author Temuri rajavi
  */
