@@ -12269,6 +12269,7 @@ $messages['si'] = array(
 
 /** Slovak (Slovenčina)
  * @author Helix84
+ * @author Teslaton
  */
 $messages['sk'] = array(
 	'wikidata-desc' => 'Pridáva databázu v štýle wiki pre rozličné druhy obsahu',
@@ -12334,6 +12335,9 @@ Vyberte kolekciu, ktorá sa má exportovať. V texovom poli jazyka zadajte čiar
 	'ow_exporttsv_not_allowed' => 'Nemáte povolenia na vykonanie exportu TSV.',
 	'ow_exporttsv_export_failed' => 'Export zlyhal',
 	'addcollection' => 'Wikidata: Pridať kolekciu',
+	'ow_searchnoresult' => "<p>Môžete:<br />
+* '''Vytvoriť výraz \"[[Expression:\$1]]\"''' (a pridať definíciu)<br />
+* '''Vytvoriť stránku \"[[:\$1]]\"''' (bežná wiki stránka)</p>",
 	'ow_save' => 'Uložiť',
 	'ow_history' => 'História',
 	'ow_datasets' => 'Výber množiny dát',
@@ -12476,6 +12480,7 @@ Prosím, pozrite si [[{{MediaWiki:Ow editing policy url}}|našu politiku ohľadn
 	'ow_needs_xlation_source_lang' => 'Zdrojový jazyk:',
 	'ow_needs_xlation_dest_lang' => 'Cieľový jazyk:',
 	'ow_needs_xlation_no_dest_lang' => 'Prosím, zadajte cieľový jazyk.',
+	'ow_statistics' => 'Wikidata: Štatistiky',
 	'ow_show' => 'Zobraziť',
 	'ow_upload' => 'Nahrať',
 	'ow_create' => 'Vytvoriť',
@@ -14852,6 +14857,7 @@ $messages['zh-cn'] = array(
  * @author Gaoxuewei
  * @author Jimmy xu wrk
  * @author Liangent
+ * @author Linforest
  * @author PhiLiP
  * @author Wilsonmess
  * @author Wmr89502270
@@ -14951,6 +14957,7 @@ $messages['zh-hans'] = array(
 	'ow_conceptmapping_no_action_specified' => '动作“$1”不被支持。',
 	'ow_dm_OK' => '确定',
 	'ow_dm_not_present' => '没有输入',
+	'ow_concept_panel' => '概念面板',
 	'ow_AddHint' => '输入一个新行以添加',
 	'ow_AlternativeDefinition' => '替代定义',
 	'ow_AlternativeDefinitions' => '替代定义',
@@ -14961,7 +14968,7 @@ $messages['zh-hans'] = array(
 	'ow_ClassAttributes' => '类属性',
 	'ow_ClassAttributeLevel' => '等级',
 	'ow_ClassAttributeType' => '类型',
-	'ow_ClassMembership' => '类成员属性',
+	'ow_ClassMembership' => '类成员',
 	'ow_Definition' => '定义',
 	'ow_DefinedMeaningAttributes' => '注解',
 	'ow_DefinedMeaning' => '已定义的含义',
@@ -15030,7 +15037,10 @@ $messages['zh-hans'] = array(
 	'ow_suggest_previous' => '上一个',
 	'ow_suggest_next' => '下一个',
 	'ow_suggest_clear' => '清除',
+	'ow_nstab_definedmeaning' => '已定义的含义',
+	'ow_nstab_edit_copy' => '编辑副本',
 	'right-addlanguage' => '添加和更改语言设置',
+	'ow_shown_datasets' => '所显示的数据集',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
