@@ -1,7 +1,7 @@
 <?php
 
 # Empty skeleton for omegawiki test cases.
-# Replace occurences of RecordHelperTest with the name of your own test case.
+# Replace occurrences of RecordHelperTest with the name of your own test case.
 
 
 define( 'MEDIAWIKI', true );
