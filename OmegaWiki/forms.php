@@ -62,7 +62,8 @@ function getRemoveCheckBox( $name ) {
 	global $wgUser;
 	$dc = wdGetDataSetContext();
 	if ( ($dc == "uw") and (! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
-		return getCheckBoxWithOnClick( $name, false, "removeClicked(this);", true );
+		// do not print the checkbox
+		return '';
 	} else {
 		return getCheckBoxWithOnClick( $name, false, "removeClicked(this);" );
 	}
