@@ -62,11 +62,12 @@ class DefaultWikidataApplication {
 
 		$title = $wgTitle->getPrefixedText();
 
-		if ( !$this->showClassicPageTitles )
+		if ( !$this->showClassicPageTitles ) {
 			$title = $this->getTitle();
+		}
 
 		$wgOut->setPageTitle( $title );
-		
+
 		$this->queryTransactionInformation = new QueryLatestTransactionInformation();
 		
 		$viewInformation = new ViewInformation();

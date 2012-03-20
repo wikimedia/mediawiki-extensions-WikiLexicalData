@@ -11,52 +11,21 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		global
 			$wgOut, $wgTitle, $wgRequest, $wdCurrentContext;
 
-		// Split title into defining expression and ID
 		$titleText = $wgTitle->getText();
-		$dmInfo = DefinedMeaningModel::splitTitleText( $titleText );
+
+		$dmNumber = (int)$titleText ;
 
 		// Title doesn't have an ID in it (or ID 0)
-		if ( is_null( $dmInfo ) || !$dmInfo["id"] ) {
+		if ( !$dmNumber ) {
 			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_badtitle' );
 			return false;
 		}
 		parent::view();
-		$definedMeaningModel = new DefinedMeaningModel( $dmInfo["id"], $this->viewInformation );
+		$definedMeaningModel = new DefinedMeaningModel( $dmNumber, $this->viewInformation );
 		$this->definedMeaningModel = $definedMeaningModel; # TODO if I wasn't so sleepy I'd make this consistent
 
-		$copyTo = $wgRequest->getText( 'CopyTo' );
-		if ( $copyTo ) {
-			$definedMeaningModel->copyTo( $copyTo );
-		}
-
-		if ( !empty( $dmInfo["expression"] ) ) {
-		 	$definedMeaningModel->setDefiningExpression( $dmInfo["expression"] );
-		}
-
-		// Search for this DM in all data-sets, beginning with the current one.
-		// Switch dataset context if found elsewhere.
+		// check that the constructed DM actually exists in the database
 		$match = $definedMeaningModel->checkExistence( true, true );
-
-		// The defining expression is likely incorrect for some reason. Let's just
-		// try looking up the number.
-		if ( is_null( $match ) && !empty( $dmInfo["expression"] ) ) {
-			$definedMeaningModel->setDefiningExpression( null );
-			$dmInfo["expression"] = null;
-			$match = $definedMeaningModel->checkExistence( true, true );
-		}
-
-		// The defining expression is either bad or missing. Let's redirect
-		// to the correct URL.
-		if ( empty( $dmInfo["expression"] ) && !is_null( $match ) ) {
-			$definedMeaningModel->loadRecord();
-			$title = Title::newFromText( $definedMeaningModel->getWikiTitle() );
-			$url = $title->getFullURL();
-			$wgOut->disable();
-			header( "Location: $url" );
-			return false;
-		}
-
-		// Bad defining expression AND bad ID! :-(
 		if ( is_null( $match ) ) {
 			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_missing' );
 			return false;
@@ -76,24 +45,40 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$this->outputViewHeader();
 // concept panel is annoying and useless
 //		$wgOut->addHTML( $this->getConceptPanel() );
+		$expressionTranslated = definedMeaningExpression( $this->definedMeaningModel->getId() ) ;
+		$wgOut->setPageTitle( $wgTitle->getFullText() . " - $expressionTranslated" ) ;
+
 		$editor = getDefinedMeaningEditor( $this->viewInformation );
 		$idStack = $this->getIdStack( $definedMeaningModel->getId() );
 		$html = $editor->view( $idStack, $definedMeaningModel->getRecord() );
 		$wgOut->addHTML( $html );
 		$this->outputViewFooter();
 	}
-	
+
 	public function edit() {
 		global
 			$wgOut, $wgTitle;
 
 		if ( !parent::edit() ) return false;
 
-		$definedMeaningId = $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
+		$definedMeaningId = (int)$wgTitle->getText();
+
+		// Title doesn't have an ID in it (or ID 0)
+		if ( !$definedMeaningId ) {
+			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_badtitle' );
+			return false;
+		}
 
 		$this->outputEditHeader();
 		$dmModel = new DefinedMeaningModel( $definedMeaningId, $this->viewInformation );
-		
+
+		// check that the constructed DM actually exists in the database
+		$match = $dmModel->checkExistence( true, true );
+		if ( is_null( $match ) ) {
+			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_missing' );
+			return false;
+		}
+
 		if ( is_null( $dmModel->getRecord() ) ) {
 			$wgOut->addHTML( wfMsgSc( "db_consistency__not_found" ) . " ID:$definedMeaningId" );
 			return;
@@ -112,10 +97,24 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		global
 			$wgOut, $wgTitle ;
 
+		$definedMeaningId = (int)$wgTitle->getText();
+		// Title doesn't have an ID in it (or ID 0)
+		if ( !$definedMeaningId ) {
+			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_badtitle' );
+			return false;
+		}
+
 		parent::history();
 
-		$definedMeaningId = $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
 		$dmModel = new DefinedMeaningModel( $definedMeaningId, $this->viewInformation );
+
+		// check that the constructed DM actually exists in the database
+		$match = $dmModel->checkExistence( true, true );
+		if ( is_null( $match ) ) {
+			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_missing' );
+			return false;
+		}
+
 		$wgOut->addHTML(
 			getDefinedMeaningEditor( $this->viewInformation )->view(
 				new IdStack( WD_DEFINED_MEANING ),
@@ -132,10 +131,15 @@ class DefinedMeaning extends DefaultWikidataApplication {
 			$wgTitle;
 
 		parent::save( $referenceQueryTransactionInformation );
-		$definedMeaningId = $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
-		
+
+		$definedMeaningId = (int)$wgTitle->getText();
+		if ( !$definedMeaningId ) {
+			// Title doesn't have an ID in it (or ID 0)
+			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_badtitle' );
+			return false;
+		}
+
 		$dmModel = new DefinedMeaningModel( $definedMeaningId, $this->viewInformation );
-		$definedMeaningId = $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
 
 		getDefinedMeaningEditor( $this->viewInformation )->save(
 			$this->getIdStack( $definedMeaningId ),
@@ -156,32 +160,6 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$idStack->pushKey( $definedMeaningIdRecord );
 		
 		return $idStack;
-	}
-	
-	/** @deprecated, use DefinedMeaningData.setTitle instead */
-	protected function getDefinedMeaningIdFromTitle( $title ) {
-		// get id from title: DefinedMeaning:expression (id)
-		$bracketPosition = strrpos( $title, "(" );
-		$definedMeaningId = substr( $title, $bracketPosition + 1, strlen( $title ) - $bracketPosition - 2 );
-		return $definedMeaningId;
-	}
-	
-	public function getTitle() {
-		global
-			$wgTitle, $wgDefinedMeaningPageTitlePrefix;
-	
-		if ( $wgDefinedMeaningPageTitlePrefix != "" )
-			$prefix = $wgDefinedMeaningPageTitlePrefix . ": ";
-		else
-			$prefix	= "";
-					
-		return $prefix . definedMeaningExpression( $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() ) );
-	}
-
-	public function getDefinedMeaningId() {
-		global
-			$wgTitle;
-		return $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
 	}
 
 	/** 

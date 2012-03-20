@@ -153,7 +153,6 @@ $wdCopyDryRunOnly = false;
 
 # FIXME: Should be renamed to prefix with wd rather than wg.
 $wgShowClassicPageTitles = false;
-$wgDefinedMeaningPageTitlePrefix = '';
 $wgExpressionPageTitlePrefix = 'Multiple meanings';
 
 # The site prefix allows us to have multiple sets of customized
