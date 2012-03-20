@@ -185,7 +185,17 @@ function startNewTransaction( $userID, $userIP, $comment, $dc = null ) {
 	$dbr = wfGetDB( DB_MASTER );
 	$timestamp = wfTimestampNow();
 	
-	$dbr->query( "INSERT INTO {$dc}_transactions (user_id, user_ip, timestamp, comment) VALUES (" . $userID . ', ' . $dbr->addQuotes( $userIP ) . ', ' . $timestamp . ', ' . $dbr->addQuotes( $comment ) . ')' );
+
+	// do not store IP for logged in users
+	if ( $userID > 0 ) {
+		$userIP = "";
+	}
+
+	$sql = "INSERT INTO {$dc}_transactions (user_id, user_ip, timestamp, comment) "
+		. "VALUES (" . $userID . ", " . $dbr->addQuotes( $userIP )
+		. ', ' . $timestamp . ', ' . $dbr->addQuotes( $comment ) . ')' ;
+
+	$dbr->query( $sql );
 	$updateTransactionId = $dbr->insertId();
 }
 
