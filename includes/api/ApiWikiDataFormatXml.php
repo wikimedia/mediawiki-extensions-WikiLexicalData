@@ -80,7 +80,7 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 		} elseif ( $this->suppress_output ) {
 			/* do nothing */
 		} else {
-			echo "An error occurred.\r\n";
+			echo "An error occured.\r\n";
 			foreach ( $this->errorMessages as $message ) {
 				echo $message . "\r\n";
 			}
