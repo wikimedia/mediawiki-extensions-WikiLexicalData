@@ -395,17 +395,6 @@ $messages['niu'] = array(
 	'ow_history' => 'Liu onoono atu ki tua',
 );
 
-/** толышә зывон (толышә зывон)
- * @author Гусейн
- */
-$messages['tly'] = array(
-	'langman_addlang' => 'Зывон зијод кардеј',
-	'datasearch_language' => 'Зывон:',
-	'ow_exporttsv_languages' => 'Зывонон:',
-	'ow_save' => 'Огәте',
-	'ow_history' => 'Тарых',
-);
-
 /** Ṫuroyo (Ṫuroyo)
  * @author Ariyo
  */
@@ -5289,6 +5278,7 @@ $messages['grc'] = array(
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Chlämens
  * @author Als-Holder
  * @author Malafaya
  */
@@ -5404,7 +5394,7 @@ Lueg [[{{MediaWiki:Ow editing policy url}}|unseri Richtlinie]].',
 	'ow_will_insert' => 'Des wird yygsetzt',
 	'ow_contents_of_mapping' => 'Inhalt vu dr Verchnipfig',
 	'ow_available_contexts' => 'Verfiegbari Kontext',
-	'ow_add_concept_link' => 'Gleicher zue andere Konzäpt zuefiege',
+	'ow_add_concept_link' => 'Links zue andere Konzäpt zuefiege',
 	'ow_concept_panel' => 'Konzäptschaltflächi',
 	'ow_dm_badtitle' => 'Die Syte wyst nit zuen ere DefinedMeaning (Konzäpt). Bitte iberprief d Netzadräss.',
 	'ow_dm_missing' => 'Die Syte wyst zuen ere DefinedMeaning (Konzäpt), wu s nit git. Bitte iberprief d Netzadräss.',
@@ -5436,7 +5426,7 @@ Lueg [[{{MediaWiki:Ow editing policy url}}|unseri Richtlinie]].',
 	'ow_GotoSource' => 'Gang zue dr Quälle',
 	'ow_Language' => 'Sproch',
 	'ow_LevelAnnotation' => 'Annotation',
-	'ow_LinkAttributeHeader' => 'Gleich-Attribut',
+	'ow_LinkAttributeHeader' => 'Link-Attribut',
 	'ow_Multiple_meanings' => 'Definitione fir „$1“',
 	'ow_NewExactMeaning' => 'Neji exakti Bedytig',
 	'ow_OptionAttribute' => 'Eigeschaft',
@@ -5467,9 +5457,9 @@ Lueg [[{{MediaWiki:Ow editing policy url}}|unseri Richtlinie]].',
 	'ow_TranslatedTextAttributeValue' => 'Täxt',
 	'ow_TranslatedTextAttributeValues' => 'Ibersetzbarer Täxt',
 	'ow_Label' => 'Label',
-	'ow_Link' => 'Gleich',
+	'ow_Link' => 'Link',
 	'ow_LinkAttribute' => 'Eigeschaft',
-	'ow_LinkAttributeValues' => 'Gleicher',
+	'ow_LinkAttributeValues' => 'Links',
 	'ow_User' => 'Benutzer',
 	'ow_Property' => 'Eigeschaft',
 	'ow_Value' => 'Wärt',
@@ -5496,7 +5486,7 @@ Bitte kontaktier dr Serveradminschtrator.',
 	'ow_class_attr_type_dm' => 'Definierti Bedytig',
 	'ow_class_attr_type_xlate' => 'Täxt, wu cha ibersetzt wäre',
 	'ow_class_attr_type_plain' => 'Klartäxt',
-	'ow_class_attr_type_link' => 'Gleich',
+	'ow_class_attr_type_link' => 'Link',
 	'ow_class_attr_type_option' => 'Optionelischt',
 	'needstranslation' => 'Wikidata: Uusdrick, wu sotte ibersetzt wäre',
 	'ow_needs_xlation_title' => 'Uusdrick wu no ibersetzt mien wäre',
@@ -8146,20 +8136,21 @@ $messages['ku-latn'] = array(
 /** Cornish (Kernowek)
  * @author Kernoweger
  * @author Kw-Moon
+ * @author Nrowe
  */
 $messages['kw'] = array(
 	'langman_langname' => 'Hanow an yeth:',
-	'langman_iso639-3' => 'Coden ISO 639-3:',
-	'langman_iso639-2' => 'Coden ISO 639-2:',
-	'langman_wikimedia' => 'Coden Wikimedia:',
+	'langman_iso639-3' => 'Koden ISO 639-3:',
+	'langman_iso639-2' => 'Koden ISO 639-2:',
+	'langman_wikimedia' => 'Koden Wikimedia:',
 	'langman_addlang' => 'Keworra an yeth',
-	'importlangnames_title' => 'Ymperthy hanow yethow',
-	'importlangnames_added' => 'Hanow yethow rag "$1" keworrys.',
+	'importlangnames_title' => 'Ymperthi henwyn yethow',
+	'importlangnames_added' => 'Henwyn yethow rag "$1" keworrys.',
 	'datasearch_language' => 'Yeth:',
 	'ow_exporttsv_languages' => 'Yethow:',
 	'ow_save' => 'Gwitha',
-	'ow_history' => 'Istory',
-	'ow_transaction_no_action' => 'Gwra tra veth',
+	'ow_history' => 'Istori',
+	'ow_transaction_no_action' => 'Na wra tra veth',
 	'ow_dm_OK' => 'Sur',
 );
 
@@ -9027,26 +9018,84 @@ $messages['mr'] = array(
  * @author Aurora
  */
 $messages['ms'] = array(
+	'wikidata-desc' => 'Menambahkan pangkalan data seakan wiki untuk pelbagai jenis kandungan',
+	'wikidata-handler-namespace-move-error' => 'Laman-laman dalam ruang nama yang diurus oleh sambungan Wikidata tidak boleh dipindahkan.',
+	'languages' => 'Wikidata: Pengelola bahasa',
+	'langman-desc' => 'Tambahkan dan ubah tetapan bahasa dengan [[Special:Languages]]',
+	'langman_title' => 'Pengelola bahasa',
+	'langman_not_allowed' => 'Anda tiada kebenaran untuk mengubah tetapan bahasa.',
+	'langman_header' => 'Taipkan kod bahasa dan nama bahasa Inggerisnya di bawah:',
+	'langman_req_fields' => 'Kedua-dua nama bahasa dan kod ISO 639-3-nya diperlukan!',
+	'langman_adding' => 'Menambahkan bahasa $1 dengan kunci $2.',
 	'langman_langname' => 'Nama bahasa:',
+	'langman_iso639-3' => 'Kod ISO 639-3:',
+	'langman_iso639-2' => 'Kod ISO 639-2:',
+	'langman_wikimedia' => 'Kod Wikimedia:',
+	'langman_field_optional' => '(tidak wajib)',
 	'langman_addlang' => 'Tambahkan bahasa',
+	'importlangnames' => 'Wikidata: Import nama bahasa',
+	'importlangnames_title' => 'Import nama bahasa',
+	'importlangnames_not_allowed' => 'Anda tiada kebenaran untuk mengimport nama bahasa.',
+	'importlangnames_added' => 'Nama bahasa untuk "$1" ditambahkan.',
+	'importlangnames_not_found' => '<strong>Entri bahasa untuk "$1" tidak ditemui!</strong>',
+	'datasearch' => 'Wikidata: Pencarian data',
 	'datasearch_language' => 'Bahasa:',
+	'datasearch_found_word' => 'Perkataan yang ditemui',
+	'datasearch_meaning' => 'Erti',
+	'datasearch_ext_identifier' => 'Pengenal pasti luaran',
+	'datasearch_search_text' => 'Cari teks:',
+	'datasearch_within_words' => 'Di dalam perkataan:',
+	'datasearch_within_ext_ids' => 'Di dalam pengenal pasti luaran:',
+	'datasearch_showing_only' => 'Menunjukkan hanya maksimum $1 (daripada $2) hasil padanan.',
+	'datasearch_match_ext_ids' => 'Pengenal pasti luaran yang sepadan dengan <i>$1</i>',
+	'datasearch_match_words' => 'Perkataan yang sepadan dengan <i>$1</i> dan erti-erti yang berkaitan',
+	'datasearch_match_words_lang' => 'Perkataan dalam <i>$1</i> yang sepadan dengan <i>$2</i> dan erti-erti yang berkaitan',
+	'importtsv' => 'Wikidata: Import TSV',
+	'ow_importtsv_title1' => 'Import TSV',
+	'ow_importtsv_title2' => 'Import takrifan dan terjemahan',
+	'ow_importtsv_not_allowed' => 'Anda tiada kebenaran untuk melakukan import TSV.',
+	'ow_importtsv_importing' => 'Data TSV sedang diimport',
+	'ow_importtsv_import_failed' => 'Import gagal',
+	'ow_importtsv_file' => 'Fail TSV:',
+	'ow_importtsv_not_utf8' => '<p>Nampaknya ini bukan fail yang berkod UTF-8. Fail <i>mestilah</i> berkod UTF-8.
+Pastikan permohonan anda telah menyimpan atau mengeksport fail itu dengan betul.</p>',
+	'ow_importtsv_not_tsv' => '<p>Nampaknya ini bukan fail berkod UTF-8 yang sah.</p>',
+	'exporttsv' => 'Wikidata: Eksport TSV',
+	'ow_exporttsv_title' => 'Eksport suatu koleksi ke TSV',
 	'ow_exporttsv_languages' => 'Bahasa:',
+	'ow_exporttsv_not_allowed' => 'Anda tiada kebenaran untuk melakukan eksport TSV.',
+	'ow_exporttsv_export_failed' => 'Eksport gagal',
 	'ow_save' => 'Simpan',
+	'ow_history' => 'Sejarah',
+	'ow_uipref_datasets' => 'Paparan asali:',
+	'ow_uiprefs' => 'Wikidata',
+	'transaction' => 'Wikidata: Log transaksi',
 	'ow_transaction_user' => 'Nama pengguna:',
 	'ow_transaction_remove' => 'Buang',
 	'ow_transaction_summary' => 'Ringkasan',
+	'ow_conceptmapping_no_action_specified' => 'Tindakan "$1" tidak dsokong.',
 	'ow_dm_OK' => 'OK',
 	'ow_ClassAttributeAttribute' => 'Atribut',
 	'ow_ClassAttributeType' => 'Jenis',
+	'ow_GotoSource' => 'Pergi ke sumber',
+	'ow_Language' => 'Bahasa',
 	'ow_OptionAttributeOptions' => 'Pilihan',
 	'ow_Remove' => 'Buang',
 	'ow_Source' => 'Sumber',
+	'ow_Time' => 'Waktu',
 	'ow_Link' => 'Pautan',
 	'ow_LinkAttributeValues' => 'Pautan',
 	'ow_Value' => 'Nilai',
 	'ow_Permission_denied' => '<h2>Kebenaran ditolak</h2>',
+	'ow_class_attr_type_xlate' => 'Teks boleh terjemah',
+	'ow_class_attr_type_plain' => 'Teks biasa',
 	'ow_class_attr_type_link' => 'Pautan',
+	'ow_needs_xlation_title' => 'Ungkapan yang perlu diterjemahkan',
+	'ow_needs_xlation_source_lang' => 'Bahasa sumber:',
+	'ow_needs_xlation_dest_lang' => 'Bahasa yang ditujui:',
+	'ow_needs_xlation_no_dest_lang' => 'Sila nyatakan bahasa yang ditujui.',
 	'ow_show' => 'Tunjukkan',
+	'ow_upload' => 'Muat naik',
 	'ow_create' => 'Cipta',
 	'ow_suggest_previous' => 'Sebelumnya',
 	'ow_suggest_next' => 'Berikutnya',
@@ -14137,6 +14186,17 @@ Makipagugnayan sa isang tagapamalakad/tagapagpatakbo ng serbidor o tagapangasiwa
 	'ow_nstab_edit_copy' => 'baguhin ang sipi',
 	'right-addlanguage' => 'Magdagdag at baguhin ang mga katakdaang pangwika',
 	'ow_shown_datasets' => 'Ipinakitang mga pangkat ng dato',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'langman_addlang' => 'Зывон зијод кардеј',
+	'datasearch_language' => 'Зывон:',
+	'ow_exporttsv_languages' => 'Зывонон:',
+	'ow_save' => 'Огәте',
+	'ow_history' => 'Тарых',
 );
 
 /** Turkish (Türkçe)
