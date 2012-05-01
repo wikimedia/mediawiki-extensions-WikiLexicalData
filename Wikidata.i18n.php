@@ -7068,6 +7068,7 @@ Non è stata eseguita l'operazione di copia.",
  * @author Fryed-peach
  * @author Hosiryuhosi
  * @author JtFuruhata
+ * @author Shirayuki
  * @author Whym
  * @author 青子守歌
  */
@@ -7093,7 +7094,7 @@ $messages['ja'] = array(
 	'importlangnames_added' => '「$1」に対する言語名が追加されました。',
 	'importlangnames_not_found' => '<strong>「$1」に対する言語項目は見つかりませんでした！</strong>',
 	'datasearch' => 'ウィキデータ: データ検索',
-	'datasearch_language' => '言語:',
+	'datasearch_language' => '言語：',
 	'datasearch_found_word' => '一致した語',
 	'datasearch_meaning' => '意味',
 	'datasearch_ext_identifier' => '外部識別子',
@@ -7129,7 +7130,7 @@ $messages['ja'] = array(
 	'ow_exporttsv_title' => 'コレクションをTSVに書き出す',
 	'ow_exporttsv_header' => '<p>コレクションを、OpenOffice.org や Excel などのスプレッドシート・ソフトウェアで取り込める、タブ区切りテキスト形式に書き出します。<br />
 書き出すコレクションを選んでください。言語テキストボックスには、ISO 639-3 の言語コードをコンマ区切りで入力します。あなたが翻訳元とする言語(数は自由)から始めて、翻訳先とする言語で終えてください。「{{int:Ow create}}」をクリックするとファイルを出力します。</p>',
-	'ow_exporttsv_languages' => '言語:',
+	'ow_exporttsv_languages' => '言語：',
 	'ow_exporttsv_not_allowed' => 'あなたはTSVの書き出しをするための権限をもっていません。',
 	'ow_exporttsv_export_failed' => '書き出し失敗',
 	'addcollection' => 'ウィキデータ: コレクション追加',
