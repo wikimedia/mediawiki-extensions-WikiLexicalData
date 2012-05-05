@@ -779,6 +779,7 @@ $messages['an'] = array(
 );
 
 /** Arabic (العربية)
+ * @author DRIHEM
  * @author Meno25
  * @author OsamaK
  */
@@ -846,6 +847,9 @@ $messages['ar'] = array(
 	'ow_exporttsv_not_allowed' => 'لا تمتلك السماح لعمل تصدير TSV.',
 	'ow_exporttsv_export_failed' => 'التصدير فشل',
 	'addcollection' => 'ويكيداتا: إضافة مجموعة',
+	'ow_searchnoresult' => "<p>بإمكانك:<br />
+* '''إنشاء التعبير \"[[Expression:\$1]]\"''' (وإضافة تعريف)<br />
+* '''إنشاء الصفحة \"[[:\$1]]\"''' (صفحة ويكي قياسية)</p>",
 	'ow_save' => 'احفظ',
 	'ow_history' => 'تاريخ',
 	'ow_datasets' => 'اختيار مجموعة البيانات',
@@ -1002,6 +1006,7 @@ $messages['ar'] = array(
 	'ow_needs_xlation_source_lang' => 'اللغة المصدر:',
 	'ow_needs_xlation_dest_lang' => 'اللغة الهدف:',
 	'ow_needs_xlation_no_dest_lang' => 'من فضلك حدد لغة هدف.',
+	'ow_statistics' => 'Wikidata: إحصاءات',
 	'ow_show' => 'اعرض',
 	'ow_upload' => 'ارفع',
 	'ow_create' => 'أنشئ',
@@ -11066,14 +11071,16 @@ Não foi feita nenhuma operação de cópia.',
  * @author Giro720
  * @author Helder.wiki
  * @author Heldergeovane
+ * @author Jaideraf
  * @author Jorge Morais
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'wikidata-desc' => 'Adicionar banco de dados tipo wiki para vários tipos de conteúdo',
 	'wikidata-handler-namespace-move-error' => 'Páginas em domínios manipulados pela extensão Wikidata não podem ser movidas',
-	'languages' => 'Wikidata: Gestor de línguas',
+	'languages' => 'Wikidata: Gerenciador de línguas',
 	'langman-desc' => 'Adicione e mude configurações de língua com [[Special:Languages]]',
-	'langman_title' => 'Gestor de línguas',
+	'langman_title' => 'Gerenciador de línguas',
 	'langman_not_allowed' => 'Você não tem permissão para alterar as configurões de línguas.',
 	'langman_header' => 'Digite abaixo o código da língua e o seu nome em inglês:',
 	'langman_req_fields' => 'Ambos o nome da língua e o código ISO 639-3 são necessários!',
@@ -11291,7 +11298,7 @@ Por favor, contate o operador ou administrador do servidor.',
 	'ow_needs_xlation_dest_lang' => 'Língua de destino:',
 	'ow_needs_xlation_no_dest_lang' => 'Por favor, especifique uma língua de destino.',
 	'ow_statistics' => 'Wikidata: Estatísticas',
-	'ow_show' => 'Mostrar',
+	'ow_show' => 'Exibir',
 	'ow_upload' => 'Carregar',
 	'ow_create' => 'Criar',
 	'ow_collection_added' => '<strong>Coleção $1 adicionada.</strong>',
