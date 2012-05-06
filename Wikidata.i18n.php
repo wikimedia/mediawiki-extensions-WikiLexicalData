@@ -11067,13 +11067,13 @@ Não foi feita nenhuma operação de cópia.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author 555
  * @author Eduardo.mps
  * @author Giro720
  * @author Helder.wiki
  * @author Heldergeovane
  * @author Jaideraf
  * @author Jorge Morais
- * @author 555
  */
 $messages['pt-br'] = array(
 	'wikidata-desc' => 'Adicionar banco de dados tipo wiki para vários tipos de conteúdo',
