@@ -45,9 +45,9 @@ $messages['en'] = array(
 	'datasearch_within_words' => 'Within words:',
 	'datasearch_within_ext_ids' => 'Within external identifiers:',
 	'datasearch_showing_only' => 'Showing only a maximum of $1 {{PLURAL:$1|match|matches}} (out of $2).',
-	'datasearch_match_ext_ids' => 'External identifiers matching <i>$1</i>',
-	'datasearch_match_words' => 'Words matching <i>$1</i> and associated meanings',
-	'datasearch_match_words_lang' => 'Words in <i>$1</i> matching <i>$2</i> and associated meanings',
+	'datasearch_match_ext_ids' => 'External identifiers matching <em>$1</em>',
+	'datasearch_match_words' => 'Words matching <em>$1</em> and associated meanings',
+	'datasearch_match_words_lang' => 'Words in <em>$1</em> matching <em>$2</em> and associated meanings',
 
 	'importtsv' => 'Wikidata: Import TSV',
 	'ow_importtsv_title1' => 'Import TSV',
@@ -64,7 +64,7 @@ You are encouraged to do a test run before you do an actual import.</p>',
 	'ow_importtsv_import_failed' => 'Import failed',
 	'ow_importtsv_file' => 'TSV File:',
 	'ow_importtsv_test_run' => 'Test run:',
-	'ow_importtsv_not_utf8' => "<p>This doesn't appear to be a UTF-8 encoded file. The file <i>must</i> be UTF-8 encoded.
+	'ow_importtsv_not_utf8' => "<p>This doesn't appear to be a UTF-8 encoded file. The file <em>must</em> be UTF-8 encoded.
 Make sure your application has saved or exported the file correctly.</p>",
 	'ow_importtsv_not_tsv' => '<p>This does not appear to be a valid TSV file.</p>',
 	'ow_importtsv_bad_columns' => "<p>Incorrect column name '$1'.<br />
@@ -831,7 +831,7 @@ $messages['ar'] = array(
 تأكد من أن تطبيقك حفظ أو صدر الملف بطريقة صحيحة.</p>',
 	'ow_importtsv_not_tsv' => '<p>هذا لا يبدو ملف TSV صحيح.</p>',
 	'ow_importtsv_bad_columns' => "<p>اسم عامود غير صحيح '$1'.<br />
-العواميد ينبغي أن تسمى 'definition_iso' أو 'translations_iso'،  
+العواميد ينبغي أن تسمى 'definition_iso' أو 'translations_iso'،
 حيث iso هو كود اللغة.</p>",
 	'ow_importtsv_test_run_title' => 'تشغيل تجربة لاستيراد بيانات TSV',
 	'ow_importtsv_nothing_added' => 'لا شيء تمت إضافته.',
@@ -1126,7 +1126,7 @@ $messages['arz'] = array(
 تأكد من أن تطبيقك حفظ أو صدر الملف بطريقة صحيحة.</p>',
 	'ow_importtsv_not_tsv' => '<p>هذا لا يبدو ملف TSV صحيح.</p>',
 	'ow_importtsv_bad_columns' => "<p>اسم عامود غير صحيح '$1'.<br />
-العواميد ينبغى أن تسمى 'definition_iso' أو 'translations_iso'،   
+العواميد ينبغى أن تسمى 'definition_iso' أو 'translations_iso'،
 حيث iso هو كود اللغة.</p>",
 	'ow_importtsv_test_run_title' => 'تشغيل تجربة لاستيراد بيانات TSV',
 	'ow_importtsv_nothing_added' => 'ا شىء تمت إضافته.',
@@ -1493,7 +1493,7 @@ $messages['be-tarask'] = array(
 Упэўніцеся, што Ваша праграма захавала ці экспартавала ў файл адпаведным чынам.</p>',
 	'ow_importtsv_not_tsv' => '<p>Гэта ня слушны файл у фармаце TSV.</p>',
 	'ow_importtsv_bad_columns' => "<p>Няслушная назва слупка '$1'.<br />
-Слупкі павінны мець назвы адпаведна 'definition_iso' ці 'translations_iso',  
+Слупкі павінны мець назвы адпаведна 'definition_iso' ці 'translations_iso',
 дзе iso зьяўляецца кодам мовы.</p>",
 	'ow_importtsv_test_run_title' => 'Тэставы запуск імпартаваньня зьвестак TSV',
 	'ow_importtsv_nothing_added' => 'Нічога не дададзена.',
@@ -1910,7 +1910,7 @@ $messages['br'] = array(
 Bezit sur eo bet enrollet pe ezporzhiet ar restr ent reizh gant hoc'h arload.</p>",
 	'ow_importtsv_not_tsv' => "<p>Evit doare n'eo ket ur restr TSV reizh.</p>",
 	'ow_importtsv_bad_columns' => "<p>Anv bann direizh '$1'.<br />
-Rankout a ra ar bannoù bezañ anvet 'definition_iso' pe 'translations_iso',  
+Rankout a ra ar bannoù bezañ anvet 'definition_iso' pe 'translations_iso',
 e-lec'h m'eo iso kod ar yezh.</p>",
 	'ow_importtsv_test_run_title' => 'Test enporzhiañ roadennoù TSV',
 	'ow_importtsv_nothing_added' => "N'eus bet ouzhpenn netra.",
@@ -3752,7 +3752,7 @@ $messages['es'] = array(
 Asegúrate que tu aplicación ha sido grabada o se exportó el archivo correctamente.</p>',
 	'ow_importtsv_not_tsv' => '<p>Parece ser que no aparece un archivo TSV válido.</p>',
 	'ow_importtsv_bad_columns' => "<p>Nombre de columna incorrecto '$1'.<br />
-Las columnas deberían ser nombradas 'definition_iso' o 'translations_iso',  
+Las columnas deberían ser nombradas 'definition_iso' o 'translations_iso',
 donde iso es el código del lenguaje.</p>",
 	'ow_importtsv_test_run_title' => 'Corre examen para la importación de datos TSV',
 	'ow_importtsv_nothing_added' => 'Nada se ha añadido.',
@@ -4486,7 +4486,7 @@ jossa ''iso'' on kielikoodi.</p>",
 Kielen pitää olla ISO 639-3 -kielikoodi.</p>',
 	'exporttsv' => 'Wikidata: TSV:n vienti',
 	'ow_exporttsv_title' => 'Vie kokoelma TSV-muotoon',
-	'ow_exporttsv_header' => "<p>Vie kokoelma sarkaimin erotetussa tekstimuodossa, jonka voit tuoda OpenOffice.org, Excel tai muuhun taulukkolaskentaohjelmistoon.<br /> 
+	'ow_exporttsv_header' => "<p>Vie kokoelma sarkaimin erotetussa tekstimuodossa, jonka voit tuoda OpenOffice.org, Excel tai muuhun taulukkolaskentaohjelmistoon.<br />
 Valitse vietävä kokoelma. Syötä kielten tekstikenttään pilkuilla eroteltu luettelo ISO 639-3 -kielikoodeista. Aloita kielistä, joista tulet kääntämään (valitse niin monta kuin haluat), ja lisää lopuksi ne joihin sinä käännät. Napsauta sitten 'Create' luodaksesi tiedoston.</p>",
 	'ow_exporttsv_languages' => 'Kielet:',
 	'ow_exporttsv_not_allowed' => 'Sinulla ei ole lupaa tehdä TSV-vientiä.',
@@ -4595,7 +4595,7 @@ Lisätietoja on [[{{MediaWiki:Ow editing policy url}}|muokkauskäytännöistä]]
 	'copy' => 'Wikidata: Kopioi',
 	'ow_copy_no_action_specified' => 'Määritä suoritettava toiminto',
 	'ow_copy_help' => 'Ohje ei ole vielä käytössä.',
-	'ow_copy_successful' => '<h2>Kopiointi onnistui</h2> 
+	'ow_copy_successful' => '<h2>Kopiointi onnistui</h2>
 Tietosi näyttäisi kopioituneen onnistuneesti.
 Tarkista asian tila silti myös itse.',
 	'ow_copy_unsuccessful' => '<h3>Kopioi epäonnistui</h3>
@@ -4686,7 +4686,7 @@ $messages['fr'] = array(
 Assurez-vous que votre application a sauvegardé ou exporté le fichier correctement.</p>',
 	'ow_importtsv_not_tsv' => '<p>Ceci ne semble pas être un fichier TSV valide.</p>',
 	'ow_importtsv_bad_columns' => '<p>Nom de colonne « $1 » invalide.<br />
-Les colonnes doivent être nomées « definition_<i>iso</i> » ou « translations_<i>iso</i> »,  
+Les colonnes doivent être nomées « definition_<i>iso</i> » ou « translations_<i>iso</i> »,
 où <i>iso</i> est le code de langue ISO 639-3.</p>',
 	'ow_importtsv_test_run_title' => 'Test d’importation de données TSV',
 	'ow_importtsv_nothing_added' => 'Rien n’a été ajouté.',
@@ -5165,7 +5165,7 @@ Vostede é responsable de facer unha proba antes dunha importación.</p>',
 Asegúrese de que a súa aplicación salvou ou exportou o ficheiro correctamente.</p>',
 	'ow_importtsv_not_tsv' => '<p>Isto parece non ser un ficheiro TSV válido.</p>',
 	'ow_importtsv_bad_columns' => '<p>Nome de columna incorrecto "$1".<br />
-As columnas deberían ser nomeadas como "definition_iso" ou "translations_iso",  
+As columnas deberían ser nomeadas como "definition_iso" ou "translations_iso",
 onde tamén está o código de lingua ISO.</p>',
 	'ow_importtsv_test_run_title' => 'Escritura de proba para importar datos TSV',
 	'ow_importtsv_nothing_added' => 'Non se engadiu nada.',
@@ -9936,7 +9936,7 @@ $messages['nn'] = array(
 Forviss deg om at programmet ditt har lagra eller eksportert fila på rett vis.</p>',
 	'ow_importtsv_not_tsv' => '<p>Dette ser ikkje ut til å vera ei gyldig TSV-fil.</p>',
 	'ow_importtsv_bad_columns' => "<p>Ikkje rett kolonnenamn '$1'.<br />
-Kolonner skal verta kalla 'definition_iso' eller 'translations_iso',  
+Kolonner skal verta kalla 'definition_iso' eller 'translations_iso',
 der iso er språkkoda.</p>",
 	'ow_importtsv_test_run_title' => 'Testkøyring for importering av TSV-data',
 	'ow_importtsv_nothing_added' => 'Ingenting lagt til.',
@@ -10176,7 +10176,7 @@ $messages['oc'] = array(
 Siatz segur(a) que vòstra aplicacion a salvat o exportat lo fichièr corrèctament.</p>",
 	'ow_importtsv_not_tsv' => '<p>Aquò sembla pas èsser un fichièr TSV valid.</p>',
 	'ow_importtsv_bad_columns' => '<p>Nom de colomna « $1 » invalida.<br />
-las colomnas devon èsser nomenadas « definition_iso » o « translations_iso »,   
+las colomnas devon èsser nomenadas « definition_iso » o « translations_iso »,
 ont iso es lo còde de lenga.</p>',
 	'ow_importtsv_test_run_title' => "Tèst d'importacion per las donadas TSV",
 	'ow_importtsv_nothing_added' => 'Res es pas estat apondut.',
@@ -11044,7 +11044,7 @@ Se adicionou colunas, estas deverão ter a forma 'definitions_iso' ou 'translati
 Certifique-se de que a sua aplicação gravou ou exportou o ficheiro correctamente.</p>',
 	'ow_importtsv_not_tsv' => '<p>Este ficheiro não aparenta ser um ficheiro TSV válido.</p>',
 	'ow_importtsv_bad_columns' => "<p>Nome de coluna '$1' incorrecto.<br />
-As colunas deverão ter o nome 'definition_iso' ou 'translations_iso',  
+As colunas deverão ter o nome 'definition_iso' ou 'translations_iso',
 onde iso é o código da língua.</p>",
 	'ow_importtsv_test_run_title' => 'Teste de execução de importação de dados TSV',
 	'ow_importtsv_nothing_added' => 'Nada adicionado.',
@@ -11282,7 +11282,7 @@ $messages['pt-br'] = array(
 Certifique-se de que a sua aplicação gravou ou exportou o arquivo corretamente.</p>',
 	'ow_importtsv_not_tsv' => '<p>Este arquivo não aparenta ser um arquivo TSV válido.</p>',
 	'ow_importtsv_bad_columns' => "<p>Nome de coluna '$1' incorreto.<br />
-As colunas deverão ter o nome 'definition_iso' ou 'translations_iso',   
+As colunas deverão ter o nome 'definition_iso' ou 'translations_iso',
 onde iso é o código da língua.</p>",
 	'ow_importtsv_test_run_title' => 'Teste de execução de importação de dados TSV',
 	'ow_importtsv_nothing_added' => 'Nada adicionado.',
@@ -11894,7 +11894,7 @@ $messages['ru'] = array(
 Убедитесь, что ваше приложение правильно сохраняет или экспортирует файл.</p>',
 	'ow_importtsv_not_tsv' => '<p>По всей видимости, формат файла отличается от TSV.</p>',
 	'ow_importtsv_bad_columns' => '<p>Ошибочное имя столбца «$1».<br />
-Столбцы должны называться «definition_iso» или «translations_iso»,  
+Столбцы должны называться «definition_iso» или «translations_iso»,
 где вместо «iso» должен быть код языка.</p>',
 	'ow_importtsv_test_run_title' => 'Пробный запуск импорта TSV-данных',
 	'ow_importtsv_nothing_added' => 'Ничего не добавлено.',
@@ -12535,7 +12535,7 @@ $messages['sk'] = array(
 Uistite sa, že vaša aplikácia uložila alebo exportovala súbor správne.</p>',
 	'ow_importtsv_not_tsv' => '<p>Zdá sa, že toto nie je platný TSV súbor.</p>',
 	'ow_importtsv_bad_columns' => '<p>Nesprávny názov stĺpca „$1“.<br />
-Stĺpce by mali byť pomenované „definition_iso“ alebo „translations_iso“,  
+Stĺpce by mali byť pomenované „definition_iso“ alebo „translations_iso“,
 kde iso je kód jazyka.</p>',
 	'ow_importtsv_test_run_title' => 'Simulácia importu údajov z TSV',
 	'ow_importtsv_nothing_added' => 'Nič nebolo pridané.',
@@ -13410,7 +13410,7 @@ $messages['sv'] = array(
 Kontrollera att ditt program har sparat eller exporterat filen på rätt sätt.</p>',
 	'ow_importtsv_not_tsv' => '<p>Detta verkar inte vara en giltig TSV-fil.</p>',
 	'ow_importtsv_bad_columns' => "<p>Felaktigt kolumnnamn '$1'.<br />
-Kolumner skall heta 'definition_iso' eller 'translations_iso', 
+Kolumner skall heta 'definition_iso' eller 'translations_iso',
 där iso är språkkoden.</p>",
 	'ow_importtsv_test_run_title' => 'Testkörning för import av TSV-data',
 	'ow_importtsv_nothing_added' => 'Ingenting har lagts till.',
@@ -14168,7 +14168,7 @@ $messages['tl'] = array(
 Pakitiyak lamang na tama ang pagkakasagip o pag-aangkat ng talaksan na ginawa ng iyong aplikasyon/sopwer.</p>',
 	'ow_importtsv_not_tsv' => '<p>Mukhang hindi ito isang tanggap na talaksang TSV.</p>',
 	'ow_importtsv_bad_columns' => "<p>Hindi tamang pangalan ng pahabang hanay ang '$1'.<br />
-Dapat na pangalanan ang pahabang mga hanay bilang 'definition_iso' o 'translations_iso',  
+Dapat na pangalanan ang pahabang mga hanay bilang 'definition_iso' o 'translations_iso',
 kung saan ang iso ay isang kodigo ng wika.</p>",
 	'ow_importtsv_test_run_title' => 'Pagpapatakbong sinusubok para sa pag-aangkat ng dato ng TSV',
 	'ow_importtsv_nothing_added' => 'Walang idinagdag.',
@@ -14191,7 +14191,7 @@ Pumili ng isang kalipunang iluluwas. Sa loob ng kahon ng tektso ng mga wika, mag
 	'ow_history' => 'Kasaysayan',
 	'ow_datasets' => 'Pampili ng pangkat ng dato',
 	'ow_noedit_title' => 'Wala kang pahintulot upang makagawa ng pagbabago',
-	'ow_noedit' => 'Wala kang pahintulot para makapagbago ng mga pahina sa loob ng pangkat ng datong "$1". 
+	'ow_noedit' => 'Wala kang pahintulot para makapagbago ng mga pahina sa loob ng pangkat ng datong "$1".
 Pakitingnan ang [[{{MediaWiki:Ow editing policy url}}|aming patakaran sa pamamatnugot]].',
 	'ow_uipref_datasets' => 'Likas na nakatakdang anyo ng tinitingnan:',
 	'ow_uiprefs' => 'Wikidata',
@@ -14704,7 +14704,7 @@ $messages['uk'] = array(
 	'ow_Permission_denied' => '<h2>Доступ заборонений</h2>',
 	'ow_copy_no_action_specified' => 'Будь ласка, зазначте дію',
 	'ow_copy_help' => 'Довідка ще не реалізована.',
-	'ow_please_proved_dmid' => "Схоже, що у вхідних даних відсутнє «?dmid=<ID>» (dmid — ідентифікатор певного значення)<br /> 
+	'ow_please_proved_dmid' => "Схоже, що у вхідних даних відсутнє «?dmid=<ID>» (dmid — ідентифікатор певного значення)<br />
 Будь ласка, зв'яжіться з адміністратором сервера.",
 	'ow_please_proved_dc1' => "Схоже, що у вхідних даних відсутнє «?dc1=<щось>» (dc1 — контекст набору даних; набір даних, звідки копіювати)<br /> Будь ласка, зв'яжіться з адміністратором сервера.",
 	'ow_copy_unsuccessful' => '<h3>Копіювання невдале</h3>
