@@ -2845,7 +2845,7 @@ $messages['de'] = array(
 	'ow_importtsv_import_failed' => 'Import fehlgeschlagen',
 	'ow_importtsv_file' => 'TSV-Datei:',
 	'ow_importtsv_test_run' => 'Testlauf:',
-	'ow_importtsv_not_utf8' => '<p>Dies scheint keine UTF-8-enkodierte Datei zu sein. Die Datei <em>muss</em> UTF-8-enkodiert sein.
+	'ow_importtsv_not_utf8' => '<p>Dies scheint keine UTF-8-kodierte Datei zu sein. Die Datei <em>muss</em> UTF-8-kodiert sein.
 Stelle sicher, dass die Anwendung die Datei richtig gespeichert oder exportiert hat.</p>',
 	'ow_importtsv_not_tsv' => '<p>Dies scheint keine gültige TSV-Datei zu sein.</p>',
 	'ow_importtsv_bad_columns' => '<p>Fehlerhafter Spaltenname „$1“.<br />
@@ -3042,7 +3042,7 @@ $messages['de-formal'] = array(
 <p>Das Format der Datei muss mit dem Format der Dateien übereinstimmen, die auf der [[Special:ExportTSV|ExportTSV]]-Seite exportiert werden können. Wenn Sie die Spaltennamen geändert haben, wird der Import fehlschlagen. Wenn Sie die ID oder den bestimmenden Ausdruck einer festgelegten Bedeutung geändert haben, wird diese Zeile ignoriert werden. Wenn Sie Spalten hinzugefügt haben, müssen diese „definitions_iso“ oder „translations_iso“ heißen, wobei „iso“ ein ISO 693-3-Sprachcode ist.</p>
 <p>Wenn das „Testlauf“-Häkchen gesetzt ist, werden alle Änderungen, die vorgenommen werden würden, gemeldet, aber keine Änderungen wirklich durchgeführt. Es wird empfohlen, vor dem eigentlichen Import einen Testlauf durchzuführen.</p>',
 	'ow_importtsv_not_allowed' => 'Sie haben nicht die Berechtigung, einen TSV-Import durchzuführen.',
-	'ow_importtsv_not_utf8' => '<p>Dies scheint keine UTF-8-enkodierte Datei zu sein. Die Datei <em>muss</em> UTF-8-enkodiert sein.
+	'ow_importtsv_not_utf8' => '<p>Dies scheint keine UTF-8-kodierte Datei zu sein. Die Datei <em>muss</em> UTF-8-kodiert sein.
 Stellen Sie sicher, dass die Anwendung die Datei richtig gespeichert oder exportiert hat.</p>',
 	'ow_exporttsv_header' => '<p>Eine Sammlung in eine Textdatei exportieren, die Tabulatoren als Trenner verwendet. Diese kann in OpenOffice.org, Excel oder andere Tabellenkalkulationsprogramme importiert werden.<br />
 Wählen Sie eine Sammlung aus, die Sie exportieren wollen. Geben Sie im Sprachen-Textfeld eine durch Kommata getrennte Liste von ISO 639-3-Sprachcodes an. Geben Sie zuerst die Sprachen an, aus denen Sie übersetzen werden (geben Sie so viele an, wie Sie wollen) und dann diejenigen, in die Sie übersetzen werden. Klicken Sie danach auf „Erstellen“, um die Datei zu erstellen.</p>',
@@ -9700,7 +9700,7 @@ $messages['nl'] = array(
 	'ow_importtsv_test_run' => 'Testen zonder wijzigingen door te voeren:',
 	'ow_importtsv_not_utf8' => '<p>Dit lijkt geen UTF-8 gecodeerd bestand.
 Het bestand <em>moet</em> UTF-8 gecodeerd zijn.
-Zorg ervoor dat uw applicatie het bestand juist opgeslagen of geëxporteerd heeft.</p>',
+Zorg ervoor dat uw toepassing het bestand juist heeft opgeslagen of geëxporteerd.</p>',
 	'ow_importtsv_not_tsv' => '<p>Dit lijkt geen valide TSV-bestand te zijn.</p>',
 	'ow_importtsv_bad_columns' => '<p>Onjuiste kolomnaam "$1".<br />
 Kolommen moeten de naam "definition_iso" of "translations_iso" hebben, waar iso de taalcode is.</p>',
@@ -11044,36 +11044,36 @@ Se adicionou colunas, estas deverão ter a forma 'definitions_iso' ou 'translati
 	'ow_importtsv_not_utf8' => '<p>Este ficheiro não aparenta ser um ficheiro com codificação UTF-8. O ficheiro <em>tem</em> de ter codificação UTF-8
 Certifique-se de que a sua aplicação gravou ou exportou o ficheiro correctamente.</p>',
 	'ow_importtsv_not_tsv' => '<p>Este ficheiro não aparenta ser um ficheiro TSV válido.</p>',
-	'ow_importtsv_bad_columns' => "<p>Nome de coluna '$1' incorrecto.<br />
+	'ow_importtsv_bad_columns' => "<p>Nome de coluna '$1' incorreto.<br />
 As colunas deverão ter o nome 'definition_iso' ou 'translations_iso',
 onde iso é o código da língua.</p>",
 	'ow_importtsv_test_run_title' => 'Teste de execução de importação de dados TSV',
 	'ow_importtsv_nothing_added' => 'Nada adicionado.',
-	'ow_importtsv_nothing_added_test' => 'Nada adicionado (efectuou um teste de execução).',
+	'ow_importtsv_nothing_added_test' => 'Nada adicionado (efetuou um teste de execução).',
 	'ow_importtsv_results' => 'Adicionadas $1 {{PLURAL:$1|definição|definições}} e $2 {{PLURAL:$2|tradução|traduções}}.',
-	'ow_impexptsv_unknown_lang' => '<p>Língua desconhecida ou incorrecta: $1.<br />
+	'ow_impexptsv_unknown_lang' => '<p>Língua desconhecida ou incorreta: $1.<br />
 As línguas deverão ser códigos de língua ISO 639-3.</p>',
 	'exporttsv' => 'Wikidata: Exportar TSV',
-	'ow_exporttsv_title' => 'Exportar uma colecção para TSV',
-	'ow_exporttsv_header' => "<p>Exporte uma colecção para o formato de texto, delimitado por tabulações, que poderá importar no OpenOffice.org, Excel ou noutra folha de cálculo.<br />
-Seleccione uma colecção para exportar. Introduza uma lista de códigos de língua ISO 639-3, delimitada por vírgulas, na caixa de texto das línguas. Comece pelas línguas a partir das quais irá traduzir (escolha tantas quantas quiser) e termine com aquelas para as quais irá traduzir. Depois, clique 'Criar' para criar o ficheiro.</p>",
+	'ow_exporttsv_title' => 'Exportar uma coleção para TSV',
+	'ow_exporttsv_header' => "<p>Exporte uma coleção para o formato de texto, delimitado por tabulações, que poderá importar no OpenOffice.org, Excel ou noutra folha de cálculo.<br />
+Selecione uma coleção para exportar. Introduza uma lista de códigos de língua ISO 639-3, delimitada por vírgulas, na caixa de texto das línguas. Comece pelas línguas a partir das quais irá traduzir (escolha tantas quantas quiser) e termine com aquelas para as quais irá traduzir. Depois, clique 'Criar' para criar o ficheiro.</p>",
 	'ow_exporttsv_languages' => 'Línguas:',
 	'ow_exporttsv_not_allowed' => 'Não tem permissões para fazer uma exportação para TSV.',
 	'ow_exporttsv_export_failed' => 'A exportação falhou',
-	'addcollection' => 'Wikidata: Adicionar colecção',
+	'addcollection' => 'Wikidata: Adicionar coleção',
 	'ow_searchnoresult' => "<p>Pode:<br />
 * '''Criar a expressão \"[[Expression:\$1]]\"''' (e adicionar uma definição)<br />
 * '''Criar a página \"[[:\$1]]\"''' (uma página wiki normal)</p>",
 	'ow_save' => 'Gravar',
 	'ow_history' => 'História',
-	'ow_datasets' => 'Selecção do conjunto de dados',
+	'ow_datasets' => 'Seleção do conjunto de dados',
 	'ow_noedit_title' => 'Não tem permissões para editar',
 	'ow_noedit' => 'Não está autorizado a editar páginas no conjunto de dados "$1". Por favor, veja [[{{MediaWiki:Ow editing policy url}}|as nossas normas de edição]].',
 	'ow_uipref_datasets' => 'Vista padrão:',
 	'ow_uiprefs' => 'Wikidata',
-	'ow_none_selected' => 'Nenhum seleccionado',
-	'transaction' => 'Wikidata: Registo de transacções',
-	'ow_transaction_from_transaction' => 'Da transacção:',
+	'ow_none_selected' => 'Nenhum selecionado',
+	'transaction' => 'Wikidata: Registo de transações',
+	'ow_transaction_from_transaction' => 'Da transação:',
 	'ow_transaction_count' => 'Número:',
 	'ow_transaction_user' => 'Nome de utilizador:',
 	'ow_transaction_show_rollback' => 'Mostrar controlos de reversão:',
@@ -11086,13 +11086,13 @@ Seleccione uma colecção para exportar. Introduza uma lista de códigos de lín
 	'ow_transaction_operation' => 'Operação',
 	'ow_transaction_is_latest' => 'É última',
 	'ow_transaction_class_member' => 'Membro da classe',
-	'ow_transaction_object' => 'Objecto',
+	'ow_transaction_object' => 'Objeto',
 	'ow_transaction_first_dm' => 'Primeiro significado definido',
 	'ow_transaction_second_dm' => 'Segundo significado definido',
 	'ow_transaction_summary' => 'Resumo',
 	'conceptmapping' => 'Wikidata: Mapeamento de conceitos',
 	'ow_conceptmapping_title' => 'Mapeamento de Conceitos',
-	'ow_conceptmapping_help' => '<p>acções possíveis:
+	'ow_conceptmapping_help' => '<p>ações possíveis:
 <ul>
  <li>&action=insert&<data_context_prefix>=<defined_id>&... inserir um mapeamento</li>
  <li>&action=get&concept=<concept_id> ler um mapeamento de volta</li>
@@ -11102,7 +11102,7 @@ Seleccione uma colecção para exportar. Introduza uma lista de códigos de lín
 </ul>
 </p>',
 	'ow_conceptmapping_uitext' => '<p>O Mapeamento de Conceitos permite-lhe identificar que significado definido num conjunto de dados é idêntico a outros significados definidos noutro conjunto de dados.</p>',
-	'ow_conceptmapping_no_action_specified' => 'A acção "$1" não é suportada.',
+	'ow_conceptmapping_no_action_specified' => 'A ação "$1" não é suportada.',
 	'ow_dm_OK' => 'OK',
 	'ow_dm_not_present' => 'não introduzido',
 	'ow_dm_not_found' => 'não encontrado na base de dados ou mal formado',
@@ -11126,15 +11126,15 @@ Seleccione uma colecção para exportar. Introduza uma lista de códigos de lín
 	'ow_ClassAttributeLevel' => 'Nível',
 	'ow_ClassAttributeType' => 'Tipo',
 	'ow_ClassMembership' => 'Associação a classes',
-	'ow_Collection' => 'Colecção',
-	'ow_Collection_colon' => 'Colecção:',
-	'ow_CollectionMember' => 'Membro da colecção',
-	'ow_CollectionMembership' => 'Associação a colecções',
+	'ow_Collection' => 'Coleção',
+	'ow_Collection_colon' => 'Coleção:',
+	'ow_CollectionMember' => 'Membro da coleção',
+	'ow_CollectionMembership' => 'Associação a coleções',
 	'ow_Definition' => 'Definição',
 	'ow_DefinedMeaningAttributes' => 'Anotação',
 	'ow_DefinedMeaning' => 'Significado definido',
 	'ow_DefinedMeaningReference' => 'Significado definido',
-	'ow_ExactMeanings' => 'Significados exactos',
+	'ow_ExactMeanings' => 'Significados exatos',
 	'ow_Expression' => 'Expressão',
 	'ow_ExpressionMeanings' => 'Significados da expressão',
 	'ow_Expressions' => 'Expressões',
@@ -11145,7 +11145,7 @@ Seleccione uma colecção para exportar. Introduza uma lista de códigos de lín
 	'ow_LevelAnnotation' => 'Anotação',
 	'ow_LinkAttributeHeader' => 'Atributo do link',
 	'ow_Multiple_meanings' => 'Definições de "$1"',
-	'ow_NewExactMeaning' => 'Novo significado exacto',
+	'ow_NewExactMeaning' => 'Novo significado exato',
 	'ow_OptionAttribute' => 'Propriedade',
 	'ow_OptionAttributeHeader' => 'Atributo da opção',
 	'ow_OptionAttributeOption' => 'Opção',
@@ -11159,7 +11159,7 @@ Seleccione uma colecção para exportar. Introduza uma lista de códigos de lín
 	'ow_Remove' => 'Remover',
 	'ow_RemoveHint' => 'Assinale as linhas a remover',
 	'ow_Spelling' => 'Ortografia',
-	'ow_SuggestHint' => 'Clique para alterar a selecção',
+	'ow_SuggestHint' => 'Clique para alterar a seleção',
 	'ow_Synonyms' => 'Sinónimos',
 	'ow_SynonymsAndTranslations' => 'Sinónimos e traduções',
 	'ow_Source' => 'Fonte',
@@ -11186,7 +11186,7 @@ Seleccione uma colecção para exportar. Introduza uma lista de códigos de lín
 	'ow_meaningsofsubtitle' => '<em>Link Wiki:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>PERMISSÃO NEGADA</h2>',
 	'copy' => 'Wikidata: Copiar',
-	'ow_copy_no_action_specified' => 'Por favor, especifique uma acção',
+	'ow_copy_no_action_specified' => 'Por favor, especifique uma ação',
 	'ow_copy_help' => 'A ajuda ainda não está implementada.',
 	'ow_please_proved_dmid' => 'Epá, parece que está a faltar um "?dmid=<qualquercoisa>" (dmid=ID do Significado Definido) aos dados introduzidos<br />
 Por favor, contacte um administrador do servidor.',
@@ -11194,13 +11194,14 @@ Por favor, contacte um administrador do servidor.',
 Por favor, contacte um administrador do servidor.',
 	'ow_please_proved_dc2' => 'Epá, parece que está a faltar um "?dc2=<qualquercoisa>" (dc2=contexto de conjunto de dados 2, conjunto de dados PARA o qual copiar) aos dados introduzidos<br />
 Por favor, contacte um administrador do servidor.',
-	'ow_copy_successful' => '<h2>Cópia com Sucesso</h2>
+	'ow_copy_successful' => '<h2>Cópia com sucesso</h2>
 Os seus dados aparentam ter sido copiados com sucesso. Não se esqueça de verificar para ter a certeza!',
 	'ow_copy_unsuccessful' => '<h3>Cópia sem sucesso</h3>
 Não foi feita nenhuma operação de cópia.',
-	'ow_no_action_specified' => '<h3>Nenhuma acção foi especificada</h3> Talvez tenha vindo a esta página directamente? Em condições normais, não precisaria de estar aqui.',
+	'ow_no_action_specified' => '<h3>Nenhuma ação foi especificada</h3>
+Talvez tenha vindo a esta página diretamente? Em condições normais, não precisa de estar aqui.',
 	'ow_db_consistency_not_found' => '<h2>Erro</h2>Há um problema com a consistência da base de dados, wikidata não consegue encontrar dados válidos relacionados com o ID deste significado definido, poderá ter-se perdido. Por favor, contacte o operador ou administrador do servidor.',
-	'ow_history_transaction' => 'Transacção:',
+	'ow_history_transaction' => 'Transação:',
 	'ow_history_show_life_span' => 'Mostrar tempo de vida do registo:',
 	'ow_class_attr_type_dm' => 'Significado definido',
 	'ow_class_attr_type_xlate' => 'Texto traduzível',
@@ -11216,7 +11217,7 @@ Não foi feita nenhuma operação de cópia.',
 	'ow_show' => 'Mostrar',
 	'ow_upload' => 'Carregar',
 	'ow_create' => 'Criar',
-	'ow_collection_added' => '<strong>Colecção $1 adicionada.</strong>',
+	'ow_collection_added' => '<strong>Coleção $1 adicionada.</strong>',
 	'ow_suggest_previous' => 'Anterior',
 	'ow_suggest_next' => 'Próximo',
 	'ow_suggest_clear' => 'Limpar',
