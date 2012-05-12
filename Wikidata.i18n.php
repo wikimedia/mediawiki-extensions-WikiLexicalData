@@ -404,7 +404,7 @@ $messages['tru'] = array(
 	'ow_Language' => 'Leşono',
 );
 
-/** Abkhazian (Аҧсуа)
+/** Abkhazian (Аҧсшәа)
  * @author Temuri rajavi
  */
 $messages['ab'] = array(
@@ -10420,9 +10420,18 @@ $messages['pdc'] = array(
 );
 
 /** Pälzisch (Pälzisch)
+ * @author Manuae
  * @author Xqt
  */
 $messages['pfl'] = array(
+	'datasearch_language' => 'Schbrooch:',
+	'ow_save' => 'Schbaischere',
+	'ow_history' => 'Gschischd',
+	'ow_transaction_no_action' => 'Nix mache',
+	'ow_transaction_restore' => 'Widderherschdelle',
+	'ow_transaction_remove' => 'Lesche',
+	'ow_Text' => 'Tegschd',
+	'ow_LinkAttribute' => 'Aischeschafd',
 	'ow_suggest_previous' => 'Voriche',
 	'ow_suggest_next' => 'Negschte',
 );
@@ -13962,7 +13971,7 @@ $messages['tg-cyrl'] = array(
 Шояд шумо бевосита ба ин саҳифа омадед? Маъмулан шумо ниёз дар инҷо буданро надоред.',
 );
 
-/** Tajik (Latin script) (tojikī)
+/** Tajik (Latin script) (Tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -14357,7 +14366,7 @@ Makipagugnayan sa isang tagapamalakad/tagapagpatakbo ng serbidor o tagapangasiwa
 	'ow_shown_datasets' => 'Ipinakitang mga pangkat ng dato',
 );
 
-/** толышә зывон (толышә зывон)
+/** Толышә зывон (Толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -14546,7 +14555,7 @@ $messages['ug-arab'] = array(
 	'ow_Language' => 'تىل',
 );
 
-/** Uyghur (Latin script) (Uyghurche‎)
+/** Uyghur (Latin script) (Uyghurche)
  * @author Jose77
  */
 $messages['ug-latn'] = array(
@@ -14730,7 +14739,7 @@ $messages['uk'] = array(
 	'right-addlanguage' => 'Додавання і зміна мовних налаштувань',
 );
 
-/** Veps (Vepsän kel')
+/** Veps (Vepsän kel’)
  * @author Triple-ADHD-AS
  * @author Игорь Бродский
  */
