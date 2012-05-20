@@ -4267,6 +4267,7 @@ $messages['fa'] = array(
 	'ow_importtsv_bad_columns' => '<p>نام ستون «$1» نادرست است.<br />
 ستون‌ها را باید «definition_iso» یا «translations_iso» نام‌گذاری کرد،
 که در آن iso کد زبان است.</p>',
+	'ow_importtsv_test_run_title' => 'اجرای آزمایشی برای درون‌ریزی داده‌های تی‌اس‌وی',
 	'ow_importtsv_nothing_added' => 'چیزی افزوده نشد.',
 	'ow_importtsv_nothing_added_test' => 'چیزی افزوده نشد (اجرای آزمایشی انجام دادید).',
 	'ow_importtsv_results' => '$1 {{PLURAL:$1|معنی|معنی}} و $2 {{PLURAL:$2|ترجمه|ترجمه}} افزوده شد.',
@@ -4315,6 +4316,9 @@ $messages['fa'] = array(
 	'ow_conceptmapping_no_action_specified' => 'عمل «$1» پشتیبانی نمی‌شود.',
 	'ow_dm_OK' => 'تأیید',
 	'ow_dm_not_present' => 'وارد نشده‌است',
+	'ow_dm_not_found' => 'در پایگاه داده یافت نشد یا ناقص یافت شد',
+	'ow_mapping_successful' => 'همهٔ زمینه‌های مشخص‌شده را با [تأیید] مشخص کن<br />',
+	'ow_mapping_unsuccessful' => 'حداقل به دو مترادف برای پیوند دادن نیاز است.',
 	'ow_will_insert' => 'این را درج خواهد کرد:',
 	'ow_contents_of_mapping' => 'محتویات نقشه‌برداری',
 	'ow_available_contexts' => 'مفاهیم در دسترس',
@@ -4392,6 +4396,9 @@ $messages['fa'] = array(
 	'ow_Permission_denied' => '<h2>عدم دسترسی</h2>',
 	'copy' => 'ویکی‌داده: رونویسی',
 	'ow_copy_no_action_specified' => 'لطفاً عملی را مشخص کنید',
+	'ow_copy_help' => 'کمک هنوز اجرا نشده‌است.',
+	'ow_copy_unsuccessful' => '<h3>رونوشت ناموفق</h3>
+هیچ عملیات رونویسی‌ای انجام نشده‌است.',
 	'ow_history_transaction' => 'تبادل:',
 	'ow_history_show_life_span' => 'نمایش ذخیرهٔ دورهٔ عمر:',
 	'ow_class_attr_type_dm' => 'معنی تعریف‌شده',
