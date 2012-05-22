@@ -3077,8 +3077,10 @@ Vielleicht kamen Sie direkt zu dieser Seite?',
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'ow_save' => 'Star ke',
 	'ow_transaction_operation' => 'Operasyon',
 	'ow_Language' => 'Zıwan',
+	'ow_Value' => 'Deger',
 );
 
 /** Lower Sorbian (Dolnoserbski)
