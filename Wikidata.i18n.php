@@ -3081,6 +3081,12 @@ $messages['diq'] = array(
 	'ow_transaction_operation' => 'Operasyon',
 	'ow_Language' => 'Zıwan',
 	'ow_Value' => 'Deger',
+	'ow_show' => 'Bımocne',
+	'ow_upload' => 'Barke',
+	'ow_create' => 'Vıraze',
+	'ow_suggest_previous' => 'Verên',
+	'ow_suggest_next' => 'Bahdoyên',
+	'ow_suggest_clear' => 'Bestern',
 );
 
 /** Lower Sorbian (Dolnoserbski)
