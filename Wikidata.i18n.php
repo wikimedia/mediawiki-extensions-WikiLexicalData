@@ -1443,6 +1443,7 @@ $messages['be'] = array(
  * @author Jim-by
  * @author Red Winged Duck
  * @author Renessaince
+ * @author Wizardist
  * @author Zedlik
  */
 $messages['be-tarask'] = array(
@@ -1519,7 +1520,7 @@ $messages['be-tarask'] = array(
 	'ow_noedit' => 'Вам не дазволена рэдагаваць старонкі ў наборы зьвестак «$1».
 Калі ласка, паглядзіце [[{{MediaWiki:Ow editing policy url}}|нашы правілы рэдагаваньня]].',
 	'ow_uipref_datasets' => 'Выгляд па змоўчваньні:',
-	'ow_uiprefs' => 'ВікіЗьвесткі',
+	'ow_uiprefs' => 'Вікізьвесткі',
 	'ow_none_selected' => 'Нічога ня выбрана',
 	'transaction' => 'ВікіЗьвесткі: Журнал апэрацыяў',
 	'ow_transaction_from_transaction' => 'З апэрацыі:',
@@ -3077,9 +3078,32 @@ Vielleicht kamen Sie direkt zu dieser Seite?',
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'langman_langname' => 'Nameyê zıwani:',
+	'langman_iso639-3' => 'Kodê ISO 639-3:',
+	'langman_iso639-2' => 'Kodê ISO 639-2:',
+	'langman_wikimedia' => 'Kodê Wikimedia:',
+	'datasearch_language' => 'Zıwan:',
+	'ow_exporttsv_languages' => 'Zıwani:',
 	'ow_save' => 'Star ke',
+	'ow_history' => 'Tarix',
+	'ow_uiprefs' => 'Wikimelumat',
+	'ow_transaction_rollback_button' => 'Zey veri kı',
+	'ow_transaction_rollback_header' => 'Zey veri kı',
+	'ow_transaction_restore' => 'Timar bike',
+	'ow_transaction_remove' => 'Wedarne',
 	'ow_transaction_operation' => 'Operasyon',
+	'ow_transaction_summary' => 'Xulasa',
+	'ow_dm_OK' => 'TEMAM',
+	'ow_concept_panel' => 'Panela konsepti',
+	'ow_Class' => 'Sınıfe',
+	'ow_ClassAttributeLevel' => 'Sewiye',
+	'ow_ClassAttributeType' => 'Babet',
+	'ow_GotoSource' => 'Şori çıme',
 	'ow_Language' => 'Zıwan',
+	'ow_OptionAttribute' => 'Xasiyey',
+	'ow_OptionAttributeOption' => 'Weçinegi',
+	'ow_OptionAttributeOptions' => 'Weçinegi',
+	'ow_Relations' => 'Eleqey',
 	'ow_Value' => 'Deger',
 	'ow_show' => 'Bımocne',
 	'ow_upload' => 'Barke',
@@ -8873,9 +8897,9 @@ $messages['mk'] = array(
 	'ow_transaction_from_transaction' => 'Од трансакцијата:',
 	'ow_transaction_count' => 'Број:',
 	'ow_transaction_user' => 'Корисничко име:',
-	'ow_transaction_show_rollback' => 'Прикажи контроли за враќање:',
-	'ow_transaction_rollback_button' => 'Врати',
-	'ow_transaction_rollback_header' => 'Врати',
+	'ow_transaction_show_rollback' => 'Прикажи контроли за отповикување:',
+	'ow_transaction_rollback_button' => 'Отповикај',
+	'ow_transaction_rollback_header' => 'Отповикување',
 	'ow_transaction_no_action' => 'Не прави ништо',
 	'ow_transaction_previous_version' => 'Претходна верзија',
 	'ow_transaction_restore' => 'Врати',
