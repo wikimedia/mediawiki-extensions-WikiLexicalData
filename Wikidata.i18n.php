@@ -8333,7 +8333,7 @@ $messages['ku-latn'] = array(
 	'ow_TranslatedTextAttributeValue' => 'Nivîs',
 	'ow_Link' => 'Lînk',
 	'ow_User' => 'Bikarhêner',
-	'ow_class_attr_type_link' => 'Lînk',
+	'ow_class_attr_type_link' => 'Girêdan',
 	'ow_show' => 'Nîşan bide',
 );
 
