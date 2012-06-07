@@ -7962,6 +7962,7 @@ $messages['kn'] = array(
  * @author Klutzy
  * @author Kwj2772
  * @author Yknok29
+ * @author 아라
  */
 $messages['ko'] = array(
 	'languages' => '위키데이터: 언어 관리자',
@@ -8038,7 +8039,7 @@ $messages['ko'] = array(
 	'ow_Value' => '값',
 	'ow_added' => '추가됨',
 	'ow_removed' => '삭제됨',
-	'ow_create' => '생성',
+	'ow_create' => '만들기',
 );
 
 /** Komi-Permyak (Перем Коми)
