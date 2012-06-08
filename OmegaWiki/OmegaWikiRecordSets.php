@@ -439,35 +439,43 @@ function getExpressionMeaningsRecord( $expressionId, ViewInformation $viewInform
 }
 
 function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $dc = null ) {
+	global $wgLang;
 	$dc = wdGetDataSetContext( $dc );
 	$o = OmegaWikiAttributes::getInstance();
 
 	$dbr = wfGetDB( DB_SLAVE );
-	$sql =
+	$sqlbase =
 		"SELECT expression_id, language_id " .
 		" FROM {$dc}_expression" .
 		" WHERE spelling=BINARY " . $dbr->addQuotes( $spelling ) .
 		" AND {$dc}_expression.remove_transaction_id IS NULL " ;
 
 	// needed because expression.remove_transaction_id is not updated automatically
-	$sql .= " AND EXISTS (" .
+	$sqlbase .= " AND EXISTS (" .
 		"SELECT * " .
 		" FROM {$dc}_syntrans " .
 		" WHERE {$dc}_syntrans.expression_id={$dc}_expression.expression_id" .
 		" AND {$dc}_syntrans.remove_transaction_id IS NULL " .
 		")";
 
-
+	$queryResult = null;
 	if ( $viewInformation->expressionLanguageId != 0 ) {
 		// display the expression in that language
-		$sql .= " AND language_id=" . $viewInformation->expressionLanguageId ;
+		$sql = $sqlbase . " AND language_id=" . $viewInformation->expressionLanguageId ;
+		$queryResult = $dbr->query( $sql );
 	} else {
-		// no language is given: display in any language that comes first
-		$sql .= " LIMIT 1";
+		// default: is there an expression in the user language?
+		$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
+		$sql = $sqlbase . " AND language_id=" . $userLanguageId ;
+		$queryResult = $dbr->query( $sql );
+
+		if ( $dbr->numRows( $queryResult ) == 0 ) {
+			// nothing in the user language, any language will do
+			$sql = $sqlbase . " LIMIT 1";
+			$queryResult = $dbr->query( $sql );
+		}
 	}
 
-	$queryResult = $dbr->query( $sql );
-	
 	$result = new ArrayRecordSet( $o->expressionsStructure, new Structure( "expression-id", $o->expressionId ) );
 	$languageStructure = new Structure( "language", $o->language );
 
