@@ -3085,7 +3085,7 @@ $messages['diq'] = array(
 	'datasearch_language' => 'Zıwan:',
 	'ow_exporttsv_languages' => 'Zıwani:',
 	'ow_save' => 'Star ke',
-	'ow_history' => 'Tarix',
+	'ow_history' => 'Ravêrden',
 	'ow_uiprefs' => 'Wikimelumat',
 	'ow_transaction_rollback_button' => 'Zey veri kı',
 	'ow_transaction_rollback_header' => 'Zey veri kı',
@@ -7276,7 +7276,7 @@ Non è stata eseguita l'operazione di copia.",
  * @author 青子守歌
  */
 $messages['ja'] = array(
-	'wikidata-desc' => '様々な種類のコンテンツに対するウィキ風のデータベースを追加する',
+	'wikidata-desc' => 'さまざまな種類のコンテンツ用のウィキ風データベースを追加する',
 	'wikidata-handler-namespace-move-error' => 'Wikidata 拡張機能が処理する名前空間にあるページは移動できません。',
 	'languages' => 'ウィキデータ: 言語管理',
 	'langman-desc' => '[[Special:Languages]] を使用して言語設定を追加および変更する',
@@ -7293,7 +7293,7 @@ $messages['ja'] = array(
 	'langman_addlang' => '言語を追加',
 	'importlangnames' => 'ウィキデータ: 言語名の取り込み',
 	'importlangnames_title' => '言語名の取り込み',
-	'importlangnames_not_allowed' => 'あなたは言語名を取り込むための権限をもっていません。',
+	'importlangnames_not_allowed' => 'あなたには言語名を取り込む権限がありません。',
 	'importlangnames_added' => '「$1」に対する言語名が追加されました。',
 	'importlangnames_not_found' => '<strong>「$1」に対する言語項目は見つかりませんでした！</strong>',
 	'datasearch' => 'ウィキデータ: データ検索',
@@ -7313,8 +7313,8 @@ $messages['ja'] = array(
 	'ow_importtsv_title2' => '定義と翻訳を取り込む',
 	'ow_importtsv_header' => "<p>OpenOffice.org や Excel などのスプレッドシート・ソフトウェアで書き出せる、タブ区切りテキストファイルから、定義および翻訳を取り込みます。</p>
 <p>ファイルの形式は、TSV書き出しページで出力されるものと同じでなくてはなりません。列名を変更してしまうと取り込みが失敗します。識別子や意味定義の表現を変更した場合、その行は無視されます。列を追加した場合、'definitions_iso' または 'translations_iso' の形式に従う必要があります。\"iso\" とは ISO 639-3 言語コードのことです。</p>
-<p>「試験実行」ボックスを選択した場合、行われる処理を報告しますが、実際の変更はされません。実際の取り込みの前に試験実行をすることを勧めます。</p>",
-	'ow_importtsv_not_allowed' => 'あなたはTSVの取り込みをするための権限をもっていません。',
+<p>「試験実行」ボックスを選択した場合、行われる処理を報告しますが、実際の変更はされません。実際の取り込みの前に試験実行をすることをお勧めします。</p>",
+	'ow_importtsv_not_allowed' => 'あなたにはTSVを取り込む権限がありません。',
 	'ow_importtsv_importing' => 'TSVデータを取り込み中',
 	'ow_importtsv_import_failed' => '取り込み失敗',
 	'ow_importtsv_file' => 'TSVファイル:',
@@ -7332,9 +7332,9 @@ $messages['ja'] = array(
 	'exporttsv' => 'ウィキデータ: TSVの書き出し',
 	'ow_exporttsv_title' => 'コレクションをTSVに書き出す',
 	'ow_exporttsv_header' => '<p>コレクションを、OpenOffice.org や Excel などのスプレッドシート・ソフトウェアで取り込める、タブ区切りテキスト形式に書き出します。<br />
-書き出すコレクションを選んでください。言語テキストボックスには、ISO 639-3 の言語コードをコンマ区切りで入力します。あなたが翻訳元とする言語(数は自由)から始めて、翻訳先とする言語で終えてください。「{{int:Ow create}}」をクリックするとファイルを出力します。</p>',
+書き出すコレクションを選択してください。言語テキストボックスには、ISO 639-3 の言語コードをカンマ区切りで入力します。あなたが翻訳元とする言語（個数は自由）から始めて、最後を翻訳先言語にしてください。「{{int:Ow create}}」をクリックするとファイルを出力します。</p>',
 	'ow_exporttsv_languages' => '言語：',
-	'ow_exporttsv_not_allowed' => 'あなたはTSVの書き出しをするための権限をもっていません。',
+	'ow_exporttsv_not_allowed' => 'あなたにはTSVを書き出す権限がありません。',
 	'ow_exporttsv_export_failed' => '書き出し失敗',
 	'addcollection' => 'ウィキデータ: コレクション追加',
 	'ow_searchnoresult' => "<p>以下の操作が可能です:<br />
@@ -7345,7 +7345,7 @@ $messages['ja'] = array(
 	'ow_datasets' => 'データ集合の選択',
 	'ow_noedit_title' => '編集権限がありません',
 	'ow_noedit' => 'データ集合「$1」の編集権限がありません。[[{{MediaWiki:Ow editing policy url}}|編集方針]]をご覧ください。',
-	'ow_uipref_datasets' => 'デフォルト表示:',
+	'ow_uipref_datasets' => '既定の表示:',
 	'ow_uiprefs' => 'ウィキデータ',
 	'ow_none_selected' => '(選択なし)',
 	'transaction' => 'ウィキデータ: トランザクションログ',
@@ -7380,8 +7380,8 @@ $messages['ja'] = array(
 	'ow_dm_OK' => 'OK',
 	'ow_dm_not_present' => '指定がありません',
 	'ow_dm_not_found' => 'データベースに存在しないか、不正な指定です',
-	'ow_mapping_successful' => '関連する全てのフィールドを[OK]とマークしました<br />',
-	'ow_mapping_unsuccessful' => '関連付けを作成するには、少なくとも意味定義が2つ登録されている必要があります。',
+	'ow_mapping_successful' => '関連するすべてのフィールドに[OK]の印を付けました<br />',
+	'ow_mapping_unsuccessful' => '関連付けを作成するには、意味定義を少なくとも2つ登録している必要があります。',
 	'ow_will_insert' => '以下の内容で作成します:',
 	'ow_contents_of_mapping' => '関連付けの内容',
 	'ow_available_contexts' => '有効な関連内容',
@@ -14406,14 +14406,14 @@ Makipagugnayan sa isang tagapamalakad/tagapagpatakbo ng serbidor o tagapangasiwa
 	'ow_shown_datasets' => 'Ipinakitang mga pangkat ng dato',
 );
 
-/** Толышә зывон (Толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
 	'langman_addlang' => 'Зывон зијод кардеј',
 	'datasearch_language' => 'Зывон:',
 	'ow_exporttsv_languages' => 'Зывонон:',
-	'ow_save' => 'Огәте',
+	'ow_save' => 'Огәтеј',
 	'ow_history' => 'Тарых',
 );
 
