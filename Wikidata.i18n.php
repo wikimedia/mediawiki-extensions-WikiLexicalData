@@ -1307,7 +1307,7 @@ $messages['arz'] = array(
 	'prefs-omegawiki' => 'أوميجاويكى',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Esbardu
  */
 $messages['ast'] = array(
@@ -1428,7 +1428,7 @@ $messages['bcl'] = array(
 	'datasearch' => 'Wikidata: Data search',
 );
 
-/** Belarusian (Беларуская)
+/** Belarusian (беларуская)
  * @author Тест
  */
 $messages['be'] = array(
@@ -1681,7 +1681,7 @@ $messages['be-tarask'] = array(
 	'ow_shown_datasets' => 'Паказаныя наборы зьвестак',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -1860,7 +1860,7 @@ $messages['bo'] = array(
 	'ow_ClassAttributeType' => 'རིགས།',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
@@ -2079,7 +2079,7 @@ Dibabit un dastumad da enporzhiañ. E prenestr testenn ar yezhoù, merkit ur rol
 	'ow_shown_datasets' => 'Diskwel ar strolladoù roadennoù',
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
@@ -2315,7 +2315,7 @@ Molimo kontaktirajte operatora servera ili administratora.',
 	'ow_shown_datasets' => 'Pokaži setove podataka',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Jordi Roqué
  * @author Paucabot
  * @author SMP
@@ -2419,7 +2419,7 @@ $messages['ce'] = array(
 	'ow_User' => 'Декъашхо',
 );
 
-/** Sorani (کوردی)
+/** Sorani Kurdish (کوردی)
  * @author Asoxor
  * @author Marmzok
  */
@@ -2513,7 +2513,7 @@ $messages['ckb'] = array(
 	'right-addlanguage' => 'زمان زیاد بکە و هەڵبژاردەکانی بگۆڕە',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Kuvaly
  * @author Matěj Grabovský
  * @author Mormegil
@@ -2757,7 +2757,7 @@ $messages['cu'] = array(
 	'ow_LinkAttributeValues' => 'съвѧ́ꙁи',
 );
 
-/** Danish (Dansk)
+/** Danish (dansk)
  * @author Froztbyte
  * @author Jon Harald Søby
  * @author Sarrus
@@ -3350,7 +3350,7 @@ Pšosym staj se z serwerowym operatorom abo administratorom do zwiska.',
 	'ow_shown_datasets' => 'Pokazane datowe sajźby',
 );
 
-/** Ewe (Eʋegbe) */
+/** Ewe (eʋegbe) */
 $messages['ee'] = array(
 	'ow_create' => 'Dze egɔme',
 );
@@ -3722,7 +3722,7 @@ Neniu kopia operacio okazis.',
 	'ow_nstab_edit_copy' => 'redakti kopion',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Antur
  * @author Ascánder
  * @author Baiji
@@ -3963,7 +3963,7 @@ Contacta por favor el operador o el administrador del servicio.',
 	'ow_shown_datasets' => 'Conjunto de datos mostrados',
 );
 
-/** Estonian (Eesti)
+/** Estonian (eesti)
  * @author AivoK
  * @author Avjoska
  * @author Hendrik
@@ -4080,7 +4080,7 @@ $messages['et'] = array(
 	'ow_suggest_clear' => 'Puhasta',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  * @author Kobazulo
  * @author Pi
@@ -4457,7 +4457,7 @@ $messages['fa'] = array(
 	'ow_shown_datasets' => 'نمایش مجموعهٔ اطلاعات',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Cimon Avaro
  * @author Crt
@@ -4665,7 +4665,7 @@ Tulit tälle sivulle ehkä suoraan? Normaalisti sinun ei pitäisi olla täällä
 	'ow_shown_datasets' => 'Näytetyt tietuekokonaisuudet',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author Grondin
  * @author IAlex
@@ -4912,7 +4912,7 @@ Veuillez contacter l’opérateur ou l’administrateur du serveur.',
 	'ow_shown_datasets' => 'Afficher les ensembles de données',
 );
 
-/** Franco-Provençal (Arpetan)
+/** Franco-Provençal (arpetan)
  * @author Cedric31
  * @author ChrisPtDe
  */
@@ -6042,7 +6042,7 @@ $messages['hil'] = array(
 	'ow_history' => 'Saysay',
 );
 
-/** Croatian (Hrvatski)
+/** Croatian (hrvatski)
  * @author CERminator
  * @author Dalibor Bosits
  * @author Ex13
@@ -6294,7 +6294,7 @@ Wubjer zběrku za eksport. Zapodaj do tekstoweho kašćika za rěče lisćinu r�
 	'ow_shown_datasets' => 'Pokazane datowe sadźby',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Bdamokos
  * @author Dani
  * @author Glanthor Reviol
@@ -6535,7 +6535,7 @@ Kérlek lépj kapcsolatba a szerver működtetőjével vagy adminisztrátorával
 	'ow_shown_datasets' => 'Adatkészletek megjelenítése',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author Malafaya
  * @author McDutchie
  */
@@ -7114,7 +7114,7 @@ $messages['io'] = array(
 	'ow_suggest_clear' => 'Vakuigar',
 );
 
-/** Icelandic (Íslenska)
+/** Icelandic (íslenska)
  * @author S.Örvarr.S
  */
 $messages['is'] = array(
@@ -7124,7 +7124,7 @@ $messages['is'] = array(
 	'ow_dm_OK' => 'Í lagi',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Annayram
  * @author Aushulz
  * @author Blaisorblade
@@ -7775,7 +7775,7 @@ $messages['kk-tr'] = array(
 	'langman_title' => 'Tilderdi meñgerw',
 );
 
-/** Kalaallisut (Kalaallisut)
+/** Kalaallisut (kalaallisut)
  * @author Qaqqalik
  */
 $messages['kl'] = array(
@@ -8338,7 +8338,7 @@ $messages['ku-latn'] = array(
 	'ow_show' => 'Nîşan bide',
 );
 
-/** Cornish (Kernowek)
+/** Cornish (kernowek)
  * @author Kernoweger
  * @author Kw-Moon
  * @author Nrowe
@@ -8678,7 +8678,7 @@ $messages['li'] = array(
 	'ow_save' => 'Opslaon',
 );
 
-/** Lingala (Lingála)
+/** Lingala (lingála)
  * @author Eruedin
  */
 $messages['ln'] = array(
@@ -8688,14 +8688,14 @@ $messages['ln'] = array(
 	'ow_history' => 'Mokóló',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Matasg
  */
 $messages['lt'] = array(
 	'datasearch' => 'Wikidata: Duomenų paieška',
 );
 
-/** Latgalian (Latgaļu)
+/** Latgalian (latgaļu)
  * @author Dark Eagle
  */
 $messages['ltg'] = array(
@@ -8703,7 +8703,7 @@ $messages['ltg'] = array(
 	'ow_show' => 'Paruodeit',
 );
 
-/** Latvian (Latviešu)
+/** Latvian (latviešu)
  * @author GreenZeb
  */
 $messages['lv'] = array(
@@ -8810,7 +8810,7 @@ $messages['mhr'] = array(
 	'ow_LinkAttributeValues' => 'Ссылке-влак',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  * @author Brest
  */
@@ -9098,7 +9098,7 @@ $messages['ml'] = array(
 	'right-addlanguage' => 'ഭാഷാ ക്രമീകരണങ്ങൾ ചേർക്കുക മാറ്റംവരുത്തുക',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
@@ -9923,7 +9923,7 @@ Vergeet niet om dit te controleren!',
 	'ow_shown_datasets' => 'Weergegeven datasets',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
  * @author Eirik
  * @author Gunnernett
  * @author Harald Khan
@@ -10166,7 +10166,7 @@ $messages['nso'] = array(
 	'ow_copy_help' => 'Thušo ga e gona ka se sebaka.',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -10476,7 +10476,7 @@ $messages['pfl'] = array(
 	'ow_suggest_next' => 'Negschte',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Derbeth
  * @author Masti
@@ -11035,7 +11035,7 @@ $messages['ps'] = array(
 	'ow_suggest_next' => 'راتلونکي',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
  * @author Jorge Morais
@@ -11276,7 +11276,7 @@ Talvez tenha vindo a esta página diretamente? Em condições normais, não prec
 	'ow_shown_datasets' => 'Conjuntos de dados mostrados',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author 555
  * @author Eduardo.mps
  * @author Giro720
@@ -11529,7 +11529,7 @@ $messages['rif'] = array(
 	'ow_LinkAttributeValues' => 'Tiẓdyin',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Emily
  * @author Firilacroco
  * @author KlaudiuMihaila
@@ -11680,7 +11680,7 @@ Poate ați ajuns la această pagină direct? În mod normal nu ar trebui să fi�
 	'ow_shown_datasets' => 'Dataset-uri afișate',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -11888,7 +11888,7 @@ Pe piacere verifiche l'indirizze web.",
 	'ow_nstab_edit_copy' => "cange 'na copie",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Aleksandrit
  * @author Eleferen
  * @author Ferrer
@@ -12191,7 +12191,7 @@ $messages['rue'] = array(
 	'ow_suggest_clear' => 'Вычістити',
 );
 
-/** Sicilian (Sicilianu)
+/** Sicilian (sicilianu)
  * @author Melos
  */
 $messages['scn'] = array(
@@ -12293,7 +12293,7 @@ $messages['sco'] = array(
 	'ow_suggest_next' => 'Neist',
 );
 
-/** Serbo-Croatian (Srpskohrvatski)
+/** Serbo-Croatian (srpskohrvatski / српскохрватски)
  * @author OC Ripper
  */
 $messages['sh'] = array(
@@ -12534,7 +12534,7 @@ $messages['si'] = array(
 	'ow_shown_datasets' => 'පෙන්වනු ලැබූ දත්ත කුලක',
 );
 
-/** Slovak (Slovenčina)
+/** Slovak (slovenčina)
  * @author Helix84
  * @author Teslaton
  */
@@ -12761,7 +12761,7 @@ Prosím, pozrite si [[{{MediaWiki:Ow editing policy url}}|našu politiku ohľadn
 	'ow_shown_datasets' => 'Zobrazené množiny dát',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -12821,7 +12821,7 @@ $messages['so'] = array(
 	'ow_history' => 'Taariikh',
 );
 
-/** Albanian (Shqip)
+/** Albanian (shqip)
  * @author Puntori
  */
 $messages['sq'] = array(
@@ -12834,7 +12834,7 @@ $messages['sq'] = array(
 	'ow_Collection' => 'Koleksioni',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Millosh
  * @author Rancher
  * @author Sasa Stefanovic
@@ -13012,7 +13012,7 @@ $messages['sr-ec'] = array(
 	'prefs-omegawiki' => 'Омегавики',
 );
 
-/** Serbian (Latin script) (‪Srpski (latinica)‬)
+/** Serbian (Latin script) (‪srpski (latinica)‬)
  * @author Michaello
  * @author Rancher
  * @author Жељко Тодоровић
@@ -13404,7 +13404,7 @@ $messages['su'] = array(
 	'ow_Language' => 'Basa',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Lokal Profil
  * @author M.M.S.
  * @author Micke
@@ -13911,7 +13911,7 @@ $messages['te'] = array(
 	'right-addlanguage' => 'భాషా అమరికలని చేర్చడం మరియు మార్చడం',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -13932,7 +13932,7 @@ $messages['tet'] = array(
 	'copy' => 'Wikidata: Kopia',
 );
 
-/** Tajik (Cyrillic script) (Тоҷикӣ)
+/** Tajik (Cyrillic script) (тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -14011,7 +14011,7 @@ $messages['tg-cyrl'] = array(
 Шояд шумо бевосита ба ин саҳифа омадед? Маъмулан шумо ниёз дар инҷо буданро надоред.',
 );
 
-/** Tajik (Latin script) (Tojikī)
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -14604,7 +14604,7 @@ $messages['ug-latn'] = array(
 	'ow_Language' => 'Til',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author AS
  * @author Ahonc
@@ -15134,7 +15134,7 @@ $messages['zh-cn'] = array(
 	'datasearch' => 'Wikidata: 数据搜寻',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Chenzw
  * @author Gaoxuewei
  * @author Jimmy xu wrk
@@ -15325,7 +15325,7 @@ $messages['zh-hans'] = array(
 	'ow_shown_datasets' => '所显示的数据集',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Alexsh
  * @author Liangent
  * @author Mark85296341
