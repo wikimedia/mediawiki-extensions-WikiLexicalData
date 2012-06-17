@@ -8527,6 +8527,7 @@ Kuckt w.e.g. [[{{MediaWiki:Ow editing policy url}}|eis Ännerungsrichtlinnen]].'
 	'ow_contents_of_mapping' => 'Inhalter vum Mapping',
 	'ow_available_contexts' => 'Disponibel Kontexter',
 	'ow_add_concept_link' => 'E Link op déi aner Konzepter derbäisetzen',
+	'ow_concept_panel' => 'Konzept-Interface',
 	'ow_AddHint' => 'Gitt nei Reien a fir derbäizesetzen',
 	'ow_AlternativeDefinition' => 'Alternativ Definitioun',
 	'ow_AlternativeDefinitions' => 'Alternativ Definitiounen',
