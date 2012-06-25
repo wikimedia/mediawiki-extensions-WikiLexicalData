@@ -3076,6 +3076,7 @@ Vielleicht kamen Sie direkt zu dieser Seite?',
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'langman_langname' => 'Nameyê zıwani:',
@@ -3104,6 +3105,7 @@ $messages['diq'] = array(
 	'ow_OptionAttributeOption' => 'Weçinegi',
 	'ow_OptionAttributeOptions' => 'Weçinegi',
 	'ow_Relations' => 'Eleqey',
+	'ow_Source' => 'Çıme',
 	'ow_Value' => 'Deger',
 	'ow_show' => 'Bımocne',
 	'ow_upload' => 'Barke',
@@ -4241,6 +4243,7 @@ Mesedez harremanetan ipini zerbitzari operadore edo administratzailearekin.',
 /** Persian (فارسی)
  * @author Dalba
  * @author Ebraminio
+ * @author Hooshmand.hasannia
  * @author Huji
  * @author Mardetanha
  * @author Reza1615
@@ -4356,6 +4359,8 @@ $messages['fa'] = array(
 	'ow_available_contexts' => 'مفاهیم در دسترس',
 	'ow_add_concept_link' => 'افزودن پیوند به مفاهیم دیگر',
 	'ow_concept_panel' => 'صفحهٔ مفاهیم',
+	'ow_dm_badtitle' => 'این صفحه به هیچ مفهوم معناداری اشاره ندارد.
+لطفاً نشانی اینترنتی را بررسی کنید.',
 	'ow_AddHint' => 'ردیف‌های جدیدی را برای افزودن وارد کنید',
 	'ow_AlternativeDefinition' => 'تعریف دیگر',
 	'ow_AlternativeDefinitions' => 'تعاریف دیگر',
@@ -4429,6 +4434,9 @@ $messages['fa'] = array(
 	'copy' => 'ویکی‌داده: رونویسی',
 	'ow_copy_no_action_specified' => 'لطفاً عملی را مشخص کنید',
 	'ow_copy_help' => 'کمک هنوز اجرا نشده‌است.',
+	'ow_copy_successful' => '<h2>کپی موفق</h2>
+به نظر می‌رسد که داده‌های شما با موفقیت کپی شده‌اند.
+فراموش نکنید که برای اطمینان بیشتر باید دوباره بررسی کنید.',
 	'ow_copy_unsuccessful' => '<h3>رونوشت ناموفق</h3>
 هیچ عملیات رونویسی‌ای انجام نشده‌است.',
 	'ow_history_transaction' => 'تبادل:',
