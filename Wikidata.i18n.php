@@ -758,7 +758,7 @@ $messages['am'] = array(
 	'ow_TranslatedTextAttributeValue' => 'ጽሕፈት',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -1438,7 +1438,7 @@ $messages['be'] = array(
 	'ow_TranslatedTextAttributeValue' => 'Тэкст',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Red Winged Duck
@@ -2749,7 +2749,7 @@ Nastal problém s konzistencí databáze. Wikidata nemůže najít platné údaj
 	'ow_shown_datasets' => 'Zobrazené množiny dat',
 );
 
-/** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+/** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author ОйЛ
  */
 $messages['cu'] = array(
@@ -3115,7 +3115,7 @@ $messages['diq'] = array(
 	'ow_suggest_clear' => 'Bestern',
 );
 
-/** Lower Sorbian (Dolnoserbski)
+/** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -5155,7 +5155,7 @@ $messages['ga'] = array(
 	'ow_Property' => 'Airí',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Alma
  * @author Toliño
  * @author Xosé
@@ -6079,7 +6079,7 @@ $messages['hr'] = array(
 	'ow_class_attr_type_link' => 'Poveznica',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -8311,7 +8311,7 @@ Wi et ußsüht, es de Datebangk nit mieh konsistent. Wikidata kunnt kein jöltij
 	'ow_collection_added' => '<strong>De Sammlong $1 es opjenumme.</strong>',
 	'ow_suggest_previous' => 'Vürijje',
 	'ow_suggest_next' => 'Nächs',
-	'ow_suggest_clear' => 'Leddish maache',
+	'ow_suggest_clear' => 'Läddesch maache',
 	'ow_nstab_definedmeaning' => 'explizeete Bedüggdeniß',
 	'ow_nstab_edit_copy' => 'en Koppi ändere',
 	'right-addlanguage' => 'Enstellunge för Shprooche dobei donn udder ändere',
@@ -12128,7 +12128,7 @@ $messages['ru'] = array(
 	'ow_shown_datasets' => 'Показанные наборы данных',
 );
 
-/** Rusyn (Русиньскый)
+/** Rusyn (русиньскый)
  * @author Gazeb
  */
 $messages['rue'] = array(
@@ -13656,7 +13656,7 @@ Var god kontakta serveroperatören eller systemadministratören.',
 	'ow_shown_datasets' => 'Visade datauppsättningar',
 );
 
-/** Silesian (Ślůnski)
+/** Silesian (ślůnski)
  * @author Herr Kriss
  * @author Lajsikonik
  */
