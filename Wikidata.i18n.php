@@ -8023,6 +8023,7 @@ $messages['ko'] = array(
 	'datasearch_within_words' => '단어:',
 	'datasearch_within_ext_ids' => '외부 식별자:',
 	'ow_importtsv_import_failed' => '가져오기 실패',
+	'ow_importtsv_file' => 'TSV 파일:',
 	'ow_exporttsv_languages' => '언어:',
 	'addcollection' => '위키데이터: 컬렉션 추가',
 	'ow_save' => '저장',
@@ -8047,6 +8048,7 @@ $messages['ko'] = array(
 	'ow_NewExactMeaning' => '새로운 엄밀한 의미',
 	'ow_OptionAttributeOption' => '선택',
 	'ow_PopupAnnotation' => '주석',
+	'ow_Relations' => '관계',
 	'ow_Remove' => '삭제',
 	'ow_Spelling' => '철자',
 	'ow_Synonyms' => '동의어',
@@ -8070,7 +8072,26 @@ $messages['ko'] = array(
 	'ow_Value' => '값',
 	'ow_added' => '추가됨',
 	'ow_removed' => '삭제됨',
+	'ow_meaningsoftitle' => '"$1"의 의미',
+	'ow_Permission_denied' => '<h2>권한 없음</h2>',
+	'copy' => '위키데이터: 복제',
+	'ow_copy_successful' => '<h2>복제 성공</h2>
+데이터가 성공적으로 복제되었습니다.
+확인을 위해 다시 한 번 살펴보십시오!',
+	'ow_copy_unsuccessful' => '<h3>복제 실패</h3>
+복제가 이루어지지 않았습니다.',
+	'ow_class_attr_type_xlate' => '번역할 수 있는 글',
+	'ow_class_attr_type_plain' => '일반 텍스트',
+	'ow_class_attr_type_link' => '링크',
+	'ow_class_attr_type_option' => '선택지 목록',
+	'ow_needs_xlation_source_lang' => '원본 언어:',
+	'ow_needs_xlation_dest_lang' => '대상 언어:',
+	'ow_statistics' => '위키데이터: 통계',
+	'ow_upload' => '올리기',
 	'ow_create' => '만들기',
+	'ow_suggest_previous' => '이전',
+	'ow_suggest_next' => '다음',
+	'right-addlanguage' => '언어 설정을 추가하고 바꿈',
 );
 
 /** Komi-Permyak (Перем Коми)
