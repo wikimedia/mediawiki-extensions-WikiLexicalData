@@ -8744,10 +8744,54 @@ $messages['ln'] = array(
 );
 
 /** Lithuanian (lietuvių)
+ * @author Eitvys200
  * @author Matasg
  */
 $messages['lt'] = array(
+	'langman_langname' => 'Kalbos pavadinimas:',
+	'langman_iso639-3' => 'ISO 639-3 kodas:',
+	'langman_iso639-2' => 'ISO 639-2 kodas:',
+	'langman_wikimedia' => 'Wikimedia kodas:',
+	'langman_field_optional' => '(nebūtinas)',
+	'langman_addlang' => 'Pridėti kalbą',
 	'datasearch' => 'Wikidata: Duomenų paieška',
+	'datasearch_language' => 'Kalba:',
+	'datasearch_meaning' => 'Reikšmė',
+	'datasearch_search_text' => 'Ieškoti teksto:',
+	'ow_exporttsv_languages' => 'Kalbos:',
+	'ow_save' => 'Išsaugoti',
+	'ow_history' => 'Istorija',
+	'ow_transaction_user' => 'Naudotojo vardas:',
+	'ow_transaction_no_action' => 'Nieko nedaryti',
+	'ow_transaction_previous_version' => 'Ankstesnės versijos',
+	'ow_transaction_restore' => 'Atkurti',
+	'ow_transaction_remove' => 'Pašalinti',
+	'ow_transaction_object' => 'Objektas',
+	'ow_dm_OK' => 'Gerai',
+	'ow_ClassAttributeLevel' => 'Lygis:',
+	'ow_ClassAttributeType' => 'Tipas',
+	'ow_Collection' => 'Kolekcija',
+	'ow_Collection_colon' => 'Kolekcija:',
+	'ow_Language' => 'Kalba',
+	'ow_OptionAttributeOption' => 'Parinktis',
+	'ow_OptionAttributeOptions' => 'Parinktys',
+	'ow_Remove' => 'Pašalinti',
+	'ow_Synonyms' => 'Sinonimai',
+	'ow_SynonymsAndTranslations' => 'Sinonimai ir vertimai',
+	'ow_Source' => 'Šaltinis',
+	'ow_Text' => 'Tekstas',
+	'ow_Time' => 'Laikas',
+	'ow_TranslatedTextAttributeValue' => 'Tekstas',
+	'ow_added' => 'Pridėta',
+	'ow_removed' => 'Pašalintas',
+	'ow_needs_xlation_source_lang' => 'Šaltinio kalba:',
+	'ow_show' => 'Rodyti',
+	'ow_upload' => 'Įkelti',
+	'ow_create' => 'Sukurti',
+	'ow_suggest_previous' => 'Ankstesnis',
+	'ow_suggest_next' => 'Kitas',
+	'ow_suggest_clear' => 'Išvalyti',
+	'ow_nstab_edit_copy' => 'redaguoti kopiją',
 );
 
 /** Latgalian (latgaļu)
