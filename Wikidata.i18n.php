@@ -2409,7 +2409,7 @@ $messages['ca'] = array(
 	'right-addlanguage' => "Afegir i canviar la configuració d'idioma",
 );
 
-/** Chechen (Нохчийн)
+/** Chechen (нохчийн)
  * @author Sasan700
  */
 $messages['ce'] = array(
@@ -8900,7 +8900,7 @@ Vangio ny [[{{MediaWiki:Ow editing policy url}}|fitsipikay momban'ny fanovana]]"
 	'ow_dm_OK' => 'Eka',
 );
 
-/** Eastern Mari (Олык Марий)
+/** Eastern Mari (олык марий)
  * @author Сай
  */
 $messages['mhr'] = array(
@@ -9424,7 +9424,7 @@ $messages['mwl'] = array(
 	'ow_Language' => 'Lhéngua',
 );
 
-/** Erzya (Эрзянь)
+/** Erzya (эрзянь)
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
@@ -9503,10 +9503,10 @@ $messages['nah'] = array(
 	'ow_copy_help' => 'In tēpalēhuiliztli aya chīhualo.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Harald Khan
- * @author Jon Harald Søby
  * @author Nghtwlkr
+ * @author Njardarlogar
  * @author Simny
  */
 $messages['nb'] = array(
@@ -9539,9 +9539,9 @@ $messages['nb'] = array(
 	'datasearch_within_words' => 'Innen ordene:',
 	'datasearch_within_ext_ids' => 'Innen eksterne identifikatorer:',
 	'datasearch_showing_only' => 'Viser bare et maksimum av {{PLURAL:$1|ett treff|$1 treff}} (utav $2).',
-	'datasearch_match_ext_ids' => 'Eksterne identifikatorer som svarer til <i>$1</i>',
-	'datasearch_match_words' => 'Ord som tilsvarer <i>$1</i> og assosierte betydninger',
-	'datasearch_match_words_lang' => 'Ord i <i>$1</i> som tilsvarer <i>$2</i> og assosierte betydninger',
+	'datasearch_match_ext_ids' => 'Eksterne identifikatorer som svarer til <em>$1</em>',
+	'datasearch_match_words' => 'Ord som tilsvarer <em>$1</em> og assosierte betydninger',
+	'datasearch_match_words_lang' => 'Ord i <em>$1</em> som tilsvarer <em>$2</em> og assosierte betydninger',
 	'importtsv' => 'Wikidata: Importer TSV',
 	'ow_importtsv_title1' => 'Importer TSV',
 	'ow_importtsv_title2' => 'Importer definisjoner og oversettelser',
@@ -9553,7 +9553,7 @@ $messages['nb'] = array(
 	'ow_importtsv_import_failed' => 'Importeringen mislyktes',
 	'ow_importtsv_file' => 'TSV-fil:',
 	'ow_importtsv_test_run' => 'Testkjøring:',
-	'ow_importtsv_not_utf8' => '<p>Dette ser ikke ut til å være en UTF-8-kodet fil. Filen <i>må</i> være i UTF-8-formatet.
+	'ow_importtsv_not_utf8' => '<p>Dette ser ikke ut til å være en UTF-8-kodet fil. Filen <em>må</em> være i UTF-8-formatet.
 Kontroller at ditt program har lagret eller eksportert filen korrekt.</p>',
 	'ow_importtsv_not_tsv' => '<p>Dette ser ikke ut til å være en gyldig TSV-fil.</p>',
 	'ow_importtsv_bad_columns' => "<p>Feil kolonnenavn '$1'.<br />
@@ -14878,7 +14878,7 @@ $messages['uk'] = array(
 	'right-addlanguage' => 'Додавання і зміна мовних налаштувань',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Triple-ADHD-AS
  * @author Игорь Бродский
  */
