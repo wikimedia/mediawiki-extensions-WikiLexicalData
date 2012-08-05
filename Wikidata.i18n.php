@@ -3149,6 +3149,7 @@ $messages['diq'] = array(
 	'ow_Source' => 'Çıme',
 	'ow_Text' => 'Nuşte',
 	'ow_TextAttribute' => 'Xasiyey',
+	'ow_TextAttributeHeader' => 'Ercina metini',
 	'ow_Time' => 'Wext',
 	'ow_TranslatedTextAttribute' => 'Xasiyey',
 	'ow_TranslatedTextAttributeValue' => 'Nuşte',
@@ -3158,7 +3159,7 @@ $messages['diq'] = array(
 	'ow_LinkAttributeValues' => 'Gırey',
 	'ow_User' => 'Karber',
 	'ow_Property' => 'Xasiyey',
-	'ow_Value' => 'Deger',
+	'ow_Value' => 'Erc',
 	'ow_added' => 'Debiya',
 	'ow_removed' => 'Wedariya',
 	'ow_class_attr_type_link' => 'Gıre',
@@ -14608,6 +14609,7 @@ Makipagugnayan sa isang tagapamalakad/tagapagpatakbo ng serbidor o tagapangasiwa
 );
 
 /** толышә зывон (толышә зывон)
+ * @author Erdemaslancan
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -14616,6 +14618,8 @@ $messages['tly'] = array(
 	'ow_exporttsv_languages' => 'Зывонон:',
 	'ow_save' => 'Огәтеј',
 	'ow_history' => 'Тарых',
+	'ow_OptionAttributeOptions' => 'Кукон',
+	'ow_Source' => 'Сәвон',
 );
 
 /** Turkish (Türkçe)
