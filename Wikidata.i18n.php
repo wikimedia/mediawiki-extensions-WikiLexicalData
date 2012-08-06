@@ -14518,6 +14518,7 @@ Pakisuri ang adres na pangweb.',
 	'ow_IdenticalMeaning' => 'Katulad na kahulugan?',
 	'ow_IncomingRelations' => 'Padating/papasok na mga ugnayan',
 	'ow_GotoSource' => 'Puntahan ang pinagmulan',
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Wika',
 	'ow_LevelAnnotation' => 'Anotasyon (paliwanag)',
 	'ow_LinkAttributeHeader' => 'Katangian ng kawing',
@@ -14554,6 +14555,7 @@ Pakisuri ang adres na pangweb.',
 	'ow_Link' => 'Kawing',
 	'ow_LinkAttribute' => 'Pag-aari',
 	'ow_LinkAttributeValues' => 'Mga kawing',
+	'ow_URL' => 'URL',
 	'ow_User' => 'Tagagamit',
 	'ow_Property' => 'Pag-aari',
 	'ow_Value' => 'Halaga',
@@ -14606,6 +14608,7 @@ Makipagugnayan sa isang tagapamalakad/tagapagpatakbo ng serbidor o tagapangasiwa
 	'ow_nstab_edit_copy' => 'baguhin ang sipi',
 	'right-addlanguage' => 'Magdagdag at baguhin ang mga katakdaang pangwika',
 	'ow_shown_datasets' => 'Ipinakitang mga pangkat ng dato',
+	'prefs-omegawiki' => 'OmegaWiki',
 );
 
 /** толышә зывон (толышә зывон)
