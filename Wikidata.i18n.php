@@ -11743,8 +11743,10 @@ $messages['rif'] = array(
  * @author KlaudiuMihaila
  * @author Mihai
  * @author Minisarm
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
+	'languages' => 'Wikidata: Gestionarul de limbi',
 	'langman_title' => 'Codul limbii',
 	'langman_not_allowed' => 'Nu ai permisiunea să modifici preferințele referitoare la limbă.',
 	'langman_req_fields' => 'Sunt cerute numele limbii și codul ISO 639-3!',
@@ -11765,6 +11767,7 @@ $messages['ro'] = array(
 	'datasearch_within_words' => 'În interiorul cuvintelor:',
 	'importtsv' => 'Wikidata: Importă TSV',
 	'ow_importtsv_title1' => 'Importă TSV',
+	'ow_importtsv_importing' => 'Se importă datele TSV',
 	'ow_importtsv_import_failed' => 'Import eșuat',
 	'ow_importtsv_file' => 'Fișier TSV:',
 	'ow_importtsv_test_run' => 'Rulare de test:',
@@ -11807,6 +11810,7 @@ Limbile trebuie să fie coduri ISO 639-3.</p>',
 	'ow_will_insert' => 'Se vor insera următoarele:',
 	'ow_available_contexts' => 'Contexte disponibile',
 	'ow_add_concept_link' => 'Adaugă o legătură la alte concepte',
+	'ow_concept_panel' => 'Panou conceptual',
 	'ow_AddHint' => 'Introduceți linii noi pentru a adăuga',
 	'ow_AlternativeDefinition' => 'Definiție alternativă',
 	'ow_AlternativeDefinitions' => 'Definiții alternative',
@@ -11845,6 +11849,7 @@ Limbile trebuie să fie coduri ISO 639-3.</p>',
 	'ow_Source' => 'Sursă',
 	'ow_Text' => 'Text',
 	'ow_TextAttribute' => 'Proprietate',
+	'ow_TextAttributeHeader' => 'Atribut pentru text',
 	'ow_TextAttributeValues' => 'Text brut',
 	'ow_Time' => 'Timp',
 	'ow_TranslatedTextAttribute' => 'Proprietate',
