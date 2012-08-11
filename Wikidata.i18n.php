@@ -395,7 +395,7 @@ $messages['niu'] = array(
 	'ow_history' => 'Liu onoono atu ki tua',
 );
 
-/** Ṫuroyo (Ṫuroyo)
+/** Turoyo (Ṫuroyo)
  * @author Ariyo
  */
 $messages['tru'] = array(
@@ -2316,6 +2316,7 @@ Molimo kontaktirajte operatora servera ili administratora.',
 );
 
 /** Catalan (català)
+ * @author BroOk
  * @author Jordi Roqué
  * @author Paucabot
  * @author SMP
@@ -2339,7 +2340,11 @@ $messages['ca'] = array(
 	'importlangnames' => 'Wikidata: Importeu els noms de les llengües',
 	'importlangnames_title' => 'Importa els noms dels idiomes',
 	'importlangnames_not_allowed' => 'No teniu permisos per a importar els noms dels idiomes.',
+	'importlangnames_added' => 'Noms d\'idiomes per "$1" afegits.',
+	'importlangnames_not_found' => '<strong>No s\'ha trobat entrada d\'idioma per a "$1"!</strong>',
+	'datasearch' => 'Wikidata: Cerca de dades',
 	'datasearch_language' => 'Idioma:',
+	'datasearch_found_word' => 'Paraula trobada',
 	'datasearch_meaning' => 'Significat',
 	'datasearch_ext_identifier' => 'Identificador extern',
 	'datasearch_search_text' => 'Cerca text:',
@@ -2350,7 +2355,11 @@ $messages['ca'] = array(
 	'ow_save' => 'Desa',
 	'ow_history' => 'Historial',
 	'ow_uiprefs' => 'Wikidata',
+	'ow_transaction_count' => 'Compte:',
 	'ow_transaction_user' => "Nom d'usuari:",
+	'ow_transaction_show_rollback' => 'Mostrar controls per revertir:',
+	'ow_transaction_rollback_button' => 'Reverteix',
+	'ow_transaction_rollback_header' => 'Reverteix',
 	'ow_transaction_no_action' => 'No facis res',
 	'ow_transaction_previous_version' => 'Versió anterior',
 	'ow_transaction_restore' => 'Restaura',
@@ -2517,6 +2526,7 @@ $messages['ckb'] = array(
  * @author Kuvaly
  * @author Matěj Grabovský
  * @author Mormegil
+ * @author Reaperman
  */
 $messages['cs'] = array(
 	'wikidata-desc' => 'Přidává databázi na principu wiki pro různé druhy obsahu',
@@ -2586,6 +2596,9 @@ Vyberte kolekci, která se má exportovat. V textovém poli jazyka zadejte čár
 	'ow_exporttsv_not_allowed' => 'Nemáte oprávnění pro exportování TSV.',
 	'ow_exporttsv_export_failed' => 'Export selhal',
 	'addcollection' => 'Wikidat: Přidat kolekci',
+	'ow_searchnoresult' => "<p>Můžete:<br />
+* '''Vytvořit výraz „[[Expression:$1]]“''' (a přidat definici)<br />
+* '''Vytvořit stránku „[[:$1]]“''' (standardní wiki stránku)</p>",
 	'ow_save' => 'Uložit',
 	'ow_history' => 'Historie',
 	'ow_datasets' => 'Výběr množiny dat',
@@ -3417,6 +3430,7 @@ $messages['ee'] = array(
  * @author Consta
  * @author Crazymadlover
  * @author Evropi
+ * @author Geraki
  * @author Omnipaedista
  * @author ZaDiak
  */
@@ -3579,7 +3593,7 @@ $messages['el'] = array(
 	'ow_added' => 'Έχει προστεθεί',
 	'ow_removed' => 'Έχει αφαιρεθεί',
 	'ow_meaningsoftitle' => 'Έννοιες του "$1"',
-	'ow_meaningsofsubtitle' => '<em>Σύνδεσμος βίκι:</em> [[$1]]',
+	'ow_meaningsofsubtitle' => '<em>Σύνδεσμος wiki:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>Η άδεια αρνήθηκε</h2>',
 	'copy' => 'Βικιδεδομένα: Αντίγραφο',
 	'ow_copy_no_action_specified' => 'Παρακαλώ προσδιορίστε μια ενέργεια',
@@ -4348,12 +4362,13 @@ $messages['fa'] = array(
 اگر به اطلاعات ستون اضافه کردید، باید مطابق با استاندارد «definitions_iso» یا «translations_iso» باشد که iso همان کد ISO 639-3 زبان است.</p>
 <p>اگر گزینهٔ «اجرای آزمایشی» انتخاب شده بود، کارهای انجام‌شده گزارش می‌شوند ولی هیچ تغییری داده نمی‌شود.
 توصیه می‌شود قبل از درون‌ریزی یک اجرای آزمایشی انجام دهید.</p>',
-	'ow_importtsv_not_allowed' => 'شما دسترسی درون ریزی تی‌اس‌وی ندارید.',
+	'ow_importtsv_not_allowed' => 'شما دسترسی برای درون‌ریزی تی‌اس‌وی ندارید.',
 	'ow_importtsv_importing' => 'درون‌ریزی اطلاعات تی‌اس‌وی',
-	'ow_importtsv_import_failed' => 'درون‌ریزی انجام نشد',
+	'ow_importtsv_import_failed' => 'درون‌ریزی ناموفق بود',
 	'ow_importtsv_file' => 'پروندهٔ تی‌اس‌وی:',
 	'ow_importtsv_test_run' => 'اجرای آزمایشی:',
-	'ow_importtsv_not_utf8' => '<p>ظاهراً این پرونده به صورت UTF-8 رمزگذاری نشده‌است. رمزگذاری پرونده <em>باید</em> UTF-8 باشد. مطمئن شوید که نرم‌افزارتان پرونده را به‌درستی ذخیره یا صادر کرده‌است.</p>',
+	'ow_importtsv_not_utf8' => '<p>ظاهراً این پرونده به صورت UTF-8 رمزگذاری نشده‌است. رمزگذاری پرونده <em>باید</em> UTF-8 باشد.
+مطمئن شوید که نرم‌افزارتان پرونده را به‌درستی ذخیره یا صادر کرده‌است.</p>',
 	'ow_importtsv_not_tsv' => '<p>ظاهراً این یک پروندهٔ تی‌اس‌وی معتبر نیست.</p>',
 	'ow_importtsv_bad_columns' => '<p>نام ستون «$1» نادرست است.<br />
 ستون‌ها را باید «definition_iso» یا «translations_iso» نام‌گذاری کرد،
@@ -4370,9 +4385,9 @@ $messages['fa'] = array(
 یک مجموعه را برای برون‌ریزی انتخاب کنید. در جعبه متن زبان، کد زبان مورد نظر را بر پایه استاندارد ۶۳۹-۳ وارد نمائید.
 از زبانی که می‌خواهید بر اساس آن ترجمه نمائید شروع کنید (هر تعدادی که دوست دارید را انتخاب نمائید)  و با زبانی که قصد ترجمه‌شدن به آن را دارید کار را خاتمه دهید. سپس دکمه ایجاد را کلیک کنید تا پرونده ساخته شود.</p>',
 	'ow_exporttsv_languages' => 'زبان‌ها:',
-	'ow_exporttsv_not_allowed' => 'شما دسترسی برون‌ریزی تی‌اس‌وی ندارید.',
-	'ow_exporttsv_export_failed' => 'برون‌ریزی انجام نشد',
-	'addcollection' => 'ویکی‌داده:افزودن مجموعه',
+	'ow_exporttsv_not_allowed' => 'شما دسترسی برای برون‌ریزی تی‌اس‌وی ندارید.',
+	'ow_exporttsv_export_failed' => 'برون‌ریزی ناموفق بود',
+	'addcollection' => 'ویکی‌داده: افزودن مجموعه',
 	'ow_searchnoresult' => "<p>شما ممکن است:<br />
 * '''ساخت اصطلاح  \"[[Expression:\$1]]\"''' (و افزودن تعریف)<br />
 * '''ایجاد صفحهٔ \"[[:\$1]]\"''' (یک صفحهٔ استاندارد ویکی)</p>",
@@ -4380,8 +4395,8 @@ $messages['fa'] = array(
 	'ow_history' => 'تاریخچه',
 	'ow_datasets' => 'انتخاب مجموعهٔ داده',
 	'ow_noedit_title' => 'اجازهٔ ویرایش ندارید',
-	'ow_noedit' => 'شما مجاز به ویرایش صفحات در مجموعهٔ داده " $1 " هستید.
-لطفاً [[{{MediaWiki:Ow editing policy url}}|سیاست‌های ویرایشی ما]] را مطالعه نمائید.',
+	'ow_noedit' => 'شما مجاز به ویرایش صفحه‌ها در مجموعهٔ داده «$1» نیستید.
+لطفاً [[{{MediaWiki:Ow editing policy url}}|سیاست‌های ویرایشی]] را مطالعه کنید.',
 	'ow_uipref_datasets' => 'نمای پیش‌فرض:',
 	'ow_uiprefs' => 'ویکی‌داده',
 	'ow_none_selected' => 'هیچ‌کدام انتخاب نشده‌اند',
@@ -4400,7 +4415,7 @@ $messages['fa'] = array(
 	'ow_transaction_is_latest' => 'آخرین است',
 	'ow_transaction_class_member' => 'عضو کلاس',
 	'ow_transaction_object' => 'شیء',
-	'ow_transaction_first_dm' => 'معنی ابتدایی تعریف شده',
+	'ow_transaction_first_dm' => 'معنی تعریف‌شدهٔ نخست',
 	'ow_transaction_second_dm' => 'معنی تعریف‌شدهٔ دوم',
 	'ow_transaction_summary' => 'خلاصه',
 	'conceptmapping' => 'ویکی‌داده: ترسیم مفاهیم',
@@ -4412,7 +4427,7 @@ $messages['fa'] = array(
 <li>&action=get_associated&dm=<defined_meaning_id>&dc=<dataset_context_prefix> برای مترادف یک معنی در یک مفهوم، بازگردانی دیگران</li>
 <li>&action=help نمایش راهنمای مؤثر</li>
 </ul></p>',
-	'ow_conceptmapping_uitext' => '<p>نمایش ایده به شما امکان یافتن معنی تعریف شده در پایگاه داده را می‌دهد تا بتوانید معنی داده‌های دیگر را تعریف نمائید.</p>',
+	'ow_conceptmapping_uitext' => '<p>ترسیم مفاهیم به شما امکان یافتن اینکه کدام معنی تعریف‌شده در یک مجموعه‌داده با معنی‌های تعریف‌شده در مجموعه‌داده‌های دیگر منطبق است را می‌دهد.</p>',
 	'ow_conceptmapping_no_action_specified' => 'عمل «$1» پشتیبانی نمی‌شود.',
 	'ow_dm_OK' => 'تأیید',
 	'ow_dm_not_present' => 'وارد نشده‌است',
@@ -4424,9 +4439,9 @@ $messages['fa'] = array(
 	'ow_available_contexts' => 'مفاهیم در دسترس',
 	'ow_add_concept_link' => 'افزودن پیوند به مفاهیم دیگر',
 	'ow_concept_panel' => 'صفحهٔ مفاهیم',
-	'ow_dm_badtitle' => 'این صفحه به هیچ مفهوم معناداری اشاره ندارد.
+	'ow_dm_badtitle' => 'این صفحه به هیچ معنی تعریف‌شده‌ای اشاره ندارد.
 لطفاً نشانی اینترنتی را بررسی کنید.',
-	'ow_dm_missing' => 'این صفحه به هیچ مفهوم معناداری اشاره ندارد (مفهوم).
+	'ow_dm_missing' => 'این صفحه به معنی تعریف‌شدهٔ (مفهوم) ناموجود اشاره دارد.
 لطفاً نشانی اینترنتی را بررسی کنید.',
 	'ow_AddHint' => 'ردیف‌های جدیدی را برای افزودن وارد کنید',
 	'ow_AlternativeDefinition' => 'تعریف دیگر',
@@ -4441,12 +4456,12 @@ $messages['fa'] = array(
 	'ow_ClassMembership' => 'عضویت کلاس',
 	'ow_Collection' => 'مجموعه',
 	'ow_Collection_colon' => 'مجموعه:',
-	'ow_CollectionMember' => 'اعضای مجموعه',
+	'ow_CollectionMember' => 'عضو مجموعه',
 	'ow_CollectionMembership' => 'عضویت مجموعه',
 	'ow_Definition' => 'معنی',
 	'ow_DefinedMeaningAttributes' => 'یادداشت',
-	'ow_DefinedMeaning' => 'معنی تعریف شده',
-	'ow_DefinedMeaningReference' => 'معنی تعریف شده',
+	'ow_DefinedMeaning' => 'معنی تعریف‌شده',
+	'ow_DefinedMeaningReference' => 'معنی تعریف‌شده',
 	'ow_ExactMeanings' => 'معانی دقیق',
 	'ow_Expression' => 'اصطلاح',
 	'ow_ExpressionMeanings' => 'معانی اصطلاح',
@@ -4460,7 +4475,7 @@ $messages['fa'] = array(
 	'ow_Multiple_meanings' => 'معانی «$1»',
 	'ow_NewExactMeaning' => 'معنی عبارت جدید',
 	'ow_OptionAttribute' => 'خاصیت',
-	'ow_OptionAttributeHeader' => 'گزینهٔ ویژگی',
+	'ow_OptionAttributeHeader' => 'ویژگی گزینه',
 	'ow_OptionAttributeOption' => 'گزینه',
 	'ow_OptionAttributeOptions' => 'گزینه‌ها',
 	'ow_OptionAttributeValues' => 'گزینهٔ مقدارها',
@@ -4490,6 +4505,7 @@ $messages['fa'] = array(
 	'ow_Link' => 'پیوند',
 	'ow_LinkAttribute' => 'خاصیت',
 	'ow_LinkAttributeValues' => 'پیوندها',
+	'ow_URL' => 'نشانی اینترنتی',
 	'ow_User' => 'کاربر',
 	'ow_Property' => 'خاصیت',
 	'ow_Value' => 'مقدار',
@@ -4501,23 +4517,23 @@ $messages['fa'] = array(
 	'copy' => 'ویکی‌داده: رونویسی',
 	'ow_copy_no_action_specified' => 'لطفاً عملی را مشخص کنید',
 	'ow_copy_help' => 'کمک هنوز اجرا نشده‌است.',
-	'ow_please_proved_dmid' => 'به نظر می‌رسد از ورودی شما  "?dmid=<ID>"  از دست رفته‌است (dmid=Defined Meaning ID)<br />
-لطفاً با سرپرست سرور تماس بگیرید.',
-	'ow_please_proved_dc1' => 'به نظر می‌رسد از ورودی شما  "?dc1=<something>"  از دست رفته‌است(dc2=dataset context 1, dataset to copy FROM)<br />
-لطفاً با سرپرست سرور تماس بگیرید.',
-	'ow_please_proved_dc2' => 'به نظر می‌رسد از ورودی شما  "?dc2=<something>"  از دست رفته‌است(dc2=dataset context 2, dataset to copy TO)<br />
-لطفاً با سرپرست سرور تماس بگیرید.',
+	'ow_please_proved_dmid' => 'به نظر می‌رسد در ورودی شما «?dmid=<ID>» (که dmid=Defined Meaning ID، یعنی شناسهٔ معنی تعریف‌شده) وجود ندارد.<br />
+لطفاً با یکی از مدیران سرور تماس بگیرید.',
+	'ow_please_proved_dc1' => 'به نظر می‌رسد در ورودی شما «?dc1=<something>» (که dc2=dataset context 1, dataset to copy FROM) وجود ندارد.<br />
+لطفاً با یکی از مدیران سرور تماس بگیرید.',
+	'ow_please_proved_dc2' => 'به نظر می‌رسد در ورودی شما «?dc2=<something>» (که dc2=dataset context 2, dataset to copy TO) وجود ندارد.<br />
+لطفاً با یکی از مدیران سرور تماس بگیرید.',
 	'ow_copy_successful' => '<h2>کپی موفق</h2>
 به نظر می‌رسد که داده‌های شما با موفقیت کپی شده‌اند.
 فراموش نکنید که برای اطمینان بیشتر باید دوباره بررسی کنید.',
 	'ow_copy_unsuccessful' => '<h3>رونوشت ناموفق</h3>
 هیچ عملیات رونویسی‌ای انجام نشده‌است.',
-	'ow_no_action_specified' => '<h3>هیچ‌چیز مشخص نشده است</h3>
-شاید شما به این صفحه بهصورت مستقیم وارد شده‌اید. به طور معمول نیاز نیست به این صفحه بیایید.',
+	'ow_no_action_specified' => '<h3>هیچ عملی مشخص نشده‌است</h3>
+شاید مستقیماً وارد این صفحه شده‌اید؟ معمولاً نیاز نیست به این صفحه بیایید.',
 	'ow_db_consistency_not_found' => '<h2>خطا</h2>
-این در مورد ثبات پایگاه داده‌است. ویکی‌داده نمی‌تواند داده‌های مرتبط با آی‌دی معنی تعریف‌شده، را بیابد.
-ممکن است اطلاعات از دست رفته باشد.
-با سرپرست یا اپراتور سرور تماس بگیرید.',
+مشکلی پیرامون ثبات پایگاه داده وجود دارد. ویکی‌داده نمی‌تواند داده‌های معتبر مرتبط با این شناسهٔ معنی تعریف‌شده را بیابد.
+ممکن است از دست رفته باشد.
+با مدیر یا اپراتور سرور تماس بگیرید.',
 	'ow_history_transaction' => 'تبادل:',
 	'ow_history_show_life_span' => 'نمایش ذخیرهٔ دورهٔ عمر:',
 	'ow_class_attr_type_dm' => 'معنی تعریف‌شده',
@@ -4527,11 +4543,11 @@ $messages['fa'] = array(
 	'ow_class_attr_type_option' => 'فهرست اختیاری',
 	'needstranslation' => 'ویکی‌داده: اصطلاحات نیازمند ترجمه',
 	'ow_needs_xlation_title' => 'اصطلاحات نیازمند ترجمه',
-	'ow_needs_xlation_source_lang' => 'زبان منبع:',
+	'ow_needs_xlation_source_lang' => 'زبان مبدأ:',
 	'ow_needs_xlation_dest_lang' => 'زبان مقصد:',
 	'ow_needs_xlation_no_dest_lang' => 'لطفاً یک زبان مقصد مشخص کنید.',
 	'ow_statistics' => 'ویکی‌داده: آمار',
-	'ow_show' => 'نشان دادن',
+	'ow_show' => 'نمایش',
 	'ow_upload' => 'بارگذاری',
 	'ow_create' => 'ایجاد',
 	'ow_collection_added' => '<strong>مجموعهٔ $1 افزوده شد.</strong>',
@@ -4541,7 +4557,7 @@ $messages['fa'] = array(
 	'ow_nstab_definedmeaning' => 'معنی تعریف‌شده',
 	'ow_nstab_edit_copy' => 'ویرایش رونوشت',
 	'right-addlanguage' => 'افزودن و تغییر تنظیمات زبان',
-	'ow_shown_datasets' => 'نمایش مجموعهٔ اطلاعات',
+	'ow_shown_datasets' => 'مجموعه‌داده‌های نمایش‌داده‌شده',
 );
 
 /** Finnish (suomi)
@@ -11760,6 +11776,7 @@ $messages['ro'] = array(
 	'langman_field_optional' => '(opțional)',
 	'langman_addlang' => 'Adaugă limba',
 	'importlangnames_title' => 'Importă numele limbilor',
+	'importlangnames_not_allowed' => 'Nu aveți permisiunea de a importa numele limbilor.',
 	'datasearch' => 'Wikidata: Căutare de date',
 	'datasearch_language' => 'Limbă:',
 	'datasearch_found_word' => 'Cuvânt găsit',
@@ -11769,6 +11786,7 @@ $messages['ro'] = array(
 	'datasearch_within_words' => 'În interiorul cuvintelor:',
 	'importtsv' => 'Wikidata: Importă TSV',
 	'ow_importtsv_title1' => 'Importă TSV',
+	'ow_importtsv_title2' => 'Importați definiții și traduceri',
 	'ow_importtsv_importing' => 'Se importă datele TSV',
 	'ow_importtsv_import_failed' => 'Import eșuat',
 	'ow_importtsv_file' => 'Fișier TSV:',
@@ -11831,6 +11849,7 @@ Limbile trebuie să fie coduri ISO 639-3.</p>',
 	'ow_DefinedMeaningAttributes' => 'Adnotare',
 	'ow_ExactMeanings' => 'Înțelesuri exacte',
 	'ow_Expression' => 'Expresie',
+	'ow_ExpressionMeanings' => 'Înțelesurile expresiei',
 	'ow_Expressions' => 'Expresii',
 	'ow_IdenticalMeaning' => 'Sens identic?',
 	'ow_GotoSource' => 'Mergi la sursă',
@@ -11871,6 +11890,7 @@ Limbile trebuie să fie coduri ISO 639-3.</p>',
 	'ow_Value' => 'Valoare',
 	'ow_added' => 'Adaugat',
 	'ow_removed' => 'Şters',
+	'ow_meaningsoftitle' => 'Înțelesurile lui „$1”',
 	'ow_Permission_denied' => '<h2>Permisiune refuzată</h2>',
 	'copy' => 'Wikidata:Copiază',
 	'ow_copy_no_action_specified' => 'Vă rugăm să specificați o acțiune',
@@ -11890,6 +11910,7 @@ Poate ați ajuns la această pagină direct? În mod normal nu ar trebui să fi�
 	'ow_needs_xlation_title' => 'Expresii care trebuie traduse',
 	'ow_needs_xlation_source_lang' => 'Limba sursă:',
 	'ow_needs_xlation_dest_lang' => 'Limba destinație:',
+	'ow_statistics' => 'Wikidata: Statistici',
 	'ow_show' => 'Arată',
 	'ow_upload' => 'Încarcă',
 	'ow_create' => 'Creează',
