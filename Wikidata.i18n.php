@@ -11190,6 +11190,7 @@ $messages['ps'] = array(
 	'langman_title' => 'د ژبې سمبالګر',
 	'langman_langname' => 'د ژبې نوم:',
 	'langman_wikimedia' => 'د ويکيمېډيا کوډ:',
+	'langman_field_optional' => '(اختياري)',
 	'langman_addlang' => 'ژبه ورګډول',
 	'importlangnames_added' => 'د "$1" لپاره د ژبو نومونه ورګډ شول',
 	'datasearch_language' => 'ژبه:',
@@ -11222,6 +11223,7 @@ $messages['ps'] = array(
 	'ow_ClassAttributeLevel' => 'کچه',
 	'ow_ClassAttributeType' => 'ډول',
 	'ow_Collection' => 'غونډ',
+	'ow_Collection_colon' => 'غونډ:',
 	'ow_Definition' => 'پېژند',
 	'ow_DefinedMeaning' => 'پېژندل شوې مانا',
 	'ow_DefinedMeaningReference' => 'پېژندل شوې مانا',
@@ -11261,6 +11263,7 @@ $messages['ps'] = array(
 	'ow_create' => 'جوړول',
 	'ow_suggest_previous' => 'پخوانی',
 	'ow_suggest_next' => 'راتلونکي',
+	'ow_suggest_clear' => 'سپينول',
 );
 
 /** Portuguese (português)
@@ -13991,12 +13994,16 @@ Sprowdź eli jeij adres je poprawny.',
 );
 
 /** Tamil (தமிழ்)
+ * @author Karthi.dr
  * @author Logicwiki
  * @author Trengarasu
  * @author செல்வா
  */
 $messages['ta'] = array(
 	'languages' => 'Wikidata: மொழி மேலாளர்',
+	'langman_langname' => 'மொழியின் பெயர்:',
+	'datasearch_language' => 'மொழி:',
+	'datasearch_meaning' => 'அர்த்தம்',
 	'ow_importtsv_test_run' => 'சோதனை ஒட்டம்:',
 	'ow_save' => 'சேமி',
 	'ow_history' => 'வரலாறு',
@@ -14005,6 +14012,27 @@ $messages['ta'] = array(
 	'ow_transaction_remove' => 'நீக்குக',
 	'ow_transaction_summary' => 'சுருக்கம்',
 	'ow_dm_OK' => 'சரி',
+	'ow_Language' => 'மொழி',
+	'ow_OptionAttributeOption' => 'விருப்பத் தேர்வு',
+	'ow_OptionAttributeOptions' => 'விருப்பத்தேர்வுகள்',
+	'ow_Remove' => 'நீக்கு',
+	'ow_Text' => 'உரை',
+	'ow_Time' => 'நேரம்',
+	'ow_TranslatedText' => 'மொழிபெயர்க்கப்பட்ட உரை',
+	'ow_TranslatedTextAttributeValue' => 'உரை',
+	'ow_TranslatedTextAttributeValues' => 'மொழிபெயர்க்கக்கூடிய உரைகள்',
+	'ow_added' => 'சேர்க்கப்பட்டது',
+	'ow_removed' => 'நீக்கப்பட்டது',
+	'ow_meaningsoftitle' => '"$1" இன் அர்த்தங்கள்',
+	'ow_class_attr_type_xlate' => 'மொழிபெயர்க்கக்கூடிய உரை',
+	'ow_class_attr_type_link' => 'இணைப்பு',
+	'ow_show' => 'காட்டு',
+	'ow_upload' => 'பதிவேற்று',
+	'ow_create' => 'உருவாக்கு',
+	'ow_suggest_previous' => 'முந்தைய',
+	'ow_suggest_next' => 'அடுத்தது',
+	'ow_suggest_clear' => 'வெறுமையாக்கு',
+	'ow_nstab_definedmeaning' => 'வரையறுக்கப்பட்ட பொருள்',
 );
 
 /** Telugu (తెలుగు)
