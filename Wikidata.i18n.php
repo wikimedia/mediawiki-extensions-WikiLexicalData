@@ -7844,7 +7844,9 @@ $messages['ka'] = array(
 	'ow_no_action_specified' => '<h3>მოქმედება არ იყო მითითებული</h3> იქნებ ამ გვერდზე პირდაპირ შემოხვედით? ნორმალური მუშაობის პირობებში აქ არ უნდა აღმოჩენილიყავით.',
 	'ow_history_transaction' => 'ტრანზაქცია:',
 	'ow_class_attr_type_xlate' => 'თარგმნადი ტექსტი',
+	'ow_class_attr_type_plain' => 'უბრალო ტექსტი',
 	'ow_class_attr_type_link' => 'ბმული',
+	'ow_class_attr_type_option' => 'არჩევის სია',
 	'ow_needs_xlation_title' => 'სათარგმნი გამოთქმები',
 	'ow_needs_xlation_source_lang' => 'საწყისი ენა:',
 	'ow_needs_xlation_dest_lang' => 'სამიზნე ენა:',
@@ -7858,6 +7860,7 @@ $messages['ka'] = array(
 	'ow_suggest_next' => 'შემდეგი',
 	'ow_suggest_clear' => 'წაშლა',
 	'ow_nstab_edit_copy' => 'ასლის რედაქტირება',
+	'right-addlanguage' => 'ენობრივი პარამეტრების დამატება და შეცვლა',
 );
 
 /** Kazakh (Қазақша) */
@@ -8100,6 +8103,8 @@ $messages['ko'] = array(
 	'datasearch_within_ext_ids' => '외부 식별자:',
 	'datasearch_showing_only' => '($2개 이외의) {{PLURAL:$1|일치하는}} 최대 $1개만 봅니다.',
 	'datasearch_match_ext_ids' => '일치하는 외부 식별자 <em>$1</em>',
+	'datasearch_match_words' => '<em>$1</em>(와)과 일치하는 단어 및 관련 의미',
+	'datasearch_match_words_lang' => '<em>$1</em>에서 <em>$2</em>(와)과 일치하는 단어 및 관련 의미',
 	'importtsv' => '위키데이터: TSV 가져오기',
 	'ow_importtsv_title1' => 'TSV 가져오기',
 	'ow_importtsv_title2' => '정의와 번역 가져오기',
@@ -8108,15 +8113,27 @@ $messages['ko'] = array(
 	'ow_importtsv_import_failed' => '가져오기 실패',
 	'ow_importtsv_file' => 'TSV 파일:',
 	'ow_importtsv_test_run' => '테스트 실행:',
+	'ow_importtsv_not_utf8' => '<p>UTF-8로 인코딩한 파일이 아닌 것 같습니다. 파일은 UTF-8로 인코딩<em>해야 합니다</em>.
+어플리케이션이 올바르게 파일을 저장하거나 내보냈는지 확인하세요.',
+	'ow_importtsv_not_tsv' => '<p>유효한 TSV 파일이 아닌 것 같습니다.</p>',
+	'ow_importtsv_bad_columns' => "<p>'$1' 이름은 잘못된 열 이름입니다.<br />
+열은 'definition_iso' 또는 'translations_iso'로 이름지어야 합니다.
+iso는 언어 코드입니다</p>",
 	'ow_importtsv_test_run_title' => 'TSV 데이터 가져오기에 대한 테스트 실행',
 	'ow_importtsv_nothing_added' => '아무것도 추가하지 않았습니다.',
 	'ow_importtsv_nothing_added_test' => '아무것도 추가하지 않았습니다. (시험 삼아 했습니다)',
+	'ow_importtsv_results' => '{{PLURAL:$1|정의}} $1개와 {{PLURAL:$2|번역}} $2개를 추가했습니다.',
+	'ow_impexptsv_unknown_lang' => '<p>알 수 없거나 잘못된 언어: $1.<br />
+언어는 ISO 639-3 언어 코드여야 합니다.</p>',
 	'exporttsv' => '위키데이터: TSV 내보내기',
 	'ow_exporttsv_title' => 'TSV로 모음집 내보내기',
 	'ow_exporttsv_languages' => '언어:',
 	'ow_exporttsv_not_allowed' => 'TSV 내보내기할 수 있는 권한이 없습니다.',
 	'ow_exporttsv_export_failed' => '내보내기 실패',
 	'addcollection' => '위키데이터: 모음집 추가',
+	'ow_searchnoresult' => "<p>다음을 할 수 있습니다:<br />
+* '''\"[[Expression:\$1]]\" 표현을 만드세요''' (그리고 의미를 추가하세요)<br />
+* '''\"[[:\$1]]\" 문서를 만드세요''' (표준 위키 문서)</p>",
 	'ow_save' => '저장',
 	'ow_history' => '역사',
 	'ow_datasets' => '데이터 집합 선택',
@@ -8142,9 +8159,23 @@ $messages['ko'] = array(
 	'ow_transaction_first_dm' => '첫 번째 의미 정의',
 	'ow_transaction_second_dm' => '두 번째 의미 정의',
 	'ow_transaction_summary' => '요약',
+	'conceptmapping' => '위키데이터: 개념 매핑',
+	'ow_conceptmapping_title' => '개념 매핑',
 	'ow_conceptmapping_no_action_specified' => '"$1" 행위는 지원하지 않습니다.',
 	'ow_dm_OK' => '확인',
 	'ow_dm_not_present' => '입력하지 않음',
+	'ow_dm_not_found' => '데이터베이스에 찾을 수 없거나 잘못된 지시입니다',
+	'ow_mapping_successful' => '매핑한 모든 필드에 [OK]로 표시함<br />',
+	'ow_mapping_unsuccessful' => '연결하기 전에 적어도 의미 정의 2개가 있어야 합니다.',
+	'ow_will_insert' => '다음 내용을 삽입합니다:',
+	'ow_contents_of_mapping' => '매핑 내용',
+	'ow_available_contexts' => '사용 가능한 관련 내용',
+	'ow_add_concept_link' => '다른 개념에 링크 추가',
+	'ow_concept_panel' => '개념 패널',
+	'ow_dm_badtitle' => '이 문서는 어떠한 의미정의(개념)를 가리키지 않습니다.
+웹 주소를 확인하세요.',
+	'ow_dm_missing' => '이 문서는 존재하지 않는 의미정의(개념)을 가리키는 것 같습니다.
+웹 주소를 확인하세요.',
 	'ow_AddHint' => '추가할 새 행을 입력하세요',
 	'ow_AlternativeDefinition' => '대체 정의',
 	'ow_AlternativeDefinitions' => '대체 정의',
