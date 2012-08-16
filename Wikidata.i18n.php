@@ -5219,15 +5219,19 @@ $messages['fy'] = array(
 
 /** Irish (Gaeilge)
  * @author Alison
+ * @author පසිඳු කාවින්ද
  */
 $messages['ga'] = array(
 	'languages' => 'Vicísonraí: Bainisteoir teangacha',
 	'langman_title' => 'Bainisteoir teangacha',
 	'datasearch' => 'Vicísonraí: Cuardaigh sonraí',
+	'datasearch_language' => 'Teanga:',
 	'ow_save' => 'Sábháil',
 	'ow_history' => 'Stair',
 	'ow_noedit_title' => 'Ní chead chun chur in eagar',
 	'ow_uiprefs' => 'Vicísonraí',
+	'ow_transaction_user' => 'Ainm úsáideora:',
+	'ow_transaction_summary' => 'Achoimriú',
 	'ow_Annotation' => 'Anótáil',
 	'ow_ClassAttributeAttribute' => 'Tréith',
 	'ow_ClassAttributeLevel' => 'Leibhéal',
@@ -5247,7 +5251,12 @@ $messages['ga'] = array(
 	'ow_TranslatedTextAttributeValue' => 'Téacs',
 	'ow_LinkAttribute' => 'Airí',
 	'ow_LinkAttributeValues' => 'Naisc',
+	'ow_User' => 'Úsáideoir',
 	'ow_Property' => 'Airí',
+	'ow_show' => 'Taispeáin',
+	'ow_create' => 'Cruthaigh',
+	'ow_suggest_previous' => 'Siar',
+	'ow_suggest_next' => 'Ar aghaidh',
 );
 
 /** Galician (galego)
@@ -7232,6 +7241,7 @@ $messages['is'] = array(
  * @author Aushulz
  * @author Blaisorblade
  * @author Darth Kule
+ * @author F. Cosoleto
  * @author Gianfranco
  * @author HalphaZ
  * @author Melos
@@ -7352,6 +7362,9 @@ Le lingue devono essere inserite secondo i codici ISO 639-3.</p>',
 	'ow_Permission_denied' => '<h2>Permesso negato</h2>',
 	'ow_copy_no_action_specified' => "Specifica un'azione",
 	'ow_copy_help' => 'Nessun aiuto è ancora stato implementato.',
+	'ow_copy_successful' => '<h2>Copia riuscita</h2>
+I dati sembrano siano stati copiati correttamente.
+Non dimenticare di controllare per assicurartene!',
 	'ow_copy_unsuccessful' => "<h3>Copia fallita</h3>
 Non è stata eseguita l'operazione di copia.",
 	'ow_class_attr_type_xlate' => 'Testo traducibile',
@@ -7727,20 +7740,37 @@ Mangga hubungi operator server utawa pangurus.',
  * @author Malafaya
  * @author Sopho
  * @author Temuri rajavi
+ * @author გიორგიმელა
  */
 $messages['ka'] = array(
-	'languages' => 'ვიკიდატა: ენების მენეჯერი',
-	'langman-desc' => 'ენის პარამეტრების დამატება და შეცვლა [[Special:Languages]] დახმარებით',
-	'langman_title' => 'ენების მენეჯერი',
+	'wikidata-desc' => 'სვამს ვიკი-მსგავს მონამცემთა ბაზას სხვადასხვა ტიპის მონაცემებისთვის',
+	'wikidata-handler-namespace-move-error' => 'ვიკიმონაცემთა (Wikidata) სახელთა სივრცეში არსებული გვერდების გადატანა შეუძლებელია.',
+	'languages' => 'ვიკიმონაცემები:ენათა მართვა',
+	'langman-desc' => 'ენის პარამეტრების დამატება და შეცვლა [[Special:Languages]] მეშვეობით',
+	'langman_title' => 'ენების მართვა',
+	'langman_not_allowed' => 'თქვენ არ გაქვთ ენების კონფიგურაციის შეცვლის უფლება.',
+	'langman_header' => 'შეიყვანეთ ენის კოდი და მისი ინგლისური ანალოგი:',
+	'langman_req_fields' => 'ენის სახელი და ISO 639-3 კოდი უნდა იყოს აუცილებლად მითითებული!',
+	'langman_adding' => 'მიმდინარეობს $1 ენის ჩასმა; მისი კოდია - $2.',
 	'langman_langname' => 'ენის სახელი:',
 	'langman_iso639-3' => 'ISO 639-3 კოდი:',
 	'langman_iso639-2' => 'ISO 639-2 კოდი:',
 	'langman_wikimedia' => 'ვიკიმედიის კოდი:',
 	'langman_field_optional' => '(არასავალდებულო)',
 	'langman_addlang' => 'ენის დამატება',
-	'datasearch' => 'ვიკიდატა: მონაცემთა ძიება',
+	'importlangnames' => 'ვიკიმონაცემები: ენების სახელების იმპორტი',
+	'importlangnames_title' => 'ენების სახელების იმპორტი',
+	'importlangnames_not_allowed' => 'თქვენ არ გაქვთ ენების იმპორტის განხორციელების უფლება.',
+	'importlangnames_added' => 'დაემატა ენების სახელები „$1“-თვის.',
+	'importlangnames_not_found' => '<strong>არ არის აღმოჩენილი «$1» ენობრიცი ჩანაწერი!</strong>',
+	'datasearch' => 'ვიკიმონაცემები: მონაცემთა ძიება',
 	'datasearch_language' => 'ენა:',
+	'datasearch_found_word' => 'აღმოჩენილია სიტყვა',
+	'datasearch_meaning' => 'მნიშვნელობა',
+	'datasearch_ext_identifier' => 'გარე იდენტიფიკატორი',
 	'datasearch_search_text' => 'ტექსტის ძიება:',
+	'datasearch_within_words' => 'სიტყვებს შორის:',
+	'datasearch_within_ext_ids' => 'გარე იდენტიფიკატორთა შორის:',
 	'ow_importtsv_file' => 'TSV ფაილი:',
 	'ow_exporttsv_languages' => 'ენები:',
 	'ow_exporttsv_export_failed' => 'ექსპორტი ვერ განხორციელდა',
@@ -15303,6 +15333,7 @@ $messages['vep'] = array(
  * @author Minh Nguyen
  * @author Trần Nguyễn Minh Huy
  * @author Vinhtantran
+ * @author පසිඳු කාවින්ද
  */
 $messages['vi'] = array(
 	'languages' => 'Wikidata: Quản lý ngôn ngữ',
@@ -15362,11 +15393,17 @@ $messages['vi'] = array(
 	'ow_SynonymsAndTranslations' => 'Từ đồng âm và cách dịch',
 	'ow_Source' => 'Nguồn',
 	'ow_Text' => 'Văn bản',
+	'ow_Time' => 'Thời gian',
 	'ow_TranslatedText' => 'Văn bản dịch',
 	'ow_TranslatedTextAttributeValue' => 'Văn bản',
 	'ow_Value' => 'Giá trị',
 	'ow_meaningsoftitle' => 'Các ý nghĩa của “$1”',
 	'ow_meaningsofsubtitle' => '<em>Liên kết wiki:</em> [[$1]]',
+	'ow_show' => 'Hiển thị',
+	'ow_upload' => 'Tải lên',
+	'ow_create' => 'Tạo',
+	'ow_suggest_previous' => 'Trước',
+	'ow_suggest_next' => 'Tiếp theo',
 );
 
 /** Volapük (Volapük)
@@ -15454,6 +15491,7 @@ $messages['vo'] = array(
 
 /** Yiddish (ייִדיש)
  * @author פוילישער
+ * @author පසිඳු කාවින්ද
  */
 $messages['yi'] = array(
 	'langman_langname' => 'שפראַך נאָמען:',
@@ -15467,10 +15505,18 @@ $messages['yi'] = array(
 	'ow_transaction_rollback_header' => 'צוריקדרייען',
 	'ow_transaction_previous_version' => 'פֿריערדיגע ווערסיע',
 	'ow_transaction_restore' => 'אויפֿריכטן',
+	'ow_transaction_remove' => 'אַראָפּנעמען',
+	'ow_OptionAttributeOptions' => 'ברירות',
+	'ow_Remove' => 'אַראָפּנעמען',
 	'ow_SuggestHint' => 'קליקט צו ענדערן אויסקלויב',
 	'ow_Source' => 'מקור',
+	'ow_Time' => 'צײַט',
 	'ow_User' => 'באַניצער',
+	'ow_Value' => 'ווערט',
+	'ow_show' => 'ווײַז',
+	'ow_create' => 'שאַפֿן',
 	'ow_suggest_previous' => 'פֿריערדיקער',
+	'ow_suggest_clear' => 'רייניקן',
 );
 
 /** Cantonese (粵語) */
