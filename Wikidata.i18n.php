@@ -11878,7 +11878,7 @@ $messages['rif'] = array(
  * @author Stelistcristi
  */
 $messages['ro'] = array(
-	'languages' => 'Wikidata: Gestionarul de limbi',
+	'languages' => 'Wikidata: Gestionar de limbi',
 	'langman_title' => 'Codul limbii',
 	'langman_not_allowed' => 'Nu ai permisiunea să modifici preferințele referitoare la limbă.',
 	'langman_req_fields' => 'Sunt cerute numele limbii și codul ISO 639-3!',
@@ -11890,7 +11890,7 @@ $messages['ro'] = array(
 	'langman_field_optional' => '(opțional)',
 	'langman_addlang' => 'Adaugă limba',
 	'importlangnames_title' => 'Importă numele limbilor',
-	'importlangnames_not_allowed' => 'Nu aveți permisiunea de a importa numele limbilor.',
+	'importlangnames_not_allowed' => 'Nu aveți permisiunea de a importa nume de limbă.',
 	'datasearch' => 'Wikidata: Căutare de date',
 	'datasearch_language' => 'Limbă:',
 	'datasearch_found_word' => 'Cuvânt găsit',
@@ -11900,7 +11900,7 @@ $messages['ro'] = array(
 	'datasearch_within_words' => 'În interiorul cuvintelor:',
 	'importtsv' => 'Wikidata: Importă TSV',
 	'ow_importtsv_title1' => 'Importă TSV',
-	'ow_importtsv_title2' => 'Importați definiții și traduceri',
+	'ow_importtsv_title2' => 'Importare definiții și traduceri',
 	'ow_importtsv_importing' => 'Se importă datele TSV',
 	'ow_importtsv_import_failed' => 'Import eșuat',
 	'ow_importtsv_file' => 'Fișier TSV:',
@@ -11939,7 +11939,7 @@ Limbile trebuie să fie coduri ISO 639-3.</p>',
 	'ow_transaction_class_member' => 'Membrul clasei',
 	'ow_transaction_object' => 'Obiect',
 	'ow_transaction_summary' => 'Rezumat',
-	'ow_conceptmapping_no_action_specified' => '!Acțiunea "$1" nu este suportată.',
+	'ow_conceptmapping_no_action_specified' => '!Acțiunea „$1” nu este suportată.',
 	'ow_dm_OK' => 'OK',
 	'ow_will_insert' => 'Se vor insera următoarele:',
 	'ow_available_contexts' => 'Contexte disponibile',
@@ -11971,7 +11971,7 @@ Limbile trebuie să fie coduri ISO 639-3.</p>',
 	'ow_LevelAnnotation' => 'Adnotare',
 	'ow_LinkAttributeHeader' => 'Atribut pentru legătură',
 	'ow_Multiple_meanings' => 'Înțelesuri multiple:',
-	'ow_NewExactMeaning' => 'Înțeles nou exact',
+	'ow_NewExactMeaning' => 'Sens nou exact',
 	'ow_OptionAttribute' => 'Proprietate',
 	'ow_OptionAttributeHeader' => 'Atribut pentru opțiune',
 	'ow_OptionAttributeOption' => 'Opțiune',
@@ -12031,7 +12031,7 @@ Poate ați ajuns la această pagină direct? În mod normal nu ar trebui să fi�
 	'ow_suggest_previous' => 'Anterior',
 	'ow_suggest_next' => 'Următorul',
 	'ow_suggest_clear' => 'Șterge',
-	'ow_shown_datasets' => 'Dataset-uri afișate',
+	'ow_shown_datasets' => 'Seturi de date afișate',
 );
 
 /** tarandíne (tarandíne)
