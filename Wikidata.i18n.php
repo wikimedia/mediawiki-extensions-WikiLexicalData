@@ -7645,7 +7645,7 @@ $messages['ja'] = array(
 	'ow_suggest_clear' => '消去',
 	'ow_nstab_definedmeaning' => '意味定義',
 	'ow_nstab_edit_copy' => '複製を編集',
-	'right-addlanguage' => '言語設定の追加と変更',
+	'right-addlanguage' => '言語設定を追加/変更',
 	'ow_shown_datasets' => '表示されたデータ集合',
 );
 
