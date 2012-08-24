@@ -7246,6 +7246,7 @@ $messages['is'] = array(
  * @author HalphaZ
  * @author Melos
  * @author Nemo bis
+ * @author Rippitippi
  */
 $messages['it'] = array(
 	'wikidata-desc' => 'Aggiunge database wiki-like per diversi tipi di contenuto',
@@ -7319,6 +7320,7 @@ Vedere [[{{MediaWiki:Ow editing policy url}}|il regolamento per le modifiche]].'
 	'ow_transaction_restore' => 'Ripristina',
 	'ow_transaction_remove' => 'Rimuovi',
 	'ow_transaction_operation' => 'Operazione',
+	'ow_transaction_is_latest' => 'Ultimo',
 	'ow_transaction_object' => 'Oggetto',
 	'ow_transaction_summary' => 'Sommario',
 	'ow_conceptmapping_no_action_specified' => 'L\'azione "$1" non è supportata.',
@@ -7396,6 +7398,7 @@ Forse si è arrivati a questa pagina in maniera diretta? Di norma non c'è bisog
 	'ow_class_attr_type_xlate' => 'Testo traducibile',
 	'ow_class_attr_type_plain' => 'Solo testo',
 	'ow_class_attr_type_link' => 'Collegamento',
+	'ow_class_attr_type_option' => 'Elenco opzioni',
 	'ow_needs_xlation_title' => 'Espressioni che necessitano di traduzione',
 	'ow_needs_xlation_source_lang' => 'Lingua di partenza:',
 	'ow_needs_xlation_dest_lang' => 'Lingua di destinazione:',
@@ -7442,7 +7445,7 @@ $messages['ja'] = array(
 	'importlangnames_added' => '「$1」に対する言語名が追加されました。',
 	'importlangnames_not_found' => '<strong>「$1」に対する言語項目は見つかりませんでした！</strong>',
 	'datasearch' => 'ウィキデータ: データ検索',
-	'datasearch_language' => '言語：',
+	'datasearch_language' => '言語:',
 	'datasearch_found_word' => '一致した語',
 	'datasearch_meaning' => '意味',
 	'datasearch_ext_identifier' => '外部識別子',
@@ -7478,7 +7481,7 @@ $messages['ja'] = array(
 	'ow_exporttsv_title' => 'コレクションをTSVに書き出す',
 	'ow_exporttsv_header' => '<p>コレクションを、OpenOffice.org や Excel などのスプレッドシート・ソフトウェアで取り込める、タブ区切りテキスト形式に書き出します。<br />
 書き出すコレクションを選択してください。言語テキストボックスには、ISO 639-3 の言語コードをカンマ区切りで入力します。あなたが翻訳元とする言語（個数は自由）から始めて、最後を翻訳先言語にしてください。「{{int:Ow create}}」をクリックするとファイルを出力します。</p>',
-	'ow_exporttsv_languages' => '言語：',
+	'ow_exporttsv_languages' => '言語:',
 	'ow_exporttsv_not_allowed' => 'あなたにはTSVを書き出す権限がありません。',
 	'ow_exporttsv_export_failed' => '書き出し失敗',
 	'addcollection' => 'ウィキデータ: コレクション追加',
