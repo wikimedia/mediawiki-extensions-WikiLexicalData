@@ -8205,6 +8205,8 @@ iso는 언어 코드입니다</p>",
 	'ow_history' => '역사',
 	'ow_datasets' => '데이터 집합 선택',
 	'ow_noedit_title' => '편집 권한 없음',
+	'ow_noedit' => '"$1" 데이터 집합에서 문서를 편집할 수 없습니다.
+[[{{MediaWiki:Ow editing policy url}}|편집 정책]]을 참고하세요.',
 	'ow_uipref_datasets' => '기본 보기',
 	'ow_uiprefs' => '위키데이터',
 	'ow_none_selected' => '선택하지 않음',
@@ -8228,6 +8230,7 @@ iso는 언어 코드입니다</p>",
 	'ow_transaction_summary' => '요약',
 	'conceptmapping' => '위키데이터: 개념 매핑',
 	'ow_conceptmapping_title' => '개념 매핑',
+	'ow_conceptmapping_uitext' => '<p>개념 매핑은 다른 데이터 집합에 포함한 의미 정의를 다른 데이터 집합에 의미 정의와 같은 개념으로 식별할 수 있습니다.</p>',
 	'ow_conceptmapping_no_action_specified' => '"$1" 행위는 지원하지 않습니다.',
 	'ow_dm_OK' => '확인',
 	'ow_dm_not_present' => '입력하지 않음',
@@ -8327,6 +8330,12 @@ iso는 언어 코드입니다</p>",
 확인을 위해 다시 한 번 살펴보십시오!',
 	'ow_copy_unsuccessful' => '<h3>복제 실패</h3>
 복제가 이루어지지 않았습니다.',
+	'ow_no_action_specified' => '<h3>작업을 지정하지 않았습니다</h3>
+아마도 직접 이 문서에 왔습니까? 일반적으로 당신은 여기에 있을 필요가 없습니다.',
+	'ow_db_consistency_not_found' => '<h2>오류</h2>
+데이터베이스 일관성에 문제가 있습니다, 위키데이터가 의미 정의 ID에 연결한 유효한 데이터를 찾을 수 없습니다.
+잃었을 수도 있습니다.
+서버 운영자 또는 관리자에게 문의하세요.',
 	'ow_history_transaction' => '트랜잭션:',
 	'ow_history_show_life_span' => '기록 수명 보기:',
 	'ow_class_attr_type_dm' => '의미 정의',
