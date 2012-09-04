@@ -7499,7 +7499,7 @@ $messages['ja'] = array(
 	'transaction' => 'ウィキデータ: トランザクションログ',
 	'ow_transaction_from_transaction' => '元のトランザクション:',
 	'ow_transaction_count' => '件数:',
-	'ow_transaction_user' => '利用者名：',
+	'ow_transaction_user' => '利用者名:',
 	'ow_transaction_show_rollback' => 'ロールバックボタンを表示:',
 	'ow_transaction_rollback_button' => 'ロールバック',
 	'ow_transaction_rollback_header' => 'ロールバック',
@@ -8175,6 +8175,13 @@ $messages['ko'] = array(
 	'importtsv' => '위키데이터: TSV 가져오기',
 	'ow_importtsv_title1' => 'TSV 가져오기',
 	'ow_importtsv_title2' => '정의와 번역 가져오기',
+	'ow_importtsv_header' => '<p>정의를 가져오고 OpenOffice.org, Excel 또는 다른 스프레드시트 소프트웨어에서 보낼 수 있는 탭으로 구분된 텍스트 파일에서 번역합니다.</p>
+<p>파일의 형식은 [[Special:ExportTSV|TSV내보내기]] 문서에서 내보낸 파일과 같아야 합니다.
+열 이름을 바꾼 경우 가져오기를 실패합니다.
+의미 정의의 ID 또는 표현 정의를 바꾼 경우 해당 줄은 무시합니다.
+열을 추가한 경우 양식에 ISO 639-3 언어 코드로 된 "definitions_iso" 또는 "translations_iso"이어야합니다.<p>
+<p>"테스트 실행" 상자가 선택되어 있으면 가져올 모든 행위을 보고하지만 실제로 바뀌지 않습니다.
+실제 가져오기를 수행하기 전에 테스트 실행을 수행하는 것이 좋습니다.</p>',
 	'ow_importtsv_not_allowed' => 'TSV 가져오기할 수 있는 권한이 없습니다.',
 	'ow_importtsv_importing' => 'TSV 데이터 가져오기',
 	'ow_importtsv_import_failed' => '가져오기 실패',
@@ -8194,6 +8201,8 @@ iso는 언어 코드입니다</p>",
 언어는 ISO 639-3 언어 코드여야 합니다.</p>',
 	'exporttsv' => '위키데이터: TSV 내보내기',
 	'ow_exporttsv_title' => 'TSV로 모음집 내보내기',
+	'ow_exporttsv_header' => "<p>OpenOffice.org, Excel 또는 다른 스프레드시트 소프트웨어에서 가져올 수 있는 탭으로 구분된 텍스트 형식으로 모음집을 내보냅니다.<br />
+	내보낼 모음집을 선택하세요. 언어 텍스트 상자에 ISO 639-3 언어 코드를 쉼표로 구분한 목록을 입력하세요. 번역할 언어(개수는 자유)로 시작하여 번역 대상 언어로 끝내세요. 그런 다음 파일을 만드려면 '만들기'을 클릭하세요.</p>",
 	'ow_exporttsv_languages' => '언어:',
 	'ow_exporttsv_not_allowed' => 'TSV 내보내기할 수 있는 권한이 없습니다.',
 	'ow_exporttsv_export_failed' => '내보내기 실패',
@@ -8230,6 +8239,13 @@ iso는 언어 코드입니다</p>",
 	'ow_transaction_summary' => '요약',
 	'conceptmapping' => '위키데이터: 개념 매핑',
 	'ow_conceptmapping_title' => '개념 매핑',
+	'ow_conceptmapping_help' => '<p>가능한 동작: <ul>
+<li>&action=insert&<data_context_prefix>=<defined_id>&... 매핑을 넣습니다</li>
+<li>&action=get&concept=<concept_id> 관련 매핑을 얻습니다</li>
+<li>&action=list_sets 얻을 수 있는 데이터 문맥 접두어와 관련 항목의 목록을 반환합니다.</li>
+<li>&action=get_associated&dm=<defined_meaning_id>&dc=<dataset_context_prefix> 개념에 대한 의미 정의에 대해 하나에서 다른 의미 정의를 반환합니다</li>
+<li>&action=help 유용한 도움말을 보여줍니다.</li>
+</ul></p>',
 	'ow_conceptmapping_uitext' => '<p>개념 매핑은 다른 데이터 집합에 포함한 의미 정의를 다른 데이터 집합에 의미 정의와 같은 개념으로 식별할 수 있습니다.</p>',
 	'ow_conceptmapping_no_action_specified' => '"$1" 행위는 지원하지 않습니다.',
 	'ow_dm_OK' => '확인',
