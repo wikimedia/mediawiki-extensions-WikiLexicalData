@@ -8629,7 +8629,7 @@ Wi et ußsüht, es de Datebangk nit mieh konsistent. Wikidata kunnt kein jöltij
 	'ow_class_attr_type_option' => 'Leß met müjjelesche Ußwahle',
 	'needstranslation' => 'Wikidata: Ußdröck, die övversaz wäde möße',
 	'ow_needs_xlation_title' => 'Ußdröck, die övversaz wäde mööte',
-	'ow_needs_xlation_source_lang' => 'Schprooch fun woh övversäze:',
+	'ow_needs_xlation_source_lang' => 'De Schprooch, fun woh övversäze:',
 	'ow_needs_xlation_dest_lang' => 'Shprooch woh hen övversäze:',
 	'ow_needs_xlation_no_dest_lang' => 'Bes esu joot, un donn de Shprooch aanjevve, woh hen ze övversäze.',
 	'ow_statistics' => 'Wikidata: Statistike',
