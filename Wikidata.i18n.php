@@ -8674,6 +8674,7 @@ $messages['ku-latn'] = array(
 	'ow_User' => 'Bikarhêner',
 	'ow_class_attr_type_link' => 'Girêdan',
 	'ow_show' => 'Nîşan bide',
+	'ow_upload' => 'Bar bike',
 );
 
 /** Cornish (kernowek)
