@@ -1037,6 +1037,7 @@ $messages['arc'] = array(
 	'ow_save' => 'ܠܒܘܟ',
 	'ow_history' => 'ܬܫܥܝܬܐ',
 	'ow_transaction_user' => 'ܫܡܐ ܕܡܦܠܚܢܐ:',
+	'ow_transaction_previous_version' => 'ܨܚܚܐ ܕܩܕܡ',
 	'ow_transaction_remove' => 'ܠܚܝ',
 	'ow_transaction_operation' => 'ܥܡܠܝܬܐ',
 	'ow_transaction_object' => 'ܓܘܫܡܐ',
@@ -1070,9 +1071,11 @@ $messages['arc'] = array(
 	'ow_show' => 'ܚܘܝ',
 	'ow_upload' => 'ܐܣܩ',
 	'ow_create' => 'ܒܪܝ',
-	'ow_suggest_previous' => 'ܩܕܡ',
-	'ow_suggest_next' => 'ܒܬܪ',
+	'ow_suggest_previous' => 'ܕܩܕܡ',
+	'ow_suggest_next' => 'ܕܒܬܪ',
 	'ow_suggest_clear' => 'ܡܫܝ',
+	'ow_nstab_definedmeaning' => 'ܣܘܟܠܐ ܡܬܚܡܐ',
+	'ow_nstab_edit_copy' => 'ܫܚܠܦ ܨܚܚܐ',
 	'right-addlanguage' => 'ܐܘܣܦ ܘܫܚܠܦ ܛܘܝܒ̈ܐ ܕܠܫܢܐ',
 );
 
