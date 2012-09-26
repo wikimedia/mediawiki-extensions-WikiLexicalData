@@ -15856,7 +15856,7 @@ $messages['zh-hans'] = array(
 	'ow_shown_datasets' => '所显示的数据集',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Alexsh
  * @author Liangent
  * @author Mark85296341
@@ -15957,6 +15957,7 @@ $messages['zh-hant'] = array(
 	'ow_conceptmapping_no_action_specified' => '動作“$1”不被支持。',
 	'ow_dm_OK' => '確定',
 	'ow_dm_not_present' => '沒有輸入',
+	'ow_concept_panel' => '概念面板',
 	'ow_AddHint' => '輸入一個新行以添加',
 	'ow_AlternativeDefinition' => '替代定義',
 	'ow_AlternativeDefinitions' => '替代定義',
@@ -15967,7 +15968,7 @@ $messages['zh-hant'] = array(
 	'ow_ClassAttributes' => '類屬性',
 	'ow_ClassAttributeLevel' => '等級',
 	'ow_ClassAttributeType' => '類型',
-	'ow_ClassMembership' => '類成員屬性',
+	'ow_ClassMembership' => '類成員',
 	'ow_Definition' => '定義',
 	'ow_DefinedMeaningAttributes' => '註解',
 	'ow_DefinedMeaning' => '已定義的含義',
@@ -16036,7 +16037,10 @@ $messages['zh-hant'] = array(
 	'ow_suggest_previous' => '上一個',
 	'ow_suggest_next' => '下一個',
 	'ow_suggest_clear' => '清除',
+	'ow_nstab_definedmeaning' => '已定義的含義',
+	'ow_nstab_edit_copy' => '編輯副本',
 	'right-addlanguage' => '新增和更改語言設定',
+	'ow_shown_datasets' => '所顯示的數據集',
 );
 
 /** Chinese (Hong Kong) (‪中文(香港)‬) */
