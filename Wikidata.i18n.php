@@ -1441,7 +1441,7 @@ $messages['be'] = array(
 	'ow_TranslatedTextAttributeValue' => 'Тэкст',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Red Winged Duck
@@ -3044,7 +3044,7 @@ Bitte kontaktiere den Serveradminstrator.',
 	'ow_shown_datasets' => 'Datensätze anzeigen',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author ChrisiPK
  * @author Imre
  * @author Kghbln
@@ -5850,7 +5850,7 @@ $messages['gv'] = array(
 	'ow_LinkAttributeValues' => 'Kianglaghyn',
 );
 
-/** Hausa (هَوُسَ) */
+/** Hausa (Hausa) */
 $messages['ha'] = array(
 	'ow_transaction_summary' => 'Taƙaici',
 	'ow_show' => 'Nuna',
@@ -8657,7 +8657,7 @@ $messages['ku'] = array(
 	'ow_Source' => 'Çavkanî',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Bangin
  * @author George Animal
  */
@@ -9428,7 +9428,7 @@ $messages['mk'] = array(
 	'ow_needs_xlation_source_lang' => 'Изворен јазик:',
 	'ow_needs_xlation_dest_lang' => 'Целен јазик:',
 	'ow_needs_xlation_no_dest_lang' => 'Назначете целен јазик',
-	'ow_statistics' => 'Википодатоци: Статистика',
+	'ow_statistics' => 'Википодатоци: Статистики',
 	'ow_show' => 'Прикажи',
 	'ow_upload' => 'Подигни',
 	'ow_create' => 'Создај',
@@ -9791,7 +9791,7 @@ $messages['nah'] = array(
 	'ow_copy_help' => 'In tēpalēhuiliztli aya chīhualo.',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Harald Khan
  * @author Nghtwlkr
  * @author Njardarlogar
@@ -10310,7 +10310,7 @@ Vergeet niet om dit te controleren!',
 	'ow_shown_datasets' => 'Weergegeven datasets',
 );
 
-/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Eirik
  * @author Gunnernett
  * @author Harald Khan
@@ -13238,7 +13238,7 @@ $messages['sq'] = array(
 	'ow_Collection' => 'Koleksioni',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Millosh
  * @author Rancher
  * @author Sasa Stefanovic
@@ -13416,7 +13416,7 @@ $messages['sr-ec'] = array(
 	'prefs-omegawiki' => 'Омегавики',
 );
 
-/** Serbian (Latin script) (‪srpski (latinica)‬)
+/** Serbian (Latin script) (srpski (latinica)‎)
  * @author Michaello
  * @author Rancher
  * @author Жељко Тодоровић
@@ -15665,7 +15665,7 @@ $messages['zh-cn'] = array(
 	'datasearch' => 'Wikidata: 数据搜寻',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Chenzw
  * @author Gaoxuewei
  * @author Jimmy xu wrk
