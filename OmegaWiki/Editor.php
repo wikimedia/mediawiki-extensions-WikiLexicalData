@@ -1248,7 +1248,7 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 			$isMetaDescSet = 1 ;
 		}
 
-		$DMPageName = $value ;
+		$DMPageName = definingExpression( $value ) . " (" . $value . ")" ;
 		$DMTitle = Title::makeTitle( NS_DEFINEDMEANING , $DMPageName );
 		$editURL = $DMTitle->getLocalURL( 'action=edit' ) ;
 		$editLink = '<div style="float:right; font-size:60%;"><sup>['

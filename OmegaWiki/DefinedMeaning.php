@@ -7,16 +7,19 @@ require_once( 'DefinedMeaningModel.php' );
 
 class DefinedMeaning extends DefaultWikidataApplication {
 	protected $definedMeaningModel;
+
 	public function view() {
 		global
-			$wgOut, $wgTitle, $wgRequest, $wdCurrentContext;
+			$wgOut, $wgTitle, $wgRequest;
 
+		// Split title into defining expression and ID
 		$titleText = $wgTitle->getText();
+		$dmInfo = DefinedMeaningModel::splitTitleText( $titleText );
 
-		$dmNumber = (int)$titleText ;
+		$dmNumber = $dmInfo["id"];
 
 		// Title doesn't have an ID in it (or ID 0)
-		if ( !$dmNumber ) {
+		if ( is_null( $dmInfo ) || !$dmNumber ) {
 			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_badtitle' );
 			return false;
 		}
@@ -24,14 +27,40 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$definedMeaningModel = new DefinedMeaningModel( $dmNumber, $this->viewInformation );
 		$this->definedMeaningModel = $definedMeaningModel; # TODO if I wasn't so sleepy I'd make this consistent
 
+		if ( !empty( $dmInfo["expression"] ) ) {
+			$definedMeaningModel->setDefiningExpression( $dmInfo["expression"] );
+		}
+
+
 		// check that the constructed DM actually exists in the database
 		$match = $definedMeaningModel->checkExistence( true, true );
+
+		// The defining expression is likely incorrect for some reason. Let's just
+		// try looking up the number.
+		if ( is_null( $match ) && !empty( $dmInfo["expression"] ) ) {
+			$definedMeaningModel->setDefiningExpression( null );
+			$dmInfo["expression"] = null;
+			$match = $definedMeaningModel->checkExistence( true, true );
+		}
+		
+		// The defining expression is either bad or missing. Let's redirect
+		// to the correct URL.
+		if ( empty( $dmInfo["expression"] ) && !is_null( $match ) ) {
+			$definedMeaningModel->loadRecord();
+			$title = Title::newFromText( $definedMeaningModel->getWikiTitle() );
+			$url = $title->getFullURL();
+			$wgOut->disable();
+			header( "Location: $url" );
+			return false;
+		}
+
+		// Bad defining expression AND bad ID! :-(
 		if ( is_null( $match ) ) {
 			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_missing' );
 			return false;
 		}
 
-		$definedMeaningModel->loadRecord();
+		$this->definedMeaningModel->loadRecord();
 		$this->showDataSetPanel = false;
 
 		# Raw mode
@@ -49,8 +78,8 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$wgOut->setPageTitle( $wgTitle->getFullText() . " - $expressionTranslated" ) ;
 
 		$editor = getDefinedMeaningEditor( $this->viewInformation );
-		$idStack = $this->getIdStack( $definedMeaningModel->getId() );
-		$html = $editor->view( $idStack, $definedMeaningModel->getRecord() );
+		$idStack = $this->getIdStack( $this->definedMeaningModel->getId() );
+		$html = $editor->view( $idStack, $this->definedMeaningModel->getRecord() );
 		$wgOut->addHTML( $html );
 		$this->outputViewFooter();
 	}
@@ -61,7 +90,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 		if ( !parent::edit() ) return false;
 
-		$definedMeaningId = (int)$wgTitle->getText();
+		$definedMeaningId = $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
 
 		// Title doesn't have an ID in it (or ID 0)
 		if ( !$definedMeaningId ) {
@@ -97,7 +126,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		global
 			$wgOut, $wgTitle ;
 
-		$definedMeaningId = (int)$wgTitle->getText();
+		$definedMeaningId = $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
 		// Title doesn't have an ID in it (or ID 0)
 		if ( !$definedMeaningId ) {
 			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_badtitle' );
@@ -132,7 +161,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 		parent::save( $referenceQueryTransactionInformation );
 
-		$definedMeaningId = (int)$wgTitle->getText();
+		$definedMeaningId = $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
 		if ( !$definedMeaningId ) {
 			// Title doesn't have an ID in it (or ID 0)
 			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_badtitle' );
@@ -147,7 +176,12 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		);
 	
 	}
-	
+
+	public function getTitle() {
+		global $wgTitle;
+		return $wgTitle->getFullText() ;
+	}
+
 	protected function getIdStack( $definedMeaningId ) {
 
 		$o = OmegaWikiAttributes::getInstance();
@@ -160,6 +194,19 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$idStack->pushKey( $definedMeaningIdRecord );
 		
 		return $idStack;
+	}
+
+	protected function getDefinedMeaningIdFromTitle( $title ) {
+		// get id from title: DefinedMeaning:expression (id)
+		$bracketPosition = strrpos( $title, "(" );
+		$definedMeaningId = substr( $title, $bracketPosition + 1, strlen( $title ) - $bracketPosition - 2 );
+		return $definedMeaningId;
+	}
+
+	public function getDefinedMeaningId() {
+		global
+			$wgTitle;
+		return $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
 	}
 
 	/** 

@@ -60,8 +60,12 @@ function spellingAsURL( $spelling, $lang = 0 ) {
 	return $title->getLocalURL( $query ) ;
 }
 
+function definedMeaningReferenceAsURL( $definedMeaningId, $definingExpression ) {
+	return pageAsURL( "DefinedMeaning", "$definingExpression ($definedMeaningId)" );
+}
+
 function definedMeaningIdAsURL( $definedMeaningId ) {
-	return pageAsURL( "DefinedMeaning", "$definedMeaningId" );
+	return definedMeaningReferenceAsURL( $definedMeaningId, definingExpression( $definedMeaningId ) );
 }
 
 function createLink( $url, $text ) {
@@ -73,7 +77,7 @@ function spellingAsLink( $spelling, $lang = 0 ) {
 }
 
 function definedMeaningReferenceAsLink( $definedMeaningId, $definingExpression, $label ) {
-	return createLink( definedMeaningIdAsURL( $definedMeaningId ), $label );
+	return createLink( definedMeaningReferenceAsURL( $definedMeaningId, $definingExpression ), $label );
 }
 
 function languageIdAsText( $languageId ) {

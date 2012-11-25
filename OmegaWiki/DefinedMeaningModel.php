@@ -120,6 +120,19 @@ class DefinedMeaningModel {
 		if ( !$dmRow || !$dmRow->defined_meaning_id ) {
 			return null;
 		}
+		if ( is_null( $definingExpression ) ) {
+			return $dc;
+		} else {
+			$expid = (int)$dmRow->expression_id;
+			$storedExpression = getExpression( $expid, $dc );
+			if ( is_null( $storedExpression ) ) return null;
+			if ( $storedExpression->spelling != $definingExpression ) {
+				// Defining expression does not match, but check was requested!
+				return null;
+			} else {
+				return $dc;
+			}
+		}
 		return $dc;
 	}
 	/** 
@@ -388,13 +401,15 @@ class DefinedMeaningModel {
 	 */
 	public function getTitleObject() {
 		if ( $this->titleObject == null ) {
+			$definingExpression = $this->getDefiningExpression();
 			$id = $this->getId();
 			
-			if ( is_null( $id ) ) {
+			if ( is_null( $definingExpression ) or is_null( $id ) ) {
 				return null;
 			}
 
-			$text = "DefinedMeaning:" . $id;
+			$definingExpressionAsTitle = str_replace( " ", "_", $definingExpression );
+			$text = "DefinedMeaning:" . $definingExpressionAsTitle . "_($id)";
 			$titleObject = Title::newFromText( $text );
 			$this->titleObject = $titleObject;
 		}
@@ -419,6 +434,33 @@ class DefinedMeaningModel {
 		$prefix = $dataset->getPrefix();
 		$name = $this->getSyntransByLanguageCode( $languageCode, $fallbackCode );
 		return $skin->makeLinkObj( $title, $name , "dataset=$prefix" );
+	}
+
+/** 
+	 * 
+	 * Splits title of the form "Abc (123)" into text and number
+	 * components.
+	 *
+	 * @param String the title to analyze
+	 * @return Array of the two components or null.
+	 *
+	 */
+	public static function splitTitleText( $titleText ) {
+		$bracketPosition = strrpos( $titleText, "(" );
+		if ( $bracketPosition === false )
+			return null; # Defined Meaning ID is missing from title string
+		$rv = array();
+		if ( $bracketPosition > 0 ) {
+			$definingExpression = substr( $titleText, 0, $bracketPosition - 1 );
+			$definingExpression = str_replace( "_", " ", $definingExpression );
+		} else {
+			$definingExpression = null;
+		}
+		$definedMeaningId = substr( $titleText, $bracketPosition + 1, strlen( $titleText ) - $bracketPosition - 2 );
+
+		$rv["expression"] = $definingExpression;
+		$rv["id"] = (int)$definedMeaningId;
+		return $rv;
 	}
 
 	/** 
@@ -449,8 +491,10 @@ class DefinedMeaningModel {
 	}
 
 	public function getWikiTitle() {
+		$dmEx = $this->getDefiningExpression();
 		$dmId = $this->getId();
-		$dmTitle = "DefinedMeaning:$dmId";
+		$dmTitle = "DefinedMeaning:$dmEx ($dmId)";
+		$dmTitle = str_replace( " ", "_", $dmTitle );
 		return $dmTitle;
 	}
 

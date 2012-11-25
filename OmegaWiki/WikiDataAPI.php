@@ -795,7 +795,8 @@ function addDefinedMeaning( $definingExpressionId ) {
 	
 	// wfDebug( "addDefinedMeaning(): after $definedMeaningId has been inserted in the database" ); 
 
-	$pageId = createPage( NS_DEFINEDMEANING, getPageTitle( $definedMeaningId ) );
+	$expression = getExpression( $definingExpressionId );
+	$pageId = createPage( NS_DEFINEDMEANING, getPageTitle( "$expression->spelling ($definedMeaningId)" ) );
 	createInitialRevisionForPage( $pageId, 'Created by adding defined meaning' );
 	
 	return $definedMeaningId;
