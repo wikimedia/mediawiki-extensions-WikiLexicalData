@@ -46,11 +46,6 @@ $wgResourceModules['ext.Wikidata'] = $resourcePathArray + array(
 	'styles' => array( 'OmegaWiki/resources/suggest.css', 'OmegaWiki/resources/tables.css' )
 );
 
-$wgResourceModules['ext.Wikidata.rtl'] = $resourcePathArray + array(
-	'scripts' => 'OmegaWiki/resources/omegawiki-ajax.js',
-	'styles' => array( 'OmegaWiki/resources/suggest-rtl.css', 'OmegaWiki/resources/tables-rtl.css' )
-);
-
 $wgResourceModules['ext.Wikidata.edit'] = $resourcePathArray + array(
 	'scripts' => 'OmegaWiki/resources/omegawiki-edit.js'
 );
@@ -178,7 +173,6 @@ $wgSpecialPages['ImportTSV'] = 'SpecialImportTSV';
 $wgSpecialPages['ow_statistics'] = 'SpecialOWStatistics';
 
 $wgHooks['BeforePageDisplay'][] = 'WikidataHooks::onBeforePageDisplay';
-$wgHooks['SkinTemplateTabs'][] = 'WikidataHooks::onSkinTemplateTabs';
 $wgHooks['GetPreferences'][] = 'WikidataHooks::onGetPreferences';
 $wgHooks['ArticleFromTitle'][] = 'WikidataHooks::onArticleFromTitle';
 $wgHooks['CustomEditor'][] = 'WikidataHooks::onCustomEditor';
