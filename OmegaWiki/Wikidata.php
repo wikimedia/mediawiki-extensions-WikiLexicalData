@@ -263,7 +263,7 @@ $title = $this->getTitle();
 	}
 	
 	protected function outputEditFooter() {
-		global $wgOut;
+		global $wgOut, $wgUser;
 		
 		$wgOut->addHTML(
 			'<div class="option-panel">' .
@@ -277,7 +277,9 @@ $title = $this->getTitle();
 		
 		$wgOut->addHTML( '</form>' );
 
-		$wgOut->wrapWikiMsg( "<div id=\"mw-anon-edit-warning\">\n$1</div>", 'anoneditwarning' );
+		if ( $wgUser->isAnon() ) {
+			$wgOut->wrapWikiMsg( "<div id=\"mw-anon-edit-warning\">\n$1</div>", 'anoneditwarning' );
+		}
 
 		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
 	}
