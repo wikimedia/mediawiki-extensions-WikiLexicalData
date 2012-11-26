@@ -43,7 +43,8 @@ $resourcePathArray = array(
 
 $wgResourceModules['ext.Wikidata'] = $resourcePathArray + array(
 	'scripts' => 'OmegaWiki/resources/omegawiki-ajax.js',
-	'styles' => array( 'OmegaWiki/resources/suggest.css', 'OmegaWiki/resources/tables.css' )
+	'styles' => array( 'OmegaWiki/resources/suggest.css', 'OmegaWiki/resources/tables.css' ),
+	'dependencies' => array( 'jquery.tablesorter' )
 );
 
 $wgResourceModules['ext.Wikidata.edit'] = $resourcePathArray + array(

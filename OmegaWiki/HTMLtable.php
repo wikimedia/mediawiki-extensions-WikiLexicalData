@@ -62,22 +62,11 @@ function addChildNodesToRows( TableHeaderNode $headerNode, &$rows, $currentDepth
 			$skipRows = count( $rows );
 			$columnIndex = $childNode->column + $columnOffset;
 			$sort = 'sortTable(this, ' . $skipRows . ', ' . $columnIndex . ')';
-			$onclick = ' onclick= "' . $sort . '"';
-			if ( $leftmost ) {		# Are we the leftmost column?
-				$leftsort = EOL .
-					'<script type="text/javascript"> jQuery( function() { toSort("' .
-					$idPath->getId() . '-h" , ' . $skipRows . ',' .
-					$columnIndex . ') } ); </script>'
-					. EOL;
-				$leftmost = False; 	# There can be only one.
-			} else {
-				$leftsort = "";
-			}
 
-			$class = ' class="' . $type . ' sortable"' . $onclick;
+			$class = ' class="' . $type . ' ' . $attribute->id . '"';
 		}
 		else {
-			$class = '';
+			$class = ' class="' . $attribute->id . '"';
 			$sort = '';
 			$leftsort = '';
 		}

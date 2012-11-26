@@ -740,14 +740,19 @@ class RecordSetTableEditor extends RecordSetEditor {
 		$columnOffset = $this->allowRemove ? 1 : 0;
 		$headerRows = getStructureAsTableHeaderRows( $visibleStructure, $columnOffset, $idPath );
 
+		$result .= Xml::openElement( 'thead' );
 		if ( $this->allowRemove )
 			$headerRows[0] = '<th class="remove" rowspan="' . count( $headerRows ) . '"><img src="' . $wgScriptPath . '/extensions/Wikidata/Images/Delete.png"  title="' . wfMsgSc( "RemoveHint" ) . '" alt="' . wfMsgSc( "Remove" ) . '"/></th>' . $headerRows[0];
 
 		if ( $this->repeatInput )
 			$headerRows[0] .= '<th class="add" rowspan="' . count( $headerRows ) . '">Input rows</th>';
 
-		foreach ( $headerRows as $headerRow )
+		foreach ( $headerRows as $headerRow ) {
 			$result .= '<tr id="' . $idPath->getId() . '" ' .  $rowAttributes . '>' . $headerRow . '</tr>' . EOL;
+		}
+
+		$result .= Xml::closeElement( 'thead' );
+		$result .= Xml::openElement( 'tbody' );
 
 		$recordCount = $value->getRecordCount();
 
@@ -777,10 +782,16 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 			$result .= '</tr>' . EOL;
 		}
+
+		$result .= Xml::closeElement( 'tbody' );
+
+		// the part in the "tfoot" does not get sorted by jquery.tablesorter
+		$result .= Xml::openElement( 'tfoot' );
 		
 		if ( $this->allowAddController->check( $idPath ) )
 			$result .= $this->getAddRowAsHTML( $idPath, $this->repeatInput, $this->allowRemove );
 
+		$result .= Xml::closeElement( 'tfoot' );
 		$result .= '</table>' . EOL;
 
 		return $result;
@@ -1080,13 +1091,12 @@ class LanguageEditor extends ScalarEditor {
 }
 
 /**
- * Shows one language at a time, but when clicked, it shows
- * a drop-down menu with other available languages
+ * Shows one language at a time,
+ * and adds tabs showing other available languages
  * (for a given expression as defined in IdStack)
- * the dropdown is generated with jQuery from a list <ul>.
  * $value is the currently displayed language
  */
-class DropdownLanguageEditor extends ScalarEditor {
+class TabLanguageEditor extends ScalarEditor {
 	public function getViewHTML( IdStack $idPath, $value ) {
 		global $wgRequest;
 		$dc = wdGetDataSetContext();
@@ -1106,16 +1116,8 @@ class DropdownLanguageEditor extends ScalarEditor {
 			}
 		}
 
-		if ( count($languageIdList) > 0 ) {
-			// there are other languages as alternative, prepare the dropdown
-			$output .= Html::openElement('span', array('class' => 'wd-dropdown') ) ;
-		}
+		if ( ! empty ( $languageIdList ) ) {
 
-		// displays the name of the current language
-		// this is the only thing that is displayed if there are no other language available
-		$output .= languageIdAsText( $value ) ;
-
-		if ( count($languageIdList) > 0 ) {
 			// there might be duplicates
 			$languageIdList = array_unique ( $languageIdList ) ;
 
@@ -1126,37 +1128,54 @@ class DropdownLanguageEditor extends ScalarEditor {
 			}
 			asort($languageNameList);
 
-			// build the list <ul>
-			$output .= ' ▿' ;
+			$output .= Html::openElement('span', array('class' => 'wd-tablist' ));
+			$output .= wfMsg( 'ow_OtherLanguages' );
 
 			// now the <li> definining the menu
 			// display: none is also in the .css, but defined here to prevent the list to show
 			// when the .css is not yet loaded.
-			$output .= Html::openElement('ul', array('class' => 'wd-dropdownlist', 'style' => 'display: none;' ));
 			foreach ( $languageNameList as $languageId => $languageName ) {
-				$output .= Html::openElement('li');
+				$output .= Html::openElement('span', array('class' => 'wd-tabitem' ));
 
+				// create links to other available languages
 				$urlOptions = array( 'explang' => $languageId );
 				if ( $wgRequest->getVal("action") == "edit" ) {
 					$urlOptions['action'] = "edit" ;
 				}
 				$aHref = $title->getLocalURL( $urlOptions ) ;
 				$output .= Html::rawElement('a', array('href' => $aHref), $languageName );
-				$output .= Html::closeElement('li');
+
+				$output .= Html::closeElement('span'); // wd-tabitem
 			}
-			$output .= Html::closeElement('ul');
-			$output .= Html::closeElement('span');
-		}
+			$output .= Html::closeElement('span'); // wd-tablist
+			$output .= Html::rawElement('br');
+			$output .= Html::rawElement('br');
+		} // if not empty other languages
+
+		// Add the "Language: German" part
+		$output .= Html::openElement('span', array('class' => 'wd-languagecurrent') ) ;
+		$output .= wfMsg( 'ow_Language' ) . ": " . languageIdAsText($value) ;
+		$output .= Html::closeElement('span');
+
 
 		return $output;
 	}
 
 	public function getEditHTML( IdStack $idPath, $value ) {
+		// is this used?
 		return getSuggest( $this->updateId( $idPath->getId() ), "language" );
 	}
 	
 	public function add( IdStack $idPath ) {
-		return getSuggest( $this->addId( $idPath->getId() ), "language" );
+		$output = "";
+		$output .= Html::openElement('div', array('class' => 'wd-languageadd') ) ;
+		$output .= wfMsg( 'ow_Language' ) . ": " ;
+		$output .= getSuggest( $this->addId( $idPath->getId() ), "language" );
+		$output .= Html::closeElement('div');
+
+		return $output;
+
+//		return getSuggest( $this->addId( $idPath->getId() ), "language" );
 	}
 
 	public function getInputValue( $id ) {
@@ -1818,7 +1837,8 @@ class RecordListEditor extends RecordEditor {
 	protected function childHeader( Editor $editor, Attribute $attribute, $class, $attributeId ) {
 		$expansionPrefix = $this->getExpansionPrefix( $class, $attributeId );
 		$this->setExpansionByEditor( $editor, $class );
-		return '<div class="level' . $this->headerLevel . '"><span id="collapse-' . $attributeId . '" class="toggle ' . addCollapsablePrefixToClass( $class ) . '" onclick="toggle(this, event);">' . $expansionPrefix . '&#160;' . $attribute->name . '</span></div>' . EOL;
+//		return '<div class="level' . $this->headerLevel . '"><span id="collapse-' . $attributeId . '" class="toggle ' . addCollapsablePrefixToClass( $class ) . '" >' . $expansionPrefix . '&#160;' . $attribute->name . '</span></div>' . EOL;
+		return '<div class="level' . $this->headerLevel . '"><span class="toggle ' . addCollapsablePrefixToClass( $class ) . '" >' . $expansionPrefix . '&#160;' . $attribute->name . '</span></div>' . EOL;
 	}
 	
 	protected function viewChild( Editor $editor, IdStack $idPath, $value, Attribute $attribute, $class, $attributeId ) {
@@ -1992,13 +2012,30 @@ class PopUpEditor extends WrappingEditor {
 	}
 
 	protected function startToggleCode( $attributeId ) {
-		return
-			'<a id="popup-' . $attributeId . '-link" style="cursor: pointer; font-weight: bolder; font-size: 90%; white-space: nowrap" onclick="togglePopup(this, event);">' . $this->linkCaption . ' »</a>' . EOL .
-			'<div><div id="popup-' . $attributeId . '-toggleable" style="position: absolute; border: 1px solid #000000; display: none; background-color: white; padding: 4px;">' . EOL;
+		$id = 'popup-' . $attributeId . '-link' ;
+		$result = HTML::openElement ('a', array( 'class' => "togglePopup", 'id' => $id));
+
+		$popupShow = HTML::element('span', array(
+			'class' => "popupshow"
+			) , wfMsg( 'showtoc' ) . " ▿"  ) ;
+		$popupHide = HTML::element('span', array(
+			'class' => "popuphide",
+			'style' => "display:none;"
+			) , wfMsg( 'hidetoc' ) . " ▵"  ) ;
+
+		$result .= $popupShow . $popupHide ;
+		$result .= HTML::closeElement('a');
+		$result .= EOL;
+
+		$id = 'popup-' . $attributeId . '-toggleable' ;
+		$result .= HTML::openElement ('div', array( 'class' => "popupToggleable", 'id' => $id ));
+		$result .= EOL;
+
+		return $result ;
 	}
 
 	protected function endToggleCode( $attributeId ) {
-		return '</div></div>' . EOL;
+		return  HTML::closeElement('div') . EOL;
 	}
 }
 
@@ -2056,8 +2093,9 @@ class RecordSetListEditor extends RecordSetEditor {
 				if ( $this->isCollapsible ) {
 					// collapsible element
 					$class = 'toggle ' . addCollapsablePrefixToClass( $captionClass ) ;
-					$id = 'collapse-' . $recordId ;
-					$attribs = array('class' => $class , 'id' => $id , 'onclick' => 'toggle(this, event);' );
+//					$id = 'collapse-' . $recordId ;
+//					$attribs = array('class' => $class , 'id' => $id );
+					$attribs = array('class' => $class );
 				}
 				$result .= HTML::rawElement ('span', $attribs, $text ) ;
 				$result .= HTML::closeElement ('div');
@@ -2105,7 +2143,14 @@ class RecordSetListEditor extends RecordSetEditor {
 				$this->setExpansion( $this->childrenExpanded, $valueClass );
 	
 				$idPath->pushAttribute( $captionAttribute );
-				$result .= '<li><div class="level' . $this->headerLevel . '"><span id="collapse-' . $recordId . '" class="toggle ' . addCollapsablePrefixToClass( $captionClass ) . '" onclick="toggle(this, event);">' . $captionExpansionPrefix . '&#160;' . $this->captionEditor->edit( $idPath, $record->getAttributeValue( $captionAttribute ) ) . '</span></div>' . EOL;
+//				$result .= '<li><div class="level' . $this->headerLevel . '"><span id="collapse-' . $recordId . '" class="toggle ' . addCollapsablePrefixToClass( $captionClass ) . '">' . $captionExpansionPrefix . '&#160;' . $this->captionEditor->edit( $idPath, $record->getAttributeValue( $captionAttribute ) ) . '</span></div>' . EOL;
+				$result .= '<li><div class="level' . $this->headerLevel . '"><span class="';
+				if ( $this->isCollapsible ) {
+					// add toggle as a class
+					$result .= 'toggle ' . addCollapsablePrefixToClass( $captionClass );
+				}
+				$result .= '">' . $captionExpansionPrefix . '&#160;' . $this->captionEditor->edit( $idPath, $record->getAttributeValue( $captionAttribute ) ) . '</span></div>' . EOL;
+
 				$idPath->popAttribute();
 	
 				$idPath->pushAttribute( $valueAttribute );
@@ -2123,7 +2168,8 @@ class RecordSetListEditor extends RecordSetEditor {
 	
 				$this->setExpansion( true, $class );
 
-				$result .= '<li><div class="level' . $this->headerLevel . '">' . '<span id="collapse-' . $recordId . '" class="toggle ' . addCollapsablePrefixToClass( $class ) . '" onclick="toggle(this, event);">' . $this->getExpansionPrefix( $idPath->getClass(), $idPath->getId() ) . $this->captionEditor->add( $idPath ) . '</div></span>' . EOL;
+//				$result .= '<li><div class="level' . $this->headerLevel . '">' . '<span id="collapse-' . $recordId . '" class="toggle ' . addCollapsablePrefixToClass( $class ) . '">' . $this->getExpansionPrefix( $idPath->getClass(), $idPath->getId() ) . $this->captionEditor->add( $idPath ) . '</div></span>' . EOL;
+				$result .= '<li><div class="level' . $this->headerLevel . '">' . '<span class="toggle ' . addCollapsablePrefixToClass( $class ) . '">' . $this->getExpansionPrefix( $idPath->getClass(), $idPath->getId() ) . $this->captionEditor->add( $idPath ) . '</div></span>' . EOL;
 				$idPath->popAttribute();
 	
 				$idPath->pushAttribute( $valueAttribute );
@@ -2152,7 +2198,12 @@ class RecordSetListEditor extends RecordSetEditor {
 
 		$this->setExpansion( true, $class );
 
-		$result .= '<li><div class="level' . $this->headerLevel . '"><span id="collapse-' . $recordId . '" class="toggle ' . addCollapsablePrefixToClass( $class ) . '" onclick="toggle(this, event);">' . $this->getExpansionPrefix( $idPath->getClass(), $idPath->getId() ) . '&#160;' . $this->captionEditor->add( $idPath ) . '</span></div>' . EOL;
+//		$result .= '<li><div class="level' . $this->headerLevel . '"><span id="collapse-' . $recordId . '" class="toggle ' . addCollapsablePrefixToClass( $class ) . '">' . $this->getExpansionPrefix( $idPath->getClass(), $idPath->getId() ) . '&#160;' . $this->captionEditor->add( $idPath ) . '</span></div>' . EOL;
+		$result .= '<li><div class="level' . $this->headerLevel . '"><span class="';
+		if ( $this->isCollapsible ) {
+			$result .= 'toggle ' . addCollapsablePrefixToClass( $class ) ;
+		}
+		$result .= '">' . $this->getExpansionPrefix( $idPath->getClass(), $idPath->getId() ) . '&#160;' . $this->captionEditor->add( $idPath ) . '</span></div>' . EOL;
 		$idPath->popAttribute();
 
 		$idPath->pushAttribute( $valueAttribute );
@@ -2205,11 +2256,11 @@ class RecordSpanEditor extends RecordEditor {
 			$idPath->pushAttribute( $attribute );
 			$attributeValue = $editor->view( $idPath, $value->getAttributeValue( $attribute ) );
 			
-			if ( $this->showAttributeNames )
+			if ( $this->showAttributeNames ) {
 				$field = $attribute->name . $this->valueSeparator . $attributeValue;
-			else
+			} else {
 				$field = $attributeValue;
-			
+			}
 			if ( $field != "" )
 				$fields[] = $field;
 					
@@ -2227,7 +2278,11 @@ class RecordSpanEditor extends RecordEditor {
 				$attribute = $editor->getAttribute();
 				$idPath->pushAttribute( $attribute );
 				$attributeId = $idPath->getId();
-				$fields[] = $attribute->name . $this->valueSeparator . $editor->add( $idPath );
+				if ( $this->showAttributeNames ) {
+					$fields[] = $attribute->name . $this->valueSeparator . $editor->add( $idPath );
+				} else {
+					$fields[] = $editor->add( $idPath );
+				}
 				$editor->add( $idPath );
 				$idPath->popAttribute();
 			}
@@ -2242,7 +2297,11 @@ class RecordSpanEditor extends RecordEditor {
 		foreach ( $this->getEditors() as $editor ) {
 			$attribute = $editor->getAttribute();
 			$idPath->pushAttribute( $attribute );
-			$fields[] = $attribute->name . $this->valueSeparator . $editor->view( $idPath, $value->getAttributeValue( $attribute ) );
+			if ( $this->showAttributeNames ) {
+				$fields[] = $attribute->name . $this->valueSeparator . $editor->view( $idPath, $value->getAttributeValue( $attribute ) );
+			} else {
+				$fields[] = $editor->view( $idPath, $value->getAttributeValue( $attribute ) );
+			}
 			$idPath->popAttribute();
 		}
 

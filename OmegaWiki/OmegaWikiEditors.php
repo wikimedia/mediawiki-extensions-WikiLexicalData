@@ -768,8 +768,9 @@ function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 
 	if ( $viewInformation->filterLanguageId == 0 ) {
 		// show all languages
-		$expressionEditor = new RecordSpanEditor( $o->expression, ': ', ' - ' );
-		$expressionEditor->addEditor( new DropdownLanguageEditor( $o->language, new SimplePermissionController( false ), true ) );
+		$showAttributeNames = false;
+		$expressionEditor = new RecordSpanEditor( $o->expression, ': ', ' - ', $showAttributeNames );
+		$expressionEditor->addEditor( new TabLanguageEditor( $o->language, new SimplePermissionController( false ), true ) );
 
 		$expressionsEditor = new RecordSetListEditor(
 			$o->expressions,

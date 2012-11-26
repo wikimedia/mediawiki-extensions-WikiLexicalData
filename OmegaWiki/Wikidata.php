@@ -7,6 +7,8 @@ require_once( "WikiDataAPI.php" );
 require_once( "Utilities.php" );
 
 class DefaultWikidataApplication {
+	protected $title;
+
 	protected $showRecordLifeSpan;
 	protected $transaction;
 	protected $queryTransactionInformation;
@@ -22,11 +24,13 @@ class DefaultWikidataApplication {
 	// Show a panel to select expressions from available data-sets
 	protected $showDataSetPanel = false;
 
-	public function __construct() {
+	public function __construct( $title ) {
 		global $wgFilterLanguageId,
 			$wgShowClassicPageTitles,
 			$wgPropertyToColumnFilters;
-			
+
+		$this->title = $title;
+
 		if ( isset( $wgFilterLanguageId ) )
 			$this->filterLanguageId = $wgFilterLanguageId;
 			
@@ -37,6 +41,9 @@ class DefaultWikidataApplication {
 			$this->propertyToColumnFilters = $wgPropertyToColumnFilters;
 	}
 
+	public function getTitle() {
+		return $this->title;
+	}
 
 	protected function outputViewHeader() {
 		global
@@ -51,19 +58,17 @@ class DefaultWikidataApplication {
 			$wgOut;
 		
 		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
-		$wgOut->addHTML( "<script language='javascript'>/* <![CDATA[ */\nexpandEditors();\n/* ]]> */</script>" );
 	}
 	
 	public function view() {
-		global
-			$wgOut, $wgTitle, $wgUser;
+		global $wgOut, $wgUser;
 
 		$wgOut->enableClientCache( false );
 
-		$title = $wgTitle->getPrefixedText();
+		$title = $this->title->getPrefixedText();
 
 		if ( !$this->showClassicPageTitles ) {
-			$title = $this->getTitle();
+			$title = $this->title;
 		}
 
 		$wgOut->setPageTitle( $title );
@@ -83,7 +88,7 @@ class DefaultWikidataApplication {
 	}
 	
 	protected function getDataSetPanel() {
-		global $wgTitle, $wgUser;
+		global $wgUser;
 		$dc = wdGetDataSetContext();
 		$ow_datasets = wfMsgSc( "datasets" );
 		$html = "<div class=\"dataset-panel\">"; ;
@@ -96,7 +101,7 @@ class DefaultWikidataApplication {
 			$prefix = $dataset->getPrefix();
 
 			$class = $active ? 'dataset-panel-active' : 'dataset-panel-inactive';
-			$slot = $active ? "$name" : $sk->makeLinkObj( $wgTitle, $name, "dataset=$prefix" );
+			$slot = $active ? "$name" : $sk->makeLinkObj( $this->title, $name, "dataset=$prefix" );
 			$html .= "<tr><td class=\"$class\">$slot</td></tr>";
 		}
 		$html .= "</table>";
@@ -118,8 +123,7 @@ class DefaultWikidataApplication {
 	}
 	
 	public function saveWithinTransaction() {
-		global
-			$wgTitle, $wgUser, $wgRequest;
+		global $wgUser, $wgRequest;
 
 		$summary = $wgRequest->getText( 'summary' );
 
@@ -130,11 +134,24 @@ class DefaultWikidataApplication {
 		$this->save( new QueryAtTransactionInformation( $wgRequest->getInt( 'transaction' ), false ) );
 
 		// Update page caches
-		$wgTitle->invalidateCache();
+		$this->title->invalidateCache();
 
 		// Add change to RC log
+/*
+
+		if ( $wgTitle->getNamespace() == NS_DEFINEDMEANING ) {
+			// for definedmeaning, append a corresponding expression to look nicer in RC
+			$definedMeaningId = (int)$wgTitle->getText();
+
+			$expression = 
+		} else {
+			RecentChange::notifyEdit( $now, $wgTitle, false, $wgUser, $summary, 0, $now, false, '', 0, 0, 0 );
+		}
+
+$title = $this->getTitle();
+*/
 		$now = wfTimestampNow();
-		RecentChange::notifyEdit( $now, $wgTitle, false, $wgUser, $summary, 0, $now, false, '', 0, 0, 0 );
+		RecentChange::notifyEdit( $now, $this->title, false, $wgUser, $summary, 0, $now, false, '', 0, 0, 0 );
 	}
 
 	/**
@@ -176,15 +193,14 @@ class DefaultWikidataApplication {
 	}
 	
 	public function history() {
-		global
-			$wgOut, $wgTitle, $wgRequest;
+		global $wgOut, $wgRequest;
 			
 		$wgOut->enableClientCache( false );
 
-		$title = $wgTitle->getPrefixedText();
+		$title = $this->title->getPrefixedText();
 
 		if ( !$this->showClassicPageTitles )
-			$title = $this->getTitle();
+			$title = $this->title;
 
 		$wgOut->setPageTitle( wfMsgSc( "history", $title ) );
 
@@ -227,16 +243,18 @@ class DefaultWikidataApplication {
 	}
 	
 	protected function outputEditHeader() {
-		global
-			$wgOut, $wgTitle;
+		global $wgOut, $wgUser;
 			
-		$title = $wgTitle->getPrefixedText();
+		$title = $this->title->getPrefixedText();
 
 		if ( !$this->showClassicPageTitles )
-			$title = $this->getTitle();
+			$title = $this->title;
 
 		$wgOut->setPageTitle( $title );
 		$wgOut->setPageTitle( wfMsg( "editing", $title ) );
+		if ( $wgUser->isAnon() ) {
+			$wgOut->wrapWikiMsg( "<div id=\"mw-anon-edit-warning\">\n$1</div>", 'anoneditwarning' );
+		}
 
 		$wgOut->addHTML(
 			'<form method="post" action="">' .
@@ -245,8 +263,7 @@ class DefaultWikidataApplication {
 	}
 	
 	protected function outputEditFooter() {
-		global
-			$wgOut;
+		global $wgOut;
 		
 		$wgOut->addHTML(
 			'<div class="option-panel">' .
@@ -259,15 +276,10 @@ class DefaultWikidataApplication {
 		);
 		
 		$wgOut->addHTML( '</form>' );
+
+		$wgOut->wrapWikiMsg( "<div id=\"mw-anon-edit-warning\">\n$1</div>", 'anoneditwarning' );
+
 		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
-		$wgOut->addHTML( "<script language='javascript'><!--\nexpandEditors();\n--></script>" );
-	}
-	
-	public function getTitle() {
-		global
-			$wgTitle;
-			
-		return $wgTitle->getText();
 	}
 }
 

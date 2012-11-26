@@ -466,18 +466,10 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 	} else {
 		// default: is there an expression in the user language?
 		$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
-		$noResult = false ;
-		if ( $userLanguageId != "" ) {
-			$sql = $sqlbase . " AND language_id=" . $userLanguageId ;
-			$queryResult = $dbr->query( $sql );
-			if ( $dbr->numRows( $queryResult ) == 0 ) {
-				$noResult = true ;
-			}
-		} else {
-			$noResult = true ;
-		}
+		$sql = $sqlbase . " AND language_id=" . $userLanguageId ;
+		$queryResult = $dbr->query( $sql );
 
-		if ( $noResult ) {
+		if ( $dbr->numRows( $queryResult ) == 0 ) {
 			// nothing in the user language, any language will do
 			$sql = $sqlbase . " LIMIT 1";
 			$queryResult = $dbr->query( $sql );

@@ -102,50 +102,67 @@
 	width: auto;
 }
 
-span.wd-dropdown {
-	position: relative;
-	border-radius: 5px;
-/*
- * background-color: #ffe0eb;
- */
+
+.wd-languagecurrent {
+	font-size:large ;
+	background-color: #ffe0eb;
+	border-style:solid; 
+	border-width:1px;
+	border-color:grey;
+/* 	top and bottom are 5px, left and right are 10px */
+	padding:5px 10px;
+	border-radius: 100px;
+	-moz-border-radius: 100px;
 }
 
-span.wd-dropdown:hover {
-	background-color: #fdeeff;
+.wd-tablist {
+	white-space: nowrap;
+	font-size: small;
+	color:grey;
 }
 
-ul.wd-dropdownlist {
-	list-style: none;
-	position: absolute;
-	left: 0;
-/*
-	top: 20px;
-*/
-	margin: 0;
-	padding-top: 5px;
-	padding-left: 5px;
-	padding-right: 10px;
-	padding-bottom: 2px;
-	display: none;
-	float: left;
-	z-index: 1;
-	background-color: #fdeeff;
-	border-style:none;
-	font-size:90% ;
-	box-shadow:5px 5px 20px black;
-	border-radius: 5px;
+.wd-tabitem {
+	white-space: nowrap;
 }
 
-ul.wd-dropdownlist li a{
+.wd-tabitem a {
 	text-decoration: none;
-	color: gray;
+	color: #4682B4;
+	padding: 1em;
 }
-ul.wd-dropdownlist li a:hover{
+
+.wd-tabitem a:hover {
+	color: blue;
+	text-shadow:1px 1px 2px blue;
+}
+
+.wd-tabitem-selected {
+	font-weight: bold;
 	color: black;
 }
+.wd-tabitem-selected:hover {
+	cursor: default;
+}
 
-.level2 {
-	font-size:150% ;
+.wd-previousArrow {
+	font-weight: bold;
+}
+.wd-previousArrow:hover {
+	cursor: pointer;
+	text-shadow:1px 1px 2px blue;
+}
+
+.wd-nextArrow {
+	font-weight: bold;
+	float:right;
+}
+.wd-nextArrow:hover {
+	cursor: pointer;
+	text-shadow:1px 1px 2px blue;
+}
+
+.wd-languageadd {
+	font-size:large ;
 	background-color: #ffe0eb;
 	border-style:solid;
 	border-width:1px;
@@ -193,6 +210,21 @@ td.add {
 	font-size: 80%;*/
 }
 
+.togglePopup {
+	cursor: pointer;
+	font-weight: bolder;
+	font-size: 90%;
+	white-space: nowrap;
+}
+
+.popupToggleable {
+	position: absolute;
+	border: 1px solid #000000;
+	display: none;
+	background-color: white;
+	padding: 4px;
+}
+
 /* Attribute list */
 
 ul.collapsable-items {
@@ -204,6 +236,13 @@ ul.collapsable-items {
 .collapsable-items .toggle {
 	margin-left: 0px;
 	text-indent: 0px;
+}
+
+.add img {
+	opacity:0.7;
+}
+.add img:hover {
+	opacity:1;
 }
 
 /* Option panel */

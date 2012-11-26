@@ -30,6 +30,22 @@ window.leftTrim = function (sString) {
 	return sString;
 }
 
+// remove accents for comparison
+window.normalizeText = function (text) {
+	text = text.replace(new RegExp("[àáâãäå]", 'g'),"a");
+	text = text.replace(new RegExp("æ", 'g'),"ae");
+	text = text.replace(new RegExp("ç", 'g'),"c");
+	text = text.replace(new RegExp("[èéêë]", 'g'),"e");
+	text = text.replace(new RegExp("[ìíîï]", 'g'),"i");
+	text = text.replace(new RegExp("ñ", 'g'),"n");
+	text = text.replace(new RegExp("[òóôõö]", 'g'),"o");
+	text = text.replace(new RegExp("œ", 'g'),"oe");
+	text = text.replace(new RegExp("[ùúûü]", 'g'),"u");
+	text = text.replace(new RegExp("[ýÿ]", 'g'),"y");
+	return text ;
+}
+
+
 /*
 * suggests a list (of languages, classes...) according to the letters typed in the query field
 * or to the arrows "next" "previous"
@@ -150,6 +166,10 @@ window.stopEventHandling = function (event) {
 		event.preventDefault();
 	else
 		event.returnValue = false;
+}
+
+window.stripSuffix = function (source, suffix) {
+	return source.substr(0, source.length - suffix.length);
 }
 
 window.suggestLinkClicked = function (event, suggestLink) {

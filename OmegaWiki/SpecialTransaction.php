@@ -83,7 +83,6 @@ class SpecialTransaction extends SpecialPage {
 			);
 
 		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
-		$wgOut->addHTML( "<script language='javascript'>/* <![CDATA[ */\nexpandEditors();\n/* ]]> */</script>" );
 	}
 }
 
