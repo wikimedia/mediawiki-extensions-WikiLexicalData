@@ -47,7 +47,7 @@ jQuery(document).ready(function( $ ) {
 		$(this).children("span").toggle();
 		$(this).parent().next().fadeToggle('fast');
 	});
-	$("a").click(function(event) {
+	$(".toggle").find("a").click(function(event) {
 		// avoid the toggling if a link is clicked
 		event.stopPropagation();
 	} );
