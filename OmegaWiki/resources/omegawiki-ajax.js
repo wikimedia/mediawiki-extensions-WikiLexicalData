@@ -9,11 +9,11 @@ jQuery(document).ready(function( $ ) {
 	
 	if(( wgAction == 'view' ) || ( wgAction == 'history' )) {
 		// simulate a click on the first column (sort on languages).
-		$("table.wiki-data-table").find("th:first").click();
+		$("table.wiki-data-table").find("th.headerSort:first").click();
 	}
 	if( wgAction == 'edit' ) {
 		// simulate a click on the second column (sort on languages).
-		$("table.wiki-data-table").find("th:first").next("th").click();
+		$("table.wiki-data-table").find("th.headerSort:first").next("th").click();
 	}
 	
 	// now disable sorting for users
