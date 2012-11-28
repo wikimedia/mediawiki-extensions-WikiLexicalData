@@ -8,7 +8,7 @@ class WikidataEditPage extends EditPage {
 		global $wdHandlerClasses;
 		$ns = $this->mTitle->getNamespace();
 		$handlerClass = $wdHandlerClasses[ $ns ];
-		$handlerInstance = new $handlerClass();
+		$handlerInstance = new $handlerClass( $this->mTitle );
 		$handlerInstance->edit();
 
 		wfProfileOut( __METHOD__ );

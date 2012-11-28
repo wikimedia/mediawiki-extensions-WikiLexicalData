@@ -8,7 +8,7 @@ class WikidataArticle extends Article {
 		global $wdHandlerClasses;
 		$ns = $this->mTitle->getNamespace();
 		$handlerClass = $wdHandlerClasses[ $ns ];
-		$handlerInstance = new $handlerClass();
+		$handlerInstance = new $handlerClass( $this->mTitle );
 		$handlerInstance->view();
 
 		wfProfileOut( __METHOD__ );
