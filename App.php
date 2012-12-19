@@ -2,6 +2,10 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 
+$dir = dirname( __FILE__ ) . '/';
+
+require_once( $dir . 'OmegaWiki/Wikidata.php' );
+
 $wgExtensionCredits['other'][] = array(
 	'path'            => __FILE__,
 	'name'            => 'Wikidata',
@@ -12,7 +16,7 @@ $wgExtensionCredits['other'][] = array(
 		'Maarten van Hoof',
 		'André Malafaya Baptista'
 	),
-	'url'             => 'http://meta.wikimedia.org/wiki/Wikidata',
+	'url'             => 'http://www.mediawiki.org/wiki/Extension:Wikidata',
 	'descriptionmsg'  => 'wikidata-desc',
 );
 
@@ -26,11 +30,12 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Alan Smithee',
 );
 
-$dir = dirname( __FILE__ ) . '/';
+/* the API "wikidata" does not work.
+ * Should be repaired, if someone has the courage to go through
+ * the undocumented code...
+ */
+//$wgAPIModules['wikidata'] = 'ApiWikiData';
 
-require_once( $dir . 'OmegaWiki/Wikidata.php' );
-
-$wgAPIModules['wikidata'] = 'ApiWikiData';
 $wgExtensionMessagesFiles['Wikidata'] = $dir . 'Wikidata.i18n.php';
 
 
@@ -41,15 +46,22 @@ $resourcePathArray = array(
 	'remoteExtPath' => 'Wikidata'
 );
 
-$wgResourceModules['ext.Wikidata'] = $resourcePathArray + array(
-	'scripts' => 'OmegaWiki/resources/omegawiki-ajax.js',
+// separated css with position "top" to avoid
+// so-called Flash of unstyled content
+$wgResourceModules['ext.Wikidata.css'] = $resourcePathArray + array(
 	'styles' => array( 'OmegaWiki/resources/suggest.css', 'OmegaWiki/resources/tables.css' ),
+	'position' => 'top'
+);
+
+$wgResourceModules['ext.Wikidata.ajax'] = $resourcePathArray + array(
+	'scripts' => 'OmegaWiki/resources/omegawiki-ajax.js',
 	'dependencies' => array( 'jquery.tablesorter' )
 );
 
 $wgResourceModules['ext.Wikidata.edit'] = $resourcePathArray + array(
 	'scripts' => 'OmegaWiki/resources/omegawiki-edit.js'
 );
+
 $wgResourceModules['ext.Wikidata.suggest'] = $resourcePathArray + array(
 	'scripts' => 'OmegaWiki/resources/suggest.js'
 );
@@ -60,9 +72,10 @@ $wgAutoloadClasses['WikidataHooks'] = $dir . 'Wikidata.hooks.php';
 $wgAutoloadClasses['WikidataArticle'      ] = $dir . 'includes/WikidataArticle.php';
 $wgAutoloadClasses['WikidataEditPage'     ] = $dir . 'includes/WikidataEditPage.php';
 $wgAutoloadClasses['WikidataPageHistory'  ] = $dir . 'includes/WikidataPageHistory.php';
-$wgAutoloadClasses['ApiWikiData'          ] = $dir . 'includes/api/ApiWikiData.php';
-$wgAutoloadClasses['ApiWikiDataFormatBase'] = $dir . 'includes/api/ApiWikiDataFormatBase.php';
-$wgAutoloadClasses['ApiWikiDataFormatXml' ] = $dir . 'includes/api/ApiWikiDataFormatXml.php';
+// api wikidata is disabled since it does not work
+// $wgAutoloadClasses['ApiWikiData'          ] = $dir . 'includes/api/ApiWikiData.php';
+// $wgAutoloadClasses['ApiWikiDataFormatBase'] = $dir . 'includes/api/ApiWikiDataFormatBase.php';
+// $wgAutoloadClasses['ApiWikiDataFormatXml' ] = $dir . 'includes/api/ApiWikiDataFormatXml.php';
 
 # FIXME: Rename this to reduce chance of collision.
 $wgAutoloadClasses['OmegaWiki'] = $dir . 'OmegaWiki/OmegaWiki.php';
@@ -82,8 +95,6 @@ $wgAutoloadClasses['SpecialImportLangNames'] = $dir . 'OmegaWiki/SpecialImportLa
 $wgAutoloadClasses['SpecialAddCollection'] = $dir . 'OmegaWiki/SpecialAddCollection.php';
 $wgAutoloadClasses['SpecialConceptMapping'] = $dir . 'OmegaWiki/SpecialConceptMapping.php';
 $wgAutoloadClasses['SpecialCopy'] = $dir . 'OmegaWiki/SpecialCopy.php';
-$wgAutoloadClasses['SpecialExportTSV'] = $dir . 'OmegaWiki/SpecialExportTSV.php';
-$wgAutoloadClasses['SpecialImportTSV'] = $dir . 'OmegaWiki/SpecialImportTSV.php';
 $wgAutoloadClasses['SpecialOWStatistics'] = $dir . 'OmegaWiki/SpecialOWStatistics.php';
 
 # FIXME: These should be modified to make Wikidata more reusable.
@@ -93,8 +104,6 @@ $wgAvailableRights[] = 'wikidata-copy';
 $wgAvailableRights[] = 'languagenames';
 $wgAvailableRights[] = 'addcollection';
 $wgAvailableRights[] = 'editClassAttributes';
-$wgAvailableRights[] = 'exporttsv';
-$wgAvailableRights[] = 'importtsv';
 
 $wgGroupPermissions['*']['editClassAttributes'] = false;  
 
@@ -106,13 +115,8 @@ $wgGroupPermissions['wikidata-omega']['wikidata-copy'] = true;
 $wgGroupPermissions['bureaucrat']['languagenames'] = true;
 $wgGroupPermissions['bureaucrat']['addcollection'] = true;
 $wgGroupPermissions['bureaucrat']['editClassAttributes'] = true;
-$wgGroupPermissions['bureaucrat']['exporttsv'] = true;
-$wgGroupPermissions['bureaucrat']['importtsv'] = true;
 
 // Wikidata Configuration.
-
-# Removed as part of migration from branch to trunk.
-# $wgCustomHandlerPath = array( '*' => "{$IP}/extensions/Wikidata/OmegaWiki/" );
 
 # Array of namespace ids and the handler classes they use.
 $wdHandlerClasses = array();
@@ -169,8 +173,6 @@ $wgSpecialPages['ImportLangNames'] = 'SpecialImportLangNames';
 $wgSpecialPages['AddCollection'] = 'SpecialAddCollection';
 $wgSpecialPages['ConceptMapping'] = 'SpecialConceptMapping';
 $wgSpecialPages['Copy'] = 'SpecialCopy';
-$wgSpecialPages['ExportTSV'] = 'SpecialExportTSV';
-$wgSpecialPages['ImportTSV'] = 'SpecialImportTSV';
 $wgSpecialPages['ow_statistics'] = 'SpecialOWStatistics';
 
 $wgHooks['BeforePageDisplay'][] = 'WikidataHooks::onBeforePageDisplay';

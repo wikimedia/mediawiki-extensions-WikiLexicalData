@@ -5,7 +5,8 @@ class WikidataHooks {
 	public static function onBeforePageDisplay( $out, $skin ) {
 		global $wgLang, $wgScriptPath, $wgRequest, $wgResourceModules;
 
-		$out->addModules( 'ext.Wikidata' );
+		$out->addModules( 'ext.Wikidata.css' );
+		$out->addModules( 'ext.Wikidata.ajax' );
 		
 		if ( $wgRequest->getText( 'action' )=='edit' ) {
 			$out->addModules( 'ext.Wikidata.edit' );
