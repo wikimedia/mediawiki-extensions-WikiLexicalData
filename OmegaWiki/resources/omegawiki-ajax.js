@@ -1,31 +1,15 @@
-
-
 jQuery(document).ready(function( $ ) {
 	/*
 	 * Some javascript that is run when the page finished loading
 	 */
-	
-	$("table.wiki-data-table").tablesorter();
-	
-	if(( wgAction == 'view' ) || ( wgAction == 'history' )) {
-		// simulate a click on the first column (sort on languages).
-		$("table.wiki-data-table").find("th.headerSort:first").click();
-	}
-	if( wgAction == 'edit' ) {
-		// simulate a click on the second column (sort on languages).
-		$("table.wiki-data-table").find("th.headerSort:first").next("th").click();
-	}
-	
-	// now disable sorting for users
-	$(".jquery-tablesorter").find("th").off("click");
-	$(".jquery-tablesorter").removeClass("jquery-tablesorter");
 
-
+	// First, sort the table on languages
+	sortTablesOnLanguages();
+	
 	// add and manage arrows to navigate the tabs
 	if ( $(".wd-tablist").length ) {
 		initializeTabs();
 	}
-
 
 	// sticky explang
 	var explangUrl = document.URL.match( /explang=\d+/gi ) ;
@@ -43,25 +27,69 @@ jQuery(document).ready(function( $ ) {
 	 * Some more javascript events
 	 */
 
+	// toggle the togglable elements
 	$(".toggle").click(function() {
 		$(this).children("span").toggle();
 		$(this).parent().next().fadeToggle('fast');
 	});
-	$(".toggle").find("a").click(function(event) {
+	$("a").click(function(event) {
 		// avoid the toggling if a link is clicked
 		event.stopPropagation();
 	} );
 
+	// toggle the annotation popups
 	$(".togglePopup").click(function() {
 		$(this).children("span").toggle();
-		$(this).next(".popupToggleable").toggle();
+		$(this).next(".popupToggleable").toggle(100);
 	});
+	
+	$(".mw-line-even").hover(
+		function (event) {
+			showTooltip( $(this), event );
+		},
+		function () {
+			hideTooltip( $(this) );
+		}
+	);
 	
 	$(window).resize(function() {
 		updateTabs();
 	});
 
+	
+	/*
+	 * sortTablesOnLanguages sorts the wiki tables according to the language column
+	 * using the jquery tablesorter plugin
+	 */
+	function sortTablesOnLanguages() {
+		// optimally, different tableSorterCollation should be used according to the interface language
+		mw.config.set('tableSorterCollation', {
+			'é':'e', 'è':'e', // French characters
+			'ä':'ae', 'ö' : 'oe', 'ß': 'ss', 'ü':'ue' // German characters
+		});
 
+		// start the tablesorter jquery plugin
+		$("table.wiki-data-table").tablesorter();
+		
+		if(( wgAction == 'view' ) || ( wgAction == 'history' )) {
+			// simulate a click on the second column (sort on languages).
+			$("table.wiki-data-table").find("th.headerSort:first").next("th").click();
+		}
+		if( wgAction == 'edit' ) {
+			// simulate a click on the third column (sort on languages).
+			$("table.wiki-data-table").find("th:first").next("th").next("th").click();
+		}
+		
+		// now disable sorting for users
+		$(".jquery-tablesorter").find("th").off("click");
+		$(".jquery-tablesorter").removeClass("jquery-tablesorter");
+	}
+
+
+	/*
+	 * initializeTabs adds tabs on the top of a page to navigate between languages
+	 * when an expression exists in several languages
+	 */
 	function initializeTabs() {
 		var $previousArrow = '<span class="wd-previousArrow">' + "❮" + '</span>' ;
 		var $nextArrow = '<span class="wd-nextArrow">' + "❯" + '</span>' ;
@@ -212,8 +240,49 @@ jQuery(document).ready(function( $ ) {
 			}
 		}
 	} // updateTabs
+	
 });
 
+	function showTooltip(elem, event) {
+//		elem.hide();
+		// position where it will be displayeds
+		var posX = event.pageX ;
+		var posY = elem.offset().top - 40 ;
+
+		// check it the element already has a tooltip (hidden)
+		if ( elem.children(".tooltip").length ) {
+			//yes : reposition and show it
+			elem.children(".tooltip")
+				.css ("left", posX)
+				.show();
+
+		} else {
+			// else create it
+			var tipdiv = jQuery(document.createElement('span')) ;
+			var tipmessage = "toto";
+
+			tipdiv.addClass("tooltip")
+				.css ("position", "fixed")
+				.css ("left", posX)
+				.css ("top", posY)
+				.html( tipmessage )
+				.appendTo(elem)
+				.show();
+
+			var triangle = jQuery(document.createElement('span')) ;
+			// position absolute = given relative to its parent
+			triangle.addClass("triangle-down")
+				.css ("position", "absolute")
+				// 5 is half of the triangle size
+				.css ("left", tipdiv.width() / 2 - 5 )
+				.css ("top", tipdiv.outerHeight() )
+				.appendTo(tipdiv);
+		} // else
+	}
+	
+	function hideTooltip(elem) {
+		elem.children(".tooltip").hide();
+	}
 //TODO: convert the functions below to jQuery...
 
 window.MD5 = function (string) {
