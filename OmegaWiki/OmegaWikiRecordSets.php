@@ -121,22 +121,24 @@ function fetchDefinedMeaningDefiningExpressions( array &$definedMeaningIds, arra
 		" AND {$dc}_expression.remove_transaction_id IS NULL " .
 		" AND {$dc}_defined_meaning.defined_meaning_id = ";
 
-    # Build atomic queries
-	$definedMeaningIdsCopy = $definedMeaningIds;
-    unset( $value );
-    foreach ( $definedMeaningIdsCopy as &$value ) { $value = $frontQuery . $value; }
-    unset( $value );
+	// copy the definedMeaningIds array to create one query for each DM id
+	$definedMeaningQueries = $definedMeaningIds;
+	unset( $value );
+	foreach ( $definedMeaningQueries as &$value ) {
+		$value = $frontQuery . $value;
+	}
+	unset( $value );
 	# Union of the atoms
-    $finalQuery = implode( ' UNION ', $definedMeaningIdsCopy );
+	$finalQuery = implode( ' UNION ', $definedMeaningQueries );
 	
 	$queryResult = $dbr->query( $finalQuery );
 
 	while ( $row = $dbr->fetchObject( $queryResult ) ) {
-		if ( isset( $definedMeaningReferenceRecords[$row->defined_meaning_id] ) )
+		if ( isset( $definedMeaningReferenceRecords[$row->defined_meaning_id] ) ) {
 			$definedMeaningReferenceRecord = $definedMeaningReferenceRecords[$row->defined_meaning_id];
-		else
+		} else {
 			$definedMeaningReferenceRecord = null;
-		
+		}
 		if ( $definedMeaningReferenceRecord == null ) {
 			$definedMeaningReferenceRecord = new ArrayRecord( $o->definedMeaningReferenceStructure );
 			$definedMeaningReferenceRecord->definedMeaningId = $row->defined_meaning_id;
@@ -174,16 +176,16 @@ function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) 
 		
 		if ( $wgRecordSetLanguage > 0 ) {
 			$userLanguage = $wgRecordSetLanguage;
-		}
-		else {
+		} else {
 			$userLanguage = getLanguageIdForCode( $wgLang->getCode() );
 		}
 		
-		if ( $userLanguage > 0 )
+		if ( $userLanguage > 0 ) {
 			$definingLanguage = $userLanguage;
-		else
-			$definingLanguage = 85;
-			
+		} else {
+			$definingLanguage = WD_ENGLISH_LANG_ID;
+		}
+
 		fetchDefinedMeaningReferenceRecords(
 			getDefiningSQLForLanguage( $definingLanguage, $definedMeaningIds ),
 			$definedMeaningIds,
@@ -203,7 +205,7 @@ function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) 
 	
 			if ( count( $definedMeaningIds ) > 0 ) {
 				fetchDefinedMeaningReferenceRecords(
-					getSynonymSQLForLanguage( 85, $definedMeaningIds ),
+					getSynonymSQLForLanguage( WD_ENGLISH_LANG_ID, $definedMeaningIds ),
 					$definedMeaningIds,
 					$result,
 					$usedAs
@@ -222,7 +224,8 @@ function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) 
 		
 		fetchDefinedMeaningDefiningExpressions( $definedMeaningIdsForExpressions, $result );
 		$result[0] = getNullDefinedMeaningReferenceRecord();
-	}
+
+	} // if ( count( $definedMeaningIds ) > 0 )
 
 //	$queriesTime = microtime(true) - $startTime;
 //	echo "<!-- Defined meaning reference queries: " . $queriesTime . " -->\n";
@@ -262,6 +265,7 @@ function expandTranslatedContentsInRecordSet( RecordSet $recordSet, Attribute $i
 }
 
 function getExpressionReferenceRecords( $expressionIds ) {
+
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext();
 
@@ -398,6 +402,9 @@ function expandTextReferencesInRecordSet( RecordSet $recordSet, array $textAttri
 	}
 }
 
+/*
+* $exactMeaning is a boolean
+*/
 function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -432,8 +439,10 @@ function getExpressionMeaningsRecord( $expressionId, ViewInformation $viewInform
 	$o = OmegaWikiAttributes::getInstance();
 		
 	$record = new ArrayRecord( $o->expressionMeaningsStructure );
-	$record->expressionExactMeanings = getExpressionMeaningsRecordSet( $expressionId, true, $viewInformation );
-	$record->expressionApproximateMeanings = getExpressionMeaningsRecordSet( $expressionId, false, $viewInformation );
+	$exactMeaning = true;
+	$record->expressionExactMeanings = getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, $viewInformation );
+	$exactMeaning = false;
+	$record->expressionApproximateMeanings = getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, $viewInformation );
 	
 	return $record;
 }
@@ -763,7 +772,7 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 	$dc = wdGetDataSetContext();
 
 	$restrictions = array( "defined_meaning_id=$definedMeaningId" );
-	if ( $viewInformation->filterLanguageId != 0 )
+	if ( $viewInformation->filterLanguageId != 0 ) {
 		$restrictions[] =
 			"expression_id IN (" .
 				"SELECT expressions.expression_id" .
@@ -772,6 +781,10 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 				" AND language_id=" . $viewInformation->filterLanguageId .
 				" AND expressions.remove_transaction_id IS NULL " .
 			")";
+	}
+
+	// order to get exact meanings first
+	$orderBy[] = " identical_meaning DESC " ;
 	
 	$recordSet = queryRecordSet(
 		$o->synonymsTranslationsStructure->getStructureType(),
@@ -783,7 +796,8 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 			new TableColumnsToAttribute( array( 'identical_meaning' ), $o->identicalMeaning )
 		),
 		$wgWikidataDataSet->syntrans,
-		$restrictions
+		$restrictions,
+		$orderBy
 	);
 	
 	if ( $viewInformation->filterLanguageId == 0 )

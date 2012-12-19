@@ -18,6 +18,7 @@ define ( 'WD_EXPRESSION', "exp" );
 define ( 'WD_EXPRESSION_APPROX_MEANINGS', "approx" );
 define ( 'WD_EXPRESSION_EXACT_MEANINGS', "exact" );
 define ( 'WD_EXPRESSION_MEANINGS', "meanings" );
+define ( 'WD_IDENTICAL_MEANING', "identMeaning" );
 define ( 'WD_INCOMING_RELATIONS', "incomingRel" );
 define ( 'WD_LINK_ATTRIBUTE', "linkAtt" );
 define ( 'WD_LINK_ATTRIBUTE_VALUES', "linkAttVal" );

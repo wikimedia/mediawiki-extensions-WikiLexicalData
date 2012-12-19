@@ -61,20 +61,16 @@ function addChildNodesToRows( TableHeaderNode $headerNode, &$rows, $currentDepth
 		if ( !$type instanceof Structure ) {
 			$skipRows = count( $rows );
 			$columnIndex = $childNode->column + $columnOffset;
-			$sort = 'sortTable(this, ' . $skipRows . ', ' . $columnIndex . ')';
-
 			$class = ' class="' . $type . ' ' . $attribute->id . '"';
 		}
 		else {
 			$class = ' class="' . $attribute->id . '"';
-			$sort = '';
-			$leftsort = '';
 		}
 
 		$rowSpan = $height - $childNode->height;
 		$rows[$currentDepth] .= '<th id="' . $idPath->getId() . '-h" ' . $class .
 			' colspan="' . $childNode->width .  '" rowspan="' . $rowSpan .
-			'">' . $attribute->name . $leftsort . '</th>';
+			'">' . $attribute->name . '</th>';
 									
 		addChildNodesToRows( $childNode, $rows, $currentDepth + $rowSpan, $columnOffset, $idPath, $leftmost );
 		$idPath->popAttribute();

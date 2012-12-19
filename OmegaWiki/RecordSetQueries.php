@@ -61,6 +61,10 @@ class TableColumnsToAttributesMapping {
 	}
 }
 
+/**
+* generates all the sql queries that are then used
+* to fill the hierarchical structures (html tables etc.)
+*/
 function getTransactedSQL( QueryTransactionInformation $transactionInformation, array $selectFields, Table $table, array $restrictions, array $orderBy = array(), $count = - 1, $offset = 0 ) {
 	$tableNames = array( $table->getIdentifier() );
 
@@ -91,6 +95,7 @@ function getTransactedSQL( QueryTransactionInformation $transactionInformation, 
 	if ( $count != - 1 ) {
 		$query .= " LIMIT " . $offset . ", " . $count;
 	}
+
 	return $query;
 }
 
@@ -117,6 +122,7 @@ function queryRecordSet( $recordSetStructureId, QueryTransactionInformation $tra
 		$allAttributes = $attributes;
 	}
 	
+	// create and run the sql query to get the "$selectFields" fields from the "$table" table
 	$query = getTransactedSQL( $transactionInformation, $selectFields, $table, $restrictions, $orderBy, $count, $offset );
 	$queryResult = $dbr->query( $query );
 	

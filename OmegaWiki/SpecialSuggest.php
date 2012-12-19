@@ -243,7 +243,7 @@ class SpecialSuggest extends SpecialPage {
 		if ( $row = $dbr->fetchObject($lang_res) ) {
 			$userlang = $row->language_id ;
 		} else {
-			$userlang = 85 ;
+			$userlang = WD_ENGLISH_LANG_ID ;
 		}
 
 		$classMids = $wgDefaultClassMids ;

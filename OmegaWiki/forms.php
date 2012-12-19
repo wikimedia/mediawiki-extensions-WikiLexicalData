@@ -26,10 +26,10 @@ function getTextArea( $name, $text = "", $rows = 5, $columns = 80, $disabled = f
 }
 
 function checkBoxCheckAttribute( $isChecked ) {
-	if ( $isChecked )
+	if ( $isChecked ) {
 		return ' checked="checked"';
-	else
-		return '';
+	}
+	return '';
 }
  
 function getCheckBox( $name, $isChecked, $disabled = false ) {
@@ -71,10 +71,11 @@ function getRemoveCheckBox( $name ) {
 
 # $options is an array of [value => text] pairs
 function getSelect( $name, $options, $selectedValue = "", $onChangeHandler = "" ) {
-	if ( $onChangeHandler != "" )
+	if ( $onChangeHandler != "" ) {
 		$onChangeAttribute = ' onchange="' . $onChangeHandler . '"';
-	else
+	} else {
 		$onChangeAttribute = '';
+	}
 	
 	$result = '<select id="' . $name . '" name="' . $name . '"' . $onChangeAttribute . '>';
  

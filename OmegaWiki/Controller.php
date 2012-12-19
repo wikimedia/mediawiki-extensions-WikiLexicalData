@@ -216,7 +216,12 @@ class SynonymTranslationController extends DefaultUpdateController {
 	public function update( $keyPath, $record ) {
 		$definedMeaningId = $keyPath->peek( 1 )->definedMeaningId;
 		$syntransId = $keyPath->peek( 0 )->syntransId;
-		updateSynonymOrTranslationWithId( $syntransId, $record->identicalMeaning );
+		$identicalMeaning = $record->identicalMeaning;
+
+		// check that the needed parameters exist
+		if ( ($syntransId != "") && ($identicalMeaning != "") ) {
+			updateSynonymOrTranslationWithId( $syntransId, $identicalMeaning );
+		}
 	}
 }
 

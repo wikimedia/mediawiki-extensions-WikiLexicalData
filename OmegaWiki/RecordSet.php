@@ -207,9 +207,9 @@ function getRecordAsListItem( $structure, $record ) {
 function getRecordKeyName( $record, $key ) {
 	$ids = array();
 	
-	foreach ( $key->attributes as $attribute )
+	foreach ( $key->attributes as $attribute ) {
 		$ids[] = $record->getAttributeValue( $attribute );
-	
+	}
 	return implode( "-", $ids );
 }
 
