@@ -235,18 +235,23 @@ class AttributeEditorMap {
 	}
 }
 
-/* XXX: Basic Editor class. */
+/**
+ * Basic Editor class.
+ */
 abstract class DefaultEditor implements Editor {
 	protected $editors;
 	protected $attributeEditorMap;
 	protected $attribute;
 	protected $isCollapsible;
+	protected $displayHeader;
 
 	public function __construct( Attribute $attribute = null ) {
 		$this->attribute = $attribute;
 		$this->editors = array();
 		$this->attributeEditorMap = new AttributeEditorMap();
 		$this->isCollapsible = true;
+		// show header by default
+		$this->displayHeader = true;
 	}
 
 	public function addEditor( Editor $editor ) {
@@ -281,6 +286,15 @@ abstract class DefaultEditor implements Editor {
 	public function setCollapsible( $value ) {
 		$this->isCollapsible = $value;
 	}
+
+	public function setDisplayHeader( $value ) {
+		$this->displayHeader = $value;
+	}
+
+	public function getDisplayHeader() {
+		return $this->displayHeader;
+	}
+
 
 	public function getExpansionPrefix( $class, $elementId ) {
 		if ( ! $this->isCollapsible ) {
@@ -522,13 +536,13 @@ abstract class RecordSetEditor extends DefaultEditor {
 	public function getUpdateRecord( IdStack $idPath, Structure $structure, $editors ) {
 		$result = new ArrayRecord( $structure );
 
-		foreach ( $editors as $editor )
+		foreach ( $editors as $editor ) {
 			if ( $attribute = $editor->getUpdateAttribute() ) {
 				$idPath->pushAttribute( $attribute );
 				$result->setAttributeValue( $attribute, $editor->getUpdateValue( $idPath ) );
 				$idPath->popAttribute();
 			}
-
+		}
 		return $result;
 	}
 
@@ -1390,15 +1404,15 @@ class ShortTextEditor extends ScalarEditor {
 	}
  
 	public function add( IdStack $idPath ) {
-		if ( $this->isAddField )
+		if ( $this->isAddField ) {
 			return getTextBox( $this->addId( $idPath->getId() ), "", $this->onChangeHandler );
-		else
+		} else {
 			return "";
+		}
 	}
 
 	public function getInputValue( $id ) {
-		global
-			$wgRequest;
+		global $wgRequest;
 
 		return trim( $wgRequest->getText( $id ) );
 	}
@@ -1415,9 +1429,9 @@ class LinkEditor extends ShortTextEditor {
 		$label = htmlspecialchars( $value->linkLabel );
 		$url = htmlspecialchars( $value->linkURL );
 
-		if ( $label == "" )
+		if ( $label == "" ) {
 			$label = $url;
-		
+		}
 		return
 			'<a href="' . $url . '">' . $label . '</a>' . EOL;
 	}
@@ -1447,10 +1461,11 @@ class BooleanEditor extends ScalarEditor {
 	}
 
 	public function add( IdStack $idPath ) {
-		if ( $this->isAddField )
+		if ( $this->isAddField ) {
 			return getCheckBox( $this->addId( $idPath->getId() ), $this->defaultValue );
-		else
+		} else {
 			return "";
+		}
 	}
 
 	public function getInputValue( $id ) {
@@ -1460,12 +1475,69 @@ class BooleanEditor extends ScalarEditor {
 	}
 }
 
+/*
+* IdenticalMeaningEditor 
+* in view mode, shows either = or ≈
+* in edit mode, shows a combobox to choose.
+* for html we use strings "true" and "false" instead of "0" and "1"
+* to be sure that an undefined value will not be considered as a "0".
+*/
+class IdenticalMeaningEditor extends ScalarEditor {
+	protected $defaultValue;
+	// textValues is an array of "value" => "how the value is displayed"
+	// e.g. array( "true" => "=", "false" => "≈" );
+	protected $textValues;
+
+	public function __construct( Attribute $attribute = null, PermissionController $permissionController, $isAddField ) {
+		parent::__construct( $attribute, $permissionController, $isAddField );
+
+		$this->defaultValue = "true";
+		$this->textValues = array( "true" => "=", "false" => "≈" );
+	}
+
+	public function getViewHTML( IdStack $idPath, $value ) {
+		// $value is what is returned from the database, i.e. an integer, 0 or 1
+		if ( $value == 0 ) return $this->textValues["false"];
+		if ( $value == 1 ) return $this->textValues["true"];
+		return "undefined"; // should not happen
+	}
+
+	public function getEditHTML( IdStack $idPath, $value ) {
+		// $value is what is returned from the database, i.e. an integer, 0 or 1
+		if ( $value == 0 ) {
+			return getSelect( $this->updateId( $idPath->getId() ), $this->textValues, "false" );
+		}
+		if ( $value == 1 ) {
+			return getSelect( $this->updateId( $idPath->getId() ), $this->textValues, "true" );
+		}
+
+		// if no $value is not 0 and not 1, should not happen
+		return "undefined";
+	}
+
+	public function add( IdStack $idPath ) {
+		if ( $this->isAddField ) {
+			return getSelect( $this->addId( $idPath->getId() ), $this->textValues, $this->defaultValue);
+		} else {
+			return "";
+		}
+	}
+
+	public function getInputValue( $id ) {
+		global $wgRequest;
+		$inputvalue = trim( $wgRequest->getText( $id ) );
+		return $inputvalue;
+	}
+}
+
+
 abstract class SuggestEditor extends ScalarEditor {
 	public function add( IdStack $idPath ) {
-		if ( $this->isAddField )
+		if ( $this->isAddField ) {
 			return getSuggest( $this->addId( $idPath->getId() ), $this->suggestType() );
-		else
+		} else {
 			return "";
+		}
 	}
 
 	protected abstract function suggestType();
@@ -1730,22 +1802,25 @@ class RecordListEditor extends RecordEditor {
 			$class = $idPath->getClass();
 			$attributeId = $idPath->getId();
 			$attributeValue = $value->getAttributeValue( $attribute );
-						
+
 			if ( $editor->showsData( $attributeValue ) ) {
-				if ( !$compress )
-					$result .=
-						'<' . $htmlTag . '>' .
-					    	$this->childHeader( $editor, $attribute, $class, $attributeId );
-					    	
+				if ( !$compress ) {
+					$result .= Html::openElement( $htmlTag, array('class' => $class )) ;
+
+					if ( $editor->getDisplayHeader() ) {
+						$result .= $this->childHeader( $editor, $attribute, $class, $attributeId );
+					}
+				}
 				$result .= $this->viewChild( $editor, $idPath, $value, $attribute, $class, $attributeId );
-				    
-			    if ( !$compress )
-			    	$result .= '</' . $htmlTag . '>';
+
+				if ( !$compress ) {
+					$result .= Html::closeElement( $htmlTag );
+				}
 			}
 			           
 			$idPath->popAttribute();
-		}
-		
+		} // foreach editors
+
 		return $result;
 	}
 
@@ -1785,17 +1860,21 @@ class RecordListEditor extends RecordEditor {
 				$class = $idPath->getClass();
 				$attributeId = $idPath->getId();
 
-				if ( !$compress )
-					$result .=
-						'<' . $htmlTag . '>' .
-						   	$this->childHeader( $editor, $attribute, $class, $attributeId );
-						   	
-				$result	.= $this->editChild( $editor, $idPath, $value,  $attribute, $class, $attributeId );
-				
-				if ( !$compress )
-					$result .= '</' . $htmlTag . '>';
+				if ( !$compress ) {
+					$result .= Html::openElement( $htmlTag, array('class' => $class )) ;
+
+					if ( $editor->getDisplayHeader() ) {
+						$result .= $this->childHeader( $editor, $attribute, $class, $attributeId );
+					}
+				}
+
+				$result .= $this->editChild( $editor, $idPath, $value,  $attribute, $class, $attributeId );
+
+				if ( !$compress ) {
+					$result .= Html::closeElement( $htmlTag );
+				}
 			}
-			
+
 			$idPath->popAttribute();
 		}
 
@@ -1877,7 +1956,9 @@ class RecordUnorderedListEditor extends RecordListEditor {
 	
 	public function view( IdStack $idPath, $value ) {
 		$editors = $this->getEditors();
-		$compress = $this->shouldCompressOnView( $idPath, $value, $editors );
+//
+//		$compress = $this->shouldCompressOnView( $idPath, $value, $editors );
+		$compress = false ;
 		$result = $this->viewEditors( $idPath, $value, $editors, $this->htmlTag, $compress );
 		
 		if ( !$compress )
@@ -2661,35 +2742,6 @@ class ObjectPathEditor extends Viewer {
 		return true;
 	}
 }
-
-/*
-Don't know what it is, but obviously only used for SwissProt
-cf. GoToSourceTemplate.php
-*/
-class GotoSourceEditor extends Viewer {
-	public function view( IdStack $idPath, $value ) {
-		global $wgGotoSourceTemplates;
-		if ( count( $wgGotoSourceTemplates ) <= 1 ) return "" ;
-
-		$collectionId = $value->collectionId;
-		$sourceIdentifier = $value->sourceIdentifier;
-
-		$gotoSourceTemplate = $wgGotoSourceTemplates[$collectionId];
-		
-		if ( $gotoSourceTemplate != null ) {
-			$url = $gotoSourceTemplate->getURL( $sourceIdentifier );
-			return '<a href="' . htmlspecialchars( $url ) . '">Go to source</a>' . EOL;
-		}
-		else
-			return "";
-		
-	}
-	
-	public function showsData( $value ) {
-		return true;
-	}
-}
-
 
 class DefinedMeaningContextEditor extends WrappingEditor {
 	public function view( IdStack $idPath, $value ) {

@@ -42,23 +42,12 @@ class Expression {
 	}
 	
 	function assureIsBoundToDefinedMeaning( $definedMeaningId, $identicalMeaning ) {
-		if ( !$this->isBoundToDefinedMeaning( $definedMeaningId ) )
+		if ( !$this->isBoundToDefinedMeaning( $definedMeaningId ) ) {
 			$this->bindToDefinedMeaning( $definedMeaningId, $identicalMeaning );
-	}
-
-	function fetchMeaningIds() {
-	
-		$dbr = wfGetDB( DB_SLAVE );
-		$dc = $this->dataset;
-		$id = $this->id;
-		$queryResult = $dbr->query( "SELECT * FROM {$dc}_syntrans where expression_id=$id AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) );
-		while ( $syntransRecord = $dbr->fetchObject( $queryResult ) ) {
-			$this->meaningIds[] = $syntransRecord->defined_meaning_id;
 		}
-		$dbr->freeResult( $queryResult ) ;
 	}
-
 }
+
 function getExpression( $expressionId, $dc = null ) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
@@ -208,13 +197,14 @@ function getSynonymId( $definedMeaningId, $expressionId ) {
 								"WHERE defined_meaning_id=$definedMeaningId AND expression_id=$expressionId " .
 								' AND ' . getLatestTransactionRestriction( "{$dc}_syntrans" ) . " LIMIT 1" );
 
-	if ( $synonym = $dbr->fetchObject( $queryResult ) )
+	if ( $synonym = $dbr->fetchObject( $queryResult ) ) {
 		return $synonym->syntrans_sid;
-	else
-		return 0;
+	}
+	// else
+	return 0;
 }
 
-function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identicalMeaning = 1 ) {
+function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identicalMeaning = "true" ) {
 	
 	$dc = wdGetDataSetContext();
 	$synonymId = getSynonymId( $definedMeaningId, $expressionId );
@@ -224,9 +214,15 @@ function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identica
 	}
 	
 	$dbw = wfGetDB( DB_MASTER );
-	$identicalMeaningInteger = (int) $identicalMeaning;
+	if ( $identicalMeaning == "true" ) {
+		$identicalMeaningInteger = 1;
+	} else {
+		// if ( $identicalMeaning == "false" )
+		$identicalMeaningInteger = 0;
+	}
 	$sql = "insert into {$dc}_syntrans(syntrans_sid, defined_meaning_id, expression_id, identical_meaning, add_transaction_id) " .
 	       "values($synonymId, $definedMeaningId, $expressionId, $identicalMeaningInteger, " . getUpdateTransactionId() . ")";
+
 	$queryResult = $dbw->query( $sql );
 }
 
@@ -249,7 +245,7 @@ function addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $id
 	$expression = findOrCreateExpression( $spelling, $languageId );
 	$expression->assureIsBoundToDefinedMeaning( $definedMeaningId, $identicalMeaning );
 }
-	
+
 function getMaximum( $field, $table ) {
 	$dbr = wfGetDB( DB_SLAVE );
 	$sql = "select max($field) as maximum from $table";
@@ -526,15 +522,29 @@ function updateSynonymOrTranslation( $definedMeaningId, $expressionId, $identica
 	createSynonymOrTranslation( $definedMeaningId, $expressionId, $identicalMeaning );
 }
 
-function updateSynonymOrTranslationWithId( $syntransId, $identicalMeaning ) {
+function updateSynonymOrTranslationWithId( $syntransId, $identicalMeaningInput ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT defined_meaning_id, expression_id" .
+
+	// check that $identicalMeaningInput has the correct form
+	if ( $identicalMeaningInput != "true" && $identicalMeaningInput != "false" ) {
+		// unknown value, no update possible
+		return;
+	}
+
+	$queryResult = $dbr->query( "SELECT defined_meaning_id, expression_id, identical_meaning" .
 								" FROM {$dc}_syntrans" .
 								" WHERE syntrans_sid=$syntransId AND remove_transaction_id IS NULL LIMIT 1" );
 				
 	if ( $syntrans = $dbr->fetchObject( $queryResult ) ) {
-		updateSynonymOrTranslation( $syntrans->defined_meaning_id, $syntrans->expression_id, $identicalMeaning );
+		// transform the identical_meaning value into the string form used in the html form
+		$identicalMeaningDB = ( $syntrans->identical_meaning == 1 ) ? "true" : "false" ;
+
+		// check if the "identicalMeaning" value of the database is different
+		// from the value provided as an input in the html form.
+		if ( $identicalMeaningInput != $identicalMeaningDB ) {
+			updateSynonymOrTranslation( $syntrans->defined_meaning_id, $syntrans->expression_id, $identicalMeaningInput );
+		}
 	}
 }
 
@@ -609,8 +619,9 @@ function addTranslatedText( $translatedContentId, $languageId, $text ) {
 }
 
 function addTranslatedTextIfNotPresent( $translatedContentId, $languageId, $text ) {
-	if ( !translatedTextExists( $translatedContentId, $languageId ) )
+	if ( !translatedTextExists( $translatedContentId, $languageId ) ) {
 		addTranslatedText( $translatedContentId, $languageId, $text );
+	}
 }
 
 function getDefinedMeaningDefinitionId( $definedMeaningId ) {
@@ -750,7 +761,7 @@ function updateDefinedMeaningInCollection( $definedMeaningId, $collectionId, $in
 function bootstrapCollection( $collection, $languageId, $collectionType ) {
 	$expression = findOrCreateExpression( $collection, $languageId );
 	$definedMeaningId = addDefinedMeaning( $expression->id );
-	$expression->assureIsBoundToDefinedMeaning( $definedMeaningId, true );
+	$expression->assureIsBoundToDefinedMeaning( $definedMeaningId, "true" );
 	addDefinedMeaningDefinition( $definedMeaningId, $languageId, $collection );
 	return addCollection( $definedMeaningId, $collectionType );
 }
@@ -789,11 +800,11 @@ function addDefinedMeaning( $definingExpressionId ) {
 	
 	$definedMeaningId = newObjectId( "{$dc}_defined_meaning" );
 	
-	// wfDebug( "addDefinedMeaning(): $definedMeaningId has to be inserted to the database $dc" ); 
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "INSERT INTO {$dc}_defined_meaning(defined_meaning_id, expression_id, add_transaction_id) values($definedMeaningId, $definingExpressionId, " . getUpdateTransactionId() . ")" );
-	
-	// wfDebug( "addDefinedMeaning(): after $definedMeaningId has been inserted in the database" ); 
+	$insertquery = "INSERT INTO {$dc}_defined_meaning(defined_meaning_id, expression_id, add_transaction_id) "
+	             . "values($definedMeaningId, $definingExpressionId, " . getUpdateTransactionId() . ")" ;
+
+	$dbw->query( $insertquery );
 
 	$expression = getExpression( $definingExpressionId );
 	$pageId = createPage( NS_DEFINEDMEANING, getPageTitle( "$expression->spelling ($definedMeaningId)" ) );
@@ -804,9 +815,9 @@ function addDefinedMeaning( $definingExpressionId ) {
 
 function createNewDefinedMeaning( $definingExpressionId, $languageId, $text ) {
 	$definedMeaningId = addDefinedMeaning( $definingExpressionId );
-	createSynonymOrTranslation( $definedMeaningId, $definingExpressionId, true );
+	createSynonymOrTranslation( $definedMeaningId, $definingExpressionId, "true" );
 	addDefinedMeaningDefiningDefinition( $definedMeaningId, $languageId, $text );
-	
+
 	return $definedMeaningId;
 }
 
@@ -1118,6 +1129,13 @@ function getDefinedMeaningDefinition( $definedMeaningId ) {
 }
 
 
+/**
+* returns one of the possible translations of 
+* a given DefinedMeaning ( $definedMeaningId )
+* preferably in a given language ( $languageCode )
+* or in English otherwise.
+* null if not found
+*/
 function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = 'en', $dc = null ) {
 
 	$dc = wdGetDataSetContext( $dc );
@@ -1134,7 +1152,13 @@ function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLang
 	$userLanguageId = $dbr->addQuotes( $userLanguageId );
 	
 	if ( $userLanguageId ) {
-		$actual_query = "select spelling from {$dc}_syntrans,{$dc}_expression where {$dc}_syntrans.defined_meaning_id=$definedMeaningId and {$dc}_expression.expression_id={$dc}_syntrans.expression_id and language_id=$userLanguageId and {$dc}_expression.remove_transaction_id is NULL LIMIT 1";
+		$actual_query =
+			"select spelling from {$dc}_syntrans,{$dc}_expression " .
+			" where {$dc}_syntrans.defined_meaning_id=$definedMeaningId " .
+			" and {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
+			" and language_id=$userLanguageId " .
+			" and {$dc}_expression.remove_transaction_id is NULL " .
+			" LIMIT 1";
 	
 		$res = $dbr->query( $actual_query );
 		$row = $dbr->fetchObject( $res );
@@ -1144,7 +1168,13 @@ function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLang
 	}
 
 	$fallbackLanguageId = $dbr->addQuotes( $fallbackLanguageId );
-	$fallback_query = "select spelling from {$dc}_syntrans,{$dc}_expression where {$dc}_syntrans.defined_meaning_id=$definedMeaningId and {$dc}_expression.expression_id={$dc}_syntrans.expression_id and language_id=$fallbackLanguageId and {$dc}_expression.remove_transaction_id is NULL LIMIT 1";
+	$fallback_query =
+		"select spelling from {$dc}_syntrans,{$dc}_expression " .
+		" where {$dc}_syntrans.defined_meaning_id=$definedMeaningId " .
+		" and {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
+		" and language_id=$fallbackLanguageId " .
+		" and {$dc}_expression.remove_transaction_id is NULL " .
+		" LIMIT 1";
 
 	$res = $dbr->query( $fallback_query );
 	$row = $dbr->fetchObject( $res );
@@ -1152,7 +1182,12 @@ function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLang
 		return $row->spelling;
 	}
 
-	$final_fallback = "select spelling from {$dc}_syntrans,{$dc}_expression where {$dc}_syntrans.defined_meaning_id=$definedMeaningId and {$dc}_expression.expression_id={$dc}_syntrans.expression_id and {$dc}_expression.remove_transaction_id is NULL LIMIT 1";
+	$final_fallback =
+		"select spelling from {$dc}_syntrans,{$dc}_expression " .
+		" where {$dc}_syntrans.defined_meaning_id=$definedMeaningId " .
+		" and {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
+		" and {$dc}_expression.remove_transaction_id is NULL " .
+		" LIMIT 1";
 
 	$res = $dbr->query( $final_fallback );
 	$row = $dbr->fetchObject( $res );
@@ -1287,18 +1322,18 @@ function getAnyDefinedMeaningWithSourceIdentifier( $sourceIdentifier ) {
 }
 
 function getExpressionMeaningIds( $spelling, $dc = null ) {
-    if ( is_null( $dc ) ) {
-    	$dc = wdGetDataSetContext();
-    }
-    $dbr = & wfGetDB( DB_SLAVE );
-    $queryResult = $dbr->query(
+	if ( is_null( $dc ) ) {
+		$dc = wdGetDataSetContext();
+	}
+	$dbr = & wfGetDB( DB_SLAVE );
+	$queryResult = $dbr->query(
 		"SELECT defined_meaning_id" .
 		" FROM {$dc}_expression, {$dc}_syntrans " .
-        " WHERE spelling=" . $dbr->addQuotes( $spelling ) .
-        " AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id" .
-        " AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-        " AND " . getLatestTransactionRestriction( "{$dc}_expression" )
-    );
+		" WHERE spelling=" . $dbr->addQuotes( $spelling ) .
+		" AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id" .
+		" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
+		" AND " . getLatestTransactionRestriction( "{$dc}_expression" )
+	);
 
 	$result = array();
 	
@@ -1311,18 +1346,18 @@ function getExpressionMeaningIds( $spelling, $dc = null ) {
 }
 
 function getExpressionMeaningIdsForLanguages( $spelling, $languageIds, $dc = null ) {
-    if ( is_null( $dc ) ) {
-    	$dc = wdGetDataSetContext();
-    }
-    $dbr = & wfGetDB( DB_SLAVE );
-    $queryResult = $dbr->query(
+	if ( is_null( $dc ) ) {
+		$dc = wdGetDataSetContext();
+	}
+	$dbr = & wfGetDB( DB_SLAVE );
+	$queryResult = $dbr->query(
 		"SELECT defined_meaning_id, language_id" .
 		" FROM {$dc}_expression, {$dc}_syntrans " .
-        " WHERE spelling=" . $dbr->addQuotes( $spelling ) .
-        " AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id" .
-        " AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-        " AND " . getLatestTransactionRestriction( "{$dc}_expression" )
-    );
+		" WHERE spelling=" . $dbr->addQuotes( $spelling ) .
+		" AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id" .
+		" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
+		" AND " . getLatestTransactionRestriction( "{$dc}_expression" )
+	);
 
 	$result = array();
 	
@@ -1687,81 +1722,6 @@ function getExpressions( $spelling, $dc = null ) {
 	return $rv;
 
 }
-
-/**
- * Returns the definitions and translations of the given defined meaning in the 
- * given languages in an associative array.
- * @param $dmid the defined meaning id.
- * @param $languages an aray of language id's.
- * @return array an associative array with two entries per language: def_lid and trans_lid 
- * (where lid is the language id); def_lid contains the definition in the language,
- * trans_lid contains the translations in a single string separated by the | character.
- */
-function getDefinitionsAndTranslationsForLanguages( $dmid, $languages, $dc = null ) {
-	if ( is_null( $dc ) ) {
-		$dc = wdGetDataSetContext();
-	}
-	$dbr = wfGetDB( DB_SLAVE );
-
-	// First we'll fill an associative array with the definitions and
-	// translations. Then we'll use the isoCodes array to put them in the
-	// proper order.
-
-	// the associative array holding the definitions and translations
-	$data = array();
-	
-	// ****************************
-	// query to get the definitions
-	// ****************************
-	$qry = 'SELECT txt.text_text, trans.language_id ';
-	$qry .= "FROM {$dc}_text txt, {$dc}_translated_content trans, {$dc}_defined_meaning dm ";
-	$qry .= 'WHERE txt.text_id = trans.text_id ';
-	$qry .= 'AND trans.translated_content_id = dm.meaning_text_tcid ';
-	$qry .= "AND dm.defined_meaning_id = $dmid ";
-	$qry .= 'AND trans.language_id IN (' . implode( ',', $languages ) . ') ';
-	$qry .= 'AND ' . getLatestTransactionRestriction( 'trans' );
-	$qry .= 'AND ' . getLatestTransactionRestriction( 'dm' );
-	
-
-	$definitions = $dbr->query( $qry );
-	while ( $row = $dbr->fetchRow( $definitions ) ) {
-		// $key becomes something like def_23
-		$key = 'def_' . $row['language_id'];
-		$data[$key] = $row['text_text'];
-	}
-	$dbr->freeResult( $definitions );
-	
-	// *****************************
-	// query to get the translations
-	// *****************************
-	$qry = "SELECT exp.spelling, exp.language_id ";
-	$qry .= "FROM {$dc}_expression exp ";
-	$qry .= "INNER JOIN {$dc}_syntrans trans ON exp.expression_id=trans.expression_id ";
-	$qry .= "WHERE trans.defined_meaning_id=$dmid ";
-	$qry .= "AND " . getLatestTransactionRestriction( "exp" );
-	$qry .= "AND " . getLatestTransactionRestriction( "trans" );
-	
-	$translations = $dbr->query( $qry );
-	while ( $row = $dbr->fetchRow( $translations ) ) {
-		// qry gets all languages, we filter them here. Saves an order 
-		// of magnitude execution time.
-		if ( in_array( $row['language_id'], $languages ) ) {
-			// $key becomes something like trans_23
-			$key = 'trans_' . $row['language_id'];
-			if ( !isset( $data[$key] ) ) {
-				$data[$key] = $row['spelling'];
-			} else {
-				$data[$key] = $data[$key] . '|' . $row['spelling'];
-			}
-		}
-	}
-	$dbr->freeResult( $translations );
-	
-	return $data;
-	
-}
-
-
 
 class ClassAttribute {
 	public $attributeId;

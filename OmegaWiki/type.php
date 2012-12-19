@@ -9,18 +9,20 @@ require_once( 'WikiDataAPI.php' );
 require_once( 'Wikidata.php' );
 require_once( 'WikiDataGlobals.php' );
 
-function booleanAsText( $value ) {
-	if ( $value )
-		return "Yes";
-	else
-		return "No";
+function booleanAsText( $boolValue, $textValues = array("true" => "Yes", "false" => "No") ) {
+	if ( $boolValue ) {
+		return $textValues["true"];
+	} else {
+		return $textValues["false"];
+	}
 }
 
 function booleanAsHTML( $value ) {
-	if ( $value )
+	if ( $value ) {
 		return '<input type="checkbox" checked="checked" disabled="disabled"/>';
-	else
+	} else {
 		return '<input type="checkbox" disabled="disabled"/>';
+	}
 }
 
 function pageAsURL( $nameSpace, $title, $usedc = true ) {
@@ -117,6 +119,8 @@ function definedMeaningAsLink( $definedMeaningId ) {
 function collectionAsLink( $collectionId ) {
 	return definedMeaningAsLink( getCollectionMeaningId( $collectionId ) );
 }
+/*
+useless?
 
 function convertToHTML( $value, $type ) {
 	switch( $type ) {
@@ -166,4 +170,4 @@ function getInputFieldValueForType( $name, $type ) {
 	}
 }
 
-
+*/

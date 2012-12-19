@@ -96,7 +96,8 @@ class OmegaWikiAttributes {
 		$t->definedMeaningAttributes = new Attribute( WD_DEFINED_MEANING_ATTRIBUTES, wfMsgSc( "DefinedMeaningAttributes" ), "will-be-specified-below" );
 		$t->objectAttributes = new Attribute( WD_OBJECT_ATTRIBUTES, wfMsgSc( "Annotation" ), "will-be-specified-below" );
 		$t->expressionId = new Attribute( "expression-id", "Expression Id", "expression-id" );
-		$t->identicalMeaning = new Attribute( "identMeaning", wfMsgSc( "IdenticalMeaning" ), "boolean" );
+		// instead of " ", could be wfMsgSc( "IdenticalMeaning" ), but then the header is too long
+		$t->identicalMeaning = new Attribute( WD_IDENTICAL_MEANING, " ", "combobox" );
 
 		if ( $viewInformation->filterOnLanguage() ) {
 			$t->expression = new Attribute( WD_EXPRESSION, wfMsgSc( "Spelling" ), "spelling" );
@@ -161,13 +162,15 @@ class OmegaWikiAttributes {
 		$t->alternativeDefinitionsStructure =  new Structure( WD_ALTERNATIVE_DEFINITIONS, $t->definitionId, $t->alternativeDefinition, $t->source );
 		$t->alternativeDefinitions = new Attribute( null, wfMsgSc( "AlternativeDefinitions" ), $t->alternativeDefinitionsStructure );
 		
-		if ( $viewInformation->filterOnLanguage() )
+		if ( $viewInformation->filterOnLanguage() ) {
 			$synonymsAndTranslationsCaption = wfMsgSc( "Synonyms" );
-		else
+		} else {
 			$synonymsAndTranslationsCaption = wfMsgSc( "SynonymsAndTranslations" );
+		}
 
 		$t->syntransId = new Attribute( "syntrans-id", "$synonymsAndTranslationsCaption identifier", "integer" );
-		$t->synonymsTranslationsStructure = new Structure( WD_SYNONYMS_TRANSLATIONS, $t->syntransId, $t->expression, $t->identicalMeaning );
+//		$t->synonymsTranslationsStructure = new Structure( WD_SYNONYMS_TRANSLATIONS, $t->syntransId, $t->expression, $t->identicalMeaning );
+		$t->synonymsTranslationsStructure = new Structure( WD_SYNONYMS_TRANSLATIONS, $t->identicalMeaning, $t->syntransId, $t->expression );
 		$t->synonymsAndTranslations = new Attribute( null, "$synonymsAndTranslationsCaption", $t->synonymsTranslationsStructure );
 		$t->translatedTextAttributeId = new Attribute( "translated-text-attribute-id", "Attribute identifier", "object-id" );
 		$t->translatedTextAttribute = new Attribute( "translated-text-attribute", wfMsgSc( "TranslatedTextAttribute" ), $definedMeaningReferenceType );

@@ -5,7 +5,6 @@ require_once( "OmegaWikiAttributes.php" );
 require_once( "WikiDataBootstrappedMeanings.php" );
 require_once( "ContextFetcher.php" );
 require_once( "WikiDataGlobals.php" );
-// require_once( "GotoSourceTemplate.php" ); // not used, disabled
 require_once( "ViewInformation.php" );
 
 class DummyViewer extends Viewer {
@@ -537,6 +536,7 @@ function getSynonymsAndTranslationsEditor( ViewInformation $viewInformation ) {
 
 	$o = OmegaWikiAttributes::getInstance();
 
+	// defining the language + expression editor (syntrans)
 	$tableEditor = new RecordSetTableEditor(
 		$o->synonymsAndTranslations,
 		new SimplePermissionController( true ),
@@ -546,10 +546,21 @@ function getSynonymsAndTranslationsEditor( ViewInformation $viewInformation ) {
 		false,
 		new SynonymTranslationController( $viewInformation->filterLanguageId )
 	);
-	
+
+
+	// defining the identicalMeaning Editor
+	$attribute = $o->identicalMeaning ;
+	$permissionController = new SimplePermissionController( true ) ;
+	$isAddField = true ;
+	$identicalMeaningEditor = new IdenticalMeaningEditor(
+		$attribute, $permissionController, $isAddField
+	);
+	$tableEditor->addEditor( $identicalMeaningEditor );
+
+	// expression Editor
 	$tableEditor->addEditor( getExpressionTableCellEditor( $o->expression, $viewInformation ) );
-	$tableEditor->addEditor( new BooleanEditor( $o->identicalMeaning, new SimplePermissionController( true ), true, true ) );
-	
+
+	// not sure what this does
 	addPropertyToColumnFilterEditors( $tableEditor, $viewInformation, $o->syntransId, $synTransMeaningName );
 
 	// Add annotation editor on the rightmost column.
@@ -623,17 +634,12 @@ function getDefinedMeaningClassMembershipEditor( ViewInformation $viewInformatio
 }
 
 function getDefinedMeaningCollectionMembershipEditor( ViewInformation $viewInformation ) {
-	global $wgGotoSourceTemplates;
-
 	$o = OmegaWikiAttributes::getInstance();
 
 	$editor = new RecordSetTableEditor( $o->collectionMembership, new SimplePermissionController( true ), new ShowEditFieldChecker( true ), new AllowAddController( true ), true, false, new DefinedMeaningCollectionController() );
 	$editor->addEditor( new CollectionReferenceEditor( $o->collectionMeaning, new SimplePermissionController( false ), true ) );
 	$editor->addEditor( new ShortTextEditor( $o->sourceIdentifier, new SimplePermissionController( false ), true ) );
 	
-	if ( count( $wgGotoSourceTemplates ) > 1 )
-		$editor->addEditor( new GotoSourceEditor( $o->gotoSource, new SimplePermissionController( true ), true ) );
-
 	addTableMetadataEditors( $editor, $viewInformation );
 
 	return $editor;
@@ -757,10 +763,15 @@ function getExpressionMeaningsEditor( Attribute $attribute, $allowAdd, ViewInfor
 function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
 
-	$expressionMeaningsRecordEditor = new RecordUnorderedListEditor( $o->expressionMeanings, 3 );
+	$headerLevel = 3 ;
+	$expressionMeaningsRecordEditor = new RecordUnorderedListEditor( $o->expressionMeanings, $headerLevel );
 	
-	$exactMeaningsEditor = getExpressionMeaningsEditor( $o->expressionExactMeanings, true, $viewInformation );
+	$allowAdd = true;
+	$exactMeaningsEditor = getExpressionMeaningsEditor( $o->expressionExactMeanings, $allowAdd, $viewInformation );
+	$exactMeaningsEditor->setDisplayHeader(false);
 	$expressionMeaningsRecordEditor->addEditor( $exactMeaningsEditor );
+
+// add an approximate meaning editor (identicalMeaning = 0):
 	$approximateMeaningsEditor = getExpressionMeaningsEditor( $o->expressionApproximateMeanings, false, $viewInformation ) ;
 	$expressionMeaningsRecordEditor->addEditor( $approximateMeaningsEditor );
 

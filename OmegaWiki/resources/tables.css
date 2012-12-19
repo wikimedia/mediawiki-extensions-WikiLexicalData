@@ -148,7 +148,6 @@
 
 .level3 {
 	font-size:120% ;
-	font-weight: bold;
 	background-color: #e0ffff;
 	margin-top:10px;
 	padding:5px;
@@ -163,6 +162,19 @@
 .level5 {
 	font-weight: bold;
 	padding:5px;
+}
+
+li.exp-meanings-exact div.level3 {
+	font-weight: bold;
+}
+
+li.exp-meanings-exact>div>ul {
+	margin: 0px;
+}
+
+li.exp-meanings-approx {
+	font-weight: normal;
+	font-style: italic;
 }
 
 td.add {
