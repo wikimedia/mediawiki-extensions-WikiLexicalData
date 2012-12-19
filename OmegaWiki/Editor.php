@@ -2067,6 +2067,12 @@ class WrappingEditor implements Editor {
 	public function getAttributeEditorMap() {
 		return $this->wrappedEditor->getAttributeEditorMap();
 	}
+
+	public function getDisplayHeader() {
+		// only used for DefaultEditor so far.
+		// here returns only default true.
+		return true;
+	}
 }
 
 class PopUpEditor extends WrappingEditor {
