@@ -43,15 +43,6 @@ jQuery(document).ready(function( $ ) {
 		$(this).next(".popupToggleable").toggle(100);
 	});
 	
-	$(".mw-line-even").hover(
-		function (event) {
-			showTooltip( $(this), event );
-		},
-		function () {
-			hideTooltip( $(this) );
-		}
-	);
-	
 	$(window).resize(function() {
 		updateTabs();
 	});
@@ -243,46 +234,7 @@ jQuery(document).ready(function( $ ) {
 	
 });
 
-	function showTooltip(elem, event) {
-//		elem.hide();
-		// position where it will be displayeds
-		var posX = event.pageX ;
-		var posY = elem.offset().top - 40 ;
 
-		// check it the element already has a tooltip (hidden)
-		if ( elem.children(".tooltip").length ) {
-			//yes : reposition and show it
-			elem.children(".tooltip")
-				.css ("left", posX)
-				.show();
-
-		} else {
-			// else create it
-			var tipdiv = jQuery(document.createElement('span')) ;
-			var tipmessage = "toto";
-
-			tipdiv.addClass("tooltip")
-				.css ("position", "fixed")
-				.css ("left", posX)
-				.css ("top", posY)
-				.html( tipmessage )
-				.appendTo(elem)
-				.show();
-
-			var triangle = jQuery(document.createElement('span')) ;
-			// position absolute = given relative to its parent
-			triangle.addClass("triangle-down")
-				.css ("position", "absolute")
-				// 5 is half of the triangle size
-				.css ("left", tipdiv.width() / 2 - 5 )
-				.css ("top", tipdiv.outerHeight() )
-				.appendTo(tipdiv);
-		} // else
-	}
-	
-	function hideTooltip(elem) {
-		elem.children(".tooltip").hide();
-	}
 //TODO: convert the functions below to jQuery...
 
 window.MD5 = function (string) {
