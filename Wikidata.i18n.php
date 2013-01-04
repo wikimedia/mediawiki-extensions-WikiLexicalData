@@ -382,29 +382,6 @@ Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki pag
 	'prefs-omegawiki' => '{{optional}}',
 );
 
-/** Karelian (Karjala)
- * @author Flrn
- */
-$messages['krl'] = array(
-	'ow_LinkAttributeValues' => 'Viippaukset',
-);
-
-/** Niuean (ko e vagahau Niuē)
- * @author Jose77
- */
-$messages['niu'] = array(
-	'ow_history' => 'Liu onoono atu ki tua',
-);
-
-/** Turoyo (Ṫuroyo)
- * @author Ariyo
- */
-$messages['tru'] = array(
-	'datasearch_language' => 'Leşono:',
-	'ow_exporttsv_languages' => 'Leşone:',
-	'ow_Language' => 'Leşono',
-);
-
 /** Abkhazian (Аҧсшәа)
  * @author Temuri rajavi
  */
@@ -2813,6 +2790,7 @@ $messages['da'] = array(
  * @author Kghbln
  * @author Kipcool
  * @author Lyzzy
+ * @author Metalhead64
  * @author Ortografix
  * @author Purodha
  * @author Revolus
@@ -2892,6 +2870,7 @@ Wähle eine Sammlung aus, die du exportieren willst. Gib im Sprachen-Textfeld ei
 	'ow_noedit_title' => 'Keine Editiererlaubnis',
 	'ow_noedit' => 'Du hast nicht die Erlaubnis Seiten im Dataset „$1“ zu editieren.
 Siehe [[{{MediaWiki:Ow editing policy url}}|unsere Richtlinien]].',
+	'ow_editing_policy_url' => 'Project:Permission policy',
 	'ow_uipref_datasets' => 'Standardansicht:',
 	'ow_uiprefs' => 'Wikidata',
 	'ow_none_selected' => 'nichts ausgewählt',
@@ -2962,6 +2941,7 @@ Siehe [[{{MediaWiki:Ow editing policy url}}|unsere Richtlinien]].',
 	'ow_IdenticalMeaning' => 'Identische Bedeutung?',
 	'ow_IncomingRelations' => 'Eingehende Relationen',
 	'ow_GotoSource' => 'Gehe zur Quelle',
+	'ow_ID' => 'Kennung',
 	'ow_Language' => 'Sprache',
 	'ow_LevelAnnotation' => 'Annotation',
 	'ow_LinkAttributeHeader' => 'Link-Attribut',
@@ -2973,6 +2953,7 @@ Siehe [[{{MediaWiki:Ow editing policy url}}|unsere Richtlinien]].',
 	'ow_OptionAttributeOptions' => 'Optionen',
 	'ow_OptionAttributeValues' => 'Optionswerte',
 	'ow_OtherDefinedMeaning' => 'Andere DefinedMeaning',
+	'ow_OtherLanguages' => 'Andere Sprachen:',
 	'ow_PopupAnnotation' => 'Annotation',
 	'ow_RecordLifeSpan' => 'Datensatz-Lebenslauf',
 	'ow_Relations' => 'Relationen',
@@ -2998,6 +2979,7 @@ Siehe [[{{MediaWiki:Ow editing policy url}}|unsere Richtlinien]].',
 	'ow_Link' => 'Link',
 	'ow_LinkAttribute' => 'Eigenschaft',
 	'ow_LinkAttributeValues' => 'Links',
+	'ow_URL' => 'URL',
 	'ow_User' => 'Benutzer',
 	'ow_Property' => 'Eigenschaft',
 	'ow_Value' => 'Wert',
@@ -3043,6 +3025,7 @@ Bitte kontaktiere den Serveradminstrator.',
 	'ow_nstab_edit_copy' => 'Kopie bearbeiten',
 	'right-addlanguage' => 'Spracheinstellungen hinzufügen und ändern',
 	'ow_shown_datasets' => 'Datensätze anzeigen',
+	'prefs-omegawiki' => 'OmegaWiki',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -4774,6 +4757,7 @@ Tulit tälle sivulle ehkä suoraan? Normaalisti sinun ei pitäisi olla täällä
 
 /** French (français)
  * @author Crochet.david
+ * @author Gomoko
  * @author Grondin
  * @author IAlex
  * @author Korrigan
@@ -4857,6 +4841,7 @@ Sélectionnez une collection à exporter. Dans la boîte de texte de langues, en
 	'ow_noedit_title' => 'Pas de permission pour modifier',
 	'ow_noedit' => 'Vous n’êtes pas autorisé{{GENDER:||e|(e)}} à modifier les pages dans les données préétablies « $1 ».
 Veuillez consulter [[{{MediaWiki:Ow editing policy url}}|nos règles sur la modification]].',
+	'ow_editing_policy_url' => 'Project:Permission policy',
 	'ow_uipref_datasets' => 'Vue par défaut :',
 	'ow_uiprefs' => 'Données wiki',
 	'ow_none_selected' => 'Aucune sélection',
@@ -4929,6 +4914,7 @@ Veuillez vérifier l’adresse internet de la page.',
 	'ow_IdenticalMeaning' => 'Sens identique ?',
 	'ow_IncomingRelations' => 'Relations entrantes',
 	'ow_GotoSource' => 'Voir la source',
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Langue',
 	'ow_LevelAnnotation' => 'Annotation',
 	'ow_LinkAttributeHeader' => 'Attribut du lien',
@@ -4940,6 +4926,7 @@ Veuillez vérifier l’adresse internet de la page.',
 	'ow_OptionAttributeOptions' => 'Options',
 	'ow_OptionAttributeValues' => 'Valeurs des options',
 	'ow_OtherDefinedMeaning' => 'Autre sens défini',
+	'ow_OtherLanguages' => 'Autres langues:',
 	'ow_PopupAnnotation' => 'Annotation',
 	'ow_RecordLifeSpan' => 'Durée de vie de l’enregistrement',
 	'ow_Relations' => 'Relations',
@@ -4965,6 +4952,7 @@ Veuillez vérifier l’adresse internet de la page.',
 	'ow_Link' => 'Lien',
 	'ow_LinkAttribute' => 'Propriété',
 	'ow_LinkAttributeValues' => 'Liens',
+	'ow_URL' => 'URL',
 	'ow_User' => 'Utilisateur',
 	'ow_Property' => 'Propriété',
 	'ow_Value' => 'Valeur',
@@ -5017,6 +5005,7 @@ Veuillez contacter l’opérateur ou l’administrateur du serveur.',
 	'ow_nstab_edit_copy' => 'modifier la copie',
 	'right-addlanguage' => 'Ajouter et modifier les paramètres de langues',
 	'ow_shown_datasets' => 'Afficher les ensembles de données',
+	'prefs-omegawiki' => 'OmegaWiki',
 );
 
 /** Franco-Provençal (arpetan)
@@ -5087,7 +5076,7 @@ $messages['frp'] = array(
 	'transaction' => 'Wikidata : jornal de les transaccions',
 	'ow_transaction_from_transaction' => 'Dês la transaccion :',
 	'ow_transaction_count' => 'Compto :',
-	'ow_transaction_user' => 'Nom d’usanciér :',
+	'ow_transaction_user' => 'Nom d’utilisator :',
 	'ow_transaction_show_rollback' => 'Fâre vêre los contrôlos de rèvocacion :',
 	'ow_transaction_rollback_button' => 'Rèvocar',
 	'ow_transaction_rollback_header' => 'Rèvocacion',
@@ -5108,7 +5097,7 @@ $messages['frp'] = array(
 	'ow_dm_OK' => 'D’acôrd',
 	'ow_dm_not_present' => 'pas enscrit',
 	'ow_dm_not_found' => 'pas trovâ dens la bâsa de balyês ou ben mâl-rèdigiê',
-	'ow_mapping_successful' => 'Tôs los champs marcâs avouéc [OK] ont étâ entrebetâs<br />',
+	'ow_mapping_successful' => 'Tôs los champs marcâs avouéc [OK] sont étâs entrebetâs<br />',
 	'ow_will_insert' => 'Entrebeterat cen que siut :',
 	'ow_contents_of_mapping' => 'Corrèspondances contegnues',
 	'ow_available_contexts' => 'Contèxtos disponiblos',
@@ -5200,7 +5189,7 @@ $messages['frp'] = array(
 	'ow_needs_xlation_dest_lang' => 'Lengoua de dèstinacion :',
 	'ow_needs_xlation_no_dest_lang' => 'Volyéd spècefiar una lengoua de dèstinacion.',
 	'ow_statistics' => 'Wikidata : statistiques',
-	'ow_show' => 'Fâre vêre',
+	'ow_show' => 'Montrar',
 	'ow_upload' => 'Tèlèchargiér',
 	'ow_create' => 'Fâre',
 	'ow_collection_added' => '<strong>Colèccion $1 apondua.</strong>',
@@ -7465,7 +7454,7 @@ $messages['ja'] = array(
 	'ow_importtsv_title2' => '定義と翻訳を取り込む',
 	'ow_importtsv_header' => "<p>OpenOffice.org や Excel などのスプレッドシート・ソフトウェアで書き出せる、タブ区切りテキストファイルから、定義および翻訳を取り込みます。</p>
 <p>ファイルの形式は、TSV書き出しページで出力されるものと同じでなくてはなりません。列名を変更してしまうと取り込みが失敗します。識別子や意味定義の表現を変更した場合、その行は無視されます。列を追加した場合、'definitions_iso' または 'translations_iso' の形式に従う必要があります。\"iso\" とは ISO 639-3 言語コードのことです。</p>
-<p>「試験実行」ボックスを選択した場合、行われる処理を報告しますが、実際の変更はされません。実際の取り込みの前に試験実行をすることをお勧めします。</p>",
+<p>「試験実行」ボックスを選択した場合、行われる処理を報告しますが、実際の変更はされません。実際の取り込みの前に試験実行をすることをお勧めします。</p>", # Fuzzy
 	'ow_importtsv_not_allowed' => 'あなたにはTSVを取り込む権限がありません。',
 	'ow_importtsv_importing' => 'TSVデータを取り込み中',
 	'ow_importtsv_import_failed' => '取り込み失敗',
@@ -7567,6 +7556,7 @@ $messages['ja'] = array(
 	'ow_IdenticalMeaning' => '同一の意味ですか？',
 	'ow_IncomingRelations' => '内向き関係',
 	'ow_GotoSource' => '起点を表示',
+	'ow_ID' => 'ID',
 	'ow_Language' => '言語',
 	'ow_LevelAnnotation' => '注釈',
 	'ow_LinkAttributeHeader' => 'リンク属性',
@@ -7578,6 +7568,7 @@ $messages['ja'] = array(
 	'ow_OptionAttributeOptions' => '選択肢',
 	'ow_OptionAttributeValues' => '選択可能値',
 	'ow_OtherDefinedMeaning' => '他の意味定義',
+	'ow_OtherLanguages' => 'その他の言語:',
 	'ow_PopupAnnotation' => '注釈',
 	'ow_RecordLifeSpan' => '記録寿命',
 	'ow_Relations' => '関係',
@@ -7603,8 +7594,9 @@ $messages['ja'] = array(
 	'ow_Link' => 'リンク',
 	'ow_LinkAttribute' => '特性',
 	'ow_LinkAttributeValues' => 'リンク',
+	'ow_URL' => 'URL',
 	'ow_User' => '利用者',
-	'ow_Property' => '特性',
+	'ow_Property' => 'プロパティ',
 	'ow_Value' => '値',
 	'ow_added' => '追加',
 	'ow_removed' => '除去',
@@ -7647,13 +7639,14 @@ $messages['ja'] = array(
 	'ow_upload' => 'アップロード',
 	'ow_create' => '作成',
 	'ow_collection_added' => '<strong>コレクション $1 を追加しました。</strong>',
-	'ow_suggest_previous' => '前',
-	'ow_suggest_next' => '次',
+	'ow_suggest_previous' => '前へ',
+	'ow_suggest_next' => '次へ',
 	'ow_suggest_clear' => '消去',
 	'ow_nstab_definedmeaning' => '意味定義',
 	'ow_nstab_edit_copy' => '複製を編集',
 	'right-addlanguage' => '言語設定を追加/変更',
 	'ow_shown_datasets' => '表示されたデータ集合',
+	'prefs-omegawiki' => 'OmegaWiki',
 );
 
 /** Javanese (Basa Jawa)
@@ -8405,6 +8398,13 @@ $messages['kri'] = array(
 $messages['krj'] = array(
 	'ow_history' => 'Kasaysayan',
 	'ow_dm_OK' => 'OK dun',
+);
+
+/** Karelian (Karjala)
+ * @author Flrn
+ */
+$messages['krl'] = array(
+	'ow_LinkAttributeValues' => 'Viippaukset',
 );
 
 /** Colognian (Ripoarisch)
@@ -10076,6 +10076,13 @@ $messages['ne'] = array(
 	'ow_transaction_user' => 'प्रयोगकर्ता नाम:',
 );
 
+/** Niuean (ko e vagahau Niuē)
+ * @author Jose77
+ */
+$messages['niu'] = array(
+	'ow_history' => 'Liu onoono atu ki tua',
+);
+
 /** Dutch (Nederlands)
  * @author GerardM
  * @author SPQRobin
@@ -10198,7 +10205,7 @@ Zie [[{{MediaWiki:Ow editing policy url}}|ons bewerkingsbeleid]].',
 	'ow_will_insert' => 'Zal het volgende toevoegen:',
 	'ow_contents_of_mapping' => 'Inhoud van de mapping',
 	'ow_available_contexts' => 'Beschikbare contexten',
-	'ow_add_concept_link' => 'Verwijzing toevoegen aan andere concepten',
+	'ow_add_concept_link' => 'Koppeling toevoegen aan andere concepten',
 	'ow_concept_panel' => 'Conceptpaneel',
 	'ow_dm_badtitle' => 'Deze pagina wijst niet naar enige BepaaldeBetekenis (concept).
 Controleer het webadres.',
@@ -10232,7 +10239,7 @@ Controleer het webadres.',
 	'ow_ID' => 'ID',
 	'ow_Language' => 'Taal',
 	'ow_LevelAnnotation' => 'Annotatie',
-	'ow_LinkAttributeHeader' => 'Verwijzingsattribuut',
+	'ow_LinkAttributeHeader' => 'Koppelingsattribuut',
 	'ow_Multiple_meanings' => 'Definities voor "$1"',
 	'ow_NewExactMeaning' => 'Nieuwe exacte betekenis',
 	'ow_OptionAttribute' => 'Eigenschap',
@@ -10263,16 +10270,16 @@ Controleer het webadres.',
 	'ow_TranslatedTextAttributeValue' => 'Tekst',
 	'ow_TranslatedTextAttributeValues' => 'Vertaalbare tekst',
 	'ow_Label' => 'Label',
-	'ow_Link' => 'Verwijzing',
+	'ow_Link' => 'Koppeling',
 	'ow_LinkAttribute' => 'Eigenschap',
-	'ow_LinkAttributeValues' => 'Verwijzingen',
+	'ow_LinkAttributeValues' => 'Koppelingen',
 	'ow_User' => 'Gebruiker',
 	'ow_Property' => 'Eigenschap',
 	'ow_Value' => 'Waarde',
 	'ow_added' => 'Toegevoegd',
 	'ow_removed' => 'Verwijderd',
 	'ow_meaningsoftitle' => 'Betekenissen van "$1"',
-	'ow_meaningsofsubtitle' => '<em>Wikiverwijzing:</em> [[$1]]',
+	'ow_meaningsofsubtitle' => '<em>Wikikoppeling:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>Toestemming geweigerd</h2>',
 	'copy' => 'Wikidata: Kopiëren',
 	'ow_copy_no_action_specified' => 'Geef alstublieft een handeling aan',
@@ -10290,7 +10297,7 @@ Vergeet niet om dit te controleren!',
 	'ow_class_attr_type_dm' => 'Gedefinieerde betekenis',
 	'ow_class_attr_type_xlate' => 'Vertaalbare tekst',
 	'ow_class_attr_type_plain' => 'Platte tekst',
-	'ow_class_attr_type_link' => 'Verwijzing',
+	'ow_class_attr_type_link' => 'Koppeling',
 	'ow_class_attr_type_option' => 'Optielijst',
 	'needstranslation' => 'Wikidata: Onvertaalde expressies',
 	'ow_needs_xlation_title' => 'Expressies zonder vertaling',
@@ -11172,6 +11179,7 @@ Ch'a selession-a na colession da esporté. Ant la casela ëd test dle lenghe, ch
 	'ow_noedit_title' => 'Gnun përmess ëd modifiché',
 	'ow_noedit' => 'A l\'ha pa ël përmess ëd modifiché le pàgine ant la partìa ëd dàit "$1".
 Për piasì, ch\'a lesa [[{{MediaWiki:Ow editing policy url}}|nòstre régole ëd modìfica]].',
+	'ow_editing_policy_url' => 'Project:Permission policy',
 	'ow_uipref_datasets' => 'Vista stàndard:',
 	'ow_uiprefs' => 'Dàit wiki',
 	'ow_none_selected' => 'Gnun-a selession',
@@ -11244,6 +11252,7 @@ Për piasì, ch'a contròla l'adrëssa an sl'aragnà.",
 	'ow_IdenticalMeaning' => 'Istess sust?',
 	'ow_IncomingRelations' => "Relassion ch'a rivo",
 	'ow_GotoSource' => 'Andé a la sorgiss',
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Lenga',
 	'ow_LevelAnnotation' => 'Nòta',
 	'ow_LinkAttributeHeader' => "Propietà dl'anliura",
@@ -11255,6 +11264,7 @@ Për piasì, ch'a contròla l'adrëssa an sl'aragnà.",
 	'ow_OptionAttributeOptions' => 'Opsion',
 	'ow_OptionAttributeValues' => "Valor ëd j'opsion",
 	'ow_OtherDefinedMeaning' => 'Àutri sust',
+	'ow_OtherLanguages' => 'Àutre lenghe:',
 	'ow_PopupAnnotation' => 'Nòta',
 	'ow_RecordLifeSpan' => "Durà ëd vita dl'argistrassion",
 	'ow_Relations' => 'Relassion',
@@ -11280,6 +11290,7 @@ Për piasì, ch'a contròla l'adrëssa an sl'aragnà.",
 	'ow_Link' => 'Anliura',
 	'ow_LinkAttribute' => 'Propietà',
 	'ow_LinkAttributeValues' => 'Anliure',
+	'ow_URL' => 'URL',
 	'ow_User' => 'Utent',
 	'ow_Property' => 'Proprietà',
 	'ow_Value' => 'Valor',
@@ -11332,6 +11343,7 @@ Për piasì, ch'a contata l'operador o l'aministrator dël servent.",
 	'ow_nstab_edit_copy' => 'modìfica còpia',
 	'right-addlanguage' => 'Gionta e cambia ampostassion ëd lenga',
 	'ow_shown_datasets' => "Mostra j'ansem ëd dàit",
+	'prefs-omegawiki' => 'OmegaWiki',
 );
 
 /** Pontic (Ποντιακά)
@@ -15061,6 +15073,15 @@ $messages['tr'] = array(
 	'ow_shown_datasets' => 'Gösterilen veri dizileri',
 );
 
+/** Turoyo (Ṫuroyo)
+ * @author Ariyo
+ */
+$messages['tru'] = array(
+	'datasearch_language' => 'Leşono:',
+	'ow_exporttsv_languages' => 'Leşone:',
+	'ow_Language' => 'Leşono',
+);
+
 /** Uyghur (Arabic script) (ئۇيغۇرچە)
  * @author Alfredie
  */
@@ -16071,4 +16092,3 @@ $messages['zh-yue'] = array(
 	'langman_title' => '語言管理員',
 	'datasearch' => 'Wikidata: 資料搜尋',
 );
-
