@@ -7452,9 +7452,13 @@ $messages['ja'] = array(
 	'importtsv' => 'ウィキデータ: TSVの取り込み',
 	'ow_importtsv_title1' => 'TSVの取り込み',
 	'ow_importtsv_title2' => '定義と翻訳を取り込む',
-	'ow_importtsv_header' => "<p>OpenOffice.org や Excel などのスプレッドシート・ソフトウェアで書き出せる、タブ区切りテキストファイルから、定義および翻訳を取り込みます。</p>
-<p>ファイルの形式は、TSV書き出しページで出力されるものと同じでなくてはなりません。列名を変更してしまうと取り込みが失敗します。識別子や意味定義の表現を変更した場合、その行は無視されます。列を追加した場合、'definitions_iso' または 'translations_iso' の形式に従う必要があります。\"iso\" とは ISO 639-3 言語コードのことです。</p>
-<p>「試験実行」ボックスを選択した場合、行われる処理を報告しますが、実際の変更はされません。実際の取り込みの前に試験実行をすることをお勧めします。</p>", # Fuzzy
+	'ow_importtsv_header' => '<p>OpenOffice.org や Excel などの表計算ソフトウェアで書き出せる、タブ区切りテキストファイルから、定義および翻訳を取り込みます。</p>
+<p>ファイルの形式は、TSV書き出しページで出力されるものと同じでなくてはなりません。
+列名を変更してしまうと取り込みが失敗します。
+識別子や意味定義の表現を変更した場合、その行は無視されます。
+列を追加した場合、「definitions_iso」または「translations_iso」の書式に従う必要があります。「iso」とは ISO 639-3 言語コードのことです。</p>
+<p>「試験実行」ボックスを選択した場合、行われる処理を報告しますが、実際の変更はされません。
+実際の取り込みの前に試験実行をすることをお勧めします。</p>', # Fuzzy
 	'ow_importtsv_not_allowed' => 'あなたにはTSVを取り込む権限がありません。',
 	'ow_importtsv_importing' => 'TSVデータを取り込み中',
 	'ow_importtsv_import_failed' => '取り込み失敗',
@@ -9723,7 +9727,7 @@ $messages['myv'] = array(
 	'langman_langname' => 'Келенть лемезэ:',
 	'langman_field_optional' => '(мелень коряс)',
 	'langman_addlang' => 'Поладомс кель',
-	'datasearch' => 'Викидата: Датань вешнэма',
+	'datasearch' => 'Викидата: Датань вешнема',
 	'datasearch_language' => 'Келесь:',
 	'datasearch_found_word' => 'Муезь вал',
 	'datasearch_meaning' => 'Смустезэ',
