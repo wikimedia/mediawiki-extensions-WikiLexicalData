@@ -165,6 +165,21 @@ function createInitialRevisionForPage( $pageId, $comment ) {
 	return $revisionId;
 }
 
+/**
+ * returns true if a spelling exists in the
+ * expression table of the database
+ */
+function existSpelling( $spelling ) {
+	$dc = wdGetDataSetContext();
+
+	$dbr = wfGetDB( DB_SLAVE );
+	$sql = "SELECT expression_id FROM {$dc}_expression " .
+			'WHERE spelling=binary ' . $dbr->addQuotes( $spelling ) .
+			' AND ' . getLatestTransactionRestriction( "{$dc}_expression" ) . " LIMIT 1 " ;
+	$queryResult = $dbr->query( $sql );
+	return $dbr->numRows( $queryResult ) > 0;
+}
+
 function findExpression( $spelling, $languageId ) {
 	if ( $expressionId = getExpressionId( $spelling, $languageId ) ) {
 		return new Expression( $expressionId, $spelling, $languageId );
@@ -176,7 +191,7 @@ function findExpression( $spelling, $languageId ) {
 
 function createExpression( $spelling, $languageId ) {
 	$expression = new Expression( createExpressionId( $spelling, $languageId ), $spelling, $languageId );
-	$expressionTitle = Title::makeTitle( MWNamespace::getCanonicalIndex('expression') , $spelling );
+	$expressionTitle = Title::makeTitle( NS_EXPRESSION , $spelling );
 	if( !$expressionTitle->exists() ) {
 		$expression->createNewInDatabase();
 	}
