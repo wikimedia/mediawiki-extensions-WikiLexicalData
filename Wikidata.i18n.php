@@ -281,6 +281,7 @@ Please contact the server operator or administrator.",
  * @author Meno25
  * @author Michawiki
  * @author Purodha
+ * @author Shirayuki
  * @author Siebrand
  * @author Umherirrender
  * @author Тест
@@ -310,6 +311,7 @@ $messages['qqq'] = array(
 	'ow_searchnoresult' => "Don't translate the word ''Expression'' in ''<nowiki>[[Expression:$1]]</nowiki>''",
 	'ow_save' => '{{Identical|Save}}',
 	'ow_history' => '{{Identical|History}}',
+	'ow_editing_policy_url' => '{{notranslate}}',
 	'ow_none_selected' => '{{Identical|None selected}}',
 	'transaction' => "A 'transaction' is a database transaction: a set of database operations considered as a whole.",
 	'ow_transaction_count' => '{{Identical|Count}}',
@@ -332,7 +334,7 @@ $messages['qqq'] = array(
 	'ow_DefinedMeaningAttributes' => '{{Identical|Annotation}}',
 	'ow_DefinedMeaning' => '{{Identical|Defined meaning}}',
 	'ow_DefinedMeaningReference' => '{{Identical|Defined meaning}}',
-	'ow_ID' => '{{optional}}',
+	'ow_ID' => '{{Identical|ID}}',
 	'ow_Language' => '{{Identical|Language}}',
 	'ow_LevelAnnotation' => '{{Identical|Annotation}}',
 	'ow_OptionAttribute' => '{{Identical|Property}}',
@@ -5410,6 +5412,7 @@ Por favor, comprobe o enderezo da páxina web.',
 	'ow_IdenticalMeaning' => 'significado idéntico?',
 	'ow_IncomingRelations' => 'Relacións entrantes',
 	'ow_GotoSource' => 'Ir á orixe',
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Lingua',
 	'ow_LevelAnnotation' => 'Anotación',
 	'ow_LinkAttributeHeader' => 'Atributo da ligazón',
