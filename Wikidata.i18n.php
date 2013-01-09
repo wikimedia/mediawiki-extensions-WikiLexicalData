@@ -14356,6 +14356,7 @@ $messages['te'] = array(
 	'ow_OptionAttributeOptions' => 'ఎంపికలు',
 	'ow_OptionAttributeValues' => 'ఎంపిక విలువలు',
 	'ow_OtherDefinedMeaning' => 'ఇతర నిర్వచిత అర్థం',
+	'ow_OtherLanguages' => 'ఇతర భాషలు:',
 	'ow_PopupAnnotation' => 'వివరణ',
 	'ow_RecordLifeSpan' => 'రికార్డు జీవిత కాలం',
 	'ow_Relations' => 'సంబంధాలు',
