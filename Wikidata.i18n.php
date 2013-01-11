@@ -14928,6 +14928,7 @@ $messages['tly'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author InfoCan
  * @author Joseph
  * @author Karduelis
@@ -15011,8 +15012,11 @@ $messages['tr'] = array(
 	'ow_Annotation' => 'Ek açıklama',
 	'ow_ApproximateMeanings' => 'Yaklaşık anlamlar',
 	'ow_Class' => 'Sınıf',
+	'ow_ClassAttributeAttribute' => 'Öznitelik',
 	'ow_ClassAttributes' => 'Sınıf değerleri',
 	'ow_ClassAttributeLevel' => 'Seviye',
+	'ow_ClassAttributeType' => 'Tür',
+	'ow_ClassMembership' => 'Üyelik sınıfı',
 	'ow_Collection' => 'Koleksiyon',
 	'ow_Collection_colon' => 'Koleksiyon:',
 	'ow_CollectionMember' => 'Koleksiyon üyesi',
@@ -15028,6 +15032,7 @@ $messages['tr'] = array(
 	'ow_IdenticalMeaning' => 'Aynı anlam mı?',
 	'ow_IncomingRelations' => 'Gelen ilişkiler',
 	'ow_GotoSource' => 'Kaynağa git',
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Dil',
 	'ow_LevelAnnotation' => 'Ek açıklama',
 	'ow_LinkAttributeHeader' => 'Bağlantı değeri',
@@ -15036,8 +15041,10 @@ $messages['tr'] = array(
 	'ow_OptionAttribute' => 'Özellik',
 	'ow_OptionAttributeHeader' => 'Seçenek değeri',
 	'ow_OptionAttributeOption' => 'Seçenek',
+	'ow_OptionAttributeOptions' => 'Seçenekler',
 	'ow_OptionAttributeValues' => 'Seçenek değerleri',
 	'ow_OtherDefinedMeaning' => 'Tanımlanan diğer anlam',
+	'ow_OtherLanguages' => 'Diğer diller:',
 	'ow_PopupAnnotation' => 'Ek açıklama',
 	'ow_Relations' => 'İlişkiler',
 	'ow_RelationType' => 'İlişki türü',
