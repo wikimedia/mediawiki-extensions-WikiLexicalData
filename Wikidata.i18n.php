@@ -3426,6 +3426,7 @@ $messages['ee'] = array(
  * @author Crazymadlover
  * @author Evropi
  * @author Geraki
+ * @author Glavkos
  * @author Omnipaedista
  * @author ZaDiak
  */
@@ -3546,6 +3547,7 @@ $messages['el'] = array(
 	'ow_IdenticalMeaning' => 'Ταυτόσημο;',
 	'ow_IncomingRelations' => 'Εισερχόμενες σχέσεις',
 	'ow_GotoSource' => 'Μετάβαση στην πηγή',
+	'ow_ID' => 'Αναγνωριστικό',
 	'ow_Language' => 'Γλώσσα',
 	'ow_LevelAnnotation' => 'Σχολιασμός',
 	'ow_LinkAttributeHeader' => 'Ιδιότητες συνδέσμων',
@@ -3557,6 +3559,7 @@ $messages['el'] = array(
 	'ow_OptionAttributeOptions' => 'Επιλογές',
 	'ow_OptionAttributeValues' => 'Προαιρετικές αξίες',
 	'ow_OtherDefinedMeaning' => 'Άλλη ορισμένη έννοια',
+	'ow_OtherLanguages' => 'Άλλες γλώσσες:',
 	'ow_PopupAnnotation' => 'Σχολιασμός',
 	'ow_RecordLifeSpan' => 'Διάρκεια ζωής εγγραφής',
 	'ow_Relations' => 'Σχέσεις',
@@ -3607,6 +3610,7 @@ $messages['el'] = array(
 	'ow_needs_xlation_source_lang' => 'Γλώσσα πηγής:',
 	'ow_needs_xlation_dest_lang' => 'Γλώσσα προορισμού:',
 	'ow_needs_xlation_no_dest_lang' => 'Παρακαλώ δώστε μια γλώσσα προορισμού.',
+	'ow_statistics' => 'Βικιδεδομένα:Στατιστικά',
 	'ow_show' => 'Προβολή',
 	'ow_upload' => 'Επιφόρτωση',
 	'ow_create' => 'Δημιουργία',
