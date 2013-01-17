@@ -26,14 +26,16 @@ class OmegaWiki extends DefaultWikidataApplication {
 		$this->outputViewHeader();
 
 		$spelling = $wgTitle->getText();
-		$recordset = getExpressionsRecordSet( $spelling, $this->viewInformation );
-		$wgOut->addHTML(
-			getExpressionsEditor( $spelling, $this->viewInformation )->view(
-				$this->getIdStack(),
-				$recordset
-			)
-		);
-		
+		if ( existSpelling ( $spelling ) ) {
+			$recordset = getExpressionsRecordSet( $spelling, $this->viewInformation );
+			$wgOut->addHTML(
+				getExpressionsEditor( $spelling, $this->viewInformation )->view(
+					$this->getIdStack(),
+					$recordset
+				)
+			);
+		}
+
 		$this->outputViewFooter();
 	}
 
@@ -50,7 +52,7 @@ class OmegaWiki extends DefaultWikidataApplication {
 				getExpressionsRecordSet( $spelling, $this->viewInformation )
 			)
 		);
-		
+
 		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
 	}
 
