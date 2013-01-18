@@ -1,5 +1,9 @@
 <?php
 
+require_once( "Wikidata.php" );
+require_once( "GotoSourceTemplate.php" );
+require_once( "PropertyToColumnFilter.php" );
+
 define( 'NS_EXPRESSION', 16 );
 define( 'NS_DEFINEDMEANING', 24 );
 define( 'WD_ENGLISH_LANG_ID', 85 );
@@ -32,11 +36,6 @@ define ( 'WD_RELATIONS', "rel" );
 define ( 'WD_SYNONYMS_TRANSLATIONS', "syntrans" );
 define ( 'WD_TEXT_ATTRIBUTES_VALUES', "txtAttVal" );
 define ( 'WD_TRANSLATED_TEXT', "transl" );
-
-
-require_once( "Wikidata.php" );
-require_once( "GotoSourceTemplate.php" );
-require_once( "PropertyToColumnFilter.php" );
 
 # Global context override. This is an evil hack to allow saving, basically.
 global $wdCurrentContext;
@@ -175,47 +174,6 @@ function &wdGetDataSets() {
 		}
 	}
 	return $datasets;
-}
-
-
-
-
-
-
-// Hook: replace the proposition to "create new page" by a custom, allowing to create new expression as well
-$wgHooks[ 'SpecialSearchNogomatch' ][] = 'owNoGoMatchHook';
-
-function owNoGoMatchHook( &$title ) {
-	global $wgOut,$wgDisableTextSearch;
-	$wgOut->addWikiMsg( 'search-nonefound' );
-	$wgOut->addWikiMsg( 'ow_searchnoresult', wfEscapeWikiText( $title ) );
-//	$wgOut->addWikiMsg( 'ow_searchnoresult', $title );
-
-	$wgDisableTextSearch = true ;
-	return true;
-}
-
-
-
-// Hook: The Go button should search (first) in the Expression namespace instead of Article namespace
-$wgHooks[ 'SearchGetNearMatchBefore' ][] = 'owGoClicked';
-
-function owGoClicked( $allSearchTerms, &$title ) {
-	$term = $allSearchTerms[0] ;
-	$title = Title::newFromText( $term ) ;
-	if ( is_null( $title ) ){
-		return true;
-	}
-
-	# Replace normal namespace with expression namespace
-	if ( $title->getNamespace() == NS_MAIN ) {
-		$title = Title::newFromText( $term, NS_EXPRESSION ) ; // $expressionNamespaceId ) ;
-	}
-
-	if ( $title->exists() ) {
-		return false; // match!
-	}
-	return true; // no match
 }
 
 ?>
