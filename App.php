@@ -175,14 +175,18 @@ $wgSpecialPages['ConceptMapping'] = 'SpecialConceptMapping';
 $wgSpecialPages['Copy'] = 'SpecialCopy';
 $wgSpecialPages['ow_statistics'] = 'SpecialOWStatistics';
 
+#
+## Hooks
+#
 $wgHooks['BeforePageDisplay'][] = 'WikidataHooks::onBeforePageDisplay';
 $wgHooks['GetPreferences'][] = 'WikidataHooks::onGetPreferences';
 $wgHooks['ArticleFromTitle'][] = 'WikidataHooks::onArticleFromTitle';
 $wgHooks['CustomEditor'][] = 'WikidataHooks::onCustomEditor';
 $wgHooks['MediaWikiPerformAction'][] = 'WikidataHooks::onMediaWikiPerformAction';
 $wgHooks['AbortMove'][] = 'WikidataHooks::onAbortMove';
-$wgHooks[ 'SpecialSearchNogomatch' ][] = 'WikidataHooks::onNoGoMatchHook';
-$wgHooks[ 'SearchGetNearMatchBefore' ][] = 'WikidataHooks::onGoClicked';
+$wgHooks['NamespaceIsMovable'][] = 'WikidataHooks::onNamespaceIsMovable';
+$wgHooks['SpecialSearchNogomatch'][] = 'WikidataHooks::onNoGoMatchHook';
+$wgHooks['SearchGetNearMatchBefore'][] = 'WikidataHooks::onGoClicked';
 
 // LocalApp.php is optional. Its function is like LocalSettings.php,
 // if you want to separate the MediaWiki configuration from the Wikidata configuration
