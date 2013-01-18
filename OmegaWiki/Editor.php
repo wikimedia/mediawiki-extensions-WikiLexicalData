@@ -1486,29 +1486,31 @@ class IdenticalMeaningEditor extends ScalarEditor {
 	protected $defaultValue;
 	// textValues is an array of "value" => "how the value is displayed"
 	// e.g. array( "true" => "=", "false" => "≈" );
-	protected $textValues;
+	protected $textValuesView;
+	protected $textValuesEdit;
 
 	public function __construct( Attribute $attribute = null, PermissionController $permissionController, $isAddField ) {
 		parent::__construct( $attribute, $permissionController, $isAddField );
 
 		$this->defaultValue = "true";
-		$this->textValues = array( "true" => "=", "false" => "≈" );
+		$this->textValuesView = array( "true" => "&nbsp;", "false" => "≈" );
+		$this->textValuesEdit = array( "true" => "=", "false" => "≈" );
 	}
 
 	public function getViewHTML( IdStack $idPath, $value ) {
 		// $value is what is returned from the database, i.e. an integer, 0 or 1
-		if ( $value == 0 ) return $this->textValues["false"];
-		if ( $value == 1 ) return $this->textValues["true"];
+		if ( $value == 0 ) return $this->textValuesView["false"];
+		if ( $value == 1 ) return $this->textValuesView["true"];
 		return "undefined"; // should not happen
 	}
 
 	public function getEditHTML( IdStack $idPath, $value ) {
 		// $value is what is returned from the database, i.e. an integer, 0 or 1
 		if ( $value == 0 ) {
-			return getSelect( $this->updateId( $idPath->getId() ), $this->textValues, "false" );
+			return getSelect( $this->updateId( $idPath->getId() ), $this->textValuesEdit, "false" );
 		}
 		if ( $value == 1 ) {
-			return getSelect( $this->updateId( $idPath->getId() ), $this->textValues, "true" );
+			return getSelect( $this->updateId( $idPath->getId() ), $this->textValuesEdit, "true" );
 		}
 
 		// if no $value is not 0 and not 1, should not happen
@@ -1517,7 +1519,7 @@ class IdenticalMeaningEditor extends ScalarEditor {
 
 	public function add( IdStack $idPath ) {
 		if ( $this->isAddField ) {
-			return getSelect( $this->addId( $idPath->getId() ), $this->textValues, $this->defaultValue);
+			return getSelect( $this->addId( $idPath->getId() ), $this->textValuesEdit, $this->defaultValue);
 		} else {
 			return "";
 		}
