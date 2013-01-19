@@ -475,7 +475,12 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 	} else {
 		// default: is there an expression in the user language?
 		$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
-		$sql = $sqlbase . " AND language_id=" . $userLanguageId ;
+		if ( $userLanguageId ) {
+			$sql = $sqlbase . " AND language_id=" . $userLanguageId ;
+		} else {
+			// no $userLanguageId, try English
+			$sql = $sqlbase . " AND language_id=" . WD_ENGLISH_LANG_ID ;
+		}
 		$queryResult = $dbr->query( $sql );
 
 		if ( $dbr->numRows( $queryResult ) == 0 ) {
