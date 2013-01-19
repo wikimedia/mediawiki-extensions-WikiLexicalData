@@ -155,8 +155,8 @@ function createInitialRevisionForPage( $pageId, $comment ) {
 	$comment = $dbw->addQuotes( $comment );
 	$timestamp = $dbw->timestamp();
 	
-	$sql = "insert into revision(rev_page,rev_comment,rev_user,rev_user_text,rev_timestamp) " .
-	        "values($pageId, $comment, $userId, $userName, $timestamp)";
+	$sql = "insert into revision(rev_page,rev_comment,rev_user,rev_user_text,rev_timestamp, rev_parent_id) " .
+	        "values($pageId, $comment, $userId, $userName, $timestamp, 0)";
 	$dbw->query( $sql );
 
 	$revisionId = $dbw->insertId();
