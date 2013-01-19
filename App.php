@@ -8,15 +8,16 @@ require_once( $dir . 'OmegaWiki/Wikidata.php' );
 
 $wgExtensionCredits['other'][] = array(
 	'path'            => __FILE__,
-	'name'            => 'Wikidata',
+	'name'            => 'WikiLexicalData',
 	'version'         => '0.1.0',
 	'author'          => array(
 		'Erik Möller',
 		'Kim Bruning',
 		'Maarten van Hoof',
-		'André Malafaya Baptista'
+		'André Malafaya Baptista',
+		'Kipcool'
 	),
-	'url'             => 'http://www.mediawiki.org/wiki/Extension:Wikidata',
+	'url'             => 'http://www.mediawiki.org/wiki/Extension:WikiLexicalData',
 	'descriptionmsg'  => 'wikidata-desc',
 );
 
