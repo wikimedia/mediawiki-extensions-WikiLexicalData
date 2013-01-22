@@ -339,6 +339,7 @@ $messages['qqq'] = array(
 	'ow_LevelAnnotation' => '{{Identical|Annotation}}',
 	'ow_OptionAttribute' => '{{Identical|Property}}',
 	'ow_OptionAttributeOptions' => '{{Identical|Options}}',
+	'ow_OtherLanguages' => '{{Identical|Otherlanguages}}',
 	'ow_PopupAnnotation' => 'The small link next to elements which can be annotated, such as Synonyms and Translations.
 This is visible when a SynTrans is annotated, or while editing a page.
 {{Identical|Annotation}}',
