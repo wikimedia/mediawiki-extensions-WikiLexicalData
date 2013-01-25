@@ -43,6 +43,22 @@ jQuery(document).ready(function( $ ) {
 		$(this).next(".popupToggleable").toggle(100);
 	});
 	
+	$("td.url").bind('paste', function() {
+		var tdurl = this ;
+		// timeout is needed, otherwise the paste is not finished when .val() is called.
+		setTimeout(function () {
+			// start from the inputted http://...
+			var labelurl = $(tdurl).children("input").val();
+			// remove everything before the last "/"
+			labelurl = labelurl.replace( /^http.*\/([^\/]+)/i, "$1" );
+			labelurl = labelurl.replace( /_/g, " " );
+			// change the %C3 and others to their utf8 values
+			labelurl = decodeURI(labelurl) ;
+			// put the obtained label in the "label" input field
+			$(tdurl).next("td").children("input").val(labelurl);
+		}, 100);
+	});
+
 	$(window).resize(function() {
 		updateTabs();
 	});
@@ -82,8 +98,8 @@ jQuery(document).ready(function( $ ) {
 	 * when an expression exists in several languages
 	 */
 	function initializeTabs() {
-		var $previousArrow = '<span class="wd-previousArrow">' + "❮" + '</span>' ;
-		var $nextArrow = '<span class="wd-nextArrow">' + "❯" + '</span>' ;
+		var previousArrow = '<span class="wd-previousArrow">' + "❮" + '</span>' ;
+		var nextArrow = '<span class="wd-nextArrow">' + "❯" + '</span>' ;
 		// add visible class to every item by default
 		$(".wd-tablist").children().addClass("visibleTab");
 		// remove right padding for the last element
@@ -92,19 +108,19 @@ jQuery(document).ready(function( $ ) {
 		// remove the tabs that are out of the window
 		// theoretically, overflow:hidden should work, but
 		// setting overflow and span and float seems a bit tricky
-		var $tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
-		while( $tablistright + 30 > $(window).width() ) {
+		var tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+		while( tablistright + 30 > $(window).width() ) {
 			// remove tabs on the right until it fits in the window
 			$(".wd-tablist .visibleTab:last")
 			.addClass("hiddenTab").removeClass("visibleTab" )
 			.hide();
-			$tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+			tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
 		}
 
 		// add arrows
-		$(".wd-tablist .wd-tabitem:first").before( $previousArrow ) ;
+		$(".wd-tablist .wd-tabitem:first").before( previousArrow ) ;
 		$(".wd-previousArrow").hide();
-		$(".wd-tablist ").after( $nextArrow );
+		$(".wd-tablist ").after( nextArrow );
 
 		// if the last element is visible, we don't need the nextArrow
 		if ( $(".wd-tablist .wd-tabitem:last").hasClass("visibleTab") ) {
@@ -122,24 +138,24 @@ jQuery(document).ready(function( $ ) {
 			$(".wd-previousArrow").show();
 
 			// remove visible tabs on the left until it fits the window
-			var $tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
-			while( $tablistright + 30 > $(window).width() ) {
+			var tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+			while( tablistright + 30 > $(window).width() ) {
 				// remove visible tabs on the left until it fits in the window
 				$(".wd-tablist .visibleTab:first")
 				.addClass("hiddenTab").removeClass("visibleTab" )
 				.hide();
-				$tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+				tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
 			}
 
 			// check if maybe we can display more elements on the right
-			while( ( $tablistright + 30 < $(window).width() ) && $(".wd-tabitem:last").hasClass("hiddenTab") ) {
+			while( ( tablistright + 30 < $(window).width() ) && $(".wd-tabitem:last").hasClass("hiddenTab") ) {
 				$(".wd-tablist .visibleTab:last").next()
 				.addClass("visibleTab").removeClass("hiddenTab" )
 				.show();
-				$tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+				tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
 			}
 			// remove last tab if we have been to far
-			if ( $tablistright + 30 > $(window).width() ) {
+			if ( tablistright + 30 > $(window).width() ) {
 				$(".wd-tablist .visibleTab:last")
 				.addClass("hiddenTab").removeClass("visibleTab" )
 				.hide();
@@ -169,13 +185,13 @@ jQuery(document).ready(function( $ ) {
 			} // if
 			
 			// remove visible tabs on the right until it fits the window
-			var $tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
-			while( $tablistright + 30 > $(window).width() ) {
+			var tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+			while( tablistright + 30 > $(window).width() ) {
 				// remove tabs on the right until it fits in the window
 				$(".wd-tablist .visibleTab:last")
 				.addClass("hiddenTab").removeClass("visibleTab" )
 				.hide();
-				$tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+				tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
 			}
 		}); // click
 	} // initializeTabs
@@ -183,29 +199,29 @@ jQuery(document).ready(function( $ ) {
 	
 	function updateTabs() {
 		// check the situation
-		var $tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+		var tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
 		
-		if ( $tablistright + 30 > $(window).width() ) {
+		if ( tablistright + 30 > $(window).width() ) {
 			// the window is now too small, we need to remove some tabs (on the right)
-			while( $tablistright + 30 > $(window).width() ) {
+			while( tablistright + 30 > $(window).width() ) {
 				// remove tabs on the right until it fits in the window
 				$(".wd-tablist .visibleTab:last")
 				.addClass("hiddenTab").removeClass("visibleTab" )
 				.hide();
-				$tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+				tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
 			}
 			$(".wd-nextArrow").show();
 		} else {
 			// the window has been enlarged, there might be extra space available
-			while( ( $tablistright + 30 < $(window).width() ) && $(".wd-tabitem:last").hasClass("hiddenTab") ) {
+			while( ( tablistright + 30 < $(window).width() ) && $(".wd-tabitem:last").hasClass("hiddenTab") ) {
 				$(".wd-tablist .visibleTab:last").next()
 				.addClass("visibleTab").removeClass("hiddenTab" )
 				.show();
-				$tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+				tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
 			}
 
 			// remove last tab if we have been to far
-			if ( $tablistright + 30 > $(window).width() ) {
+			if ( tablistright + 30 > $(window).width() ) {
 				$(".wd-tablist .visibleTab:last")
 				.addClass("hiddenTab").removeClass("visibleTab" )
 				.hide();
@@ -214,14 +230,14 @@ jQuery(document).ready(function( $ ) {
 				$(".wd-nextArrow").hide();
 
 				// maybe we can still add more tabs on the left?
-				while( ( $tablistright + 30 < $(window).width() ) && $(".wd-tabitem:first").hasClass("hiddenTab") ) {
+				while( ( tablistright + 30 < $(window).width() ) && $(".wd-tabitem:first").hasClass("hiddenTab") ) {
 					$(".wd-tablist .visibleTab:first").prev()
 					.addClass("visibleTab").removeClass("hiddenTab" )
 					.show();
-					$tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+					tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
 				}
 				// remove first tab if we have been to far
-				if ( $tablistright + 30 > $(window).width() ) {
+				if ( tablistright + 30 > $(window).width() ) {
 					$(".wd-tablist .visibleTab:first")
 					.addClass("hiddenTab").removeClass("visibleTab" )
 					.hide();
