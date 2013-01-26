@@ -7443,7 +7443,7 @@ $messages['ja'] = array(
 	'langman_title' => '言語管理',
 	'langman_not_allowed' => 'あなたには言語設定を変更する権限がありません。',
 	'langman_header' => '言語コードとその英語名を下に入力してください:',
-	'langman_req_fields' => '言語名と ISO 639-3 コードの両方が必要です！',
+	'langman_req_fields' => '言語名と ISO 639-3 コードの両方が必要です!',
 	'langman_adding' => '言語 $1 をコード $2 で追加中',
 	'langman_langname' => '言語名:',
 	'langman_iso639-3' => 'ISO 639-3 コード:',
@@ -7455,7 +7455,7 @@ $messages['ja'] = array(
 	'importlangnames_title' => '言語名の取り込み',
 	'importlangnames_not_allowed' => 'あなたには言語名を取り込む権限がありません。',
 	'importlangnames_added' => '「$1」に対する言語名が追加されました。',
-	'importlangnames_not_found' => '<strong>「$1」に対する言語項目は見つかりませんでした！</strong>',
+	'importlangnames_not_found' => '<strong>「$1」に対する言語項目が見つかりません!</strong>',
 	'datasearch' => 'ウィキデータ: データ検索',
 	'datasearch_language' => '言語:',
 	'datasearch_found_word' => '一致した語',
@@ -7576,7 +7576,7 @@ $messages['ja'] = array(
 	'ow_Expression' => '表現',
 	'ow_ExpressionMeanings' => '表現意味',
 	'ow_Expressions' => '表現',
-	'ow_IdenticalMeaning' => '同一の意味ですか？',
+	'ow_IdenticalMeaning' => '同一の意味ですか?',
 	'ow_IncomingRelations' => '内向き関係',
 	'ow_GotoSource' => '起点を表示',
 	'ow_ID' => 'ID',
@@ -7640,7 +7640,7 @@ $messages['ja'] = array(
 	'ow_copy_unsuccessful' => '<h3>コピー失敗</h3>
 コピー処理は行われませんでした。',
 	'ow_no_action_specified' => '<h3>操作が指定されていません</h3>
-もしかすると、あなたは直接このページに来たのでしょうか？通常はあなたがここにいる必要はありません。',
+もしかして、このページに直接来ましたか? 通常はあなたがここにいる必要はありません。',
 	'ow_db_consistency_not_found' => '<h2>エラー</h2>
 データベースの一貫性に問題があり、ウィキデータはこの意味定義IDに関連付けられた有効なデータを見つけられませんでした。
 それは失われた可能性もあります。
@@ -8160,7 +8160,7 @@ $messages['kn'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
-	'wikidata-desc' => '내용의 다양한 종류에 대한 위키 데이터베이스 추가',
+	'wikidata-desc' => '내용의 다양한 종류에 대한 위키 데이터베이스를 추가합니다',
 	'wikidata-handler-namespace-move-error' => '위키데이터 확장 기능에 의해 처리되는 이름공간의 문서는 이동할 수 없습니다.',
 	'languages' => '위키데이터: 언어 관리자',
 	'langman-desc' => '[[Special:Languages]]를 사용해 언어 설정을 추가하거나 바꾸는 기능',
@@ -8934,6 +8934,7 @@ Kuckt w.e.g. [[{{MediaWiki:Ow editing policy url}}|eis Ännerungsrichtlinnen]].'
 	'ow_OptionAttributeOptions' => 'Optiounen',
 	'ow_OptionAttributeValues' => 'Werter vun den Optiounen',
 	'ow_OtherDefinedMeaning' => 'Aner definéiert Bedeitung',
+	'ow_OtherLanguages' => 'Aner Sproochen:',
 	'ow_PopupAnnotation' => 'Notiz',
 	'ow_RecordLifeSpan' => 'Liewensdauer vum Enregistrement',
 	'ow_Relations' => 'Relatiounen',
