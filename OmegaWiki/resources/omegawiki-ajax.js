@@ -78,15 +78,10 @@ jQuery(document).ready(function( $ ) {
 		// start the tablesorter jquery plugin
 		$("table.wiki-data-table").tablesorter();
 		
-		if(( wgAction == 'view' ) || ( wgAction == 'history' )) {
-			// simulate a click on the second column (sort on languages).
-			$("table.wiki-data-table").find("th.headerSort:first").next("th").click();
-		}
-		if( wgAction == 'edit' ) {
-			// simulate a click on the third column (sort on languages).
-			$("table.wiki-data-table").find("th:first").next("th").next("th").click();
-		}
-		
+		$("table.wiki-data-table").find("th.headerSort.language").click();
+		// for syntrans table, the headerSort is not on language but on expression
+		$("table.wiki-data-table").find("th.headerSort.exp").click();
+
 		// now disable sorting for users
 		$(".jquery-tablesorter").find("th").off("click");
 		$(".jquery-tablesorter").removeClass("jquery-tablesorter");
