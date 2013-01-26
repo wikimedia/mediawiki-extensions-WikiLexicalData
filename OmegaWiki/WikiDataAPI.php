@@ -1585,14 +1585,20 @@ function definingExpressionRow( $definedMeaningId, $dc = null ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT {$dc}_expression.expression_id, spelling, language_id " .
-								" FROM {$dc}_defined_meaning, {$dc}_expression " .
-								" WHERE {$dc}_defined_meaning.defined_meaning_id=$definedMeaningId " .
-								" AND {$dc}_expression.expression_id={$dc}_defined_meaning.expression_id" .
-								" AND " . getLatestTransactionRestriction( "{$dc}_defined_meaning" ) .
-								" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) . " LIMIT 1" );
-	$expression = $dbr->fetchObject( $queryResult );
-	return array( $expression->expression_id, $expression->spelling, $expression->language_id );
+	$queryResult = $dbr->query(
+		"SELECT {$dc}_expression.expression_id, spelling, language_id " .
+		" FROM {$dc}_defined_meaning, {$dc}_expression " .
+		" WHERE {$dc}_defined_meaning.defined_meaning_id=$definedMeaningId " .
+		" AND {$dc}_expression.expression_id={$dc}_defined_meaning.expression_id" .
+		" AND " . getLatestTransactionRestriction( "{$dc}_defined_meaning" ) .
+		" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) . " LIMIT 1"
+	);
+
+	if ( $dbr->numrows( $queryResult ) > 0 ) {
+		$expression = $dbr->fetchObject( $queryResult );
+		return array( $expression->expression_id, $expression->spelling, $expression->language_id );
+	}
+	return null;
 }
 
 function definingExpression( $definedMeaningId, $dc = null ) {

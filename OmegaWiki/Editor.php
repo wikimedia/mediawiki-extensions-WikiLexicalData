@@ -2753,6 +2753,9 @@ class ObjectPathEditor extends Viewer {
 
 class DefinedMeaningContextEditor extends WrappingEditor {
 	public function view( IdStack $idPath, $value ) {
+		if ( is_null( $value ) ) {
+			return;
+		}
 		$definedMeaningId = (int) $value->definedMeaningId;
 
 		$idPath->pushDefinedMeaningId( $definedMeaningId );
