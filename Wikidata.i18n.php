@@ -1313,7 +1313,7 @@ $messages['avk'] = array(
 	'ow_datasets' => 'Rebara va origlospa',
 	'ow_noedit_title' => 'Me betararictara',
 	'ow_noedit' => 'Rin me zorictal ta bubetara koe "$1" origlospa. Va [[{{MediaWiki:Ow editing policy url}}|betaraverteem]] vay wil !',
-	'ow_uipref_datasets' => 'Omavawira',
+	'ow_uipref_datasets' => 'Omavawira', # Fuzzy
 	'ow_uiprefs' => 'Wikidata',
 	'ow_none_selected' => 'Mecoba rebana',
 	'ow_conceptmapping_help' => '<p>rotisa tegira se : <ul>
@@ -1324,12 +1324,12 @@ $messages['avk'] = array(
 <li>&action=help  Nedira va pomapara.</li>
 </ul></p>',
 	'ow_conceptmapping_uitext' => '<p>Envaksskura pu rin rictal da inde tentunafa sugdala koe tanoya origlospa tir milkafa gu tentunafa sugdala se koe ara origlospa yo ropilkomodal.</p>',
-	'ow_conceptmapping_no_action_specified' => 'Skalewé ! Jin me grupaskí inde "$1".',
+	'ow_conceptmapping_no_action_specified' => 'Skalewé ! Jin me grupaskí inde "$1".', # Fuzzy
 	'ow_dm_OK' => 'Ená !',
 	'ow_dm_not_present' => 'me geltsuteyen',
 	'ow_dm_not_found' => 'me trasiyin koe origak ok tazukajayan',
 	'ow_mapping_successful' => 'Kota rapta tcalayana kan [OK] skuyuna <br />',
-	'ow_mapping_unsuccessful' => 'Abdi gluyara icle toloya tentunafa sugdala tid adrafa.',
+	'ow_mapping_unsuccessful' => 'Abdi gluyara icle toloya tentunafa sugdala tid adrafa.', # Fuzzy
 	'ow_will_insert' => 'Batcoba walbutur va :',
 	'ow_contents_of_mapping' => 'Skuracek',
 	'ow_available_contexts' => 'Roderaykana orka se',
@@ -1389,7 +1389,7 @@ $messages['avk'] = array(
 	'ow_meaningsofsubtitle' => '<em>Wiki gluyasiki :</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>VEWANA RICTARA</h2>',
 	'ow_copy_no_action_specified' => 'Va tegira vay bazel !',
-	'ow_copy_help' => 'Konviele va rin rotir pomatav.',
+	'ow_copy_help' => 'Konviele va rin rotir pomatav.', # Fuzzy
 	'ow_please_proved_dmid' => 'Nuvelar da "?dmid=<ID>" (dmid=Defined Meaning ID) koe rinafa geltsutera gracer<br /> Va ristusik va zanisiko vay uzeral !',
 	'ow_please_proved_dc1' => 'Nuvelar da "?dc1=<koncoba>" (dc1=dataset context 1, origlospa ta MALksudara) koe rinafa geltsutera gracer<br />Va ristusik va zanisiko vay uzeral !',
 	'ow_please_proved_dc2' => 'Nuvelar da "?dc2=<koncoba>" (dc2=dataset context 2, origlospa ta KALksudara) koe rinafa geltsutera gracer<br />Va ristusik va zanisiko vay uzeral !',
@@ -1397,6 +1397,13 @@ $messages['avk'] = array(
 	'ow_copy_unsuccessful' => '<h3>Ksudajara</h3> Ksudaraskura metuwadayana.',
 	'ow_no_action_specified' => '<h3>Meka tegira zo bazeyer</h3> Rotir ko batu bu rontion artpil ? Nelkon batlize vol co-til.',
 	'ow_db_consistency_not_found' => '<h2>Rokla</h2>Tir uum icde duga ke origak, Wikidata va wadaf orig skedas va bata ID tentunafa sugdala me rotrasir. Rotir batcoba tir griawiyisa. Va ristusik va zanisiko vay uzeral !',
+);
+
+/** South Azerbaijani (تورکجه)
+ * @author Ebrahimi-amir
+ */
+$messages['azb'] = array(
+	'ow_transaction_no_action' => 'هئچ ایش گؤرمه',
 );
 
 /** Bavarian (Boarisch)
@@ -2418,6 +2425,7 @@ $messages['ce'] = array(
 
 /** Sorani Kurdish (کوردی)
  * @author Asoxor
+ * @author Calak
  * @author Marmzok
  */
 $messages['ckb'] = array(
@@ -2463,7 +2471,7 @@ $messages['ckb'] = array(
 	'ow_GotoSource' => 'بڕۆ بۆ سەرچاوە',
 	'ow_Language' => 'زمان',
 	'ow_OptionAttribute' => 'تایبەتمەندی',
-	'ow_OptionAttributeOption' => 'هەڵبژاردن',
+	'ow_OptionAttributeOption' => 'ھەڵبژاردن',
 	'ow_OptionAttributeOptions' => 'هەڵبژاردەکان',
 	'ow_OptionAttributeValues' => 'نرخەکانی هەڵبژاردە',
 	'ow_Relations' => 'پەیوەندیەکان',
@@ -2497,7 +2505,7 @@ $messages['ckb'] = array(
 	'ow_class_attr_type_xlate' => 'ئەو دەقانەی توانای وەرگێرانیان هەیە',
 	'ow_class_attr_type_plain' => 'دەقی سادە',
 	'ow_class_attr_type_link' => 'بەستەر',
-	'ow_class_attr_type_option' => 'لیستی هەڵبژاردن',
+	'ow_class_attr_type_option' => 'پێرستی ھەڵبژاردن',
 	'ow_needs_xlation_source_lang' => 'زمانی سەرچاوە:',
 	'ow_needs_xlation_dest_lang' => 'زمانی مەبەست:',
 	'ow_needs_xlation_no_dest_lang' => 'تکایە زمانێکی مەبەست دیاری بکە.',
@@ -3092,8 +3100,8 @@ $messages['diq'] = array(
 	'langman_iso639-3' => 'Kodê ISO 639-3:',
 	'langman_iso639-2' => 'Kodê ISO 639-2:',
 	'langman_wikimedia' => 'Kodê Wikimedia:',
-	'langman_field_optional' => '(Waştışo keyfi)',
-	'langman_addlang' => 'Zıwan deke',
+	'langman_field_optional' => '(opsiyonel)',
+	'langman_addlang' => 'Zıwan cı ke',
 	'importlangnames' => 'Wikidata: Namey zıwanan azere de',
 	'importlangnames_title' => 'Namey zıwanan azere de',
 	'importlangnames_added' => 'Namey zıwanê "$1" debiya de',
@@ -3153,6 +3161,7 @@ $messages['diq'] = array(
 	'ow_Relations' => 'Eleqey',
 	'ow_Remove' => 'Wedarne',
 	'ow_Spelling' => 'Nusey',
+	'ow_Synonyms' => 'Hemmeney',
 	'ow_Source' => 'Çıme',
 	'ow_Text' => 'Nuşte',
 	'ow_TextAttribute' => 'Xasiyey',
@@ -3417,7 +3426,8 @@ Pšosym staj se z serwerowym operatorom abo administratorom do zwiska.',
 	'ow_shown_datasets' => 'Pokazane datowe sajźby',
 );
 
-/** Ewe (eʋegbe) */
+/** Ewe (eʋegbe)
+ */
 $messages['ee'] = array(
 	'ow_create' => 'Dze egɔme',
 );
@@ -4312,6 +4322,7 @@ Mesedez harremanetan ipini zerbitzari operadore edo administratzailearekin.',
 
 /** Persian (فارسی)
  * @author Dalba
+ * @author Ebrahimi-amir
  * @author Ebraminio
  * @author Hooshmand.hasannia
  * @author Huji
@@ -4608,7 +4619,7 @@ $messages['fi'] = array(
 	'ow_importtsv_title2' => 'Tuo määritelmiä ja käännöksiä',
 	'ow_importtsv_header' => '<p>Tuo määritelmät ja käännökset sarkainmerkein eroteltuna tekstitiedostona, jolle olet saattanut tehdä viennin OpenOffice.orgin, Excelin tai muun taulukkolaskentaohjelmiston tiedostomuodossa.</p>
 <p>Tiedostomuodon pitää olla sama kuin viedyissä tiedostoissa, jotka ovat [[Special:ExportTSV|ExportTSV]]-sivulla. Jos olet muuttanut sarakkeiden nimiä, tuonti ei onnistu. Jos olet muuttanut id:n tai määrittävän lausekkeen määritellylle merkitykselle ilmaus mitään määritelty merkitys, että linja ei oteta huomioon. Jos olet lisännyt sarakkeet, niiden on oltava muodossa ”definitions_iso” tai ”translations_iso”, jossa iso on ISO 639-3 -kielikoodi.</p>
-<p>Jos ”testikäyttö” on valittuna, kaikki toimet, jotka sen suhteen on raportoitu, mutta muutoksia ei oikeastaan tapahtunut. Sinun kannattaa tehdä testin, ennen kuin teet todellinen tuonti.</p>',
+<p>Jos ”testikäyttö” on valittuna, kaikki toimet, jotka sen suhteen on raportoitu, mutta muutoksia ei oikeastaan tapahtunut. Sinun kannattaa tehdä testin, ennen kuin teet todellinen tuonti.</p>', # Fuzzy
 	'ow_importtsv_not_allowed' => 'Sinulla ei ole oikeuksia tehdä TSV-tuontia.',
 	'ow_importtsv_importing' => 'Tuodaan TSV-tietoa',
 	'ow_importtsv_import_failed' => 'Tuonti ei onnistunut',
@@ -4629,7 +4640,7 @@ Kielen pitää olla ISO 639-3 -kielikoodi.</p>',
 	'exporttsv' => 'Wikidata: TSV:n vienti',
 	'ow_exporttsv_title' => 'Vie kokoelma TSV-muotoon',
 	'ow_exporttsv_header' => "<p>Vie kokoelma sarkaimin erotetussa tekstimuodossa, jonka voit tuoda OpenOffice.org, Excel tai muuhun taulukkolaskentaohjelmistoon.<br /> 
-Valitse vietävä kokoelma. Syötä kielten tekstikenttään pilkuilla eroteltu luettelo ISO 639-3 -kielikoodeista. Aloita kielistä, joista tulet kääntämään (valitse niin monta kuin haluat), ja lisää lopuksi ne joihin sinä käännät. Napsauta sitten 'Create' luodaksesi tiedoston.</p>",
+Valitse vietävä kokoelma. Syötä kielten tekstikenttään pilkuilla eroteltu luettelo ISO 639-3 -kielikoodeista. Aloita kielistä, joista tulet kääntämään (valitse niin monta kuin haluat), ja lisää lopuksi ne joihin sinä käännät. Napsauta sitten 'Create' luodaksesi tiedoston.</p>", # Fuzzy
 	'ow_exporttsv_languages' => 'Kielet:',
 	'ow_exporttsv_not_allowed' => 'Sinulla ei ole lupaa tehdä TSV-vientiä.',
 	'ow_exporttsv_export_failed' => 'Vienti epäonnistui',
@@ -5855,7 +5866,8 @@ $messages['gv'] = array(
 	'ow_LinkAttributeValues' => 'Kianglaghyn',
 );
 
-/** Hausa (Hausa) */
+/** Hausa (Hausa)
+ */
 $messages['ha'] = array(
 	'ow_transaction_summary' => 'Taƙaici',
 	'ow_show' => 'Nuna',
@@ -6186,7 +6198,7 @@ $messages['hr'] = array(
 	'datasearch_search_text' => 'Pretraži tekst:',
 	'datasearch_within_words' => 'Unutar riječi:',
 	'datasearch_within_ext_ids' => 'Unutar vanjskih identifikatora:',
-	'datasearch_showing_only' => 'Prikazan je samo maksimum od $1 {{PLURAL:$1|pronalaska|pronalazaka}}.',
+	'datasearch_showing_only' => 'Prikazan je samo maksimum od $1 {{PLURAL:$1|pronalaska|pronalazaka}}.', # Fuzzy
 	'datasearch_match_ext_ids' => 'Vanjski identifikatori koji se podudaraju s <em>$1</em>',
 	'datasearch_match_words' => 'Riječi koje se podudaraju s <em>$1</em> i pridruženim značenjima',
 	'ow_save' => 'Spremi',
@@ -7185,7 +7197,7 @@ $messages['io'] = array(
 	'ow_transaction_user' => 'Uzantonomo:',
 	'ow_transaction_object' => 'Objekto',
 	'ow_transaction_summary' => 'Rezumo',
-	'ow_conceptmapping_no_action_specified' => 'Pardonez! Me ne savas quale "$1".',
+	'ow_conceptmapping_no_action_specified' => 'Pardonez! Me ne savas quale "$1".', # Fuzzy
 	'ow_dm_OK' => 'O.K.',
 	'ow_Annotation' => 'Noto',
 	'ow_Class' => 'Klaso',
@@ -7243,7 +7255,7 @@ $messages['io'] = array(
  */
 $messages['is'] = array(
 	'ow_save' => 'Vista',
-	'ow_uipref_datasets' => 'Sjálfgefið útlit',
+	'ow_uipref_datasets' => 'Sjálfgefið útlit', # Fuzzy
 	'ow_uiprefs' => 'Wikigögn',
 	'ow_dm_OK' => 'Í lagi',
 );
@@ -7259,10 +7271,11 @@ $messages['is'] = array(
  * @author Melos
  * @author Nemo bis
  * @author Rippitippi
+ * @author Sannita
  */
 $messages['it'] = array(
-	'wikidata-desc' => 'Aggiunge database wiki-like per diversi tipi di contenuto',
-	'wikidata-handler-namespace-move-error' => "Le pagine negli spazi dei nomi gestiti dall'estensione Wikidata non possono essere spostate.",
+	'wikidata-desc' => 'Aggiunge database basati su software wiki per diverse tipologie di contenuti.',
+	'wikidata-handler-namespace-move-error' => "Le pagine nei namespace gestiti dall'estensione Wikidata non possono essere spostate.",
 	'languages' => 'Wikidata: manager della lingua',
 	'langman-desc' => 'Aggiungi e modifica le impostazioni di lingua con [[Special:Languages]]',
 	'langman_title' => 'Manager della lingua',
@@ -8042,7 +8055,7 @@ $messages['km'] = array(
 	'ow_transaction_remove' => 'ដកចេញ',
 	'ow_transaction_operation' => 'ប្រតិបត្តិការ',
 	'ow_transaction_summary' => 'សង្ខេប​សេចក្ដី​',
-	'ow_conceptmapping_no_action_specified' => '',
+	'ow_conceptmapping_no_action_specified' => '', # Fuzzy
 	'ow_dm_OK' => 'យល់ព្រម',
 	'ow_dm_not_present' => 'មិនបានបញ្ចូល',
 	'ow_will_insert' => 'នឹង​ដាក់បញ្ចូល​ដូចតទៅ:',
@@ -9543,7 +9556,7 @@ $messages['mr'] = array(
 	'ow_datasets' => 'विदा-संच निवड',
 	'ow_noedit_title' => 'संपादनाकरिता परवानगी नाही',
 	'ow_noedit' => 'विदासंच "$1"मधील पाने संपादीत करण्याची तुम्हाला परवानगी नाही.कृपया [[{{MediaWiki:Ow editing policy url}}|आमची संपादन निती]]पहा.',
-	'ow_uipref_datasets' => 'अविचल दृश्य',
+	'ow_uipref_datasets' => 'अविचल दृश्य', # Fuzzy
 	'ow_uiprefs' => 'विकिविदा',
 	'ow_none_selected' => 'कोणतेही निवडले नाही',
 	'ow_conceptmapping_help' => '<p>शक्य क्रिया: <ul>
@@ -9554,12 +9567,12 @@ $messages['mr'] = array(
 <li>&action=help  माहितीपूर्ण मदत दाखवा.</li>
 </ul></p>',
 	'ow_conceptmapping_uitext' => '<p>कन्सेप्ट मॅपिंग मुळे तुम्हाला एखाद्या डाटाबेस मध्ये असणारा अर्थ दुसर्‍या डाटाबेस मधल्या कुठल्या अर्थाशी तंतोतंत जुळतो हे कळते.</p>',
-	'ow_conceptmapping_no_action_specified' => '"$1" कसे करावे मला ठावूक नाही,क्षमस्व',
+	'ow_conceptmapping_no_action_specified' => '"$1" कसे करावे मला ठावूक नाही,क्षमस्व', # Fuzzy
 	'ow_dm_OK' => 'ठीक',
 	'ow_dm_not_present' => 'भरले नाही',
 	'ow_dm_not_found' => 'विदेत सापडले नाही अथवा बरोबर नाही',
 	'ow_mapping_successful' => '[OK] लिहिलेले सर्व रकाने जोडले<br />',
-	'ow_mapping_unsuccessful' => 'जोडण्यापूर्वी कमीतकमी दोन अर्थ असणे आवश्यक आहे.',
+	'ow_mapping_unsuccessful' => 'जोडण्यापूर्वी कमीतकमी दोन अर्थ असणे आवश्यक आहे.', # Fuzzy
 	'ow_will_insert' => 'खालील भर घातली जाईल',
 	'ow_contents_of_mapping' => 'मॅपिंगचे कंटेन्ट्स',
 	'ow_available_contexts' => 'उपलब्ध संदर्भ',
@@ -9621,7 +9634,7 @@ $messages['mr'] = array(
 	'ow_meaningsofsubtitle' => '<em>विकिदुवा:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>परवानगी नाकारली</h2>',
 	'ow_copy_no_action_specified' => 'कृपया कृती निर्देशीत करा',
-	'ow_copy_help' => 'एकदिवस आम्ही तुम्हाला मदत करु शकु',
+	'ow_copy_help' => 'एकदिवस आम्ही तुम्हाला मदत करु शकु', # Fuzzy
 	'ow_please_proved_dmid' => 'असं दिसतंय की तुमच्या इनपुट मध्ये एक "?dmid=<ID>" (dmid=दिलेल्या अर्थाचा क्र) दिलेला नाही<br />
 कृपया सर्व्हर प्रबंधकाशी संपर्क करा.',
 	'ow_please_proved_dc1' => 'असं दिसतंय की तुमच्या इनपुट मध्ये एक "?dc1=<something>" (dc1=डाटासेट कन्टेक्स्ट 1, डाटासेट कुठून प्रत करायचा ते ठिकाण) दिलेले नाही<br />
@@ -10276,6 +10289,7 @@ Controleer het webadres.',
 	'ow_OptionAttributeOptions' => 'Opties',
 	'ow_OptionAttributeValues' => 'Optiewaarden',
 	'ow_OtherDefinedMeaning' => 'Andere bepaalde betekenis',
+	'ow_OtherLanguages' => 'Andere talen:',
 	'ow_PopupAnnotation' => 'Annotatie',
 	'ow_RecordLifeSpan' => 'Levensduur record',
 	'ow_Relations' => 'Relaties',
@@ -11708,13 +11722,13 @@ Talvez tenha vindo a esta página diretamente? Em condições normais, não prec
 );
 
 /** Brazilian Portuguese (português do Brasil)
- * @author 555
  * @author Eduardo.mps
  * @author Giro720
  * @author Helder.wiki
  * @author Heldergeovane
  * @author Jaideraf
  * @author Jorge Morais
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'wikidata-desc' => 'Adicionar banco de dados tipo wiki para vários tipos de conteúdo',
@@ -12061,7 +12075,7 @@ Limbile trebuie să fie coduri ISO 639-3.</p>',
 	'ow_Language' => 'Limbă',
 	'ow_LevelAnnotation' => 'Adnotare',
 	'ow_LinkAttributeHeader' => 'Atribut pentru legătură',
-	'ow_Multiple_meanings' => 'Înțelesuri multiple:',
+	'ow_Multiple_meanings' => 'Înțelesuri multiple:', # Fuzzy
 	'ow_NewExactMeaning' => 'Sens nou exact',
 	'ow_OptionAttribute' => 'Proprietate',
 	'ow_OptionAttributeHeader' => 'Atribut pentru opțiune',
@@ -12679,7 +12693,7 @@ $messages['scn'] = array(
  * @author Omnipaedista
  */
 $messages['sco'] = array(
-	'langman_title' => 'Leid dispensatour',
+	'langman_title' => 'Leid dispensatour', # Fuzzy
 	'langman_langname' => 'Leid naim:',
 	'langman_iso639-3' => 'ISO 639-2 cod:',
 	'langman_iso639-2' => 'ISO 639-2 cod:',
@@ -13662,7 +13676,7 @@ $messages['stq'] = array(
 	'datasearch_search_text' => 'Säiktext:',
 	'datasearch_within_words' => 'Binne do Woude:',
 	'datasearch_within_ext_ids' => 'Binne dän externen Identifikator:',
-	'datasearch_showing_only' => 'Der wäd bloot n Maximum fon {{PLURAL:$1|een Uureenstimmenge|$1 Uureenstimmengen}} wiesd.',
+	'datasearch_showing_only' => 'Der wäd bloot n Maximum fon {{PLURAL:$1|een Uureenstimmenge|$1 Uureenstimmengen}} wiesd.', # Fuzzy
 	'datasearch_match_ext_ids' => 'Externen Identifikator paaset tou <em>$1</em>',
 	'datasearch_match_words' => 'Tou <em>$1</em> paasjende Woude un touheerige Betjuudengen',
 	'datasearch_match_words_lang' => 'Tou <em>$2</em> paasjende Woude in <em>$1</em> un touheerige Betjuudengen',
@@ -13764,7 +13778,7 @@ Sproaken mouten dän ISO-639-3-Sproakencode äntspreeke.</p>',
 	'ow_Language' => 'Sproake',
 	'ow_LevelAnnotation' => 'Annotation',
 	'ow_LinkAttributeHeader' => 'Link-Attribut',
-	'ow_Multiple_meanings' => 'Moorfachbetjuudengen:',
+	'ow_Multiple_meanings' => 'Moorfachbetjuudengen:', # Fuzzy
 	'ow_NewExactMeaning' => 'Näie exakte Betjuudenge',
 	'ow_OptionAttribute' => 'Oainskup',
 	'ow_OptionAttributeHeader' => 'Option-Attribut',
@@ -14105,7 +14119,7 @@ $messages['szl'] = array(
 	'ow_datasets' => 'Wybjerańy zbjora danych',
 	'ow_noedit_title' => 'Brak uprowńyń do uůnaczyńo sprowjyń',
 	'ow_noedit' => 'Ńy mosz uprowńyń coby sprowjać zbjůr danych "$1". Uobejzdrzij [[{{MediaWiki:Ow editing policy url}}|rule nadowańo uprowńyń do sprowjańo]].',
-	'ow_uipref_datasets' => 'Widok důmyślny',
+	'ow_uipref_datasets' => 'Widok důmyślny', # Fuzzy
 	'ow_uiprefs' => 'Dane wiki',
 	'ow_none_selected' => 'Ńic ńy je zaznoczůne',
 	'ow_conceptmapping_help' => '<p>możliwe dziołańo: <ul>
@@ -14116,12 +14130,12 @@ $messages['szl'] = array(
 <li>&action=help  pokozuje půmoc</li>
 </ul></p>',
 	'ow_conceptmapping_uitext' => '<p>Uodwzorowywańy pojyńć dozwalo na identyfikacyjo tego, kere ze zdefińjowanych w jednym zestowj danych znoczyń sům identyczne do znoczy0ń zdefińjowanych we drugim zestowje danych.</p>',
-	'ow_conceptmapping_no_action_specified' => 'Wyboczće, ńy wjym, jako zuůnaczyć "$1".',
+	'ow_conceptmapping_no_action_specified' => 'Wyboczće, ńy wjym, jako zuůnaczyć "$1".', # Fuzzy
 	'ow_dm_OK' => 'OK',
 	'ow_dm_not_present' => 'ńy wkludzůno',
 	'ow_dm_not_found' => 'uobjekta ńy znejdźůno we baźe abo je uůn felerńe uformowany',
 	'ow_mapping_successful' => 'Uodwzorowano wszysjstke pola uoznaczůne kej [OK]<br />',
-	'ow_mapping_unsuccessful' => 'Ńym bydźe można skuplować dwa zdefińjowane znoczyńa, muszům być uůne podane.',
+	'ow_mapping_unsuccessful' => 'Ńym bydźe można skuplować dwa zdefińjowane znoczyńa, muszům być uůne podane.', # Fuzzy
 	'ow_will_insert' => 'Wstowjo nastympujůnce dane:',
 	'ow_contents_of_mapping' => 'Zawartość uodwzorowańo',
 	'ow_available_contexts' => 'Dostympne kůnteksty',
@@ -14183,7 +14197,7 @@ Sprowdź eli jeij adres je poprawny.',
 	'ow_meaningsofsubtitle' => '<em>Link wiki:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>DOSTYMP ZAKOZANY</h2>',
 	'ow_copy_no_action_specified' => 'Uokryśl akcyjo',
-	'ow_copy_help' => 'Kedyś może Ćebje pomogymy.',
+	'ow_copy_help' => 'Kedyś może Ćebje pomogymy.', # Fuzzy
 	'ow_please_proved_dmid' => 'We wkludzůnych danych ńy znejdźůno wpisa „?dmid=<ID>” (dmid=Defined Meaning ID)<br />Skůntaktuj śe s admińistratorym serwera.',
 	'ow_please_proved_dc1' => 'We wkludzůnych danych ńy znejdźůno wpisa „?dc1=<jakeś_dane>” (dc1=dataset context 1, zestow danych S KERYGO mo nastůmpić kopjowańy)<br />Skůntaktuj śe s admińistratorym serwera.',
 	'ow_please_proved_dc2' => 'We wkludzůnych danych ńy znejdźůno wpisa „?dc2=<jakeś_dane>” (dc2=dataset context 2, zestow danych DO KERYGO mo nastůmpić kopjowańy)<br />Skůntaktuj śe s admińistratorym serwera.',
@@ -14465,7 +14479,7 @@ $messages['tg-cyrl'] = array(
 	'ow_transaction_restore' => 'Барқарор',
 	'ow_transaction_remove' => 'Ҳазф',
 	'ow_transaction_operation' => 'Амал',
-	'ow_conceptmapping_no_action_specified' => 'Бахшиш, ман чӣ тавр "$1" карданро намедонам.',
+	'ow_conceptmapping_no_action_specified' => 'Бахшиш, ман чӣ тавр "$1" карданро намедонам.', # Fuzzy
 	'ow_dm_not_found' => 'дар пойгоҳи додаҳо ёфт нашуд ё ноқис аст',
 	'ow_will_insert' => 'Зеринро хоҳад ҷой дод:',
 	'ow_available_contexts' => 'Матнҳои дастрас',
@@ -14511,7 +14525,7 @@ $messages['tg-cyrl'] = array(
 	'ow_meaningsofsubtitle' => '<em>Вики пайванд:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>ИҶОЗА РАД ШУД</h2>',
 	'ow_copy_no_action_specified' => 'Лутфан амалеро мушаххас кунед',
-	'ow_copy_help' => 'Рӯзе, мо битавонем ба шумо кӯмак кунем.',
+	'ow_copy_help' => 'Рӯзе, мо битавонем ба шумо кӯмак кунем.', # Fuzzy
 	'ow_copy_successful' => '<h2>Нусхабардории Муваффақ</h2>
 Додаҳои шум ба назар мерасанд, ки бо муваффақият нусхабардорӣ шуданд.
 Барои мутмаин будна дубора барраси карданро фаромӯш накунед!',
@@ -15702,7 +15716,8 @@ $messages['yi'] = array(
 	'ow_suggest_clear' => 'רייניקן',
 );
 
-/** Cantonese (粵語) */
+/** Cantonese (粵語)
+ */
 $messages['yue'] = array(
 	'languages' => 'Wikidata: 語言管理員',
 	'langman_title' => '語言管理員',
@@ -15919,6 +15934,7 @@ $messages['zh-hans'] = array(
  * @author Liangent
  * @author Mark85296341
  * @author Oapbtommy
+ * @author Simon Shek
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
@@ -15988,7 +16004,7 @@ $messages['zh-hant'] = array(
 	'ow_uiprefs' => 'Wiki 資料',
 	'ow_none_selected' => '未選擇',
 	'ow_transaction_count' => '數量：',
-	'ow_transaction_user' => '使用者名稱：',
+	'ow_transaction_user' => '用戶名：',
 	'ow_transaction_show_rollback' => '顯示回滾控制：',
 	'ow_transaction_rollback_button' => '回滾',
 	'ow_transaction_rollback_header' => '回滾',
