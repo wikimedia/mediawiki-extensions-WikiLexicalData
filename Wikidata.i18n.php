@@ -15155,6 +15155,7 @@ $messages['ug-latn'] = array(
  * @author AS
  * @author Ahonc
  * @author Aleksandrit
+ * @author Base
  * @author Olvin
  * @author Prima klasy4na
  * @author Riwnodennyk
@@ -15205,18 +15206,26 @@ $messages['uk'] = array(
 	'ow_uipref_datasets' => 'Звичайний вигляд:',
 	'ow_uiprefs' => 'Вікідані',
 	'ow_none_selected' => 'Нічого не обрано',
+	'transaction' => 'Вікідані: Журнал транзакцій',
 	'ow_transaction_from_transaction' => 'З транзакції:',
 	'ow_transaction_count' => 'Кількість:',
 	'ow_transaction_user' => "Ім'я користувача:",
+	'ow_transaction_show_rollback' => 'Показувати кнопку відкоту:',
 	'ow_transaction_rollback_button' => 'Відкинути',
 	'ow_transaction_rollback_header' => 'Відкинути',
+	'ow_transaction_no_action' => 'Не робити нічого',
 	'ow_transaction_previous_version' => 'Попередня версія',
 	'ow_transaction_restore' => 'Відновити',
 	'ow_transaction_remove' => 'Вилучити',
 	'ow_transaction_operation' => 'Операція',
 	'ow_transaction_is_latest' => 'Є останньою',
+	'ow_transaction_class_member' => 'Член класу',
 	'ow_transaction_object' => "Об'єкт",
+	'ow_transaction_first_dm' => 'Перше визначене значення',
+	'ow_transaction_second_dm' => 'Друге визначене значення',
 	'ow_transaction_summary' => 'Опис',
+	'conceptmapping' => 'Вікідані: Відповідність концепціям',
+	'ow_conceptmapping_title' => 'Відповідність концепціям',
 	'ow_conceptmapping_help' => '<p>можливі дії: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  вставити відповідність</li>
 <li>&action=get&concept=<concept_id>  зчитати відповідність</li>
@@ -15251,6 +15260,7 @@ $messages['uk'] = array(
 	'ow_ClassMembership' => 'Членство у класах',
 	'ow_Collection' => 'Колекція',
 	'ow_Collection_colon' => 'Колекція:',
+	'ow_CollectionMember' => 'Член колекції',
 	'ow_CollectionMembership' => 'Присутні в колекціях',
 	'ow_Definition' => 'Визначення',
 	'ow_DefinedMeaningAttributes' => 'Анотація',
@@ -15263,15 +15273,21 @@ $messages['uk'] = array(
 	'ow_IdenticalMeaning' => 'Тотожне значення?',
 	'ow_IncomingRelations' => 'Вхідне відношення',
 	'ow_GotoSource' => 'Перейти до початкового коду',
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Мова',
 	'ow_LevelAnnotation' => 'Анотація',
+	'ow_LinkAttributeHeader' => 'Атрибут посилання',
 	'ow_Multiple_meanings' => 'Визначення «$1»',
+	'ow_NewExactMeaning' => 'Нове точне значення',
 	'ow_OptionAttribute' => 'Властивість',
+	'ow_OptionAttributeHeader' => 'Атрибут опції',
 	'ow_OptionAttributeOption' => 'Параметр',
 	'ow_OptionAttributeOptions' => 'Параметри',
 	'ow_OptionAttributeValues' => 'Значення параметрів',
 	'ow_OtherDefinedMeaning' => 'Інше задане значення',
+	'ow_OtherLanguages' => 'Інші мови:',
 	'ow_PopupAnnotation' => 'Анотація',
+	'ow_RecordLifeSpan' => 'Час існування запису',
 	'ow_Relations' => 'Відношення',
 	'ow_RelationType' => 'Тип відношення',
 	'ow_Remove' => 'Вилучити',
@@ -15303,6 +15319,7 @@ $messages['uk'] = array(
 	'ow_meaningsoftitle' => 'Значення «$1»',
 	'ow_meaningsofsubtitle' => '<em>Вікі-посилання:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>Доступ заборонений</h2>',
+	'copy' => 'Вікідані: Копіювання',
 	'ow_copy_no_action_specified' => 'Будь ласка, зазначте дію',
 	'ow_copy_help' => 'Довідка ще не реалізована.',
 	'ow_please_proved_dmid' => "Схоже, що у вхідних даних відсутнє «?dmid=<ID>» (dmid — ідентифікатор певного значення)<br />
@@ -15311,9 +15328,18 @@ $messages['uk'] = array(
 	'ow_copy_unsuccessful' => '<h3>Копіювання невдале</h3>
 Не була виконана операція копіювання.',
 	'ow_history_transaction' => 'Транзакція:',
+	'ow_history_show_life_span' => 'Показати час існування запису:',
+	'ow_class_attr_type_dm' => 'Визначене значення',
+	'ow_class_attr_type_xlate' => 'Текст, що можна перекласти',
 	'ow_class_attr_type_plain' => 'Простий текст',
 	'ow_class_attr_type_link' => 'Посилання',
+	'ow_class_attr_type_option' => 'Список опцій',
+	'needstranslation' => 'Вікідані: Вирази, що потребують перекладу',
+	'ow_needs_xlation_title' => 'Вирази, що потребують перекладу',
 	'ow_needs_xlation_source_lang' => 'Мова оригіналу:',
+	'ow_needs_xlation_dest_lang' => 'Цільова мова:',
+	'ow_needs_xlation_no_dest_lang' => 'Будь ласка, вкажіть цільову мову.',
+	'ow_statistics' => 'Вікідані: Статистика',
 	'ow_show' => 'Показати',
 	'ow_upload' => 'Завантажити',
 	'ow_create' => 'Створити',
@@ -15321,8 +15347,10 @@ $messages['uk'] = array(
 	'ow_suggest_previous' => 'Попередній',
 	'ow_suggest_next' => 'Наступний',
 	'ow_suggest_clear' => 'Очистити',
+	'ow_nstab_definedmeaning' => 'визначене значення',
 	'ow_nstab_edit_copy' => 'редагувати копію',
 	'right-addlanguage' => 'Додавання і зміна мовних налаштувань',
+	'ow_shown_datasets' => 'Показані набори даних',
 );
 
 /** Urdu (اردو)
