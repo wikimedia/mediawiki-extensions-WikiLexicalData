@@ -99,12 +99,8 @@ class OmegaWikiAttributes {
 		// instead of " ", could be wfMsgSc( "IdenticalMeaning" ), but then the header is too long
 		$t->identicalMeaning = new Attribute( WD_IDENTICAL_MEANING, " ", "combobox" );
 
-		if ( $viewInformation->filterOnLanguage() ) {
-			$t->expression = new Attribute( WD_EXPRESSION, wfMsgSc( "Spelling" ), "spelling" );
-		} else {
-			$t->expressionStructure = new Structure( WD_EXPRESSION, $t->language, $t->spelling );
-			$t->expression = new Attribute( WD_EXPRESSION, wfMsgSc( "Expression" ), $t->expressionStructure );
-		}
+		$t->expressionStructure = new Structure( WD_EXPRESSION, $t->language, $t->spelling );
+		$t->expression = new Attribute( WD_EXPRESSION, wfMsgSc( "Expression" ), $t->expressionStructure );
 
 		$t->definedMeaningId = new Attribute( "defined-meaning-id", "Defined meaning identifier", "defined-meaning-id" );
 		$t->definedMeaningDefiningExpression = new Attribute( "defined-meaning-defining-expression", "Defined meaning defining expression", "short-text" );
@@ -152,36 +148,29 @@ class OmegaWikiAttributes {
 
 		$t->definitionId = new Attribute( "definition-id", "Definition identifier", "integer" );
 
-		if ( $viewInformation->filterOnLanguage() && !$viewInformation->hasMetaDataAttributes() ) {
-			$t->alternativeDefinition = new Attribute( WD_ALTERNATIVE_DEF, wfMsgSc( "AlternativeDefinition" ), "text" );
-		} else {
-			$t->alternativeDefinition = new Attribute( WD_ALTERNATIVE_DEF, wfMsgSc( "AlternativeDefinition" ), $t->translatedTextStructure );
-		}
+		$t->alternativeDefinition = new Attribute( WD_ALTERNATIVE_DEF, wfMsgSc( "AlternativeDefinition" ), $t->translatedTextStructure );
+
 		$t->source = new Attribute( "source-id", wfMsgSc( "Source" ), $definedMeaningReferenceType );
 		
 		$t->alternativeDefinitionsStructure =  new Structure( WD_ALTERNATIVE_DEFINITIONS, $t->definitionId, $t->alternativeDefinition, $t->source );
 		$t->alternativeDefinitions = new Attribute( null, wfMsgSc( "AlternativeDefinitions" ), $t->alternativeDefinitionsStructure );
 		
-		if ( $viewInformation->filterOnLanguage() ) {
-			$synonymsAndTranslationsCaption = wfMsgSc( "Synonyms" );
-		} else {
-			$synonymsAndTranslationsCaption = wfMsgSc( "SynonymsAndTranslations" );
-		}
+		$synonymsAndTranslationsCaption = wfMsgSc( "SynonymsAndTranslations" );
 
 		$t->syntransId = new Attribute( "syntrans-id", "$synonymsAndTranslationsCaption identifier", "integer" );
-//		$t->synonymsTranslationsStructure = new Structure( WD_SYNONYMS_TRANSLATIONS, $t->syntransId, $t->expression, $t->identicalMeaning );
 		$t->synonymsTranslationsStructure = new Structure( WD_SYNONYMS_TRANSLATIONS, $t->identicalMeaning, $t->syntransId, $t->expression );
 		$t->synonymsAndTranslations = new Attribute( null, "$synonymsAndTranslationsCaption", $t->synonymsTranslationsStructure );
+
+		// alternative full syntrans structure with expression already decomposed into language and spelling
+		// $t->synTransExpressionStructure = new Structure( WD_SYNONYMS_TRANSLATIONS, $t->identicalMeaning, $t->syntransId, $t->expressionId, $t->language, $t->spelling );
+
 		$t->translatedTextAttributeId = new Attribute( "translated-text-attribute-id", "Attribute identifier", "object-id" );
 		$t->translatedTextAttribute = new Attribute( "translated-text-attribute", wfMsgSc( "TranslatedTextAttribute" ), $definedMeaningReferenceType );
 		$t->translatedTextValueId = new Attribute( "translated-text-value-id", "Translated text value identifier", "translated-text-value-id" );
 		
 		$t->attributeObjectId = new Attribute( "attributeObjectId", "Attribute object", "object-id" );
 
-		if ( $viewInformation->filterOnLanguage() && !$viewInformation->hasMetaDataAttributes() )
-			$t->translatedTextValue = new Attribute( "translated-text-value", wfMsgSc( "TranslatedTextAttributeValue" ), "text" );
-		else
-			$t->translatedTextValue = new Attribute( "translated-text-value", wfMsgSc( "TranslatedTextAttributeValue" ), $t->translatedTextStructure );
+		$t->translatedTextValue = new Attribute( "translated-text-value", wfMsgSc( "TranslatedTextAttributeValue" ), $t->translatedTextStructure );
 		
 		$t->translatedTextAttributeValuesStructure = new Structure( "translated-text-attribute-values", $t->translatedTextAttributeId, $t->attributeObjectId, $t->translatedTextAttribute, $t->translatedTextValueId, $t->translatedTextValue );
 		$t->translatedTextAttributeValues = new Attribute( null, wfMsgSc( "TranslatedTextAttributeValues" ), $t->translatedTextAttributeValuesStructure );
@@ -212,11 +201,7 @@ class OmegaWikiAttributes {
 		$t->optionAttributeOptionsStructure = new Structure( "option-attribute-options", $t->optionAttributeOptionId, $t->optionAttribute, $t->optionAttributeOption, $t->language );
 		$t->optionAttributeOptions = new Attribute( null, wfMsgSc( "OptionAttributeOptions" ), $t->optionAttributeOptionsStructure );
 		
-		if ( $viewInformation->filterOnLanguage() && !$viewInformation->hasMetaDataAttributes() ) {
-			$t->translatedText = new Attribute( WD_TRANSLATED_TEXT, wfMsgSc( "Text" ), "text" );
-		} else {
-			$t->translatedText = new Attribute( WD_TRANSLATED_TEXT, wfMsgSc( "TranslatedText" ), $t->translatedTextStructure );
-		}
+		$t->translatedText = new Attribute( WD_TRANSLATED_TEXT, wfMsgSc( "TranslatedText" ), $t->translatedTextStructure );
 
 		$t->definition = new Attribute( null, wfMsgSc( "Definition" ), new Structure( WD_DEFINITION, $t->translatedText ) );
 
@@ -303,6 +288,10 @@ class OmegaWikiAttributes {
 		$t->recordLifeSpan = new Attribute( 'record-life-span', wfMsg( 'ow_RecordLifeSpan' ), $t->recordLifeSpanStructure );
 
 		$t->in_setup = False;
+	}
+
+	public function getViewInformation() {
+		return $this->viewInformation;
 	}
 
 	public function __set( $key, $value ) {

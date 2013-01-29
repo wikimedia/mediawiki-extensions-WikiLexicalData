@@ -1,5 +1,7 @@
 <?php
 
+require_once( 'WikiDataGlobals.php' );
+
 /** 
  * @param $purge purge cache
  * @return array of language names for the user's language preference
@@ -87,23 +89,34 @@ function getLanguageIso639_3ForId( $id ) {
 
 /**
  * Returns a SQL query string for fetching language names in a given language.
- * @param $lang_code the language in which to retrieve the language names 
+ * @param $lang_code the language in which to retrieve the language names
+ * @param $lang_subset a string in the form ( 85, 89, ...) that restricts the language_id that are returned
+ * this string can be generated with ViewInformation->getFilterLanguageSQL() according to user preferences
  **/
-function getSQLForLanguageNames( $lang_code ) {
+function getSQLForLanguageNames( $lang_code, $lang_subset = "") {
 	/* Use a simpler query if the user's language is English. */
 	/* getLanguageIdForCode( 'en' ) = 85 */
+	$lang_id = getLanguageIdForCode( $lang_code );
 
-	if ( $lang_code == 'en' || !( $lang_id = getLanguageIdForCode( $lang_code ) ) )
-		return 'SELECT language_id AS row_id, language_name' .
-			' FROM language_names' .
-			' WHERE name_language_id = 85' ;
-	/* Fall back on English in cases where a language name is not present in the
+	if ( $lang_code == 'en' || is_null( $lang_id ) ) {
+		$sqlQuery = 'SELECT language_id AS row_id, language_name'
+			. ' FROM language_names'
+			. ' WHERE name_language_id = ' . WD_ENGLISH_LANG_ID ;
+		if ( $lang_subset ) {
+			$sqlQuery .= " AND language_id IN $lang_subset " ;
+		}
+	} else {
+		/* Fall back on English in cases where a language name is not present in the
 		user's preferred language. */
-	else
-		return 'SELECT language.language_id AS row_id, COALESCE(ln1.language_name,ln2.language_name) AS language_name' .
-			' FROM language' .
-			' LEFT JOIN language_names AS ln1 ON language.language_id = ln1.language_id' .
-			' AND ln1.name_language_id = ' . $lang_id .
-			' JOIN language_names AS ln2 ON language.language_id = ln2.language_id AND ln2.name_language_id = 85 ' ;
+		$sqlQuery = 'SELECT language.language_id AS row_id, COALESCE(ln1.language_name,ln2.language_name) AS language_name'
+			. ' FROM language'
+			. ' LEFT JOIN language_names AS ln1 ON language.language_id = ln1.language_id'
+			. ' AND ln1.name_language_id = ' . $lang_id
+			. ' JOIN language_names AS ln2 ON language.language_id = ln2.language_id AND ln2.name_language_id = 85 ' ;
+		if ( $lang_subset ) {
+			$sqlQuery .= " AND language.language_id IN $lang_subset " ;
+		}
+	}
 
+	return $sqlQuery;
 }

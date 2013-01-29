@@ -31,6 +31,8 @@ class WikidataHooks {
 	 *        preferences are still being detected.
 	 */
 	public static function onGetPreferences( $user, &$preferences ) {
+/*
+		// preference to select between several available datasets
 		$datasets = wdGetDatasets();
 		foreach ( $datasets as $datasetid => $dataset ) {
 			$datasetarray[$dataset->fetchName()] = $datasetid;
@@ -40,8 +42,26 @@ class WikidataHooks {
 			'options' => $datasetarray,
 			'section' => 'omegawiki',
 			'label' => wfMsg( 'ow_shown_datasets' ),
-			'prefix' => 'ow_datasets-',
 		);
+*/
+		// allow the user to select the languages to display
+		$preferences['ow_language_filter'] = array(
+			'type' => 'check',
+			'label' => wfMsg( 'ow_pref_lang_switch' ),
+			'section' => 'omegawiki/ow-lang',
+		);
+		$preferences['ow_language_filter_list'] = array(
+			'type' => 'multiselect',
+			'label' => '<b>' . wfMsg( 'ow_pref_lang_switch' ) . '</b>',
+			'options' => array(), // to be filled later
+			'section' => 'omegawiki/ow-lang',
+		);
+
+		$owLanguageNames = getOwLanguageNames();
+		foreach ( $owLanguageNames as $language_id => $language_name ) {
+			$preferences['ow_language_filter_list']['options'][$language_name] = $language_id ;
+		}
+
 		return true;
 	}
 

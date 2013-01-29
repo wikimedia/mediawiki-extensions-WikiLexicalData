@@ -9,10 +9,8 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgLang, $wgRequest, $IP;
+		global $wgOut, $wgLang;
 
-		$wgOut->disable();
-		require_once( "$IP/includes/Setup.php" );
 		require_once( "Attribute.php" );
 		require_once( "WikiDataBootstrappedMeanings.php" );
 		require_once( "RecordSet.php" );
@@ -26,16 +24,18 @@ class SpecialSuggest extends SpecialPage {
 		require_once( "WikiDataGlobals.php" );
 
 		$o = OmegaWikiAttributes::getInstance();
-
 		$dc = wdGetDataSetContext();
-		$search = ltrim( $wgRequest->getVal( 'search-text' ) );
-		$prefix = $wgRequest->getVal( 'prefix' );
-		$query = $wgRequest->getVal( 'query' );
-		$definedMeaningId = $wgRequest->getVal( 'definedMeaningId' );
-		$offset = $wgRequest->getVal( 'offset' );
-		$attributesLevel = $wgRequest->getVal( 'attributesLevel' );
-		$annotationAttributeId = $wgRequest->getVal( 'annotationAttributeId' );
-		$syntransId = $wgRequest->getVal( 'syntransId' );
+		$wgOut->disable();
+
+		$request = $this->getRequest();
+		$search = ltrim( $request->getVal( 'search-text' ) );
+		$prefix = $request->getVal( 'prefix' );
+		$query = $request->getVal( 'query' );
+		$definedMeaningId = $request->getVal( 'definedMeaningId' );
+		$offset = $request->getVal( 'offset' );
+		$attributesLevel = $request->getVal( 'attributesLevel' );
+		$annotationAttributeId = $request->getVal( 'annotationAttributeId' );
+		$syntransId = $request->getVal( 'syntransId' );
 		$langCode = $wgLang->getCode();
 
 		$sql = '';
@@ -70,7 +70,7 @@ class SpecialSuggest extends SpecialPage {
 				break;
 			case 'language':
 				require_once( 'languages.php' );
-				$sql = getSQLForLanguageNames( $langCode );
+				$sql = getSQLForLanguageNames( $langCode, $o->getViewInformation()->getFilterLanguageSQL() );
 				$rowText = 'language_name';
 				break;
 			case WD_DEFINED_MEANING:

@@ -15,7 +15,6 @@ class DefaultWikidataApplication {
 	protected $showCommunityContribution;
 	
 	// The following member variables control some application specific preferences
-	protected $filterLanguageId = 0;			// Filter pages on this languageId, set to 0 to show all languages
 	protected $showClassicPageTitles = true;	// Show classic page titles instead of prettier page titles
 
 	protected $propertyToColumnFilters = array();
@@ -25,15 +24,10 @@ class DefaultWikidataApplication {
 	protected $showDataSetPanel = false;
 
 	public function __construct( $title ) {
-		global $wgFilterLanguageId,
-			$wgShowClassicPageTitles,
-			$wgPropertyToColumnFilters;
+		global $wgShowClassicPageTitles, $wgPropertyToColumnFilters;
 
 		$this->title = $title;
 
-		if ( isset( $wgFilterLanguageId ) )
-			$this->filterLanguageId = $wgFilterLanguageId;
-			
 		if ( isset( $wgShowClassicPageTitles ) )
 			$this->showClassicPageTitles = $wgShowClassicPageTitles;
 			
@@ -76,7 +70,6 @@ class DefaultWikidataApplication {
 		$this->queryTransactionInformation = new QueryLatestTransactionInformation();
 		
 		$viewInformation = new ViewInformation();
-		$viewInformation->filterLanguageId = $this->filterLanguageId;
 		$viewInformation->showRecordLifeSpan = false;
 		$viewInformation->queryTransactionInformation = $this->queryTransactionInformation;
 		$viewInformation->setPropertyToColumnFilters( $this->propertyToColumnFilters );
@@ -111,7 +104,6 @@ class DefaultWikidataApplication {
 
 	protected function save( $referenceQueryTransactionInformation ) {
 		$viewInformation = new ViewInformation();
-		$viewInformation->filterLanguageId = $this->filterLanguageId;
 		$viewInformation->queryTransactionInformation = $referenceQueryTransactionInformation;
 		$viewInformation->setPropertyToColumnFilters( $this->propertyToColumnFilters );
 		$viewInformation->viewOrEdit = "edit";
@@ -151,7 +143,7 @@ class DefaultWikidataApplication {
 $title = $this->getTitle();
 */
 		$now = wfTimestampNow();
-		RecentChange::notifyEdit( $now, $this->title, false, $wgUser, $summary, 0, $now, false, '', 0, 0, 0 );
+		RecentChange::notifyEdit( $now, $this->title, false, $wgUser, $summary, 0, $now, false );
 	}
 
 	/**
@@ -178,7 +170,6 @@ $title = $this->getTitle();
 			$this->saveWithinTransaction();
 
 		$viewInformation = new ViewInformation();
-		$viewInformation->filterLanguageId = $this->filterLanguageId;
 		$viewInformation->showRecordLifeSpan = false;
 		$viewInformation->queryTransactionInformation = new QueryLatestTransactionInformation();
 		$viewInformation->viewOrEdit = "edit";
@@ -231,7 +222,6 @@ $title = $this->getTitle();
 		) );
 
 		$viewInformation = new ViewInformation();
-		$viewInformation->filterLanguageId = $this->filterLanguageId;
 		$viewInformation->showRecordLifeSpan = $this->showRecordLifeSpan;
 		$viewInformation->queryTransactionInformation = $this->queryTransactionInformation;
 		$viewInformation->setPropertyToColumnFilters( $this->propertyToColumnFilters );

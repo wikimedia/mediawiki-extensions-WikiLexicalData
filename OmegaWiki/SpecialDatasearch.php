@@ -4,6 +4,13 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 
 require_once( "Wikidata.php" );
 require_once( "WikiDataGlobals.php" );
+require_once( "WikiDataAPI.php" );
+require_once( "forms.php" );
+require_once( "type.php" );
+require_once( "ViewInformation.php" );
+require_once( "OmegaWikiAttributes.php" );
+require_once( "OmegaWikiRecordSets.php" );
+require_once( "OmegaWikiEditors.php" );
 
 class SpecialDatasearch extends SpecialPage {
 	protected $externalIdentifierAttribute;
@@ -33,15 +40,6 @@ class SpecialDatasearch extends SpecialPage {
 		initializeOmegaWikiAttributes( new ViewInformation() );
 
 		global $definedMeaningReferenceType ;
-
-		require_once( "WikiDataGlobals.php" );
-		require_once( "forms.php" );
-		require_once( "type.php" );
-		require_once( "ViewInformation.php" );
-		require_once( "WikiDataAPI.php" );
-		require_once( "OmegaWikiAttributes.php" );
-		require_once( "OmegaWikiRecordSets.php" );
-		require_once( "OmegaWikiEditors.php" );
 
 		$wgOut->setPageTitle( wfMsg( 'search' ) );
 
@@ -102,7 +100,7 @@ class SpecialDatasearch extends SpecialPage {
 
 	function search( $searchText ) {
 		global
-			$wgOut, $wgRequest, $wgFilterLanguageId,
+			$wgOut, $wgRequest,
 			$wgSearchWithinWordsDefaultValue, $wgSearchWithinExternalIdentifiersDefaultValue,
 			$wgShowSearchWithinExternalIdentifiersOption, $wgShowSearchWithinWordsOption;
 
@@ -120,10 +118,7 @@ class SpecialDatasearch extends SpecialPage {
 		$options = array();
 		$options[wfMsg( 'datasearch_search_text' )] = getTextBox( 'search-text', $searchText );
 
-		if ( $wgFilterLanguageId == 0 )
-			$options[wfMsg( 'datasearch_language' )] = getSuggest( 'language', "language", array(), $languageId, $languageName );
-		else
-			$languageId = $wgFilterLanguageId;
+		$options[wfMsg( 'datasearch_language' )] = getSuggest( 'language', "language", array(), $languageId, $languageName );
 
 		$options[wfMsg( 'ow_Collection_colon' )] = getSuggest( 'collection', 'collection', array(), $collectionId, collectionIdAsText( $collectionId ) );
 

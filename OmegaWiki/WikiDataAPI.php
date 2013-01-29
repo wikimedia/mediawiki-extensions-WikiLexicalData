@@ -28,9 +28,7 @@ class Expression {
 	}
 	
 	function createPage() {
-		$expressionNameSpaceId = MWNamespace::getCanonicalIndex('expression');
-		wfDebug( "NS ID: $expressionNameSpaceId \n" );
-		return createPage( $expressionNameSpaceId, getPageTitle( $this->spelling ) );
+		return createPage( NS_EXPRESSION, getPageTitle( $this->spelling ) );
 	}
 	
 	function isBoundToDefinedMeaning( $definedMeaningId ) {
@@ -1714,16 +1712,27 @@ function getTextValue( $textId ) {
 	return $dbr->fetchObject( $queryResult )->text_text;
 }
 
+/**
+ * returns an array of "Expression" objects
+ * that correspond to the same $spelling (max 1 per language)
+ */
 function getExpressions( $spelling, $dc = null ) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_SLAVE );
 
+	$viewInformation = new ViewInformation();
+	$langsubset = $viewInformation->getFilterLanguageSQL();
+
 	$spelling = $dbr->addQuotes( $spelling );
 	$sql = "SELECT * FROM {$dc}_expression " . 
 		" WHERE spelling=binary $spelling " .
 		" AND {$dc}_expression.remove_transaction_id IS NULL" ;
+
+	if ( $langsubset ) {
+		$sql .= " AND language_id IN $langsubset ";
+	}
 
 	// needed because expression.remove_transaction_id is not updated automatically
 	$sql .= " AND EXISTS (" .

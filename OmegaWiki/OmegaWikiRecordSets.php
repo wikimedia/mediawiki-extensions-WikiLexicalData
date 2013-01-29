@@ -13,7 +13,7 @@ function getSynonymSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 	$dc = wdGetDataSetContext();
 	
 	# Query building
-    $frontQuery = "SELECT {$dc}_defined_meaning.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS label " .
+	$frontQuery = "SELECT {$dc}_defined_meaning.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS label " .
 		" FROM {$dc}_defined_meaning, {$dc}_syntrans, {$dc}_expression " .
 		" WHERE {$dc}_syntrans.remove_transaction_id IS NULL " .
 		" AND {$dc}_expression.remove_transaction_id IS NULL " .
@@ -23,20 +23,22 @@ function getSynonymSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 		" AND {$dc}_defined_meaning.defined_meaning_id={$dc}_syntrans.defined_meaning_id " .
 		" AND {$dc}_syntrans.identical_meaning=1 " .
 		" AND {$dc}_defined_meaning.defined_meaning_id = ";
-		
-    # Build atomic queries
+
+	# Build atomic queries
 	$definedMeaningIdsCopy = $definedMeaningIds;
-    foreach ( $definedMeaningIdsCopy as &$value ) { $value = $frontQuery . $value; }
-    unset( $value );
+	foreach ( $definedMeaningIdsCopy as &$value ) {
+		$value = $frontQuery . $value;
+	}
+	unset( $value );
 	# Union of the atoms
-    return implode( ' UNION ', $definedMeaningIdsCopy );
+	return implode( ' UNION ', $definedMeaningIdsCopy );
 }
 
 function getSynonymSQLForAnyLanguage( array &$definedMeaningIds ) {
 	$dc = wdGetDataSetContext();
 
 	# Query building
-    $frontQuery = "SELECT {$dc}_defined_meaning.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS label " .
+	$frontQuery = "SELECT {$dc}_defined_meaning.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS label " .
 		" FROM {$dc}_defined_meaning, {$dc}_syntrans, {$dc}_expression " .
 		" WHERE {$dc}_syntrans.remove_transaction_id IS NULL " .
 		" AND {$dc}_expression.remove_transaction_id IS NULL " .
@@ -46,19 +48,21 @@ function getSynonymSQLForAnyLanguage( array &$definedMeaningIds ) {
 		" AND {$dc}_syntrans.identical_meaning=1 " .
 		" AND {$dc}_defined_meaning.defined_meaning_id = ";
 
-    # Build atomic queries
+	# Build atomic queries
 	$definedMeaningIdsCopy = $definedMeaningIds;
-    foreach ( $definedMeaningIdsCopy as &$value ) { $value = $frontQuery . $value; }
-    unset( $value );
+	foreach ( $definedMeaningIdsCopy as &$value ) {
+		$value = $frontQuery . $value;
+	}
+	unset( $value );
 	# Union of the atoms
-    return implode( ' UNION ', $definedMeaningIdsCopy );
+	return implode( ' UNION ', $definedMeaningIdsCopy );
 }
 
 function getDefiningSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 	$dc = wdGetDataSetContext();
 
 	# Query building
-    $frontQuery = "SELECT {$dc}_defined_meaning.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS label " .
+	$frontQuery = "SELECT {$dc}_defined_meaning.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS label " .
 		" FROM {$dc}_defined_meaning, {$dc}_syntrans, {$dc}_expression " .
 		" WHERE {$dc}_syntrans.remove_transaction_id IS NULL " .
 		" AND {$dc}_expression.remove_transaction_id IS NULL " .
@@ -70,12 +74,14 @@ function getDefiningSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 		" AND {$dc}_expression.language_id=" . $languageId .
 		" AND {$dc}_defined_meaning.defined_meaning_id = ";
 
-    # Build atomic queries
+	# Build atomic queries
 	$definedMeaningIdsCopy = $definedMeaningIds;
-    foreach ( $definedMeaningIdsCopy as &$value ) { $value = $frontQuery . $value; }
-    unset( $value );
+	foreach ( $definedMeaningIdsCopy as &$value ) {
+		$value = $frontQuery . $value;
+	}
+	unset( $value );
 	# Union of the atoms
-    return implode( ' UNION ', $definedMeaningIdsCopy );
+	return implode( ' UNION ', $definedMeaningIdsCopy );
 }
 
 
@@ -108,9 +114,7 @@ function fetchDefinedMeaningReferenceRecords( $sql, array &$definedMeaningIds, a
 
 function fetchDefinedMeaningDefiningExpressions( array &$definedMeaningIds, array &$definedMeaningReferenceRecords ) {
 	$o = OmegaWikiAttributes::getInstance();
-
 	$dc = wdGetDataSetContext();
-	
 	$dbr = wfGetDB( DB_SLAVE );
 	
 	# Query building
@@ -239,76 +243,29 @@ function expandDefinedMeaningReferencesInRecordSet( RecordSet $recordSet, array 
 	foreach ( $definedMeaningAttributes as $dmatt ) {
 		$tmpArray = getDefinedMeaningReferenceRecords( getUniqueIdsInRecordSet( $recordSet, array( $dmatt ) ), $dmatt->id );
 		$definedMeaningReferenceRecords += $tmpArray;
-
 	}
 
 	for ( $i = 0; $i < $recordSet->getRecordCount(); $i++ ) {
 		$record = $recordSet->getRecord( $i );
-		foreach ( $definedMeaningAttributes as $definedMeaningAttribute )
+		foreach ( $definedMeaningAttributes as $definedMeaningAttribute ) {
 			$record->setAttributeValue(
 				$definedMeaningAttribute,
 				$definedMeaningReferenceRecords[$record->getAttributeValue( $definedMeaningAttribute )]
 			);
+		}
 	}
 }
 
 function expandTranslatedContentInRecord( Record $record, Attribute $idAttribute, Attribute $translatedContentAttribute, ViewInformation $viewInformation ) {
 	$record->setAttributeValue(
 		$translatedContentAttribute,
-		getTranslatedContentValue( $record->getAttributeValue( $idAttribute ), $viewInformation )
+		getTranslatedContentRecordSet( $record->getAttributeValue( $idAttribute ), $viewInformation )
 	);
 }
 
 function expandTranslatedContentsInRecordSet( RecordSet $recordSet, Attribute $idAttribute, Attribute $translatedContentAttribute, ViewInformation $viewInformation ) {
-	for ( $i = 0; $i < $recordSet->getRecordCount(); $i++ )
-		expandTranslatedContentInRecord( $recordSet->getRecord( $i ), $idAttribute, $translatedContentAttribute, $viewInformation );
-}
-
-function getExpressionReferenceRecords( $expressionIds ) {
-
-	$o = OmegaWikiAttributes::getInstance();
-	$dc = wdGetDataSetContext();
-
-	if ( count( $expressionIds ) > 0 ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		
-		# Query building
-		$frontQuery = "SELECT expression_id, language_id, spelling" .
-		  " FROM {$dc}_expression" .
-		  " WHERE expression_id = ";
-
-		# Build atomic queries
-		foreach ( $expressionIds as &$value ) { $value = $frontQuery . $value ; }
-		unset( $value );
-		# Union of the atoms
-		$finalQuery = implode( ' UNION ', $expressionIds );
-
-		$queryResult = $dbr->query( $finalQuery );
-
-		$result = array();
-	
-		while ( $row = $dbr->fetchObject( $queryResult ) ) {
-			$record = new ArrayRecord( $o->expressionStructure );
-			$record->language = $row->language_id;
-			$record->spelling = $row->spelling;
-			$result[$row->expression_id] = $record;
-		}
-		return $result;
-	}
-	else return array();
-}
-
-function expandExpressionReferencesInRecordSet( RecordSet $recordSet, array $expressionAttributes ) {
-	$expressionReferenceRecords = getExpressionReferenceRecords( getUniqueIdsInRecordSet( $recordSet, $expressionAttributes ) );
-
 	for ( $i = 0; $i < $recordSet->getRecordCount(); $i++ ) {
-		$record = $recordSet->getRecord( $i );
-		
-		foreach ( $expressionAttributes as $expressionAttribute )
-			$record->setAttributeValue(
-				$expressionAttribute,
-				$expressionReferenceRecords[$record->getAttributeValue( $expressionAttribute )]
-			);
+		expandTranslatedContentInRecord( $recordSet->getRecord( $i ), $idAttribute, $translatedContentAttribute, $viewInformation );
 	}
 }
 
@@ -320,24 +277,26 @@ function getExpressionSpellings( array $expressionIds ) {
 		
 		# Prepare steady components
 		$frontQuery = "SELECT expression_id, spelling FROM {$dc}_expression WHERE expression_id =";
-        $queueQuery	= " AND {$dc}_expression.remove_transaction_id IS NULL ";
-        # Build atomic queries
-        foreach ( $expressionIds as &$value ) { $value = $frontQuery . $value . $queueQuery; }
-        unset( $value );
+		$queueQuery	= " AND {$dc}_expression.remove_transaction_id IS NULL ";
+		# Build atomic queries
+		foreach ( $expressionIds as &$value ) {
+			$value = $frontQuery . $value . $queueQuery;
+		}
+		unset( $value );
 		# Union of the atoms
-        $finalQuery = implode( ' UNION ', $expressionIds );
+		$finalQuery = implode( ' UNION ', $expressionIds );
 		
 		$queryResult = $dbr->query( $finalQuery );
 		
 		$result = array();
-	
-		while ( $row = $dbr->fetchObject( $queryResult ) )
+
+		while ( $row = $dbr->fetchObject( $queryResult ) ) {
 			$result[$row->expression_id] = $row->spelling;
-			
+		}
 		return $result;
-	}
-	else
+	} else {
 		return array();
+	}
 }
 
 function expandExpressionSpellingsInRecordSet( RecordSet $recordSet, array $expressionAttributes ) {
@@ -346,11 +305,12 @@ function expandExpressionSpellingsInRecordSet( RecordSet $recordSet, array $expr
 	for ( $i = 0; $i < $recordSet->getRecordCount(); $i++ ) {
 		$record = $recordSet->getRecord( $i );
 		
-		foreach ( $expressionAttributes as $expressionAttribute )
+		foreach ( $expressionAttributes as $expressionAttribute ) {
 			$record->setAttributeValue(
 				$expressionAttribute,
 				$expressionSpellings[$record->getAttributeValue( $expressionAttribute )]
 			);
+		}
 	}
 }
 
@@ -364,23 +324,25 @@ function getTextReferences( array $textIds ) {
 			" FROM {$dc}_text" .
 			" WHERE text_id = ";
 
-        # Build atomic queries
-        foreach ( $textIds as &$value ) { $value = $frontQuery . $value; }
-        unset( $value );
+		# Build atomic queries
+		foreach ( $textIds as &$value ) {
+			$value = $frontQuery . $value;
+		}
+		unset( $value );
 		# Union of the atoms
-        $finalQuery = implode( ' UNION ', $textIds );
+		$finalQuery = implode( ' UNION ', $textIds );
 		
 		$queryResult = $dbr->query( $finalQuery );
 		
 		$result = array();
 	
-		while ( $row = $dbr->fetchObject( $queryResult ) )
+		while ( $row = $dbr->fetchObject( $queryResult ) ) {
 			$result[$row->text_id] = $row->text_text;
-			
+		}
 		return $result;
-	}
-	else
+	} else {
 		return array();
+	}
 }
 
 function expandTextReferencesInRecordSet( RecordSet $recordSet, array $textAttributes ) {
@@ -392,11 +354,11 @@ function expandTextReferencesInRecordSet( RecordSet $recordSet, array $textAttri
 		foreach ( $textAttributes as $textAttribute ) {
 			$textId = $record->getAttributeValue( $textAttribute );
 			
-			if ( isset( $textReferences[$textId] ) )
+			if ( isset( $textReferences[$textId] ) ) {
 				$textValue = $textReferences[$textId];
-			else
+			} else {
 				$textValue = "";
-			
+			}
 			$record->setAttributeValue( $textAttribute, $textValue );
 		}
 	}
@@ -599,7 +561,7 @@ function getDefinedMeaningDefinitionRecord( $definedMeaningId, ViewInformation $
 		
 	$definitionId = getDefinedMeaningDefinitionId( $definedMeaningId );
 	$record = new ArrayRecord( $o->definition->type );
-	$record->translatedText = getTranslatedContentValue( $definitionId, $viewInformation );
+	$record->translatedText = getTranslatedContentRecordSet( $definitionId, $viewInformation );
 	
 	$objectAttributesRecord = getObjectAttributesRecord( $definitionId, $viewInformation, $o->objectAttributes->id );
 	$record->objectAttributes = $objectAttributesRecord;
@@ -702,113 +664,86 @@ function filterObjectAttributesRecord( Record $sourceRecord, array &$attributeId
 	return $result;
 }
 
-function getTranslatedContentValue( $translatedContentId, ViewInformation $viewInformation ) {
-	$o = OmegaWikiAttributes::getInstance();
-	
-	if ( $viewInformation->filterLanguageId == 0 ) {
-		return getTranslatedContentRecordSet( $translatedContentId, $viewInformation );
-	
-	}
-	else {
-		$recordSet = getFilteredTranslatedContentRecordSet( $translatedContentId, $viewInformation );
-		
-		if ( count( $viewInformation->queryTransactionInformation->versioningAttributes() ) > 0 )
-			return $recordSet;
-		else {
-			if ( $recordSet->getRecordCount() > 0 )
-				return $recordSet->getRecord( 0 )->text;
-			else
-				return "";
-		}
-	}
-}
-
 function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $viewInformation ) {
 	global $wgWikidataDataSet;
 
 	$o = OmegaWikiAttributes::getInstance();
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
 
-	$recordSet = queryRecordSet(
-		$o->translatedTextStructure->getStructureType(),
-		$viewInformation->queryTransactionInformation,
-		$o->language,
-		new TableColumnsToAttributesMapping(
-			new TableColumnsToAttribute( array( 'language_id' ), $o->language ),
-			new TableColumnsToAttribute( array( 'text_id' ), $o->text )
-		),
-		$wgWikidataDataSet->translatedContent,
-		array( "translated_content_id=$translatedContentId" )
-	);
-	
-	expandTextReferencesInRecordSet( $recordSet, array( $o->text ) );
-	
-	return $recordSet;
-}
+	$getTranslatedContentSQL = "SELECT language_id, text_id "
+		. " FROM {$dc}_translated_content "
+		. " WHERE translated_content_id = $translatedContentId "
+		. " AND remove_transaction_id IS NULL " ;
 
-function getFilteredTranslatedContentRecordSet( $translatedContentId, ViewInformation $viewInformation ) {
-	global $wgWikidataDataSet;
-	
-	$o = OmegaWikiAttributes::getInstance();
+	// filter on languages, if activated by the user
+	$filterLanguageSQL = $viewInformation->getFilterLanguageSQL() ;
+	if ( $filterLanguageSQL != "" ) {
+		$getTranslatedContentSQL .= " AND language_id IN $filterLanguageSQL " ;
+	}
 
-	$recordSet = queryRecordSet(
-		null,
-		$viewInformation->queryTransactionInformation,
-		$o->language,
-		new TableColumnsToAttributesMapping(
-			new TableColumnsToAttribute( array( 'language_id' ), $o->language ),
-			new TableColumnsToAttribute( array( 'text_id' ), $o->text )
-		),
-		$wgWikidataDataSet->translatedContent,
-		array(
-			"translated_content_id=$translatedContentId",
-			"language_id=" . $viewInformation->filterLanguageId
-		)
-	);
-	
+	$structure = $o->translatedTextStructure ;
+	// keyAttribute is stored in the $keyPath and used by the controller
+	$keyAttribute = $o->language ;
+	$recordSet = new ArrayRecordSet( $structure, new Structure( $keyAttribute ) );
+
+	$queryResult = $dbr->query( $getTranslatedContentSQL );
+	while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		$record = new ArrayRecord( $structure );
+		$record->language = $row->language_id;
+		$record->text = $row->text_id; // expanded below
+
+		$recordSet->add( $record );
+	}
+
 	expandTextReferencesInRecordSet( $recordSet, array( $o->text ) );
 	
 	return $recordSet;
 }
 
 function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $viewInformation ) {
-	global $wgWikidataDataSet;
-
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
 
-	$restrictions = array( "defined_meaning_id=$definedMeaningId" );
-	if ( $viewInformation->filterLanguageId != 0 ) {
-		$restrictions[] =
-			"expression_id IN (" .
-				"SELECT expressions.expression_id" .
-				" FROM {$dc}_expression AS expressions" .
-				" WHERE expressions.expression_id=expression_id" .
-				" AND language_id=" . $viewInformation->filterLanguageId .
-				" AND expressions.remove_transaction_id IS NULL " .
-			")";
+	$getSynTransSQL = "SELECT syntrans_sid, {$dc}_syntrans.expression_id AS expression_id, identical_meaning, language_id, spelling "
+		. " FROM {$dc}_syntrans, {$dc}_expression "
+		. " WHERE defined_meaning_id = $definedMeaningId "
+		. " AND {$dc}_expression.expression_id = {$dc}_syntrans.expression_id"
+		. " AND {$dc}_syntrans.remove_transaction_id IS NULL" ;
+
+	// filter on languages, if activated by the user
+	$filterLanguageSQL = $viewInformation->getFilterLanguageSQL() ;
+	if ( $filterLanguageSQL != "" ) {
+		$getSynTransSQL .= " AND language_id IN $filterLanguageSQL " ;
 	}
 
-	// order to get exact meanings first
-	$orderBy[] = " identical_meaning DESC " ;
-	
-	$recordSet = queryRecordSet(
-		$o->synonymsTranslationsStructure->getStructureType(),
-		$viewInformation->queryTransactionInformation,
-		$o->syntransId,
-		new TableColumnsToAttributesMapping(
-			new TableColumnsToAttribute( array( 'syntrans_sid' ), $o->syntransId ),
-			new TableColumnsToAttribute( array( 'expression_id' ), $o->expression ),
-			new TableColumnsToAttribute( array( 'identical_meaning' ), $o->identicalMeaning )
-		),
-		$wgWikidataDataSet->syntrans,
-		$restrictions,
-		$orderBy
-	);
-	
-	if ( $viewInformation->filterLanguageId == 0 )
-		expandExpressionReferencesInRecordSet( $recordSet, array( $o->expression ) );
-	else
-		expandExpressionSpellingsInRecordSet( $recordSet, array( $o->expression ) );
+	// have identical translations on top
+	$getSynTransSQL .= " ORDER BY identical_meaning DESC" ;
+
+	// TODO; try with synTransExpressionStructure instead of synonymsTranslationsStructure
+	// so that expression is not a sublevel of the hierarchy, but on the same level
+	//	$structure = $o->synTransExpressionStructure ;
+
+	$structure = $o->synonymsTranslationsStructure ;
+	$keyAttribute = $o->syntransId ;
+	$recordSet = new ArrayRecordSet( $structure, new Structure( $keyAttribute ) );
+
+	$queryResult = $dbr->query( $getSynTransSQL );
+	while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		$record = new ArrayRecord( $structure );
+
+		$record->syntransId = $row->syntrans_sid;
+		$record->identicalMeaning = $row->identical_meaning;
+
+		// adds the expression structure 
+		$expressionRecord = new ArrayRecord( $o->expressionStructure );
+		$expressionRecord->language = $row->language_id;
+		$expressionRecord->spelling = $row->spelling;
+		$record->expression = $expressionRecord;
+
+		$recordSet->add( $record );
+	}
 
 	expandObjectAttributesAttribute( $recordSet, $o->objectAttributes, $o->syntransId, $viewInformation );
 	return $recordSet;

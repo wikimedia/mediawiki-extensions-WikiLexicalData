@@ -2,8 +2,7 @@
 
 /**
  * ViewInformation is used to capture various settings that influence the way a page will be viewed
- * depending on different use case scenarios. For instance, by specifying a filterLanguageId, a page
- * will be filtered entirely on one language, collapsing record sets to records where appropiate.
+ * depending on different use case scenarios.
  * 
  * A ViewInformation can be constructed based on various conditions. The language filtering for instance
  * could be an application wide setting, or a setting that can be controlled by the user. Functions that
@@ -13,10 +12,11 @@
 
 class ViewInformation {
 	/**
-	* if != 0: shows only translations and definitions in this language
-	* if = 0 : display all languages
+	* array containing a list of languages that the user wants to display
+	* so that other languages are hidden.
+	* If the array is empty, all languages are displayed.
 	*/
-	public $filterLanguageId;
+	public $filterLanguageList;
 
 	/**
 	* The language of the expression being displayed in the Expression: namespace
@@ -34,28 +34,64 @@ class ViewInformation {
 	 * Constructor
 	 */
 	public function __construct() {
-		global $wgRequest ;
+		global $wgRequest, $wgUser ;
 
-		$this->filterLanguageId = 0;
+		// filterLanguageList allows to only display languages that are in that list.
+		// The list can be set up in the user preferences.
+		$this->filterLanguageList = array();
 		$this->expressionLanguageId = $wgRequest->getVal( 'explang', 0 );
 		$this->queryTransactionInformation = null;
 		$this->showRecordLifeSpan = false;
 		$this->propertyToColumnFilters = array();
 		$this->viewOrEdit = "view";
+
+		// set filterLanguageList according to the user preferences
+		if ( $wgUser->getOption( 'ow_language_filter' ) ) {
+			// language filtering is activated (checkbox selected in preferences)
+			$owLanguageNames = getOwLanguageNames();
+			foreach ( $owLanguageNames as $language_id => $language_name ) {
+				if ( $wgUser->getOption( 'ow_language_filter_list' . $language_id ) ) {
+					// language $language_id/$language_name is selected by the user
+					$this->filterLanguageList[] = $language_id;
+				}
+			}
+		}
 	}
-	
+
 	public function hasMetaDataAttributes() {
 		return $this->showRecordLifeSpan;
 	}
 	
 	/**
-	 * @return true if we are filtering according to a language
-	 * @return false if all languages are displayed
+	 * returns an array containing the language_id that the user wants to display
+	 * if the array is empty, all languages should be displayed.
 	 */
-	public function filterOnLanguage() {
-		return $this->filterLanguageId != 0;
+	public function getFilterLanguageList() {
+		return $this->filterLanguageList;
 	}
-	
+
+	/**
+	 * returns a string "(1, 3, ...)" to add to a sql query
+	 * with language_id IN $string to filter the languages
+	 * according to the user preferences.
+	 */
+	public function getFilterLanguageSQL() {
+		if ( !empty( $this->filterLanguageList ) ) {
+			$filterLanguageSQL = " ( ";
+			$first = true ;
+			foreach ( $this->filterLanguageList as $language_id ) {
+				if ( !$first ) {
+					$filterLanguageSQL .= ",";
+				}
+				$filterLanguageSQL .= " $language_id " ;
+				$first = false;
+			}
+			$filterLanguageSQL .= ") ";
+			return $filterLanguageSQL ;
+		}
+		return "";
+	}
+
 	public function setPropertyToColumnFilters( array $propertyToColumnFilters ) {
 		$this->propertyToColumnFilters = $propertyToColumnFilters;
 	}
@@ -81,7 +117,6 @@ class ViewInformation {
 	 */
 	public function hashCode() {
 		return
-			$this->filterLanguageId . "," .
 			$this->showRecordLifeSpan . "," .
 			$this->viewOrEdit;
 	}

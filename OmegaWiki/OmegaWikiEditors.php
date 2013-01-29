@@ -364,7 +364,6 @@ function getDefinitionEditor( ViewInformation $viewInformation ) {
 	$editor->addEditor( getTranslatedTextEditor(
 		$o->translatedText,
 		new DefinedMeaningDefinitionController(),
-		new DefinedMeaningFilteredDefinitionController( $viewInformation->filterLanguageId ),
 		$viewInformation
 	) );
 	
@@ -417,20 +416,14 @@ function addPropertyToColumnFilterEditors( Editor $editor, ViewInformation $view
 	}
 }
 
-function getTranslatedTextEditor( Attribute $attribute, UpdateController $updateController, UpdateAttributeController $updateAttributeController, ViewInformation $viewInformation ) {
+function getTranslatedTextEditor( Attribute $attribute, UpdateController $updateController, ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
 	
-	if ( $viewInformation->filterLanguageId == 0 || $viewInformation->showRecordLifeSpan ) {
-		$editor = new RecordSetTableEditor( $attribute, new SimplePermissionController( true ), new ShowEditFieldChecker( true ), new AllowAddController( true ), true, true, $updateController );
-		
-		if ( $viewInformation->filterLanguageId == 0 )
-			$editor->addEditor( new LanguageEditor( $o->language, new SimplePermissionController( false ), true ) );
-			
-		$editor->addEditor( new TextEditor( $o->text, new SimplePermissionController( true ), true ) );
-		addTableMetadataEditors( $editor, $viewInformation );
-	}
-	else
-		$editor = new TextEditor( $attribute, new SimplePermissionController( true ), true, false, 0, $updateAttributeController );
+	$editor = new RecordSetTableEditor( $attribute, new SimplePermissionController( true ), new ShowEditFieldChecker( true ), new AllowAddController( true ), true, true, $updateController );
+	
+	$editor->addEditor( new LanguageEditor( $o->language, new SimplePermissionController( false ), true ) );
+	$editor->addEditor( new TextEditor( $o->text, new SimplePermissionController( true ), true ) );
+	addTableMetadataEditors( $editor, $viewInformation );
 
 	return $editor;
 }
@@ -441,7 +434,7 @@ function addObjectAttributesEditors( ObjectAttributeValuesEditor $objectAttribut
 
 	$objectAttributesEditor->addEditor( getDefinedMeaningAttributeValuesEditor( $viewInformation, new DefinedMeaningAttributeValuesController( $annotatedObjectIdFetcher, $annotationLevelName, $attributeIDFilter ), $annotationLevelName, $attributeIDFilter ) );
 	$objectAttributesEditor->addEditor( getTextAttributeValuesEditor( $viewInformation, new TextAttributeValuesController( $annotatedObjectIdFetcher, $annotationLevelName, $attributeIDFilter ), $annotationLevelName, $attributeIDFilter ) );
-	$objectAttributesEditor->addEditor( getTranslatedTextAttributeValuesEditor( $viewInformation, new TranslatedTextAttributeValuesController( $annotatedObjectIdFetcher, $annotationLevelName, $attributeIDFilter, $viewInformation->filterLanguageId ), $annotationLevelName, $attributeIDFilter ) );
+	$objectAttributesEditor->addEditor( getTranslatedTextAttributeValuesEditor( $viewInformation, new TranslatedTextAttributeValuesController( $annotatedObjectIdFetcher, $annotationLevelName, $attributeIDFilter ), $annotationLevelName, $attributeIDFilter ) );
 	$objectAttributesEditor->addEditor( getLinkAttributeValuesEditor( $viewInformation, new LinkAttributeValuesController( $annotatedObjectIdFetcher, $annotationLevelName, $attributeIDFilter ), $annotationLevelName, $attributeIDFilter ) );
 	$objectAttributesEditor->addEditor( getOptionAttributeValuesEditor( $viewInformation, new OptionAttributeValuesController( $annotatedObjectIdFetcher, $annotationLevelName, $attributeIDFilter ), $annotationLevelName, $attributeIDFilter ) );
 }
@@ -484,13 +477,12 @@ function getAlternativeDefinitionsEditor( ViewInformation $viewInformation ) {
 		new AllowAddController( true ),
 		true,
 		false,
-		new DefinedMeaningAlternativeDefinitionsController( $viewInformation->filterLanguageId )
+		new DefinedMeaningAlternativeDefinitionsController( )
 	);
 	
 	$editor->addEditor( getTranslatedTextEditor(
 		$o->alternativeDefinition,
 		new DefinedMeaningAlternativeDefinitionController(),
-		new DefinedMeaningFilteredAlternativeDefinitionController( $viewInformation ),
 		$viewInformation )
 	);
 	$editor->addEditor( new DefinedMeaningReferenceEditor( $o->source, new SimplePermissionController( false ), true ) );
@@ -506,14 +498,9 @@ function getAlternativeDefinitionsEditor( ViewInformation $viewInformation ) {
 function getExpressionTableCellEditor( Attribute $attribute, ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
 
-	if ( $viewInformation->filterLanguageId == 0 ) {
-		$editor = new RecordTableCellEditor( $attribute );
-		$editor->addEditor( new LanguageEditor( $o->language, new SimplePermissionController( false ), true ) );
-		$editor->addEditor( new SpellingEditor( $o->spelling, new SimplePermissionController( false ), true ) );
-	}
-	else {
-		$editor = new SpellingEditor( $attribute, new SimplePermissionController( false ), true );
-	}
+	$editor = new RecordTableCellEditor( $attribute );
+	$editor->addEditor( new LanguageEditor( $o->language, new SimplePermissionController( false ), true ) );
+	$editor->addEditor( new SpellingEditor( $o->spelling, new SimplePermissionController( false ), true ) );
 	return $editor;
 }
 
@@ -544,11 +531,11 @@ function getSynonymsAndTranslationsEditor( ViewInformation $viewInformation ) {
 		new AllowAddController( true ),
 		true,
 		false,
-		new SynonymTranslationController( $viewInformation->filterLanguageId )
+		new SynonymTranslationController( )
 	);
 
 
-	// defining the identicalMeaning Editor
+	// defining the identicalMeaning Editor (first column)
 	$attribute = $o->identicalMeaning ;
 	$permissionController = new SimplePermissionController( true ) ;
 	$isAddField = true ;
@@ -557,7 +544,7 @@ function getSynonymsAndTranslationsEditor( ViewInformation $viewInformation ) {
 	);
 	$tableEditor->addEditor( $identicalMeaningEditor );
 
-	// expression Editor
+	// expression Editor (second and third column)
 	$tableEditor->addEditor( getExpressionTableCellEditor( $o->expression, $viewInformation ) );
 
 	// not sure what this does
@@ -707,7 +694,6 @@ function getTranslatedTextAttributeValuesEditor( ViewInformation $viewInformatio
 	$editor->addEditor( getTranslatedTextEditor(
 		$o->translatedTextValue,
 		new TranslatedTextAttributeValueController(),
-		new FilteredTranslatedTextAttributeValueController( $viewInformation->filterLanguageId ),
 		$viewInformation
 	) );
 	
@@ -753,7 +739,7 @@ function getExpressionMeaningsEditor( Attribute $attribute, $allowAdd, ViewInfor
 	$definedMeaningCaptionEditor = new DefinedMeaningHeaderEditor( $o->definedMeaningId, new SimplePermissionController( false ), false, 75 );
 	$definedMeaningCaptionEditor->setAddText( wfMsg( 'ow_NewExactMeaning' ) );
 
-	$expressionMeaningsEditor = new RecordSetListEditor( $attribute, new SimplePermissionController( true ), new ShowEditFieldChecker( true ), new AllowAddController( $allowAdd ), false, $allowAdd, new ExpressionMeaningController( $viewInformation->filterLanguageId ), 3, false );
+	$expressionMeaningsEditor = new RecordSetListEditor( $attribute, new SimplePermissionController( true ), new ShowEditFieldChecker( true ), new AllowAddController( $allowAdd ), false, $allowAdd, new ExpressionMeaningController( ), 3, false );
 	$expressionMeaningsEditor->setCaptionEditor( $definedMeaningCaptionEditor );
 	$expressionMeaningsEditor->setValueEditor( $definedMeaningEditor );
 	
@@ -777,43 +763,25 @@ function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 
 	$expressionMeaningsRecordEditor->expandEditor( $exactMeaningsEditor );
 
-	if ( $viewInformation->filterLanguageId == 0 ) {
-		// show all languages
-		$showAttributeNames = false;
-		$expressionEditor = new RecordSpanEditor( $o->expression, ': ', ' - ', $showAttributeNames );
-		$expressionEditor->addEditor( new TabLanguageEditor( $o->language, new SimplePermissionController( false ), true ) );
+	// show all languages
+	$showAttributeNames = false;
+	$expressionEditor = new RecordSpanEditor( $o->expression, ': ', ' - ', $showAttributeNames );
+	$expressionEditor->addEditor( new TabLanguageEditor( $o->language, new SimplePermissionController( false ), true ) );
 
-		$expressionsEditor = new RecordSetListEditor(
-			$o->expressions,
-			new SimplePermissionController( true ),
-			new ShowEditFieldChecker( true ),
-			new AllowAddController( true ),
-			false,
-			false,
-			new ExpressionController( $spelling, $viewInformation->filterLanguageId ),
-			2, // headerLevel
-			true // childrenExpanded
-		);
-		$expressionsEditor->setCollapsible( false );
-		$expressionsEditor->setCaptionEditor( $expressionEditor );
-		$expressionsEditor->setValueEditor( $expressionMeaningsRecordEditor );
-	}
-	else {
-		// show only one language
-		$expressionEditor = new RecordSubRecordEditor( $o->expression );
-		$expressionEditor->setSubRecordEditor( $expressionMeaningsRecordEditor );
-		
-		$expressionsEditor = new RecordSetFirstRecordEditor(
-			$o->expressions,
-			new SimplePermissionController( true ),
-			new ShowEditFieldChecker( true ),
-			new AllowAddController( true ),
-			false,
-			false,
-			new ExpressionController( $spelling, $viewInformation->filterLanguageId )
-		);
-		$expressionsEditor->setRecordEditor( $expressionEditor );
-	}
+	$expressionsEditor = new RecordSetListEditor(
+		$o->expressions,
+		new SimplePermissionController( true ),
+		new ShowEditFieldChecker( true ),
+		new AllowAddController( true ),
+		false,
+		false,
+		new ExpressionController( $spelling ),
+		2, // headerLevel
+		true // childrenExpanded
+	);
+	$expressionsEditor->setCollapsible( false );
+	$expressionsEditor->setCaptionEditor( $expressionEditor );
+	$expressionsEditor->setValueEditor( $expressionMeaningsRecordEditor );
 
 	return $expressionsEditor;
 }

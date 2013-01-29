@@ -269,6 +269,9 @@ Please contact the server operator or administrator.",
 
 	'ow_shown_datasets' => 'Shown datasets',
 	'prefs-omegawiki' => 'OmegaWiki',
+	'prefs-ow-lang' => 'Languages',
+	'ow_pref_lang_switch' => 'Show only the selected languages',
+	'ow_pref_lang_select' => 'Languages to display:'
 );
 
 /** Message documentation (Message documentation)
@@ -385,6 +388,9 @@ Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki pag
 	'right-addlanguage' => '{{doc-right|addlanguage}}',
 	'ow_shown_datasets' => 'A "dataset" is an independant collection of data, such as an ontology, a thesaurus, or a specific dictionary.',
 	'prefs-omegawiki' => '{{optional}}',
+	'prefs-ow-lang' => 'A header in the user preferences where the user can configure languages',
+	'ow_pref_lang_switch' => 'A checkbox in the user preferences. If checked, it allows the user to select which languages should be displayed. If unchecked, all languages are displayed.',
+	'ow_pref_lang_select' => 'Next to this text is shown a list of languages, each with a checkbox, to select the languages to display or hide in OmegaWiki',
 );
 
 /** Abkhazian (Аҧсшәа)
