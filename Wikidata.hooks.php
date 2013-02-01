@@ -47,17 +47,19 @@ class WikidataHooks {
 		// allow the user to select the languages to display
 		$preferences['ow_language_filter'] = array(
 			'type' => 'check',
-			'label' => wfMsg( 'ow_pref_lang_switch' ),
+			'label' => '<b>' . wfMsg( 'ow_pref_lang_switch' ) . '</b>',
 			'section' => 'omegawiki/ow-lang',
 		);
 		$preferences['ow_language_filter_list'] = array(
 			'type' => 'multiselect',
-			'label' => '<b>' . wfMsg( 'ow_pref_lang_switch' ) . '</b>',
+			'label' => wfMsg( 'ow_pref_lang_select' ),
 			'options' => array(), // to be filled later
 			'section' => 'omegawiki/ow-lang',
 		);
 
 		$owLanguageNames = getOwLanguageNames();
+		$col = new Collator('en_US.utf8');
+		$col->asort( $owLanguageNames );
 		foreach ( $owLanguageNames as $language_id => $language_name ) {
 			$preferences['ow_language_filter_list']['options'][$language_name] = $language_id ;
 		}
