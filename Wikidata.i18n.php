@@ -388,7 +388,8 @@ Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki pag
 	'right-addlanguage' => '{{doc-right|addlanguage}}',
 	'ow_shown_datasets' => 'A "dataset" is an independant collection of data, such as an ontology, a thesaurus, or a specific dictionary.',
 	'prefs-omegawiki' => '{{optional}}',
-	'prefs-ow-lang' => 'A header in the user preferences where the user can configure languages',
+	'prefs-ow-lang' => 'A header in the user preferences where the user can configure languages.
+{{Identical|Language}}',
 	'ow_pref_lang_switch' => 'A checkbox in the user preferences. If checked, it allows the user to select which languages should be displayed. If unchecked, all languages are displayed.',
 	'ow_pref_lang_select' => 'Next to this text is shown a list of languages, each with a checkbox, to select the languages to display or hide in OmegaWiki',
 );
@@ -3047,6 +3048,9 @@ Bitte kontaktiere den Serveradminstrator.',
 	'right-addlanguage' => 'Spracheinstellungen hinzufügen und ändern',
 	'ow_shown_datasets' => 'Datensätze anzeigen',
 	'prefs-omegawiki' => 'OmegaWiki',
+	'prefs-ow-lang' => 'Sprachen',
+	'ow_pref_lang_switch' => 'Nur die ausgewählten Sprachen anzeigen',
+	'ow_pref_lang_select' => 'Anzuzeigende Sprachen:',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -7692,6 +7696,9 @@ $messages['ja'] = array(
 	'right-addlanguage' => '言語設定を追加/変更',
 	'ow_shown_datasets' => '表示されたデータ集合',
 	'prefs-omegawiki' => 'OmegaWiki',
+	'prefs-ow-lang' => '言語',
+	'ow_pref_lang_switch' => '選択した言語のみを表示する',
+	'ow_pref_lang_select' => '表示する言語:',
 );
 
 /** Javanese (Basa Jawa)
@@ -9492,6 +9499,9 @@ $messages['mk'] = array(
 	'right-addlanguage' => 'Додавање и менување на јазични нагодувања',
 	'ow_shown_datasets' => 'Прикажи збирови податоци',
 	'prefs-omegawiki' => 'ОмегаВики',
+	'prefs-ow-lang' => 'Јазици',
+	'ow_pref_lang_switch' => 'Прикажи ги само избраните јазици',
+	'ow_pref_lang_select' => 'Јазик за приказ:',
 );
 
 /** Malayalam (മലയാളം)
@@ -12296,6 +12306,7 @@ Pe piacere verifiche l'indirizze web.",
 	'ow_IdenticalMeaning' => 'Significate identiche?',
 	'ow_IncomingRelations' => 'Relaziune ca trasene',
 	'ow_GotoSource' => "Veje a 'u sorgende",
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Lènghe',
 	'ow_LevelAnnotation' => 'Annotaziune',
 	'ow_LinkAttributeHeader' => 'Colleghe atribbute',
@@ -12307,6 +12318,7 @@ Pe piacere verifiche l'indirizze web.",
 	'ow_OptionAttributeOptions' => 'Opzione',
 	'ow_OptionAttributeValues' => "Valore de l'opzione",
 	'ow_OtherDefinedMeaning' => 'Otre significate definite',
+	'ow_OtherLanguages' => 'Otre lènghe:',
 	'ow_PopupAnnotation' => 'Annotaziune',
 	'ow_RecordLifeSpan' => "Reggistre 'a larghezze d'a vite",
 	'ow_Relations' => 'Relaziune',
@@ -12344,6 +12356,7 @@ Pe piacere verifiche l'indirizze web.",
 	'ow_copy_no_action_specified' => "Pe piacere specifiche 'n'azione",
 	'ow_copy_help' => "L'aiute angore non g'è presende.
 <!-- Quacche giurne, pò essere ca v'aiuteme. -->",
+	'ow_history_transaction' => 'Transazione:',
 	'ow_class_attr_type_link' => 'Collegamende',
 	'ow_show' => 'Fa vedè',
 	'ow_upload' => 'Careche',
@@ -12354,6 +12367,8 @@ Pe piacere verifiche l'indirizze web.",
 	'ow_suggest_clear' => 'Pulizze',
 	'ow_nstab_definedmeaning' => 'significhete definite',
 	'ow_nstab_edit_copy' => "cange 'na copie",
+	'prefs-ow-lang' => 'Lènghe',
+	'ow_pref_lang_select' => 'Lènghe da fà vedè:',
 );
 
 /** Russian (русский)
