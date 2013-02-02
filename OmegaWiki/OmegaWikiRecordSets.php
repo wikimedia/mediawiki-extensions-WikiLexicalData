@@ -671,10 +671,19 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
 
-	$getTranslatedContentSQL = "SELECT language_id, text_id "
-		. " FROM {$dc}_translated_content "
-		. " WHERE translated_content_id = $translatedContentId "
-		. " AND remove_transaction_id IS NULL " ;
+	if ( ! $viewInformation->showRecordLifeSpan ) {
+		// standard view
+		$getTranslatedContentSQL = "SELECT language_id, text_id "
+			. " FROM {$dc}_translated_content "
+			. " WHERE translated_content_id = $translatedContentId "
+			. " AND remove_transaction_id IS NULL " ;
+	} else {
+		// history view
+		$getTranslatedContentSQL = "SELECT language_id, text_id "
+			. ", add_transaction_id, remove_transaction_id "
+			. " FROM {$dc}_translated_content "
+			. " WHERE translated_content_id = $translatedContentId ";
+	}
 
 	// filter on languages, if activated by the user
 	$filterLanguageSQL = $viewInformation->getFilterLanguageSQL() ;
@@ -683,6 +692,10 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 	}
 
 	$structure = $o->translatedTextStructure ;
+	if ( $viewInformation->showRecordLifeSpan ) {
+		// additional attributes for history view
+		$structure->addAttribute( $o->recordLifeSpan );
+	}
 	// keyAttribute is stored in the $keyPath and used by the controller
 	$keyAttribute = $o->language ;
 	$recordSet = new ArrayRecordSet( $structure, new Structure( $keyAttribute ) );
@@ -693,6 +706,10 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 		$record->language = $row->language_id;
 		$record->text = $row->text_id; // expanded below
 
+		// adds transaction details for history view
+		if ( $viewInformation->showRecordLifeSpan ) {
+			$record->recordLifeSpan = getRecordLifeSpanTuple ( $row->add_transaction_id, $row->remove_transaction_id ) ;
+		}
 		$recordSet->add( $record );
 	}
 
@@ -706,11 +723,23 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
 
-	$getSynTransSQL = "SELECT syntrans_sid, {$dc}_syntrans.expression_id AS expression_id, identical_meaning, language_id, spelling "
-		. " FROM {$dc}_syntrans, {$dc}_expression "
-		. " WHERE defined_meaning_id = $definedMeaningId "
-		. " AND {$dc}_expression.expression_id = {$dc}_syntrans.expression_id"
-		. " AND {$dc}_syntrans.remove_transaction_id IS NULL" ;
+	if ( ! $viewInformation->showRecordLifeSpan ) {
+		// standard view
+		$getSynTransSQL = "SELECT syntrans_sid, {$dc}_syntrans.expression_id AS expression_id, identical_meaning, language_id, spelling "
+			. " FROM {$dc}_syntrans, {$dc}_expression "
+			. " WHERE defined_meaning_id = $definedMeaningId "
+			. " AND {$dc}_expression.expression_id = {$dc}_syntrans.expression_id"
+			. " AND {$dc}_syntrans.remove_transaction_id IS NULL" ;
+	} else {
+		// history view
+		$getSynTransSQL = "SELECT syntrans_sid, {$dc}_syntrans.expression_id AS expression_id, "
+			. " identical_meaning, language_id, spelling, "
+			. " {$dc}_syntrans.remove_transaction_id AS remove_transaction_id,  "
+			. " {$dc}_syntrans.add_transaction_id AS add_transaction_id "
+			. " FROM {$dc}_syntrans, {$dc}_expression "
+			. " WHERE defined_meaning_id = $definedMeaningId "
+			. " AND {$dc}_expression.expression_id = {$dc}_syntrans.expression_id" ;
+	}
 
 	// filter on languages, if activated by the user
 	$filterLanguageSQL = $viewInformation->getFilterLanguageSQL() ;
@@ -724,8 +753,12 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 	// TODO; try with synTransExpressionStructure instead of synonymsTranslationsStructure
 	// so that expression is not a sublevel of the hierarchy, but on the same level
 	//	$structure = $o->synTransExpressionStructure ;
-
 	$structure = $o->synonymsTranslationsStructure ;
+	if ( $viewInformation->showRecordLifeSpan ) {
+		// additional attributes for history view
+		$structure->addAttribute( $o->recordLifeSpan );
+	}
+
 	$keyAttribute = $o->syntransId ;
 	$recordSet = new ArrayRecordSet( $structure, new Structure( $keyAttribute ) );
 
@@ -741,6 +774,11 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 		$expressionRecord->language = $row->language_id;
 		$expressionRecord->spelling = $row->spelling;
 		$record->expression = $expressionRecord;
+
+		// adds transaction details for history view
+		if ( $viewInformation->showRecordLifeSpan ) {
+			$record->recordLifeSpan = getRecordLifeSpanTuple ( $row->add_transaction_id, $row->remove_transaction_id ) ;
+		}
 
 		$recordSet->add( $record );
 	}

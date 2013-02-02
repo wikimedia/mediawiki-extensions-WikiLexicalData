@@ -625,17 +625,22 @@ class RecordSetTableEditor extends RecordSetEditor {
 		$this->rowHTMLAttributes = $rowHTMLAttributes;
 	}
 	
+	/**
+	* Determines if there is at least one non-empty cell in the column
+	* and returns true in that case.
+	* This can be used so that columns that are empty are not displayed.
+	*/
 	protected function columnShowsData( Editor $columnEditor, RecordSet $value, $attributePath ) {
 		$result = false;
 		$recordCount = $value->getRecordCount();
 		$i = 0;
-		
+
 		while ( !$result && $i < $recordCount ) {
 			$recordOrScalar = $value->getRecord( $i );
 			
-			foreach ( $attributePath as $attribute )
+			foreach ( $attributePath as $attribute ) {
 				$recordOrScalar = $recordOrScalar->getAttributeValue( $attribute );
-				
+			}
 			$result = $columnEditor->showsData( $recordOrScalar );
 			$i++;
 		}
@@ -675,9 +680,15 @@ class RecordSetTableEditor extends RecordSetEditor {
 					$attributes[] = new Attribute( $childAttribute->id, $childAttribute->name, $type );
 				}
 			}
-			elseif ( ( $viewOrEdit == "view" && $this->columnShowsData( $childEditor, $value, $attributePath ) ) ||
-					 ( $viewOrEdit == "edit" ) && $childEditor->showEditField( $idPath ) ) {
-				$attributes[] = new Attribute( $childAttribute->id, $childAttribute->name, 'short-text' );
+			elseif ( $viewOrEdit == "view" ) {
+				if ( $this->columnShowsData( $childEditor, $value, $attributePath ) ) {
+					$attributes[] = new Attribute( $childAttribute->id, $childAttribute->name, 'short-text' );
+				}
+			}
+			elseif ( $viewOrEdit == "edit" ) {
+				if ( $childEditor->showEditField( $idPath ) ) {
+					$attributes[] = new Attribute( $childAttribute->id, $childAttribute->name, 'short-text' );
+				}
 			}
 
 			array_pop( $attributePath );
