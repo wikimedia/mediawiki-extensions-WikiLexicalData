@@ -4330,6 +4330,7 @@ Mesedez harremanetan ipini zerbitzari operadore edo administratzailearekin.',
 	'ow_suggest_clear' => 'Ezabatu',
 	'ow_nstab_edit_copy' => 'kopia editatu',
 	'right-addlanguage' => 'Gehitu eta aldatu hizkuntzaren ezarpenak',
+	'prefs-ow-lang' => 'Hizkuntzak',
 );
 
 /** Persian (فارسی)
@@ -5043,6 +5044,9 @@ Veuillez contacter l’opérateur ou l’administrateur du serveur.',
 	'right-addlanguage' => 'Ajouter et modifier les paramètres de langues',
 	'ow_shown_datasets' => 'Afficher les ensembles de données',
 	'prefs-omegawiki' => 'OmegaWiki',
+	'prefs-ow-lang' => 'Langues',
+	'ow_pref_lang_switch' => 'Afficher seulement les langues sélectionnées',
+	'ow_pref_lang_select' => 'Langues à afficher:',
 );
 
 /** Franco-Provençal (arpetan)
@@ -8427,6 +8431,9 @@ iso는 언어 코드입니다</p>",
 	'ow_nstab_edit_copy' => '복사본 편집',
 	'right-addlanguage' => '언어 설정을 추가하고 바꿈',
 	'ow_shown_datasets' => '보이는 데이터 집합',
+	'prefs-ow-lang' => '언어',
+	'ow_pref_lang_switch' => '선택한 언어만 보이기',
+	'ow_pref_lang_select' => '보일 언어:',
 );
 
 /** Komi-Permyak (Перем Коми)
@@ -15800,6 +15807,7 @@ $messages['zh-cn'] = array(
  * @author Wilsonmess
  * @author Wmr89502270
  * @author Yfdyh000
+ * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
 	'wikidata-desc' => '为各种类型的内容添加类wiki数据库',
@@ -15979,6 +15987,9 @@ $messages['zh-hans'] = array(
 	'ow_nstab_edit_copy' => '编辑副本',
 	'right-addlanguage' => '添加和更改语言设置',
 	'ow_shown_datasets' => '所显示的数据集',
+	'prefs-ow-lang' => '语言',
+	'ow_pref_lang_switch' => '仅显示所选语言',
+	'ow_pref_lang_select' => '要显示的语言：',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
