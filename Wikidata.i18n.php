@@ -10456,6 +10456,9 @@ Vel ei samling til å eksportera. Skriv inn i språktekstruta i ei kommaseparere
 	'ow_exporttsv_not_allowed' => 'Du har ikkje løve til å gjera ei TSV-eksportering.',
 	'ow_exporttsv_export_failed' => 'Eksporteringa mislukkast',
 	'addcollection' => 'Wikidata: Legg til samling',
+	'ow_searchnoresult' => "<p>Du kan:<br />
+* '''Oppretta uttrykket «[[Expression:$1]]»''' (og leggja til ein definisjon)<br />
+* '''Oppretta sida «[[:$1]]»''' (ei standard wikiside)</p>",
 	'ow_save' => 'Lagre',
 	'ow_history' => 'Historikk',
 	'ow_datasets' => 'Val for vising av data',
@@ -10531,6 +10534,7 @@ Vel ei samling til å eksportera. Skriv inn i språktekstruta i ei kommaseparere
 	'ow_IdenticalMeaning' => 'Same tyding?',
 	'ow_IncomingRelations' => 'Innkomande slektskap',
 	'ow_GotoSource' => 'Gå til kjelda',
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Språk',
 	'ow_LevelAnnotation' => 'Merknad',
 	'ow_LinkAttributeHeader' => 'Lenkeatributt',
@@ -10542,6 +10546,7 @@ Vel ei samling til å eksportera. Skriv inn i språktekstruta i ei kommaseparere
 	'ow_OptionAttributeOptions' => 'Innstillingar',
 	'ow_OptionAttributeValues' => 'Innstillingsverdiar',
 	'ow_OtherDefinedMeaning' => 'Anna definert tyding',
+	'ow_OtherLanguages' => 'Andre språk:',
 	'ow_PopupAnnotation' => 'Merknad',
 	'ow_RecordLifeSpan' => 'Databaseposten si livslengd',
 	'ow_Relations' => 'Slektskap',
@@ -10597,6 +10602,7 @@ Vel ei samling til å eksportera. Skriv inn i språktekstruta i ei kommaseparere
 	'ow_needs_xlation_source_lang' => 'Kjeldespråk:',
 	'ow_needs_xlation_dest_lang' => 'Målspråk:',
 	'ow_needs_xlation_no_dest_lang' => 'Oppgje eit målspråk.',
+	'ow_statistics' => 'Wikidata: Statistikk',
 	'ow_show' => 'Syna',
 	'ow_upload' => 'Last opp',
 	'ow_create' => 'Opprett',
@@ -10608,6 +10614,9 @@ Vel ei samling til å eksportera. Skriv inn i språktekstruta i ei kommaseparere
 	'ow_nstab_edit_copy' => 'endra kopi',
 	'right-addlanguage' => 'Leggja til og endra språkinnstillingar',
 	'ow_shown_datasets' => 'Synte datasett',
+	'prefs-ow-lang' => 'Språk',
+	'ow_pref_lang_switch' => 'Vis berre dei valde språka',
+	'ow_pref_lang_select' => 'Språk som skal visast:',
 );
 
 /** Northern Sotho (Sesotho sa Leboa)
