@@ -5535,6 +5535,9 @@ Por favor, póñase en contacto cun operador ou administrador do servidor.',
 	'ow_nstab_edit_copy' => 'editar a copia',
 	'right-addlanguage' => 'Engadir e modificar a configuración de lingua',
 	'ow_shown_datasets' => 'Conxunto de datos mostrados',
+	'prefs-ow-lang' => 'Linguas',
+	'ow_pref_lang_switch' => 'Mostrar só as linguas seleccionadas',
+	'ow_pref_lang_select' => 'Linguas que mostrar:',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -9513,6 +9516,7 @@ $messages['mk'] = array(
 
 /** Malayalam (മലയാളം)
  * @author Praveenp
+ * @author Santhosh.thottingal
  * @author Shijualex
  */
 $messages['ml'] = array(
@@ -9551,6 +9555,7 @@ $messages['ml'] = array(
 	'ow_nstab_definedmeaning' => 'നിർവചിക്കപ്പെട്ട അർത്ഥം',
 	'ow_nstab_edit_copy' => 'പകർപ്പ് തിരുത്തുക',
 	'right-addlanguage' => 'ഭാഷാ ക്രമീകരണങ്ങൾ ചേർക്കുക മാറ്റംവരുത്തുക',
+	'prefs-ow-lang' => 'ഭാഷകൾ',
 );
 
 /** Mongolian (монгол)
