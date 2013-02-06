@@ -1,6 +1,6 @@
 <?php
 
-require_once( "extensions/Wikidata/OmegaWiki/WikiDataAPI.php" );
+require_once( "WikiDataAPI.php" );
 
 function ConvertIsoToEpoch( $iso ) {
 	// 01234567890123456789

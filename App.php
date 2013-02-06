@@ -191,6 +191,6 @@ $wgHooks['SearchGetNearMatchBefore'][] = 'WikidataHooks::onGoClicked';
 
 // LocalApp.php is optional. Its function is like LocalSettings.php,
 // if you want to separate the MediaWiki configuration from the Wikidata configuration
-if ( file_exists ( "{$IP}/extensions/Wikidata/LocalApp.php" )) {
-	require_once( "{$IP}/extensions/Wikidata/LocalApp.php" );
+if ( file_exists ( dirname(__FILE__) . "LocalApp.php" )) {
+	require_once( dirname(__FILE__) . "LocalApp.php" );
 }

@@ -141,35 +141,35 @@ function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = 
 			'<a id="' . $name . '-suggest-link" class="suggest-link" onclick="suggestLinkClicked(event, this);" title="' . wfMsgSc( "SuggestHint" ) . '">' . $label . '</a>' .
 		'</span>';
 	
-	if ( $wgLang->isRTL() )
+	if ( $wgLang->isRTL() ) {
 		$result .=
-        '<div class="suggest-drop-down" style="position: relative"><div id="' . $name . '-suggest-div" style="position: absolute; right: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
-        	'<div><table>' .
-        		'<tr>' .
-        			'<td><input type="text" id="' . $name . '-suggest-text" autocomplete="off" onkeyup="suggestTextChanged(this)" style="width: 300px"></input></td>' .
-        			'<td><a id="' . $name . '-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">' . wfMsg( 'ow_suggest_clear' ) . '</a></td>' .
-        			'<td style="white-space: nowrap"><a id="' . $name . '-suggest-previous" href="javascript:void(0)" class="suggest-previous" onclick="suggestPreviousClicked(event, this)"><img src="' . $wgScriptPath . '/extensions/Wikidata/Images/ArrowRight.png" alt="' . wfMsg( 'ow_suggest_previous' ) . '"/> ' . wfMsg( 'ow_suggest_previous' ) . '</a></td>' .
-        			'<td style="white-space: nowrap"><a id="' . $name . '-suggest-next" href="javascript:void(0)" class="suggest-next" onclick="suggestNextClicked(event, this)">' . wfMsg( 'ow_suggest_next' ) . ' <img src="' . $wgScriptPath . '/extensions/Wikidata/Images/ArrowLeft.png" alt="' . wfMsg( 'ow_suggest_next' ) . '"/></a></td>' .
-        			'<td><a id="' . $name . '-suggest-close" href="javascript:void(0)" onclick="suggestCloseClicked(event, this)">[X]</a></td>' .
-        		'</tr>' .
-        	'</table></div>' .
-        	'<div><table id="' . $name . '-suggest-table"><tr><td></td></tr></table></div>' .
-        '</div></div>';
-	else
+			'<div class="suggest-drop-down" style="position: relative"><div id="' . $name . '-suggest-div" style="position: absolute; right: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
+				'<div><table>' .
+					'<tr>' .
+						'<td><input type="text" id="' . $name . '-suggest-text" autocomplete="off" onkeyup="suggestTextChanged(this)" style="width: 300px"></input></td>' .
+						'<td><a id="' . $name . '-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">' . wfMsg( 'ow_suggest_clear' ) . '</a></td>' .
+						'<td style="white-space: nowrap"><a id="' . $name . '-suggest-previous" href="javascript:void(0)" class="suggest-previous" onclick="suggestPreviousClicked(event, this)"><img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowRight.png" alt="' . wfMsg( 'ow_suggest_previous' ) . '"/> ' . wfMsg( 'ow_suggest_previous' ) . '</a></td>' .
+						'<td style="white-space: nowrap"><a id="' . $name . '-suggest-next" href="javascript:void(0)" class="suggest-next" onclick="suggestNextClicked(event, this)">' . wfMsg( 'ow_suggest_next' ) . ' <img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowLeft.png" alt="' . wfMsg( 'ow_suggest_next' ) . '"/></a></td>' .
+						'<td><a id="' . $name . '-suggest-close" href="javascript:void(0)" onclick="suggestCloseClicked(event, this)">[X]</a></td>' .
+					'</tr>' .
+				'</table></div>' .
+				'<div><table id="' . $name . '-suggest-table"><tr><td></td></tr></table></div>' .
+			'</div></div>';
+	} else {
 		$result .=
-        '<div class="suggest-drop-down" style="position: relative"><div id="' . $name . '-suggest-div" style="position: absolute; left: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
-        	'<div><table>' .
-        		'<tr>' .
-        			'<td><input type="text" id="' . $name . '-suggest-text" autocomplete="off" onkeyup="suggestTextChanged(this)" style="width: 300px"></input></td>' .
-        			'<td><a id="' . $name . '-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">' . wfMsg( 'ow_suggest_clear' ) . '</a></td>' .
-        			'<td style="white-space: nowrap"><a id="' . $name . '-suggest-previous" href="javascript:void(0)" class="suggest-previous" onclick="suggestPreviousClicked(event, this)"><img src="' . $wgScriptPath . '/extensions/Wikidata/Images/ArrowLeft.png" alt="' . wfMsg( 'ow_suggest_previous' ) . '"/> ' . wfMsg( 'ow_suggest_previous' ) . '</a></td>' .
-        			'<td style="white-space: nowrap"><a id="' . $name . '-suggest-next" href="javascript:void(0)" class="suggest-next" onclick="suggestNextClicked(event, this)">' . wfMsg( 'ow_suggest_next' ) . ' <img src="' . $wgScriptPath . '/extensions/Wikidata/Images/ArrowRight.png" alt="' . wfMsg( 'ow_suggest_next' ) . '"/></a></td>' .
-        			'<td><a id="' . $name . '-suggest-close" href="javascript:void(0)" onclick="suggestCloseClicked(event, this)">[X]</a></td>' .
-        		'</tr>' .
-        	'</table></div>' .
-        	'<div><table id="' . $name . '-suggest-table"><tr><td></td></tr></table></div>' .
-        '</div></div>';
-	
+			'<div class="suggest-drop-down" style="position: relative"><div id="' . $name . '-suggest-div" style="position: absolute; left: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
+				'<div><table>' .
+					'<tr>' .
+						'<td><input type="text" id="' . $name . '-suggest-text" autocomplete="off" onkeyup="suggestTextChanged(this)" style="width: 300px"></input></td>' .
+						'<td><a id="' . $name . '-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">' . wfMsg( 'ow_suggest_clear' ) . '</a></td>' .
+						'<td style="white-space: nowrap"><a id="' . $name . '-suggest-previous" href="javascript:void(0)" class="suggest-previous" onclick="suggestPreviousClicked(event, this)"><img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowLeft.png" alt="' . wfMsg( 'ow_suggest_previous' ) . '"/> ' . wfMsg( 'ow_suggest_previous' ) . '</a></td>' .
+						'<td style="white-space: nowrap"><a id="' . $name . '-suggest-next" href="javascript:void(0)" class="suggest-next" onclick="suggestNextClicked(event, this)">' . wfMsg( 'ow_suggest_next' ) . ' <img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowRight.png" alt="' . wfMsg( 'ow_suggest_next' ) . '"/></a></td>' .
+						'<td><a id="' . $name . '-suggest-close" href="javascript:void(0)" onclick="suggestCloseClicked(event, this)">[X]</a></td>' .
+					'</tr>' .
+				'</table></div>' .
+				'<div><table id="' . $name . '-suggest-table"><tr><td></td></tr></table></div>' .
+			'</div></div>';
+	}
 	return $result;
 }
 
