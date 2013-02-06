@@ -767,7 +767,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 		$result .= Xml::openElement( 'thead' );
 		if ( $this->allowRemove )
-			$headerRows[0] = '<th class="remove" rowspan="' . count( $headerRows ) . '"><img src="' . $wgScriptPath . '/extensions/Wikidata/Images/Delete.png"  title="' . wfMsgSc( "RemoveHint" ) . '" alt="' . wfMsgSc( "Remove" ) . '"/></th>' . $headerRows[0];
+			$headerRows[0] = '<th class="remove" rowspan="' . count( $headerRows ) . '"><img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/Delete.png"  title="' . wfMsgSc( "RemoveHint" ) . '" alt="' . wfMsgSc( "Remove" ) . '"/></th>' . $headerRows[0];
 
 		if ( $this->repeatInput )
 			$headerRows[0] .= '<th class="add" rowspan="' . count( $headerRows ) . '">Input rows</th>';
@@ -878,7 +878,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 		
 		# + is add new Fo o(but grep this file for Add.png for more)
 		if ( $allowRemove ) {
-			$result .= '<td class="add"><img src="' . $wgScriptPath . '/extensions/Wikidata/Images/Add.png" title="' . wfMsgSc( "AddHint" ) . '" alt="Add" onclick="addEmptyRow(this.parentNode.parentNode.id);"/></td>' . EOL;
+			$result .= '<td class="add"><img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/Add.png" title="' . wfMsgSc( "AddHint" ) . '" alt="Add" onclick="addEmptyRow(this.parentNode.parentNode.id);"/></td>' . EOL;
 		}
 
 		$result .= $this->getStructureAsAddCells( $idPath, $this );
@@ -1929,8 +1929,21 @@ class RecordListEditor extends RecordEditor {
 	protected function childHeader( Editor $editor, Attribute $attribute, $class, $attributeId ) {
 		$expansionPrefix = $this->getExpansionPrefix( $class, $attributeId );
 		$this->setExpansionByEditor( $editor, $class );
-//		return '<div class="level' . $this->headerLevel . '"><span id="collapse-' . $attributeId . '" class="toggle ' . addCollapsablePrefixToClass( $class ) . '" >' . $expansionPrefix . '&#160;' . $attribute->name . '</span></div>' . EOL;
-		return '<div class="level' . $this->headerLevel . '"><span class="toggle ' . addCollapsablePrefixToClass( $class ) . '" >' . $expansionPrefix . '&#160;' . $attribute->name . '</span></div>' . EOL;
+
+		$divclass = 'level' . $this->headerLevel ;
+		$childHeaderHtml = HTML::openElement ('div', array( 'class' => $divclass )) ;
+
+		$spanclass = $class;
+		if ( $this->isCollapsible ) {
+			$spanclass = 'toggle ' . addCollapsablePrefixToClass( $class ) ;
+		}
+		$spanattribs = array('class' => $spanclass );
+		$spantext = $expansionPrefix . '&#160;' . $attribute->name ;
+
+		$childHeaderHtml .= HTML::rawElement ('span', $spanattribs, $spantext ) ;
+		$childHeaderHtml .= HTML::closeElement ('div');
+
+		return $childHeaderHtml;
 	}
 	
 	protected function viewChild( Editor $editor, IdStack $idPath, $value, Attribute $attribute, $class, $attributeId ) {
@@ -2226,7 +2239,7 @@ class RecordSetListEditor extends RecordSetEditor {
 		$recordCount = $value->getRecordCount();
 		
 		if ( $recordCount > 0 || $this->allowAddController->check( $idPath ) ) {
-			$result = '<ul class="collapsable-items">';
+			$result = HTML::openElement ('ul', array( 'class' => "collapsable-items" )) ;
 			$key = $value->getKey();
 			$captionAttribute = $this->captionEditor->getAttribute();
 			$valueAttribute = $this->valueEditor->getAttribute();
@@ -2243,19 +2256,32 @@ class RecordSetListEditor extends RecordSetEditor {
 				$this->setExpansion( $this->childrenExpanded, $valueClass );
 	
 				$idPath->pushAttribute( $captionAttribute );
-//				$result .= '<li><div class="level' . $this->headerLevel . '"><span id="collapse-' . $recordId . '" class="toggle ' . addCollapsablePrefixToClass( $captionClass ) . '">' . $captionExpansionPrefix . '&#160;' . $this->captionEditor->edit( $idPath, $record->getAttributeValue( $captionAttribute ) ) . '</span></div>' . EOL;
-				$result .= '<li><div class="level' . $this->headerLevel . '"><span class="';
+
+				$result .= HTML::openElement ('li');
+				$divclass = 'level' . $this->headerLevel ;
+				$result .= HTML::openElement ('div', array( 'class' => $divclass ));
+
+				$spantext = $captionExpansionPrefix . '&#160;'
+					. $this->captionEditor->edit( $idPath, $record->getAttributeValue( $captionAttribute ) ) ;
+				$spanattribs = array(); // default if not collapsible
 				if ( $this->isCollapsible ) {
 					// add toggle as a class
-					$result .= 'toggle ' . addCollapsablePrefixToClass( $captionClass );
+					$spanclass = 'toggle ' . addCollapsablePrefixToClass( $captionClass ) ;
+					$spanattribs = array('class' => $spanclass );
 				}
-				$result .= '">' . $captionExpansionPrefix . '&#160;' . $this->captionEditor->edit( $idPath, $record->getAttributeValue( $captionAttribute ) ) . '</span></div>' . EOL;
+				$result .= HTML::rawElement ('span', $spanattribs, $spantext ) ;
+				$result .= HTML::closeElement ('div');
 
 				$idPath->popAttribute();
-	
 				$idPath->pushAttribute( $valueAttribute );
-				$result .= '<div id="collapsable-' . $recordId . '" class="expand-' . $valueClass . '">' . $this->valueEditor->edit( $idPath, $record->getAttributeValue( $valueAttribute ) ) . '</div>' . EOL .
-							'</li>' . EOL;
+
+				$divid = 'collapsable-' . $recordId ;
+				$divclass = 'expand-' . $valueClass ;
+				$divattribs = array( 'id' => $divid, 'class' => $divclass ) ;
+				$divtext = $this->valueEditor->edit( $idPath, $record->getAttributeValue( $valueAttribute ) ) ;
+				$result .= HTML::rawElement ('div', $divattribs, $divtext ) ;
+
+				$result .= HTML::closeElement ('li');
 				$idPath->popAttribute();
 	
 				$idPath->popKey();
@@ -2268,17 +2294,35 @@ class RecordSetListEditor extends RecordSetEditor {
 	
 				$this->setExpansion( true, $class );
 
-//				$result .= '<li><div class="level' . $this->headerLevel . '">' . '<span id="collapse-' . $recordId . '" class="toggle ' . addCollapsablePrefixToClass( $class ) . '">' . $this->getExpansionPrefix( $idPath->getClass(), $idPath->getId() ) . $this->captionEditor->add( $idPath ) . '</div></span>' . EOL;
-				$result .= '<li><div class="level' . $this->headerLevel . '">' . '<span class="toggle ' . addCollapsablePrefixToClass( $class ) . '">' . $this->getExpansionPrefix( $idPath->getClass(), $idPath->getId() ) . $this->captionEditor->add( $idPath ) . '</div></span>' . EOL;
-				$idPath->popAttribute();
-	
-				$idPath->pushAttribute( $valueAttribute );
-				$result .= '<div id="collapsable-' . $recordId . '" class="expand-' . $class . '">' . $this->valueEditor->add( $idPath ) . '</div>' . EOL .
-							'</li>' . EOL;
+				$result .= HTML::openElement ('li');
+				$divclass = 'level' . $this->headerLevel ;
+				$result .= HTML::openElement ('div', array( 'class' => $divclass ));
+
+				$spantext = $this->getExpansionPrefix( $idPath->getClass(), $idPath->getId() ) . $this->captionEditor->add( $idPath );
+				$spanattribs = array(); // default if not collapsible
+				if ( $this->isCollapsible ) {
+					// add toggle as a class
+					$spanclass = 'toggle ' . addCollapsablePrefixToClass( $class ) ;
+					$spanattribs = array('class' => $spanclass );
+				}
+				$result .= HTML::rawElement ('span', $spanattribs, $spantext ) ;
+				$result .= HTML::closeElement ('div');
+
+				$idPath->popAttribute();	
+				$idPath->pushAttribute( $valueAttribute );#
+
+				$divid = 'collapsable-' . $recordId ;
+				$divclass = 'expand-' . $class ;
+				$divattribs = array( 'id' => $divid, 'class' => $divclass ) ;
+				$divtext = $this->valueEditor->add( $idPath ) ;
+
+				$result .= HTML::rawElement ('div', $divattribs, $divtext ) ;
+				$result .= HTML::closeElement ('li');
+
 				$idPath->popAttribute();
 			}
 
-			$result .= '</ul>' . EOL;
+			$result .= HTML::closeElement ('ul');
 
 			return $result;
 		}
