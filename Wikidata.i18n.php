@@ -6156,6 +6156,9 @@ $messages['he'] = array(
 	'ow_nstab_edit_copy' => 'עריכת עותק',
 	'right-addlanguage' => 'הוספת ושינוי הגדרות שפה',
 	'ow_shown_datasets' => 'ערכות נתונים מוצגות',
+	'prefs-ow-lang' => 'שפות',
+	'ow_pref_lang_switch' => 'להציג רק את השפות שנבחרו',
+	'ow_pref_lang_select' => 'שפות להצגה:',
 );
 
 /** Hindi (हिन्दी)
@@ -10391,7 +10394,7 @@ Vergeet niet om dit te controleren!',
 	'ow_shown_datasets' => 'Weergegeven datasets',
 );
 
-/** Norwegian Nynorsk (norsk (nynorsk)‎)
+/** Norwegian Nynorsk (norsk nynorsk)
  * @author Eirik
  * @author Gunnernett
  * @author Harald Khan
