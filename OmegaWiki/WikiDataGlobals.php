@@ -1,41 +1,45 @@
 <?php
 
 require_once( "Wikidata.php" );
-require_once( "GotoSourceTemplate.php" );
 require_once( "PropertyToColumnFilter.php" );
+
+// global variables should be named $wgWldVariable
+// where Wld stands for "WikiLexicalData".
+// TODO: rename the other variables
 
 define( 'NS_EXPRESSION', 16 );
 define( 'NS_DEFINEDMEANING', 24 );
-define( 'WD_ENGLISH_LANG_ID', 85 );
+define( 'WLD_ENGLISH_LANG_ID', 85 );
 
 // Achtung: the following defines should match the strings used in
 // the Javascript files
-define ( 'WD_ALTERNATIVE_DEF', "altDef" );
-define ( 'WD_ALTERNATIVE_DEFINITIONS', "altDefs" );
-define ( 'WD_CLASS_ATTRIBUTES', "classAtt" );
-define ( 'WD_CLASS_MEMBERSHIP', "classMembers" );
-define ( 'WD_COLLECTION_MEMBERSHIP', "colMembers" );
-define ( 'WD_DEFINED_MEANING', "dm" );
-define ( 'WD_DEFINED_MEANING_ATTRIBUTES', "dmAtt" );
-define ( 'WD_DEFINITION', "def" );
-define ( 'WD_EXPRESSION', "exp" );
-define ( 'WD_EXPRESSION_APPROX_MEANINGS', "approx" );
-define ( 'WD_EXPRESSION_EXACT_MEANINGS', "exact" );
-define ( 'WD_EXPRESSION_MEANINGS', "meanings" );
-define ( 'WD_IDENTICAL_MEANING', "identMeaning" );
-define ( 'WD_INCOMING_RELATIONS', "incomingRel" );
-define ( 'WD_LINK_ATTRIBUTE', "linkAtt" );
-define ( 'WD_LINK_ATTRIBUTE_VALUES', "linkAttVal" );
-define ( 'WD_OBJECT_ATTRIBUTES', "objAtt" );
-define ( 'WD_OPTION_ATTRIBUTE', "optnAtt" );
-define ( 'WD_OPTION_ATTRIBUTE_OPTION', "optnAttOptn" ); // WD_OPTION_ATTRIBUTE . WD_OPTION_SUFFIX
-define ( 'WD_OPTION_ATTRIBUTE_VALUES', "optnAttVal" ); // WD_OPTION_ATTRIBUTE . "Val"
-define ( 'WD_OPTION_SUFFIX', "Optn" );
-define ( 'WD_OTHER_DEFINED_MEANING', "otherDm" );
-define ( 'WD_RELATIONS', "rel" );
-define ( 'WD_SYNONYMS_TRANSLATIONS', "syntrans" );
-define ( 'WD_TEXT_ATTRIBUTES_VALUES', "txtAttVal" );
-define ( 'WD_TRANSLATED_TEXT', "transl" );
+define ( 'WLD_ALTERNATIVE_DEF', "altDef" );
+define ( 'WLD_ALTERNATIVE_DEFINITIONS', "altDefs" );
+define ( 'WLD_CLASS_ATTRIBUTES', "classAtt" );
+define ( 'WLD_CLASS_MEMBERSHIP', "classMembers" );
+define ( 'WLD_COLLECTION_MEMBERSHIP', "colMembers" );
+define ( 'WLD_DEFINED_MEANING', "dm" );
+define ( 'WLD_DM_ATTRIBUTES', "dmAtt" );
+define ( 'WLD_DEFINITION', "def" );
+define ( 'WLD_EXPRESSION', "exp" );
+define ( 'WLD_EXPRESSION_APPROX_MEANINGS', "approx" );
+define ( 'WLD_EXPRESSION_EXACT_MEANINGS', "exact" );
+define ( 'WLD_EXPRESSION_MEANINGS', "meanings" );
+define ( 'WLD_IDENTICAL_MEANING', "identMeaning" );
+define ( 'WLD_INCOMING_RELATIONS', "incomingRel" );
+define ( 'WLD_LINK_ATTRIBUTE', "linkAtt" );
+define ( 'WLD_LINK_ATTRIBUTE_VALUES', "linkAttVal" );
+define ( 'WLD_OBJECT_ATTRIBUTES', "objAtt" );
+define ( 'WLD_OPTION_ATTRIBUTE', "optnAtt" );
+define ( 'WLD_OPTION_ATTRIBUTE_OPTION', "optnAttOptn" ); // WLD_OPTION_ATTRIBUTE . WLD_OPTION_SUFFIX
+define ( 'WLD_OPTION_ATTRIBUTE_VALUES', "optnAttVal" ); // WLD_OPTION_ATTRIBUTE . "Val"
+define ( 'WLD_OPTION_SUFFIX', "Optn" );
+define ( 'WLD_OTHER_DM', "otherDm" );
+define ( 'WLD_OTHER_OBJECT', "otherObj" );
+define ( 'WLD_RELATIONS', "rel" );
+define ( 'WLD_SYNONYMS_TRANSLATIONS', "syntrans" );
+define ( 'WLD_TEXT_ATTRIBUTES_VALUES', "txtAttVal" );
+define ( 'WLD_TRANSLATED_TEXT', "transl" );
 
 # Global context override. This is an evil hack to allow saving, basically.
 global $wdCurrentContext;
@@ -48,20 +52,15 @@ $wgIso639_3CollectionId = null;
 global $wdDefinedMeaningAttributesOrder;
 	
 $wdDefinedMeaningAttributesOrder = array(
-	WD_DEFINITION,
-	WD_ALTERNATIVE_DEFINITIONS,
-	WD_SYNONYMS_TRANSLATIONS,
-	WD_DEFINED_MEANING_ATTRIBUTES,
-	WD_CLASS_MEMBERSHIP,
-	WD_CLASS_ATTRIBUTES,
-	WD_COLLECTION_MEMBERSHIP,
-	WD_INCOMING_RELATIONS
+	WLD_DEFINITION,
+	WLD_ALTERNATIVE_DEFINITIONS,
+	WLD_SYNONYMS_TRANSLATIONS,
+	WLD_DM_ATTRIBUTES,
+	WLD_CLASS_MEMBERSHIP,
+	WLD_CLASS_ATTRIBUTES,
+	WLD_COLLECTION_MEMBERSHIP,
+	WLD_INCOMING_RELATIONS
 );
-
-
-global $wgGotoSourceTemplates;
-
-$wgGotoSourceTemplates = array();	// Map of collection id => GotoSourceTemplate
 
 // Page titles
 
@@ -81,6 +80,7 @@ $wgSearchWithinExternalIdentifiersDefaultValue = true;
 $wgSearchWithinWordsDefaultValue = true;
 $wgShowSearchWithinExternalIdentifiersOption = true;
 $wgShowSearchWithinWordsOption = true;
+
 
 global
 	$wgPropertyToColumnFilters;

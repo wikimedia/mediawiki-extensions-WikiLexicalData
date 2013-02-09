@@ -69,9 +69,9 @@ class SpecialConceptMapping extends SpecialPage {
 			if ( $rq[$set] ) {
 				$dmModel = new DefinedMeaningModel( $rq[$set], null, $setObject );
 				$defaultSel = $dmModel->getSyntransByLanguageCode( $lang );
-				$options[$setObject->fetchName()] = getSuggest( "set_$set", WD_DEFINED_MEANING, array(), $rq[$set], $defaultSel, array( 0 ), $setObject );
+				$options[$setObject->fetchName()] = getSuggest( "set_$set", WLD_DEFINED_MEANING, array(), $rq[$set], $defaultSel, array( 0 ), $setObject );
 			} else {
-				$options[$setObject->fetchName()] = getSuggest( "set_$set", WD_DEFINED_MEANING, array(), null, null, array( 0 ), $setObject );
+				$options[$setObject->fetchName()] = getSuggest( "set_$set", WLD_DEFINED_MEANING, array(), null, null, array( 0 ), $setObject );
 			}
 
 		}

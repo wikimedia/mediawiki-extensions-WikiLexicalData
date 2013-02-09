@@ -228,7 +228,7 @@ class DefinedMeaningModel {
 		$definedMeaningIdRecord = new ArrayRecord( $definedMeaningIdStructure, $definedMeaningIdStructure );
 		$definedMeaningIdRecord->definedMeaningId = $definedMeaningId;
 		
-		$idStack = new IdStack( WD_DEFINED_MEANING );
+		$idStack = new IdStack( WLD_DEFINED_MEANING );
 		$idStack->pushKey( $definedMeaningIdRecord );
 		
 		return $idStack;

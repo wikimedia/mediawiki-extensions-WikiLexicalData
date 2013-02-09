@@ -86,7 +86,7 @@ function getDefiningSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 
 
 function fetchDefinedMeaningReferenceRecords( $sql, array &$definedMeaningIds, array &$definedMeaningReferenceRecords, $usedAs = '' ) {
-	if ( $usedAs == '' ) $usedAs = WD_DEFINED_MEANING ;
+	if ( $usedAs == '' ) $usedAs = WLD_DEFINED_MEANING ;
 	$dc = wdGetDataSetContext();
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -187,7 +187,7 @@ function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) 
 		if ( $userLanguage > 0 ) {
 			$definingLanguage = $userLanguage;
 		} else {
-			$definingLanguage = WD_ENGLISH_LANG_ID;
+			$definingLanguage = WLD_ENGLISH_LANG_ID;
 		}
 
 		fetchDefinedMeaningReferenceRecords(
@@ -209,7 +209,7 @@ function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) 
 	
 			if ( count( $definedMeaningIds ) > 0 ) {
 				fetchDefinedMeaningReferenceRecords(
-					getSynonymSQLForLanguage( WD_ENGLISH_LANG_ID, $definedMeaningIds ),
+					getSynonymSQLForLanguage( WLD_ENGLISH_LANG_ID, $definedMeaningIds ),
 					$definedMeaningIds,
 					$result,
 					$usedAs
@@ -441,7 +441,7 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 			$sql = $sqlbase . " AND language_id=" . $userLanguageId ;
 		} else {
 			// no $userLanguageId, try English
-			$sql = $sqlbase . " AND language_id=" . WD_ENGLISH_LANG_ID ;
+			$sql = $sqlbase . " AND language_id=" . WLD_ENGLISH_LANG_ID ;
 		}
 		$queryResult = $dbr->query( $sql );
 
@@ -831,7 +831,7 @@ function expandObjectAttributesAttribute( RecordSet $recordSet, Attribute $attri
 		$translatedTextAttributeValuesRecordSets =
 			splitRecordSet(
 				$allTranslatedTextAttributeValuesRecordSet,
-				$o->attributeObject
+				$o->attributeObjectId
 			);
 			
 		$emptyTranslatedTextAttributesRecordSet = new ArrayRecordSet( $allTranslatedTextAttributeValuesRecordSet->getStructure(), $allTranslatedTextAttributeValuesRecordSet->getKey() );
@@ -1071,7 +1071,7 @@ function getTranslatedTextAttributeValuesRecordSet( array $objectIds, ViewInform
 		$o->translatedTextAttributeId,
 		new TableColumnsToAttributesMapping(
 			new TableColumnsToAttribute( array( 'value_id' ), $o->translatedTextAttributeId ),
-			new TableColumnsToAttribute( array( 'object_id' ), $o->attributeObject ),
+			new TableColumnsToAttribute( array( 'object_id' ), $o->attributeObjectId ),
 			new TableColumnsToAttribute( array( 'attribute_mid' ), $o->translatedTextAttribute ),
 			new TableColumnsToAttribute( array( 'value_tcid' ), $o->translatedTextValueId )
 		),

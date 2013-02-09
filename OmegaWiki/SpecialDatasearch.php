@@ -49,7 +49,7 @@ class SpecialDatasearch extends SpecialPage {
 		$this->expressionStructure = new Structure( $this->spellingAttribute, $this->languageAttribute );
 		$this->expressionAttribute = new Attribute( "expression", wfMsg( 'ow_Expression' ), $this->expressionStructure );
 
-		$this->definedMeaningAttribute = new Attribute( WD_DEFINED_MEANING, wfMsg( 'ow_DefinedMeaning' ), $definedMeaningReferenceType );
+		$this->definedMeaningAttribute = new Attribute( WLD_DEFINED_MEANING, wfMsg( 'ow_DefinedMeaning' ), $definedMeaningReferenceType );
 		$this->definitionAttribute = new Attribute( "definition", wfMsg( 'ow_Definition' ), "definition" );
 
 		$this->meaningStructure = new Structure( $this->definedMeaningAttribute, $this->definitionAttribute );

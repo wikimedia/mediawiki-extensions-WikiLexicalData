@@ -69,7 +69,7 @@ class InstallWikidata extends Maintenance {
 		$langiso6393 = "eng";
 		$langwmf = "en";
 		$sql = 'INSERT IGNORE INTO language(language_id, iso639_2,iso639_3,wikimedia_key) values('
-			. WD_ENGLISH_LANG_ID . ','
+			. WLD_ENGLISH_LANG_ID . ','
 			. $dbw->addQuotes( $langiso6392 ) . ','
 			. $dbw->addQuotes( $langiso6393 ) . ','
 			. $dbw->addQuotes( $langwmf ) . ')';
@@ -77,8 +77,8 @@ class InstallWikidata extends Maintenance {
 		$dbw->query( $sql );
 
 		$sql = 'INSERT IGNORE INTO language_names(language_id,name_language_id,language_name) values ('
-			. WD_ENGLISH_LANG_ID . ','
-			. WD_ENGLISH_LANG_ID . ','
+			. WLD_ENGLISH_LANG_ID . ','
+			. WLD_ENGLISH_LANG_ID . ','
 			. $dbw->addQuotes( $langname ) . ')';
 		$dbw->query( $sql );
 	}
@@ -101,7 +101,7 @@ class InstallWikidata extends Maintenance {
 
 
 		startNewTransaction( $userId, 0, "Script bootstrap class attribute meanings", $dc );
-		$collectionId = bootstrapCollection( "Class attribute levels", WD_ENGLISH_LANG_ID, "LEVL", $dc );
+		$collectionId = bootstrapCollection( "Class attribute levels", WLD_ENGLISH_LANG_ID, "LEVL", $dc );
 
 		$definedMeaningMeaningName = "DefinedMeaning";
 		$definitionMeaningName = "Definition";
@@ -110,11 +110,11 @@ class InstallWikidata extends Maintenance {
 		$annotationMeaningName = "Annotation";
 
 		$meanings = array();
-		$meanings[$definedMeaningMeaningName] = $this->bootstrapDefinedMeaning( $definedMeaningMeaningName, WD_ENGLISH_LANG_ID, "The combination of an expression and definition in one language defining a concept." );
-		$meanings[$definitionMeaningName] = $this->bootstrapDefinedMeaning( $definitionMeaningName, WD_ENGLISH_LANG_ID, "A paraphrase describing a concept." );
-		$meanings[$synTransMeaningName] = $this->bootstrapDefinedMeaning( $synTransMeaningName, WD_ENGLISH_LANG_ID, "A translation or a synonym that is equal or near equal to the concept defined by the defined meaning." );
-		$meanings[$relationMeaningName] = $this->bootstrapDefinedMeaning( $relationMeaningName, WD_ENGLISH_LANG_ID, "The association of two defined meanings through a specific relation type." );
-		$meanings[$annotationMeaningName] = $this->bootstrapDefinedMeaning( $annotationMeaningName, WD_ENGLISH_LANG_ID, "Characteristic information of a concept." );
+		$meanings[$definedMeaningMeaningName] = $this->bootstrapDefinedMeaning( $definedMeaningMeaningName, WLD_ENGLISH_LANG_ID, "The combination of an expression and definition in one language defining a concept." );
+		$meanings[$definitionMeaningName] = $this->bootstrapDefinedMeaning( $definitionMeaningName, WLD_ENGLISH_LANG_ID, "A paraphrase describing a concept." );
+		$meanings[$synTransMeaningName] = $this->bootstrapDefinedMeaning( $synTransMeaningName, WLD_ENGLISH_LANG_ID, "A translation or a synonym that is equal or near equal to the concept defined by the defined meaning." );
+		$meanings[$relationMeaningName] = $this->bootstrapDefinedMeaning( $relationMeaningName, WLD_ENGLISH_LANG_ID, "The association of two defined meanings through a specific relation type." );
+		$meanings[$annotationMeaningName] = $this->bootstrapDefinedMeaning( $annotationMeaningName, WLD_ENGLISH_LANG_ID, "Characteristic information of a concept." );
 
 		foreach ( $meanings as $internalName => $meaningId ) {
 			addDefinedMeaningToCollection( $meaningId, $collectionId, $internalName );
@@ -133,18 +133,18 @@ class InstallWikidata extends Maintenance {
 		startNewTransaction( $userId, 0, "Script bootstrap class attribute meanings", $dc );
 
 		// a collection of classes. A word added to that collection becomes a class
-		$lexicalCollectionId = bootstrapCollection( "lexical functionality", WD_ENGLISH_LANG_ID, "CLAS", $dc );
+		$lexicalCollectionId = bootstrapCollection( "lexical functionality", WLD_ENGLISH_LANG_ID, "CLAS", $dc );
 
 		// a collection of iso639-3 codes, to enable translation of the interface
 		// and language specific annotations
-		$iso6393CollectionId = bootstrapCollection( "ISO 639-3 codes", WD_ENGLISH_LANG_ID, "", $dc );
+		$iso6393CollectionId = bootstrapCollection( "ISO 639-3 codes", WLD_ENGLISH_LANG_ID, "", $dc );
 
 		// DM lexical item, a class by default for every word
-		$lexicalItemDMId = $this->bootstrapDefinedMeaning( "lexical item", WD_ENGLISH_LANG_ID, "Lexical item is used as a class by default." );
+		$lexicalItemDMId = $this->bootstrapDefinedMeaning( "lexical item", WLD_ENGLISH_LANG_ID, "Lexical item is used as a class by default." );
 		addDefinedMeaningToCollection( $lexicalItemDMId, $lexicalCollectionId, "" );
 
 		// DM English, a class by default for English words
-		$englishDMId = $this->bootstrapDefinedMeaning( "English", WD_ENGLISH_LANG_ID,
+		$englishDMId = $this->bootstrapDefinedMeaning( "English", WLD_ENGLISH_LANG_ID,
 			"A West-Germanic language originating in England but now spoken in all parts of the British Isles,"
 			. " the Commonwealth of Nations, the United States of America, and other parts of the world."
 		);
