@@ -54,7 +54,7 @@ function getSearchResultAsRecordSet( $queryResult ) {
 	$expressionStructure = new Structure( $spellingAttribute, $languageAttribute );
 	$expressionAttribute = new Attribute( "expression", "Expression", $expressionStructure );
 	
-	$definedMeaningAttribute = new Attribute( WD_DEFINED_MEANING, "Defined meaning", $definedMeaningReferenceType );
+	$definedMeaningAttribute = new Attribute( WLD_DEFINED_MEANING, "Defined meaning", $definedMeaningReferenceType );
 	$definitionAttribute = new Attribute( "definition", "Definition", "definition" );
 	
 	$meaningStructure = new Structure( $definedMeaningAttribute, $definitionAttribute );

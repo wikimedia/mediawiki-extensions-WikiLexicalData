@@ -84,210 +84,234 @@ class OmegaWikiAttributes {
 	 * 	(-"Structure" is retained, -"Attributes" is retained)
 	*/
 	private function hardValues( viewInformation $viewInformation ) {
-	
+
 		assert ( !is_null( $viewInformation ) );
-		$t = $this; # <-keep things short to declutter
 
-		$t->in_setup = True;
-		$t->language = new Attribute( "language", wfMsgSc( "Language" ), "language" );
-		$t->spelling = new Attribute( "spelling", wfMsgSc( "Spelling" ), "spelling" );
-		$t->text = new Attribute( "text", wfMsgSc( "Text" ), "text" );
+		global $wgWlddefinedMeaningReferenceType;
 
-		$t->definedMeaningAttributes = new Attribute( WD_DEFINED_MEANING_ATTRIBUTES, wfMsgSc( "DefinedMeaningAttributes" ), "will-be-specified-below" );
-		$t->objectAttributes = new Attribute( WD_OBJECT_ATTRIBUTES, wfMsgSc( "Annotation" ), "will-be-specified-below" );
-		$t->expressionId = new Attribute( "expression-id", "Expression Id", "expression-id" );
+		$this->in_setup = true;
+
+		// *** DEFINING THE SIMPLE ATTRIBUTES ***
+		// i.e. the ones where the type is a string (and not a structure)
+		$this->attributeObjectId = new Attribute( "attributeObjectId", "Attribute object", "object-id" );
+		$this->classAttributeId = new Attribute( "class-attribute-id", "Class attribute identifier", "object-id" );
+		$this->classAttributeType = new Attribute( "class-attribute-type", wfMsgSc( "ClassAttributeType" ), "short-text" );
+		$this->classMembershipId = new Attribute( "class-membership-id", "Class membership id", "integer" );
+		$this->collectionId = new Attribute( "collection", "Collection", "collection-id" );
+
+		$this->definedMeaningAttributes = new Attribute( WLD_DM_ATTRIBUTES, wfMsgSc( "DefinedMeaningAttributes" ), "will-be-specified-below" );
+		$this->definedMeaningDefiningExpression = new Attribute( "defined-meaning-defining-expression", "Defined meaning defining expression", "short-text" );
+		$this->definedMeaningLabel = new Attribute( "defined-meaning-label", "Defined meaning label", "short-text" );
+		$this->definedMeaningId = new Attribute( "defined-meaning-id", "Defined meaning identifier", "defined-meaning-id" );
+
+		$this->definitionId = new Attribute( "definition-id", "Definition identifier", "integer" );
+		$this->expressionId = new Attribute( "expression-id", "Expression Id", "expression-id" );
+
 		// instead of " ", could be wfMsgSc( "IdenticalMeaning" ), but then the header is too long
-		$t->identicalMeaning = new Attribute( WD_IDENTICAL_MEANING, " ", "combobox" );
+		// and the column in the table is too large
+		$this->identicalMeaning = new Attribute( WLD_IDENTICAL_MEANING, " ", "combobox" );
 
-		$t->expressionStructure = new Structure( WD_EXPRESSION, $t->language, $t->spelling );
-		$t->expression = new Attribute( WD_EXPRESSION, wfMsgSc( "Expression" ), $t->expressionStructure );
+		$this->language = new Attribute( "language", wfMsgSc( "Language" ), "language" );
 
-		$t->definedMeaningId = new Attribute( "defined-meaning-id", "Defined meaning identifier", "defined-meaning-id" );
-		$t->definedMeaningDefiningExpression = new Attribute( "defined-meaning-defining-expression", "Defined meaning defining expression", "short-text" );
-		$t->definedMeaningCompleteDefiningExpressionStructure =
+		$this->linkAttributeId = new Attribute( "link-attribute-id", "Attribute identifier", "object-id" );
+		$this->linkAttributeObject = new Attribute( "link-attribute-object-id", "Attribute object", "object-id" );
+		$this->linkLabel = new Attribute( "label", wfMsg( 'ow_Label' ), "short-text" );
+		$this->linkURL = new Attribute( "url", wfMsg( 'ow_URL' ), "url" );
+
+		$this->objectAttributes = new Attribute( WLD_OBJECT_ATTRIBUTES, wfMsgSc( "Annotation" ), "will-be-specified-below" );
+		$this->objectId = new Attribute( "object-id", "Object identifier", "object-id" );
+
+		$this->optionAttributeId = new Attribute( "option-attribute-id", "Attribute identifier", "object-id" );
+		$this->optionAttributeObject = new Attribute( "option-attribute-object-id", "Attribute object", "object-id" );
+		$this->optionAttributeOptionId = new Attribute( "option-attribute-option-id", "Option identifier", "object-id" );
+
+		$this->relationId = new Attribute( "relation-id", "Relation identifier", "object-id" );
+		$this->sourceIdentifier = new Attribute( "source-identifier", wfMsgSc( "SourceIdentifier" ), "short-text" );
+		$this->spelling = new Attribute( "spelling", wfMsgSc( "Spelling" ), "spelling" );
+		$this->syntransId = new Attribute( "syntrans-id", "Syntrans identifier", "integer" );
+		$this->text = new Attribute( "text", wfMsgSc( "Text" ), "text" );
+		$this->textAttributeId = new Attribute( "text-attribute-id", "Attribute identifier", "object-id" );
+		$this->textAttributeObject = new Attribute( "text-attribute-object-id", "Attribute object", "object-id" );
+		$this->translatedTextAttributeId = new Attribute( "translated-text-attribute-id", "Attribute identifier", "object-id" );
+		$this->translatedTextId = new Attribute( "translated-text-id", "Translated text ID", "integer" );
+		$this->translatedTextValueId = new Attribute( "translated-text-value-id", "Translated text value identifier", "translated-text-value-id" );
+
+
+		// *** STRUCTURES AND STRUCTURE-TYPE ATTRIBUTES ***
+		$this->expressionStructure = new Structure( WLD_EXPRESSION, $this->language, $this->spelling );
+		$this->expression = new Attribute( WLD_EXPRESSION, wfMsgSc( "Expression" ), $this->expressionStructure );
+
+		$this->definedMeaningCompleteDefiningExpressionStructure =
 			new Structure( "defined-meaning-complete-defining-expression",
-				  $t->definedMeaningDefiningExpression,
-				  $t->expressionId,
-				  $t->language
+				  $this->definedMeaningDefiningExpression,
+				  $this->expressionId,
+				  $this->language
 			);
 		# try this
-		$t->definedMeaningCompleteDefiningExpressionStructure->setStructureType( WD_EXPRESSION );
-		$t->definedMeaningCompleteDefiningExpression = new Attribute( null, "Defining expression", $t->definedMeaningCompleteDefiningExpressionStructure );
+		$this->definedMeaningCompleteDefiningExpressionStructure->setStructureType( WLD_EXPRESSION );
+		$this->definedMeaningCompleteDefiningExpression = new Attribute( null, "Defining expression", $this->definedMeaningCompleteDefiningExpressionStructure );
 
-		global $definedMeaningReferenceType;
+		$this->definedMeaningReferenceStructure = new Structure( WLD_DEFINED_MEANING, $this->definedMeaningId, $this->definedMeaningLabel, $this->definedMeaningDefiningExpression );
+		$wgWlddefinedMeaningReferenceType = $this->definedMeaningReferenceStructure; // global variable
 
-		$t->definedMeaningLabel = new Attribute( "defined-meaning-label", "Defined meaning label", "short-text" );
-		$t->definedMeaningReferenceStructure = new Structure( WD_DEFINED_MEANING, $t->definedMeaningId, $t->definedMeaningLabel, $t->definedMeaningDefiningExpression );
-		$definedMeaningReferenceType = $t->definedMeaningReferenceStructure;
-		$t->definedMeaningReference = new Attribute( null, wfMsgSc( "DefinedMeaningReference" ), $definedMeaningReferenceType );
-		$t->collectionId = new Attribute( "collection", "Collection", "collection-id" );
-		$t->collectionMeaning = new Attribute( "collection-meaning", wfMsgSc( "Collection" ), $t->definedMeaningReferenceStructure );
-		$t->sourceIdentifier = new Attribute( "source-identifier", wfMsgSc( "SourceIdentifier" ), "short-text" );
-		$t->gotoSourceStructure = new Structure( "goto-source", $t->collectionId, $t->sourceIdentifier );
-		$t->gotoSource = new Attribute( null, wfMsgSc( "GotoSource" ), $t->gotoSourceStructure );
+		$this->definedMeaningReference = new Attribute( null, wfMsgSc( "DefinedMeaningReference" ), $this->definedMeaningReferenceStructure );
 
-		$t->collectionMembershipStructure = new Structure( WD_COLLECTION_MEMBERSHIP, $t->collectionId, $t->collectionMeaning, $t->sourceIdentifier );
-		$t->collectionMembership = new Attribute( null, wfMsgSc( "CollectionMembership" ), $t->collectionMembershipStructure );
+		$this->collectionMeaning = new Attribute( "collection-meaning", wfMsgSc( "Collection" ), $this->definedMeaningReferenceStructure );
 
-		$t->classMembershipId = new Attribute( "class-membership-id", "Class membership id", "integer" );
-		$t->class = new Attribute( "class", wfMsg( 'ow_Class' ), $t->definedMeaningReferenceStructure );
-		$t->classMembershipStructure = new Structure( WD_CLASS_MEMBERSHIP, $t->classMembershipId, $t->class );
-		$t->classMembership = new Attribute( null, wfMsgSc( "ClassMembership" ), $t->classMembershipStructure );
+		$this->gotoSourceStructure = new Structure( "goto-source", $this->collectionId, $this->sourceIdentifier );
+		$this->gotoSource = new Attribute( null, wfMsgSc( "GotoSource" ), $this->gotoSourceStructure );
 
-		global $relationTypeType;
+		$this->collectionMembershipStructure = new Structure( WLD_COLLECTION_MEMBERSHIP, $this->collectionId, $this->collectionMeaning, $this->sourceIdentifier );
+		$this->collectionMembership = new Attribute( null, wfMsgSc( "CollectionMembership" ), $this->collectionMembershipStructure );
 
-		$t->relationId = new Attribute( "relation-id", "Relation identifier", "object-id" );
-		$t->relationType = new Attribute( "relation-type", wfMsgSc( "RelationType" ), $t->definedMeaningReferenceStructure );
-		$t->otherDefinedMeaning = new Attribute( WD_OTHER_DEFINED_MEANING, wfMsgSc( "OtherDefinedMeaning" ), $definedMeaningReferenceType );
+		$this->class = new Attribute( "class", wfMsg( 'ow_Class' ), $this->definedMeaningReferenceStructure );
+		$this->classMembershipStructure = new Structure( WLD_CLASS_MEMBERSHIP, $this->classMembershipId, $this->class );
+		$this->classMembership = new Attribute( null, wfMsgSc( "ClassMembership" ), $this->classMembershipStructure );
 
-		$t->relationStructure = new Structure( WD_RELATIONS, $t->relationId, $t->relationType, $t->otherDefinedMeaning );
-		$t->relations = new Attribute( WD_RELATIONS, wfMsgSc( "Relations" ), $t->relationStructure );
-		$t->reciprocalRelations = new Attribute( WD_INCOMING_RELATIONS, wfMsgSc( "IncomingRelations" ), $t->relationStructure );
-		$t->translatedTextId = new Attribute( "translated-text-id", "Translated text ID", "integer" );
-		$t->translatedTextStructure = new Structure( WD_TRANSLATED_TEXT, $t->language, $t->text );
+		$this->relationType = new Attribute( "relation-type", wfMsgSc( "RelationType" ), $this->definedMeaningReferenceStructure );
+		$this->otherDefinedMeaning = new Attribute( WLD_OTHER_DM, wfMsgSc( "OtherDefinedMeaning" ), $this->definedMeaningReferenceStructure );
+		$this->relationStructure = new Structure( WLD_RELATIONS, $this->relationId, $this->relationType, $this->otherDefinedMeaning );
+		$this->relations = new Attribute( WLD_RELATIONS, wfMsgSc( "Relations" ), $this->relationStructure );
 
-		$t->definitionId = new Attribute( "definition-id", "Definition identifier", "integer" );
+/*
+		// the type of relation is a DM. e.g. for the relation "antonym" it would be the DM that defines "antony"
+		$this->relationType = new Attribute( "relation-type", wfMsgSc( "RelationType" ), $this->definedMeaningReferenceStructure );
 
-		$t->alternativeDefinition = new Attribute( WD_ALTERNATIVE_DEF, wfMsgSc( "AlternativeDefinition" ), $t->translatedTextStructure );
+		// otherObject is what the relation links to. It could be a DM or a Syntrans or anything else.
+		$this->otherObject = new Attribute( WLD_OTHER_OBJECT, "related to", $this->objectId );
 
-		$t->source = new Attribute( "source-id", wfMsgSc( "Source" ), $definedMeaningReferenceType );
+		$this->relationStructure = new Structure( WLD_RELATIONS, $this->relationId, $this->relationType, $this->otherObject );
+		$this->relations = new Attribute( WLD_RELATIONS, wfMsgSc( "Relations" ), $this->relationStructure );
+*/
+		$this->reciprocalRelations = new Attribute( WLD_INCOMING_RELATIONS, wfMsgSc( "IncomingRelations" ), $this->relationStructure );
+
+		$this->translatedTextStructure = new Structure( WLD_TRANSLATED_TEXT, $this->language, $this->text );
+
+		$this->alternativeDefinition = new Attribute( WLD_ALTERNATIVE_DEF, wfMsgSc( "AlternativeDefinition" ), $this->translatedTextStructure );
+
+		$this->source = new Attribute( "source-id", wfMsgSc( "Source" ), $this->definedMeaningReferenceStructure );
 		
-		$t->alternativeDefinitionsStructure =  new Structure( WD_ALTERNATIVE_DEFINITIONS, $t->definitionId, $t->alternativeDefinition, $t->source );
-		$t->alternativeDefinitions = new Attribute( null, wfMsgSc( "AlternativeDefinitions" ), $t->alternativeDefinitionsStructure );
+		$this->alternativeDefinitionsStructure =  new Structure( WLD_ALTERNATIVE_DEFINITIONS, $this->definitionId, $this->alternativeDefinition, $this->source );
+		$this->alternativeDefinitions = new Attribute( null, wfMsgSc( "AlternativeDefinitions" ), $this->alternativeDefinitionsStructure );
 		
-		$synonymsAndTranslationsCaption = wfMsgSc( "SynonymsAndTranslations" );
-
-		$t->syntransId = new Attribute( "syntrans-id", "$synonymsAndTranslationsCaption identifier", "integer" );
-		$t->synonymsTranslationsStructure = new Structure( WD_SYNONYMS_TRANSLATIONS, $t->identicalMeaning, $t->syntransId, $t->expression );
-		$t->synonymsAndTranslations = new Attribute( null, "$synonymsAndTranslationsCaption", $t->synonymsTranslationsStructure );
+		$this->synonymsTranslationsStructure = new Structure( WLD_SYNONYMS_TRANSLATIONS, $this->identicalMeaning, $this->syntransId, $this->expression );
+		$this->synonymsAndTranslations = new Attribute( null, wfMsgSc( "SynonymsAndTranslations" ), $this->synonymsTranslationsStructure );
 
 		// alternative full syntrans structure with expression already decomposed into language and spelling
-		// $t->synTransExpressionStructure = new Structure( WD_SYNONYMS_TRANSLATIONS, $t->identicalMeaning, $t->syntransId, $t->expressionId, $t->language, $t->spelling );
+		// $this->synTransExpressionStructure = new Structure( WLD_SYNONYMS_TRANSLATIONS, $this->identicalMeaning, $this->syntransId, $this->expressionId, $this->language, $this->spelling );
 
-		$t->translatedTextAttributeId = new Attribute( "translated-text-attribute-id", "Attribute identifier", "object-id" );
-		$t->translatedTextAttribute = new Attribute( "translated-text-attribute", wfMsgSc( "TranslatedTextAttribute" ), $definedMeaningReferenceType );
-		$t->translatedTextValueId = new Attribute( "translated-text-value-id", "Translated text value identifier", "translated-text-value-id" );
+		$this->translatedTextAttribute = new Attribute( "translated-text-attribute", wfMsgSc( "TranslatedTextAttribute" ), $this->definedMeaningReferenceStructure );
+
+		$this->translatedTextValue = new Attribute( "translated-text-value", wfMsgSc( "TranslatedTextAttributeValue" ), $this->translatedTextStructure );
 		
-		$t->attributeObjectId = new Attribute( "attributeObjectId", "Attribute object", "object-id" );
+		$this->translatedTextAttributeValuesStructure = new Structure( "translated-text-attribute-values", $this->translatedTextAttributeId, $this->attributeObjectId, $this->translatedTextAttribute, $this->translatedTextValueId, $this->translatedTextValue );
+		$this->translatedTextAttributeValues = new Attribute( null, wfMsgSc( "TranslatedTextAttributeValues" ), $this->translatedTextAttributeValuesStructure );
 
-		$t->translatedTextValue = new Attribute( "translated-text-value", wfMsgSc( "TranslatedTextAttributeValue" ), $t->translatedTextStructure );
+		$this->textAttribute = new Attribute( "text-attribute", wfMsgSc( "TextAttribute" ), $this->definedMeaningReferenceStructure );
+		$this->textAttributeValuesStructure = new Structure( WLD_TEXT_ATTRIBUTES_VALUES, $this->textAttributeId, $this->textAttributeObject, $this->textAttribute, $this->text );
+		$this->textAttributeValues = new Attribute( null, wfMsgSc( "TextAttributeValues" ), $this->textAttributeValuesStructure );
 		
-		$t->translatedTextAttributeValuesStructure = new Structure( "translated-text-attribute-values", $t->translatedTextAttributeId, $t->attributeObjectId, $t->translatedTextAttribute, $t->translatedTextValueId, $t->translatedTextValue );
-		$t->translatedTextAttributeValues = new Attribute( null, wfMsgSc( "TranslatedTextAttributeValues" ), $t->translatedTextAttributeValuesStructure );
-		$t->attributeObject = new Attribute( "attribute-object-id", "Attribute object", "object-id" );
+		$this->linkStructure = new Structure( $this->linkLabel, $this->linkURL );
+		$this->link = new Attribute( "link", wfMsg( 'ow_Link' ), $this->linkStructure );
 
-		$t->textAttributeId = new Attribute( "text-attribute-id", "Attribute identifier", "object-id" );
-		$t->textAttributeObject = new Attribute( "text-attribute-object-id", "Attribute object", "object-id" );
-		$t->textAttribute = new Attribute( "text-attribute", wfMsgSc( "TextAttribute" ), $t->definedMeaningReferenceStructure );
-		$t->textAttributeValuesStructure = new Structure( WD_TEXT_ATTRIBUTES_VALUES, $t->textAttributeId, $t->textAttributeObject, $t->textAttribute, $t->text );
-		$t->textAttributeValues = new Attribute( null, wfMsgSc( "TextAttributeValues" ), $t->textAttributeValuesStructure );
+		$this->linkAttribute = new Attribute( WLD_LINK_ATTRIBUTE, wfMsgSc( "LinkAttribute" ), $this->definedMeaningReferenceStructure );
+		$this->linkAttributeValuesStructure = new Structure( WLD_LINK_ATTRIBUTE_VALUES, $this->linkAttributeId, $this->linkAttributeObject, $this->linkAttribute, $this->link );
+		$this->linkAttributeValues = new Attribute( null, wfMsgSc( "LinkAttributeValues" ), $this->linkAttributeValuesStructure );
 		
-		$t->linkLabel = new Attribute( "label", wfMsg( 'ow_Label' ), "short-text" );
-		$t->linkURL = new Attribute( "url", wfMsg( 'ow_URL' ), "url" );
-		$t->link = new Attribute( "link", wfMsg( 'ow_Link' ), new Structure( $t->linkLabel, $t->linkURL ) );
-		$t->linkAttributeId = new Attribute( "link-attribute-id", "Attribute identifier", "object-id" );
-		$t->linkAttributeObject = new Attribute( "link-attribute-object-id", "Attribute object", "object-id" );
-		$t->linkAttribute = new Attribute( WD_LINK_ATTRIBUTE, wfMsgSc( "LinkAttribute" ), $t->definedMeaningReferenceStructure );
-		$t->linkAttributeValuesStructure = new Structure( WD_LINK_ATTRIBUTE_VALUES, $t->linkAttributeId, $t->linkAttributeObject, $t->linkAttribute, $t->link );
-		$t->linkAttributeValues = new Attribute( null, wfMsgSc( "LinkAttributeValues" ), $t->linkAttributeValuesStructure );
+		$this->optionAttribute = new Attribute( WLD_OPTION_ATTRIBUTE, wfMsgSc( "OptionAttribute" ), $this->definedMeaningReferenceStructure );
+		$this->optionAttributeOption = new Attribute( WLD_OPTION_ATTRIBUTE_OPTION, wfMsgSc( "OptionAttributeOption" ), $this->definedMeaningReferenceStructure );
+		$this->optionAttributeValuesStructure = new Structure( WLD_OPTION_ATTRIBUTE_VALUES, $this->optionAttributeId, $this->optionAttribute, $this->optionAttributeObject, $this->optionAttributeOption );
+		$this->optionAttributeValues = new Attribute( null, wfMsgSc( "OptionAttributeValues" ), $this->optionAttributeValuesStructure );
+		$this->optionAttributeOptionsStructure = new Structure( "option-attribute-options", $this->optionAttributeOptionId, $this->optionAttribute, $this->optionAttributeOption, $this->language );
+		$this->optionAttributeOptions = new Attribute( null, wfMsgSc( "OptionAttributeOptions" ), $this->optionAttributeOptionsStructure );
 		
-		$t->optionAttributeId = new Attribute( "option-attribute-id", "Attribute identifier", "object-id" );
-		$t->optionAttributeObject = new Attribute( "option-attribute-object-id", "Attribute object", "object-id" );
-		$t->optionAttribute = new Attribute( WD_OPTION_ATTRIBUTE, wfMsgSc( "OptionAttribute" ), $definedMeaningReferenceType );
-		$t->optionAttributeOption = new Attribute( WD_OPTION_ATTRIBUTE_OPTION, wfMsgSc( "OptionAttributeOption" ), $definedMeaningReferenceType );
-		$t->optionAttributeValuesStructure = new Structure( WD_OPTION_ATTRIBUTE_VALUES, $t->optionAttributeId, $t->optionAttribute, $t->optionAttributeObject, $t->optionAttributeOption );
-		$t->optionAttributeValues = new Attribute( null, wfMsgSc( "OptionAttributeValues" ), $t->optionAttributeValuesStructure );
-		$t->optionAttributeOptionId = new Attribute( "option-attribute-option-id", "Option identifier", "object-id" );
-		$t->optionAttributeOptionsStructure = new Structure( "option-attribute-options", $t->optionAttributeOptionId, $t->optionAttribute, $t->optionAttributeOption, $t->language );
-		$t->optionAttributeOptions = new Attribute( null, wfMsgSc( "OptionAttributeOptions" ), $t->optionAttributeOptionsStructure );
-		
-		$t->translatedText = new Attribute( WD_TRANSLATED_TEXT, wfMsgSc( "TranslatedText" ), $t->translatedTextStructure );
+		$this->translatedText = new Attribute( WLD_TRANSLATED_TEXT, wfMsgSc( "TranslatedText" ), $this->translatedTextStructure );
 
-		$t->definition = new Attribute( null, wfMsgSc( "Definition" ), new Structure( WD_DEFINITION, $t->translatedText ) );
+		$this->definitionStructure = new Structure( WLD_DEFINITION, $this->translatedText );
+		$this->definition = new Attribute( null, wfMsgSc( "Definition" ), $this->definitionStructure );
 
-		$t->classAttributeId = new Attribute( "class-attribute-id", "Class attribute identifier", "object-id" );
-		$t->classAttributeAttribute = new Attribute( "class-attribute-attribute", wfMsgSc( "ClassAttributeAttribute" ), $t->definedMeaningReferenceStructure );
-		$t->classAttributeLevel = new Attribute( "class-attribute-level", wfMsgSc( "ClassAttributeLevel" ), $t->definedMeaningReferenceStructure );
-		$t->classAttributeType = new Attribute( "class-attribute-type", wfMsgSc( "ClassAttributeType" ), "short-text" );
-		$t->classAttributesStructure = new Structure( WD_CLASS_ATTRIBUTES, $t->classAttributeId, $t->classAttributeAttribute, $t->classAttributeLevel, $t->classAttributeType, $t->optionAttributeOptions );
-		$t->classAttributes = new Attribute( null, wfMsgSc( "ClassAttributes" ), $t->classAttributesStructure );
+		$this->classAttributeAttribute = new Attribute( "class-attribute-attribute", wfMsgSc( "ClassAttributeAttribute" ), $this->definedMeaningReferenceStructure );
+		$this->classAttributeLevel = new Attribute( "class-attribute-level", wfMsgSc( "ClassAttributeLevel" ), $this->definedMeaningReferenceStructure );
+		$this->classAttributesStructure = new Structure( WLD_CLASS_ATTRIBUTES, $this->classAttributeId, $this->classAttributeAttribute, $this->classAttributeLevel, $this->classAttributeType, $this->optionAttributeOptions );
+		$this->classAttributes = new Attribute( null, wfMsgSc( "ClassAttributes" ), $this->classAttributesStructure );
 
-		$t->definedMeaning = new Attribute( null, wfMsgSc( "DefinedMeaning" ),
+		$this->definedMeaning = new Attribute( null, wfMsgSc( "DefinedMeaning" ),
 			new Structure(
-				WD_DEFINED_MEANING,
-				$t->definedMeaningId,
-				$t->definedMeaningCompleteDefiningExpression,
-				$t->definition,
-				$t->classAttributes,
-				$t->alternativeDefinitions,
-				$t->synonymsAndTranslations,
-				$t->reciprocalRelations,
-				$t->classMembership,
-				$t->collectionMembership,
-				$t->definedMeaningAttributes
+				WLD_DEFINED_MEANING,
+				$this->definedMeaningId,
+				$this->definedMeaningCompleteDefiningExpression,
+				$this->definition,
+				$this->classAttributes,
+				$this->alternativeDefinitions,
+				$this->synonymsAndTranslations,
+				$this->reciprocalRelations,
+				$this->classMembership,
+				$this->collectionMembership,
+				$this->definedMeaningAttributes
 			)
 		);
 
-		$t->expressionMeaningStructure = new Structure( $t->definedMeaningId, $t->text, $t->definedMeaning );
-		$t->expressionExactMeanings = new Attribute( WD_EXPRESSION_EXACT_MEANINGS, wfMsgSc( "ExactMeanings" ), $t->expressionMeaningStructure );
-		$t->expressionApproximateMeanings = new Attribute( WD_EXPRESSION_APPROX_MEANINGS, wfMsgSc( "ApproximateMeanings" ), $t->expressionMeaningStructure );
-		$t->expressionMeaningsStructure = new Structure( WD_EXPRESSION_MEANINGS, $t->expressionExactMeanings, $t->expressionApproximateMeanings );
-		$t->expressionMeanings = new Attribute( null, wfMsgSc( "ExpressionMeanings" ), $t->expressionMeaningsStructure );
-		$t->expressionsStructure = new Structure( "expressions", $t->expressionId, $t->expression, $t->expressionMeanings );
-		$t->expressions = new Attribute( null, wfMsgSc( "Expressions" ), $t->expressionsStructure );
+		$this->expressionMeaningStructure = new Structure( $this->definedMeaningId, $this->text, $this->definedMeaning );
+		$this->expressionExactMeanings = new Attribute( WLD_EXPRESSION_EXACT_MEANINGS, wfMsgSc( "ExactMeanings" ), $this->expressionMeaningStructure );
+		$this->expressionApproximateMeanings = new Attribute( WLD_EXPRESSION_APPROX_MEANINGS, wfMsgSc( "ApproximateMeanings" ), $this->expressionMeaningStructure );
+		$this->expressionMeaningsStructure = new Structure( WLD_EXPRESSION_MEANINGS, $this->expressionExactMeanings, $this->expressionApproximateMeanings );
+		$this->expressionMeanings = new Attribute( null, wfMsgSc( "ExpressionMeanings" ), $this->expressionMeaningsStructure );
+		$this->expressionsStructure = new Structure( "expressions", $this->expressionId, $this->expression, $this->expressionMeanings );
+		$this->expressions = new Attribute( null, wfMsgSc( "Expressions" ), $this->expressionsStructure );
 		
-		$t->objectId = new Attribute( "object-id", "Object identifier", "object-id" );
-		$t->objectAttributesStructure = new Structure( "object-attributes",
-			$t->objectId,
-			$t->relations,
-			$t->textAttributeValues,
-			$t->translatedTextAttributeValues,
-			$t->linkAttributeValues,
-			$t->optionAttributeValues
+		$this->objectAttributesStructure = new Structure( "object-attributes",
+			$this->objectId,
+			$this->relations,
+			$this->textAttributeValues,
+			$this->translatedTextAttributeValues,
+			$this->linkAttributeValues,
+			$this->optionAttributeValues
 		);
 		
-		$t->objectAttributes->setAttributeType( $t->objectAttributesStructure );
-		$t->definedMeaningAttributes->setAttributeType( $t->objectAttributesStructure );
+		$this->objectAttributes->setAttributeType( $this->objectAttributesStructure );
+		$this->definedMeaningAttributes->setAttributeType( $this->objectAttributesStructure );
 		
 		$annotatedAttributes = array(
-			$t->definedMeaning,
-			$t->definition,
-			$t->synonymsAndTranslations,
-			$t->relations,
-			$t->reciprocalRelations,
-			$t->textAttributeValues,
-			$t->linkAttributeValues,
-			$t->translatedTextAttributeValues,
-			$t->optionAttributeValues
+			$this->definedMeaning,
+			$this->definition,
+			$this->synonymsAndTranslations,
+			$this->relations,
+			$this->reciprocalRelations,
+			$this->textAttributeValues,
+			$this->linkAttributeValues,
+			$this->translatedTextAttributeValues,
+			$this->optionAttributeValues
 		);
 		
-		foreach ( $annotatedAttributes as $annotatedAttribute )
-			$annotatedAttribute->type->addAttribute( $t->objectAttributes );
-		
+		foreach ( $annotatedAttributes as $annotatedAttribute ) {
+			$annotatedAttribute->type->addAttribute( $this->objectAttributes );
+		}
 		foreach ( $viewInformation->getPropertyToColumnFilters() as $propertyToColumnFilter ) {
 			$attribute = $propertyToColumnFilter->getAttribute();
-			$attribute->setAttributeType( $t->objectAttributesStructure );
+			$attribute->setAttributeType( $this->objectAttributesStructure );
 			
-			foreach ( $annotatedAttributes as $annotatedAttribute )
+			foreach ( $annotatedAttributes as $annotatedAttribute ) {
 				$annotatedAttribute->type->addAttribute( $attribute );
+			}
 		}
 		
-		# transaction stuff 
-		$t->transactionId = new Attribute( 'transaction-id', 'Transaction ID', 'integer' );
-		$t->user = new Attribute( 'user', wfMsg( 'ow_User' ), 'user' );
-		$t->userIP = new Attribute( 'user-ip', 'User IP', 'IP' );
-		$t->timestamp = new Attribute( 'timestamp', wfMsg( 'ow_Time' ), 'timestamp' );
-		$t->summary = new Attribute( 'summary', 'Summary', 'text' );
-		$t->transactionStructure = new Structure( $t->transactionId, $t->user, $t->userIP, $t->timestamp, $t->summary );
-		$t->transaction = new Attribute( 'transaction', 'Transaction', $t->transactionStructure );
+		// Attributes and Structure about transactions
+		$this->transactionId = new Attribute( 'transaction-id', 'Transaction ID', 'integer' );
+		$this->user = new Attribute( 'user', wfMsg( 'ow_User' ), 'user' );
+		$this->userIP = new Attribute( 'user-ip', 'User IP', 'IP' );
+		$this->timestamp = new Attribute( 'timestamp', wfMsg( 'ow_Time' ), 'timestamp' );
+		$this->summary = new Attribute( 'summary', 'Summary', 'text' );
+		$this->transactionStructure = new Structure( $this->transactionId, $this->user, $this->userIP, $this->timestamp, $this->summary );
+		$this->transaction = new Attribute( 'transaction', 'Transaction', $this->transactionStructure );
 
-		$t->addTransaction = new Attribute( 'add-transaction', wfMsg( 'ow_added' ), $t->transactionStructure );
-		$t->removeTransaction = new Attribute( 'remove-transaction', wfMsg( 'ow_removed' ), $t->transactionStructure );
+		$this->addTransaction = new Attribute( 'add-transaction', wfMsg( 'ow_added' ), $this->transactionStructure );
+		$this->removeTransaction = new Attribute( 'remove-transaction', wfMsg( 'ow_removed' ), $this->transactionStructure );
 
-		$t->recordLifeSpanStructure = new Structure( $t->addTransaction, $t->removeTransaction );
-		$t->recordLifeSpan = new Attribute( 'record-life-span', wfMsg( 'ow_RecordLifeSpan' ), $t->recordLifeSpanStructure );
+		$this->recordLifeSpanStructure = new Structure( $this->addTransaction, $this->removeTransaction );
+		$this->recordLifeSpan = new Attribute( 'record-life-span', wfMsg( 'ow_RecordLifeSpan' ), $this->recordLifeSpanStructure );
 
-		$t->in_setup = False;
+		// setup finished
+		$this->in_setup = false;
 	}
 
 	public function getViewInformation() {

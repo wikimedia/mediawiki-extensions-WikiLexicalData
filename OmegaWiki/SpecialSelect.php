@@ -18,7 +18,7 @@ class SpecialSelect extends SpecialPage {
 		$wgOut->disable();
 
 		$dc = wdGetDataSetContext();
-		$optionAttribute = $wgRequest->getVal( WD_OPTION_ATTRIBUTE );
+		$optionAttribute = $wgRequest->getVal( WLD_OPTION_ATTRIBUTE );
 		$attributeObject = $wgRequest->getVal( 'attribute-object' );
 		$lang_code = $wgLang->getCode();
 

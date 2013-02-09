@@ -4,7 +4,6 @@ require_once( "WikiDataGlobals.php" );
 require_once( "HTMLtable.php" );
 require_once( "Controller.php" );
 require_once( "type.php" );
-require_once( "GotoSourceTemplate.php" );
 require_once( "Wikidata.php" );
 require_once( "ContextFetcher.php" );
 
@@ -1568,7 +1567,7 @@ abstract class SuggestEditor extends ScalarEditor {
 
 class DefinedMeaningReferenceEditor extends SuggestEditor {
 	protected function suggestType() {
-		return WD_DEFINED_MEANING;
+		return WLD_DEFINED_MEANING;
 	}
 
 	public function getViewHTML( IdStack $idPath, $value ) {
@@ -1620,12 +1619,12 @@ abstract class SelectEditor extends ScalarEditor {
 	}
 }
 
-/* XXX: Should these options be stored somewhere else? */
 class ClassAttributesTypeEditor extends SelectEditor {
 	protected function getOptions() {
 		return array(
 			'DM' => wfMsg( 'ow_class_attr_type_dm' ),
 			'TRNS' => wfMsg( 'ow_class_attr_type_xlate' ),
+//			'SYNT' => "SynTrans",
 			'TEXT' => wfMsg( 'ow_class_attr_type_plain' ),
 			'URL' => wfMsg( 'ow_class_attr_type_link' ),
 			'OPTN' => wfMsg( 'ow_class_attr_type_option' )
@@ -1706,7 +1705,7 @@ class AttributeEditor extends DefinedMeaningReferenceEditor {
 
 class DefinedMeaningAttributeEditor extends AttributeEditor {
 	protected function suggestType() {
-		return WD_DEFINED_MEANING_ATTRIBUTES;
+		return WLD_DM_ATTRIBUTES;
 	}
 }
 
@@ -1724,13 +1723,13 @@ class TranslatedTextAttributeEditor extends AttributeEditor {
 
 class LinkAttributeEditor extends AttributeEditor {
 	protected function suggestType() {
-		return WD_LINK_ATTRIBUTE;
+		return WLD_LINK_ATTRIBUTE;
 	}
 }
 
 class OptionAttributeEditor extends AttributeEditor {
 	protected function suggestType() {
-		return WD_OPTION_ATTRIBUTE;
+		return WLD_OPTION_ATTRIBUTE;
 	}
 
 	public function add( IdStack $idPath ) {
@@ -1744,7 +1743,7 @@ class OptionAttributeEditor extends AttributeEditor {
 				"definedMeaningId" => $idPath->getDefinedMeaningId(),
 				"syntransId" => $syntransId,
 				"annotationAttributeId" => $idPath->getAnnotationAttribute()->getId(),
-				"onUpdate" => 'updateSelectOptions(\'' . $this->addId( $idPath->getId() ) . WD_OPTION_SUFFIX . '\',' . $syntransId
+				"onUpdate" => 'updateSelectOptions(\'' . $this->addId( $idPath->getId() ) . WLD_OPTION_SUFFIX . '\',' . $syntransId
 			);
 			return getSuggest( $this->addId( $idPath->getId() ), $this->suggestType(), $parameters );
 		}
@@ -1755,7 +1754,7 @@ class OptionAttributeEditor extends AttributeEditor {
 		// note: it is normal that the "updateSelectOptions(" has no closing parenthesis. An additional parameter and ')' is added by the function updateSuggestValue (suggest.js)
 		$parameters = array(
 			"level" => $this->attributesLevelName,
-			"onUpdate" => 'updateSelectOptions(\'' . $this->updateId( $idPath->getId() ) . WD_OPTION_SUFFIX . '\''
+			"onUpdate" => 'updateSelectOptions(\'' . $this->updateId( $idPath->getId() ) . WLD_OPTION_SUFFIX . '\''
 		);
 
 		return getSuggest( $this->updateId( $idPath->getId() ), $this->suggestType(), $parameters );

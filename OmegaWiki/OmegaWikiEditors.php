@@ -507,7 +507,19 @@ function getExpressionTableCellEditor( Attribute $attribute, ViewInformation $vi
 function getClassAttributesEditor( ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
 
-	$tableEditor = new RecordSetTableEditor( $o->classAttributes, new SimplePermissionController( true ), new ShowEditFieldForClassesChecker( 0, $o->definedMeaningId ), new AllowAddController( true ), true, false, new ClassAttributesController() );
+	$allowRemove = true;
+	$isAddField = false;
+	$tableEditor = new RecordSetTableEditor(
+		$o->classAttributes,
+		new SimplePermissionController( true ),
+		new ShowEditFieldForClassesChecker( 0, $o->definedMeaningId ),
+		new AllowAddController( true ),
+		$allowRemove,
+		$isAddField,
+		new ClassAttributesController()
+	);
+
+	// the four columns of the table
 	$tableEditor->addEditor( new ClassAttributesLevelDefinedMeaningEditor( $o->classAttributeLevel, new SimplePermissionController( false ), true ) );
 	$tableEditor->addEditor( new DefinedMeaningReferenceEditor( $o->classAttributeAttribute, new SimplePermissionController( false ), true ) );
 	$tableEditor->addEditor( new ClassAttributesTypeEditor( $o->classAttributeType, new SimplePermissionController( false ), true ) );
@@ -559,24 +571,6 @@ function getSynonymsAndTranslationsEditor( ViewInformation $viewInformation ) {
 	addTableMetadataEditors( $tableEditor, $viewInformation );
 
 	return $tableEditor;
-}
-
-function getDefinedMeaningAttributeValuesEditor( ViewInformation $viewInformation, UpdateController $controller, $levelDefinedMeaningName, AttributeIDFilter $attributeIDFilter ) {
-	global
-		$definedMeaningValueObjectAttributesEditors;
-
-	$o = OmegaWikiAttributes::getInstance();
-
-	$showEditFieldChecker = new ShowEditFieldForAttributeValuesChecker( $levelDefinedMeaningName, "DM", $attributeIDFilter );
-
-	$editor = new RecordSetTableEditor( $o->relations, new SimplePermissionController( true ), $showEditFieldChecker, new AllowAddController( true ), true, false, $controller );
-	$editor->addEditor( new DefinedMeaningAttributeEditor( $o->relationType, new SimplePermissionController( false ), true, $attributeIDFilter, $levelDefinedMeaningName ) );
-	$editor->addEditor( new DefinedMeaningReferenceEditor( $o->otherDefinedMeaning, new SimplePermissionController( false ), true ) );
-
-	addPopupEditors( $editor, $definedMeaningValueObjectAttributesEditors );
-	addTableMetadataEditors( $editor, $viewInformation );
-
-	return $editor;
 }
 
 function getDefinedMeaningReciprocalRelationsEditor( ViewInformation $viewInformation ) {
@@ -635,6 +629,24 @@ function getDefinedMeaningCollectionMembershipEditor( ViewInformation $viewInfor
 function addPopupEditors( Editor $editor, array &$columnEditors ) {
 	foreach ( $columnEditors as $columnEditor )
 		$editor->addEditor( new PopUpEditor( $columnEditor, $columnEditor->getAttribute()->name ) );
+}
+
+function getDefinedMeaningAttributeValuesEditor( ViewInformation $viewInformation, UpdateController $controller, $levelDefinedMeaningName, AttributeIDFilter $attributeIDFilter ) {
+	global
+		$definedMeaningValueObjectAttributesEditors;
+
+	$o = OmegaWikiAttributes::getInstance();
+
+	$showEditFieldChecker = new ShowEditFieldForAttributeValuesChecker( $levelDefinedMeaningName, "DM", $attributeIDFilter );
+
+	$editor = new RecordSetTableEditor( $o->relations, new SimplePermissionController( true ), $showEditFieldChecker, new AllowAddController( true ), true, false, $controller );
+	$editor->addEditor( new DefinedMeaningAttributeEditor( $o->relationType, new SimplePermissionController( false ), true, $attributeIDFilter, $levelDefinedMeaningName ) );
+	$editor->addEditor( new DefinedMeaningReferenceEditor( $o->otherDefinedMeaning, new SimplePermissionController( false ), true ) );
+
+	addPopupEditors( $editor, $definedMeaningValueObjectAttributesEditors );
+	addTableMetadataEditors( $editor, $viewInformation );
+
+	return $editor;
 }
 
 function getTextAttributeValuesEditor( ViewInformation $viewInformation, UpdateController $controller, $levelDefinedMeaningName, AttributeIDFilter $attributeIDFilter ) {

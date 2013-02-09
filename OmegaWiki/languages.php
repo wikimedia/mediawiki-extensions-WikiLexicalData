@@ -101,7 +101,7 @@ function getSQLForLanguageNames( $lang_code, $lang_subset = "") {
 	if ( $lang_code == 'en' || is_null( $lang_id ) ) {
 		$sqlQuery = 'SELECT language_id AS row_id, language_name'
 			. ' FROM language_names'
-			. ' WHERE name_language_id = ' . WD_ENGLISH_LANG_ID ;
+			. ' WHERE name_language_id = ' . WLD_ENGLISH_LANG_ID ;
 		if ( $lang_subset ) {
 			$sqlQuery .= " AND language_id IN $lang_subset " ;
 		}

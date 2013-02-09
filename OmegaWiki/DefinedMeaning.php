@@ -146,7 +146,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 		$wgOut->addHTML(
 			getDefinedMeaningEditor( $this->viewInformation )->view(
-				new IdStack( WD_DEFINED_MEANING ),
+				new IdStack( WLD_DEFINED_MEANING ),
 				$dmModel->getRecord()
 			)
 		);
@@ -189,7 +189,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$definedMeaningIdRecord = new ArrayRecord( $definedMeaningIdStructure, $definedMeaningIdStructure );
 		$definedMeaningIdRecord->definedMeaningId = $definedMeaningId;
 		
-		$idStack = new IdStack( WD_DEFINED_MEANING );
+		$idStack = new IdStack( WLD_DEFINED_MEANING );
 		$idStack->pushKey( $definedMeaningIdRecord );
 		
 		return $idStack;

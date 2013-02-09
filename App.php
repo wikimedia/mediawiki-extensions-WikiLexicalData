@@ -5,6 +5,7 @@ if ( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 $dir = dirname( __FILE__ ) . '/';
 
 require_once( $dir . 'OmegaWiki/Wikidata.php' );
+require_once( $dir . '/SpecialLanguages.php' );
 
 $wgExtensionCredits['other'][] = array(
 	'path'            => __FILE__,
@@ -67,7 +68,6 @@ $wgResourceModules['ext.Wikidata.suggest'] = $resourcePathArray + array(
 	'scripts' => 'OmegaWiki/resources/suggest.js'
 );
 
-
 $wgAutoloadClasses['WikidataHooks'] = $dir . 'Wikidata.hooks.php';
 
 $wgAutoloadClasses['WikidataArticle'      ] = $dir . 'includes/WikidataArticle.php';
@@ -77,6 +77,7 @@ $wgAutoloadClasses['WikidataPageHistory'  ] = $dir . 'includes/WikidataPageHisto
 // $wgAutoloadClasses['ApiWikiData'          ] = $dir . 'includes/api/ApiWikiData.php';
 // $wgAutoloadClasses['ApiWikiDataFormatBase'] = $dir . 'includes/api/ApiWikiDataFormatBase.php';
 // $wgAutoloadClasses['ApiWikiDataFormatXml' ] = $dir . 'includes/api/ApiWikiDataFormatXml.php';
+
 
 # FIXME: Rename this to reduce chance of collision.
 $wgAutoloadClasses['OmegaWiki'] = $dir . 'OmegaWiki/OmegaWiki.php';
@@ -97,6 +98,7 @@ $wgAutoloadClasses['SpecialAddCollection'] = $dir . 'OmegaWiki/SpecialAddCollect
 $wgAutoloadClasses['SpecialConceptMapping'] = $dir . 'OmegaWiki/SpecialConceptMapping.php';
 $wgAutoloadClasses['SpecialCopy'] = $dir . 'OmegaWiki/SpecialCopy.php';
 $wgAutoloadClasses['SpecialOWStatistics'] = $dir . 'OmegaWiki/SpecialOWStatistics.php';
+
 
 # FIXME: These should be modified to make Wikidata more reusable.
 $wgAvailableRights[] = 'editwikidata-uw';
@@ -163,7 +165,6 @@ if ( !isset( $wdSiteContext ) ) $wdSiteContext = "uw";
 
 $wgRecordSetLanguage = 0;
 
-require_once( $dir . '/SpecialLanguages.php' );
 
 $wgSpecialPages['Suggest'] = 'SpecialSuggest';
 $wgSpecialPages['Select'] = 'SpecialSelect';

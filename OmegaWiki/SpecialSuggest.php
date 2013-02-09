@@ -53,7 +53,7 @@ class SpecialSuggest extends SpecialPage {
 				// so : not using it. The English fall back has been included in the SQL query
 				$sql = $this->getSQLForClasses( $langCode );
 				break;
-			case WD_DEFINED_MEANING_ATTRIBUTES:
+			case WLD_DM_ATTRIBUTES:
 				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'DM' );
 				break;
 			case 'text-attribute':
@@ -62,10 +62,10 @@ class SpecialSuggest extends SpecialPage {
 			case 'translated-text-attribute':
 				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'TRNS' );
 				break;
-			case WD_LINK_ATTRIBUTE:
+			case WLD_LINK_ATTRIBUTE:
 				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'URL' );
 				break;
-			case WD_OPTION_ATTRIBUTE:
+			case WLD_OPTION_ATTRIBUTE:
 				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'OPTN' );
 				break;
 			case 'language':
@@ -73,7 +73,7 @@ class SpecialSuggest extends SpecialPage {
 				$sql = getSQLForLanguageNames( $langCode, $o->getViewInformation()->getFilterLanguageSQL() );
 				$rowText = 'language_name';
 				break;
-			case WD_DEFINED_MEANING:
+			case WLD_DEFINED_MEANING:
 				$sql =
 					"SELECT {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id " .
 					" FROM {$dc}_expression, {$dc}_syntrans " .
@@ -107,9 +107,9 @@ class SpecialSuggest extends SpecialPage {
 			elseif ( $query == 'class' ) {
 				$searchCondition = " AND $rowText LIKE " . $dbr->addQuotes( "$search%" );
 			}
-			elseif ( $query == WD_DEFINED_MEANING_ATTRIBUTES or // should be 'relation-type' in html, there is a bug I cannot find
-				$query == WD_LINK_ATTRIBUTE or
-				$query == WD_OPTION_ATTRIBUTE or
+			elseif ( $query == WLD_DM_ATTRIBUTES or // should be 'relation-type' in html, there is a bug I cannot find
+				$query == WLD_LINK_ATTRIBUTE or
+				$query == WLD_OPTION_ATTRIBUTE or
 				$query == 'translated-text-attribute' or
 				$query == 'text-attribute' )
 			{
@@ -157,7 +157,7 @@ class SpecialSuggest extends SpecialPage {
 			case 'class':
 				list( $recordSet, $editor ) = $this->getClassAsRecordSet( $queryResult );
 				break;
-			case WD_DEFINED_MEANING_ATTRIBUTES:
+			case WLD_DM_ATTRIBUTES:
 				list( $recordSet, $editor ) = $this->getDefinedMeaningAttributeAsRecordSet( $queryResult );
 				break;
 			case 'text-attribute':
@@ -166,13 +166,13 @@ class SpecialSuggest extends SpecialPage {
 			case 'translated-text-attribute':
 				list( $recordSet, $editor ) = $this->getTranslatedTextAttributeAsRecordSet( $queryResult );
 				break;
-			case WD_LINK_ATTRIBUTE:
+			case WLD_LINK_ATTRIBUTE:
 				list( $recordSet, $editor ) = $this->getLinkAttributeAsRecordSet( $queryResult );
 				break;
-			case WD_OPTION_ATTRIBUTE:
+			case WLD_OPTION_ATTRIBUTE:
 				list( $recordSet, $editor ) = $this->getOptionAttributeAsRecordSet( $queryResult );
 				break;
-			case WD_DEFINED_MEANING:
+			case WLD_DEFINED_MEANING:
 				list( $recordSet, $editor ) = $this->getDefinedMeaningAsRecordSet( $queryResult );
 				break;
 			case 'class-attributes-level':
@@ -243,7 +243,7 @@ class SpecialSuggest extends SpecialPage {
 		if ( $row = $dbr->fetchObject($lang_res) ) {
 			$userlang = $row->language_id ;
 		} else {
-			$userlang = WD_ENGLISH_LANG_ID ;
+			$userlang = WLD_ENGLISH_LANG_ID ;
 		}
 
 		$classMids = $wgDefaultClassMids ;
@@ -555,7 +555,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 	
-		$definedMeaningAttributeAttribute = new Attribute( WD_DEFINED_MEANING_ATTRIBUTES, wfMsgSc( "DefinedMeaningAttributes" ), "short-text" );
+		$definedMeaningAttributeAttribute = new Attribute( WLD_DM_ATTRIBUTES, wfMsgSc( "DefinedMeaningAttributes" ), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $definedMeaningAttributeAttribute ), new Structure( $o->id ) );
 	
 		while ( $row = $dbr->fetchObject( $queryResult ) )
@@ -590,7 +590,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$linkAttributeAttribute = new Attribute( WD_LINK_ATTRIBUTE, wfMsg( 'ow_LinkAttributeHeader' ), "short-text" );
+		$linkAttributeAttribute = new Attribute( WLD_LINK_ATTRIBUTE, wfMsg( 'ow_LinkAttributeHeader' ), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $linkAttributeAttribute ), new Structure( $o->id ) );
 
 		while ( $row = $dbr->fetchObject( $queryResult ) )
@@ -625,7 +625,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$optionAttributeAttribute = new Attribute( WD_OPTION_ATTRIBUTE, wfMsg( 'ow_OptionAttributeHeader' ), "short-text" );
+		$optionAttributeAttribute = new Attribute( WLD_OPTION_ATTRIBUTE, wfMsg( 'ow_OptionAttributeHeader' ), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $optionAttributeAttribute ), new Structure( $o->id ) );
 
 		while ( $row = $dbr->fetchObject( $queryResult ) )
@@ -644,7 +644,7 @@ class SpecialSuggest extends SpecialPage {
 		$spellingAttribute = new Attribute( "spelling", wfMsg( 'ow_Spelling' ), "short-text" );
 		$languageAttribute = new Attribute( "language", wfMsg( 'ow_Language' ), "language" );
 
-		$expressionStructure = new Structure( WD_DEFINED_MEANING, $spellingAttribute, $languageAttribute );
+		$expressionStructure = new Structure( WLD_DEFINED_MEANING, $spellingAttribute, $languageAttribute );
 		$definedMeaningAttribute = new Attribute( null, wfMsg( 'ow_DefinedMeaning' ), $expressionStructure );
 		$definitionAttribute = new Attribute( "definition", wfMsg( 'ow_Definition' ), "definition" );
 
