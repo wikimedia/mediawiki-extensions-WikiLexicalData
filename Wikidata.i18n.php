@@ -10620,6 +10620,9 @@ Vergeet niet om dit te controleren!',
 	'ow_nstab_edit_copy' => 'kopie bewerken',
 	'right-addlanguage' => 'Toevoegen en wijzigen van taalinstellingen',
 	'ow_shown_datasets' => 'Weergegeven datasets',
+	'prefs-ow-lang' => 'Talen',
+	'ow_pref_lang_switch' => 'Allen de geselecteerde talen weergeven',
+	'ow_pref_lang_select' => 'Weer te geven talen:',
 );
 
 /** Norwegian Nynorsk (norsk nynorsk)
