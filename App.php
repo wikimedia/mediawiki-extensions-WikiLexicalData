@@ -91,7 +91,7 @@ $wgAutoloadClasses['Search'] = $dir . 'OmegaWiki/Search.php';
 $wgAutoloadClasses['SpecialSuggest'] = $dir . 'OmegaWiki/SpecialSuggest.php';
 $wgAutoloadClasses['SpecialSelect'] = $dir . 'OmegaWiki/SpecialSelect.php';
 $wgAutoloadClasses['SpecialDatasearch'] = $dir . 'OmegaWiki/SpecialDatasearch.php';
-$wgAutoloadClasses['SpecialTransaction'] = $dir . 'OmegaWiki/SpecialTransaction.php';
+// $wgAutoloadClasses['SpecialTransaction'] = $dir . 'OmegaWiki/SpecialTransaction.php';
 $wgAutoloadClasses['SpecialNeedsTranslation'] = $dir . 'OmegaWiki/SpecialNeedsTranslation.php';
 $wgAutoloadClasses['SpecialImportLangNames'] = $dir . 'OmegaWiki/SpecialImportLangNames.php';
 $wgAutoloadClasses['SpecialAddCollection'] = $dir . 'OmegaWiki/SpecialAddCollection.php';
@@ -163,13 +163,11 @@ $wgExpressionPageTitlePrefix = 'Multiple meanings';
 # in a single database.
 if ( !isset( $wdSiteContext ) ) $wdSiteContext = "uw";
 
-$wgRecordSetLanguage = 0;
-
 
 $wgSpecialPages['Suggest'] = 'SpecialSuggest';
 $wgSpecialPages['Select'] = 'SpecialSelect';
 $wgSpecialPages['Datasearch'] = 'SpecialDatasearch';
-$wgSpecialPages['Transaction'] = 'SpecialTransaction';
+// $wgSpecialPages['Transaction'] = 'SpecialTransaction';
 $wgSpecialPages['NeedsTranslation'] = 'SpecialNeedsTranslation';
 $wgSpecialPages['ImportLangNames'] = 'SpecialImportLangNames';
 $wgSpecialPages['AddCollection'] = 'SpecialAddCollection';

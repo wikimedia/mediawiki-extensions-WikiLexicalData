@@ -49,12 +49,14 @@ class SpecialSuggest extends SpecialPage {
 				$sql = $this->constructSQLWithFallback( $sqlActual, $sqlFallback, array( "member_mid", "spelling", "collection_mid" ) );
 				break;
 			case 'class':
-				// constructSQLWithFallback is a bit broken in this case, showing several time the same lines
-				// so : not using it. The English fall back has been included in the SQL query
 				$sql = $this->getSQLForClasses( $langCode );
 				break;
-			case WLD_DM_ATTRIBUTES:
-				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'DM' );
+			case WLD_RELATIONS:
+				if ( $attributesLevel == "DefinedMeaning" ) {
+					$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'DM' );
+				} elseif ( $attributesLevel == "SynTrans" ) {
+					$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'SYNT' );
+				}
 				break;
 			case 'text-attribute':
 				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'TEXT' );
@@ -79,11 +81,19 @@ class SpecialSuggest extends SpecialPage {
 					" FROM {$dc}_expression, {$dc}_syntrans " .
 					" WHERE {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
 					" AND {$dc}_syntrans.identical_meaning=1 " .
-					" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-					" AND " . getLatestTransactionRestriction( "{$dc}_expression" );
+					" AND {$dc}_syntrans.remove_transaction_id is NULL ";
+				break;
+			case WLD_SYNONYMS_TRANSLATIONS:
+				$sql =
+					"SELECT {$dc}_syntrans.syntrans_sid AS syntrans_sid, {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, " .
+					" {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id " .
+					" FROM {$dc}_expression, {$dc}_syntrans " .
+					" WHERE {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
+					" AND {$dc}_syntrans.identical_meaning=1 " .
+					" AND {$dc}_syntrans.remove_transaction_id is NULL ";
 				break;
 			case 'class-attributes-level':
-				$sql = $this->getSQLForLevels( $langCode );
+				$sql = $this->getSQLForLevels();
 				break;
 			case 'collection':
 				$sql = $this->getSQLForCollection( $langCode );
@@ -107,7 +117,7 @@ class SpecialSuggest extends SpecialPage {
 			elseif ( $query == 'class' ) {
 				$searchCondition = " AND $rowText LIKE " . $dbr->addQuotes( "$search%" );
 			}
-			elseif ( $query == WLD_DM_ATTRIBUTES or // should be 'relation-type' in html, there is a bug I cannot find
+			elseif ( $query == WLD_RELATIONS or
 				$query == WLD_LINK_ATTRIBUTE or
 				$query == WLD_OPTION_ATTRIBUTE or
 				$query == 'translated-text-attribute' or
@@ -146,8 +156,6 @@ class SpecialSuggest extends SpecialPage {
 		# == Actual query here
 		// wfdebug("]]]".$sql."\n");
 		$queryResult = $dbr->query( $sql );
-
-		$o->id = new Attribute( "id", wfMsg( 'ow_ID' ), "id" );
 	
 		# == Process query
 		switch( $query ) {
@@ -157,7 +165,7 @@ class SpecialSuggest extends SpecialPage {
 			case 'class':
 				list( $recordSet, $editor ) = $this->getClassAsRecordSet( $queryResult );
 				break;
-			case WLD_DM_ATTRIBUTES:
+			case WLD_RELATIONS:
 				list( $recordSet, $editor ) = $this->getDefinedMeaningAttributeAsRecordSet( $queryResult );
 				break;
 			case 'text-attribute':
@@ -174,6 +182,9 @@ class SpecialSuggest extends SpecialPage {
 				break;
 			case WLD_DEFINED_MEANING:
 				list( $recordSet, $editor ) = $this->getDefinedMeaningAsRecordSet( $queryResult );
+				break;
+			case WLD_SYNONYMS_TRANSLATIONS:
+				list( $recordSet, $editor ) = $this->getSyntransAsRecordSet( $queryResult );
 				break;
 			case 'class-attributes-level':
 				list( $recordSet, $editor ) = $this->getClassAttributeLevelAsRecordSet( $queryResult );
@@ -484,8 +495,8 @@ class SpecialSuggest extends SpecialPage {
 		return $sql;
 	}
 
-	private function getSQLForLevels( $language = "<ANY>" ) {
-		global $classAttributeLevels, $wgWikidataDataSet;
+	private function getSQLForLevels( ) {
+		global $wgWldClassAttributeLevels, $wgWikidataDataSet;
 
 		$o = OmegaWikiAttributes::getInstance();
 		// TO DO: Add support for multiple languages here
@@ -494,7 +505,7 @@ class SpecialSuggest extends SpecialPage {
 				array( $wgWikidataDataSet->bootstrappedDefinedMeanings->definedMeaningId, $wgWikidataDataSet->expression->spelling ),
 				array( $wgWikidataDataSet->definedMeaning, $wgWikidataDataSet->expression, $wgWikidataDataSet->bootstrappedDefinedMeanings ),
 				array(
-					'name IN (' . implodeFixed( $classAttributeLevels ) . ')',
+					'name IN (' . implodeFixed( $wgWldClassAttributeLevels ) . ')',
 					equals( $wgWikidataDataSet->definedMeaning->definedMeaningId, $wgWikidataDataSet->bootstrappedDefinedMeanings->definedMeaningId ),
 					equals( $wgWikidataDataSet->definedMeaning->expressionId, $wgWikidataDataSet->expression->expressionId )
 				)
@@ -637,34 +648,64 @@ class SpecialSuggest extends SpecialPage {
 		return array( $recordSet, $editor );
 	}
 
+	/**
+	* returns a table with three columns for selecting a DM:
+	* spelling / language / definition
+	* The three together represent a specific (unique) defined_meaning_id
+	*/
 	private function getDefinedMeaningAsRecordSet( $queryResult ) {
 		$o = OmegaWikiAttributes::getInstance();
 
 		$dbr = wfGetDB( DB_SLAVE );
-		$spellingAttribute = new Attribute( "spelling", wfMsg( 'ow_Spelling' ), "short-text" );
-		$languageAttribute = new Attribute( "language", wfMsg( 'ow_Language' ), "language" );
 
-		$expressionStructure = new Structure( WLD_DEFINED_MEANING, $spellingAttribute, $languageAttribute );
-		$definedMeaningAttribute = new Attribute( null, wfMsg( 'ow_DefinedMeaning' ), $expressionStructure );
 		$definitionAttribute = new Attribute( "definition", wfMsg( 'ow_Definition' ), "definition" );
 
-		$recordSet = new ArrayRecordSet( new Structure( $o->id, $definedMeaningAttribute, $definitionAttribute ), new Structure( $o->id ) );
+		$spellingLangDefStructure = new Structure( $o->id, $o->spelling, $o->language, $definitionAttribute );
+		$recordSet = new ArrayRecordSet( $spellingLangDefStructure, new Structure( $o->id ) );
 
 		while ( $row = $dbr->fetchObject( $queryResult ) ) {
-			$definedMeaningRecord = new ArrayRecord( $expressionStructure );
-			$definedMeaningRecord->setAttributeValue( $spellingAttribute, $row->spelling );
-			$definedMeaningRecord->setAttributeValue( $languageAttribute, $row->language_id );
+			$definition = getDefinedMeaningDefinition( $row->defined_meaning_id );
 
-			$recordSet->addRecord( array( $row->defined_meaning_id, $definedMeaningRecord, getDefinedMeaningDefinition( $row->defined_meaning_id ) ) );
+			$recordSet->addRecord( array( $row->defined_meaning_id, $row->spelling, $row->language_id, $definition ) );
 		}
 
-		$expressionEditor = new RecordTableCellEditor( $definedMeaningAttribute );
-		$expressionEditor->addEditor( createShortTextViewer( $spellingAttribute ) );
-		$expressionEditor->addEditor( createLanguageViewer( $languageAttribute ) );
+		$definitionEditor = new TextEditor( $definitionAttribute, new SimplePermissionController( false ), false, true, 75 );
 
 		$editor = createSuggestionsTableViewer( null );
-		$editor->addEditor( $expressionEditor );
-		$editor->addEditor( new TextEditor( $definitionAttribute, new SimplePermissionController( false ), false, true, 75 ) );
+		$editor->addEditor( createShortTextViewer( $o->spelling ) );
+		$editor->addEditor( createLanguageViewer( $o->language ) );
+		$editor->addEditor( $definitionEditor );
+
+		return array( $recordSet, $editor );
+	}
+
+	/**
+	* returns a table with three columns for selecting a Syntrans:
+	* spelling / language / definition
+	* The three together represent a specific (unique) syntrans_sid
+	*/
+	private function getSyntransAsRecordSet( $queryResult ) {
+		$o = OmegaWikiAttributes::getInstance();
+
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$definitionAttribute = new Attribute( "definition", wfMsg( 'ow_Definition' ), "definition" );
+
+		$spellingLangDefStructure = new Structure( $o->id, $o->spelling, $o->language, $definitionAttribute );
+		$recordSet = new ArrayRecordSet( $spellingLangDefStructure, new Structure( $o->id ) );
+
+		while ( $row = $dbr->fetchObject( $queryResult ) ) {
+			$definition = getDefinedMeaningDefinition( $row->defined_meaning_id );
+
+			$recordSet->addRecord( array( $row->syntrans_sid, $row->spelling, $row->language_id, $definition ) );
+		}
+
+		$definitionEditor = new TextEditor( $definitionAttribute, new SimplePermissionController( false ), false, true, 75 );
+
+		$editor = createSuggestionsTableViewer( null );
+		$editor->addEditor( createShortTextViewer( $o->spelling ) );
+		$editor->addEditor( createLanguageViewer( $o->language ) );
+		$editor->addEditor( $definitionEditor );
 
 		return array( $recordSet, $editor );
 	}

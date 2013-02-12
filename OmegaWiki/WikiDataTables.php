@@ -143,6 +143,10 @@ class Table {
 			return null;
 		}
 	}
+
+	public function __tostring() {
+		return "TableObject( $this->identifier )";
+	}
 }
 
 class TableIndex {

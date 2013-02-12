@@ -25,6 +25,19 @@ function booleanAsHTML( $value ) {
 	}
 }
 
+/**
+* adds a parameter to a url, with "?" or "&" depending on
+* what is already in the url
+* $parameter is for example "dataset=$dc"
+*/
+function addParameterToURL( &$url, $parameter ) {
+	if ( strpos($url , "?") ) {
+		$url .= "&" . $parameter ;
+	} else {
+		$url .= "?" . $parameter;
+	}
+}
+
 function pageAsURL( $nameSpace, $title, $usedc = true ) {
 
 	global $wgArticlePath, $wdDefaultViewDataSet;
@@ -36,11 +49,7 @@ function pageAsURL( $nameSpace, $title, $usedc = true ) {
 	if ( $usedc ) {
 		$dc = wdGetDataSetContext();
 		if ( $dc == $wdDefaultViewDataSet ) return $url;
-		if ( strpos($url , "?") ) {
-			$url .= "&dataset=$dc";
-		} else {
-			$url .= "?dataset=$dc";
-		}
+		addParameterToURL( $url, "dataset=$dc" );
 	}
 	return $url;
 }
@@ -76,6 +85,12 @@ function createLink( $url, $text ) {
 
 function spellingAsLink( $spelling, $lang = 0 ) {
 	return createLink( spellingAsURL( $spelling, $lang ), $spelling );
+}
+
+function syntransAsLink( $syntransId, $spelling ) {
+	$url = spellingAsURL( $spelling ) ;
+	addParameterToURL( $url, "syntrans=$syntransId" );
+	return createLink( $url, $spelling);
 }
 
 function definedMeaningReferenceAsLink( $definedMeaningId, $definingExpression, $label ) {

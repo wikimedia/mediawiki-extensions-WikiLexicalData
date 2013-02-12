@@ -106,6 +106,7 @@ class OmegaWikiAttributes {
 
 		$this->definitionId = new Attribute( "definition-id", "Definition identifier", "integer" );
 		$this->expressionId = new Attribute( "expression-id", "Expression Id", "expression-id" );
+		$this->id = new Attribute( "id", wfMsg( 'ow_ID' ), "id" );
 
 		// instead of " ", could be wfMsgSc( "IdenticalMeaning" ), but then the header is too long
 		// and the column in the table is too large
@@ -168,12 +169,6 @@ class OmegaWikiAttributes {
 		$this->classMembershipStructure = new Structure( WLD_CLASS_MEMBERSHIP, $this->classMembershipId, $this->class );
 		$this->classMembership = new Attribute( null, wfMsgSc( "ClassMembership" ), $this->classMembershipStructure );
 
-		$this->relationType = new Attribute( "relation-type", wfMsgSc( "RelationType" ), $this->definedMeaningReferenceStructure );
-		$this->otherDefinedMeaning = new Attribute( WLD_OTHER_DM, wfMsgSc( "OtherDefinedMeaning" ), $this->definedMeaningReferenceStructure );
-		$this->relationStructure = new Structure( WLD_RELATIONS, $this->relationId, $this->relationType, $this->otherDefinedMeaning );
-		$this->relations = new Attribute( WLD_RELATIONS, wfMsgSc( "Relations" ), $this->relationStructure );
-
-/*
 		// the type of relation is a DM. e.g. for the relation "antonym" it would be the DM that defines "antony"
 		$this->relationType = new Attribute( "relation-type", wfMsgSc( "RelationType" ), $this->definedMeaningReferenceStructure );
 
@@ -182,7 +177,7 @@ class OmegaWikiAttributes {
 
 		$this->relationStructure = new Structure( WLD_RELATIONS, $this->relationId, $this->relationType, $this->otherObject );
 		$this->relations = new Attribute( WLD_RELATIONS, wfMsgSc( "Relations" ), $this->relationStructure );
-*/
+
 		$this->reciprocalRelations = new Attribute( WLD_INCOMING_RELATIONS, wfMsgSc( "IncomingRelations" ), $this->relationStructure );
 
 		$this->translatedTextStructure = new Structure( WLD_TRANSLATED_TEXT, $this->language, $this->text );

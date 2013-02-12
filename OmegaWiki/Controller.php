@@ -321,20 +321,29 @@ class ObjectAttributeValuesController extends DefaultUpdateController {
 	}
 }
 
-class DefinedMeaningAttributeValuesController extends ObjectAttributeValuesController {
+class RelationValuesController extends ObjectAttributeValuesController {
 	public function add( IdStack $idPath, $record )  {
 		$objectId = $this->objectIdFetcher->fetch( $idPath->getKeyStack() );
-		$definedMeaningAttributeId = $this->determineAttributeId( $idPath, "DM", $record->relationType );
-		$definedMeaningValue = $record->otherDefinedMeaning;
+
+		if ( $this->levelName == "DefinedMeaning" ) {
+			$attributeId = $this->determineAttributeId( $idPath, "DM", $record->relationType );
+		} elseif ( $this->levelName == "SynTrans" ) {
+			$attributeId = $this->determineAttributeId( $idPath, "SYNT", $record->relationType );
+		} else {
+			// not a DM relation, nor a Syntrans relation: therefore unknown!
+		}
+
+		// $otherObjectId could be DMid or SyntransId
+		$otherObjectId = $record->otherObject;
 		
-		if ( $definedMeaningAttributeId != 0 && $definedMeaningValue != 0 ) {
-			addRelation( $objectId, $definedMeaningAttributeId, $definedMeaningValue );
+		if ( $attributeId != 0 && $otherObjectId != 0 ) {
+			addRelation( $objectId, $attributeId, $otherObjectId );
 		}
 	}
 
 	public function remove( $keyPath ) {
-		$valueId = $keyPath->peek( 0 )->relationId;
-		removeRelationWithId( $valueId );
+		$relationId = $keyPath->peek( 0 )->relationId;
+		removeRelationWithId( $relationId );
 	}
 }
 
