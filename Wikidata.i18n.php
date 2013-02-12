@@ -11909,6 +11909,7 @@ Selecione uma coleção para exportar. Introduza uma lista de códigos de língu
 	'ow_IdenticalMeaning' => 'Significado idêntico?',
 	'ow_IncomingRelations' => 'Relações afluentes',
 	'ow_GotoSource' => 'Ir para fonte',
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Língua',
 	'ow_LevelAnnotation' => 'Anotação',
 	'ow_LinkAttributeHeader' => 'Atributo do link',
@@ -11920,6 +11921,7 @@ Selecione uma coleção para exportar. Introduza uma lista de códigos de língu
 	'ow_OptionAttributeOptions' => 'Opções',
 	'ow_OptionAttributeValues' => 'Valores da opção',
 	'ow_OtherDefinedMeaning' => 'Outro significado definido',
+	'ow_OtherLanguages' => 'Outras línguas:',
 	'ow_PopupAnnotation' => 'Anotação',
 	'ow_RecordLifeSpan' => 'Tempo de vida do registo',
 	'ow_Relations' => 'Relações',
@@ -11993,6 +11995,9 @@ Talvez tenha vindo a esta página diretamente? Em condições normais, não prec
 	'ow_nstab_edit_copy' => 'editar cópia',
 	'right-addlanguage' => 'Adicionar e modificar configurações de línguas',
 	'ow_shown_datasets' => 'Conjuntos de dados mostrados',
+	'prefs-ow-lang' => 'Línguas',
+	'ow_pref_lang_switch' => 'Mostrar apenas as línguas selecionadas',
+	'ow_pref_lang_select' => 'Línguas a mostrar:',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -15960,6 +15965,7 @@ $messages['vo'] = array(
 	'ow_OptionAttribute' => 'Patöf',
 	'ow_OptionAttributeOption' => 'Välot',
 	'ow_OptionAttributeOptions' => 'Välots',
+	'ow_OtherLanguages' => 'Püks votik:',
 	'ow_PopupAnnotation' => 'Penet',
 	'ow_Remove' => 'Moükön',
 	'ow_Spelling' => 'Tonatam',
