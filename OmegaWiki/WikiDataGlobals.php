@@ -34,7 +34,6 @@ define ( 'WLD_OPTION_ATTRIBUTE', "optnAtt" );
 define ( 'WLD_OPTION_ATTRIBUTE_OPTION', "optnAttOptn" ); // WLD_OPTION_ATTRIBUTE . WLD_OPTION_SUFFIX
 define ( 'WLD_OPTION_ATTRIBUTE_VALUES', "optnAttVal" ); // WLD_OPTION_ATTRIBUTE . "Val"
 define ( 'WLD_OPTION_SUFFIX', "Optn" );
-define ( 'WLD_OTHER_DM', "otherDm" );
 define ( 'WLD_OTHER_OBJECT', "otherObj" );
 define ( 'WLD_RELATIONS', "rel" );
 define ( 'WLD_SYNONYMS_TRANSLATIONS', "syntrans" );

@@ -166,10 +166,12 @@ class DefinedMeaningModel {
 		$record->reciprocalRelations = getDefinedMeaningReciprocalRelationsRecordSet( $id, $view );
 		$record->classMembership = getDefinedMeaningClassMembershipRecordSet( $id, $view );
 		$record->collectionMembership = getDefinedMeaningCollectionMembershipRecordSet( $id, $view );
+		// Adds Annotation at a DM level
 		$objectAttributesRecord = getObjectAttributesRecord( $id, $view );
 		$record->definedMeaningAttributes = $objectAttributesRecord;
-		applyPropertyToColumnFiltersToRecord( $record, $objectAttributesRecord, $view );
-		
+		// what this does is not clear...
+//		applyPropertyToColumnFiltersToRecord( $record, $objectAttributesRecord, $view );
+
 		$this->record = $record;
 		$this->recordIsLoaded = true;
 		return true;

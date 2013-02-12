@@ -967,6 +967,7 @@ abstract class RecordEditor extends DefaultEditor {
 	}
 
 	public function save( IdStack $idPath, $value ) {
+		if ( !$value ) return;
 		foreach ( $this->getEditors() as $editor ) {
 			$attribute = $editor->getAttribute();
 			$idPath->pushAttribute( $attribute );
@@ -1579,6 +1580,20 @@ class DefinedMeaningReferenceEditor extends SuggestEditor {
 	}
 }
 
+class SyntransReferenceEditor extends SuggestEditor {
+	// very similar to a DefinedMeaningReferenceEditor
+	protected function suggestType() {
+		return WLD_SYNONYMS_TRANSLATIONS;
+	}
+
+	public function getViewHTML( IdStack $idPath, $value ) {
+		$syntransId = $value->syntransId;
+		$spelling = $value->spelling;
+
+		return syntransAsLink( $syntransId, $spelling );
+	}
+}
+
 class ClassAttributesLevelDefinedMeaningEditor extends SuggestEditor {
 	protected function suggestType() {
 		return "class-attributes-level";
@@ -1621,13 +1636,24 @@ abstract class SelectEditor extends ScalarEditor {
 
 class ClassAttributesTypeEditor extends SelectEditor {
 	protected function getOptions() {
+/*
+	the translated version
+		'DM' => wfMsg( 'ow_class_attr_type_dm' ),
+		'TRNS' => wfMsg( 'ow_class_attr_type_xlate' ),
+		'SYNT' => "SynTrans",
+		'TEXT' => wfMsg( 'ow_class_attr_type_plain' ),
+		'URL' => wfMsg( 'ow_class_attr_type_link' ),
+		'OPTN' => wfMsg( 'ow_class_attr_type_option' )
+*/
+	// more descriptive titles, but without translation for the moment
+	// this is only seen by the users who have access to adding new annotations
 		return array(
-			'DM' => wfMsg( 'ow_class_attr_type_dm' ),
-			'TRNS' => wfMsg( 'ow_class_attr_type_xlate' ),
-//			'SYNT' => "SynTrans",
-			'TEXT' => wfMsg( 'ow_class_attr_type_plain' ),
-			'URL' => wfMsg( 'ow_class_attr_type_link' ),
-			'OPTN' => wfMsg( 'ow_class_attr_type_option' )
+			'DM' => "Relation to DefinedMeaning",
+			'TRNS' => "Text, translatable",
+			'SYNT' => "Relation to SynTrans",
+			'TEXT' => "Text, plain",
+			'URL' => "Link to URL",
+			'OPTN' => "List of options",
 		);
 	}
 }
@@ -1703,9 +1729,9 @@ class AttributeEditor extends DefinedMeaningReferenceEditor {
 	}
 }
 
-class DefinedMeaningAttributeEditor extends AttributeEditor {
+class RelationTypeEditor extends AttributeEditor {
 	protected function suggestType() {
-		return WLD_DM_ATTRIBUTES;
+		return WLD_RELATIONS;
 	}
 }
 
@@ -1774,6 +1800,9 @@ class RecordListEditor extends RecordEditor {
 	}
 	
 	public function showsData( $value ) {
+		if ( !$value ) {
+			return false;
+		}
 		$i = 0;
 		$result = false;
 		$childEditors = $this->getEditors();

@@ -176,53 +176,30 @@ function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) 
 	$definedMeaningIdsForExpressions = $definedMeaningIds;
 
 	if ( count( $definedMeaningIds ) > 0 ) {
-		global $wgRecordSetLanguage;
-		
-		if ( $wgRecordSetLanguage > 0 ) {
-			$userLanguage = $wgRecordSetLanguage;
-		} else {
-			$userLanguage = getLanguageIdForCode( $wgLang->getCode() );
-		}
-		
-		if ( $userLanguage > 0 ) {
-			$definingLanguage = $userLanguage;
-		} else {
-			$definingLanguage = WLD_ENGLISH_LANG_ID;
+		if ( $userLanguageId > 0 ) {
+			fetchDefinedMeaningReferenceRecords(
+				getSynonymSQLForLanguage( $userLanguageId, $definedMeaningIds ),
+				$definedMeaningIds,
+				$result,
+				$usedAs
+			);
 		}
 
-		fetchDefinedMeaningReferenceRecords(
-			getDefiningSQLForLanguage( $definingLanguage, $definedMeaningIds ),
-			$definedMeaningIds,
-			$result,
-			$usedAs
-		);
-	
 		if ( count( $definedMeaningIds ) > 0 ) {
-			if ( $userLanguage > 0 )
-				fetchDefinedMeaningReferenceRecords(
-					getSynonymSQLForLanguage( $userLanguage, $definedMeaningIds ),
-					$definedMeaningIds,
-					$result,
-					$usedAs
-					
-				);
+			fetchDefinedMeaningReferenceRecords(
+				getSynonymSQLForLanguage( WLD_ENGLISH_LANG_ID, $definedMeaningIds ),
+				$definedMeaningIds,
+				$result,
+				$usedAs
+			);
 	
 			if ( count( $definedMeaningIds ) > 0 ) {
 				fetchDefinedMeaningReferenceRecords(
-					getSynonymSQLForLanguage( WLD_ENGLISH_LANG_ID, $definedMeaningIds ),
+					getSynonymSQLForAnyLanguage( $definedMeaningIds ),
 					$definedMeaningIds,
 					$result,
 					$usedAs
 				);
-		
-				if ( count( $definedMeaningIds ) > 0 ) {
-					fetchDefinedMeaningReferenceRecords(
-						getSynonymSQLForAnyLanguage( $definedMeaningIds ),
-						$definedMeaningIds,
-						$result,
-						$usedAs
-					);
-				}
 			}
 		}
 		
@@ -247,10 +224,60 @@ function expandDefinedMeaningReferencesInRecordSet( RecordSet $recordSet, array 
 
 	for ( $i = 0; $i < $recordSet->getRecordCount(); $i++ ) {
 		$record = $recordSet->getRecord( $i );
-		foreach ( $definedMeaningAttributes as $definedMeaningAttribute ) {
+		foreach ( $definedMeaningAttributes as $att ) {
 			$record->setAttributeValue(
-				$definedMeaningAttribute,
-				$definedMeaningReferenceRecords[$record->getAttributeValue( $definedMeaningAttribute )]
+				$att,
+				$definedMeaningReferenceRecords[$record->getAttributeValue( $att )]
+			);
+		}
+	}
+}
+
+function getSyntransReferenceRecords( array $syntransIds, $usedAs ) {
+	$o = OmegaWikiAttributes::getInstance();
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
+
+	// an array of records
+	$result = array();
+
+	// find the spelling of a syntrans (of all syntrans from array syntransIds)
+	$sql = "SELECT /* getSyntransReferenceRecords */ syntrans_sid, spelling"
+		. " FROM {$dc}_syntrans, {$dc}_expression "
+		. " WHERE syntrans_sid IN (" . implode( ", ", $syntransIds ) . ")"
+		. " AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id ";
+
+	$queryResult = $dbr->query( $sql );
+	$structure = new Structure( WLD_SYNONYMS_TRANSLATIONS, $o->syntransId, $o->spelling );
+	$structure->setStructureType( $usedAs );
+
+	while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		$record = new ArrayRecord( $structure );
+		$syntransId = $row->syntrans_sid;
+		$record->syntransId = $syntransId;
+		$record->spelling = $row->spelling;
+		$result[$syntransId] = $record;
+	}
+	return $result;
+}
+
+function expandSyntransReferencesInRecordSet( RecordSet $recordSet, array $syntransAttributes ) {
+	$syntransReferenceRecords = array();
+
+	foreach ( $syntransAttributes as $att ) {
+		$listIds = getUniqueIdsInRecordSet( $recordSet, array( $att ) );
+		if ( $listIds ) {
+			// can be empty... why?
+			$syntransReferenceRecords += getSyntransReferenceRecords( $listIds, $att->id );
+		}
+	}
+
+	for ( $i = 0; $i < $recordSet->getRecordCount(); $i++ ) {
+		$record = $recordSet->getRecord( $i );
+		foreach ( $syntransAttributes as $att ) {
+			$record->setAttributeValue(
+				$att,
+				$syntransReferenceRecords[$record->getAttributeValue( $att )]
 			);
 		}
 	}
@@ -563,10 +590,11 @@ function getDefinedMeaningDefinitionRecord( $definedMeaningId, ViewInformation $
 	$record = new ArrayRecord( $o->definition->type );
 	$record->translatedText = getTranslatedContentRecordSet( $definitionId, $viewInformation );
 	
-	$objectAttributesRecord = getObjectAttributesRecord( $definitionId, $viewInformation, $o->objectAttributes->id );
-	$record->objectAttributes = $objectAttributesRecord;
+	// (Kip) What is this? There is no attributes to a definition => commented
+	// $objectAttributesRecord = getObjectAttributesRecord( $definitionId, $viewInformation, $o->objectAttributes->id );
+	// $record->objectAttributes = $objectAttributesRecord;
 	
-	applyPropertyToColumnFiltersToRecord( $record, $objectAttributesRecord, $viewInformation );
+	// applyPropertyToColumnFiltersToRecord( $record, $objectAttributesRecord, $viewInformation );
 
 	return $record;
 }
@@ -589,16 +617,17 @@ function applyPropertyToColumnFiltersToRecordSet( RecordSet $recordSet, Attribut
 	}
 }
 
-function getObjectAttributesRecord( $objectId, ViewInformation $viewInformation, $structuralOverride = null ) {
+function getObjectAttributesRecord( $objectId, ViewInformation $viewInformation, $structuralOverride = null, $level = "" ) {
 	$o = OmegaWikiAttributes::getInstance();
 
-	if ( $structuralOverride )
+	if ( $structuralOverride ) {
 		$record = new ArrayRecord( new Structure( $structuralOverride, $o->definedMeaningAttributes->type->getAttributes() ) );
-	else
+	} else {
 		$record = new ArrayRecord( $o->definedMeaningAttributes->type );
-	
+	}
+
 	$record->objectId = $objectId;
-	$record->relations = getDefinedMeaningAttributeValuesRecordSet( array( $objectId ), $viewInformation );
+	$record->relations = getRelationsRecordSet( array( $objectId ), $viewInformation, $level );
 	$record->textAttributeValues = getTextAttributesValuesRecordSet( array( $objectId ), $viewInformation );
 	$record->translatedTextAttributeValues = getTranslatedTextAttributeValuesRecordSet( array( $objectId ), $viewInformation );
 	$record->linkAttributeValues = getLinkAttributeValuesRecordSet( array( $objectId ), $viewInformation );
@@ -754,8 +783,10 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 	// so that expression is not a sublevel of the hierarchy, but on the same level
 	//	$structure = $o->synTransExpressionStructure ;
 	$structure = $o->synonymsTranslationsStructure ;
+	$structure->addAttribute( $o->objectAttributes );
+
+	// adds additional attributes for history view if needed
 	if ( $viewInformation->showRecordLifeSpan ) {
-		// additional attributes for history view
 		$structure->addAttribute( $o->recordLifeSpan );
 	}
 
@@ -766,7 +797,8 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 	while ( $row = $dbr->fetchObject( $queryResult ) ) {
 		$record = new ArrayRecord( $structure );
 
-		$record->syntransId = $row->syntrans_sid;
+		$syntransId = $row->syntrans_sid;
+		$record->syntransId = $syntransId;
 		$record->identicalMeaning = $row->identical_meaning;
 
 		// adds the expression structure 
@@ -774,6 +806,9 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 		$expressionRecord->language = $row->language_id;
 		$expressionRecord->spelling = $row->spelling;
 		$record->expression = $expressionRecord;
+
+		// adds the annotations (if any)
+		$record->objectAttributes = getObjectAttributesRecord( $syntransId, $viewInformation, null, "SYNT" );
 
 		// adds transaction details for history view
 		if ( $viewInformation->showRecordLifeSpan ) {
@@ -783,126 +818,7 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 		$recordSet->add( $record );
 	}
 
-	expandObjectAttributesAttribute( $recordSet, $o->objectAttributes, $o->syntransId, $viewInformation );
 	return $recordSet;
-}
-
-function expandObjectAttributesAttribute( RecordSet $recordSet, Attribute $attributeToExpand, Attribute $objectIdAttribute, ViewInformation $viewInformation ) {
-	$o = OmegaWikiAttributes::getInstance();
-		
-	$recordSetStructure = $recordSet->getStructure();
-	$recordSetStructure->addAttribute( $attributeToExpand );
-	
-	foreach ( $viewInformation->getPropertyToColumnFilters() as $propertyToColumnFilter )
-		$recordSetStructure->addAttribute( $propertyToColumnFilter->getAttribute() );
-			
-	$objectAttributesRecordStructure = $attributeToExpand->type;
-	$objectIds = getUniqueIdsInRecordSet( $recordSet, array( $objectIdAttribute ) );
-	
-	if ( count( $objectIds ) > 0 ) {
-		for ( $i = 0; $i < count( $objectIds ); $i++ )
-			if ( isset( $objectIds[$i] ) ) {
-				$record = new ArrayRecord( $objectAttributesRecordStructure );
-				$objectAttributesRecords[$objectIds[$i]] = $record;
-			}
-
-		// Defined meaning attributes		
-		$allDefinedMeaningAttributeValuesRecordSet = getDefinedMeaningAttributeValuesRecordSet( $objectIds, $viewInformation );
-		$definedMeaningAttributeValuesRecordSets =
-			splitRecordSet(
-				$allDefinedMeaningAttributeValuesRecordSet,
-				$o->relationType
-			);
-			
-		$emptyDefinedMeaningAttributesRecordSet = new ArrayRecordSet( $allDefinedMeaningAttributeValuesRecordSet->getStructure(), $allDefinedMeaningAttributeValuesRecordSet->getKey() );
-		
-		// Text attributes		
-		$allTextAttributeValuesRecordSet = getTextAttributesValuesRecordSet( $objectIds, $viewInformation );
-		$textAttributeValuesRecordSets =
-			splitRecordSet(
-				$allTextAttributeValuesRecordSet,
-				$o->textAttributeObject
-			);
-			
-		$emptyTextAttributesRecordSet = new ArrayRecordSet( $allTextAttributeValuesRecordSet->getStructure(), $allTextAttributeValuesRecordSet->getKey() );
-		
-		// Translated text attributes	
-		$allTranslatedTextAttributeValuesRecordSet = getTranslatedTextAttributeValuesRecordSet( $objectIds, $viewInformation );
-		$translatedTextAttributeValuesRecordSets =
-			splitRecordSet(
-				$allTranslatedTextAttributeValuesRecordSet,
-				$o->attributeObjectId
-			);
-			
-		$emptyTranslatedTextAttributesRecordSet = new ArrayRecordSet( $allTranslatedTextAttributeValuesRecordSet->getStructure(), $allTranslatedTextAttributeValuesRecordSet->getKey() );
-
-		// Link attributes		
-		$allLinkAttributeValuesRecordSet = getLinkAttributeValuesRecordSet( $objectIds, $viewInformation );
-		$linkAttributeValuesRecordSets =
-			splitRecordSet(
-				$allLinkAttributeValuesRecordSet,
-				$o->linkAttributeObject
-			);
-			
-		$emptyLinkAttributesRecordSet = new ArrayRecordSet( $allLinkAttributeValuesRecordSet->getStructure(), $allLinkAttributeValuesRecordSet->getKey() );
-		
-		// Option attributes		
-		$allOptionAttributeValuesRecordSet = getOptionAttributeValuesRecordSet( $objectIds, $viewInformation );
-		$optionAttributeValuesRecordSets =
-			splitRecordSet(
-				$allOptionAttributeValuesRecordSet,
-				$o->optionAttributeObject
-			);
-			
-		
-		$emptyOptionAttributesRecordSet = new ArrayRecordSet( $allOptionAttributeValuesRecordSet->getStructure(), $allOptionAttributeValuesRecordSet->getKey() );
-		
-		for ( $i = 0; $i < $recordSet->getRecordCount(); $i++ ) {
-			$record = $recordSet->getRecord( $i );
-			$objectId = $record->getAttributeValue( $objectIdAttribute );
-			
-			// Defined meaning attributes
-			if ( isset( $definedMeaningAttributeValuesRecordSets[$objectId] ) )
-				$definedMeaningAttributeValuesRecordSet = $definedMeaningAttributeValuesRecordSets[$objectId];
-			else
-				$definedMeaningAttributeValuesRecordSet = $emptyDefinedMeaningAttributesRecordSet;
-
-			// Text attributes
-			if ( isset( $textAttributeValuesRecordSets[$objectId] ) )
-				$textAttributeValuesRecordSet = $textAttributeValuesRecordSets[$objectId];
-			else
-				$textAttributeValuesRecordSet = $emptyTextAttributesRecordSet;
-
-			// Translated text attributes
-			if ( isset( $translatedTextAttributeValuesRecordSets[$objectId] ) )
-				$translatedTextAttributeValuesRecordSet = $translatedTextAttributeValuesRecordSets[$objectId];
-			else
-				$translatedTextAttributeValuesRecordSet = $emptyTranslatedTextAttributesRecordSet;
-
-			// Link attributes
-			if ( isset( $linkAttributeValuesRecordSets[$objectId] ) )
-				$linkAttributeValuesRecordSet = $linkAttributeValuesRecordSets[$objectId];
-			else
-				$linkAttributeValuesRecordSet = $emptyLinkAttributesRecordSet;
-
-			// Option attributes
-			if ( isset( $optionAttributeValuesRecordSets[$objectId] ) )
-				$optionAttributeValuesRecordSet = $optionAttributeValuesRecordSets[$objectId];
-			else
-				$optionAttributeValuesRecordSet = $emptyOptionAttributesRecordSet;
-
-			$objectAttributesRecord = new ArrayRecord( $objectAttributesRecordStructure );
-			$objectAttributesRecord->objectId = $objectId;
-			$objectAttributesRecord->relations = $definedMeaningAttributeValuesRecordSet;
-			$objectAttributesRecord->textAttributeValues = $textAttributeValuesRecordSet;
-			$objectAttributesRecord->translatedTextAttributeValues = $translatedTextAttributeValuesRecordSet;
-			$objectAttributesRecord->linkAttributeValues = $linkAttributeValuesRecordSet;
-			$objectAttributesRecord->optionAttributeValues = $optionAttributeValuesRecordSet;
-			
-			$record->setAttributeValue( $attributeToExpand, $objectAttributesRecord );
-			applyPropertyToColumnFiltersToRecord( $record, $objectAttributesRecord, $viewInformation );
-		}
-	}
 }
 
 function getDefinedMeaningReferenceRecord( $definedMeaningId ) {
@@ -916,7 +832,7 @@ function getDefinedMeaningReferenceRecord( $definedMeaningId ) {
 	return $record;
 }
 
-function getDefinedMeaningAttributeValuesRecordSet( array $objectIds, ViewInformation $viewInformation ) {
+function getRelationsRecordSet( array $objectIds, ViewInformation $viewInformation, $level = "" ) {
 	global $wgWikidataDataSet;
 
 	$o = OmegaWikiAttributes::getInstance();
@@ -928,16 +844,21 @@ function getDefinedMeaningAttributeValuesRecordSet( array $objectIds, ViewInform
 		new TableColumnsToAttributesMapping(
 			new TableColumnsToAttribute( array( 'relation_id' ), $o->relationId ),
 			new TableColumnsToAttribute( array( 'relationtype_mid' ), $o->relationType ),
-			new TableColumnsToAttribute( array( 'meaning2_mid' ), $o->otherDefinedMeaning )
+			new TableColumnsToAttribute( array( 'meaning2_mid' ), $o->otherObject )
 		),
 		$wgWikidataDataSet->meaningRelations,
 		array( "meaning1_mid IN (" . implode( ", ", $objectIds ) . ")" ),
-		array( 'add_transaction_id' )
+		array( 'relationtype_mid' )
 	);
-	
-	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->relationType, $o->otherDefinedMeaning ) );
-	expandObjectAttributesAttribute( $recordSet, $o->objectAttributes, $o->relationId, $viewInformation );
-	
+
+	if ( $level == "SYNT" ) {
+		expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->relationType ) );
+		expandSyntransReferencesInRecordSet( $recordSet, array( $o->otherObject ) );
+	} else {
+		// assuming DM relations
+		expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->relationType, $o->otherObject ) );
+	}
+
 	return $recordSet;
 }
 
@@ -952,15 +873,14 @@ function getDefinedMeaningReciprocalRelationsRecordSet( $definedMeaningId, ViewI
 		new TableColumnsToAttributesMapping(
 			new TableColumnsToAttribute( array( 'relation_id' ), $o->relationId ),
 			new TableColumnsToAttribute( array( 'relationtype_mid' ), $o->relationType ),
-			new TableColumnsToAttribute( array( 'meaning1_mid' ), $o->otherDefinedMeaning )
+			new TableColumnsToAttribute( array( 'meaning1_mid' ), $o->otherObject )
 		),
 		$wgWikidataDataSet->meaningRelations,
 		array( "meaning2_mid=$definedMeaningId" ),
 		array( 'relationtype_mid' )
 	);
 	
-	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->relationType, $o->otherDefinedMeaning ) );
-	expandObjectAttributesAttribute( $recordSet, $o->objectAttributes, $o->relationId, $viewInformation );
+	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->relationType, $o->otherObject ) );
 	
 	return $recordSet;
 }
@@ -1029,7 +949,6 @@ function getTextAttributesValuesRecordSet( array $objectIds, ViewInformation $vi
 	);
 	
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->textAttribute ) );
-	expandObjectAttributesAttribute( $recordSet, $o->objectAttributes, $o->textAttributeId, $viewInformation );
 	
 	return $recordSet;
 }
@@ -1054,7 +973,6 @@ function getLinkAttributeValuesRecordSet( array $objectIds, ViewInformation $vie
 	);
 	
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->linkAttribute ) );
-	expandObjectAttributesAttribute( $recordSet, $o->objectAttributes, $o->linkAttributeId, $viewInformation );
 	
 	return $recordSet;
 }
@@ -1083,7 +1001,7 @@ function getTranslatedTextAttributeValuesRecordSet( array $objectIds, ViewInform
 	
 	expandTranslatedContentsInRecordSet( $recordSet, $o->translatedTextValueId, $o->translatedTextValue, $viewInformation );
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->translatedTextAttribute ) );
-	expandObjectAttributesAttribute( $recordSet, $o->objectAttributes, $o->translatedTextAttributeId, $viewInformation );
+
 	return $recordSet;
 }
 
@@ -1131,7 +1049,6 @@ function getOptionAttributeValuesRecordSet( array $objectIds, ViewInformation $v
 
 	expandOptionsInRecordSet( $recordSet, $viewInformation );
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->optionAttribute, $o->optionAttributeOption ) );
-	expandObjectAttributesAttribute( $recordSet, $o->objectAttributes, $o->optionAttributeId, $viewInformation );
 
 	return $recordSet;
 }
