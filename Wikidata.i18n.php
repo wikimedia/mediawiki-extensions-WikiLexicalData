@@ -341,6 +341,7 @@ $messages['qqq'] = array(
 	'ow_Language' => '{{Identical|Language}}',
 	'ow_LevelAnnotation' => '{{Identical|Annotation}}',
 	'ow_OptionAttribute' => '{{Identical|Property}}',
+	'ow_OptionAttributeOption' => '{{Identical|Options}}',
 	'ow_OptionAttributeOptions' => '{{Identical|Options}}',
 	'ow_OtherLanguages' => '{{Identical|Otherlanguages}}',
 	'ow_PopupAnnotation' => 'The small link next to elements which can be annotated, such as Synonyms and Translations.
@@ -5010,6 +5011,7 @@ Tulit tälle sivulle ehkä suoraan? Normaalisti sinun ei pitäisi olla täällä
 	'ow_nstab_edit_copy' => 'muokkaa kopiota',
 	'right-addlanguage' => 'Lisätä ja muuttaa kieliasetuksia',
 	'ow_shown_datasets' => 'Näytetyt tietuekokonaisuudet',
+	'prefs-ow-lang' => 'Kielet',
 );
 
 /** French (français)
