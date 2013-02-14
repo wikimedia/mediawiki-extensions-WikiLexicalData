@@ -322,6 +322,7 @@ $messages['qqq'] = array(
 	'ow_transaction_rollback_button' => '{{Identical|Rollback}}',
 	'ow_transaction_rollback_header' => '{{Identical|Rollback}}',
 	'ow_transaction_remove' => '{{Identical|Remove}}',
+	'ow_transaction_object' => '{{Identical|Object}}',
 	'ow_transaction_summary' => '{{Identical|Summary}}',
 	'ow_conceptmapping_uitext' => 'A "dataset" is an independant collection of data, such as an ontology, a thesaurus, or a specific dictionary.',
 	'ow_conceptmapping_no_action_specified' => '* $1 is a parameter that is not supported (for example manually changed in a URL). It can be anything that has been provided by a client.',
@@ -361,7 +362,7 @@ This is visible when a SynTrans is annotated, or while editing a page.
 	'ow_Label' => '{{Identical|Label}}',
 	'ow_Link' => '{{Identical|Link}}',
 	'ow_LinkAttribute' => '{{Identical|Property}}',
-	'ow_LinkAttributeValues' => '{{Identical|Links}}',
+	'ow_LinkAttributeValues' => '{{Identical|Link}}',
 	'ow_URL' => '{{optional}}',
 	'ow_User' => '{{Identical|User}}',
 	'ow_Property' => '{{Identical|Property}}',
@@ -14151,6 +14152,7 @@ $messages['su'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Ainali
  * @author Lokal Profil
  * @author M.M.S.
  * @author Micke
@@ -14303,6 +14305,7 @@ Var god kolla webbadressen.',
 	'ow_IdenticalMeaning' => 'Identisk betydelse?',
 	'ow_IncomingRelations' => 'Inkommande släktskap',
 	'ow_GotoSource' => 'Gå till källa',
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Språk',
 	'ow_LevelAnnotation' => 'Anmärkning',
 	'ow_LinkAttributeHeader' => 'Länkattribut',
@@ -14314,6 +14317,7 @@ Var god kolla webbadressen.',
 	'ow_OptionAttributeOptions' => 'Alternativ',
 	'ow_OptionAttributeValues' => 'Alternativvärden',
 	'ow_OtherDefinedMeaning' => 'Annan definierad betydelse',
+	'ow_OtherLanguages' => 'Andra språk:',
 	'ow_PopupAnnotation' => 'Anmärkning',
 	'ow_RecordLifeSpan' => 'Postens historik',
 	'ow_Relations' => 'Släktskap',
@@ -14391,6 +14395,9 @@ Var god kontakta serveroperatören eller systemadministratören.',
 	'ow_nstab_edit_copy' => 'redigera kopia',
 	'right-addlanguage' => 'Lägg till och ändra språkinställningar',
 	'ow_shown_datasets' => 'Visade datauppsättningar',
+	'prefs-ow-lang' => 'Språk',
+	'ow_pref_lang_switch' => 'Visa endast valda språk',
+	'ow_pref_lang_select' => 'Språk att visa:',
 );
 
 /** Silesian (ślůnski)
