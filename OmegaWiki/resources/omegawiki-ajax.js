@@ -43,22 +43,6 @@ jQuery(document).ready(function( $ ) {
 		$(this).next(".popupToggleable").toggle(100);
 	});
 	
-	$("td.url").bind('paste', function() {
-		var tdurl = this ;
-		// timeout is needed, otherwise the paste is not finished when .val() is called.
-		setTimeout(function () {
-			// start from the inputted http://...
-			var labelurl = $(tdurl).children("input").val();
-			// remove everything before the last "/"
-			labelurl = labelurl.replace( /^http.*\/([^\/]+)/i, "$1" );
-			labelurl = labelurl.replace( /_/g, " " );
-			// change the %C3 and others to their utf8 values
-			labelurl = decodeURI(labelurl) ;
-			// put the obtained label in the "label" input field
-			$(tdurl).next("td").children("input").val(labelurl);
-		}, 100);
-	});
-
 	$(window).resize(function() {
 		updateTabs();
 	});

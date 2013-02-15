@@ -1,3 +1,28 @@
+jQuery(document).ready(function( $ ) {
+	
+	// automatically fills in the label when a url is pasted.
+	$("td.url").bind('paste', function() {
+		var tdurl = this ;
+		// timeout is needed, otherwise the paste is not finished when .val() is called.
+		setTimeout(function () {
+			// remove any ?uselang=... or whatever, in label but also in url
+			var labelurl = $(tdurl).children("input").val().replace( /\?.*$/gi, "" );
+			$(tdurl).children("input").val(labelurl);
+
+			// remove everything before the last "/"
+			labelurl = labelurl.replace( /^http.*\/([^\/]+)/i, "$1" );
+			labelurl = labelurl.replace( /_/g, " " );
+			labelurl = labelurl.replace( /^File:/g, "" );
+			labelurl = labelurl.replace( /^Image:/g, "" );
+			labelurl = labelurl.replace( /.jpg$/gi, "" );
+			// change the %C3 and others to their utf8 values
+			labelurl = decodeURI(labelurl) ;
+			// put the obtained label in the "label" input field
+			$(tdurl).next("td").children("input").val(labelurl);
+		}, 100);
+	});
+});
+
 // add a new row for translation or definition
 window.addEmptyRow = function (elementId) {
   var element = document.getElementById( elementId );
