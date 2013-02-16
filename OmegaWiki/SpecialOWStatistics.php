@@ -258,8 +258,9 @@ class SpecialOWStatistics extends SpecialPage {
 	function getAnnotationStats () {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
+		$output = "";
 
-		// at the moment only link attributes
+		// Link attributes
 		$sql = "SELECT attribute_mid, count(DISTINCT value_id) as tot ";
 		$sql .= " FROM {$dc}_url_attribute_values" ;
 		$sql .= " WHERE remove_transaction_id IS NULL " ;
@@ -273,6 +274,28 @@ class SpecialOWStatistics extends SpecialPage {
 		}
 		arsort ( $nbAtt ) ;
 
+		$output .= "<p><h2>Link attributes</h2>\n" . $this->createTable( $nbAtt ) . "</p>\n"  ;
+
+		// Text attributes
+		$sql = "SELECT attribute_mid, count(DISTINCT value_id) as tot ";
+		$sql .= " FROM {$dc}_text_attribute_values" ;
+		$sql .= " WHERE remove_transaction_id IS NULL " ;
+		$sql .= " group by attribute_mid " ;
+
+		$queryResult = $dbr->query( $sql );
+
+		while ( $row = $dbr->fetchObject( $queryResult ) ) {
+			$att = $row->attribute_mid ;
+			$nbAtt[$att] = $row->tot ;
+		}
+		arsort ( $nbAtt ) ;
+
+		$output .= "<p><h2>Text attributes</h2>\n" . $this->createTable( $nbAtt ) . "</p>\n"  ;
+
+		return $output ;
+	}
+
+	function createTable( $nbAtt ) {
 		$table = "<center><table class=\"sortable\">" ;
 		$table .= "<tr><th><b>" . wfMsg('ow_Annotation') . "</b></th><th><b>" . '#' . "</b></th></tr>\n";
 		foreach ($nbAtt as $att => $nb) {
@@ -281,7 +304,6 @@ class SpecialOWStatistics extends SpecialPage {
 			$table .= "<tr><td alt=$att>$attname</td><td align=right>$nb</td></tr>\n" ;
 		}
 		$table .= "</table></center>" ;
-		$output = "<p>$table</p>"  ;
-		return $output ;
+		return $table;
 	}
 }
