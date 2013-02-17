@@ -150,6 +150,11 @@ class WikiLexicalDataHooks {
 
 	public static function onSkinTemplateNavigation ( &$skin, &$links ) {
 
+		// only for Expression and DefinedMeaning namespaces
+		if ( ! self::isWikidataNs( $skin->getTitle() ) ) {
+			return true;
+		}
+
 		// display an icon for enabling/disabling language filtering
 		// only available in Vector.
 		if ( $skin instanceof SkinVector ) {
