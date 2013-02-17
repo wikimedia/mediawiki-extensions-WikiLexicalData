@@ -59,12 +59,13 @@ jQuery(document).ready(function( $ ) {
 			'ä':'ae', 'ö' : 'oe', 'ß': 'ss', 'ü':'ue' // German characters
 		});
 
-		// start the tablesorter jquery plugin
-		$("table.wiki-data-table").tablesorter();
+		// start the tablesorter jquery plugin, only for tables having a language (or exp) column
+		tablesToSort = $("th.language,th.exp").parents("table.wiki-data-table");
 		
-		$("table.wiki-data-table").find("th.headerSort.language").click();
+		$(tablesToSort).tablesorter();
+		$(tablesToSort).find("th.headerSort.language").click();
 		// for syntrans table, the headerSort is not on language but on expression
-		$("table.wiki-data-table").find("th.headerSort.exp").click();
+		$(tablesToSort).find("th.headerSort.exp").click();
 
 		// now disable sorting for users
 		$(".jquery-tablesorter").find("th").off("click");
