@@ -260,6 +260,7 @@ class SpecialOWStatistics extends SpecialPage {
 		$dbr = wfGetDB( DB_SLAVE );
 		$output = "";
 
+		$nbAtt = array();
 		// Link attributes
 		$sql = "SELECT attribute_mid, count(DISTINCT value_id) as tot ";
 		$sql .= " FROM {$dc}_url_attribute_values" ;
@@ -276,6 +277,7 @@ class SpecialOWStatistics extends SpecialPage {
 
 		$output .= "<p><h2>Link attributes</h2>\n" . $this->createTable( $nbAtt ) . "</p>\n"  ;
 
+		$nbAtt = array();
 		// Text attributes
 		$sql = "SELECT attribute_mid, count(DISTINCT value_id) as tot ";
 		$sql .= " FROM {$dc}_text_attribute_values" ;
