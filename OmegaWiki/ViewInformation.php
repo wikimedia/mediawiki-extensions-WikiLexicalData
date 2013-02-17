@@ -45,6 +45,17 @@ class ViewInformation {
 		$this->propertyToColumnFilters = array();
 		$this->viewOrEdit = "view";
 
+		// check if language filtering is changed from the url
+		// and modify the user options accordingly. Cf. onSkinTemplateNavigation hook
+		$langFilterRequest = $wgRequest->getVal( 'langfilter' );
+		if ( $langFilterRequest == "on" ) {
+			$wgUser->setOption ( 'ow_language_filter', true );
+			$wgUser->saveSettings();
+		} elseif ( $langFilterRequest == "off" ) {
+			$wgUser->setOption ( 'ow_language_filter', false );
+			$wgUser->saveSettings();
+		}
+
 		// set filterLanguageList according to the user preferences
 		if ( $wgUser->getOption( 'ow_language_filter' ) ) {
 			// language filtering is activated (checkbox selected in preferences)

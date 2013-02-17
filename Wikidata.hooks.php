@@ -2,7 +2,7 @@
 
 require_once( "OmegaWiki/WikiDataGlobals.php" );
 
-class WikidataHooks {
+class WikiLexicalDataHooks {
 
 	public static function onBeforePageDisplay( $out, $skin ) {
 		global $wgLang, $wgScriptPath, $wgRequest, $wgResourceModules;
@@ -137,9 +137,9 @@ class WikidataHooks {
 			return true;
 		}
 
-		# Replace normal namespace with expression namespace
+		// Replace normal namespace with expression namespace
 		if ( $title->getNamespace() == NS_MAIN ) {
-			$title = Title::newFromText( $term, NS_EXPRESSION ) ; // $expressionNamespaceId ) ;
+			$title = Title::newFromText( $term, NS_EXPRESSION ) ;
 		}
 
 		if ( $title->exists() ) {
@@ -148,4 +148,28 @@ class WikidataHooks {
 		return true; // no match
 	}
 
+	public static function onSkinTemplateNavigation ( &$skin, &$links ) {
+
+		// display an icon for enabling/disabling language filtering
+		// only available in Vector.
+		if ( $skin instanceof SkinVector ) {
+			if ( $skin->getUser()->getOption( 'ow_language_filter' ) ) {
+				// language filtering is on. The button is for disabling it
+				$links['views']['switch_lang_filter'] = array (
+					'class' => 'wld_lang_filter_on',
+					'text' => '', // no text, just an image, see css
+					'href' => $skin->getTitle()->getLocalUrl( "langfilter=off" ),
+				);
+			} else {
+				// language filtering is off. The button is for enablingit
+				$links['views']['switch_lang_filter'] = array (
+					'class' => 'wld_lang_filter_off',
+					'text' => '', // no text, just an image, see css
+					'href' => $skin->getTitle()->getLocalUrl( "langfilter=on" ),
+				);
+			}
+		}
+
+		return true;
+	}
 }

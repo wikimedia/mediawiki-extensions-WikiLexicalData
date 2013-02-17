@@ -68,7 +68,7 @@ $wgResourceModules['ext.Wikidata.suggest'] = $resourcePathArray + array(
 	'scripts' => 'OmegaWiki/resources/suggest.js'
 );
 
-$wgAutoloadClasses['WikidataHooks'] = $dir . 'Wikidata.hooks.php';
+$wgAutoloadClasses['WikiLexicalDataHooks'] = $dir . 'Wikidata.hooks.php';
 
 $wgAutoloadClasses['WikidataArticle'      ] = $dir . 'includes/WikidataArticle.php';
 $wgAutoloadClasses['WikidataEditPage'     ] = $dir . 'includes/WikidataEditPage.php';
@@ -178,15 +178,16 @@ $wgSpecialPages['ow_statistics'] = 'SpecialOWStatistics';
 #
 ## Hooks
 #
-$wgHooks['BeforePageDisplay'][] = 'WikidataHooks::onBeforePageDisplay';
-$wgHooks['GetPreferences'][] = 'WikidataHooks::onGetPreferences';
-$wgHooks['ArticleFromTitle'][] = 'WikidataHooks::onArticleFromTitle';
-$wgHooks['CustomEditor'][] = 'WikidataHooks::onCustomEditor';
-$wgHooks['MediaWikiPerformAction'][] = 'WikidataHooks::onMediaWikiPerformAction';
-$wgHooks['AbortMove'][] = 'WikidataHooks::onAbortMove';
-$wgHooks['NamespaceIsMovable'][] = 'WikidataHooks::onNamespaceIsMovable';
-$wgHooks['SpecialSearchNogomatch'][] = 'WikidataHooks::onNoGoMatchHook';
-$wgHooks['SearchGetNearMatchBefore'][] = 'WikidataHooks::onGoClicked';
+$wgHooks['BeforePageDisplay'][] = 'WikiLexicalDataHooks::onBeforePageDisplay';
+$wgHooks['GetPreferences'][] = 'WikiLexicalDataHooks::onGetPreferences';
+$wgHooks['ArticleFromTitle'][] = 'WikiLexicalDataHooks::onArticleFromTitle';
+$wgHooks['CustomEditor'][] = 'WikiLexicalDataHooks::onCustomEditor';
+$wgHooks['MediaWikiPerformAction'][] = 'WikiLexicalDataHooks::onMediaWikiPerformAction';
+$wgHooks['AbortMove'][] = 'WikiLexicalDataHooks::onAbortMove';
+$wgHooks['NamespaceIsMovable'][] = 'WikiLexicalDataHooks::onNamespaceIsMovable';
+$wgHooks['SpecialSearchNogomatch'][] = 'WikiLexicalDataHooks::onNoGoMatchHook';
+$wgHooks['SearchGetNearMatchBefore'][] = 'WikiLexicalDataHooks::onGoClicked';
+$wgHooks['SkinTemplateNavigation'][] = 'WikiLexicalDataHooks::onSkinTemplateNavigation';
 
 // LocalApp.php is optional. Its function is like LocalSettings.php,
 // if you want to separate the MediaWiki configuration from the Wikidata configuration

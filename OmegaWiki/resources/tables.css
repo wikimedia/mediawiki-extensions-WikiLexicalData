@@ -1,4 +1,26 @@
 
+/* Language filtering Icon Styling */
+.wld_lang_filter_on a, .wld_lang_filter_off a {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	display: block;
+	width: 26px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.wld_lang_filter_on a {
+	/* @embed */
+	background-image: url("../../Images/my_lang.png");
+}
+
+.wld_lang_filter_off a {
+	/* @embed */
+	background-image: url("../../Images/all_lang.png");
+}
+
+
 /* Wikidata tables */
 
 .wiki-data-table td, .wiki-data-table th {
