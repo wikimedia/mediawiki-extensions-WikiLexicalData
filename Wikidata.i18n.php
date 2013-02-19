@@ -775,11 +775,12 @@ $messages['an'] = array(
  * @author DRIHEM
  * @author Meno25
  * @author OsamaK
+ * @author Tarawneh
  */
 $messages['ar'] = array(
 	'wikidata-desc' => 'يضيف قاعدة بيانات ذات طابع الويكي لأنواع عديدة من المحتويات',
-	'wikidata-handler-namespace-move-error' => 'لا يمكن نقل الصفحات في النطاقات التي يديرها امتداد ويكيداتا.',
-	'languages' => 'ويكيداتا: مدير اللغة',
+	'wikidata-handler-namespace-move-error' => 'لا يمكن نقل الصفحات ضمن النطاقات التي يديرها امتداد ويكيبيانات.',
+	'languages' => 'ويكيبيانات: مدير اللغة',
 	'langman-desc' => 'إضافة وتغيير إعدادات اللغات مع [[Special:Languages]]',
 	'langman_title' => 'مدير اللغة',
 	'langman_not_allowed' => 'أنت لا تمتلك السماح لتغيير إعدادات اللغة.',
@@ -792,12 +793,12 @@ $messages['ar'] = array(
 	'langman_wikimedia' => 'كود ويكيميديا:',
 	'langman_field_optional' => '(اختياري)',
 	'langman_addlang' => 'أضف اللغة',
-	'importlangnames' => 'ويكيداتا: استيراد أسماء اللغات',
+	'importlangnames' => 'ويكيبيانات: استيراد أسماء اللغات',
 	'importlangnames_title' => 'استيراد أسماء اللغات',
 	'importlangnames_not_allowed' => 'أنت لا تمتلك السماح لاستيراد أسماء اللغات.',
 	'importlangnames_added' => 'أسماء اللغات ل"$1" تمت إضافتها.',
 	'importlangnames_not_found' => '<strong>لا مدخلة لغة ل"$1" تم العثور عليها!</strong>',
-	'datasearch' => 'ويكيداتا: بحث البيانات',
+	'datasearch' => 'ويكيبيانات: بحث البيانات',
 	'datasearch_language' => 'اللغة:',
 	'datasearch_found_word' => 'وجد الكلمة',
 	'datasearch_meaning' => 'المعنى',
@@ -809,7 +810,7 @@ $messages['ar'] = array(
 	'datasearch_match_ext_ids' => 'المعرفات الخارجية تطابق <em>$1</em>',
 	'datasearch_match_words' => 'الكلمات التي تطابق <em>$1</em> والمعاني المصاحبة',
 	'datasearch_match_words_lang' => 'الكلمات باللغة <em>$1</em> التي تطابق <em>$2</em> والمعاني المصاحبة',
-	'importtsv' => 'ويكيداتا: استيراد TSV',
+	'importtsv' => 'ويكيبيانات: استيراد ملف البيانات TSV',
 	'ow_importtsv_title1' => 'استيراد تي إس في',
 	'ow_importtsv_title2' => 'استيراد التعريفات والترجمات',
 	'ow_importtsv_header' => "<p>استورد التعريفات والترجمات من ملف نص محدد بألسنة ربما تكون صدرته من OpenOffice.org، إكسل أو برنامج صحائف آخر.</p>
@@ -832,14 +833,14 @@ $messages['ar'] = array(
 	'ow_importtsv_results' => 'أضاف {{PLURAL:$1||تعريفًا واحدًا|تعريفين|$1 تعريفات|$1 تعريفًا|$1 تعريف}} و{{PLURAL:$2||ترجمة واحدة|ترجمتين|$2 ترجمات|$2 ترجمة|$2 ترجمة}}.',
 	'ow_impexptsv_unknown_lang' => '<p>لغة غير معروفة أو غير صحيحة: $1.<br />
 اللغات يجب أن تكون أكواد لغات ISO 639-3.</p>',
-	'exporttsv' => 'ويكيداتا: تصدير TSV',
+	'exporttsv' => 'ويكيبيانات: تصدير ملف البيانات TSV',
 	'ow_exporttsv_title' => 'تصدير مجموعة إلى TSV',
 	'ow_exporttsv_header' => "<p>صدر مجموعة إلى صيغة نص مفصول بألسنة الذي يمكنك استيراده في OpenOffice.org، إكسل أو برنامج صحائف آخر.<br />
 اختر مجموعة للتصدير. في صندوق نص اللغات، أدخل قائمة مفصولة بفاصلات لأكواد لغات ISO 639-3. ابدأ باللغة التي ستترجم منها (اختر كما تحب) وانه بالتي ستترجم إليها. ثم اضغط 'إنشاء' لإنشاء الملف.</p>",
 	'ow_exporttsv_languages' => 'اللغات:',
 	'ow_exporttsv_not_allowed' => 'لا تمتلك السماح لعمل تصدير TSV.',
 	'ow_exporttsv_export_failed' => 'التصدير فشل',
-	'addcollection' => 'ويكيداتا: إضافة مجموعة',
+	'addcollection' => 'ويكيبيانات: إضافة مجموعة',
 	'ow_searchnoresult' => "<p>بإمكانك:<br />
 * '''إنشاء التعبير \"[[Expression:\$1]]\"''' (وإضافة تعريف)<br />
 * '''إنشاء الصفحة \"[[:\$1]]\"''' (صفحة ويكي قياسية)</p>",
@@ -850,9 +851,9 @@ $messages['ar'] = array(
 	'ow_noedit' => 'أنت غير مسموح لك بتعديل الصفحات في مجموعة البيانات "$1".
 من فضلك انظر [[{{MediaWiki:Ow editing policy url}}|سياسة التحرير الخاصة بنا]].',
 	'ow_uipref_datasets' => 'عرض افتراضي:',
-	'ow_uiprefs' => 'ويكيداتا',
+	'ow_uiprefs' => 'ويكيبيانات',
 	'ow_none_selected' => 'لا شيء تم اختياره',
-	'transaction' => 'ويكيداتا: سجل الانتقال',
+	'transaction' => 'ويكيبيانات: سجل المعاملات',
 	'ow_transaction_from_transaction' => 'من الانتقال:',
 	'ow_transaction_count' => 'العدد:',
 	'ow_transaction_user' => 'اسم المستخدم:',
@@ -870,7 +871,7 @@ $messages['ar'] = array(
 	'ow_transaction_first_dm' => 'المعنى المعرف الأول',
 	'ow_transaction_second_dm' => 'المعنى المعرف الثاني',
 	'ow_transaction_summary' => 'ملخص',
-	'conceptmapping' => 'ويكيداتا: تخطيط المبدأ',
+	'conceptmapping' => 'ويكيبيانات: تخطيط المبدأ',
 	'ow_conceptmapping_title' => 'تخطيط المبدأ',
 	'ow_conceptmapping_help' => '<p>الأفعال الممكنة: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  إدراج رابطة</li>
@@ -967,7 +968,7 @@ $messages['ar'] = array(
 	'ow_meaningsoftitle' => 'معاني "$1"',
 	'ow_meaningsofsubtitle' => '<em>وصلة ويكي:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>السماح مرفوض</h2>',
-	'copy' => 'ويكيداتا: نسخ',
+	'copy' => 'ويكيبيانات: نسخ',
 	'ow_copy_no_action_specified' => 'من فضلك حدد فعلا',
 	'ow_copy_help' => 'المساعدة ليست مطبقة حاليا.',
 	'ow_please_proved_dmid' => 'على ما يبدو دخلك يفقد ?dmid=<something>  (dmid=رقم المعنى المعرف)<br />
@@ -984,8 +985,8 @@ $messages['ar'] = array(
 	'ow_no_action_specified' => '<h3>لا فعل تم تحديده</h3>
 ربما أتيت إلى هذه الصفحة مباشرة؟ عادة أنت لا تحتاج إلى أن تكون هنا.',
 	'ow_db_consistency_not_found' => '<h2>خطأ</h2>
-توجد مشكلة في ثبات قاعدة البيانات، ويكيداتا لا يمكنها العثور على بيانات صحيحة تتصل برقم المعنى المعرف هذا.
-ربما يكون قد ضاع.
+توجد مشكلة في تناسق قاعدة البيانات، ويكيبيانات لا يمكنها العثور على بيانات صحيحة متصلة برقم المعنى المعرف هذا.
+ربما تكون قد ضاعت.
 من فضلك اتصل بمشغل أو إداري الخادم.',
 	'ow_history_transaction' => 'الانتقال:',
 	'ow_history_show_life_span' => 'اعرض مدة الحياة المسجلة:',
@@ -994,7 +995,7 @@ $messages['ar'] = array(
 	'ow_class_attr_type_plain' => 'نص بحت',
 	'ow_class_attr_type_link' => 'وصلة',
 	'ow_class_attr_type_option' => 'قائمة الخيارات',
-	'needstranslation' => 'ويكيداتا: التعبيرات المحتاجة للترجمة',
+	'needstranslation' => 'ويكيبيانات: تعبيرات تحتاج الترجمة',
 	'ow_needs_xlation_title' => 'التعبيرات المحتاجة لترجمة',
 	'ow_needs_xlation_source_lang' => 'اللغة المصدر:',
 	'ow_needs_xlation_dest_lang' => 'اللغة الهدف:',
@@ -9393,9 +9394,44 @@ $messages['ltg'] = array(
 
 /** Latvian (latviešu)
  * @author GreenZeb
+ * @author Papuass
  */
 $messages['lv'] = array(
+	'langman_langname' => 'Valodas nosaukums:',
+	'langman_iso639-3' => 'ISO 639-3 kods:',
+	'langman_iso639-2' => 'ISO 639-2 kods:',
+	'langman_wikimedia' => 'Wikimedia kods:',
+	'langman_addlang' => 'Pievienot valodu',
+	'datasearch_language' => 'Valoda:',
+	'datasearch_meaning' => 'Nozīme',
+	'ow_importtsv_import_failed' => 'Imports neizdevās',
+	'ow_importtsv_file' => 'TSV fails:',
+	'ow_exporttsv_languages' => 'Valodas:',
+	'ow_save' => 'Saglabāt',
+	'ow_history' => 'Vēsture',
 	'ow_none_selected' => 'Neviena licence nav izvēlēta',
+	'ow_transaction_count' => 'Skaits:',
+	'ow_dm_OK' => 'Labi',
+	'ow_ClassAttributeLevel' => 'Līmenis',
+	'ow_ID' => 'ID',
+	'ow_Language' => 'Valoda',
+	'ow_LevelAnnotation' => 'Anotācija',
+	'ow_Synonyms' => 'Sinonīmi',
+	'ow_SynonymsAndTranslations' => 'Sinonīmi un tulkojumi',
+	'ow_Source' => 'Avots',
+	'ow_Text' => 'Teksts',
+	'ow_Time' => 'Laiks',
+	'ow_TranslatedTextAttributeValue' => 'Teksts',
+	'ow_Link' => 'Saite',
+	'ow_LinkAttribute' => 'Īpašība',
+	'ow_LinkAttributeValues' => 'Saites',
+	'ow_User' => 'Lietotājs',
+	'ow_Property' => 'Īpašība',
+	'ow_Value' => 'Vērtība',
+	'ow_added' => 'Pievienota',
+	'ow_removed' => 'Noņemta',
+	'ow_meaningsoftitle' => '"$1" nozīmes',
+	'prefs-ow-lang' => 'Valodas',
 );
 
 /** Lazuri (Lazuri)
