@@ -3656,6 +3656,9 @@ Pšosym staj se z serwerowym operatorom abo administratorom do zwiska.',
 	'ow_nstab_edit_copy' => 'kopiju wobźěłaś',
 	'right-addlanguage' => 'Rěcne nastajenja pśidaś a změniś',
 	'ow_shown_datasets' => 'Pokazane datowe sajźby',
+	'prefs-ow-lang' => 'Rěcy',
+	'ow_pref_lang_switch' => 'Jano wubrane rěcy pokazaś',
+	'ow_pref_lang_select' => 'Rěcy za zwobraznjenje:',
 );
 
 /** Ewe (eʋegbe)
@@ -6674,6 +6677,9 @@ Wubjer zběrku za eksport. Zapodaj do tekstoweho kašćika za rěče lisćinu r�
 	'ow_nstab_edit_copy' => 'kopiju wobdźěłać',
 	'right-addlanguage' => 'Rěčne nastajenja přidać a změnić',
 	'ow_shown_datasets' => 'Pokazane datowe sadźby',
+	'prefs-ow-lang' => 'Rěče',
+	'ow_pref_lang_switch' => 'Jenož wubrane rěče pokazać',
+	'ow_pref_lang_select' => 'Rěče za zwobraznjenje:',
 );
 
 /** Hungarian (magyar)
