@@ -37,6 +37,7 @@ define ( 'WLD_OPTION_SUFFIX', "Optn" );
 define ( 'WLD_OTHER_OBJECT', "otherObj" );
 define ( 'WLD_RELATIONS', "rel" );
 define ( 'WLD_SYNONYMS_TRANSLATIONS', "syntrans" );
+define ( 'WLD_SYNT_ATTRIBUTES', "syntAtt" );
 define ( 'WLD_TEXT_ATTRIBUTES_VALUES', "txtAttVal" );
 define ( 'WLD_TRANSLATED_TEXT', "transl" );
 
@@ -51,6 +52,7 @@ $wgIso639_3CollectionId = null;
 global $wdDefinedMeaningAttributesOrder;
 	
 $wdDefinedMeaningAttributesOrder = array(
+	WLD_SYNT_ATTRIBUTES,
 	WLD_DEFINITION,
 	WLD_ALTERNATIVE_DEFINITIONS,
 	WLD_SYNONYMS_TRANSLATIONS,

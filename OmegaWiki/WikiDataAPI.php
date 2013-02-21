@@ -1572,7 +1572,7 @@ function &getDefinedMeaningDataAssociatedByConcept( $dm, $dc ) {
 	$map = getDataSetsAssociatedByConcept( $dm, $dc );
 	$dm_map = getAssociatedByConcept( $dm, $dc );
 	foreach ( $map as $map_dc => $map_dataset ) {
-		$dmModel = new DefinedMeaningModel( $dm_map[$map_dc], null, $map_dataset );
+		$dmModel = new DefinedMeaningModel( $dm_map[$map_dc], array( "dataset" => $map_dataset ) );
 		$meanings[$map_dc] = $dmModel;
 	}
 	return $meanings;

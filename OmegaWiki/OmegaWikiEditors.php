@@ -537,6 +537,9 @@ function getClassAttributesEditor( ViewInformation $viewInformation ) {
 	return $tableEditor;
 }
 
+/**
+* the corresponding recordSet function is getSynonymAndTranslationRecordSet
+*/
 function getSynonymsAndTranslationsEditor( ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -626,10 +629,10 @@ function getRelationEditor( ViewInformation $viewInformation, UpdateController $
 	// ClassAttributesTypeEditor in Editor.php
 	$relationLevel = "";
 
-	if ( $levelDefinedMeaningName == "DefinedMeaning" ) {
+	if ( $levelDefinedMeaningName == WLD_DM_MEANING_NAME ) {
 		// DM-DM relations
 		$relationLevel = "DM";
-	} elseif ( $levelDefinedMeaningName == "SynTrans" ) {
+	} elseif ( $levelDefinedMeaningName == WLD_SYNTRANS_MEANING_NAME ) {
 		// Syntrans-Syntrans relations
 		$relationLevel = "SYNT";
 	}
@@ -803,10 +806,14 @@ function getOptionAttributeOptionsEditor() {
 	return $editor;
 }
 
+/**
+* The corresponding RecordSet function is getExpressionMeaningsRecordSet
+*/
 function getExpressionMeaningsEditor( Attribute $attribute, $allowAdd, ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
 	
-	$definedMeaningEditor = getDefinedMeaningEditor( $viewInformation );
+	$insideExpression = true;
+	$definedMeaningEditor = getDefinedMeaningEditor( $viewInformation, $insideExpression );
 
 	$definedMeaningCaptionEditor = new DefinedMeaningHeaderEditor( $o->definedMeaningId, new SimplePermissionController( false ), false, 75 );
 	$definedMeaningCaptionEditor->setAddText( wfMsg( 'ow_NewExactMeaning' ) );
@@ -818,6 +825,9 @@ function getExpressionMeaningsEditor( Attribute $attribute, $allowAdd, ViewInfor
 	return $expressionMeaningsEditor;
 }
 
+/**
+ * the corresponding RecordSet function is getExpressionMeaningsRecord
+ */
 function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -858,7 +868,11 @@ function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 	return $expressionsEditor;
 }
 
-function getDefinedMeaningEditor( ViewInformation $viewInformation ) {
+/**
+* The corresponding RecordSet function is loadRecord in DefinedMeaningModel.php
+* @param $insideExpression boolean, indicates if the DM Editor is called inside an Expression Editor
+*/
+function getDefinedMeaningEditor( ViewInformation $viewInformation, $insideExpression = null ) {
 	global $wdDefinedMeaningAttributesOrder, $wgUser;
 		
 	$o = OmegaWikiAttributes::getInstance();
@@ -889,8 +903,27 @@ function getDefinedMeaningEditor( ViewInformation $viewInformation ) {
 	
 	$availableEditors->addEditor( createObjectAttributesEditor( $viewInformation, $o->definedMeaningAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $o->definedMeaningId, WLD_DM_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() ) );
 
+	// if we come from Expression, or a syntransId is given, also add a syntrans annotations editor
+	if ( $insideExpression ) {
+		$syntransAttributesEditor = new ObjectAttributeValuesEditor( $o->syntransAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $viewInformation, WLD_SYNTRANS_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() );
+
+		addObjectAttributesEditors(
+			$syntransAttributesEditor,
+			$viewInformation,
+			new ObjectIdFetcher( 0, $o->objectId )
+		);
+		// we need to wrap the editor to geth the "objectId" (i.e. syntransId) in the idPath
+		// Otherwise, saving new data does not work
+		$syntransAttributesWrappedEditor = new ObjectContextEditor ( $syntransAttributesEditor ) ;
+
+		$availableEditors->addEditor( $syntransAttributesWrappedEditor );
+	}
+
 	$definedMeaningEditor = new RecordUnorderedListEditor( $o->definedMeaning, 4 );
-	
+
+
+	// put all of the above editors in the right order.
+	// the default order is defined in WikiDataGlobals.php but can be reconfigured
 	foreach ( $wdDefinedMeaningAttributesOrder as $attributeId ) {
 		$editor = $availableEditors->getEditorForAttributeId( $attributeId );
 		
@@ -900,7 +933,11 @@ function getDefinedMeaningEditor( ViewInformation $viewInformation ) {
 
 	$definedMeaningEditor->expandEditor( $definitionEditor );
 	$definedMeaningEditor->expandEditor( $synonymsAndTranslationsEditor );
-	
+
+	if ( $insideExpression ) {
+		$definedMeaningEditor->expandEditor( $syntransAttributesWrappedEditor );
+	}
+
 	return new DefinedMeaningContextEditor( $definedMeaningEditor );
 }
 
