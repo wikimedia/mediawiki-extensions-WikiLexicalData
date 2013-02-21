@@ -151,7 +151,7 @@ class IdStack {
 	}
 
 	public function __tostring() {
-		return "<object of class IdStack>";
+		return "IdStack(" . $this->getId() . ")\n" ;
 	}
 }
 
@@ -1979,7 +1979,11 @@ class RecordListEditor extends RecordEditor {
 	}
 
 	protected function editChild( Editor $editor, IdStack $idPath, $value, Attribute $attribute, $class, $attributeId ) {
-		return '<div id="collapsable-' . $attributeId . '" class="expand-' . $class . '">' . $editor->edit( $idPath, $value->getAttributeValue( $attribute ) ) . '</div>' . EOL;
+		$divid = 'collapsable-' . $attributeId ;
+		$divclass = 'expand-' . $class;
+		$divattribs = array('id' => $divid, 'class' => $divclass );
+		$divcontent = $editor->edit( $idPath, $value->getAttributeValue( $attribute ) );
+		return HTML::rawElement ('div', $divattribs, $divcontent);
 	}
 
 	protected function addChild( Editor $editor, IdStack $idPath, Attribute $attribute, $class, $attributeId ) {
@@ -2884,5 +2888,64 @@ class DefinedMeaningContextEditor extends WrappingEditor {
 
 		$idPath->popClassAttributes();
 		$idPath->popDefinedMeaningId();
+	}
+}
+
+
+class ObjectContextEditor extends WrappingEditor {
+	public function view( IdStack $idPath, $value ) {
+		if ( is_null( $value ) ) {
+			return;
+		}
+		$o = OmegaWikiAttributes::getInstance();
+
+		$objectId = (int) $value->objectId;
+		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId) ) ;
+		$objectIdRecord->setAttributeValue( $o->objectId, $objectId );
+
+		$idPath->pushKey( $objectIdRecord );
+
+		$result = $this->wrappedEditor->view( $idPath, $value );
+
+		$idPath->popKey();
+
+		return $result;
+	}
+
+	public function edit( IdStack $idPath, $value ) {
+		if ( is_null( $idPath ) ) {
+			throw new Exception( "SyntransContextEditor: Null provided for idPath while trying to edit()" );
+		}
+
+		if ( is_null( $value ) ) {
+			throw new Exception( "SyntransContextEditor: Null provided for value while trying to edit()" );
+		}
+
+		$o = OmegaWikiAttributes::getInstance();
+		$objectId = (int) $value->objectId;
+		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId) ) ;
+		$objectIdRecord->setAttributeValue( $o->objectId, $objectId );
+
+		$idPath->pushKey( $objectIdRecord );
+
+		$result = $this->wrappedEditor->edit( $idPath, $value );
+
+		$idPath->popKey();
+
+		return $result;
+	}
+
+	public function save( IdStack $idPath, $value ) {
+		$o = OmegaWikiAttributes::getInstance();
+
+		$objectId = (int) $value->objectId;
+		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId) ) ;
+		$objectIdRecord->setAttributeValue( $o->objectId, $objectId );
+
+		$idPath->pushKey( $objectIdRecord );
+
+		$this->wrappedEditor->save( $idPath, $value );
+
+		$idPath->popKey();
 	}
 }

@@ -46,7 +46,7 @@ class RecordHelperTest extends PHPUnit_Framework_TestCase {
 		$viewInformation = new ViewInformation();
 		$viewInformation->queryTransactionInformation = new QueryLatestTransactionInformation();
 
-		$model = new DefinedMeaningModel( $definedMeaningId, $viewInformation );
+		$model = new DefinedMeaningModel( $definedMeaningId, array( "viewinformation" => $viewInformation ) );
 		$testRecord = $model->getRecord();
 	}
 	

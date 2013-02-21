@@ -67,7 +67,7 @@ class SpecialConceptMapping extends SpecialPage {
 			$rq[$set] = trim( $rq[$set] );
 			$rq[$set] = (int)$rq[$set];
 			if ( $rq[$set] ) {
-				$dmModel = new DefinedMeaningModel( $rq[$set], null, $setObject );
+				$dmModel = new DefinedMeaningModel( $rq[$set], array( "dataset" => $setObject ) );
 				$defaultSel = $dmModel->getSyntransByLanguageCode( $lang );
 				$options[$setObject->fetchName()] = getSuggest( "set_$set", WLD_DEFINED_MEANING, array(), $rq[$set], $defaultSel, array( 0 ), $setObject );
 			} else {
@@ -83,7 +83,7 @@ class SpecialConceptMapping extends SpecialPage {
 			if ( !$rq[$set] ) {
 				$wgOut->addHTML( ' <span style="color:yellow">[' . wfMsgSc( "dm_not_present" ) . ']</span>' );
 			} else  {
-				$dmModel = new DefinedMeaningModel( $rq[$set], null, $setObject );
+				$dmModel = new DefinedMeaningModel( $rq[$set], array( "dataset" => $setObject ) );
 				$dmModel->checkExistence();
 				if ( $dmModel->exists() ) {
 					$id = $dmModel->getId();

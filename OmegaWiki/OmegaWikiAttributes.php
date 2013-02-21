@@ -99,7 +99,9 @@ class OmegaWikiAttributes {
 		$this->classMembershipId = new Attribute( "class-membership-id", "Class membership id", "integer" );
 		$this->collectionId = new Attribute( "collection", "Collection", "collection-id" );
 
-		$this->definedMeaningAttributes = new Attribute( WLD_DM_ATTRIBUTES, wfMsgSc( "DefinedMeaningAttributes" ), "will-be-specified-below" );
+		// text was wfMsgSc( "DefinedMeaningAttributes" ).
+		// Using a non-i18n text until we agree on a label
+		$this->definedMeaningAttributes = new Attribute( WLD_DM_ATTRIBUTES, "Semantic annotations", "will-be-specified-below" );
 		$this->definedMeaningDefiningExpression = new Attribute( "defined-meaning-defining-expression", "Defined meaning defining expression", "short-text" );
 		$this->definedMeaningLabel = new Attribute( "defined-meaning-label", "Defined meaning label", "short-text" );
 		$this->definedMeaningId = new Attribute( "defined-meaning-id", "Defined meaning identifier", "defined-meaning-id" );
@@ -230,30 +232,6 @@ class OmegaWikiAttributes {
 		$this->classAttributesStructure = new Structure( WLD_CLASS_ATTRIBUTES, $this->classAttributeId, $this->classAttributeAttribute, $this->classAttributeLevel, $this->classAttributeType, $this->optionAttributeOptions );
 		$this->classAttributes = new Attribute( null, wfMsgSc( "ClassAttributes" ), $this->classAttributesStructure );
 
-		$this->definedMeaning = new Attribute( null, wfMsgSc( "DefinedMeaning" ),
-			new Structure(
-				WLD_DEFINED_MEANING,
-				$this->definedMeaningId,
-				$this->definedMeaningCompleteDefiningExpression,
-				$this->definition,
-				$this->classAttributes,
-				$this->alternativeDefinitions,
-				$this->synonymsAndTranslations,
-				$this->reciprocalRelations,
-				$this->classMembership,
-				$this->collectionMembership,
-				$this->definedMeaningAttributes
-			)
-		);
-
-		$this->expressionMeaningStructure = new Structure( $this->definedMeaningId, $this->text, $this->definedMeaning );
-		$this->expressionExactMeanings = new Attribute( WLD_EXPRESSION_EXACT_MEANINGS, wfMsgSc( "ExactMeanings" ), $this->expressionMeaningStructure );
-		$this->expressionApproximateMeanings = new Attribute( WLD_EXPRESSION_APPROX_MEANINGS, wfMsgSc( "ApproximateMeanings" ), $this->expressionMeaningStructure );
-		$this->expressionMeaningsStructure = new Structure( WLD_EXPRESSION_MEANINGS, $this->expressionExactMeanings, $this->expressionApproximateMeanings );
-		$this->expressionMeanings = new Attribute( null, wfMsgSc( "ExpressionMeanings" ), $this->expressionMeaningsStructure );
-		$this->expressionsStructure = new Structure( "expressions", $this->expressionId, $this->expression, $this->expressionMeanings );
-		$this->expressions = new Attribute( null, wfMsgSc( "Expressions" ), $this->expressionsStructure );
-		
 		$this->objectAttributesStructure = new Structure( "object-attributes",
 			$this->objectId,
 			$this->relations,
@@ -265,6 +243,33 @@ class OmegaWikiAttributes {
 		
 		$this->objectAttributes->setAttributeType( $this->objectAttributesStructure );
 		$this->definedMeaningAttributes->setAttributeType( $this->objectAttributesStructure );
+
+		// TODO: use i18n text when we agree on a label
+		$this->syntransAttributes = new Attribute( WLD_SYNT_ATTRIBUTES, "Lexical annotations", $this->objectAttributesStructure );
+
+		$this->definedMeaningStructure = new Structure(
+			WLD_DEFINED_MEANING,
+			$this->definedMeaningId,
+			$this->definedMeaningCompleteDefiningExpression,
+			$this->definition,
+			$this->classAttributes,
+			$this->alternativeDefinitions,
+			$this->synonymsAndTranslations,
+			$this->reciprocalRelations,
+			$this->classMembership,
+			$this->collectionMembership,
+			$this->definedMeaningAttributes,
+			$this->syntransAttributes
+		);
+		$this->definedMeaning = new Attribute( null, wfMsgSc( "DefinedMeaning" ), $this->definedMeaningStructure );
+
+		$this->expressionMeaningStructure = new Structure( $this->definedMeaningId, $this->text, $this->definedMeaning );
+		$this->expressionExactMeanings = new Attribute( WLD_EXPRESSION_EXACT_MEANINGS, wfMsgSc( "ExactMeanings" ), $this->expressionMeaningStructure );
+		$this->expressionApproximateMeanings = new Attribute( WLD_EXPRESSION_APPROX_MEANINGS, wfMsgSc( "ApproximateMeanings" ), $this->expressionMeaningStructure );
+		$this->expressionMeaningsStructure = new Structure( WLD_EXPRESSION_MEANINGS, $this->expressionExactMeanings, $this->expressionApproximateMeanings );
+		$this->expressionMeanings = new Attribute( null, wfMsgSc( "ExpressionMeanings" ), $this->expressionMeaningsStructure );
+		$this->expressionsStructure = new Structure( "expressions", $this->expressionId, $this->expression, $this->expressionMeanings );
+		$this->expressions = new Attribute( null, wfMsgSc( "Expressions" ), $this->expressionsStructure );
 		
 		$annotatedAttributes = array(
 			$this->definedMeaning,

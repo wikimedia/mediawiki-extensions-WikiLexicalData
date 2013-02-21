@@ -352,7 +352,10 @@ class TextAttributeValuesController extends ObjectAttributeValuesController {
 		$objectId = $this->objectIdFetcher->fetch( $idPath->getKeyStack() );
 		$textAttributeId = $this->determineAttributeId( $idPath, "TEXT", $record->textAttribute );
 		$text = $record->text;
-		
+
+		if ( !$objectId ) {
+			throw new MWException( "TextAttributeValuesController: objectId is null, idpath: $idPath" );
+		}
 		if ( $textAttributeId != 0 && $text != '' ) {
 			addTextAttributeValue( $objectId, $textAttributeId, $text );
 		}

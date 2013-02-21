@@ -391,7 +391,8 @@ function expandTextReferencesInRecordSet( RecordSet $recordSet, array $textAttri
 	}
 }
 
-/*
+/**
+* The corresponding Editor function is getExpressionMeaningsEditor
 * $exactMeaning is a boolean
 */
 function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInformation $viewInformation ) {
@@ -404,14 +405,16 @@ function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInfor
 
 	$dbr = wfGetDB( DB_SLAVE );
 	$queryResult = $dbr->query(
-		"SELECT defined_meaning_id FROM {$dc}_syntrans" .
+		"SELECT defined_meaning_id, syntrans_sid FROM {$dc}_syntrans" .
 		" WHERE expression_id=$expressionId AND identical_meaning=" . $identicalMeaning .
 		" AND {$dc}_syntrans.remove_transaction_id IS NULL "
 	);
 
-	while ( $definedMeaning = $dbr->fetchObject( $queryResult ) ) {
-		$definedMeaningId = $definedMeaning->defined_meaning_id;
-		$dmModel = new DefinedMeaningModel( $definedMeaningId, $viewInformation );
+	while ( $syntrans = $dbr->fetchObject( $queryResult ) ) {
+		$definedMeaningId = $syntrans->defined_meaning_id;
+		$syntransId = $syntrans->syntrans_sid;
+		$dmModelParams = array( "viewinformation" => $viewInformation, "syntransid" => $syntransId );
+		$dmModel = new DefinedMeaningModel( $definedMeaningId, $dmModelParams );
 		$recordSet->addRecord(
 			array(
 				$definedMeaningId,
@@ -424,6 +427,9 @@ function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInfor
 	return $recordSet;
 }
 
+/**
+* The corresponding Editor function is getExpressionsEditor
+*/
 function getExpressionMeaningsRecord( $expressionId, ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
 		
@@ -747,7 +753,10 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 	return $recordSet;
 }
 
-function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $viewInformation ) {
+/**
+* the corresponding Editor is getSynonymsAndTranslationsEditor
+*/
+function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $viewInformation, $excludeSyntransId = null ) {
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
@@ -795,9 +804,12 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 
 	$queryResult = $dbr->query( $getSynTransSQL );
 	while ( $row = $dbr->fetchObject( $queryResult ) ) {
-		$record = new ArrayRecord( $structure );
-
 		$syntransId = $row->syntrans_sid;
+		if ( $syntransId == $excludeSyntransId ) {
+			continue;
+		}
+
+		$record = new ArrayRecord( $structure );
 		$record->syntransId = $syntransId;
 		$record->identicalMeaning = $row->identical_meaning;
 

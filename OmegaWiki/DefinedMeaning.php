@@ -24,30 +24,29 @@ class DefinedMeaning extends DefaultWikidataApplication {
 			return false;
 		}
 		parent::view();
-		$definedMeaningModel = new DefinedMeaningModel( $dmNumber, $this->viewInformation );
-		$this->definedMeaningModel = $definedMeaningModel; # TODO if I wasn't so sleepy I'd make this consistent
+		$this->definedMeaningModel = new DefinedMeaningModel( $dmNumber, array( "viewinformation" => $this->viewInformation ) );
 
 		if ( !empty( $dmInfo["expression"] ) ) {
-			$definedMeaningModel->setDefiningExpression( $dmInfo["expression"] );
+			$this->definedMeaningModel->setDefiningExpression( $dmInfo["expression"] );
 		}
 
 
 		// check that the constructed DM actually exists in the database
-		$match = $definedMeaningModel->checkExistence( true, true );
+		$match = $this->definedMeaningModel->checkExistence( true, true );
 
 		// The defining expression is likely incorrect for some reason. Let's just
 		// try looking up the number.
 		if ( is_null( $match ) && !empty( $dmInfo["expression"] ) ) {
-			$definedMeaningModel->setDefiningExpression( null );
+			$this->definedMeaningModel->setDefiningExpression( null );
 			$dmInfo["expression"] = null;
-			$match = $definedMeaningModel->checkExistence( true, true );
+			$match = $this->definedMeaningModel->checkExistence( true, true );
 		}
 		
 		// The defining expression is either bad or missing. Let's redirect
 		// to the correct URL.
 		if ( empty( $dmInfo["expression"] ) && !is_null( $match ) ) {
-			$definedMeaningModel->loadRecord();
-			$title = Title::newFromText( $definedMeaningModel->getWikiTitle() );
+			$this->definedMeaningModel->loadRecord();
+			$title = Title::newFromText( $this->definedMeaningModel->getWikiTitle() );
 			$url = $title->getFullURL();
 			$wgOut->disable();
 			header( "Location: $url" );
@@ -66,7 +65,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		# Raw mode
 		$view_as = $wgRequest->getText( 'view_as' );
 		if ( $view_as == "raw" ) {
-			$wgOut->addHTML( "<pre>" . $definedMeaningModel->getRecord() . "</pre>" );
+			$wgOut->addHTML( "<pre>" . $this->definedMeaningModel->getRecord() . "</pre>" );
 			# $wgOut->disable();
 			return;
 		}
@@ -99,7 +98,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		}
 
 		$this->outputEditHeader();
-		$dmModel = new DefinedMeaningModel( $definedMeaningId, $this->viewInformation );
+		$dmModel = new DefinedMeaningModel( $definedMeaningId, array( "viewinformation" => $this->viewInformation ) );
 
 		// check that the constructed DM actually exists in the database
 		$match = $dmModel->checkExistence( true, true );
@@ -135,7 +134,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 		parent::history();
 
-		$dmModel = new DefinedMeaningModel( $definedMeaningId, $this->viewInformation );
+		$dmModel = new DefinedMeaningModel( $definedMeaningId, array ( "viewinformation" => $this->viewInformation ) );
 
 		// check that the constructed DM actually exists in the database
 		$match = $dmModel->checkExistence( true, true );
@@ -167,7 +166,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 			return false;
 		}
 
-		$dmModel = new DefinedMeaningModel( $definedMeaningId, $this->viewInformation );
+		$dmModel = new DefinedMeaningModel( $definedMeaningId, array ( "viewinformation" => $this->viewInformation ) );
 
 		getDefinedMeaningEditor( $this->viewInformation )->save(
 			$this->getIdStack( $definedMeaningId ),

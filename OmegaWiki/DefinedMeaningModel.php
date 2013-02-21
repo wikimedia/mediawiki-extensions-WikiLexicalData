@@ -21,30 +21,41 @@ class DefinedMeaningModel {
 	protected $definingExpression = null; # String
 	protected $dataset = null;
 	protected $syntrans = array();
+	// optionally, a syntransId can be given to see syntrans annotations
+	// inside of the DM Editor (e.g. when viewing a DM inside an expression page).
+	protected $syntransId = null;
 	protected $titleObject = null;
 
 	/**
 	 * Construct a new DefinedMeaningModel for a particular DM.
 	 * You need to call loadRecord() to load the actual data.
 	 *
-	 * @param Integer         the database ID of the DM 
-	 * @param ViewInformation optional
-	 * @param DataSet	  where to look for the DM by default
-         */
-	public function __construct( $definedMeaningId, $viewInformation = null, DataSet $dc = null ) {
+	 * @param $definedMeaningId Integer: the database ID of the DM
+	 * @param $params Array: optional parameters to pass to the constructor
+	 * can be "viewinformation" of type ViewInformation, or "dataset" of type DataSet
+	 * or "syntransid" which is an integer
+	 */
+	public function __construct( $definedMeaningId, $params = array() ) {
 
 		if ( !$definedMeaningId ) throw new Exception( "DM needs at least a DMID!" );
 		$this->setId( $definedMeaningId );
 
-		if ( is_null( $viewInformation ) ) {
+		if ( array_key_exists ( "viewinformation", $params ) ) {
+			$this->viewInformation = $params["viewinformation"];
+		} else {
 			$viewInformation = new ViewInformation();
 			$viewInformation->queryTransactionInformation = new QueryLatestTransactionInformation();
 		}
-		$this->viewInformation = $viewInformation;
-		if ( is_null( $dc ) ) {
-			$dc = wdGetDataSetContext();
+
+		if ( array_key_exists ( "dataset", $params ) ) {
+			$this->dataset = $params["dataset"];
+		} else {
+			$this->dataset = wdGetDataSetContext();
 		}
-		$this->dataset = $dc;
+
+		if ( array_key_exists ( "syntransid", $params ) ) {
+			$this->syntransId = $params["syntransid"];
+		}
 	}
 
 	/**
@@ -162,15 +173,26 @@ class DefinedMeaningModel {
 		$record->definition = getDefinedMeaningDefinitionRecord( $id, $view );
 		$record->classAttributes = getClassAttributesRecordSet( $id, $view );
 		$record->alternativeDefinitions = getAlternativeDefinitionsRecordSet( $id, $view );
-		$record->synonymsAndTranslations = getSynonymAndTranslationRecordSet( $id, $view );
+
+		// exclude the current syntrans from the list of Synonyms
+		$excludeSyntransId = null;
+		if ( $this->syntransId ) {
+			$excludeSyntransId = $this->syntransId;
+		}
+		$record->synonymsAndTranslations = getSynonymAndTranslationRecordSet( $id, $view, $excludeSyntransId );
 		$record->reciprocalRelations = getDefinedMeaningReciprocalRelationsRecordSet( $id, $view );
 		$record->classMembership = getDefinedMeaningClassMembershipRecordSet( $id, $view );
 		$record->collectionMembership = getDefinedMeaningCollectionMembershipRecordSet( $id, $view );
 		// Adds Annotation at a DM level
-		$objectAttributesRecord = getObjectAttributesRecord( $id, $view );
+		$objectAttributesRecord = getObjectAttributesRecord( $id, $view, null, "DM" );
 		$record->definedMeaningAttributes = $objectAttributesRecord;
 		// what this does is not clear...
 //		applyPropertyToColumnFiltersToRecord( $record, $objectAttributesRecord, $view );
+
+		// if syntransAttributes should be displayed, get them
+		if ( $this->syntransId ) {
+			$record->syntransAttributes = getObjectAttributesRecord( $this->syntransId, $view, null, "SYNT" );
+		}
 
 		$this->record = $record;
 		$this->recordIsLoaded = true;

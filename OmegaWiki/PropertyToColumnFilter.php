@@ -27,6 +27,15 @@ class IncludeAttributeIDsFilter implements AttributeIDFilter {
 	public function leavesOnlyOneOption() {
 		return count( $this->attributeIDsToInclude ) == 1;
 	}
+
+	public function __tostring() {
+		$string = "IncludeAttributeIDsFilter (";
+		foreach ( $this->attributeIDsToInclude as $included ) {
+			$string.= " $included ; ";
+		}
+		$string.= ")\n";
+		return $string;
+	}
 }
 
 class ExcludeAttributeIDsFilter implements AttributeIDFilter {
@@ -49,6 +58,16 @@ class ExcludeAttributeIDsFilter implements AttributeIDFilter {
 	public function leavesOnlyOneOption() {
 		return false;
 	}
+
+	public function __tostring() {
+		$string = "ExcludeAttributeIDsFilter (";
+		foreach ( $this->attributeIDsToExclude as $excluded ) {
+			$string.= " $excluded ; ";
+		}
+		$string.= ")\n";
+		return $string;
+	}
+
 }
 
 /**
