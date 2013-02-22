@@ -210,7 +210,7 @@ jQuery(document).ready(function( $ ) {
 			URL = '../' + URL;
 		}
 		URL = URL + '/Special:Select?optnAtt=' + encodeURI(value) + '&attribute-object=' + encodeURI(objectId);
-		alert(URL);
+
 		$.get( URL, function(data) {
 			var select = document.getElementById(id);
 			select.options.length = 0;
