@@ -277,7 +277,13 @@ class SpecialSuggest extends SpecialPage {
 				' AND ' . getLatestTransactionRestriction( "{$dc}_collection_contents" ) .
 				' LIMIT 1 ' ;
 			$lang_res = $dbr->query( $sql );
-			$language_dm_id = $dbr->fetchObject( $lang_res )->member_mid;
+			$result = $dbr->fetchObject( $lang_res );
+			if ( $result ) {
+				$language_dm_id = $result->member_mid;
+			} else {
+				// this language does not have an associated dm
+				$language_dm_id = 0;
+			}
 
 			$classMids = array_merge ( $wgDefaultClassMids , array($language_dm_id) ) ;
 		}
