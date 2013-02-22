@@ -983,10 +983,7 @@ function createSuggestionsTableViewer( $attribute ) {
 	$result = createTableViewer( $attribute );
 	$result->setHideEmptyColumns( false );
 	$result->setRowHTMLAttributes( array(
-		"class" => "suggestion-row",
-		"onclick" => "suggestRowClicked(event, this)",
-		"onmouseover" => "mouseOverRow(this)",
-		"onmouseout" => "mouseOutRow(this)"
+		"class" => "suggestion-row"
 	) );
 	
 	return $result;

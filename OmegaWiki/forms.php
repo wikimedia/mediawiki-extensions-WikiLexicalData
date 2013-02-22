@@ -46,7 +46,7 @@ function getCheckBox( $name, $isChecked, $disabled = false ) {
 	}
 }
 
-function getCheckBoxWithOnClick( $name, $isChecked, $onClick, $disabled = false ) {
+function getCheckBoxWithClass( $name, $isChecked, $class, $disabled = false ) {
 	if ( $disabled ) {
 		if ( $isChecked ) {
 			return '<input disabled="disabled" type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . '"/><input type="hidden" name="' . $name . '" value="1"/>';
@@ -54,7 +54,7 @@ function getCheckBoxWithOnClick( $name, $isChecked, $onClick, $disabled = false 
 			return '<input disabled="disabled" type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . '"/>';
 		}
 	} else {
-		return '<input type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . ' onclick="' . $onClick . '"/>';
+		return '<input type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . ' class="' . $class . '"/>';
 	}
 }
 
@@ -65,7 +65,7 @@ function getRemoveCheckBox( $name ) {
 		// do not print the checkbox
 		return '';
 	} else {
-		return getCheckBoxWithOnClick( $name, false, "removeClicked(this);" );
+		return getCheckBoxWithClass( $name, false, "remove-checkbox" );
 	}
 }
 
@@ -138,45 +138,30 @@ function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = 
 			'<input type="hidden" id="' . $name . '-suggest-parameter-' . $parameter . '" name="' . $parameter . '" value="' . $parameterValue . '"/>';
 
 	$result .=
-			'<a id="' . $name . '-suggest-link" class="suggest-link" onclick="suggestLinkClicked(event, this);" title="' . wfMsgSc( "SuggestHint" ) . '">' . $label . '</a>' .
+		'<a id="' . $name . '-suggest-link" class="suggest-link" title="' . wfMsgSc( "SuggestHint" ) . '">' . $label . '</a>' .
 		'</span>';
 	
-	if ( $wgLang->isRTL() ) {
-		$result .=
-			'<div class="suggest-drop-down" style="position: relative"><div id="' . $name . '-suggest-div" style="position: absolute; right: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
-				'<div><table>' .
-					'<tr>' .
-						'<td><input type="text" id="' . $name . '-suggest-text" autocomplete="off" onkeyup="suggestTextChanged(this)" style="width: 300px"></input></td>' .
-						'<td><a id="' . $name . '-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">' . wfMsg( 'ow_suggest_clear' ) . '</a></td>' .
-						'<td style="white-space: nowrap"><a id="' . $name . '-suggest-previous" href="javascript:void(0)" class="suggest-previous" onclick="suggestPreviousClicked(event, this)"><img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowRight.png" alt="' . wfMsg( 'ow_suggest_previous' ) . '"/> ' . wfMsg( 'ow_suggest_previous' ) . '</a></td>' .
-						'<td style="white-space: nowrap"><a id="' . $name . '-suggest-next" href="javascript:void(0)" class="suggest-next" onclick="suggestNextClicked(event, this)">' . wfMsg( 'ow_suggest_next' ) . ' <img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowLeft.png" alt="' . wfMsg( 'ow_suggest_next' ) . '"/></a></td>' .
-						'<td><a id="' . $name . '-suggest-close" href="javascript:void(0)" onclick="suggestCloseClicked(event, this)">[X]</a></td>' .
-					'</tr>' .
-				'</table></div>' .
-				'<div><table id="' . $name . '-suggest-table"><tr><td></td></tr></table></div>' .
-			'</div></div>';
-	} else {
-		$result .=
-			'<div class="suggest-drop-down" style="position: relative"><div id="' . $name . '-suggest-div" style="position: absolute; left: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
-				'<div><table>' .
-					'<tr>' .
-						'<td><input type="text" id="' . $name . '-suggest-text" autocomplete="off" onkeyup="suggestTextChanged(this)" style="width: 300px"></input></td>' .
-						'<td><a id="' . $name . '-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">' . wfMsg( 'ow_suggest_clear' ) . '</a></td>' .
-						'<td style="white-space: nowrap"><a id="' . $name . '-suggest-previous" href="javascript:void(0)" class="suggest-previous" onclick="suggestPreviousClicked(event, this)"><img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowLeft.png" alt="' . wfMsg( 'ow_suggest_previous' ) . '"/> ' . wfMsg( 'ow_suggest_previous' ) . '</a></td>' .
-						'<td style="white-space: nowrap"><a id="' . $name . '-suggest-next" href="javascript:void(0)" class="suggest-next" onclick="suggestNextClicked(event, this)">' . wfMsg( 'ow_suggest_next' ) . ' <img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowRight.png" alt="' . wfMsg( 'ow_suggest_next' ) . '"/></a></td>' .
-						'<td><a id="' . $name . '-suggest-close" href="javascript:void(0)" onclick="suggestCloseClicked(event, this)">[X]</a></td>' .
-					'</tr>' .
-				'</table></div>' .
-				'<div><table id="' . $name . '-suggest-table"><tr><td></td></tr></table></div>' .
-			'</div></div>';
-	}
+	$result .=
+		'<div class="suggest-drop-down"><div id="' . $name . '-suggest-div" class="suggest-div">' .
+			'<div><table>' .
+				'<tr>' .
+					'<td><input type="text" id="' . $name . '-suggest-text" autocomplete="off" class="suggest-text"></input></td>' .
+					'<td id="' . $name . '-suggest-clear" class="suggest-clear">' . wfMsg( 'ow_suggest_clear' ) . '</td>' .
+					'<td id="' . $name . '-suggest-previous" class="suggest-previous"><img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowLeft.png" alt="' . wfMsg( 'ow_suggest_previous' ) . '"/> ' . wfMsg( 'ow_suggest_previous' ) . '</td>' .
+					'<td id="' . $name . '-suggest-next" class="suggest-next">' . wfMsg( 'ow_suggest_next' ) . ' <img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowRight.png" alt="' . wfMsg( 'ow_suggest_next' ) . '"/></td>' .
+					'<td id="' . $name . '-suggest-close" class="suggest-close">[X]</td>' .
+				'</tr>' .
+			'</table></div>' .
+			'<div><table id="' . $name . '-suggest-table"><tr><td></td></tr></table></div>' .
+		'</div></div>';
+
 	return $result;
 }
 
 function getStaticSuggest( $name, $suggestions, $idColumns = 1, $value = 0, $label = '', $displayLabelColumns = array( 0 ) ) {
-	if ( $label == "" )
+	if ( $label == "" ) {
 		$label = '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;';
-
+	}
 	$result =
 		'<span class="suggest">' .
 //			'<input type="hidden" id="'. $name .'-suggest-query" value="'. $query .'"/>' .
@@ -187,17 +172,16 @@ function getStaticSuggest( $name, $suggestions, $idColumns = 1, $value = 0, $lab
 		$result .= '<input type="hidden" id="' . $name . '-suggest-id-columns" value="' . $idColumns . '"/>';
 
 	$result .=
-			'<a id="' . $name . '-suggest-link" class="suggest-link" onclick="suggestLinkClicked(event, this);" title="' . wfMsgSc( "SuggestHint" ) . '">' . $label . '</a>' .
+			'<a id="' . $name . '-suggest-link" class="suggest-link" title="' . wfMsgSc( "SuggestHint" ) . '">' . $label . '</a>' .
 		'</span>' .
-        '<div class="suggest-drop-down" style="position: relative"><div id="' . $name . '-suggest-div" style="position: absolute; left: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
-        	'<div><table><tr><td>' .
-//        	'<input type="text" id="'. $name .'-suggest-text" autocomplete="off" onkeyup="suggestTextChanged(this)" style="width: 300px"></input>' .
-        	'</td><td><a id="' . $name . '-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">' . wfMsg( 'ow_suggest_clear' ) . '</a></td><td><a id="' . $name . '-suggest-close" href="#' . $name . '-suggest-link" onclick="suggestCloseClicked(event, this)">[X]</a></td></tr></table></div>' .
-        	'<div>' . $suggestions .
-        	// <table id="'. $name .'-suggest-table"><tr><td></td></tr></table>
-        	'</div>' .
-        '</div></div>';
-	
+		'<div class="suggest-drop-down" style="position: relative"><div id="' . $name . '-suggest-div" style="position: absolute; left: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
+			'<div><table><tr><td>' .
+			'</td><td><a id="' . $name . '-suggest-clear" href="javascript:void(0)" class="suggest-clear">' . wfMsg( 'ow_suggest_clear' ) . '</a></td>' .
+			'<td><a id="' . $name . '-suggest-close" href="#' . $name . '-suggest-link" class="suggest-close">[X]</a></td></tr></table></div>' .
+			'<div>' . $suggestions .
+			'</div>' .
+		'</div></div>';
+
 	return $result;
 }
 
