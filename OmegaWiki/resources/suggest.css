@@ -117,9 +117,6 @@ td .suggest-link:visited {
 .suggestion-row {
 	padding: 0px;
 	margin: 0px;
-}
-
-.suggestion-row {
 	cursor: pointer;
 }
 .suggestion-row.active td.column-even,

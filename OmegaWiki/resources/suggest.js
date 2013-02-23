@@ -6,35 +6,33 @@ jQuery(document).ready(function( $ ) {
 		$(this).parent().parent().toggleClass('to-be-removed');
 	});
 
-	$(".suggest-next").click(function(event) {
+	// some delegated handlers for elements added dynamically
+	$("body").on('click', ".suggest-next", function(event) {
 		var suggestPrefix = getSuggestPrefix( this, 'next');
 		var suggestOffset = document.getElementById(suggestPrefix + 'offset');
 		suggestOffset.value = parseInt(suggestOffset.value) + 10;
 		updateSuggestions(suggestPrefix);
-		stopEventHandling(event);
 	});
 
-	$(".suggest-previous").click(function(event) {
+	$("body").on('click', ".suggest-previous", function(event) {
 		var suggestPrefix = getSuggestPrefix( this, 'previous');
 		var suggestOffset = document.getElementById(suggestPrefix + 'offset');
 		suggestOffset.value = Math.max(parseInt(suggestOffset.value) - 10, 0);
 		updateSuggestions(suggestPrefix);
-		stopEventHandling(event);
 	});
 
-	$(".suggest-close").click(function(event) {
+	$("body").on('click', ".suggest-close", function(event) {
 		var suggestPrefix = getSuggestPrefix( this, 'close');
 		$("#" + suggestPrefix + "div").hide();
-		stopEventHandling(event);
 	});
 
-	$(".suggest-clear").click(function(event) {
-		updateSuggestValue(getSuggestPrefix(this, 'clear'), ""
+	$("body").on('click', ".suggest-clear", function(event) {
+		var suggestPrefix = getSuggestPrefix( this, 'clear');
+		updateSuggestValue(suggestPrefix, ""
 			, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-		stopEventHandling(event);
 	});
 
-	$(".suggest-link").click(function(event) {
+	$("body").on('click', ".suggest-link", function(event) {
 		var suggestLinkId = this.id;
 		// removing the "link" at the end of the Id
 		var suggestPrefix = getSuggestPrefix( this, 'link');
@@ -46,10 +44,9 @@ jQuery(document).ready(function( $ ) {
 			suggestField.focus();
 			updateSuggestions(suggestPrefix);
 		}
-		stopEventHandling(event);
 	});
 
-	$(".suggest-text").keyup(function(event) {
+	$("body").on('keyup', "input.suggest-text", function(event) {
 		var suggestPrefix = getSuggestPrefix( this, 'text');
 		scheduleUpdateSuggestions( suggestPrefix );
 	});
@@ -95,15 +92,16 @@ jQuery(document).ready(function( $ ) {
 	* suggests a list (of languages, classes...) according to the letters typed in the query field
 	* or to the arrows "next" "previous"
 	*/
+
 	function updateSuggestions( suggestPrefix ) {
 		var table = document.getElementById(suggestPrefix + "table");
 		var suggestQuery = document.getElementById(suggestPrefix + "query").value;
 		var suggestOffset = document.getElementById(suggestPrefix + "offset").value;
 		var dataSet = document.getElementById(suggestPrefix + "dataset").value;
 
-		suggestText = document.getElementById(suggestPrefix + "text");
-		suggestText.className = "suggest-loading";
-		var suggestTextVal = suggestText.value ; // we copy the value to compare it later to the current value
+		suggestText = $("#" + suggestPrefix + "text");
+		suggestText.addClass("suggest-loading");
+		var suggestTextVal = suggestText.val() ; // we copy the value to compare it later to the current value
 
 		var suggestAttributesLevel = document.getElementById(suggestPrefix + "parameter-level");
 		var suggestDefinedMeaningId = document.getElementById(suggestPrefix + "parameter-definedMeaningId");
@@ -156,10 +154,10 @@ jQuery(document).ready(function( $ ) {
 				
 				table.parentNode.replaceChild(newTable.firstChild, table);
 			}
-			suggestText.className = "";
+			suggestText.removeClass("suggest-loading");
 
 			// comparing the stored value send in the URL, and the actual value
-			if ( suggestTextVal != suggestText.value ) {
+			if ( suggestTextVal != suggestText.val() ) {
 				suggestionTimeOut = setTimeout( function() {
 					updateSuggestions( suggestPrefix )
 				}, 100);
@@ -189,19 +187,6 @@ jQuery(document).ready(function( $ ) {
 		return text ;
 	}
 
-	function stopEventHandling( event ) {
-		event.cancelBubble = true;
-
-		if (event.stopPropagation) {
-			event.stopPropagation();
-		}
-		if (event.preventDefault) {
-			event.preventDefault();
-		} else {
-			event.returnValue = false;
-		}
-	}
-
 	function updateSelectOptions(id, objectId, value) {
 		var URL = 'index.php';
 		var location = "" + document.location;
@@ -227,7 +212,9 @@ jQuery(document).ready(function( $ ) {
 		* because the class "suggestion-row" is not known before that
 		* and it does not work if the functions are defined outside
 		* of ajaxcomplete
+		* alternatively we could use delegated handlers
 		*/
+
 	$(document).ajaxComplete(function() {
 		$(".suggestion-row").mouseover(function() {
 			$(this).addClass('active');
@@ -264,7 +251,6 @@ jQuery(document).ready(function( $ ) {
 				ids.push(values[values.length - i - 1]);
 			}
 			updateSuggestValue(suggestPrefix, ids.join('-'), labels.join(', '));
-			stopEventHandling(event);
 		});
 	});
 

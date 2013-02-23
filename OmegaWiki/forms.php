@@ -138,14 +138,14 @@ function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = 
 			'<input type="hidden" id="' . $name . '-suggest-parameter-' . $parameter . '" name="' . $parameter . '" value="' . $parameterValue . '"/>';
 
 	$result .=
-		'<a id="' . $name . '-suggest-link" class="suggest-link" title="' . wfMsgSc( "SuggestHint" ) . '">' . $label . '</a>' .
+		'<span id="' . $name . '-suggest-link" class="suggest-link" title="' . wfMsgSc( "SuggestHint" ) . '">' . $label . '</span>' .
 		'</span>';
 	
 	$result .=
 		'<div class="suggest-drop-down"><div id="' . $name . '-suggest-div" class="suggest-div">' .
 			'<div><table>' .
 				'<tr>' .
-					'<td><input type="text" id="' . $name . '-suggest-text" autocomplete="off" class="suggest-text"></input></td>' .
+					'<td><input type="text" id="' . $name . '-suggest-text" autocomplete="off" class="suggest-text"/></td>' .
 					'<td id="' . $name . '-suggest-clear" class="suggest-clear">' . wfMsg( 'ow_suggest_clear' ) . '</td>' .
 					'<td id="' . $name . '-suggest-previous" class="suggest-previous"><img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowLeft.png" alt="' . wfMsg( 'ow_suggest_previous' ) . '"/> ' . wfMsg( 'ow_suggest_previous' ) . '</td>' .
 					'<td id="' . $name . '-suggest-next" class="suggest-next">' . wfMsg( 'ow_suggest_next' ) . ' <img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowRight.png" alt="' . wfMsg( 'ow_suggest_next' ) . '"/></td>' .
