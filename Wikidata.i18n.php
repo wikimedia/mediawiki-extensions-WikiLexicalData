@@ -386,6 +386,7 @@ Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki pag
 	'ow_create' => '{{Identical|Create}}',
 	'ow_suggest_previous' => '{{Identical|Previous}}',
 	'ow_suggest_next' => '{{Identical|Next}}',
+	'ow_suggest_clear' => '{{Identical|Clear}}',
 	'ow_nstab_definedmeaning' => 'Tab title when displaying a Defined Meaning.
 {{Identical|Defined meaning}}',
 	'ow_nstab_edit_copy' => "Tab title when copying across datasets. The word 'edit' is a verb here.",
