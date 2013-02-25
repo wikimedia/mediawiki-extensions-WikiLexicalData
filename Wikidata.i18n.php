@@ -1909,8 +1909,11 @@ $messages['be-tarask'] = array(
 
 /** Bulgarian (български)
  * @author DCLXVI
+ * @author Spiritia
  */
 $messages['bg'] = array(
+	'wikidata-desc' => 'Добавяне на уики-подобна база данни за различни видове съдържание',
+	'wikidata-handler-namespace-move-error' => 'Страниците от именните пространства, управлявани от разширението "Уикиданни", не могат да бъдат местени.',
 	'langman_not_allowed' => 'Нямате право да променяте езиковите настройки.',
 	'langman_adding' => 'Добавяне на езика $1 с ключ $2.',
 	'langman_langname' => 'Име на езика:',
