@@ -4723,6 +4723,7 @@ $messages['fa'] = array(
 	'ow_IdenticalMeaning' => 'هم‌‌معنی؟',
 	'ow_IncomingRelations' => 'روابط ورودی',
 	'ow_GotoSource' => 'رفتن به منبع',
+	'ow_ID' => 'شناسه',
 	'ow_Language' => 'زبان',
 	'ow_LevelAnnotation' => 'یادداشت',
 	'ow_LinkAttributeHeader' => 'پیوند صفت',
@@ -4734,6 +4735,7 @@ $messages['fa'] = array(
 	'ow_OptionAttributeOptions' => 'گزینه‌ها',
 	'ow_OptionAttributeValues' => 'گزینهٔ مقدارها',
 	'ow_OtherDefinedMeaning' => 'معنی‌های دیگر',
+	'ow_OtherLanguages' => 'زبان‌های دیگر:',
 	'ow_PopupAnnotation' => 'یادداشت',
 	'ow_RecordLifeSpan' => 'ذخیرهٔ محدودهٔ عمر',
 	'ow_Relations' => 'روابط',
@@ -4812,6 +4814,9 @@ $messages['fa'] = array(
 	'ow_nstab_edit_copy' => 'ویرایش رونوشت',
 	'right-addlanguage' => 'افزودن و تغییر تنظیمات زبان',
 	'ow_shown_datasets' => 'مجموعه‌داده‌های نمایش‌داده‌شده',
+	'prefs-ow-lang' => 'زبان‌ها',
+	'ow_pref_lang_switch' => 'فقط زبان‌های انتخاب‌شده را نمایش بده',
+	'ow_pref_lang_select' => 'زبان‌هایی که می‌خواهید نمایش داده شوند:',
 );
 
 /** Finnish (suomi)
