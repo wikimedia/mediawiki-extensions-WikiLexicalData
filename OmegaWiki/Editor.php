@@ -1773,17 +1773,26 @@ class OptionAttributeEditor extends AttributeEditor {
 
 	public function add( IdStack $idPath ) {
 		if ( $this->isAddField ) {
-			$syntransId = $idPath->getKeyStack()->peek( 0 )->syntransId;
-			if ( ! $syntransId ) $syntransId = 0 ; // in the case of a DM option attribute, there is no syntrans in the PathId
-
 			// note: it is normal that the "updateSelectOptions(" has no closing parenthesis. An additional parameter and ')' is added by the function updateSuggestValue (suggest.js)
 			$parameters = array(
 				"level" => $this->attributesLevelName,
 				"definedMeaningId" => $idPath->getDefinedMeaningId(),
-				"syntransId" => $syntransId,
 				"annotationAttributeId" => $idPath->getAnnotationAttribute()->getId(),
 				"onUpdate" => 'updateSelectOptions(\'' . $this->addId( $idPath->getId() ) . WLD_OPTION_SUFFIX . '\',' . $syntransId
 			);
+
+			if ( $this->attributesLevelName == WLD_SYNTRANS_MEANING_NAME ) {
+				// find and add syntransId as a parameter
+				$syntransId = $idPath->getKeyStack()->peek( 0 )->syntransId;
+				if ( $syntransId == "" ) {
+					// second tentative, sometimes it is called objectId
+					$syntransId = $idPath->getKeyStack()->peek( 0 )->objectId;
+				}
+				if ( $syntransId != "" ) {
+					$parameters["syntransId"] = $syntransId;
+				}
+			}
+
 			return getSuggest( $this->addId( $idPath->getId() ), $this->suggestType(), $parameters );
 		}
 		else return '';
