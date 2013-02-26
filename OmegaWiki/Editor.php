@@ -1516,6 +1516,11 @@ class IdenticalMeaningEditor extends ScalarEditor {
 	}
 
 	public function getEditHTML( IdStack $idPath, $value ) {
+		global $wgUser;
+		if ( ! $wgUser->isAllowed( 'deletewikidata-uw' ) ) {
+			return $this->getViewHTML( $idPath, $value );
+		}
+
 		// $value is what is returned from the database, i.e. an integer, 0 or 1
 		if ( $value == 0 ) {
 			return getSelect( $this->updateId( $idPath->getId() ), $this->textValuesEdit, "false" );
