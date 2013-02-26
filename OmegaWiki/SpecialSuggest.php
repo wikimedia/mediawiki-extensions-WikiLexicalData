@@ -259,7 +259,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$classMids = $wgDefaultClassMids ;
 
-		if ( ( $syntransId != 0 ) && ( !is_null($wgIso639_3CollectionId)) ) {
+		if ( ( !is_null($syntransId) ) && ( !is_null($wgIso639_3CollectionId)) ) {
 			// find the language of the syntrans and add attributes of that language by adding the language DM to the list of default classes
 			// this first query returns the language_id
 			$sql = 'SELECT language_id' .

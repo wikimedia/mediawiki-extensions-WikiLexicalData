@@ -1708,15 +1708,23 @@ class AttributeEditor extends DefinedMeaningReferenceEditor {
 
 	public function add( IdStack $idPath ) {
 		if ( $this->isAddField ) {
-			$syntransId = $idPath->getKeyStack()->peek( 0 )->syntransId;
-			if ( $syntransId == "" ) $syntransId = 0 ; // in the case of a DM option attribute, there is no syntrans in the PathId
-
 			$parameters = array(
 				"level" => $this->attributesLevelName,
 				"definedMeaningId" => $idPath->getDefinedMeaningId(),
-				"syntransId" => $syntransId,
 				"annotationAttributeId" => $idPath->getAnnotationAttribute()->getId()
 			);
+
+			if ( $this->attributesLevelName == WLD_SYNTRANS_MEANING_NAME ) {
+				// find and add syntransId as a parameter
+				$syntransId = $idPath->getKeyStack()->peek( 0 )->syntransId;
+				if ( $syntransId == "" ) {
+					// second tentative, sometimes it is called objectId
+					$syntransId = $idPath->getKeyStack()->peek( 0 )->objectId;
+				}
+				if ( $syntransId != "" ) {
+					$parameters["syntransId"] = $syntransId;
+				}
+			}
 
 			return getSuggest( $this->addId( $idPath->getId() ), $this->suggestType(), $parameters );
 		}

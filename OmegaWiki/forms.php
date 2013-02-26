@@ -133,9 +133,10 @@ function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = 
 			'<input type="hidden" id="' . $name . '" name="' . $name . '" value="' . $value . '"/>' .
 			'<input type="hidden" id="' . $name . '-suggest-dataset" value="' . $dc . '"/>';
 
-	foreach ( $parameters as $parameter => $parameterValue )
-		$result .=
-			'<input type="hidden" id="' . $name . '-suggest-parameter-' . $parameter . '" name="' . $parameter . '" value="' . $parameterValue . '"/>';
+	foreach ( $parameters as $parameter => $parameterValue ) {
+		$inputID = $name . '-suggest-parameter-' . $parameter;
+		$result .= HTML::hidden( $parameter, $parameterValue , array( "id" => $inputID ) );
+	}
 
 	$result .=
 		'<span id="' . $name . '-suggest-link" class="suggest-link" title="' . wfMsgSc( "SuggestHint" ) . '">' . $label . '</span>' .
