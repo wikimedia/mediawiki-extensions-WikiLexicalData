@@ -19,20 +19,24 @@ class SpecialSelect extends SpecialPage {
 
 		$dc = wdGetDataSetContext();
 		$optionAttribute = $wgRequest->getVal( WLD_OPTION_ATTRIBUTE );
-		$attributeObject = $wgRequest->getVal( 'attribute-object' );
+		$attributeObject = $wgRequest->getVal( 'attribute-object', 0 );
 		$lang_code = $wgLang->getCode();
 
 		$dbr = wfGetDB( DB_SLAVE );
-		$sql = 'SELECT language_id' .
-				" FROM {$dc}_syntrans" .
-				" JOIN {$dc}_expression ON {$dc}_expression.expression_id = {$dc}_syntrans.expression_id" .
-				" WHERE {$dc}_syntrans.syntrans_sid = " . $attributeObject .
-				' AND ' . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-				' AND ' . getLatestTransactionRestriction( "{$dc}_expression" );
-		$lang_res = $dbr->query( $sql );
-		$objectLanguage = $dbr->fetchObject( $lang_res )->language_id;
-		// language is not always defined, for example for a DM Option Attribute
-		if ( ! $objectLanguage ) $objectLanguage = 0 ;
+
+		$objectLanguage = 0 ;
+		if ( $attributeObject != 0 ) {
+			$sql = 'SELECT language_id' .
+					" FROM {$dc}_syntrans" .
+					" JOIN {$dc}_expression ON {$dc}_expression.expression_id = {$dc}_syntrans.expression_id" .
+					" WHERE {$dc}_syntrans.syntrans_sid = " . $attributeObject .
+					' AND ' . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
+					' AND ' . getLatestTransactionRestriction( "{$dc}_expression" );
+			$lang_res = $dbr->query( $sql );
+			$objectLanguage = $dbr->fetchObject( $lang_res )->language_id;
+			// language is not always defined, for example for a DM Option Attribute
+			if ( ! $objectLanguage ) $objectLanguage = 0 ;
+		}
 
 		$sql = "SELECT {$dc}_option_attribute_options.option_id,{$dc}_option_attribute_options.option_mid" .
 				" FROM {$dc}_option_attribute_options" .
@@ -67,7 +71,7 @@ class SpecialSelect extends SpecialPage {
 						' AND ' . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
 						' AND ' . getLatestTransactionRestriction( "{$dc}_expression" );
 				$res = $dbr->query( $sql );
-				if ( !$dbr->fetchObject( $res )->spelling )
+				if ( !$dbr->fetchObject( $res ) )
 					$sql = "SELECT {$dc}_expression.spelling" .
 							" FROM {$dc}_syntrans" .
 							" JOIN {$dc}_expression ON {$dc}_expression.expression_id = {$dc}_syntrans.expression_id" .

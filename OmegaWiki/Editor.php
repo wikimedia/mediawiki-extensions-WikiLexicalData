@@ -1778,7 +1778,7 @@ class OptionAttributeEditor extends AttributeEditor {
 				"level" => $this->attributesLevelName,
 				"definedMeaningId" => $idPath->getDefinedMeaningId(),
 				"annotationAttributeId" => $idPath->getAnnotationAttribute()->getId(),
-				"onUpdate" => 'updateSelectOptions(\'' . $this->addId( $idPath->getId() ) . WLD_OPTION_SUFFIX . '\',' . $syntransId
+				"onUpdate" => "updateSelectOptions('" . $this->addId( $idPath->getId() ) . WLD_OPTION_SUFFIX . "',0"
 			);
 
 			if ( $this->attributesLevelName == WLD_SYNTRANS_MEANING_NAME ) {
@@ -1790,6 +1790,7 @@ class OptionAttributeEditor extends AttributeEditor {
 				}
 				if ( $syntransId != "" ) {
 					$parameters["syntransId"] = $syntransId;
+					$parameters["onUpdate"] = 'updateSelectOptions(\'' . $this->addId( $idPath->getId() ) . WLD_OPTION_SUFFIX . '\',' . $syntransId ;
 				}
 			}
 
