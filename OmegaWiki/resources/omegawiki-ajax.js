@@ -3,9 +3,13 @@ jQuery(document).ready(function( $ ) {
 	 * Some javascript that is run when the page finished loading
 	 */
 
-	// First, sort the table on languages
-	sortTablesOnLanguages();
-	
+	// document.OWnosort can be set in the user .js to disable
+	// sorting for faster page loads
+	if ( ! document.OWnosort ) {
+		// sort the tables on language
+		sortTablesOnLanguages();
+	}
+
 	// add and manage arrows to navigate the tabs
 	if ( $(".wd-tablist").length ) {
 		initializeTabs();
@@ -59,13 +63,21 @@ jQuery(document).ready(function( $ ) {
 			'ä':'ae', 'ö' : 'oe', 'ß': 'ss', 'ü':'ue' // German characters
 		});
 
-		// start the tablesorter jquery plugin, only for tables having a language (or exp) column
-		tablesToSort = $("th.language,th.exp").parents("table.wiki-data-table");
-		
-		$(tablesToSort).tablesorter();
-		$(tablesToSort).find("th.headerSort.language").click();
-		// for syntrans table, the headerSort is not on language but on expression
-		$(tablesToSort).find("th.headerSort.exp").click();
+		// sort the definitions in the DM namespace
+		$("div.expand-dm-def-transl").children(".wiki-data-table")
+			.tablesorter().find("th.headerSort.language").click();
+
+		// sort the definitions in the Expression namespace
+		$("div.expand-exp-meanings-exact-dm-def-transl").children(".wiki-data-table")
+			.tablesorter().find("th.headerSort.language").click();
+
+		// sort the translations in the DM namespace
+		$("div.expand-dm-syntrans").children(".wiki-data-table")
+			.tablesorter().find("th.headerSort.exp:first").click();
+
+		// sort the translations in the Expression namespace
+		$("div.expand-exp-meanings-exact-dm-syntrans").children(".wiki-data-table")
+			.tablesorter().find("th.headerSort.exp:first").click();
 
 		// now disable sorting for users
 		$(".jquery-tablesorter").find("th").off("click");
