@@ -25,8 +25,8 @@ class SpecialNeedsTranslation extends SpecialPage {
                                                                 
 		$wgOut->addHTML( getOptionPanel(
 			array(
-				wfMsg( 'ow_needs_xlation_dest_lang' ) => getSuggest( 'to-lang', 'language', array(), $destinationLanguageId, languageIdAsText( $destinationLanguageId ) ),
 				wfMsg( 'ow_needs_xlation_source_lang' ) => getSuggest( 'from-lang', 'language', array(), $sourceLanguageId, languageIdAsText( $sourceLanguageId ) ),
+				wfMsg( 'ow_needs_xlation_dest_lang' ) => getSuggest( 'to-lang', 'language', array(), $destinationLanguageId, languageIdAsText( $destinationLanguageId ) ),
 				wfMsg( 'ow_Collection_colon' ) => getSuggest( 'collection', 'collection', array(), $collectionId, collectionIdAsText( $collectionId ) )
 			)
 		) );
