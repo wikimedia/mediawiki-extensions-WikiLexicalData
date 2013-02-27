@@ -37,6 +37,9 @@ jQuery(document).ready(function( $ ) {
 		// removing the "link" at the end of the Id
 		var suggestPrefix = getSuggestPrefix( this, 'link');
 
+		if ( $("#" + suggestPrefix + "div").length == 0 ) {
+			createSuggestStructure(this, suggestPrefix);
+		}
 		$("#" + suggestPrefix + "div").show();
 
 		var suggestField = document.getElementById(suggestPrefix + "text");
@@ -68,6 +71,26 @@ jQuery(document).ready(function( $ ) {
 
 	function stripSuffix( source, suffix ) {
 		return source.substr(0, source.length - suffix.length);
+	}
+
+	function createSuggestStructure( element, suggestPrefix ) {
+		var imgPath =  mw.config.get( 'wgExtensionAssetsPath' ) + '/WikiLexicalData/Images/' ;
+		var suggestStructure =
+			'<div class="suggest-drop-down"><div id="' + suggestPrefix + 'div" class="suggest-div">' +
+				'<table><tr>' +
+					'<td><input type="text" id="' + suggestPrefix + 'text" autocomplete="off" class="suggest-text"/></td>' +
+					'<td id="' + suggestPrefix + 'clear" class="suggest-clear">' + mw.message('ow_suggest_clear') + '</td>' +
+					'<td id="' + suggestPrefix + 'previous" class="suggest-previous">' +
+						'<img src="' + imgPath + 'ArrowLeft.png" alt="' + mw.message('ow_suggest_previous') + '"/> ' +
+						mw.message('ow_suggest_previous') + '</td>' +
+					'<td id="' + suggestPrefix + 'next" class="suggest-next">' + mw.message('ow_suggest_next') +
+						'<img src="' + imgPath + 'ArrowRight.png" alt="' + mw.message('ow_suggest_next') + '"/></td>' +
+					'<td id="' + suggestPrefix + 'close" class="suggest-close">[X]</td>' +
+				'</tr></table>' +
+				'<table id="' + suggestPrefix + 'table"><tr><td></td></tr></table>' +
+			'</div></div>';
+
+		$(element).after( suggestStructure );
 	}
 
 	function updateSuggestValue( suggestPrefix, value, displayValue ) {
@@ -223,7 +246,7 @@ jQuery(document).ready(function( $ ) {
 		});
 
 		$(".suggestion-row").click(function() {
-			var suggestPrefix = getSuggestPrefix(this.parentNode.parentNode.parentNode.parentNode, "div");
+			var suggestPrefix = getSuggestPrefix(this.parentNode.parentNode.parentNode, "div");
 			var idColumnsField = document.getElementById(suggestPrefix + "id-columns");
 			var displayLabelField = document.getElementById(suggestPrefix + "label-columns");
 			var displayLabelColumnIndices = displayLabelField.value.split(", ");

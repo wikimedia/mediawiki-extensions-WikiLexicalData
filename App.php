@@ -65,7 +65,8 @@ $wgResourceModules['ext.Wikidata.edit'] = $resourcePathArray + array(
 );
 
 $wgResourceModules['ext.Wikidata.suggest'] = $resourcePathArray + array(
-	'scripts' => 'OmegaWiki/resources/suggest.js'
+	'scripts' => 'OmegaWiki/resources/suggest.js',
+	'messages' => array( 'ow_suggest_clear', 'ow_suggest_previous', 'ow_suggest_next' )
 );
 
 $wgAutoloadClasses['WikiLexicalDataHooks'] = $dir . 'Wikidata.hooks.php';
