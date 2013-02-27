@@ -141,20 +141,9 @@ function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = 
 	$result .=
 		'<span id="' . $name . '-suggest-link" class="suggest-link" title="' . wfMsgSc( "SuggestHint" ) . '">' . $label . '</span>' .
 		'</span>';
-	
-	$result .=
-		'<div class="suggest-drop-down"><div id="' . $name . '-suggest-div" class="suggest-div">' .
-			'<div><table>' .
-				'<tr>' .
-					'<td><input type="text" id="' . $name . '-suggest-text" autocomplete="off" class="suggest-text"/></td>' .
-					'<td id="' . $name . '-suggest-clear" class="suggest-clear">' . wfMsg( 'ow_suggest_clear' ) . '</td>' .
-					'<td id="' . $name . '-suggest-previous" class="suggest-previous"><img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowLeft.png" alt="' . wfMsg( 'ow_suggest_previous' ) . '"/> ' . wfMsg( 'ow_suggest_previous' ) . '</td>' .
-					'<td id="' . $name . '-suggest-next" class="suggest-next">' . wfMsg( 'ow_suggest_next' ) . ' <img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/ArrowRight.png" alt="' . wfMsg( 'ow_suggest_next' ) . '"/></td>' .
-					'<td id="' . $name . '-suggest-close" class="suggest-close">[X]</td>' .
-				'</tr>' .
-			'</table></div>' .
-			'<div><table id="' . $name . '-suggest-table"><tr><td></td></tr></table></div>' .
-		'</div></div>';
+
+	// The table that then allows to select from a dropdown list
+	// is generated with javascript (cf. suggest.js)
 
 	return $result;
 }
