@@ -290,7 +290,7 @@ Please contact the server operator or administrator.",
  * @author Тест
  */
 $messages['qqq'] = array(
-	'wikidata-desc' => '{{desc}}',
+	'wikidata-desc' => '{{desc|name=Wiki Lexical Data|url=http://www.mediawiki.org/wiki/Extension:WikiLexicalData}}',
 	'languages' => 'Name of special page (see [http://www.omegawiki.org/Special:Specialpages http://www.omegawiki.org/Special:Specialpages])',
 	'langman-desc' => '{{desc}}',
 	'langman_title' => 'Title in Language manager special page ([http://www.omegawiki.org/Special:Languages http://www.omegawiki.org/Special:Languages]).
