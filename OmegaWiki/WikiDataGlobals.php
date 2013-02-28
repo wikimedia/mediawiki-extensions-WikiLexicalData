@@ -54,7 +54,8 @@ global $wdDefinedMeaningAttributesOrder;
 $wdDefinedMeaningAttributesOrder = array(
 	WLD_SYNT_ATTRIBUTES,
 	WLD_DEFINITION,
-	WLD_ALTERNATIVE_DEFINITIONS,
+	// Kip: alternative definitions disabled until we find a use for that field
+	// WLD_ALTERNATIVE_DEFINITIONS,
 	WLD_SYNONYMS_TRANSLATIONS,
 	WLD_DM_ATTRIBUTES,
 	WLD_CLASS_MEMBERSHIP,

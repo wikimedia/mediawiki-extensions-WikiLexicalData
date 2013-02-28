@@ -878,7 +878,6 @@ function getDefinedMeaningEditor( ViewInformation $viewInformation, $insideExpre
 	$o = OmegaWikiAttributes::getInstance();
 	
 	$definitionEditor = getDefinitionEditor( $viewInformation );
-	$alternativeDefinitionsEditor = getAlternativeDefinitionsEditor( $viewInformation );
 	$synonymsAndTranslationsEditor = getSynonymsAndTranslationsEditor( $viewInformation );
 	$reciprocalRelationsEditor = getDefinedMeaningReciprocalRelationsEditor( $viewInformation );
 	$classMembershipEditor = getDefinedMeaningClassMembershipEditor( $viewInformation );
@@ -886,7 +885,8 @@ function getDefinedMeaningEditor( ViewInformation $viewInformation, $insideExpre
 	
 	$availableEditors = new AttributeEditorMap();
 	$availableEditors->addEditor( $definitionEditor );
-	$availableEditors->addEditor( $alternativeDefinitionsEditor );
+	// Kip: alternative definitions disabled until we find a use for that field
+	// $availableEditors->addEditor( getAlternativeDefinitionsEditor( $viewInformation ) );
 
 	if ( $wgUser->isAllowed( 'editClassAttributes' ) ) {
 		$classAttributesEditor = getClassAttributesEditor( $viewInformation );

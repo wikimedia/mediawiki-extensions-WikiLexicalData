@@ -172,7 +172,8 @@ class DefinedMeaningModel {
 		$record->definedMeaningCompleteDefiningExpression =  getDefiningExpressionRecord( $id );
 		$record->definition = getDefinedMeaningDefinitionRecord( $id, $view );
 		$record->classAttributes = getClassAttributesRecordSet( $id, $view );
-		$record->alternativeDefinitions = getAlternativeDefinitionsRecordSet( $id, $view );
+		// Kip: alternative definitions disabled until we find a use for that field
+		// $record->alternativeDefinitions = getAlternativeDefinitionsRecordSet( $id, $view );
 
 		// exclude the current syntrans from the list of Synonyms
 		$excludeSyntransId = null;
