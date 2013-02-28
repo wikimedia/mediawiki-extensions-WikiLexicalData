@@ -77,18 +77,18 @@ class SpecialSuggest extends SpecialPage {
 				break;
 			case WLD_DEFINED_MEANING:
 				$sql =
-					"SELECT {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id " .
-					" FROM {$dc}_expression, {$dc}_syntrans " .
-					" WHERE {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
+					"SELECT STRAIGHT_JOIN {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id " .
+					" FROM {$dc}_expression JOIN {$dc}_syntrans " .
+					" ON {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
 					" AND {$dc}_syntrans.identical_meaning=1 " .
 					" AND {$dc}_syntrans.remove_transaction_id is NULL ";
 				break;
 			case WLD_SYNONYMS_TRANSLATIONS:
 				$sql =
-					"SELECT {$dc}_syntrans.syntrans_sid AS syntrans_sid, {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, " .
+					"SELECT STRAIGHT_JOIN {$dc}_syntrans.syntrans_sid AS syntrans_sid, {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, " .
 					" {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id " .
-					" FROM {$dc}_expression, {$dc}_syntrans " .
-					" WHERE {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
+					" FROM {$dc}_expression JOIN {$dc}_syntrans " .
+					" ON {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
 					" AND {$dc}_syntrans.identical_meaning=1 " .
 					" AND {$dc}_syntrans.remove_transaction_id is NULL ";
 				break;
