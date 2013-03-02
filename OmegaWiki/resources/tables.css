@@ -97,6 +97,10 @@
 	width: auto;
 }
 
+.wld-remove-header {
+	/* @embed */
+	background: url("../../Images/Delete.png") no-repeat center;
+}
 
 .wd-languagecurrent {
 	font-size:large ;

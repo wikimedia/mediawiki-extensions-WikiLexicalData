@@ -301,15 +301,17 @@ abstract class DefaultEditor implements Editor {
 		}
 
 		// if it is collapsible, continue
+		global $wgLang;
+		$arrow = ( $wgLang->getDir() == 'ltr' ) ? "▶" : "◀" ;
 		$prefix = HTML::element('span', array(
 			'id' => "prefix-collapsed-$elementId" ,
 			'class' => "collapse-$class"
-			) , "▶" ) ;
+			) , $arrow ) ;
 		$prefix .= HTML::element('span', array(
 			'id' => "prefix-expanded-$elementId" ,
 			'class' => "expand-$class"
 			) , "▼" ) ;
-			
+
 		return $prefix ;
 	}
 
@@ -765,8 +767,11 @@ class RecordSetTableEditor extends RecordSetEditor {
 		$headerRows = getStructureAsTableHeaderRows( $visibleStructure, $columnOffset, $idPath );
 
 		$result .= Xml::openElement( 'thead' );
-		if ( $this->allowRemove )
-			$headerRows[0] = '<th class="remove" rowspan="' . count( $headerRows ) . '"><img src="' . $wgScriptPath . '/extensions/WikiLexicalData/Images/Delete.png"  title="' . wfMsgSc( "RemoveHint" ) . '" alt="' . wfMsgSc( "Remove" ) . '"/></th>' . $headerRows[0];
+		if ( $this->allowRemove ) {
+			$headerRows[0] = HTML::element( 'th',
+				array( 'class' => 'wld-remove-header', 'rowspan' => count( $headerRows ), 'title' => wfMsgSc( "RemoveHint" ) )
+			).$headerRows[0];
+		}
 
 		if ( $this->repeatInput )
 			$headerRows[0] .= '<th class="add" rowspan="' . count( $headerRows ) . '">Input rows</th>';
