@@ -148,6 +148,15 @@ class WikiLexicalDataHooks {
 		return true; // no match
 	}
 
+	public static function onPageContentLanguage( $title, &$pageLang ) {
+		if ( $title->getNamespace() === NS_EXPRESSION || $title->getNamespace() === NS_DEFINEDMEANING ) {
+			global $wgLang;
+			// in this wiki, we try to deliver content in the user language
+			$pageLang = $wgLang;
+		}
+		return true;
+	}
+
 	public static function onSkinTemplateNavigation ( &$skin, &$links ) {
 
 		// only for Expression and DefinedMeaning namespaces

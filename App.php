@@ -188,6 +188,7 @@ $wgHooks['AbortMove'][] = 'WikiLexicalDataHooks::onAbortMove';
 $wgHooks['NamespaceIsMovable'][] = 'WikiLexicalDataHooks::onNamespaceIsMovable';
 $wgHooks['SpecialSearchNogomatch'][] = 'WikiLexicalDataHooks::onNoGoMatchHook';
 $wgHooks['SearchGetNearMatchBefore'][] = 'WikiLexicalDataHooks::onGoClicked';
+$wgHooks['PageContentLanguage'][] = 'WikiLexicalDataHooks::onPageContentLanguage';
 $wgHooks['SkinTemplateNavigation'][] = 'WikiLexicalDataHooks::onSkinTemplateNavigation';
 
 // LocalApp.php is optional. Its function is like LocalSettings.php,
