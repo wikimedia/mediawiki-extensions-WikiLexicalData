@@ -2663,6 +2663,8 @@ $messages['ce'] = array(
  * @author Marmzok
  */
 $messages['ckb'] = array(
+	'wikidata-handler-namespace-move-error' => 'پەڕەکانی بۆشایی ناو کە لە لایەن پاشبەندی ویکیدراوە دەکاردەگیرێ ناگوازرێتەوە.',
+	'languages' => 'ویکیدراوە: بەڕێوەبەری زمان',
 	'langman-desc' => 'به [[Special:Languages]] زمان زیاد بکە و هەڵبژاردەکانی بگۆڕە ‌',
 	'langman_title' => 'جێبەجێکەری زمان',
 	'langman_not_allowed' => 'ڕێگەت پێ‌نەدراوە بۆ گۆڕانی هەڵبژاردەکانی زمان.',
@@ -2675,22 +2677,29 @@ $messages['ckb'] = array(
 	'langman_wikimedia' => 'کۆدی ویکیمدیا:',
 	'langman_field_optional' => '(دڵخوازانه‌)',
 	'langman_addlang' => 'زمان زیاد بکە',
+	'importlangnames' => 'ویکیدراوە: ھاوردنی ناوەکانی زمان',
 	'importlangnames_not_allowed' => 'ڕێگەت پێ‌نەدراوە بۆ گۆڕانی هەڵبژاردەکانی زمان.',
 	'importlangnames_added' => 'ناوه‌کانی زمان بۆ "$1" زیاد کرا.',
+	'datasearch' => 'ویکیدراوە: گەڕانی دراوەکان',
 	'datasearch_language' => 'زمان:',
 	'datasearch_search_text' => 'گه‌ڕان بۆ ئه‌م ده‌قه‌:',
 	'datasearch_within_words' => 'بریتی بێت له‌م وشانه‌:',
+	'importtsv' => 'ویکیدراوە: ھاوردنی TSV',
 	'ow_importtsv_nothing_added' => 'هیچ‌شتێک زیاد نەکرا.',
 	'ow_importtsv_nothing_added_test' => 'هیچ‌شتێک زیاد نەکرا (تاکە تاقی‌کردنەوەیەکت کرد).',
 	'ow_impexptsv_unknown_lang' => '<p>$1: زمانێکی هەڵە یان نەناسراو.<br />
 زمانەکان دەبێ لە کۆدی زمانەکانی ISO 639-3 ببێت.</p>',
+	'exporttsv' => 'ویکیدراوە: ھەناردنی TSV',
 	'ow_exporttsv_languages' => 'زمانەکان:',
 	'ow_exporttsv_export_failed' => 'هەناردن سەرکەوتوو نەبوو',
+	'addcollection' => 'ویکیدراوە: زیادکردنی کۆمەڵ',
 	'ow_save' => 'پاشەکەوت‌کردن',
 	'ow_history' => 'مێژوو',
 	'ow_noedit_title' => 'ڕێگە نەدراوە بۆ دەستکاری‌کردن',
 	'ow_uipref_datasets' => 'نمای بنەڕەت:',
+	'ow_uiprefs' => 'ویکیدراوە',
 	'ow_none_selected' => 'هیچ هەڵنەبژێردراوە',
+	'transaction' => 'ویکیدراوە: لۆگی دانوستان',
 	'ow_transaction_user' => 'ناوی بەکارهێنەر:',
 	'ow_transaction_previous_version' => 'وەشانی پێشوو',
 	'ow_transaction_restore' => 'گەڕاندنەوە',
@@ -2699,6 +2708,7 @@ $messages['ckb'] = array(
 	'ow_transaction_is_latest' => 'داویینە',
 	'ow_transaction_object' => 'تەن',
 	'ow_transaction_summary' => 'پوختە',
+	'conceptmapping' => 'ویکیدراوە: ھێڵکاریی چەمک',
 	'ow_conceptmapping_no_action_specified' => 'ئەنجامی "$1" پاڵپشت‌نەکراوە',
 	'ow_ClassAttributeLevel' => 'ئاست',
 	'ow_ClassAttributeType' => 'جۆر',
@@ -2730,19 +2740,26 @@ $messages['ckb'] = array(
 	'ow_Value' => 'نرخ',
 	'ow_added' => 'زیادکرا',
 	'ow_removed' => 'لابردرا',
+	'copy' => 'ویکیدراوە: کۆپی',
 	'ow_copy_help' => 'یارمەتی ئێستا بە ئاستی دڵخواز نەگەیشتە.',
 	'ow_copy_successful' => '<h2>ڕوونووسین سەرکەوتوو بوو</h2><br />
 لەوە دەچی دراوەت بە سەرکەوتوویی ڕوونووسین کرا.<br />
 لە یادمەکە بۆ ئەرخەیان بوون، دیسان چاوی لێ‌بکەیتەوە!',
 	'ow_copy_unsuccessful' => '<h3>ڕوونووسین سەرکەوتوو نەبوو</h3>
 کردەوەی ڕوونووسین ڕووی نەدا.',
+	'ow_db_consistency_not_found' => '<h2>ھەڵە</h2>
+گرفتێک لە سازانی بنکەدراوە دۆزرایەوە، ویکیدراوە ناتوانێ دراوە دروستە پەیوەندیدارەکان بە پێناسەی مانای دیاریکراو بدۆزێتەوە.
+لەوانەیە بزر بووبێ.
+تکایە لەگەڵ بەڕێوەبەر یان ئۆپەراتۆر پەیوەندی بگرن.',
 	'ow_class_attr_type_xlate' => 'ئەو دەقانەی توانای وەرگێرانیان هەیە',
 	'ow_class_attr_type_plain' => 'دەقی سادە',
 	'ow_class_attr_type_link' => 'بەستەر',
 	'ow_class_attr_type_option' => 'پێرستی ھەڵبژاردن',
+	'needstranslation' => 'ویکیدراوە: دەستەواژەکانی پێویست بە وەرگێڕان',
 	'ow_needs_xlation_source_lang' => 'زمانی سەرچاوە:',
 	'ow_needs_xlation_dest_lang' => 'زمانی مەبەست:',
 	'ow_needs_xlation_no_dest_lang' => 'تکایە زمانێکی مەبەست دیاری بکە.',
+	'ow_statistics' => 'ویکیدراوە: ئامارەکان',
 	'ow_show' => 'نیشانیبدە',
 	'ow_upload' => 'بارکردن',
 	'ow_create' => 'درووست‌کردن',
@@ -4564,6 +4581,7 @@ Mesedez harremanetan ipini zerbitzari operadore edo administratzailearekin.',
 );
 
 /** Persian (فارسی)
+ * @author Calak
  * @author Dalba
  * @author Ebrahimi-amir
  * @author Ebraminio
@@ -7776,9 +7794,9 @@ $messages['ja'] = array(
 	'ow_exporttsv_not_allowed' => 'あなたにはTSVを書き出す権限がありません。',
 	'ow_exporttsv_export_failed' => '書き出し失敗',
 	'addcollection' => 'ウィキデータ: コレクション追加',
-	'ow_searchnoresult' => "<p>以下の操作が可能です:<br />
-* '''式 \"[[Expression:\$1]]\" の作成''' (および定義の追加)<br />
-* '''ページ \"[[:\$1]]\" の作成''' (通常のウィキページ)</p>",
+	'ow_searchnoresult' => "<p>以下の操作ができます:<br />
+* '''式「[[Expression:$1]]」の作成''' (および定義の追加)<br />
+* '''ページ「[[:$1]]」の作成''' (通常のウィキページ)</p>",
 	'ow_save' => '保存',
 	'ow_history' => '履歴',
 	'ow_datasets' => 'データ集合の選択',
