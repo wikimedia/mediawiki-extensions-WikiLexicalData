@@ -13,6 +13,10 @@ jQuery(document).ready(function( $ ) {
 	// add and manage arrows to navigate the tabs
 	if ( $(".wd-tablist").length ) {
 		initializeTabs();
+
+		$(window).resize(function() {
+			updateTabs();
+		});
 	}
 
 	// sticky explang
@@ -46,11 +50,6 @@ jQuery(document).ready(function( $ ) {
 		$(this).children("span").toggle();
 		$(this).next(".popupToggleable").toggle(100);
 	});
-	
-	$(window).resize(function() {
-		updateTabs();
-	});
-
 	
 	/*
 	 * sortTablesOnLanguages sorts the wiki tables according to the language column
