@@ -1436,6 +1436,7 @@ $messages['bcl'] = array(
 
 /** Belarusian (беларуская)
  * @author Тест
+ * @author Хомелка
  * @author Чаховіч Уладзіслаў
  */
 $messages['be'] = array(
@@ -1553,6 +1554,7 @@ $messages['be'] = array(
 	'ow_add_concept_link' => 'Дадаць спасылку на іншыя канцэпты',
 	'ow_concept_panel' => 'Панэль канцэптаў',
 	'ow_dm_badtitle' => 'Гэта старонка не паказвае ні на адно ВызначанаеЗначэнне (канцэпт). Калі ласка, праверце вэб-адрас.',
+	'ow_dm_missing' => 'Гэта старонка не паказвае ні на адно ВызначанаеЗначэнне (канцэпт). Калі ласка, праверце вэб-адрас.',
 	'ow_AddHint' => 'Увядзіце новы радок для дадання',
 	'ow_AlternativeDefinition' => 'Альтэрнатыўнае вызначэнне',
 	'ow_AlternativeDefinitions' => 'Альтэрнатыўныя вызначэнні',
@@ -1660,6 +1662,8 @@ $messages['be'] = array(
 	'right-addlanguage' => 'даданне і змяненне моўных настаўленняў',
 	'ow_shown_datasets' => 'Паказаныя наборы дадзеных',
 	'prefs-ow-lang' => 'Мовы',
+	'ow_pref_lang_switch' => 'Паказваць толькі вызначаныя мовы',
+	'ow_pref_lang_select' => 'Мовы для паказу',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
