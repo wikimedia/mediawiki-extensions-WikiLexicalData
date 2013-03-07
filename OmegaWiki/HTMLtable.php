@@ -114,15 +114,21 @@ function getRecordAsTableCells( IdStack $idPath, Editor $editor, Structure $visi
 			if ( $childEditor instanceof RecordTableCellEditor ) {
 				$result .= getRecordAsTableCells( $idPath, $childEditor, $visibleAttribute->type, $value, $startColumn );
 			} else {
+				$tdclass = getHTMLClassForType( $type, $attribute ) . ' column-' . parityClass( $startColumn );
+				$tdattribs = array( "class" => $tdclass );
 				$displayValue = $childEditor->showsData( $value ) ? $childEditor->view( $idPath, $value ) : "";
-				$result .= '<td class="' . getHTMLClassForType( $type, $attribute ) . ' column-' . parityClass( $startColumn ) . '">' . $displayValue . '</td>';
+
+				if ( $childEditor instanceof LanguageEditor ) {
+					$tdattribs["langid"] = $value;
+				}
+				$result .= Html::rawElement( 'td', $tdattribs, $displayValue );
 				$startColumn++;
 			}
 			
 			$idPath->popAttribute();
 		}
 		else {
-			$result .= '<td/>';
+			$result .= Html::element('td');
 		}
 	}
 	return $result;
@@ -144,20 +150,21 @@ function getRecordAsEditTableCells( IdStack $idPath, Editor $editor, Structure $
 			if ( $childEditor instanceof RecordTableCellEditor ) {
 				$result .= getRecordAsEditTableCells( $idPath, $childEditor, $visibleAttribute->type, $value, $startColumn );
 			} else {
-				if ( $childEditor->showEditField( $idPath ) ) {
-					$displayValue = $childEditor->edit( $idPath, $value );
-				} else {
-					$displayValue = "";
+				$tdclass = getHTMLClassForType( $type, $attribute ) . ' column-' . parityClass( $startColumn );
+				$tdattribs = array( "class" => $tdclass );
+				$displayValue = $childEditor->showEditField( $idPath ) ? $childEditor->edit( $idPath, $value ) : "";
+
+				if ( $childEditor instanceof LanguageEditor ) {
+					$tdattribs["langid"] = $value;
 				}
-				$result .= '<td class="' . getHTMLClassForType( $type, $attribute ) . ' column-' . parityClass( $startColumn ) . '">' . $displayValue . '</td>';
-					
+				$result .= Html::rawElement( 'td', $tdattribs, $displayValue );
 				$startColumn++;
 			}
 			
 			$idPath->popAttribute();
 		}
 		else {
-			$result .= "<td/>";
+			$result .= Html::element('td');
 		}
 	}
 	return $result;
