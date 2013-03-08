@@ -2094,6 +2094,7 @@ $messages['bo'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  */
 $messages['br'] = array(
@@ -2243,6 +2244,7 @@ Dibabit un dastumad da enporzhiañ. E prenestr testenn ar yezhoù, merkit ur rol
 	'ow_OptionAttributeOptions' => 'Dibarzhioù',
 	'ow_OptionAttributeValues' => 'Talvoudegezh an dibarzhioù',
 	'ow_OtherDefinedMeaning' => 'Ster termenet all',
+	'ow_OtherLanguages' => 'Yezhoù all :',
 	'ow_PopupAnnotation' => 'Notennadur',
 	'ow_RecordLifeSpan' => 'Pad buhez an enrolladenn',
 	'ow_Relations' => 'Darempredoù',
@@ -2310,6 +2312,7 @@ Dibabit un dastumad da enporzhiañ. E prenestr testenn ar yezhoù, merkit ur rol
 	'ow_nstab_edit_copy' => 'Kemmañ an eiladenn',
 	'right-addlanguage' => 'Ouzhpennañ ha kemmañ an arventennoù yezh',
 	'ow_shown_datasets' => 'Diskwel ar strolladoù roadennoù',
+	'prefs-ow-lang' => 'Yezhoù',
 );
 
 /** Bosnian (bosanski)
