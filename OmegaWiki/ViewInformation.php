@@ -1,5 +1,7 @@
 <?php
 
+require_once('PropertyToColumnFilter.php');
+
 /**
  * ViewInformation is used to capture various settings that influence the way a page will be viewed
  * depending on different use case scenarios.
@@ -79,28 +81,6 @@ class ViewInformation {
 	 */
 	public function getFilterLanguageList() {
 		return $this->filterLanguageList;
-	}
-
-	/**
-	 * returns a string "(1, 3, ...)" to add to a sql query
-	 * with language_id IN $string to filter the languages
-	 * according to the user preferences.
-	 */
-	public function getFilterLanguageSQL() {
-		if ( !empty( $this->filterLanguageList ) ) {
-			$filterLanguageSQL = " ( ";
-			$first = true ;
-			foreach ( $this->filterLanguageList as $language_id ) {
-				if ( !$first ) {
-					$filterLanguageSQL .= ",";
-				}
-				$filterLanguageSQL .= " $language_id " ;
-				$first = false;
-			}
-			$filterLanguageSQL .= ") ";
-			return $filterLanguageSQL ;
-		}
-		return "";
 	}
 
 	public function setPropertyToColumnFilters( array $propertyToColumnFilters ) {

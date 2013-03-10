@@ -706,25 +706,30 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
 
+	$vars = array( 'language_id', 'text_id' );
+	$cond = array( 'translated_content_id' => $translatedContentId );
+
 	if ( ! $viewInformation->showRecordLifeSpan ) {
-		// standard view
-		$getTranslatedContentSQL = "SELECT language_id, text_id "
-			. " FROM {$dc}_translated_content "
-			. " WHERE translated_content_id = $translatedContentId "
-			. " AND remove_transaction_id IS NULL " ;
+		// not in history view: don't show deleted content
+		$cond['remove_transaction_id'] = null;
 	} else {
-		// history view
-		$getTranslatedContentSQL = "SELECT language_id, text_id "
-			. ", add_transaction_id, remove_transaction_id "
-			. " FROM {$dc}_translated_content "
-			. " WHERE translated_content_id = $translatedContentId ";
+		// in history view: retrieve history information
+		$vars[] = 'add_transaction_id';
+		$vars[] = 'remove_transaction_id';
 	}
 
 	// filter on languages, if activated by the user
-	$filterLanguageSQL = $viewInformation->getFilterLanguageSQL() ;
-	if ( $filterLanguageSQL != "" ) {
-		$getTranslatedContentSQL .= " AND language_id IN $filterLanguageSQL " ;
+	$langsubset = $viewInformation->getFilterLanguageList();
+	if ( ! empty( $langsubset ) ) {
+		$cond['language_id'] = $langsubset;
 	}
+
+	$queryResult = $dbr->select(
+		"{$dc}_translated_content",
+		$vars,
+		$cond,
+		__METHOD__
+	);
 
 	$structure = $o->translatedTextStructure ;
 	if ( $viewInformation->showRecordLifeSpan ) {
@@ -735,8 +740,7 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 	$keyAttribute = $o->language ;
 	$recordSet = new ArrayRecordSet( $structure, new Structure( $keyAttribute ) );
 
-	$queryResult = $dbr->query( $getTranslatedContentSQL );
-	while ( $row = $dbr->fetchObject( $queryResult ) ) {
+	foreach ( $queryResult as $row ) {
 		$record = new ArrayRecord( $structure );
 		$record->language = $row->language_id;
 		$record->text = $row->text_id; // expanded below
@@ -761,32 +765,42 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
 
+
+	$vars = array(
+		'syntrans_sid',
+		'expression_id' => 'synt.expression_id',
+		'identical_meaning',
+		'language_id',
+		'spelling'
+	);
+	$cond = array(
+		'defined_meaning_id' => $definedMeaningId,
+		'exp.expression_id = synt.expression_id'
+	);
+
 	if ( ! $viewInformation->showRecordLifeSpan ) {
-		// standard view
-		$getSynTransSQL = "SELECT syntrans_sid, {$dc}_syntrans.expression_id AS expression_id, identical_meaning, language_id, spelling "
-			. " FROM {$dc}_syntrans, {$dc}_expression "
-			. " WHERE defined_meaning_id = $definedMeaningId "
-			. " AND {$dc}_expression.expression_id = {$dc}_syntrans.expression_id"
-			. " AND {$dc}_syntrans.remove_transaction_id IS NULL" ;
+		// not in history view: don't show deleted content
+		$cond['synt.remove_transaction_id'] = null;
 	} else {
-		// history view
-		$getSynTransSQL = "SELECT syntrans_sid, {$dc}_syntrans.expression_id AS expression_id, "
-			. " identical_meaning, language_id, spelling, "
-			. " {$dc}_syntrans.remove_transaction_id AS remove_transaction_id,  "
-			. " {$dc}_syntrans.add_transaction_id AS add_transaction_id "
-			. " FROM {$dc}_syntrans, {$dc}_expression "
-			. " WHERE defined_meaning_id = $definedMeaningId "
-			. " AND {$dc}_expression.expression_id = {$dc}_syntrans.expression_id" ;
+		// in history view: retrieve history information
+		$vars['add_transaction_id'] = 'synt.add_transaction_id';
+		$vars['remove_transaction_id'] = 'synt.remove_transaction_id';
 	}
 
 	// filter on languages, if activated by the user
-	$filterLanguageSQL = $viewInformation->getFilterLanguageSQL() ;
-	if ( $filterLanguageSQL != "" ) {
-		$getSynTransSQL .= " AND language_id IN $filterLanguageSQL " ;
+	$langsubset = $viewInformation->getFilterLanguageList() ;
+	if ( ! empty( $langsubset ) ) {
+		$cond['language_id'] = $langsubset;
 	}
 
-	// have identical translations on top
-	$getSynTransSQL .= " ORDER BY identical_meaning DESC" ;
+	// the order-by is used to get the identical translations on top
+	$queryResult = $dbr->select(
+		array( 'synt' => "{$dc}_syntrans", 'exp' => "{$dc}_expression" ),
+		$vars,
+		$cond,
+		__METHOD__,
+		array( 'ORDER BY' => 'identical_meaning DESC' )
+	);
 
 	// TODO; try with synTransExpressionStructure instead of synonymsTranslationsStructure
 	// so that expression is not a sublevel of the hierarchy, but on the same level
@@ -802,8 +816,7 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 	$keyAttribute = $o->syntransId ;
 	$recordSet = new ArrayRecordSet( $structure, new Structure( $keyAttribute ) );
 
-	$queryResult = $dbr->query( $getSynTransSQL );
-	while ( $row = $dbr->fetchObject( $queryResult ) ) {
+	foreach ( $queryResult as $row ) {
 		$syntransId = $row->syntrans_sid;
 		if ( $syntransId == $excludeSyntransId ) {
 			continue;

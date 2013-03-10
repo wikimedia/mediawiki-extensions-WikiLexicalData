@@ -72,7 +72,7 @@ class SpecialSuggest extends SpecialPage {
 				break;
 			case 'language':
 				require_once( 'languages.php' );
-				$sql = getSQLForLanguageNames( $langCode, $o->getViewInformation()->getFilterLanguageSQL() );
+				$sql = getSQLForLanguageNames( $langCode, $o->getViewInformation()->getFilterLanguageList() );
 				$rowText = 'language_name';
 				break;
 			case WLD_DEFINED_MEANING:

@@ -90,32 +90,57 @@ function getLanguageIso639_3ForId( $id ) {
 /**
  * Returns a SQL query string for fetching language names in a given language.
  * @param $lang_code the language in which to retrieve the language names
- * @param $lang_subset a string in the form ( 85, 89, ...) that restricts the language_id that are returned
- * this string can be generated with ViewInformation->getFilterLanguageSQL() according to user preferences
+ * @param $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
+ * this array can be generated with ViewInformation->getFilterLanguageList() according to user preferences
  **/
-function getSQLForLanguageNames( $lang_code, $lang_subset = "") {
+function getSQLForLanguageNames( $lang_code, $lang_subset = array() ) {
 	/* Use a simpler query if the user's language is English. */
 	/* getLanguageIdForCode( 'en' ) = 85 */
+	$dbr = wfGetDB( DB_SLAVE );
 	$lang_id = getLanguageIdForCode( $lang_code );
 
 	if ( $lang_code == 'en' || is_null( $lang_id ) ) {
-		$sqlQuery = 'SELECT language_id AS row_id, language_name'
-			. ' FROM language_names'
-			. ' WHERE name_language_id = ' . WLD_ENGLISH_LANG_ID ;
-		if ( $lang_subset ) {
-			$sqlQuery .= " AND language_id IN $lang_subset " ;
+		$cond = array( 'name_language_id' => WLD_ENGLISH_LANG_ID );
+		if ( ! empty( $lang_subset ) ) {
+			$cond['language_id'] = $lang_subset;
 		}
+		$sqlQuery = $dbr->selectSQLText(
+			'language_names',
+			array( 'row_id' => 'language_id', 'language_name' ),
+			$cond,
+			__METHOD__
+		);
+
 	} else {
 		/* Fall back on English in cases where a language name is not present in the
 		user's preferred language. */
-		$sqlQuery = 'SELECT language.language_id AS row_id, COALESCE(ln1.language_name,ln2.language_name) AS language_name'
-			. ' FROM language'
-			. ' LEFT JOIN language_names AS ln1 ON language.language_id = ln1.language_id'
-			. ' AND ln1.name_language_id = ' . $lang_id
-			. ' JOIN language_names AS ln2 ON language.language_id = ln2.language_id AND ln2.name_language_id = 85 ' ;
-		if ( $lang_subset ) {
-			$sqlQuery .= " AND language.language_id IN $lang_subset " ;
+		$cond = array();
+
+		if ( ! empty( $lang_subset ) ) {
+			$cond['language_id'] = $lang_subset;
 		}
+
+		$sqlQuery = $dbr->selectSQLText(
+			array( 'language', 'ln1' => 'language_names', 'ln2' => 'language_names' ),
+			array( /* fields to select */
+				'row_id' => 'language.language_id',
+				'language_name' => 'COALESCE(ln1.language_name,ln2.language_name)' ),
+			$cond,
+			__METHOD__,
+			array(),
+			array( /* JOIN */
+				'ln1' => array( 'LEFT JOIN', array(
+					'language.language_id = ln1.language_id',
+					'ln1.name_language_id' => $lang_id
+					)
+				),
+				'ln2' => array( 'JOIN', array(
+					'language.language_id = ln2.language_id',
+					'ln2.name_language_id' => WLD_ENGLISH_LANG_ID
+					)
+				)
+			)
+		);
 	}
 
 	return $sqlQuery;

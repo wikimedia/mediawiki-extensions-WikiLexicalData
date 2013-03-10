@@ -51,11 +51,13 @@ function getExpression( $expressionId, $dc = null ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT spelling, language_id " .
-								" FROM {$dc}_expression " .
-								" WHERE {$dc}_expression.expression_id=$expressionId LIMIT 1" );
-	$expressionRecord = $dbr->fetchObject( $queryResult );
-	$dbr->freeResult( $queryResult ) ;
+	$expressionRecord = $dbr->selectRow(
+		"{$dc}_expression",
+		array( 'spelling', 'language_id' ),
+		"expression_id = $expressionId",
+		__METHOD__
+	);
+
 	if ( $expressionRecord ) {
 		$expression = new Expression( $expressionId, $expressionRecord->spelling, $expressionRecord->language_id );
 		return $expression;
@@ -68,7 +70,12 @@ function newObjectId( $table ) {
 	$dc = wdGetDataSetContext();
 
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "INSERT INTO {$dc}_objects (`table`, `UUID`) VALUES (" . $dbw->addQuotes( $table ) . ", UUID())" );
+	$uuid = $dbw->selectField( '', 'UUID()', '', __METHOD__);
+	$dbw->insert(
+		"{$dc}_objects",
+		array(  '`table`' => $table, '`UUID`' => $uuid ),
+		__METHOD__
+	);
 
 	return $dbw->insertId();
 }
@@ -77,16 +84,17 @@ function getTableNameWithObjectId( $objectId ) {
 	$dc = wdGetDataSetContext();
 
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT `table`" .
-		" FROM {$dc}_objects" .
-		" WHERE object_id=$objectId"
+	$table = $dbr->selectField(
+		"{$dc}_objects",
+		'table',
+		array ( 'object_id' => $objectId ),
+		__METHOD__
 	);
-	
-	if ( $objectRecord = $dbr->fetchObject( $queryResult ) )
-		return $objectRecord->table;
-	else
-		return "";
+	// false returned if not found
+	if ( $table ) {
+		return $table;
+	}
+	return "";
 }
 
 function getExpressionId( $spelling, $languageId ) {
@@ -94,25 +102,37 @@ function getExpressionId( $spelling, $languageId ) {
 	$dc = wdGetDataSetContext();
 
 	$dbr = wfGetDB( DB_SLAVE );
-	$sql = "SELECT expression_id FROM {$dc}_expression " .
-			'WHERE spelling=binary ' . $dbr->addQuotes( $spelling ) . ' AND language_id=' . $languageId .
-			' AND ' . getLatestTransactionRestriction( "{$dc}_expression" ) . " LIMIT 1 " ;
-	$queryResult = $dbr->query( $sql );
-	$expression = $dbr->fetchObject( $queryResult );
-	return isset( $expression->expression_id ) ? $expression->expression_id : null;
+	$expressionId = $dbr->selectField(
+		"{$dc}_expression",
+		'expression_id',
+		array(
+			'BINARY spelling' => $spelling,
+			'language_id' => $languageId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( $expressionId ) {
+		return $expressionId;
+	}
+	return null;
 }
 
 function createExpressionId( $spelling, $languageId ) {
 	
 	$dc = wdGetDataSetContext();
+	$dbw = wfGetDB( DB_MASTER );
 	
 	$expressionId = newObjectId( "{$dc}_expression" );
-
-	$dbw = wfGetDB( DB_MASTER );
-	$spelling = $dbw->addQuotes( $spelling );
-
-	$dbw->query( "INSERT INTO {$dc}_expression(expression_id, spelling, language_id, add_transaction_id) values($expressionId, $spelling, $languageId, " . getUpdateTransactionId() . ")" );
-	 
+	$updateId = getUpdateTransactionId();
+	$dbw->insert(
+		"{$dc}_expression",
+		array( 'expression_id' => $expressionId,
+			'spelling' => $spelling,
+			'language_id' => $languageId,
+			'add_transaction_id' => $updateId
+		), __METHOD__
+	);
 	return $expressionId;
 }
 
@@ -123,39 +143,58 @@ function getPageTitle( $spelling ) {
 
 function createPage( $namespace, $title ) {
 	$dbw = wfGetDB( DB_MASTER );
-	$title = $dbw->addQuotes( $title );
 	$timestamp = $dbw->timestamp();
-	$sql = "select page_id from page where page_namespace = $namespace and page_title = $title";
-	$queryResult = $dbw->query( $sql );
-	$page = $dbw->fetchObject( $queryResult );
-	if ( isset( $page->page_id ) ) {
-		return $page->page_id;
-	}
-	else {
-		$sql = "insert into page(page_namespace,page_title,page_is_new,page_touched) " .
-		"values($namespace, $title, 1, $timestamp)";
-		$dbw->query( $sql );
+
+	$pageId = $dbw->selectField(
+		'page',
+		'page_id',
+		array( 'page_namespace' => $namespace, 'page_title' => $title ),
+		__METHOD__
+	);
+
+	if ( $pageId ) {
+		return $pageId;
+	} else {
+		$dbw->insert(
+			'page',
+			array( 'page_namespace' => $namespace,
+				'page_title' => $title,
+				'page_is_new' => 1,
+				'page_touched' => $timestamp
+			), __METHOD__
+		);
 		return $dbw->insertId();
 	}
 }
 
 function setPageLatestRevision( $pageId, $latestRevision ) {
 	$dbw = wfGetDB( DB_MASTER );
-	$sql = "update page set page_latest=$latestRevision where page_id=$pageId";
-	$dbw->query( $sql );
+	$dbw->update( 'page',
+		array( /* SET */
+			'page_latest' => $latestRevision
+		), array( /* WHERE */
+			'page_id' => $pageId
+		), __METHOD__
+	);
 }
 function createInitialRevisionForPage( $pageId, $comment ) {
 	global $wgUser;
 		
 	$dbw = wfGetDB( DB_MASTER );
 	$userId = $wgUser->getID();
-	$userName = $dbw->addQuotes( $wgUser->getName() );
-	$comment = $dbw->addQuotes( $comment );
+	$userName = $wgUser->getName();
 	$timestamp = $dbw->timestamp();
 	
-	$sql = "insert into revision(rev_page,rev_comment,rev_user,rev_user_text,rev_timestamp, rev_parent_id) " .
-	        "values($pageId, $comment, $userId, $userName, $timestamp, 0)";
-	$dbw->query( $sql );
+	$dbw->insert(
+		'revision',
+		array( 'rev_page' => $pageId,
+			'rev_comment' => $comment,
+			'rev_user' => $userId,
+			'rev_user_text' => $userName,
+			'rev_timestamp' => $timestamp,
+			'rev_parent_id' => 0
+		), __METHOD__
+	);
 
 	$revisionId = $dbw->insertId();
 	setPageLatestRevision( $pageId, $revisionId );
@@ -171,11 +210,17 @@ function existSpelling( $spelling ) {
 	$dc = wdGetDataSetContext();
 
 	$dbr = wfGetDB( DB_SLAVE );
-	$sql = "SELECT expression_id FROM {$dc}_expression " .
-			'WHERE spelling=binary ' . $dbr->addQuotes( $spelling ) .
-			' AND ' . getLatestTransactionRestriction( "{$dc}_expression" ) . " LIMIT 1 " ;
-	$queryResult = $dbr->query( $sql );
-	return $dbr->numRows( $queryResult ) > 0;
+	$expressionId = $dbr->selectField(
+		"{$dc}_expression",
+		'expression_id',
+		array( 'BINARY spelling' => $spelling, 'remove_transaction_id' => null ),
+		__METHOD__
+	);
+
+	if ( $expressionId ) {
+		return true;
+	}
+	return false;
 }
 
 function findExpression( $spelling, $languageId ) {
@@ -206,12 +251,17 @@ function findOrCreateExpression( $spelling, $languageId ) {
 function getSynonymId( $definedMeaningId, $expressionId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT syntrans_sid FROM {$dc}_syntrans " .
-								"WHERE defined_meaning_id=$definedMeaningId AND expression_id=$expressionId " .
-								' AND ' . getLatestTransactionRestriction( "{$dc}_syntrans" ) . " LIMIT 1" );
+	$syntransId = $dbr->selectField(
+		"{$dc}_syntrans",
+		'syntrans_sid',
+		array( 'defined_meaning_id' => $definedMeaningId,
+			'expression_id' => $expressionId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 
-	if ( $synonym = $dbr->fetchObject( $queryResult ) ) {
-		return $synonym->syntrans_sid;
+	if ( $syntransId ) {
+		return $syntransId;
 	}
 	// else
 	return 0;
@@ -233,25 +283,35 @@ function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identica
 		// if ( $identicalMeaning == "false" )
 		$identicalMeaningInteger = 0;
 	}
-	$sql = "insert into {$dc}_syntrans(syntrans_sid, defined_meaning_id, expression_id, identical_meaning, add_transaction_id) " .
-	       "values($synonymId, $definedMeaningId, $expressionId, $identicalMeaningInteger, " . getUpdateTransactionId() . ")";
-
-	$queryResult = $dbw->query( $sql );
+	$transactionId = getUpdateTransactionId();
+	$dbw->insert(
+		"{$dc}_syntrans",
+		array( 'syntrans_sid' => $synonymId,
+			'defined_meaning_id' => $definedMeaningId,
+			'expression_id' => $expressionId,
+			'identical_meaning' => $identicalMeaningInteger,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 }
 
 function expressionIsBoundToDefinedMeaning( $definedMeaningId, $expressionId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
 	
-	$query = "SELECT * FROM {$dc}_syntrans "
-		. " WHERE defined_meaning_id = $definedMeaningId "
-		. " AND expression_id = $expressionId "
-		. " AND remove_transaction_id IS NULL"
-		. " LIMIT 1" ;
-
-	$queryResult = $dbr->query( $query );
+	$syntransId = $dbr->selectField(
+		"{$dc}_syntrans",
+		'syntrans_sid',
+		array( 'defined_meaning_id' => $definedMeaningId,
+			'expression_id' => $expressionId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 	
-	return $dbr->numRows( $queryResult ) > 0;
+	if ( $syntransId ) {
+		return true;
+	}
+	return false;
 }
 
 function addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning ) {
@@ -259,52 +319,51 @@ function addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $id
 	$expression->assureIsBoundToDefinedMeaning( $definedMeaningId, $identicalMeaning );
 }
 
-function getMaximum( $field, $table ) {
-	$dbr = wfGetDB( DB_SLAVE );
-	$sql = "select max($field) as maximum from $table";
-	$queryResult = $dbr->query( $sql );
-	
-	if ( $maximum = $dbr->fetchObject( $queryResult ) )
-		return $maximum->maximum;
-	else
-		return 0;
-}
-
 function getRelationId( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT relation_id FROM {$dc}_meaning_relations " .
-								"WHERE meaning1_mid=$definedMeaning1Id AND meaning2_mid=$definedMeaning2Id AND relationtype_mid=$relationTypeId LIMIT 1" );
 
-	if ( $relation = $dbr->fetchObject( $queryResult ) )
-		return $relation->relation_id;
-	else
-		return 0;
+	$relationId = $dbr->selectField(
+		"{$dc}_meaning_relations",
+		'relation_id',
+		array( 'meaning1_mid' => $definedMeaning1Id,
+			'meaning2_mid' => $definedMeaning2Id,
+			'relationtype_mid' => $relationTypeId
+		), __METHOD__
+	);
+
+	if ( $relationId ) {
+		return $relationId;
+	}
+	return 0;
 }
 
 function relationExists( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) {
-	$dc = wdGetDataSetContext();
-
-	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT meaning1_mid FROM {$dc}_meaning_relations " .
-								"WHERE meaning1_mid=$definedMeaning1Id AND meaning2_mid=$definedMeaning2Id AND relationtype_mid=$relationTypeId " .
-								"AND " . getLatestTransactionRestriction( "{$dc}_meaning_relations" ) . " LIMIT 1" );
-	
-	return $dbr->numRows( $queryResult ) > 0;
+	if ( getRelationId( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) > 0 ) {
+		return true;
+	}
+	return false;
 }
 
 function createRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) {
 	$dc = wdGetDataSetContext();
+	$dbw = wfGetDB( DB_MASTER );
 
 	$relationId = getRelationId( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id );
-	
-	if ( $relationId == 0 )
+	if ( $relationId == 0 ) {
 		$relationId = newObjectId( "{$dc}_meaning_relations" );
-		
-	$dbw = wfGetDB( DB_MASTER );
-	$sql = "INSERT INTO {$dc}_meaning_relations(relation_id, meaning1_mid, meaning2_mid, relationtype_mid, add_transaction_id) " .
-			" VALUES ($relationId, $definedMeaning1Id, $definedMeaning2Id, $relationTypeId, " . getUpdateTransactionId() . ")";
-	$dbw->query( $sql );
+	}
+
+	$transactionId = getUpdateTransactionId();
+	$dbw->insert(
+		"{$dc}_meaning_relations",
+		array( 'relation_id' => $relationId,
+			'meaning1_mid' => $definedMeaning1Id,
+			'meaning2_mid' => $definedMeaning2Id,
+			'relationtype_mid' => $relationTypeId,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 }
 
 function addRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) {
@@ -315,17 +374,31 @@ function addRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) 
 function removeRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_meaning_relations SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE meaning1_mid=$definedMeaning1Id AND meaning2_mid=$definedMeaning2Id AND relationtype_mid=$relationTypeId " .
-				" AND remove_transaction_id IS NULL" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_meaning_relations",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'meaning1_mid' => $definedMeaning1Id,
+			'meaning2_mid' => $definedMeaning2Id,
+			'relationtype_mid' => $relationTypeId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function removeRelationWithId( $relationId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_meaning_relations SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE relation_id=$relationId " .
-				" AND remove_transaction_id IS NULL" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_meaning_relations",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'relation_id' => $relationId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 /**
@@ -342,62 +415,102 @@ function removeRelationWithId( $relationId ) {
  * @param unknown_type $dc the dataset, optional
  */
 function getRelationDefinedMeanings( $relationTypeId = null, $lhs = null, $rhs = null, $dc = null ) {
-	$result = array();
-	
 	$dc = wdGetDataSetContext( $dc );
 	$dbr = wfGetDB( DB_SLAVE );
+
+	$result = array();
+	$queryResult = array();
+
 	if ( $relationTypeId == null ) {
 		if ( $lhs == null ) {
 			if ( $rhs == null ) {
 				return $result;
 			}
-			$query = "SELECT rel.relationtype_mid FROM {$dc}_meaning_relations rel " .
-				"INNER JOIN {$dc}_defined_meaning dm ON rel.relationtype_mid=dm.defined_meaning_id " .
-				"WHERE rel.meaning2_mid={$rhs} " .
-				"AND" . getLatestTransactionRestriction( 'rel' ) .
-				"AND" . getLatestTransactionRestriction( 'dm' ) .
-				"GROUP BY rel.relationtype_mid";
+			$queryResult = $dbr->select(
+				array( 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ),
+				'rel.relationtype_mid',
+				array( /* WHERE */
+					'rel.meaning2_mid' => $rhs,
+					'rel.remove_transaction_id' => null
+				), __METHOD__,
+				array( 'GROUP BY' => 'rel.relationtype_mid' ),
+				array( 'dm' => array( 'INNER JOIN', array(
+						'rel.relationtype_mid = dm.defined_meaning_id',
+						'dm.remove_transaction_id' => null
+				)))
+			);
 		}
 		elseif ( $rhs == null ) {
-			$query = "SELECT rel.relationtype_mid FROM {$dc}_meaning_relations rel " .
-				"INNER JOIN {$dc}_defined_meaning dm ON rel.relationtype_mid=dm.defined_meaning_id " .
-				"WHERE rel.meaning1_mid={$lhs} " .
-				"AND" . getLatestTransactionRestriction( 'rel' ) .
-				"AND" . getLatestTransactionRestriction( 'dm' ) .
-				"GROUP BY rel.relationtype_mid ";
+			$queryResult = $dbr->select(
+				array( 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ),
+				'rel.relationtype_mid',
+				array( /* WHERE */
+					'rel.meaning1_mid' => $lhs,
+					'rel.remove_transaction_id' => null
+				), __METHOD__,
+				array( 'GROUP BY' => 'rel.relationtype_mid' ),
+				array( 'dm' => array( 'INNER JOIN', array(
+						'rel.relationtype_mid = dm.defined_meaning_id',
+						'dm.remove_transaction_id' => null
+				)))
+			);
 		}
 		else {
-			$query = "SELECT rel.relationtype_mid FROM {$dc}_meaning_relations rel " .
-				"INNER JOIN {$dc}_defined_meaning dm ON rel.relationtype_mid=dm.defined_meaning_id " .
-				"WHERE rel.meaning1_mid={$lhs} AND rel.meaning2_mid={$rhs} " .
-				"AND" . getLatestTransactionRestriction( 'rel' ) .
-				"AND" . getLatestTransactionRestriction( 'dm' );
+			$queryResult = $dbr->select(
+				array( 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ),
+				'rel.relationtype_mid',
+				array( /* WHERE */
+					'rel.meaning1_mid' => $lhs,
+					'rel.meaning2_mid' => $rhs,
+					'rel.remove_transaction_id' => null
+				), __METHOD__,
+				array( ), /* options */
+				array( 'dm' => array( 'INNER JOIN', array(
+						'rel.relationtype_mid = dm.defined_meaning_id',
+						'dm.remove_transaction_id' => null
+				)))
+			);
 		}
 	}
 	elseif ( $lhs == null ) {
 		if ( $rhs == null ) {
 			return $result;
 		}
-		$query = "SELECT rel.meaning1_mid FROM {$dc}_meaning_relations rel " .
-			"INNER JOIN {$dc}_defined_meaning dm ON rel.meaning1_mid=dm.defined_meaning_id " .
-			"WHERE rel.meaning2_mid={$rhs} AND rel.relationtype_mid={$relationTypeId} " .
-			"AND" . getLatestTransactionRestriction( 'rel' ) .
-			"AND" . getLatestTransactionRestriction( 'dm' );
+		$queryResult = $dbr->select(
+			array( 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ),
+			'rel.meaning1_mid',
+			array( /* WHERE */
+				'rel.meaning2_mid' => $rhs,
+				'rel.relationtype_mid' => $relationTypeId,
+				'rel.remove_transaction_id' => null
+			), __METHOD__,
+			array( ), /* options */
+			array( 'dm' => array( 'INNER JOIN', array(
+					'rel.meaning1_mid = dm.defined_meaning_id',
+					'dm.remove_transaction_id' => null
+			)))
+		);
 	}
 	else {
-		$query = "SELECT rel.meaning2_mid FROM {$dc}_meaning_relations rel " .
-			"INNER JOIN {$dc}_defined_meaning dm ON rel.meaning2_mid=dm.defined_meaning_id " .
-			"WHERE rel.meaning1_mid={$lhs} AND rel.relationtype_mid={$relationTypeId} " .
-			"AND" . getLatestTransactionRestriction( 'rel' ) .
-			"AND" . getLatestTransactionRestriction( 'dm' );
+		$queryResult = $dbr->select(
+			array( 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ),
+			'rel.meaning2_mid',
+			array( /* WHERE */
+				'rel.meaning1_mid' => $lhs,
+				'rel.relationtype_mid' => $relationTypeId,
+				'rel.remove_transaction_id' => null
+			), __METHOD__,
+			array( ), /* options */
+			array( 'dm' => array( 'INNER JOIN', array(
+					'rel.meaning2_mid = dm.defined_meaning_id',
+					'dm.remove_transaction_id' => null
+			)))
+		);
 	}
-	
-	$queryResult = $dbr->query( $query );
-	
-	while ( $row = $dbr->fetchRow( $queryResult ) ) {
+
+	foreach ( $queryResult as $row ) {
 		$result[] = $row[0];
 	}
-	$dbr->freeResult( $queryResult ) ;
 
 	return $result;
 }
@@ -408,89 +521,111 @@ function addClassAttribute( $classMeaningId, $levelMeaningId, $attributeMeaningI
 	}
 }
 
-function classAttributeExists( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType ) {
-	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
-
-	$queryResult = $dbr->query( "SELECT object_id FROM {$dc}_class_attributes" .
-								" WHERE class_mid=$classMeaningId AND level_mid=$levelMeaningId AND attribute_mid=$attributeMeaningId AND attribute_type = " . $dbr->addQuotes( $attributeType ) .
-								' AND ' . getLatestTransactionRestriction( "{$dc}_class_attributes" ) . " LIMIT 1" );
-
-	return $dbr->numRows( $queryResult ) > 0;
-}
-
-function createClassAttribute( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType ) {
-	$objectId = getClassAttributeId( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType );
-	
-	$dc = wdGetDataSetContext();
-
-	if ( $objectId == 0 ) {
-		$objectId = newObjectId( "{$dc}_class_attributes" );
-	}
-		
-	$dbw = wfGetDB( DB_MASTER );
-	$sql = "INSERT INTO {$dc}_class_attributes(object_id, class_mid, level_mid, attribute_mid, attribute_type, add_transaction_id) " .
-			" VALUES ($objectId, $classMeaningId, $levelMeaningId, $attributeMeaningId, " . $dbw->addQuotes( $attributeType ) . ', ' . getUpdateTransactionId() . ')';
-	$dbw->query( $sql );
-}
-
 function getClassAttributeId( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
 
-	$queryResult = $dbr->query( "SELECT object_id FROM {$dc}_class_attributes " .
-								"WHERE class_mid=$classMeaningId AND level_mid =$levelMeaningId AND attribute_mid=$attributeMeaningId AND attribute_type = " . $dbr->addQuotes( $attributeType ) );
+	$classAttributeId = $dbr->selectField(
+		"{$dc}_class_attributes",
+		'object_id',
+		array( 'class_mid' => $classMeaningId,
+			'level_mid' => $levelMeaningId,
+			'attribute_mid' => $attributeMeaningId,
+			'attribute_type' => $attributeType
+		), __METHOD__
+	);
 
-	if ( $classAttribute = $dbr->fetchObject( $queryResult ) ) {
-		return $classAttribute->object_id;
-	} else {
-		return 0;
+	if ( $classAttributeId ) {
+		return $classAttributeId;
 	}
+	return 0;
+}
+
+function classAttributeExists( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType ) {
+	$classAttributeId = getClassAttributeId( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType );
+	if ( $classAttributeId > 0 ) {
+		return true;
+	}
+	return false;
+}
+
+function createClassAttribute( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType ) {
+	$dc = wdGetDataSetContext();
+	$dbw = wfGetDB( DB_MASTER );
+
+	$objectId = getClassAttributeId( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType );
+	if ( $objectId == 0 ) {
+		$objectId = newObjectId( "{$dc}_class_attributes" );
+	}
+	$transactionId = getUpdateTransactionId();
+	$dbw->insert(
+		"{$dc}_class_attributes",
+		array( 'object_id' => $objectId,
+			'class_mid' => $classMeaningId,
+			'level_mid' => $levelMeaningId,
+			'attribute_mid' => $attributeMeaningId,
+			'attribute_type' => $attributeType,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 }
 
 function removeClassAttributeWithId( $classAttributeId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_class_attributes SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE object_id=$classAttributeId " .
-				" AND remove_transaction_id IS NULL" );
+
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_class_attributes",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'object_id' => $classAttributeId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function getClassMembershipId( $classMemberId, $classId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT class_membership_id FROM {$dc}_class_membership " .
-								"WHERE class_mid=$classId AND class_member_mid=$classMemberId LIMIT 1" );
+	$classMembershipId = $dbr->selectField(
+		"{$dc}_class_membership",
+		'class_membership_id',
+		array( 'class_mid' => $classId, 'class_member_mid' => $classMemberId ),
+		__METHOD__
+	);
 
-	if ( $classMembership = $dbr->fetchObject( $queryResult ) ) {
-		return $classMembership->class_membership_id;
-	} else {
-		return 0;
+	if ( $classMembershipId ) {
+		return $classMembershipId;
 	}
+	return 0;
+}
+
+function classMembershipExists( $classMemberId, $classId ) {
+	$classMembershipId = getClassMembershipId( $classMemberId, $classId );
+	if ( $classMembershipId > 0 ) {
+		return true;
+	}
+	return false;
 }
 
 function createClassMembership( $classMemberId, $classId ) {
 	$dc = wdGetDataSetContext();
+	$dbw = wfGetDB( DB_MASTER );
+
 	$classMembershipId = getClassMembershipId( $classMemberId, $classId );
-	
 	if ( $classMembershipId == 0 ) {
 		$classMembershipId = newObjectId( "{$dc}_class_membership" );
 	}
-
-	$dbw = wfGetDB( DB_MASTER );
-	$sql = "INSERT INTO {$dc}_class_membership(class_membership_id, class_mid, class_member_mid, add_transaction_id) " .
-			"VALUES ($classMembershipId, $classId, $classMemberId, " . getUpdateTransactionId() . ")";
-	$dbw->query( $sql );
-}
-
-function classMembershipExists( $classMemberId, $classId ) {
-	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT class_member_mid FROM {$dc}_class_membership " .
-								"WHERE class_mid=$classId AND class_member_mid=$classMemberId  " .
-								"AND " . getLatestTransactionRestriction( "{$dc}_class_membership" ) . " LIMIT 1" );
-	
-	return $dbr->numRows( $queryResult ) > 0;
+	$transactionId = getUpdateTransactionId();
+	$dbw->insert(
+		"{$dc}_class_membership",
+		array( 'class_membership_id' => $classMembershipId,
+			'class_mid' => $classId,
+			'class_member_mid' => $classMemberId,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 }
 
 function addClassMembership( $classMemberId, $classId ) {
@@ -502,32 +637,59 @@ function addClassMembership( $classMemberId, $classId ) {
 function removeClassMembership( $classMemberId, $classId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_class_membership SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE class_mid=$classId AND class_member_mid=$classMemberId " .
-				" AND remove_transaction_id IS NULL" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_class_membership",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'class_mid' => $classId,
+			'class_member_mid' => $classMemberId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function removeClassMembershipWithId( $classMembershipId ) {
 	$dc = wdGetDataSetContext();
-
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_class_membership SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE class_membership_id=$classMembershipId" .
-				" AND remove_transaction_id IS NULL" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_class_membership",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'class_membership_id' => $classMembershipId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function removeSynonymOrTranslation( $definedMeaningId, $expressionId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_syntrans SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE defined_meaning_id=$definedMeaningId AND expression_id=$expressionId AND remove_transaction_id IS NULL LIMIT 1" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_syntrans",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'defined_meaning_id' => $definedMeaningId,
+			'expression_id' => $expressionId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function removeSynonymOrTranslationWithId( $syntransId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_syntrans SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE syntrans_sid=$syntransId AND remove_transaction_id IS NULL LIMIT 1" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_syntrans",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'syntrans_sid' => $syntransId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function updateSynonymOrTranslation( $definedMeaningId, $expressionId, $identicalMeaning ) {
@@ -545,11 +707,14 @@ function updateSynonymOrTranslationWithId( $syntransId, $identicalMeaningInput )
 		return;
 	}
 
-	$queryResult = $dbr->query( "SELECT defined_meaning_id, expression_id, identical_meaning" .
-								" FROM {$dc}_syntrans" .
-								" WHERE syntrans_sid=$syntransId AND remove_transaction_id IS NULL LIMIT 1" );
-				
-	if ( $syntrans = $dbr->fetchObject( $queryResult ) ) {
+	$syntrans = $dbr->selectRow(
+		"{$dc}_syntrans",
+		array( 'defined_meaning_id', 'expression_id', 'identical_meaning' ),
+		array( 'syntrans_sid' => $syntransId, 'remove_transaction_id' => null ),
+		__METHOD__
+	);
+
+	if ( $syntrans ) {
 		// transform the identical_meaning value into the string form used in the html form
 		$identicalMeaningDB = ( $syntrans->identical_meaning == 1 ) ? "true" : "false" ;
 
@@ -587,43 +752,54 @@ function updateTranslatedText( $setId, $languageId, $text ) {
 function createText( $text ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$text = $dbw->addQuotes( $text );
-	$sql = "insert into {$dc}_text(text_text) values($text)";
-	$dbw->query( $sql );
-	
+
+	$dbw->insert( "{$dc}_text",
+		array( 'text_text' => $text ),
+		__METHOD__
+	);
 	return $dbw->insertId();
 }
 
 function createTranslatedContent( $translatedContentId, $languageId, $textId ) {
 	$dc = wdGetDataSetContext();
-
 	$dbw = wfGetDB( DB_MASTER );
-	$sql = "insert into {$dc}_translated_content(translated_content_id,language_id,text_id,add_transaction_id) values($translatedContentId, $languageId, $textId, " . getUpdateTransactionId() . ")";
-	$dbw->query( $sql );
-	
+
+	$transactionId = getUpdateTransactionId();
+	$dbw->insert( "{$dc}_translated_content",
+		array(
+			'translated_content_id' => $translatedContentId,
+			'language_id' => $languageId,
+			'text_id' => $textId,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 	return $dbw->insertId();
 }
 
 function translatedTextExists( $textId, $languageId ) {
-	$dc = wdGetDataSetContext();
-
 	if ( is_null( $textId ) ) {
-		throw new Exception( "textId is null" );
+		throw new Exception( "translatedTextExists - textId is null" );
 	}
 	if ( is_null( $languageId ) ) {
-		throw new Exception( "languageId is null" );
+		throw new Exception( "translatedTextExists - languageId is null" );
 	}
-
+	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT translated_content_id" .
-		" FROM {$dc}_translated_content" .
-		" WHERE translated_content_id=$textId" .
-		" AND language_id=$languageId" .
-		" AND " . getLatestTransactionRestriction( "{$dc}_translated_content" ) . " LIMIT 1"
+
+	$translatedContentId = $dbr->selectField(
+		"{$dc}_translated_content",
+		'translated_content_id',
+		array(
+			'translated_content_id' => $textId,
+			'language_id' => $languageId,
+			'remove_transaction_id' => null
+		), __METHOD__
 	);
 
-	return $dbr->numRows( $queryResult ) > 0;
+	if ( $translatedContentId ) {
+		return true;
+	}
+	return false;
 }
 
 function addTranslatedText( $translatedContentId, $languageId, $text ) {
@@ -640,17 +816,29 @@ function addTranslatedTextIfNotPresent( $translatedContentId, $languageId, $text
 function getDefinedMeaningDefinitionId( $definedMeaningId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT meaning_text_tcid FROM {$dc}_defined_meaning WHERE defined_meaning_id=$definedMeaningId " .
-								" AND " . getLatestTransactionRestriction( "{$dc}_defined_meaning" ) . " LIMIT 1" );
+	$meaningTextTcid = $dbr->selectField(
+		"{$dc}_defined_meaning",
+		'meaning_text_tcid',
+		array(
+			'defined_meaning_id' => $definedMeaningId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 
-	return $dbr->fetchObject( $queryResult )->meaning_text_tcid;
+	return $meaningTextTcid;
 }
 
 function updateDefinedMeaningDefinitionId( $definedMeaningId, $definitionId ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$dc = wdGetDataSetContext();
-	$dbw->query( "UPDATE {$dc}_defined_meaning SET meaning_text_tcid=$definitionId WHERE defined_meaning_id=$definedMeaningId" .
-				" AND " . getLatestTransactionRestriction( "{$dc}_defined_meaning" ) );
+	$dbw->update( "{$dc}_defined_meaning",
+		array( /* SET */
+			'meaning_text_tcid' => $definitionId
+		), array( /* WHERE */
+			'defined_meaning_id' => $definedMeaningId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function newTranslatedContentId() {
@@ -677,8 +865,15 @@ function addDefinedMeaningDefinition( $definedMeaningId, $languageId, $text ) {
 function createDefinedMeaningAlternativeDefinition( $definedMeaningId, $translatedContentId, $sourceMeaningId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "INSERT INTO {$dc}_alt_meaningtexts (meaning_mid, meaning_text_tcid, source_id, add_transaction_id) " .
-			    "VALUES ($definedMeaningId, $translatedContentId, $sourceMeaningId, " . getUpdateTransactionId() . ")" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->insert( "{$dc}_alt_meaningtexts",
+		array(
+			'meaning_mid' => $definedMeaningId,
+			'meaning_text_tcid' => $translatedContentId,
+			'source_id' => $sourceMeaningId,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 }
 
 function addDefinedMeaningAlternativeDefinition( $definedMeaningId, $languageId, $text, $sourceMeaningId ) {
@@ -691,15 +886,30 @@ function addDefinedMeaningAlternativeDefinition( $definedMeaningId, $languageId,
 function removeTranslatedText( $translatedContentId, $languageId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_translated_content SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE translated_content_id=$translatedContentId AND language_id=$languageId AND remove_transaction_id IS NULL" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_translated_content",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'translated_content_id' => $translatedContentId,
+			'language_id' => $languageId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function removeTranslatedTexts( $translatedContentId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_translated_content SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE translated_content_id=$translatedContentId AND remove_transaction_id IS NULL" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_translated_content",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'translated_content_id' => $translatedContentId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function removeDefinedMeaningAlternativeDefinition( $definedMeaningId, $definitionId ) {
@@ -712,32 +922,56 @@ function removeDefinedMeaningAlternativeDefinition( $definedMeaningId, $definiti
 
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_alt_meaningtexts SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE meaning_text_tcid=$definitionId AND meaning_mid=$definedMeaningId" .
-				" AND remove_transaction_id IS NULL" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_alt_meaningtexts",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'meaning_text_tcid' => $definitionId,
+			'meaning_mid' => $definedMeaningId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function removeDefinedMeaningDefinition( $definedMeaningId, $languageId ) {
 	$definitionId = getDefinedMeaningDefinitionId( $definedMeaningId );
 	
-	if ( $definitionId != 0 )
+	if ( $definitionId != 0 ) {
 		removeTranslatedText( $definitionId, $languageId );
+	}
 }
 
 function definedMeaningInCollection( $definedMeaningId, $collectionId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT collection_id FROM {$dc}_collection_contents WHERE collection_id=$collectionId AND member_mid=$definedMeaningId " .
-								"AND " . getLatestTransactionRestriction( "{$dc}_collection_contents" ) . " LIMIT 1" );
-	
-	return $dbr->numRows( $queryResult ) > 0;
+	$collectionId = $dbr->selectField(
+		"{$dc}_collection_contents",
+		'collection_id',
+		array(
+			'collection_id' => $collectionId,
+			'member_mid' => $definedMeaningId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+	if ( $collectionId ) {
+		return true;
+	}
+	return false;
 }
 
 function addDefinedMeaningToCollection( $definedMeaningId, $collectionId, $internalId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "INSERT INTO {$dc}_collection_contents(collection_id, member_mid, internal_member_id, add_transaction_id) " .
-					"VALUES ($collectionId, $definedMeaningId, " . $dbw->addQuotes( $internalId ) . ", " . getUpdateTransactionId() . ")" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->insert( "{$dc}_collection_contents",
+		array(
+			'collection_id' => $collectionId,
+			'member_mid' => $definedMeaningId,
+			'internal_member_id' => $internalId,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 }
 
 function addDefinedMeaningToCollectionIfNotPresent( $definedMeaningId, $collectionId, $internalId ) {
@@ -749,21 +983,32 @@ function addDefinedMeaningToCollectionIfNotPresent( $definedMeaningId, $collecti
 function getDefinedMeaningFromCollection( $collectionId, $internalMemberId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$query = "SELECT member_mid FROM {$dc}_collection_contents WHERE collection_id=$collectionId AND internal_member_id=" . $dbr->addQuotes( $internalMemberId ) . " AND " . getLatestTransactionRestriction( "{$dc}_collection_contents" ) . " LIMIT 1" ;
-	$queryResult = $dbr->query( $query );
-	
-	if ( $definedMeaningObject = $dbr->fetchObject( $queryResult ) ) {
-		return $definedMeaningObject->member_mid;
-	} else {
-		return null;
-	}
+	$memberMid = $dbr->selectField(
+		"{$dc}_collection_contents",
+		'member_mid',
+		array(
+			'collection_id' => $collectionId,
+			'internal_member_id' => $internalMemberId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+	// null if not found
+	return $memberMid;
 }
 
 function removeDefinedMeaningFromCollection( $definedMeaningId, $collectionId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_collection_contents SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE collection_id=$collectionId AND member_mid=$definedMeaningId AND remove_transaction_id IS NULL" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_collection_contents",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'collection_id' => $collectionId,
+			'member_mid' => $definedMeaningId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function updateDefinedMeaningInCollection( $definedMeaningId, $collectionId, $internalId ) {
@@ -782,45 +1027,67 @@ function bootstrapCollection( $collection, $languageId, $collectionType ) {
 function getCollectionMeaningId( $collectionId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT collection_mid FROM {$dc}_collection " .
-								" WHERE collection_id=$collectionId AND " . getLatestTransactionRestriction( "{$dc}_collection" ) . " LIMIT 1" );
-	
-	return $dbr->fetchObject( $queryResult )->collection_mid;
+	$collectionMid = $dbr->selectField(
+		"{$dc}_collection",
+		'collection_mid',
+		array(
+			'collection_id' => $collectionId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	return $collectionMid;
 }
 
 function getCollectionId( $collectionMeaningId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT collection_id FROM {$dc}_collection " .
-								" WHERE collection_mid=$collectionMeaningId AND " . getLatestTransactionRestriction( "{$dc}_collection" ) . " LIMIT 1" );
+	$collectionId = $dbr->selectField(
+		"{$dc}_collection",
+		'collection_id',
+		array(
+			'collection_mid' => $collectionMeaningId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 
-	return $dbr->fetchObject( $queryResult )->collection_id;
+	return $collectionId;
 }
 
 function addCollection( $definedMeaningId, $collectionType ) {
 	$dc = wdGetDataSetContext();
-	$collectionId = newObjectId( "{$dc}_collection" );
-	
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "INSERT INTO {$dc}_collection(collection_id, collection_mid, collection_type, add_transaction_id)" .
-				" VALUES($collectionId, $definedMeaningId, '$collectionType', " . getUpdateTransactionId() . ")" );
-	
+	$collectionId = newObjectId( "{$dc}_collection" );
+	$transactionId = getUpdateTransactionId();
+
+	$dbw->insert( "{$dc}_collection",
+		array(
+			'collection_id' => $collectionId,
+			'collection_mid' => $definedMeaningId,
+			'collection_type' => $collectionType,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 	return $collectionId;
 }
 
 function addDefinedMeaning( $definingExpressionId ) {
 	$dc = wdGetDataSetContext();
-	
-	$definedMeaningId = newObjectId( "{$dc}_defined_meaning" );
-	
 	$dbw = wfGetDB( DB_MASTER );
-	$insertquery = "INSERT INTO {$dc}_defined_meaning(defined_meaning_id, expression_id, add_transaction_id) "
-	             . "values($definedMeaningId, $definingExpressionId, " . getUpdateTransactionId() . ")" ;
+	$definedMeaningId = newObjectId( "{$dc}_defined_meaning" );
+	$transactionId = getUpdateTransactionId();
 
-	$dbw->query( $insertquery );
+	$dbw->insert( "{$dc}_defined_meaning",
+		array(
+			'defined_meaning_id' => $definedMeaningId,
+			'expression_id' => $definingExpressionId,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 
 	$expression = getExpression( $definingExpressionId );
-	$pageId = createPage( NS_DEFINEDMEANING, getPageTitle( "$expression->spelling ($definedMeaningId)" ) );
+	$spelling = $expression->spelling;
+	$pageId = createPage( NS_DEFINEDMEANING, getPageTitle( "$spelling ($definedMeaningId)" ) );
 	createInitialRevisionForPage( $pageId, 'Created by adding defined meaning' );
 	
 	return $definedMeaningId;
@@ -845,18 +1112,30 @@ function addTextAttributeValue( $objectId, $textAttributeId, $text ) {
 function createTextAttributeValue( $textValueAttributeId, $objectId, $textAttributeId, $text ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query(
-		"INSERT INTO {$dc}_text_attribute_values (value_id, object_id, attribute_mid, text, add_transaction_id) " .
-		"VALUES ($textValueAttributeId, $objectId, $textAttributeId, " . $dbw->addQuotes( $text ) . ", " . getUpdateTransactionId() . ")"
+	$transactionId = getUpdateTransactionId();
+	$dbw->insert( "{$dc}_text_attribute_values",
+		array(
+			'value_id' => $textValueAttributeId,
+			'object_id' => $objectId,
+			'attribute_mid' => $textAttributeId,
+			'text' => $text,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
 	);
 }
 
 function removeTextAttributeValue( $textValueAttributeId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "UPDATE {$dc}_text_attribute_values SET remove_transaction_id=" . getUpdateTransactionId() .
-				" WHERE value_id=$textValueAttributeId" .
-				" AND remove_transaction_id IS NULL" );
+	$transactionId = getUpdateTransactionId();
+	$dbw->update( "{$dc}_text_attribute_values",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'value_id' => $textValueAttributeId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function updateTextAttributeValue( $text, $textValueAttributeId ) {
@@ -868,14 +1147,14 @@ function updateTextAttributeValue( $text, $textValueAttributeId ) {
 function getTextValueAttribute( $textValueAttributeId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT object_id, attribute_mid, text" .
-		" FROM {$dc}_text_attribute_values" .
-		" WHERE value_id=$textValueAttributeId " .
-		" AND " . getLatestTransactionRestriction( "{$dc}_text_attribute_values" ) . " LIMIT 1"
+	$textAttributeValue = $dbr->selectRow(
+		"{$dc}_text_attribute_values",
+		array( 'object_id', 'attribute_mid', 'text' ),
+		array( 'value_id' => $textValueAttributeId, 'remove_transaction_id' => null ),
+		__METHOD__
 	);
 
-	return $dbr->fetchObject( $queryResult );
+	return $textAttributeValue;
 }
 
 function addLinkAttributeValue( $objectId, $linkAttributeId, $url, $label = "" ) {
@@ -887,19 +1166,31 @@ function addLinkAttributeValue( $objectId, $linkAttributeId, $url, $label = "" )
 function createLinkAttributeValue( $linkValueAttributeId, $objectId, $linkAttributeId, $url, $label = "" ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query(
-		"INSERT INTO {$dc}_url_attribute_values (value_id, object_id, attribute_mid, url, label, add_transaction_id) " .
-		"VALUES ($linkValueAttributeId, $objectId, $linkAttributeId, " . $dbw->addQuotes( $url ) . ", " . $dbw->addQuotes( $label ) . ", " . getUpdateTransactionId() . ")"
+	$transactionId = getUpdateTransactionId();
+	$dbw->insert( "{$dc}_url_attribute_values",
+		array(
+			'value_id' => $linkValueAttributeId,
+			'object_id' => $objectId,
+			'attribute_mid' => $linkAttributeId,
+			'url' => $url,
+			'label' => $label,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
 	);
 }
 
 function removeLinkAttributeValue( $linkValueAttributeId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query(
-		"UPDATE {$dc}_url_attribute_values SET remove_transaction_id=" . getUpdateTransactionId() .
-		" WHERE value_id=$linkValueAttributeId" .
-		" AND remove_transaction_id IS NULL"
+	$transactionId = getUpdateTransactionId();
+
+	$dbw->update( "{$dc}_url_attribute_values",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'value_id' => $linkValueAttributeId,
+			'remove_transaction_id' => null
+		), __METHOD__
 	);
 }
 
@@ -912,20 +1203,30 @@ function updateLinkAttributeValue( $linkValueAttributeId, $url, $label = "" ) {
 function getLinkValueAttribute( $linkValueAttributeId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT object_id, attribute_mid, url" .
-		" FROM {$dc}_url_attribute_values WHERE value_id=$linkValueAttributeId " .
-		" AND " . getLatestTransactionRestriction( "{$dc}_url_attribute_values" ) . " LIMIT 1"
+	$linkAttribute = $dbr->selectRow(
+		"{$dc}_url_attribute_values",
+		array( 'object_id', 'attribute_mid', 'url' ),
+		array( 'value_id' => $linkValueAttributeId, 'remove_transaction_id' => null ),
+		__METHOD__
 	);
 
-	return $dbr->fetchObject( $queryResult );
+	return $linkAttribute;
 }
 
 function createTranslatedTextAttributeValue( $valueId, $objectId, $attributeId, $translatedContentId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query( "INSERT INTO {$dc}_translated_content_attribute_values (value_id, object_id, attribute_mid, value_tcid, add_transaction_id) " .
-			    "VALUES ($valueId, $objectId, $attributeId, $translatedContentId, " . getUpdateTransactionId() . ")" );
+	$transactionId = getUpdateTransactionId();
+
+	$dbw->insert( "{$dc}_translated_content_attribute_values",
+		array(
+			'value_id' => $valueId,
+			'object_id' => $objectId,
+			'attribute_mid' => $attributeId,
+			'value_tcid' => $translatedContentId,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 }
 
 function addTranslatedTextAttributeValue( $objectId, $attributeId, $languageId, $text ) {
@@ -940,16 +1241,23 @@ function addTranslatedTextAttributeValue( $objectId, $attributeId, $languageId, 
 function getTranslatedTextAttribute( $valueId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT value_id, object_id, attribute_mid, value_tcid FROM {$dc}_translated_content_attribute_values WHERE value_id=$valueId " .
-								" AND " . getLatestTransactionRestriction( "{$dc}_translated_content_attribute_values" ) . " LIMIT 1" );
 
-	return $dbr->fetchObject( $queryResult );
+	$translatedText = $dbr->selectRow(
+		"{$dc}_translated_content_attribute_values",
+		array( 'value_id', 'object_id', 'attribute_mid', 'value_tcid' ),
+		array( 'value_id' => $valueId, 'remove_transaction_id' => null ),
+		__METHOD__
+	);
+
+	return $translatedText;
 }
 
 function removeTranslatedTextAttributeValue( $valueId ) {
 	$dc = wdGetDataSetContext();
+	$dbw = wfGetDB( DB_MASTER );
 	$translatedTextAttribute = getTranslatedTextAttribute( $valueId );
-	
+	$transactionId = getUpdateTransactionId();
+
 	// Dilemma: 
 	// Should we also remove the translated texts when removing a
 	// translated content attribute? There are pros and cons. For
@@ -957,23 +1265,34 @@ function removeTranslatedTextAttributeValue( $valueId ) {
 	// back easier.      
 //	removeTranslatedTexts($translatedTextAttribute->value_tcid);  
 
-	$dbw = wfGetDB( DB_MASTER );
-	$dbw->query(
-		"UPDATE {$dc}_translated_content_attribute_values" .
-		" SET remove_transaction_id=" . getUpdateTransactionId() .
-		" WHERE value_id=$valueId" .
-		" AND remove_transaction_id IS NULL"
+	$dbw->update( "{$dc}_translated_content_attribute_values",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'value_id' => $valueId,
+			'remove_transaction_id' => null
+		), __METHOD__
 	);
 }
 
 function optionAttributeValueExists( $objectId, $optionId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT value_id FROM {$dc}_option_attribute_values" .
-								' WHERE object_id = ' . $objectId .
-								' AND option_id = ' . $optionId .
-								' AND ' . getLatestTransactionRestriction( "{$dc}_option_attribute_values" ) . " LIMIT 1" );
-	return $dbr->numRows( $queryResult ) > 0;
+
+	$valueId = $dbr->selectField(
+		"{$dc}_option_attribute_values",
+		'value_id',
+		array(
+			'object_id' => $objectId,
+			'option_id' => $optionId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( $valueId ) {
+		return true;
+	}
+	return false;
 }
 
 function addOptionAttributeValue( $objectId, $optionId ) {
@@ -984,36 +1303,54 @@ function addOptionAttributeValue( $objectId, $optionId ) {
 
 function createOptionAttributeValue( $objectId, $optionId ) {
 	$dc = wdGetDataSetContext();
-	$valueId = newObjectId( "{$dc}_option_attribute_values" );
-
 	$dbw = wfGetDB( DB_MASTER );
-	$sql = "INSERT INTO {$dc}_option_attribute_values(value_id,object_id,option_id,add_transaction_id)" .
-			' VALUES(' . $valueId .
-			',' . $objectId .
-			',' . $optionId .
-			',' . getUpdateTransactionId() . ')';
-	$dbw->query( $sql );
+	$valueId = newObjectId( "{$dc}_option_attribute_values" );
+	$transactionId = getUpdateTransactionId();
+
+	$dbw->insert( "{$dc}_option_attribute_values",
+		array(
+			'value_id' => $valueId,
+			'object_id' => $objectId,
+			'option_id' => $optionId,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 }
 
 function removeOptionAttributeValue( $valueId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	$sql = "UPDATE {$dc}_option_attribute_values" .
-			' SET remove_transaction_id = ' . getUpdateTransactionId() .
-			' WHERE value_id = ' . $valueId .
-			' AND ' . getLatestTransactionRestriction( "{$dc}_option_attribute_values" );
-	$dbw->query( $sql );
+	$transactionId = getUpdateTransactionId();
+
+	$dbw->update( "{$dc}_option_attribute_values",
+		array( /* SET */
+			'remove_transaction_id' => $transactionId
+		), array( /* WHERE */
+			'value_id' => $valueId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
 }
 
 function optionAttributeOptionExists( $attributeId, $optionMeaningId, $languageId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT option_id FROM {$dc}_option_attribute_options" .
-								' WHERE attribute_id = ' . $attributeId .
-								' AND option_mid = ' . $optionMeaningId .
-								' AND language_id = ' . $languageId .
-								' AND ' . getLatestTransactionRestriction( "{$dc}_option_attribute_options" ) . " LIMIT 1" );
-	return $dbr->numRows( $queryResult ) > 0;
+
+	$optionId = $dbr->selectField(
+		"{$dc}_option_attribute_options",
+		'option_id',
+		array(
+			'attribute_id' => $attributeId,
+			'option_mid' => $optionMeaningId,
+			'language_id' => $languageId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( $optionId ) {
+		return true;
+	}
+	return false;
 }
 
 function addOptionAttributeOption( $attributeId, $optionMeaningId, $languageId ) {
@@ -1024,16 +1361,19 @@ function addOptionAttributeOption( $attributeId, $optionMeaningId, $languageId )
 
 function createOptionAttributeOption( $attributeId, $optionMeaningId, $languageId ) {
 	$dc = wdGetDataSetContext();
-	$optionId = newObjectId( "{$dc}_option_attribute_options" );
-
 	$dbw = wfGetDB( DB_MASTER );
-	$sql = "INSERT INTO {$dc}_option_attribute_options(option_id,attribute_id,option_mid,language_id,add_transaction_id)" .
-			' VALUES(' . $optionId .
-			',' . $attributeId .
-			',' . $optionMeaningId .
-			',' . $languageId .
-			',' . getUpdateTransactionId() . ')';
-	$dbw->query( $sql );
+	$optionId = newObjectId( "{$dc}_option_attribute_options" );
+	$transactionId = getUpdateTransactionId();
+
+	$dbw->insert( "{$dc}_option_attribute_options",
+		array(
+			'option_id' => $optionId,
+			'attribute_id' => $attributeId,
+			'option_mid' => $optionMeaningId,
+			'language_id' => $languageId,
+			'add_transaction_id' => $transactionId
+		), __METHOD__
+	);
 }
 
 function removeOptionAttributeOption( $optionId ) {
@@ -1041,33 +1381,28 @@ function removeOptionAttributeOption( $optionId ) {
 	$dbw = wfGetDB( DB_MASTER );
 
 	// first check if the option attribute option is still in use
-	$sql = "SELECT * FROM {$dc}_option_attribute_values" .
-		' WHERE option_id = ' . $optionId .
-		' AND remove_transaction_id IS NULL LIMIT 1' ;
-	$queryResult = $dbw->query( $sql );
-  
-	if ( $dbw->numRows( $queryResult ) > 0 ) {
-		echo "\nThe option $optionId cannot be deleted because it is still in use!\n" ;
-	} else {
+	$valueId = $dbw->selectField( "{$dc}_option_attribute_values",
+		'value_id',
+		array(
+			'option_id' => $optionId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( is_null( $valueId ) ){
 		// option not used, can proceed to delete
 		$transactionId = getUpdateTransactionId() ;
-		$sql = "UPDATE {$dc}_option_attribute_options" .
-			' SET remove_transaction_id = ' . $transactionId .
-			' WHERE option_id = ' . $optionId .
-			' AND ' . getLatestTransactionRestriction( "{$dc}_option_attribute_options" );
-		$dbw->query( $sql );
+		$dbw->update( "{$dc}_option_attribute_options",
+			array( /* SET */
+				'remove_transaction_id' => $transactionId
+			), array( /* WHERE */
+				'option_id' => $optionId,
+				'remove_transaction_id' => null
+			), __METHOD__
+		);
+	} else {
+		echo "\nThe option $optionId cannot be deleted because it is still in use!\n" ;
 	}
-
-	// alternatively to checking if the attribute option is in use
-	// we could remove all the attribute values in the syntrans using this option.
-  // this is however a bit dangerous (deletes too many information with just one click)
-/*
-	$sql = "UPDATE {$dc}_option_attribute_values" .
-		' SET remove_transaction_id = ' . $transactionId .
-		' WHERE option_id = ' . $optionId .
-		' AND remove_transaction_id IS NULL' ;
-	$dbr->query( $sql );
-*/
 }
 
 /**
@@ -1081,18 +1416,28 @@ function getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId,
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT text_text FROM {$dc}_defined_meaning as dm, {$dc}_translated_content as tc, {$dc}_text as t " .
-								"WHERE dm.defined_meaning_id=$definedMeaningId " .
-								" AND " . getLatestTransactionRestriction( 'dm' ) .
-								" AND " . getLatestTransactionRestriction( 'tc' ) .
-								" AND  dm.meaning_text_tcid=tc.translated_content_id AND tc.language_id=$languageId " .
-								" AND  t.text_id=tc.text_id LIMIT 1" );
-	
-	if ( $definition = $dbr->fetchObject( $queryResult ) ) {
-		return $definition->text_text;
-	} else {
-		return "";
+
+	$text = $dbr->selectField(
+		array(
+			'dm' => "{$dc}_defined_meaning",
+			'tc' => "{$dc}_translated_content",
+			't' => "{$dc}_text"
+		),
+		'text_text',
+		array(
+			'dm.defined_meaning_id' => $definedMeaningId,
+			'dm.remove_transaction_id' => null,
+			'tc.remove_transaction_id' => null,
+			'dm.meaning_text_tcid = tc.translated_content_id',
+			'tc.language_id' => $languageId,
+			't.text_id = tc.text_id'
+		), __METHOD__
+	);
+
+	if ( $text ) {
+		return $text;
 	}
+	return "";
 }
 
 /**
@@ -1103,18 +1448,27 @@ function getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId,
 function getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT text_text FROM {$dc}_defined_meaning as dm, {$dc}_translated_content as tc, {$dc}_text as t " .
-								"WHERE dm.defined_meaning_id=$definedMeaningId " .
-								" AND " . getLatestTransactionRestriction( 'dm' ) .
-								" AND " . getLatestTransactionRestriction( 'tc' ) .
-								" AND dm.meaning_text_tcid=tc.translated_content_id " .
-								" AND t.text_id=tc.text_id LIMIT 1" );
-	
-	if ( $definition = $dbr->fetchObject( $queryResult ) ) {
-		return $definition->text_text;
-	} else {
-		return "";
+
+	$text = $dbr->selectField(
+		array(
+			'dm' => "{$dc}_defined_meaning",
+			'tc' => "{$dc}_translated_content",
+			't' => "{$dc}_text"
+		),
+		'text_text',
+		array(
+			'dm.defined_meaning_id' => $definedMeaningId,
+			'dm.remove_transaction_id' => null,
+			'tc.remove_transaction_id' => null,
+			'dm.meaning_text_tcid = tc.translated_content_id',
+			't.text_id = tc.text_id'
+		), __METHOD__
+	);
+
+	if ( $text ) {
+		return $text;
 	}
+	return "";
 }
 
 /**
@@ -1150,65 +1504,64 @@ function getDefinedMeaningDefinition( $definedMeaningId ) {
 * null if not found
 */
 function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = 'en', $dc = null ) {
-
-	$dc = wdGetDataSetContext( $dc );
+	if ( is_null ( $dc ) ) {
+		$dc = wdGetDataSetContext( $dc );
+	}
+	$dbr = wfGetDB( DB_SLAVE );
 
 	$userLanguageId = getLanguageIdForCode( $languageCode );
 
 	# wfDebug("User language: $userLanguageId\n");
 	$fallbackLanguageId = getLanguageIdForCode( $fallbackLanguageCode );
 
-	# wfDebug("Fallback language: $fallbackLanguageId\n");
-	$dbr = & wfGetDB( DB_SLAVE );
-
-	$definedMeaningId = $dbr->addQuotes( $definedMeaningId );
-	$userLanguageId = $dbr->addQuotes( $userLanguageId );
-	
 	if ( $userLanguageId ) {
-		$actual_query =
-			"select spelling from {$dc}_syntrans,{$dc}_expression " .
-			" where {$dc}_syntrans.defined_meaning_id=$definedMeaningId " .
-			" and {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
-			" and language_id=$userLanguageId " .
-			" and {$dc}_expression.remove_transaction_id is NULL " .
-			" LIMIT 1";
-	
-		$res = $dbr->query( $actual_query );
-		$row = $dbr->fetchObject( $res );
-		if ( isset( $row->spelling ) ) {
-			return $row->spelling;
+		$spelling = $dbr->selectField(
+			array( "{$dc}_syntrans" , "{$dc}_expression" ),
+			'spelling',
+			array(
+				"{$dc}_syntrans.defined_meaning_id" => $definedMeaningId,
+				"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
+				'language_id' => $userLanguageId,
+				"{$dc}_expression.remove_transaction_id" => null
+			), __METHOD__
+		);
+
+		if ( $spelling ) {
+			return $spelling;
 		}
 	}
 
-	$fallbackLanguageId = $dbr->addQuotes( $fallbackLanguageId );
-	$fallback_query =
-		"select spelling from {$dc}_syntrans,{$dc}_expression " .
-		" where {$dc}_syntrans.defined_meaning_id=$definedMeaningId " .
-		" and {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
-		" and language_id=$fallbackLanguageId " .
-		" and {$dc}_expression.remove_transaction_id is NULL " .
-		" LIMIT 1";
+	// fallback language
+	$spelling = $dbr->selectField(
+		array( "{$dc}_syntrans" , "{$dc}_expression" ),
+		'spelling',
+		array(
+			"{$dc}_syntrans.defined_meaning_id" => $definedMeaningId,
+			"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
+			'language_id' => $fallbackLanguageId,
+			"{$dc}_expression.remove_transaction_id" => null
+		), __METHOD__
+	);
 
-	$res = $dbr->query( $fallback_query );
-	$row = $dbr->fetchObject( $res );
-	if ( isset( $row->spelling ) ) {
-		return $row->spelling;
+	if ( $spelling ) {
+		return $spelling;
 	}
 
-	$final_fallback =
-		"select spelling from {$dc}_syntrans,{$dc}_expression " .
-		" where {$dc}_syntrans.defined_meaning_id=$definedMeaningId " .
-		" and {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
-		" and {$dc}_expression.remove_transaction_id is NULL " .
-		" LIMIT 1";
+	// final fallback
+	$spelling = $dbr->selectField(
+		array( "{$dc}_syntrans" , "{$dc}_expression" ),
+		'spelling',
+		array(
+			"{$dc}_syntrans.defined_meaning_id" => $definedMeaningId,
+			"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
+			"{$dc}_expression.remove_transaction_id" => null
+		), __METHOD__
+	);
 
-	$res = $dbr->query( $final_fallback );
-	$row = $dbr->fetchObject( $res );
-	if ( isset( $row->spelling ) ) {
-		return $row->spelling;
+	if ( $spelling ) {
+		return $spelling;
 	}
 	return null;
-
 }
 
 /**
@@ -1218,46 +1571,41 @@ function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLang
 function isClass( $objectId ) {
 	global $wgDefaultClassMids;
 
-	$result = in_array( $objectId, $wgDefaultClassMids );
-
-	if ( !$result ) {
-		$dc = wdGetDataSetContext();
-		$dbr = & wfGetDB( DB_SLAVE );
-		$query =
-			"SELECT {$dc}_collection.collection_id " .
-			" FROM ({$dc}_collection_contents INNER JOIN {$dc}_collection ON {$dc}_collection.collection_id = {$dc}_collection_contents.collection_id) " .
-			" WHERE {$dc}_collection_contents.member_mid = $objectId AND {$dc}_collection.collection_type = 'CLAS' " .
-			" AND {$dc}_collection_contents.remove_transaction_id is NULL" .
-			" AND {$dc}_collection.remove_transaction_id is NULL LIMIT 1" ;
-		$queryResult = $dbr->query( $query );
-	
-		$result = $dbr->numRows( $queryResult ) > 0;
+	if ( in_array( $objectId, $wgDefaultClassMids ) ) {
+		// easy, it is a default class
+		return true;
 	}
 
-	return $result;
-}
-
-function findCollection( $name ) {
+	// if not, search in the db
 	$dc = wdGetDataSetContext();
-	$dbr = & wfGetDB( DB_SLAVE );
-	$query = "SELECT collection_id, collection_mid, collection_type FROM {$dc}_collection" .
-			" WHERE " . getLatestTransactionRestriction( "{$dc}_collection" ) .
-			" AND collection_mid = (SELECT defined_meaning_id FROM {$dc}_syntrans WHERE expression_id = " .
-             "(SELECT expression_id FROM {$dc}_expression WHERE spelling LIKE " . $dbr->addQuotes( $name ) . " limit 1) limit 1)";
-	$queryResult = $dbr->query( $query );
-	
-	if ( $collectionObject = $dbr->fetchObject( $queryResult ) ) {
-		return $collectionObject->collection_id;
-	} else {
-		return null;
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$collectionId = $dbr->selectField(
+		array( 'cont' => "{$dc}_collection_contents", 'col' => "{$dc}_collection" ),
+		'col.collection_id',
+		array(
+			'cont.member_mid' => $objectId,
+			'cont.remove_transaction_id' => null
+		), __METHOD__,
+		array(),
+		array( 'col' => array( 'INNER JOIN', array(
+			'col.collection_id = cont.collection_id',
+			'col.collection_type' => 'CLAS',
+			'col.remove_transaction_id' => null
+		)))
+	);
+
+	if ( $collectionId ) {
+		return true;
 	}
+	return false;
 }
 
 function getCollectionContents( $collectionId ) {
 	global $wgWikidataDataSet;
 	
 	$dc = wdGetDataSetContext();
-	$dbr = & wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_SLAVE );
 	$queryResult = $dbr->query(
 		selectLatest(
 			array( $wgWikidataDataSet->collectionMemberships->memberMid, $wgWikidataDataSet->collectionMemberships->internalMemberId ),
@@ -1285,103 +1633,114 @@ function getCollectionContents( $collectionId ) {
 function getCollectionMembers( $collectionId, $dc = null ) {
 	$memberMids = array();
 	$dc = wdGetDataSetContext();
-	$dbr = & wfGetDB( DB_SLAVE );
-	$query = "SELECT member_mid FROM {$dc}_collection_contents WHERE collection_id=$collectionId " .
-			"AND " . getLatestTransactionRestriction( "{$dc}_collection_contents" );
-	$result = $dbr->query( $query );
-	
-	while ( $row = $dbr->fetchRow( $result ) ) {
-		$memberMids[] = $row['member_mid'];
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$result = $dbr->select(
+		"{$dc}_collection_contents",
+		'member_mid',
+		array(
+			'collection_id' => $collectionId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	foreach ( $result as $row ) {
+		$memberMids[] = $row->member_mid;
 	}
-	$dbr->freeResult( $result ) ;
 
 	return $memberMids;
 }
 
 function getCollectionMemberId( $collectionId, $sourceIdentifier ) {
 	$dc = wdGetDataSetContext();
-	$dbr = & wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT member_mid" .
-		" FROM {$dc}_collection_contents " .
-		" WHERE collection_id=$collectionId" .
-		" AND internal_member_id=" . $dbr->addQuotes( $sourceIdentifier ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_collection_contents" ) . " LIMIT 1"
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$memberMid = $dbr->selectField(
+		"{$dc}_collection_contents",
+		'member_mid',
+		array(
+			'collection_id' => $collectionId,
+			'internal_member_id' => $sourceIdentifier,
+			'remove_transaction_id' => null
+		), __METHOD__
 	);
 
-	if ( $collectionEntry = $dbr->fetchObject( $queryResult ) ) {
-		return $collectionEntry->member_mid;
-	} else {
-		return 0;
+	if ( $memberMid ) {
+		return $memberMid;
 	}
+	return 0;
 }
 
 function getAnyDefinedMeaningWithSourceIdentifier( $sourceIdentifier ) {
 	$dc = wdGetDataSetContext();
-	$dbr = & wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT member_mid" .
-		" FROM {$dc}_collection_contents " .
-		" WHERE internal_member_id=" . $dbr->addQuotes( $sourceIdentifier ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_collection_contents" ) .
-		" LIMIT 1"
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$memberMid = $dbr->selectField(
+		"{$dc}_collection_contents",
+		'member_mid',
+		array(
+			'internal_member_id' => $sourceIdentifier,
+			'remove_transaction_id' => null
+		), __METHOD__
 	);
 
-	if ( $collectionEntry = $dbr->fetchObject( $queryResult ) ) {
-		return $collectionEntry->member_mid;
-	} else {
-		return 0;
+	if ( $memberMid ) {
+		return $memberMid;
 	}
+	return 0;
 }
 
 function getExpressionMeaningIds( $spelling, $dc = null ) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
 	}
-	$dbr = & wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT defined_meaning_id" .
-		" FROM {$dc}_expression, {$dc}_syntrans " .
-		" WHERE spelling=" . $dbr->addQuotes( $spelling ) .
-		" AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id" .
-		" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" )
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$queryResult = $dbr->select(
+		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		'defined_meaning_id',
+		array(
+			'spelling' => $spelling,
+			'exp.remove_transaction_id' => null,
+			'synt.remove_transaction_id' => null,
+			'exp.expression_id = synt.expression_id'
+		), __METHOD__
 	);
 
-	$result = array();
+	$dmlist = array();
 	
-	while ( $synonymRecord = $dbr->fetchObject( $queryResult ) ) {
-		$result[] = $synonymRecord->defined_meaning_id;
+	foreach ( $queryResult as $synonymRecord ) {
+		$dmlist[] = $synonymRecord->defined_meaning_id;
 	}
-	$dbr->freeResult( $queryResult ) ;
 
-	return $result;
+	return $dmlist;
 }
 
 function getExpressionMeaningIdsForLanguages( $spelling, $languageIds, $dc = null ) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
 	}
-	$dbr = & wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT defined_meaning_id, language_id" .
-		" FROM {$dc}_expression, {$dc}_syntrans " .
-		" WHERE spelling=" . $dbr->addQuotes( $spelling ) .
-		" AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id" .
-		" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" )
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$queryResult = $dbr->select(
+		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		array( 'defined_meaning_id', 'language_id' ),
+		array(
+			'spelling' => $spelling,
+			'exp.expression_id = synt.expression_id',
+			'synt.remove_transaction_id' => null,
+			'exp.remove_transaction_id' => null
+		), __METHOD__
 	);
 
-	$result = array();
-	
-	while ( $synonymRecord = $dbr->fetchObject( $queryResult ) ) {
+	$dmlist = array();
+
+	foreach( $queryResult as $synonymRecord ) {
 		if ( in_array( $synonymRecord->language_id, $languageIds ) ) {
-        	$result[] = $synonymRecord->defined_meaning_id;
+			$dmlist[] = $synonymRecord->defined_meaning_id;
 		}
 	}
-	$dbr->freeResult( $queryResult ) ;
-
-	return $result;
+	return $dmlist;
 }
 
 
@@ -1406,24 +1765,31 @@ function createConceptMapping( $concepts, $override_transaction = null ) {
 
 function getMapping( $dc, $collid, $dm_id ) {
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "select internal_member_id from {$dc}_collection_contents where collection_id = $collid AND member_mid = $dm_id LIMIT 1" );
-	if ( $record = $dbr->fetchObject( $queryResult ) ) {
-		return $record->internal_member_id;
+
+	$internalMemberId = $dbr->selectField(
+		"{$dc}_collection_contents",
+		'internal_member_id',
+		array(
+			'collection_id' => $collid,
+			'member_mid' => $dm_id
+		), __METHOD__
+	);
+
+	if ( $internalMemberId ) {
+		return $internalMemberId;
 	}
-	else {
-		return - 1;
-	}
+	return - 1;
 }
 
 /** ask db to provide a universally unique id */
 
 function getUUID( $concepts ) {
-    $dbr = & wfGetDB( DB_SLAVE );
-    
-    $uuid_array = array();
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$uuid_array = array();
  	$uuid = - 1;
     
-    foreach ( $concepts as $dc => $dm_id ) {
+	foreach ( $concepts as $dc => $dm_id ) {
 		$collid = getCollectionIdForDC( $dc );
 		$uuid_array[$dc] = getMapping( $dc, $collid, $dm_id );
 		if ( ( $uuid == - 1 ) && ( $uuid_array[$dc] != - 1 ) ) {
@@ -1438,47 +1804,45 @@ function getUUID( $concepts ) {
 		$uuid = isset( $row->id ) ? $row->id : - 1;
 	}
 	
-    foreach ( $concepts as $dc => $dm_id ) {
-    	if ( $uuid_array[$dc] == - 1 ) {
-    		$uuid_array[$dc] = $uuid;
-    	}
-    	else {
-    		$uuid_array[$dc] = - 1;
-    	}
-    }
-	
+	foreach ( $concepts as $dc => $dm_id ) {
+		if ( $uuid_array[$dc] == - 1 ) {
+			$uuid_array[$dc] = $uuid;
+		}
+		else {
+			$uuid_array[$dc] = - 1;
+		}
+	}
 	return $uuid_array;
 }
 
 /** this funtion assumes that there is only a single mapping collection */
 
 function getCollectionIdForDC( $dc ) {
-	$dbr = & wfGetDB( DB_SLAVE );
-	$query = "
-		SELECT collection_id FROM {$dc}_collection
-		WHERE collection_type=\"MAPP\"
-         	AND  " . getLatestTransactionRestriction( "{$dc}_collection" ) . "
-		LIMIT 1
-		";
-	$queryResult = $dbr->query( $query );
-	$row = $dbr->fetchObject( $queryResult );
-	return isset( $row->collection_id ) ? $row->collection_id : null;
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$collectionId = $dbr->selectField(
+		"{$dc}_collection",
+		'collection_id',
+		array(
+			'collection_type' => 'MAPP',
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( $collectionId ) {
+		return $collectionId;
+	}
+	return null;
 }
 
 /** Write the dm to the correct collection for a particular dc */
 
 function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction = null ) {
-	global
-		$wgUser;
+	global $wgUser;
 	// if(is_null($dc)) {
 	//	$dc=wdGetDataSetContext();
 	// } 
-    	$dbw = & wfGetDB( DB_MASTER );
-
-	$collection_contents = "{$dc}_collection_contents";
-	$collid = $dbw->addQuotes( $collid );
-	$uuid = $dbw->addQuotes( $uuid );
-	$dm_id = $dbw->addQuotes( $dm_id );
+	$dbw = wfGetDB( DB_MASTER );
 
 	$add_transaction_id = $override_transaction;
 	if ( is_null( $add_transaction_id ) ) {
@@ -1486,17 +1850,18 @@ function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction
 		$add_transaction_id = getUpdateTransactionId();
 	}
 
-	$sql = "
-		INSERT INTO $collection_contents
-		SET 	collection_id=$collid,
-			internal_member_id=$uuid,
-			member_mid=$dm_id,
-			add_transaction_id=$add_transaction_id		
-		";
-	$result = $dbw->query( $sql );
+	$dbw->insert( "{$dc}_collection_contents",
+		array(
+			'collection_id' => $collid,
+			'internal_member_id' => $uuid,
+			'member_mid' => $dm_id,
+			'add_transaction_id' => $add_transaction_id
+		), __METHOD__
+	);
 }
 
-/**read a ConceptMapping from the database.
+/**
+ * Read a ConceptMapping from the database.
  * map is in the form;
  * array("dataset_prefix"=>defined_meaning_id,...)
  * (possibly to rename $map or $concepts, to remain consistent)
@@ -1508,26 +1873,25 @@ function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction
  * see also: createConceptMapping($concepts)
  */
 function &readConceptMapping( $concept_id ) {
-    	$dbr = & wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_SLAVE );
 	$sets = wdGetDataSets();
 	$map = array();
-	$concept_id = $dbr->addQuotes( $concept_id );
+
 	foreach ( $sets as $key => $set ) {
 		# wfdebug ("$key => $set");
 		$dc = $set->getPrefix();
 		$collection_id = getCollectionIdForDC( $dc );
-		$collection_id = $dbr->addQuotes( $collection_id );
-		$collection_contents = "{$dc}_collection_contents";
 
-		$query = "
-			SELECT member_mid FROM $collection_contents
-			WHERE collection_id = $collection_id
-			AND internal_member_id=$concept_id LIMIT 1
-			";
-		$queryResult = $dbr->query( $query );
-		$row = $dbr->fetchObject( $queryResult );
-		if ( isset( $row->member_mid ) ) {
-			$map[$dc] = $row->member_mid;
+		$memberMid = $dbr->selectField(
+			"{$dc}_collection_contents",
+			'member_mid',
+			array(
+				'collection_id' => $collection_id,
+				'internal_member_id' => $concept_id
+			), __METHOD__
+		);
+		if ( $memberMid ) {
+			$map[$dc] = $memberMid;
 		}
 	}
 	return $map;
@@ -1538,17 +1902,21 @@ function getConceptId( $dm, $dc ) {
 		$dc = wdGetDataSetContext();
 	}
 	$collection_id = getCollectionIdForDC( $dc );
-    	$dbr = & wfGetDB( DB_SLAVE );
-	$dm = $dbr->addQuotes( $dm );
-	$query = "
-		SELECT internal_member_id AS concept_id
-		FROM {$dc}_collection_contents
-		WHERE member_mid=$dm
-		AND collection_id=$collection_id LIMIT 1
-		";
-	$queryResult = $dbr->query( $query );
-	$row = $dbr->fetchObject( $queryResult );
-	return isset( $row->concept_id ) ? $row->concept_id : null;
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$internalMemberId = $dbr->selectField(
+		"{$dc}_collection_contents",
+		'internal_member_id',
+		array(
+			'member_mid' => $dm,
+			'collection_id' => $collection_id
+		), __METHOD__
+	);
+
+	if ( $internalMemberId ) {
+		return $internalMemberId;
+	}
+	return null;
 }
 
 function &getAssociatedByConcept( $dm, $dc ) {
@@ -1583,17 +1951,19 @@ function definingExpressionRow( $definedMeaningId, $dc = null ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT {$dc}_expression.expression_id, spelling, language_id " .
-		" FROM {$dc}_defined_meaning, {$dc}_expression " .
-		" WHERE {$dc}_defined_meaning.defined_meaning_id=$definedMeaningId " .
-		" AND {$dc}_expression.expression_id={$dc}_defined_meaning.expression_id" .
-		" AND " . getLatestTransactionRestriction( "{$dc}_defined_meaning" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) . " LIMIT 1"
+
+	$expression = $dbr->selectRow(
+		array( 'dm' => "{$dc}_defined_meaning", 'exp' => "{$dc}_expression" ),
+		array( 'exp.expression_id', 'spelling', 'language_id' ),
+		array(
+			'dm.defined_meaning_id' => $definedMeaningId,
+			'exp.expression_id = dm.expression_id',
+			'dm.remove_transaction_id' => null,
+			'exp.remove_transaction_id' => null
+		), __METHOD__
 	);
 
-	if ( $dbr->numrows( $queryResult ) > 0 ) {
-		$expression = $dbr->fetchObject( $queryResult );
+	if ( $expression ) {
 		return array( $expression->expression_id, $expression->spelling, $expression->language_id );
 	}
 	return null;
@@ -1604,18 +1974,22 @@ function definingExpression( $definedMeaningId, $dc = null ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT spelling " .
-		" FROM {$dc}_defined_meaning, {$dc}_expression " .
-		" WHERE {$dc}_defined_meaning.defined_meaning_id=$definedMeaningId " .
-		" AND {$dc}_expression.expression_id={$dc}_defined_meaning.expression_id" .
-		" AND " . getLatestTransactionRestriction( "{$dc}_defined_meaning" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) . " LIMIT 1" );
-	$expression = $dbr->fetchObject( $queryResult );
-	if ( $expression ) {
-		return $expression->spelling;
-	} else {
-		return null;
+
+	$spelling = $dbr->selectField(
+		array( 'dm' => "{$dc}_defined_meaning", 'exp' => "{$dc}_expression" ),
+		'spelling',
+		array(
+			'dm.defined_meaning_id' => $definedMeaningId,
+			'exp.expression_id = dm.expression_id',
+			'dm.remove_transaction_id' => null,
+			'exp.remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( $spelling ) {
+		return $spelling;
 	}
+	return null;
 }
 
 /**
@@ -1626,23 +2000,24 @@ function definingExpression( $definedMeaningId, $dc = null ) {
 function definedMeaningExpressionForLanguage( $definedMeaningId, $languageId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT spelling" .
-		" FROM {$dc}_syntrans, {$dc}_expression " .
-		" WHERE defined_meaning_id=$definedMeaningId" .
-		" AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id" .
-		" AND {$dc}_expression.language_id=$languageId" .
-		" AND {$dc}_syntrans.identical_meaning=1" .
-		" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) .
-		" LIMIT 1"
+
+	$spelling = $dbr->selectField(
+		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		'spelling',
+		array(
+			'defined_meaning_id' => $definedMeaningId,
+			'exp.expression_id = synt.expression_id',
+			'exp.language_id' => $languageId,
+			'synt.identical_meaning' => 1,
+			'synt.remove_transaction_id' => null,
+			'exp.remove_transaction_id' => null
+		), __METHOD__
 	);
 
-	if ( $expression = $dbr->fetchObject( $queryResult ) ) {
-		return $expression->spelling;
-	} else {
-		return "";
+	if ( $spelling ) {
+		return $spelling;
 	}
+	return "";
 }
 
 /**
@@ -1652,21 +2027,23 @@ function definedMeaningExpressionForLanguage( $definedMeaningId, $languageId ) {
 function definedMeaningExpressionForAnyLanguage( $definedMeaningId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT spelling " .
-		" FROM {$dc}_syntrans, {$dc}_expression" .
-		" WHERE defined_meaning_id=$definedMeaningId" .
-		" AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id" .
-		" AND {$dc}_syntrans.identical_meaning=1" .
-		" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) .
-		" LIMIT 1" );
 
-	if ( $expression = $dbr->fetchObject( $queryResult ) ) {
-		return $expression->spelling;
-	} else {
-		return "";
+	$spelling = $dbr->selectField(
+		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		'spelling',
+		array(
+			'defined_meaning_id' => $definedMeaningId,
+			'exp.expression_id = synt.expression_id',
+			'synt.identical_meaning' => 1,
+			'synt.remove_transaction_id' => null,
+			'exp.remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( $spelling ) {
+		return $spelling;
 	}
+	return "";
 }
 
 /**
@@ -1707,9 +2084,18 @@ function definedMeaningExpression( $definedMeaningId ) {
 function getTextValue( $textId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT text_text from {$dc}_text where text_id=$textId LIMIT 1" );
 
-	return $dbr->fetchObject( $queryResult )->text_text;
+	$text = $dbr->selectField(
+		"{$dc}_text",
+		'text_text',
+		array( 'text_id' => $textId ),
+		__METHOD__
+	);
+
+	if ( $text ) {
+		return $text;
+	}
+	return "";
 }
 
 /**
@@ -1723,34 +2109,32 @@ function getExpressions( $spelling, $dc = null ) {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$viewInformation = new ViewInformation();
-	$langsubset = $viewInformation->getFilterLanguageSQL();
+	$langsubset = $viewInformation->getFilterLanguageList();
 
-	$spelling = $dbr->addQuotes( $spelling );
-	$sql = "SELECT * FROM {$dc}_expression " . 
-		" WHERE spelling=binary $spelling " .
-		" AND {$dc}_expression.remove_transaction_id IS NULL" ;
-
-	if ( $langsubset ) {
-		$sql .= " AND language_id IN $langsubset ";
+	// when the remove_transaction_id will be automatically updated,
+	// we can get rid of using the syntrans table
+	$cond = array(
+		'BINARY spelling' => $spelling,
+		'exp.expression_id = synt.expression_id',
+		'exp.remove_transaction_id' => null,
+		'synt.remove_transaction_id' => null
+	);
+	if ( ! empty( $langsubset ) ) {
+		$cond['language_id'] = $langsubset;
 	}
 
-	// needed because expression.remove_transaction_id is not updated automatically
-	$sql .= " AND EXISTS (" .
-		"SELECT * " .
-		" FROM {$dc}_syntrans " .
-		" WHERE {$dc}_syntrans.expression_id={$dc}_expression.expression_id" .
-		" AND {$dc}_syntrans.remove_transaction_id IS NULL " .
-		")";
-
-	$queryResult = $dbr->query( $sql );
+	$queryResult = $dbr->select(
+		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		array( 'exp.expression_id', 'spelling', 'language_id' ),
+		$cond,
+		__METHOD__
+	);
 
 	$rv = array();
-	foreach ( $queryResult as $expressionRecord ) {
-		$rv[] = new Expression( $expressionRecord->expression_id, $expressionRecord->spelling, $expressionRecord->language_id );
+	foreach ( $queryResult as $exp ) {
+		$rv[] = new Expression( $exp->expression_id, $exp->spelling, $exp->language_id );
 	}
-	$dbr->freeResult( $queryResult ) ;
 	return $rv;
-
 }
 
 class ClassAttribute {
@@ -1768,57 +2152,22 @@ class ClassAttributes {
 
 		global $wgDefaultClassMids, $wgWikidataDataSet;
 
-/*
-		$query = SelectLatestDistinct(
+		$queryResult = $dbr->select(
+			array( 'ca' => "{$dc}_class_attributes", 'bdm' => "{$dc}_bootstrapped_defined_meanings" ),
+			array( 'DISTINCT ca.attribute_mid', 'ca.attribute_type', 'bdm.name' ),
 			array(
-				$wgWikidataDataSet->classAttributes->attributeMid,
-				$wgWikidataDataSet->classAttributes->attributeType,
-				$wgWikidataDataSet->bootstrappedDefinedMeanings->name
-			),
-			array( $wgWikidataDataSet->classAttributes, $wgWikidataDataSet->bootstrappedDefinedMeanings ),
-			array(
-				equals( $wgWikidataDataSet->classAttributes->levelMid, $wgWikidataDataSet->bootstrappedDefinedMeanings->definedMeaningId ),
-				sqlOr(
-					in( $wgWikidataDataSet->classAttributes->classMid,
-						selectLatest(
-							array( $wgWikidataDataSet->classMemberships->classMid ),
-							array( $wgWikidataDataSet->classMemberships ),
-							array( equals( $wgWikidataDataSet->classMemberships->classMemberMid, $definedMeaningId ) )
-						)
-					),
-					inArray( $wgWikidataDataSet->classAttributes->classMid, $wgDefaultClassMids )
-				)
-			)
-		) ;
-
-		generates something like this:
-SELECT DISTINCT uw_class_attributes.attribute_mid, uw_class_attributes.attribute_type, uw_bootstrapped_defined_meanings.name
-FROM uw_class_attributes, uw_bootstrapped_defined_meanings
-WHERE ((uw_class_attributes.level_mid) = (uw_bootstrapped_defined_meanings.defined_meaning_id))
-AND ((uw_class_attributes.class_mid IN (SELECT uw_class_membership.class_mid FROM uw_class_membership
-WHERE ((uw_class_membership.class_member_mid) = (37)) AND (uw_class_membership.remove_transaction_id IS NULL)))
-OR (uw_class_attributes.class_mid IN (37))) AND (uw_class_attributes.remove_transaction_id IS NULL)
-
-FIXME: the above query does not take into account language specific annotations
-(i.e. existing annotations are not shown).
-the query below is more simple (and faster), but might show annotations that are empty
-when one clicks on the combobox.
-*/
-		$query = "SELECT DISTINCT {$dc}_class_attributes.attribute_mid, "
-			. " {$dc}_class_attributes.attribute_type, {$dc}_bootstrapped_defined_meanings.name "
-			. " FROM {$dc}_class_attributes, {$dc}_bootstrapped_defined_meanings "
-			. " WHERE {$dc}_class_attributes.level_mid = {$dc}_bootstrapped_defined_meanings.defined_meaning_id "
-			. " AND {$dc}_class_attributes.remove_transaction_id IS NULL ";
-
-		$queryResult = $dbr->query($query);
+				'ca.level_mid = bdm.defined_meaning_id',
+				'ca.remove_transaction_id' => null
+			), __METHOD__
+		);
 
 		$this->classAttributes = array();
 		
-		while ( $row = $dbr->fetchRow( $queryResult ) ) {
+		foreach ( $queryResult as $row ) {
 			$classAttribute = new ClassAttribute();
-			$classAttribute->attributeId = $row[0];
-			$classAttribute->type = $row[1];
-			$classAttribute->levelName = $row[2];
+			$classAttribute->attributeId = $row->attribute_mid;
+			$classAttribute->type = $row->attribute_type;
+			$classAttribute->levelName = $row->name;
 			
 			$this->classAttributes[] = $classAttribute;
 		}
