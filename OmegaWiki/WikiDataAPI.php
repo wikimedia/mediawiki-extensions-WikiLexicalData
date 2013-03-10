@@ -54,7 +54,7 @@ function getExpression( $expressionId, $dc = null ) {
 	$expressionRecord = $dbr->selectRow(
 		"{$dc}_expression",
 		array( 'spelling', 'language_id' ),
-		"expression_id = $expressionId",
+		array( 'expression_id' => $expressionId ),
 		__METHOD__
 	);
 
@@ -98,10 +98,9 @@ function getTableNameWithObjectId( $objectId ) {
 }
 
 function getExpressionId( $spelling, $languageId ) {
-
 	$dc = wdGetDataSetContext();
-
 	$dbr = wfGetDB( DB_SLAVE );
+
 	$expressionId = $dbr->selectField(
 		"{$dc}_expression",
 		'expression_id',
@@ -118,8 +117,46 @@ function getExpressionId( $spelling, $languageId ) {
 	return null;
 }
 
+function getRemovedExpressionId( $spelling, $languageId ) {
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$expressionId = $dbr->selectField(
+		"{$dc}_expression",
+		'expression_id',
+		array(
+			'BINARY spelling' => $spelling,
+			'language_id' => $languageId,
+			'remove_transaction_id IS NOT NULL'
+		), __METHOD__
+	);
+
+	if ( $expressionId ) {
+		return $expressionId;
+	}
+	return null;
+}
+
+function getExpressionIdFromSyntrans( $syntransId, $dc = null ) {
+	if ( is_null( $dc ) ) {
+		$dc = wdGetDataSetContext();
+	}
+	$dbr = wfGetDB( DB_SLAVE );
+	$expressionId = $dbr->selectField(
+		"{$dc}_syntrans",
+		'expression_id',
+		array( 'syntrans_sid' => $syntransId ),
+		__METHOD__
+	);
+
+	if ( $expressionId ) {
+		return $expressionId;
+	}
+	// shouldn't happen
+	return null;
+}
+
 function createExpressionId( $spelling, $languageId ) {
-	
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
 	
@@ -134,6 +171,18 @@ function createExpressionId( $spelling, $languageId ) {
 		), __METHOD__
 	);
 	return $expressionId;
+}
+
+function reviveExpression( $expressionId ) {
+	$dc = wdGetDataSetContext();
+	$dbw = wfGetDB( DB_MASTER );
+	$dbw->update( "{$dc}_expression",
+		array( /* SET */
+			'remove_transaction_id' => null
+		), array( /* WHERE */
+			'expression_id' => $expressionId
+		), __METHOD__
+	);
 }
 
 function getPageTitle( $spelling ) {
@@ -223,13 +272,35 @@ function existSpelling( $spelling ) {
 	return false;
 }
 
+/**
+ * returns an expression object of the expression corresponding
+ * to a given spelling and language, where the expression has
+ * remove_transaction_id is null (i.e. still active)
+ * null if not found
+ */
 function findExpression( $spelling, $languageId ) {
-	if ( $expressionId = getExpressionId( $spelling, $languageId ) ) {
+	$expressionId = getExpressionId( $spelling, $languageId );
+	if ( ! is_null( $expressionId ) ) {
 		return new Expression( $expressionId, $spelling, $languageId );
 	}
-	else {
-		return null;
+	return null;
+}
+
+/**
+ * returns an expression object of the expression corresponding
+ * to a given spelling and language, where the expression has
+ * remove_transaction_id is not null (i.e. deleted).
+ * At the same time, the expression is revived (remove_transaction_id set to null)
+ * returns null if not found
+ */
+function findRemovedExpression( $spelling, $languageId ) {
+	$expressionId = getRemovedExpressionId( $spelling, $languageId );
+	if ( ! is_null( $expressionId ) ) {
+		reviveExpression( $expressionId );
+		createPage( NS_EXPRESSION, $spelling );
+		return new Expression( $expressionId, $spelling, $languageId );
 	}
+	return null;
 }
 
 function createExpression( $spelling, $languageId ) {
@@ -242,10 +313,17 @@ function createExpression( $spelling, $languageId ) {
 }
 
 function findOrCreateExpression( $spelling, $languageId ) {
-	if ( $expression = findExpression( $spelling, $languageId ) )
+	$expression = findExpression( $spelling, $languageId );
+	if ( ! is_null( $expression ) ) {
 		return $expression;
-	else
-		return createExpression( $spelling, $languageId );
+	}
+	// else
+	$expression = findRemovedExpression( $spelling, $languageId );
+	if ( ! is_null( $expression ) ) {
+		return $expression;
+	}
+	// else
+	return createExpression( $spelling, $languageId );
 }
 
 function getSynonymId( $definedMeaningId, $expressionId ) {
@@ -295,6 +373,10 @@ function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identica
 	);
 }
 
+/**
+ * returns true if the expression is one of the translations of the
+ * given definedMeaningId
+ */
 function expressionIsBoundToDefinedMeaning( $definedMeaningId, $expressionId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
@@ -663,6 +745,10 @@ function removeClassMembershipWithId( $classMembershipId ) {
 	);
 }
 
+/**
+ * removes a syntrans corresponding to a given $definedMeaningId
+ * and $expressionId by setting remove_transaction_id to some value.
+ */
 function removeSynonymOrTranslation( $definedMeaningId, $expressionId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
@@ -676,8 +762,16 @@ function removeSynonymOrTranslation( $definedMeaningId, $expressionId ) {
 			'remove_transaction_id' => null
 		), __METHOD__
 	);
+
+	// this function is called only by updateSynonymOrTranslation
+	// which happens when the identicalMeaning value is modified
+	// so the expressionId will still be in use, no need to check if remove needed
 }
 
+/**
+ * removes a syntrans corresponding to a given $syntransId
+ * by setting remove_transaction_id to some value.
+ */
 function removeSynonymOrTranslationWithId( $syntransId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
@@ -690,6 +784,28 @@ function removeSynonymOrTranslationWithId( $syntransId ) {
 			'remove_transaction_id' => null
 		), __METHOD__
 	);
+
+	// check if the corresponding expression is still in use
+	$expressionId = getExpressionIdFromSyntrans( $syntransId );
+	$result = $dbw->selectField(
+		"{$dc}_syntrans",
+		'syntrans_sid',
+		array(
+			'expression_id' => $expressionId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( $result == false ) {
+		// the expression is not in use anymore, remove it
+		$dbw->update( "{$dc}_expression",
+			array( /* SET */
+				'remove_transaction_id' => $transactionId
+			), array( /* WHERE */
+				'expression_id' => $expressionId
+			), __METHOD__
+		);
+	}
 }
 
 function updateSynonymOrTranslation( $definedMeaningId, $expressionId, $identicalMeaning ) {
@@ -1389,7 +1505,7 @@ function removeOptionAttributeOption( $optionId ) {
 		), __METHOD__
 	);
 
-	if ( is_null( $valueId ) ){
+	if ( $valueId == false ){
 		// option not used, can proceed to delete
 		$transactionId = getUpdateTransactionId() ;
 		$dbw->update( "{$dc}_option_attribute_options",
