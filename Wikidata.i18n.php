@@ -9238,6 +9238,7 @@ Kuckt w.e.g. [[{{MediaWiki:Ow editing policy url}}|eis Ännerungsrichtlinnen]].'
 	'ow_IdenticalMeaning' => 'Déi selwescht Bedeitung?',
 	'ow_IncomingRelations' => 'Relatiounen déi erakommen',
 	'ow_GotoSource' => "Zréck op d'Quell",
+	'ow_ID' => 'Nummer',
 	'ow_Language' => 'Sprooch',
 	'ow_LevelAnnotation' => 'Notiz',
 	'ow_LinkAttributeHeader' => 'Link-Attribut',
@@ -9317,6 +9318,9 @@ Vläicht koumt Dir direkt op dës Säit: Normalerweis braucht Dir net hei ze sin
 	'ow_nstab_edit_copy' => 'Kopie änneren',
 	'right-addlanguage' => 'Sproochastellungen derbäisetzen an änneren',
 	'ow_shown_datasets' => 'Datesätz weisen',
+	'prefs-ow-lang' => 'Sproochen',
+	'ow_pref_lang_switch' => 'Nëmmen déi erausgesichte Sprooche weisen',
+	'ow_pref_lang_select' => 'Sprooche fir ze weisen:',
 );
 
 /** Lingua Franca Nova (Lingua Franca Nova)
