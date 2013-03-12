@@ -13,7 +13,6 @@ function getOwLanguageNames( $purge = false ) {
 		$owLanguageNames = getLangNames( $wgLang->getCode() );
 	}
 	return $owLanguageNames;
-
 }
 
 /* Return an array containing all language names translated into the language
@@ -34,17 +33,19 @@ function getLanguageIdForCode( $code ) {
 	static $languages = null;
 	if ( is_null( $languages ) ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$id_res = $dbr->query( "select language_id,wikimedia_key from language" );
-		while ( $id_row = $dbr->fetchObject( $id_res ) ) {
+		$id_res = $dbr->select(
+			'language',
+			array( 'language_id', 'wikimedia_key'),
+			'', __METHOD__
+		);
+		foreach ( $id_res as $id_row ) {
 			$languages[$id_row->wikimedia_key] = $id_row->language_id;
 		}
 	}
 	if ( is_array( $languages ) && array_key_exists( $code, $languages ) ) {
 		return $languages[$code];
-	} else {
-		return null;
 	}
-	
+	return null;
 }
 
 function getLanguageIdForIso639_3( $code ) {
@@ -53,18 +54,20 @@ function getLanguageIdForIso639_3( $code ) {
 	
 	if ( is_null( $languages ) ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$result = $dbr->query( "SELECT language_id,iso639_3 FROM language" );
-		while ( $row = $dbr->fetchObject( $result ) ) {
+		$result = $dbr->select(
+			'language',
+			array( 'language_id', 'iso639_3'),
+			'', __METHOD__
+		);
+		foreach ( $result as $row ) {
 			$languages[$row->iso639_3] = $row->language_id;
 		}
 	}
 	
 	if ( is_array( $languages ) && array_key_exists( $code, $languages ) ) {
 		return $languages[$code];
-	} else {
-		return null;
 	}
-	
+	return null;
 }
 
 function getLanguageIso639_3ForId( $id ) {
@@ -73,18 +76,20 @@ function getLanguageIso639_3ForId( $id ) {
 	
 	if ( is_null( $languages ) ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$result = $dbr->query( "SELECT language_id,iso639_3 FROM language" );
-		while ( $row = $dbr->fetchObject( $result ) ) {
+		$result = $dbr->select(
+			'language',
+			array( 'language_id', 'iso639_3'),
+			'', __METHOD__
+		);
+		foreach( $result as $row ) {
 			$languages['id' . $row->language_id] = $row->iso639_3;
 		}
 	}
 	
 	if ( is_array( $languages ) && array_key_exists( 'id' . $id, $languages ) ) {
 		return $languages['id' . $id];
-	} else {
-		return null;
 	}
-	
+	return null;
 }
 
 /**
@@ -114,29 +119,24 @@ function getSQLForLanguageNames( $lang_code, $lang_subset = array() ) {
 	} else {
 		/* Fall back on English in cases where a language name is not present in the
 		user's preferred language. */
-		$cond = array();
+		$cond = array( 'eng.name_language_id' => WLD_ENGLISH_LANG_ID );
 
 		if ( ! empty( $lang_subset ) ) {
 			$cond['language_id'] = $lang_subset;
 		}
 
 		$sqlQuery = $dbr->selectSQLText(
-			array( 'language', 'ln1' => 'language_names', 'ln2' => 'language_names' ),
+			array( 'eng' => 'language_names', 'ln2' => 'language_names' ),
 			array( /* fields to select */
-				'row_id' => 'language.language_id',
-				'language_name' => 'COALESCE(ln1.language_name,ln2.language_name)' ),
+				'row_id' => 'eng.language_id',
+				'language_name' => 'COALESCE(ln2.language_name,eng.language_name)' ),
 			$cond,
 			__METHOD__,
 			array(),
 			array( /* JOIN */
-				'ln1' => array( 'LEFT JOIN', array(
-					'language.language_id = ln1.language_id',
-					'ln1.name_language_id' => $lang_id
-					)
-				),
-				'ln2' => array( 'JOIN', array(
-					'language.language_id = ln2.language_id',
-					'ln2.name_language_id' => WLD_ENGLISH_LANG_ID
+				'ln2' => array( 'LEFT JOIN', array(
+					'eng.language_id = ln2.language_id',
+					'ln2.name_language_id' => $lang_id
 					)
 				)
 			)
