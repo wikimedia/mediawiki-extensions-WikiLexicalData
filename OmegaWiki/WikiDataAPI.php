@@ -105,7 +105,7 @@ function getExpressionId( $spelling, $languageId ) {
 		"{$dc}_expression",
 		'expression_id',
 		array(
-			'BINARY spelling' => $spelling,
+			'spelling' => $spelling,
 			'language_id' => $languageId,
 			'remove_transaction_id' => null
 		), __METHOD__
@@ -125,7 +125,7 @@ function getRemovedExpressionId( $spelling, $languageId ) {
 		"{$dc}_expression",
 		'expression_id',
 		array(
-			'BINARY spelling' => $spelling,
+			'spelling' => $spelling,
 			'language_id' => $languageId,
 			'remove_transaction_id IS NOT NULL'
 		), __METHOD__
@@ -262,7 +262,7 @@ function existSpelling( $spelling ) {
 	$expressionId = $dbr->selectField(
 		"{$dc}_expression",
 		'expression_id',
-		array( 'BINARY spelling' => $spelling, 'remove_transaction_id' => null ),
+		array( 'spelling' => $spelling, 'remove_transaction_id' => null ),
 		__METHOD__
 	);
 
@@ -2230,7 +2230,7 @@ function getExpressions( $spelling, $dc = null ) {
 	// when the remove_transaction_id will be automatically updated,
 	// we can get rid of using the syntrans table
 	$cond = array(
-		'BINARY spelling' => $spelling,
+		'spelling' => $spelling,
 		'exp.expression_id = synt.expression_id',
 		'exp.remove_transaction_id' => null,
 		'synt.remove_transaction_id' => null

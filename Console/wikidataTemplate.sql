@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS /*$wgWDprefix*/defined_meaning (
 
 CREATE TABLE IF NOT EXISTS /*$wgWDprefix*/expression (
   `expression_id` int(10) unsigned NOT NULL,
-  `spelling` varchar(255) NOT NULL default '',
+  `spelling` varbinary(255) NOT NULL default '',
   `language_id` int(10) NOT NULL default '0',
   `add_transaction_id` int(11) NOT NULL,
   `remove_transaction_id` int(11) default NULL,
@@ -146,6 +146,7 @@ CREATE TABLE IF NOT EXISTS /*$wgWDprefix*/expression (
   KEY /*$wgWDprefix*/versioned_start_expression (`add_transaction_id`,`expression_id`,`language_id`),
   KEY /*$wgWDprefix*/versioned_start_language (`add_transaction_id`,`language_id`,`expression_id`),
   KEY /*$wgWDprefix*/versioned_start_spelling (`add_transaction_id`,`spelling`,`expression_id`,`language_id`)
+  KEY /*$wgWDprefix*/spelling_idx (`spelling`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS /*$wgWDprefix*/meaning_relations (
