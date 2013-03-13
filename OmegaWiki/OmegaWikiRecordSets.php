@@ -451,7 +451,7 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 	$sqlbase =
 		"SELECT expression_id, language_id " .
 		" FROM {$dc}_expression" .
-		" WHERE spelling=BINARY " . $dbr->addQuotes( $spelling ) .
+		" WHERE spelling= " . $dbr->addQuotes( $spelling ) .
 		" AND {$dc}_expression.remove_transaction_id IS NULL " ;
 
 	// needed because expression.remove_transaction_id is not updated automatically
@@ -509,7 +509,7 @@ function getExpressionIdThatHasSynonyms( $spelling, $languageId ) {
 	$queryResult = $dbr->query(
 		"SELECT expression_id, language_id " .
 		" FROM {$dc}_expression" .
-		" WHERE spelling=BINARY " . $dbr->addQuotes( $spelling ) .
+		" WHERE spelling= " . $dbr->addQuotes( $spelling ) .
 		" AND {$dc}_expression.remove_transaction_id IS NULL " .
 		" AND language_id=$languageId" .
 		" AND EXISTS (" .
