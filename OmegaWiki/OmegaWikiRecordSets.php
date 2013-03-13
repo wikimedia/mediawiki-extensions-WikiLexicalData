@@ -454,14 +454,6 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 		" WHERE spelling= " . $dbr->addQuotes( $spelling ) .
 		" AND {$dc}_expression.remove_transaction_id IS NULL " ;
 
-	// needed because expression.remove_transaction_id is not updated automatically
-	$sqlbase .= " AND EXISTS (" .
-		"SELECT * " .
-		" FROM {$dc}_syntrans " .
-		" WHERE {$dc}_syntrans.expression_id={$dc}_expression.expression_id" .
-		" AND {$dc}_syntrans.remove_transaction_id IS NULL " .
-		")";
-
 	$queryResult = null;
 	if ( $viewInformation->expressionLanguageId != 0 ) {
 		// display the expression in that language
@@ -498,35 +490,8 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 			getExpressionMeaningsRecord( $expression->expression_id, $viewInformation )
 		) );
 	}
-
 	return $result;
 }
-
-function getExpressionIdThatHasSynonyms( $spelling, $languageId ) {
-	$dc = wdGetDataSetContext();
-
-	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT expression_id, language_id " .
-		" FROM {$dc}_expression" .
-		" WHERE spelling= " . $dbr->addQuotes( $spelling ) .
-		" AND {$dc}_expression.remove_transaction_id IS NULL " .
-		" AND language_id=$languageId" .
-		" AND EXISTS (" .
-			"SELECT expression_id " .
-			" FROM {$dc}_syntrans " .
-			" WHERE {$dc}_syntrans.expression_id={$dc}_expression.expression_id" .
-			" AND {$dc}_syntrans.remove_transaction_id IS NULL "
-		. ")"
-	);
-	
-	if ( $expression = $dbr->fetchObject( $queryResult ) ) {
-		return $expression->expression_id;
-	} else {
-		return 0;
-	}
-}
- 
 
 function getClassAttributesRecordSet( $definedMeaningId, ViewInformation $viewInformation ) {
 	global $wgWikidataDataSet;
