@@ -2091,14 +2091,15 @@ function definingExpression( $definedMeaningId, $dc = null ) {
 	}
 	$dbr = wfGetDB( DB_SLAVE );
 
+	// no exp.remove_transaction_id because definingExpression could have been deleted
+	// but is still needed to form the DM page title.
 	$spelling = $dbr->selectField(
 		array( 'dm' => "{$dc}_defined_meaning", 'exp' => "{$dc}_expression" ),
 		'spelling',
 		array(
 			'dm.defined_meaning_id' => $definedMeaningId,
 			'exp.expression_id = dm.expression_id',
-			'dm.remove_transaction_id' => null,
-			'exp.remove_transaction_id' => null
+			'dm.remove_transaction_id' => null
 		), __METHOD__
 	);
 
