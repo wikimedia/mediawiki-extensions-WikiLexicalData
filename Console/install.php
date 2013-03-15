@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Maintenance script to create a wikidata extension for mediawiki
+* Maintenance script to create a WikiLexicalData extension for mediawiki
 * it generates the tables in a database (passed as parameter) with a defined prefix (passed as parameter)
 */
 
@@ -10,15 +10,15 @@ require_once( $baseDir . '/maintenance/Maintenance.php' );
 
 echo "start\n";
 
-class InstallWikidata extends Maintenance {
+class InstallWikiLexicalData extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Install Wikidata by creating the tables and filling them with the minimal necessary data\n"
-			. 'Example usage: php installWikidata.php --prefix=uw '
+		$this->mDescription = "Installation by creating the tables and filling them with the minimal necessary data\n"
+			. 'Example usage: php install.php --prefix=uw '
 			. '--template=wikidataTemplate.sql --datasetname="OmegaWiki community"' ;
-		$this->addOption( 'prefix', 'The prefix to use for Wikidata relational tables. e.g. --prefix=uw' );
-		$this->addOption( 'template', 'A sql template describing the relational tables. e.g. --template=wikidataTemplate.sql' );
+		$this->addOption( 'prefix', 'The prefix to use for the relational tables. e.g. --prefix=uw' );
+		$this->addOption( 'template', 'A sql template describing the relational tables. e.g. --template=databaseTemplate.sql' );
 		$this->addOption( 'datasetname', 'A name for your dataset. e.g. --datasetname="OmegaWiki community"' );
 	}
 
@@ -32,7 +32,7 @@ class InstallWikidata extends Maintenance {
 			exit(0);
 		}
 		if ( !$this->hasOption( 'template' ) ) {
-			$this->output( "A template is missing. Use for example --template=wikidataTemplate.sql\n");
+			$this->output( "A template is missing. Use for example --template=databaseTemplate.sql\n");
 			exit(0);
 		}
 
@@ -41,7 +41,7 @@ class InstallWikidata extends Maintenance {
 		$datasetname = $this->getOption( 'datasetname' );
 		$wdCurrentContext = $prefix ;
 
-		$this->output( "Creating Wikidata tables...\n" );
+		$this->output( "Creating relational tables...\n" );
 
 		$this->ReadTemplateSQLFile( "/*\$wgWDprefix*/", $prefix . "_", dirname( __FILE__ ) . DIRECTORY_SEPARATOR . $template );
 
@@ -128,27 +128,25 @@ class InstallWikidata extends Maintenance {
 	protected function enableAnnotations( $dc ) {
 		// Admin user
 		$userId = 1 ;
-		$dbw = wfGetDB( DB_MASTER );
 
 		startNewTransaction( $userId, 0, "Script bootstrap class attribute meanings", $dc );
 
 		// a collection of classes. A word added to that collection becomes a class
-		$lexicalCollectionId = bootstrapCollection( "lexical functionality", WLD_ENGLISH_LANG_ID, "CLAS", $dc );
+		$classCollectionId = bootstrapCollection( "Community class", WLD_ENGLISH_LANG_ID, "CLAS", $dc );
 
 		// a collection of iso639-3 codes, to enable translation of the interface
 		// and language specific annotations
-		$iso6393CollectionId = bootstrapCollection( "ISO 639-3 codes", WLD_ENGLISH_LANG_ID, "", $dc );
+		$iso6393CollectionId = bootstrapCollection( "ISO 639-3 codes", WLD_ENGLISH_LANG_ID, "LANG", $dc );
 
 		// DM lexical item, a class by default for every word
 		$lexicalItemDMId = $this->bootstrapDefinedMeaning( "lexical item", WLD_ENGLISH_LANG_ID, "Lexical item is used as a class by default." );
-		addDefinedMeaningToCollection( $lexicalItemDMId, $lexicalCollectionId, "" );
+		addDefinedMeaningToCollection( $lexicalItemDMId, $classCollectionId, "" );
 
 		// DM English, a class by default for English words
 		$englishDMId = $this->bootstrapDefinedMeaning( "English", WLD_ENGLISH_LANG_ID,
 			"A West-Germanic language originating in England but now spoken in all parts of the British Isles,"
 			. " the Commonwealth of Nations, the United States of America, and other parts of the world."
 		);
-		addDefinedMeaningToCollection( $englishDMId, $lexicalCollectionId, "" );
 		addDefinedMeaningToCollection( $englishDMId, $iso6393CollectionId, "eng" );
 
 		echo "**\n";
@@ -239,5 +237,5 @@ class InstallWikidata extends Maintenance {
 
 }
 
-$maintClass = 'InstallWikidata';
+$maintClass = 'InstallWikiLexicalData';
 require_once( RUN_MAINTENANCE_IF_MAIN );

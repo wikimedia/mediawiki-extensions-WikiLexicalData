@@ -1,7 +1,7 @@
 --
 -- Add the wikidata specific namespaces
 --
- 
+
 CREATE TABLE IF NOT EXISTS language (
   language_id int(10) NOT NULL auto_increment,
   dialect_of_lid int(10) NOT NULL default '0',
@@ -301,5 +301,4 @@ CREATE TABLE IF NOT EXISTS /*$wgWDprefix*/url_attribute_values (
   KEY /*$wgWDprefix*/versioned_start_object (`add_transaction_id`,`object_id`,`attribute_mid`,`value_id`),
   KEY /*$wgWDprefix*/versioned_start_attribute (`add_transaction_id`,`attribute_mid`,`object_id`,`value_id`),
   KEY /*$wgWDprefix*/versioned_start_value (`add_transaction_id`,`value_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;	
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
