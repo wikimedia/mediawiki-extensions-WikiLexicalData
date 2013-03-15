@@ -38,11 +38,25 @@ class SpecialAddCollection extends SpecialPage {
 			$datasetarray[$datasetid] = $dataset->fetchName();
 		}
 
+		// CLAS: an object added to a collection of type CLAS becomes a class (e.g. animal)
+		// Then, objects can be attached to that class to give them class-specific attributes (e.g. species)
+		// LANG: an object added to a collection of type LANG is considered as a language
+		// which allows one to add lang-specific attributes (such as defining "part of speech" for that language
+		// so, it acts a bit like a class, but it is not possible to attach an object to that class manually
+		// this is done automatically when a word is known to belong to a language.
+		$collectionTypes = array(
+			'' => 'None',
+			'CLAS' => 'CLAS',
+			'LANG' => 'LANG',
+			'LEVL' => 'LEVL',
+			'MAPP' => 'MAPP',
+			'RELT' => 'RELT'
+		);
 		$wgOut->addHTML( getOptionPanel(
 			array(
 				'Collection name:' => getTextBox( 'collection' ),
 				'Language of name:' => getSuggest( 'language', 'language' ),
-				'Collection type:' => getSelect( 'type', array( '' => 'None', 'RELT' => 'RELT', 'LEVL' => 'LEVL', 'CLAS' => 'CLAS', 'MAPP' => 'MAPP' ) ),
+				'Collection type:' => getSelect( 'type', $collectionTypes ),
 				'Dataset:' => getSelect( 'dataset', $datasetarray )
 			),
 			'', array( 'create' => wfMsg( 'ow_create' ) )

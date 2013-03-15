@@ -1706,7 +1706,7 @@ function isClass( $objectId ) {
 		array(),
 		array( 'col' => array( 'INNER JOIN', array(
 			'col.collection_id = cont.collection_id',
-			'col.collection_type' => 'CLAS',
+			'col.collection_type' => array( 'CLAS', 'LANG' ),
 			'col.remove_transaction_id' => null
 		)))
 	);
