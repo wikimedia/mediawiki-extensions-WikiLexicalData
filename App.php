@@ -5,7 +5,8 @@ if ( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 $dir = dirname( __FILE__ ) . '/';
 
 require_once( $dir . 'OmegaWiki/Wikidata.php' );
-require_once( $dir . '/SpecialLanguages.php' );
+require_once( $dir . 'SpecialLanguages.php' );
+require_once( $dir . 'includes/api/OmegaWikiExt.php');
 
 $wgExtensionCredits['other'][] = array(
 	'path'            => __FILE__,
@@ -36,7 +37,7 @@ $wgExtensionCredits['specialpage'][] = array(
  * Should be repaired, if someone has the courage to go through
  * the undocumented code...
  */
-//$wgAPIModules['wikidata'] = 'ApiWikiData';
+// $wgAPIModules['wikidata'] = 'ApiWikiData';
 
 $wgExtensionMessagesFiles['Wikidata'] = $dir . 'Wikidata.i18n.php';
 
