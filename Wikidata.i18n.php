@@ -301,8 +301,15 @@ $messages['qqq'] = array(
 {{Identical|Optional}}",
 	'langman_addlang' => 'Button text when adding a new language in the Language Manager.',
 	'importlangnames' => 'Name of special page (see [http://www.omegawiki.org/Special:Specialpages http://www.omegawiki.org/Special:Specialpages])',
+	'importlangnames_added' => 'Parameters:
+* $1 - ISO 639-3 code for language. [[w:ISO 639-3]]',
+	'importlangnames_not_found' => 'Parameters:
+* $1 - ISO 639-3 code for language. [[w:ISO 639-3]]',
 	'datasearch' => 'Name of special page (see [http://www.omegawiki.org/Special:Specialpages http://www.omegawiki.org/Special:Specialpages])',
 	'datasearch_language' => '{{Identical|Language}}',
+	'datasearch_showing_only' => 'Parameters:
+* $1 - 100 (hard-coded)
+* $2 - number of results (number of matches), or empty string(?)',
 	'datasearch_match_ext_ids' => "*'''$1''': searched text",
 	'datasearch_match_words' => "*'''$1''': searched text",
 	'datasearch_match_words_lang' => "*'''$1''': language name
@@ -310,11 +317,35 @@ $messages['qqq'] = array(
 	'importtsv' => '"TSV" is a "Tab Separated Values File"',
 	'ow_importtsv_header' => "'test run' comes from {{msg-mw|ow importtsv test run}}.",
 	'ow_importtsv_bad_columns' => "Do not translate 'definition_iso' and 'translations_iso'.",
+	'ow_importtsv_results' => 'Commented out because the code is outdated.
+
+This message indicates that definitions and translations have been added.
+
+Parameters:
+* $1 - number of definitions which have been added
+* $2 - number of translations which have been added',
+	'ow_impexptsv_unknown_lang' => 'Parameters:
+* $1 - language code
+
+The page title for this message is {{msg-mw|ow_exporttsv_export_failed}}.',
 	'ow_exporttsv_languages' => '{{Identical|Language}}',
+	'ow_exporttsv_export_failed' => 'Used as page title.
+
+The page body for this message is:
+* {{msg-mw|ow_impexptsv_unknown_lang}}.',
 	'addcollection' => 'Name of special page (see [http://www.omegawiki.org/Special:Specialpages http://www.omegawiki.org/Special:Specialpages])',
 	'ow_searchnoresult' => "Don't translate the word ''Expression'' in ''<nowiki>[[Expression:$1]]</nowiki>''",
 	'ow_save' => '{{Identical|Save}}',
 	'ow_history' => '{{Identical|History}}',
+	'ow_noedit_title' => 'Used as page title.
+
+The page body for this message is {{msg-mw|Ow noedit}}.',
+	'ow_noedit' => 'Used as page body.
+
+The title for this message is {{msg-mw|Ow noedit title}}.
+
+Parameters:
+* $1 - dataset name',
 	'ow_editing_policy_url' => '{{notranslate}}',
 	'ow_none_selected' => '{{Identical|None selected}}',
 	'transaction' => "A 'transaction' is a database transaction: a set of database operations considered as a whole.",
@@ -342,6 +373,8 @@ $messages['qqq'] = array(
 	'ow_ID' => '{{Identical|ID}}',
 	'ow_Language' => '{{Identical|Language}}',
 	'ow_LevelAnnotation' => '{{Identical|Annotation}}',
+	'ow_Multiple_meanings' => 'Used as page title. Parameters:
+* $1 - page title',
 	'ow_OptionAttribute' => '{{Identical|Property}}',
 	'ow_OptionAttributeOption' => '{{Identical|Options}}',
 	'ow_OptionAttributeOptions' => '{{Identical|Options}}',
@@ -369,6 +402,18 @@ This is visible when a SynTrans is annotated, or while editing a page.
 	'ow_Property' => '{{Identical|Property}}',
 	'ow_Value' => '{{Identical|Value}}',
 	'ow_added' => '{{Identical|Added}}',
+	'ow_meaningsoftitle' => 'Unused at this time.
+
+Used as page title. Parameters:
+* $1 - page title
+See also:
+* {{msg-mw|Ow meaningsofsubtitle}}',
+	'ow_meaningsofsubtitle' => 'Unused at this time.
+
+Used as page subtitle. Parameters:
+* $1 - page title
+See also:
+* {{msg-mw|Ow meaningsoftitle}}',
 	'ow_Permission_denied' => "Visible on [http://www.omegawiki.org/Special:Copy this OmegaWiki page] (make sure you're not logged in)
 {{Identical|Permission denied}}",
 	'copy' => '{{Identical|Copy}}',
@@ -384,6 +429,10 @@ Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki pag
 	'ow_upload' => 'Text in the upload button after selecting a TSV file for import.
 {{Identical|Upload}}',
 	'ow_create' => '{{Identical|Create}}',
+	'ow_collection_added' => 'This message indicates that the collection $1 has been added.
+
+Parameters:
+* $1 - collection name',
 	'ow_suggest_previous' => '{{Identical|Previous}}',
 	'ow_suggest_next' => '{{Identical|Next}}',
 	'ow_suggest_clear' => '{{Identical|Clear}}',
@@ -7791,8 +7840,8 @@ $messages['ja'] = array(
 	'ow_importtsv_nothing_added' => '追加なし。',
 	'ow_importtsv_nothing_added_test' => '追加なし(試験実行です)。',
 	'ow_importtsv_results' => '$1{{PLURAL:$1|個}}の定義と $2{{PLURAL:$2|個}}の翻訳を追加しました。',
-	'ow_impexptsv_unknown_lang' => '<p>未知または不正な言語: $1<br />
-言語は ISO 639-3 言語コードで指定されなければなりません。</p>',
+	'ow_impexptsv_unknown_lang' => '<p>未知または正しくない言語: $1<br />
+言語は ISO 639-3 言語コードで指定してください。</p>',
 	'exporttsv' => 'ウィキデータ: TSVの書き出し',
 	'ow_exporttsv_title' => 'コレクションをTSVに書き出す',
 	'ow_exporttsv_header' => '<p>コレクションを、OpenOffice.org や Excel などの表計算ソフトウェアに取り込める、タブ区切りテキスト形式で書き出します。<br />
