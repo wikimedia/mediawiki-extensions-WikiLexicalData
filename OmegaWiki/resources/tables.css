@@ -306,3 +306,34 @@ ul.collapsable-items {
 	border-width:1px;
 	font-size:110%;
 }
+
+div.owstatmainheader {
+	text-align:center;
+	background-color:#DDFFDD;
+	font-size:130%;
+}
+
+div.owstatbar {
+	background-image: -webkit-linear-gradient(blue, cyan, blue);
+	background-image: -moz-linear-gradient(blue, cyan, blue);
+	float:left;
+	height: 15px;
+}
+
+table.owstatmaintable {
+	margin-left: auto;
+	margin-right: auto;
+}
+table.owstatmaintable th {
+	font-weight:bold;
+}
+
+table.owstatbig {
+	font-size:120%;
+	font-weight:bold;
+	margin-left: auto;
+	margin-right: auto;
+}
+table.owstatbig td {
+	padding: 0px 5px;
+}

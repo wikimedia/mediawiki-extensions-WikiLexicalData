@@ -16,13 +16,14 @@ class SpecialOWStatistics extends SpecialPage {
 
 		$showstat = array_key_exists( 'showstat', $_GET ) ? $_GET['showstat']:'';
 
-		$headerText = '<big><div style="text-align:center; background-color:#DDFFDD;">'
+		$headerText = Html::openElement('div', array( 'class' => 'owstatmainheader' ))
 			. $this->linkHeader ( wfMsg('ow_DefinedMeaning'), "dm", $showstat ) . " — "
 			. $this->linkHeader ( wfMsg('ow_Definition'), "def", $showstat ) . " — "
 			. $this->linkHeader ( wfMsg('ow_Expression'), "exp", $showstat ) . " — "
 			. $this->linkHeader ( "Syntrans", "syntrans", $showstat ) . " — "
 			. $this->linkHeader ( wfMsg('ow_Annotation'), "annot", $showstat )
-			. "</big></div><br /><br />" ;
+			. Html::closeElement('div')
+			. Html::element('br');
 
 		$wgOut->addHTML( $headerText ) ;
 
@@ -44,7 +45,7 @@ class SpecialOWStatistics extends SpecialPage {
 		if ( $showstat != $val ) {
 			$url = str_replace( "$1", 'Special:Ow_statistics' , $wgArticlePath );
 			$url .= strpos($url , "?") ? "&showstat=$val":"?showstat=$val";
-			return "<a href=\"$url\">$text</a>" ;
+			return Html::element( 'a', array( 'href' => $url ), $text );
 		} else {
 			return "<b>$text</b>" ;
 		}
@@ -54,58 +55,61 @@ class SpecialOWStatistics extends SpecialPage {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$sql = "SELECT COUNT(DISTINCT defined_meaning_id) as number " ;
-		$sql .= "FROM " . "{$dc}_syntrans" . " WHERE remove_transaction_id IS NULL" ;
-
-		$queryResult = $dbr->query( $sql );
-		$row = $dbr->fetchObject( $queryResult ) ;
-		$nbdm = $row->number ;
-
-		return "$nbdm";
+		$nbdm = $dbr->selectField(
+			"{$dc}_syntrans",
+			'COUNT(DISTINCT defined_meaning_id)',
+			array( 'remove_transaction_id' => null ),
+			__METHOD__
+		);
+		return $nbdm;
 	}
 
 	function getDefinedMeaningPerLanguage () {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 		global $wgUploadPath ;
+		$output = "";
 
 		$languageNames = getOwLanguageNames();
 
 		// get number of DM with at least one translation for each language
-		$sql = "SELECT language_id, count(DISTINCT {$dc}_syntrans.defined_meaning_id) as tot ";
-		$sql .= " FROM {$dc}_expression, {$dc}_syntrans" ;
-		$sql .= " WHERE {$dc}_expression.expression_id = {$dc}_syntrans.expression_id " ;
-		$sql .= " AND {$dc}_syntrans.remove_transaction_id IS NULL " ;
-		$sql .= " group by language_id " ;
+		$queryResult = $dbr->select(
+			array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+			array( 'language_id', 'tot' => 'count(DISTINCT synt.defined_meaning_id)' ),
+			array( 'exp.expression_id = synt.expression_id', 'synt.remove_transaction_id' => null ),
+			__METHOD__,
+			array( 'GROUP BY' => 'language_id' )
+		);
 
-		$queryResult = $dbr->query( $sql );
 		$nbDMArray = array () ;
 
-		while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		foreach ( $queryResult as $row ) {
 			$lang = $languageNames[$row->language_id] ;
 			$nbDMArray[$lang] = $row->tot ;
 		}
 		$nblang = count ( $nbDMArray ) ;
 		$nbdm = $this->getNumberOfDM() ;
 
-		$tableLang = "<center><table class=\"sortable\">" ;
-		$tableLang .= "<tr><th><b>" . wfMsg('ow_Language') . "</b></th><th><b>" . wfMsg('ow_DefinedMeaning') . "</b></th></tr>\n";
+		$tableLang = Html::openElement( 'table', array( 'class' => 'sortable owstatmaintable' ));
+		$tableLang .= Html::openElement( 'tr' );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Language') );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_DefinedMeaning') );
+		$tableLang .= Html::closeElement( 'tr' );
 
 		arsort ( $nbDMArray ) ;
 		$max = max ( $nbDMArray ) ;
 
 		foreach ($nbDMArray as $lang => $dm) {
-			$wi = ceil( ( ( $dm / $max ) * 500 ) );
-			$per = ceil( ( ( $dm / $max ) * 100 ) );
-			$tableLang .= "<tr><td>$lang</td><td align=right>$dm</td><td><img src=\"$wgUploadPath/sc1.png\" width=\"$wi\" height=15> $per % </td></tr>\n" ;
+			$tableLang .= $this->addTableRowWithBar( $lang, $dm, $max );
 		}
+		$tableLang .= Html::closeElement( 'table' );
 
-		$tableLang .= "</table></center>" ;
+		$output .= Html::openElement( 'table', array('class' => 'owstatbig') );
+		$output .= $this->addTableRow( array( wfMsg('ow_DefinedMeaning'), $nbdm ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_Language'), $nblang ) );
+		$output .= Html::closeElement( 'table' );
 
-		$output = "<center><big><table><tr><td>" . wfMsg('ow_DefinedMeaning') . " : </td><td><b>$nbdm</b></td></tr>" ;
-		$output .= "<tr><td>" . wfMsg('ow_Language') . " : </td><td><b>$nblang</b></td></tr></table></big></center>" ;
-
-		$output .= "<p>$tableLang</p>"  ;
+		$output .= $tableLang;
 
 		return $output ;
 	}
@@ -115,21 +119,25 @@ class SpecialOWStatistics extends SpecialPage {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 		global $wgUploadPath ;
+		$output = "";
 
 		$languageNames = getOwLanguageNames();
 
 		// get number of definitions for each language (note : a definition is always unique )
-		$sql = "SELECT language_id, count(DISTINCT {$dc}_translated_content.text_id) as tot ";
-		$sql .= " FROM {$dc}_translated_content, {$dc}_defined_meaning" ;
-		$sql .= " WHERE {$dc}_translated_content.translated_content_id = {$dc}_defined_meaning.meaning_text_tcid " ;
-		$sql .= " AND {$dc}_translated_content.remove_transaction_id IS NULL " ;
-		$sql .= " AND {$dc}_defined_meaning.remove_transaction_id IS NULL " ;
-		$sql .= " group by language_id " ;
+		$queryResult = $dbr->select(
+			array( 'tc' => "{$dc}_translated_content", 'dm' => "{$dc}_defined_meaning" ),
+			array( 'language_id', 'tot' => 'count(DISTINCT tc.text_id)' ),
+			array(
+				'tc.translated_content_id = dm.meaning_text_tcid',
+				'tc.remove_transaction_id' => null,
+				'dm.remove_transaction_id' => null
+			), __METHOD__,
+			array( 'GROUP BY' => 'language_id' )
+		);
 
-		$queryResult = $dbr->query( $sql );
 		$nbDefArray = array () ;
 
-		while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		foreach ( $queryResult as $row ) {
 			$lang = $languageNames[$row->language_id] ;
 			$nbDefArray[$lang] = $row->tot ;
 		}
@@ -137,24 +145,27 @@ class SpecialOWStatistics extends SpecialPage {
 		$nblang = count ( $nbDefArray ) ;
 		$nbdm = $this->getNumberOfDM() ;
 
-		$tableLang = "<center><table class=\"sortable\">" ;
-		$tableLang .= "<tr><th><b>" . wfMsg('ow_Language') . "</b></th><th><b>" . wfMsg('ow_Definition') . "</b></th></tr>\n";
+		$tableLang = Html::openElement( 'table', array( 'class' => 'sortable owstatmaintable' ));
+		$tableLang .= Html::openElement( 'tr' );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Language') );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Definition') );
+		$tableLang .= Html::closeElement( 'tr' );
 
 		arsort ( $nbDefArray ) ;
 		$max = max ( $nbDefArray ) ;
 		foreach ($nbDefArray as $lang => $def) {
-			$wi = ceil( ( ( $def / $max ) * 500 ) );
-			$per = ceil( ( ( $def / $max ) * 100 ) );
-			$tableLang .= "<tr><td>$lang</td><td align=right>$def</td><td><img src=\"$wgUploadPath/sc1.png\" width=\"$wi\" height=15> $per % </td></tr>\n" ;
+			$tableLang .= $this->addTableRowWithBar( $lang, $def, $max );
 		}
 
-		$tableLang .= "</table></center>" ;
+		$tableLang .= Html::closeElement( 'table' );
 
-		$output = "<center><big><table><tr><td>" . wfMsg('ow_Definition') . " : </td><td><b>$nbDefTot</b></td></tr>" ;
-		$output .= "<tr><td>" . wfMsg('ow_DefinedMeaning') . " : </td><td><b>$nbdm</b></td></tr>" ;
-		$output .= "<tr><td>" . wfMsg('ow_Language') . " : </td><td><b>$nblang</b></td></tr></table></big></center>" ;
+		$output .= Html::openElement( 'table', array('class' => 'owstatbig') );
+		$output .= $this->addTableRow( array( wfMsg('ow_Definition'), $nbDefTot ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_DefinedMeaning'), $nbdm ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_Language'), $nblang ) );
+		$output .= Html::closeElement( 'table' );
 
-		$output .= "<p>$tableLang</p>"  ;
+		$output .= $tableLang;
 
 		return $output ;
 	}
@@ -165,18 +176,20 @@ class SpecialOWStatistics extends SpecialPage {
 		$dbr = wfGetDB( DB_SLAVE );
 		global $wgUploadPath ;
 
-		$sql = "SELECT language_id, count(DISTINCT {$dc}_expression.expression_id) as tot ";
-		$sql .= " FROM {$dc}_expression, {$dc}_syntrans" ;
-		$sql .= " WHERE {$dc}_expression.expression_id = {$dc}_syntrans.expression_id " ;
-		$sql .= " AND {$dc}_syntrans.remove_transaction_id IS NULL " ;
-		$sql .= " group by language_id " ;
+		$output = "";
 
-		$queryResult = $dbr->query( $sql );
+		$queryResult = $dbr->select(
+			"{$dc}_expression",
+			array( 'language_id', 'tot' => 'count(expression_id)' ),
+			array( 'remove_transaction_id' => null ),
+			__METHOD__,
+			array( 'GROUP BY' => 'language_id' )
+		);
 
 		$languageNames = getOwLanguageNames();
 		$nbexpArray = array () ;
 
-		while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		foreach ( $queryResult as $row ) {
 			$lang = $languageNames[$row->language_id] ;
 			$nbexpArray[$lang] = $row->tot ;
 		}
@@ -184,24 +197,27 @@ class SpecialOWStatistics extends SpecialPage {
 		$nbdm = $this->getNumberOfDM() ;
 		$nblang = count ( $nbexpArray ) ;
 
-		$tableLang = "<center><table class=\"sortable\">" ;
-		$tableLang .= "<tr><th><b>" . wfMsg('ow_Language') . "</b></th><th><b>" . wfMsg('ow_Expression') . "</b></th></tr>\n";
+		$tableLang = Html::openElement( 'table', array( 'class' => 'sortable owstatmaintable' ));
+		$tableLang .= Html::openElement( 'tr' );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Language') );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Expression') );
+		$tableLang .= Html::closeElement( 'tr' );
 
 		arsort ( $nbexpArray ) ;
 		$max = max ( $nbexpArray ) ;
 		foreach ($nbexpArray as $lang => $exp) {
-			$wi = ceil( ( ( $exp / $max ) * 500 ) );
-			$per = ceil( ( ( $exp / $max ) * 100 ) );
-			$tableLang .= "<tr><td>$lang</td><td align=right>$exp</td><td><img src=\"$wgUploadPath/sc1.png\" width=\"$wi\" height=15> $per % </td></tr>\n" ;
+			$tableLang .= $this->addTableRowWithBar( $lang, $exp, $max );
 		}
 
-		$tableLang .= "</table></center>" ;
+		$tableLang .= Html::closeElement( 'table' );
 
-		$output = "<center><big><table><tr><td>" . wfMsg('ow_Expression') . " : </td><td><b>$nbexptot</b></td></tr>" ;
-		$output .= "<tr><td>" . wfMsg('ow_DefinedMeaning') . " : </td><td><b>$nbdm</b></td></tr>" ;
-		$output .= "<tr><td>" . wfMsg('ow_Language') . " : </td><td><b>$nblang</b></td></tr></table></big></center>" ;
+		$output .= Html::openElement( 'table', array('class' => 'owstatbig') );
+		$output .= $this->addTableRow( array( wfMsg('ow_Expression'), $nbexptot ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_DefinedMeaning'), $nbdm ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_Language'), $nblang ) );
+		$output .= Html::closeElement( 'table' );
 
-		$output .= "<p>$tableLang</p>"  ;
+		$output .= $tableLang ;
 		return $output ;
 	}
 
@@ -210,14 +226,15 @@ class SpecialOWStatistics extends SpecialPage {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 		global $wgUploadPath ;
+		$output = "";
 
-		$sql = "SELECT language_id, count(DISTINCT {$dc}_syntrans.syntrans_sid) as tot ";
-		$sql .= " FROM {$dc}_expression, {$dc}_syntrans" ;
-		$sql .= " WHERE {$dc}_expression.expression_id = {$dc}_syntrans.expression_id " ;
-		$sql .= " AND {$dc}_syntrans.remove_transaction_id IS NULL " ;
-		$sql .= " group by language_id " ;
-
-		$queryResult = $dbr->query( $sql );
+		$queryResult = $dbr->select(
+			array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+			array( 'language_id', 'tot' => 'count(DISTINCT synt.syntrans_sid)' ),
+			array( 'exp.expression_id = synt.expression_id', 'synt.remove_transaction_id' => null ),
+			__METHOD__,
+			array( 'GROUP BY' => 'language_id' )
+		);
 
 		$languageNames = getOwLanguageNames();
 
@@ -225,7 +242,7 @@ class SpecialOWStatistics extends SpecialPage {
 		$nbexptot = 0 ;
 		$nbSyntransArray = array () ;
 
-		while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		foreach ( $queryResult as $row ) {
 			$lang = $languageNames[$row->language_id] ;
 			$nbSyntransArray[$lang] = $row->tot ;
 		}
@@ -233,24 +250,26 @@ class SpecialOWStatistics extends SpecialPage {
 		$nbdm = $this->getNumberOfDM() ;
 		$nblang = count ( $nbSyntransArray ) ;
 
-		$tableLang = "<center><table class=\"sortable\">" ;
-		$tableLang .= "<tr><th><b>" . wfMsg('ow_Language') . "</b></th><th><b>Syntrans</b></th></tr>\n";
+		$tableLang = Html::openElement( 'table', array( 'class' => 'sortable owstatmaintable' ));
+		$tableLang .= Html::openElement( 'tr' );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Language') );
+		$tableLang .= Html::element( 'th', array(), 'Syntrans' );
+		$tableLang .= Html::closeElement( 'tr' );
 
 		arsort ( $nbSyntransArray ) ;
 		$max = max ( $nbSyntransArray ) ;
 		foreach ($nbSyntransArray as $lang => $syntrans) {
-			$wi = ceil( ( ( $syntrans / $max ) * 500 ) );
-			$per = ceil( ( ( $syntrans / $max ) * 100 ) );
-			$tableLang .= "<tr><td>$lang</td><td align=right>$syntrans</td><td><img src=\"$wgUploadPath/sc1.png\" width=\"$wi\" height=15> $per % </td></tr>\n" ;
+			$tableLang .= $this->addTableRowWithBar( $lang, $syntrans, $max );
 		}
+		$tableLang .= Html::closeElement( 'table' );
 
-		$tableLang .= "</table></center>" ;
+		$output .= Html::openElement( 'table', array('class' => 'owstatbig') );
+		$output .= $this->addTableRow( array( 'Syntrans', $nbSyntransTot ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_DefinedMeaning'), $nbdm ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_Language'), $nblang ) );
+		$output .= Html::closeElement( 'table' );
 
-		$output = "<center><big><table><tr><td>Syntrans : </td><td><b>$nbSyntransTot</b></td></tr>" ;
-		$output .= "<tr><td>" . wfMsg('ow_DefinedMeaning') . " : </td><td><b>$nbdm</b></td></tr>" ;
-		$output .= "<tr><td>" . wfMsg('ow_Language') . " : </td><td><b>$nblang</b></td></tr></table></big></center>" ;
-
-		$output .= "<p>$tableLang</p>"  ;
+		$output .= $tableLang ;
 
 		return $output ;
 	}
@@ -260,52 +279,104 @@ class SpecialOWStatistics extends SpecialPage {
 		$dbr = wfGetDB( DB_SLAVE );
 		$output = "";
 
+		// LINK ATTRIBUTES
 		$nbAtt = array();
-		// Link attributes
-		$sql = "SELECT attribute_mid, count(DISTINCT value_id) as tot ";
-		$sql .= " FROM {$dc}_url_attribute_values" ;
-		$sql .= " WHERE remove_transaction_id IS NULL " ;
-		$sql .= " group by attribute_mid " ;
+		$queryResult = $dbr->select(
+			"{$dc}_url_attribute_values",
+			array( 'attribute_mid', 'tot' => 'count(DISTINCT value_id)' ),
+			array( 'remove_transaction_id' => null ),
+			__METHOD__,
+			array( 'GROUP BY' => 'attribute_mid' )
+		);
 
-		$queryResult = $dbr->query( $sql );
-
-		while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		foreach ( $queryResult as $row ) {
 			$att = $row->attribute_mid ;
 			$nbAtt[$att] = $row->tot ;
 		}
 		arsort ( $nbAtt ) ;
 
-		$output .= "<p><h2>Link attributes</h2>\n" . $this->createTable( $nbAtt ) . "</p>\n"  ;
+		$output .= Html::element( 'h2', array(), 'Link attributes' );
+		$output .= $this->createTable( $nbAtt );
 
+
+		// TEXT ATTRIBUTES
 		$nbAtt = array();
-		// Text attributes
-		$sql = "SELECT attribute_mid, count(DISTINCT value_id) as tot ";
-		$sql .= " FROM {$dc}_text_attribute_values" ;
-		$sql .= " WHERE remove_transaction_id IS NULL " ;
-		$sql .= " group by attribute_mid " ;
+		$queryResult = $dbr->select(
+			"{$dc}_text_attribute_values",
+			array( 'attribute_mid', 'tot' => 'count(DISTINCT value_id)' ),
+			array( 'remove_transaction_id' => null ),
+			__METHOD__,
+			array( 'GROUP BY' => 'attribute_mid' )
+		);
 
-		$queryResult = $dbr->query( $sql );
-
-		while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		foreach ( $queryResult as $row ) {
 			$att = $row->attribute_mid ;
 			$nbAtt[$att] = $row->tot ;
 		}
 		arsort ( $nbAtt ) ;
 
-		$output .= "<p><h2>Text attributes</h2>\n" . $this->createTable( $nbAtt ) . "</p>\n"  ;
+		$output .= Html::element( 'h2', array(), 'Text attributes' );
+		$output .= $this->createTable( $nbAtt );
 
 		return $output ;
 	}
 
+	/**
+	 * creates a table from an array
+	 * the array key is an element name, the array value is a number
+	 */
 	function createTable( $nbAtt ) {
-		$table = "<center><table class=\"sortable\">" ;
-		$table .= "<tr><th><b>" . wfMsg('ow_Annotation') . "</b></th><th><b>" . '#' . "</b></th></tr>\n";
+		$table = Html::openElement( 'table', array( 'class' => 'sortable owstatmaintable' ) );
+		$table .= Html::openElement( 'tr' );
+		$table .= Html::element( 'th', array(), wfMsg('ow_Annotation') );
+		$table .= Html::element( 'th', array(), '#' );
+		$table .= Html::closeElement( 'tr' );
+
 		foreach ($nbAtt as $att => $nb) {
 			$attname = definedMeaningExpression ( $att ) ;
 			if ( $attname == "" ) $attname = $att ;
-			$table .= "<tr><td alt=$att>$attname</td><td align=right>$nb</td></tr>\n" ;
+			$table .= Html::openElement( 'tr' );
+			$table .= Html::element( 'td', array(), $attname );
+			$table .= Html::element( 'td', array('text-align' => 'right'), $nb );
+			$table .= Html::closeElement( 'tr' );
 		}
-		$table .= "</table></center>" ;
+		$table .= Html::closeElement( 'table' );
 		return $table;
+	}
+
+	/**
+	 * adds a simple html row in a table
+	 * where each value of the input array is a column value
+	 */
+	function addTableRow ( $data = array() ) {
+		$result = Html::openElement( 'tr' );
+		foreach( $data as $text ) {
+			$result .= Html::element( 'td', array(), $text );
+		}
+		$result .= Html::closeElement( 'tr' );
+		return $result;
+	}
+
+	/**
+	 * adds a row in a table with three columns
+	 * the first column is e.g. the language name
+	 * the second column is a value
+	 * the third column shows a bar according to value/max
+	 */
+	function addTableRowWithBar ( $firstcol, $value, $max ) {
+		$wi = ceil( ( ( $value / $max ) * 500 ) );
+		$per = ceil( ( ( $value / $max ) * 100 ) );
+
+		$row = Html::openElement( 'tr' );
+		$row .= Html::element( 'td', array(), $firstcol );
+		$row .= Html::element( 'td', array( 'align' => 'right' ), $value );
+		$row .= Html::openElement( 'td', array( 'width' => '600px') );
+
+		$row .= Html::element( 'div', array( 'class' => 'owstatbar', 'style' => "width: {$wi}px"));
+		$row .= Html::element( 'div', array(), " $per %" );
+		$row .= Html::closeElement( 'td' );
+		$row .= Html::closeElement( 'tr' );
+
+		return $row;
 	}
 }
