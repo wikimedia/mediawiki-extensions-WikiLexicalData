@@ -21,16 +21,16 @@ class Expression {
 			$this->dataset = $dc;
 		}
 	}
-	
+
 	function createNewInDatabase() {
 		$this->pageId = $this->createPage();
 		createInitialRevisionForPage( $this->pageId, 'Created by adding expression' );
 	}
-	
+
 	function createPage() {
 		return createPage( NS_EXPRESSION, getPageTitle( $this->spelling ) );
 	}
-	
+
 	function isBoundToDefinedMeaning( $definedMeaningId ) {
 		return expressionIsBoundToDefinedMeaning( $definedMeaningId, $this->id );
 	}
@@ -38,7 +38,7 @@ class Expression {
 	function bindToDefinedMeaning( $definedMeaningId, $identicalMeaning ) {
 		createSynonymOrTranslation( $definedMeaningId, $this->id, $identicalMeaning );
 	}
-	
+
 	function assureIsBoundToDefinedMeaning( $definedMeaningId, $identicalMeaning ) {
 		if ( !$this->isBoundToDefinedMeaning( $definedMeaningId ) ) {
 			$this->bindToDefinedMeaning( $definedMeaningId, $identicalMeaning );
@@ -159,7 +159,7 @@ function getExpressionIdFromSyntrans( $syntransId, $dc = null ) {
 function createExpressionId( $spelling, $languageId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
-	
+
 	$expressionId = newObjectId( "{$dc}_expression" );
 	$updateId = getUpdateTransactionId();
 	$dbw->insert(
@@ -228,12 +228,12 @@ function setPageLatestRevision( $pageId, $latestRevision ) {
 }
 function createInitialRevisionForPage( $pageId, $comment ) {
 	global $wgUser;
-		
+
 	$dbw = wfGetDB( DB_MASTER );
 	$userId = $wgUser->getID();
 	$userName = $wgUser->getName();
 	$timestamp = $dbw->timestamp();
-	
+
 	$dbw->insert(
 		'revision',
 		array( 'rev_page' => $pageId,
@@ -247,7 +247,7 @@ function createInitialRevisionForPage( $pageId, $comment ) {
 
 	$revisionId = $dbw->insertId();
 	setPageLatestRevision( $pageId, $revisionId );
-	
+
 	return $revisionId;
 }
 
@@ -346,14 +346,14 @@ function getSynonymId( $definedMeaningId, $expressionId ) {
 }
 
 function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identicalMeaning = "true" ) {
-	
+
 	$dc = wdGetDataSetContext();
 	$synonymId = getSynonymId( $definedMeaningId, $expressionId );
-	
+
 	if ( $synonymId == 0 ) {
 		$synonymId = newObjectId( "{$dc}_syntrans" );
 	}
-	
+
 	$dbw = wfGetDB( DB_MASTER );
 	if ( $identicalMeaning == "true" ) {
 		$identicalMeaningInteger = 1;
@@ -380,7 +380,7 @@ function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identica
 function expressionIsBoundToDefinedMeaning( $definedMeaningId, $expressionId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	
+
 	$syntransId = $dbr->selectField(
 		"{$dc}_syntrans",
 		'syntrans_sid',
@@ -389,7 +389,7 @@ function expressionIsBoundToDefinedMeaning( $definedMeaningId, $expressionId ) {
 			'remove_transaction_id' => null
 		), __METHOD__
 	);
-	
+
 	if ( $syntransId ) {
 		return true;
 	}
@@ -489,7 +489,7 @@ function removeRelationWithId( $relationId ) {
  * get an array of defined meaning id's found on the right hand side. And vice versa.
  * If you don't specify a relation type dmid but do give either a right hand side or
  * left hand side, you'll get all relations that exist in which the dm you did specify
- * is involved. 
+ * is involved.
  *
  * @param unknown_type $relationTypeId dmid of the relationtype, optional.
  * @param unknown_type $lhs dmid of the left hand side, optional.
@@ -844,7 +844,7 @@ function updateSynonymOrTranslationWithId( $syntransId, $identicalMeaningInput )
 
 function updateDefinedMeaningDefinition( $definedMeaningId, $languageId, $text ) {
 	$definitionId = getDefinedMeaningDefinitionId( $definedMeaningId );
-	
+
 	if ( $definitionId != 0 ) {
 		updateTranslatedText( $definitionId, $languageId, $text );
 	}
@@ -852,7 +852,7 @@ function updateDefinedMeaningDefinition( $definedMeaningId, $languageId, $text )
 
 function updateOrAddDefinedMeaningDefinition( $definedMeaningId, $languageId, $text ) {
 	$definitionId = getDefinedMeaningDefinitionId( $definedMeaningId );
-	
+
 	if ( $definitionId != 0 ) {
 		updateTranslatedText( $definitionId, $languageId, $text );
 	} else {
@@ -864,7 +864,7 @@ function updateTranslatedText( $setId, $languageId, $text ) {
 	removeTranslatedText( $setId, $languageId );
 	addTranslatedText( $setId, $languageId, $text );
 }
- 
+
 function createText( $text ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
@@ -970,7 +970,7 @@ function addDefinedMeaningDefiningDefinition( $definedMeaningId, $languageId, $t
 
 function addDefinedMeaningDefinition( $definedMeaningId, $languageId, $text ) {
 	$definitionId = getDefinedMeaningDefinitionId( $definedMeaningId );
-	
+
 	if ( $definitionId == 0 ) {
 		addDefinedMeaningDefiningDefinition( $definedMeaningId, $languageId, $text );
 	} else {
@@ -994,7 +994,7 @@ function createDefinedMeaningAlternativeDefinition( $definedMeaningId, $translat
 
 function addDefinedMeaningAlternativeDefinition( $definedMeaningId, $languageId, $text, $sourceMeaningId ) {
 	$translatedContentId = newTranslatedContentId();
-	
+
 	createDefinedMeaningAlternativeDefinition( $definedMeaningId, $translatedContentId, $sourceMeaningId );
 	addTranslatedText( $translatedContentId, $languageId, $text );
 }
@@ -1029,11 +1029,11 @@ function removeTranslatedTexts( $translatedContentId ) {
 }
 
 function removeDefinedMeaningAlternativeDefinition( $definedMeaningId, $definitionId ) {
-	// Dilemma: 
+	// Dilemma:
 	// Should we also remove the translated texts when removing an
 	// alternative definition? There are pros and cons. For
 	// now it is easier to not remove them so they can be rolled
-	// back easier.      
+	// back easier.
 //	removeTranslatedTexts($definitionId);
 
 	$dc = wdGetDataSetContext();
@@ -1052,7 +1052,7 @@ function removeDefinedMeaningAlternativeDefinition( $definedMeaningId, $definiti
 
 function removeDefinedMeaningDefinition( $definedMeaningId, $languageId ) {
 	$definitionId = getDefinedMeaningDefinitionId( $definedMeaningId );
-	
+
 	if ( $definitionId != 0 ) {
 		removeTranslatedText( $definitionId, $languageId );
 	}
@@ -1205,7 +1205,7 @@ function addDefinedMeaning( $definingExpressionId ) {
 	$spelling = $expression->spelling;
 	$pageId = createPage( NS_DEFINEDMEANING, getPageTitle( "$spelling ($definedMeaningId)" ) );
 	createInitialRevisionForPage( $pageId, 'Created by adding defined meaning' );
-	
+
 	return $definedMeaningId;
 }
 
@@ -1221,7 +1221,7 @@ function addTextAttributeValue( $objectId, $textAttributeId, $text ) {
 	$dc = wdGetDataSetContext();
 	$textValueAttributeId = newObjectId( "{$dc}_text_attribute_values" );
 	createTextAttributeValue( $textValueAttributeId, $objectId, $textAttributeId, $text );
-	
+
 	return $textValueAttributeId;
 }
 
@@ -1349,7 +1349,7 @@ function addTranslatedTextAttributeValue( $objectId, $attributeId, $languageId, 
 	$dc = wdGetDataSetContext();
 	$translatedTextValueAttributeId = newObjectId( "{$dc}_translated_content_attribute_values" );
 	$translatedContentId = newTranslatedContentId();
-	
+
 	createTranslatedTextAttributeValue( $translatedTextValueAttributeId, $objectId, $attributeId, $translatedContentId );
 	addTranslatedText( $translatedContentId, $languageId, $text );
 }
@@ -1374,12 +1374,12 @@ function removeTranslatedTextAttributeValue( $valueId ) {
 	$translatedTextAttribute = getTranslatedTextAttribute( $valueId );
 	$transactionId = getUpdateTransactionId();
 
-	// Dilemma: 
+	// Dilemma:
 	// Should we also remove the translated texts when removing a
 	// translated content attribute? There are pros and cons. For
 	// now it is easier to not remove them so they can be rolled
-	// back easier.      
-//	removeTranslatedTexts($translatedTextAttribute->value_tcid);  
+	// back easier.
+//	removeTranslatedTexts($translatedTextAttribute->value_tcid);
 
 	$dbw->update( "{$dc}_translated_content_attribute_values",
 		array( /* SET */
@@ -1522,6 +1522,81 @@ function removeOptionAttributeOption( $optionId ) {
 }
 
 /**
+ * returns a spelling that is one of the possible translations of a given DM
+ * in a given language
+ */
+function getDefinedMeaningSpellingForLanguage( $definedMeaning, $language) {
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$spelling = $dbr->selectField(
+		array( "{$dc}_expression" , "{$dc}_syntrans" ),
+		'spelling',
+		array(
+			"{$dc}_syntrans.defined_meaning_id" => $definedMeaning,
+			"{$dc}_expression.language_id" => $language,
+			"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
+			"{$dc}_syntrans.remove_transaction_id" => null
+		), __METHOD__
+	);
+
+	if ( $spelling ) {
+		return $spelling;
+	}
+	return "";
+}
+
+/**
+ * returns a spelling that is one of the possible translations of a given DM
+ * in any language
+ */
+function getDefinedMeaningSpellingForAnyLanguage( $definedMeaning ) {
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$spelling = $dbr->selectField(
+		array( "{$dc}_expression" , "{$dc}_syntrans" ),
+		'spelling',
+		array(
+			"{$dc}_syntrans.defined_meaning_id" => $definedMeaning,
+			"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
+			"{$dc}_syntrans.remove_transaction_id" => null
+		), __METHOD__
+	);
+
+	if ( $spelling ) {
+		return $spelling;
+	}
+	return "";
+}
+
+/**
+ * Returns the language id of a definedMeaning in any language
+ * according to which definition comes up first in the SQL query
+ * @param $definedMeaning
+ */
+function getDefinedMeaningSpellingLanguageId( $definedMeaning ) {
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$languageId = $dbr->selectField(
+		array( "{$dc}_expression" , "{$dc}_syntrans" ),
+		'language_id',
+		array(
+			"{$dc}_syntrans.defined_meaning_id" => $definedMeaning,
+			"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
+			"{$dc}_syntrans.remove_transaction_id" => null
+		), __METHOD__
+	);
+
+	if ( $languageId ) {
+		return $languageId;
+	}
+	return "";
+}
+
+
+/**
  * Returns the definition of a definedMeaning in a given language
  * @param $definedMeaningId
  * @param $languageId
@@ -1595,7 +1670,7 @@ function getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId ) {
 function getDefinedMeaningDefinition( $definedMeaningId ) {
 	global $wgLang;
 	$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
-	
+
 	if ( $userLanguageId > 0 ) {
 		$result = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $userLanguageId );
 	} else {
@@ -1603,7 +1678,7 @@ function getDefinedMeaningDefinition( $definedMeaningId ) {
 	}
 	if ( $result == "" ) {
 		$result = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, 85 );
-		
+
 		if ( $result == "" ) {
 			$result = getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId );
 		}
@@ -1611,9 +1686,39 @@ function getDefinedMeaningDefinition( $definedMeaningId ) {
 	return $result;
 }
 
+/**
+ * returns a language_id in which a definition exists for the given definedMeaning
+ * returns "" if not found
+ */
+function getDefinedMeaningDefinitionLanguageForAnyLanguage( $definedMeaningId ) {
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$languageId = $dbr->selectField(
+		array(
+			'dm' => "{$dc}_defined_meaning",
+			'tc' => "{$dc}_translated_content",
+			't' => "{$dc}_text"
+		),
+		'tc.language_id',
+		array(
+			'dm.defined_meaning_id' => $definedMeaningId,
+			'dm.remove_transaction_id' => null,
+			'tc.remove_transaction_id' => null,
+			'dm.meaning_text_tcid = tc.translated_content_id',
+			't.text_id = tc.text_id'
+		), __METHOD__
+	);
+
+	if ( $languageId ) {
+		return $languageId;
+	}
+	return "";
+}
+
 
 /**
-* returns one of the possible translations of 
+* returns one of the possible translations of
 * a given DefinedMeaning ( $definedMeaningId )
 * preferably in a given language ( $languageCode )
 * or in English otherwise.
@@ -1719,7 +1824,7 @@ function isClass( $objectId ) {
 
 function getCollectionContents( $collectionId ) {
 	global $wgWikidataDataSet;
-	
+
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
 	$queryResult = $dbr->query(
@@ -1729,19 +1834,19 @@ function getCollectionContents( $collectionId ) {
 			array( equals( $wgWikidataDataSet->collectionMemberships->collectionId, $collectionId ) )
 		)
 	);
-	
+
 	$collectionContents = array();
-	
+
 	while ( $collectionEntry = $dbr->fetchObject( $queryResult ) ) {
 		$collectionContents[$collectionEntry->internal_member_id] = $collectionEntry->member_mid;
 	}
-	
+
 	return $collectionContents;
 }
 
 /**
  * Returns an array containing the ids of the defined meanings belonging to the collection
- * with the given id. 
+ * with the given id.
  *
  * @param unknown_type $collectionId
  * @param unknown_type $dc
@@ -1824,7 +1929,7 @@ function getExpressionMeaningIds( $spelling, $dc = null ) {
 	);
 
 	$dmlist = array();
-	
+
 	foreach ( $queryResult as $synonymRecord ) {
 		$dmlist[] = $synonymRecord->defined_meaning_id;
 	}
@@ -1903,8 +2008,8 @@ function getUUID( $concepts ) {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$uuid_array = array();
- 	$uuid = - 1;
-    
+	$uuid = - 1;
+
 	foreach ( $concepts as $dc => $dm_id ) {
 		$collid = getCollectionIdForDC( $dc );
 		$uuid_array[$dc] = getMapping( $dc, $collid, $dm_id );
@@ -1912,14 +2017,14 @@ function getUUID( $concepts ) {
 			$uuid = $uuid_array[$dc];
 		}
 	}
-	
+
 	if ( $uuid == - 1 ) {
 		$query = "SELECT uuid() AS id";
 		$queryResult = $dbr->query( $query );
 		$row = $dbr->fetchObject( $queryResult );
 		$uuid = isset( $row->id ) ? $row->id : - 1;
 	}
-	
+
 	foreach ( $concepts as $dc => $dm_id ) {
 		if ( $uuid_array[$dc] == - 1 ) {
 			$uuid_array[$dc] = $uuid;
@@ -1957,7 +2062,7 @@ function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction
 	global $wgUser;
 	// if(is_null($dc)) {
 	//	$dc=wdGetDataSetContext();
-	// } 
+	// }
 	$dbw = wfGetDB( DB_MASTER );
 
 	$add_transaction_id = $override_transaction;
@@ -2174,9 +2279,9 @@ function definedMeaningExpression( $definedMeaningId ) {
 	global $wgLang;
 
 	$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
-	
+
 	list( $definingExpressionId, $definingExpression, $definingExpressionLanguage ) = definingExpressionRow( $definedMeaningId );
-	
+
 	if ( $userLanguageId > 0 ) {
 		$result = definedMeaningExpressionForLanguage( $definedMeaningId, $userLanguageId );
 	} else {
@@ -2185,10 +2290,10 @@ function definedMeaningExpression( $definedMeaningId ) {
 	if ( $result == "" ) {
 		// if no expression exists for the specified language : look for an expression in English
 		$result = definedMeaningExpressionForLanguage( $definedMeaningId, 85 );
-		
+
 		if ( $result == "" ) {
 			$result = definedMeaningExpressionForAnyLanguage( $definedMeaningId );
-			
+
 			if ( $result == "" ) {
 				$result = $definingExpression;
 			}
@@ -2262,7 +2367,7 @@ class ClassAttribute {
 
 class ClassAttributes {
 	protected $classAttributes;
-	
+
 	public function __construct( $definedMeaningId ) {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
@@ -2279,39 +2384,81 @@ class ClassAttributes {
 		);
 
 		$this->classAttributes = array();
-		
+
 		foreach ( $queryResult as $row ) {
 			$classAttribute = new ClassAttribute();
 			$classAttribute->attributeId = $row->attribute_mid;
 			$classAttribute->type = $row->attribute_type;
 			$classAttribute->levelName = $row->name;
-			
+
 			$this->classAttributes[] = $classAttribute;
 		}
 	}
 
 	public function filterClassAttributesOnLevelAndType( $levelName, $type ) {
 		$result = array();
-		
+
 		foreach ( $this->classAttributes as $classAttribute ) {
 			if ( $classAttribute->levelName == $levelName && $classAttribute->type == $type ) {
 				$result[] = $classAttribute->attributeId;
 			}
 		}
-		
+
 		return $result;
 	}
 
 	public function filterClassAttributesOnLevel( $levelName ) {
 		$result = array();
-		
+
 		foreach ( $this->classAttributes as $classAttribute ) {
 			if ( $classAttribute->levelName == $levelName ) {
 				$result[] = $classAttribute->attributeId;
 			}
 		}
-		
+
 		return $result;
 	}
 }
 
+/**
+ * returns the value of column if exist
+ * null if not found
+ * @param $table  table name
+ * @param $column column nane
+ * @param $value  column value
+ * @param $isDc   if has DataSet Context(boolean)
+ */
+function verifyColumn( $table, $column, $value, $isDc ) {
+	if ($isDc == 1) { $dc = wdGetDataSetContext() . "_"; }
+	else {$dc = '';}
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$existId = $dbr->selectField(
+		"{$dc}{$table}",
+		"$column",
+		array(
+			"$column" => $value
+		), __METHOD__
+	);
+
+	if ( $existId ) {
+		return $existId;
+	}
+	return null;
+}
+
+/**
+ * returns back the language id if it exist
+ * null if not found
+ */
+function verifyLanguageId( $languageId ) {
+	return verifyColumn('language', 'language_id', $languageId, 0 );
+}
+
+/**
+ * returns back the definedMeaningId if it exist
+ * null if not found
+ */
+function verifyDefinedMeaningId( $definedMeaningId ) {
+	return verifyColumn('defined_meaning', 'defined_meaning_id', $definedMeaningId, 1 );
+}
