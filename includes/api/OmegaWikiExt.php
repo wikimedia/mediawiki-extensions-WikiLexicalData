@@ -1,7 +1,7 @@
 <?php
 
 // Take credit for your work.
-$wgExtensionCredits[][] = array(
+$wgExtensionCredits['other'][] = array(
 
 	// The full path and filename of the file. This allows MediaWiki
 	// to display the Subversion revision number on Special:Version.
@@ -9,9 +9,6 @@ $wgExtensionCredits[][] = array(
 
 	// The name of the extension, which will appear on Special:Version.
 	'name' => 'OmegaWiki',
-
-	// A description of the extension, which will appear on Special:Version.
-	'description' => 'An Omegawiki API extension',
 
 	// Alternatively, you can specify a message key for the description.
 	'descriptionmsg' => 'apiow-desc',
@@ -21,11 +18,11 @@ $wgExtensionCredits[][] = array(
 	'version' => '1.0',
 
 	// Your name, which will appear on Special:Version.
-	'author' => 'Hiong3-eng5 and Kip',
+	'author' => array( 'Hiong3-eng5', 'Kip' ),
 
 	// The URL to a wiki page/web page with information about the extension,
 	// which will appear on Special:Version.
-	'url' => 'https://www.omegawiki.org/index.php/omegawiki api',
+	'url' => 'https://www.omegawiki.org/omegawiki_api',
 
 );
 
