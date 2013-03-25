@@ -148,6 +148,7 @@ class SpecialDatasearch extends SpecialPage {
 
 		if ( $withinExternalIdentifiers ) {
 			$wgOut->addHTML( '<h1>' . wfMsg( 'datasearch_match_ext_ids', $searchText ) . '</i></h1>' );
+			// TODO: "datasearch_showing_only" requires a value for $2
 			$wgOut->addHTML( '<p>' . wfMsgExt( 'datasearch_showing_only', 'parsemag', 100 ) . '</p>' );
 
 			$wgOut->addHTML( $this->searchExternalIdentifiers( $searchText, $collectionId ) );
