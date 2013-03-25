@@ -291,7 +291,8 @@ Please contact the server operator or administrator.",
  */
 $messages['qqq'] = array(
 	'wikidata-desc' => '{{desc|name=Wiki Lexical Data|url=http://www.mediawiki.org/wiki/Extension:WikiLexicalData}}',
-	'languages' => 'Name of special page (see [http://www.omegawiki.org/Special:Specialpages http://www.omegawiki.org/Special:Specialpages])',
+	'languages' => '{{doc-special|Languages}}
+See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]',
 	'langman-desc' => '{{desc}}',
 	'langman_title' => 'Title in Language manager special page ([http://www.omegawiki.org/Special:Languages http://www.omegawiki.org/Special:Languages]).
 {{Identical|Language manager}}',
@@ -300,12 +301,14 @@ $messages['qqq'] = array(
 	'langman_field_optional' => "Here, '''optional''' refers to the fields labeled with text from {{msg-mw|langman_iso639-2}} and {{msg-mw|langman_wikimedia}}
 {{Identical|Optional}}",
 	'langman_addlang' => 'Button text when adding a new language in the Language Manager.',
-	'importlangnames' => 'Name of special page (see [http://www.omegawiki.org/Special:Specialpages http://www.omegawiki.org/Special:Specialpages])',
+	'importlangnames' => '{{doc-special|ImportLangNames}}
+See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]',
 	'importlangnames_added' => 'Parameters:
 * $1 - ISO 639-3 code for language. [[w:ISO 639-3]]',
 	'importlangnames_not_found' => 'Parameters:
 * $1 - ISO 639-3 code for language. [[w:ISO 639-3]]',
-	'datasearch' => 'Name of special page (see [http://www.omegawiki.org/Special:Specialpages http://www.omegawiki.org/Special:Specialpages])',
+	'datasearch' => '{{doc-special|Datasearch}}
+See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]',
 	'datasearch_language' => '{{Identical|Language}}',
 	'datasearch_showing_only' => 'Parameters:
 * $1 - 100 (hard-coded)
@@ -333,7 +336,8 @@ The page title for this message is {{msg-mw|ow_exporttsv_export_failed}}.',
 
 The page body for this message is:
 * {{msg-mw|ow_impexptsv_unknown_lang}}.',
-	'addcollection' => 'Name of special page (see [http://www.omegawiki.org/Special:Specialpages http://www.omegawiki.org/Special:Specialpages])',
+	'addcollection' => '{{doc-special|AddCollection}}
+See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]',
 	'ow_searchnoresult' => "Don't translate the word ''Expression'' in ''<nowiki>[[Expression:$1]]</nowiki>''",
 	'ow_save' => '{{Identical|Save}}',
 	'ow_history' => '{{Identical|History}}',
@@ -3490,7 +3494,7 @@ $messages['diq'] = array(
 	'ow_removed' => 'Wedariya',
 	'ow_class_attr_type_link' => 'Gıre',
 	'ow_show' => 'Bımocne',
-	'ow_upload' => 'Barke',
+	'ow_upload' => 'Bar ke',
 	'ow_create' => 'Vıraze',
 	'ow_suggest_previous' => 'Verên',
 	'ow_suggest_next' => 'Bahdoyên',
