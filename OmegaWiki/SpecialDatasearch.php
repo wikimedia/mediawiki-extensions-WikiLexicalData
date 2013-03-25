@@ -30,18 +30,32 @@ class SpecialDatasearch extends SpecialPage {
 	protected $meaningStructure;
 	protected $meaningAttribute;
 
+	private $withinWords;
+	private $collectionId;
+	private $languageId;
+	private $withinExternalIdentifiers;
+	private $languageName;
+	private $searchText;
+	private $show;
+
 	function SpecialDatasearch() {
 		parent::__construct( 'DataSearch' );
+
+		$request = $this->getRequest();
+		$this->collectionId = $request->getInt( "collection" ); // default is 0
+		$this->languageId = $request->getInt( "language" );
+		$this->withinWords = $request->getBool( "within-words" ); // default is false
+		$this->withinExternalIdentifiers = $request->getBool( "within-external-identifiers" );
+		$this->languageName = languageIdAsText( $this->languageId );
+		$this->searchText = $request->getText( 'search-text', null );
+		$this->show = $request->getBool( 'show' );
 	}
 
 	function execute( $parameter ) {
-		global $wgOut;
-
-		initializeOmegaWikiAttributes( new ViewInformation() );
-
 		global $definedMeaningReferenceType ;
 
-		$wgOut->setPageTitle( wfMsg( 'search' ) );
+		$output = $this->getOutput();
+		$output->setPageTitle( wfMsg( 'search' ) );
 
 		$this->spellingAttribute = new Attribute( "found-word", wfMsg( 'datasearch_found_word' ), "short-text" );
 		$this->languageAttribute = new Attribute( "language", wfMsg( 'ow_Language' ), "language" );
@@ -65,93 +79,70 @@ class SpecialDatasearch extends SpecialPage {
 			$this->collectionMemberAttribute
 		);
 
-		if ( array_key_exists( 'search-text', $_GET ) ) {
-			$searchText = ltrim( $_GET['search-text'] );
-		} else {
-			$searchText = null;
-		}
 
-		if ( isset( $_GET['go'] ) )
-			$this->go( $searchText );
-		else
-			$this->search( $searchText );
-	}
+		$this->displayForm();
 
-	function go( $searchText ) {
-		global $wgOut;
-
-		$expressionMeaningIds = getExpressionMeaningIds( $searchText );
-
-		if ( count( $expressionMeaningIds ) > 0 ) {
-			if ( count( $expressionMeaningIds ) == 1 )
-				$wgOut->redirect( definedMeaningIdAsURL( $expressionMeaningIds[0] ) );
-			else
-				$wgOut->redirect( spellingAsURL( $searchText ) );
-		}
-		else {
-			$collectionMemberId = getAnyDefinedMeaningWithSourceIdentifier( $searchText );
-
-			if ( $collectionMemberId != 0 )
-				$wgOut->redirect( definedMeaningIdAsURL( $collectionMemberId ) );
-			else
-				$wgOut->redirect( spellingAsURL( $searchText ) );
+		if ( $this->show ) {
+			$this->search();
 		}
 	}
 
-	function search( $searchText ) {
-		global
-			$wgOut, $wgRequest,
-			$wgSearchWithinWordsDefaultValue, $wgSearchWithinExternalIdentifiersDefaultValue,
+	function displayForm() {
+		global $wgSearchWithinWordsDefaultValue, $wgSearchWithinExternalIdentifiersDefaultValue,
 			$wgShowSearchWithinExternalIdentifiersOption, $wgShowSearchWithinWordsOption;
 
-		$collectionId = $wgRequest->getInt( "collection" );
-		$languageId = $wgRequest->getInt( "language" );
-		$withinWords = $wgRequest->getBool( "within-words" );
-		$withinExternalIdentifiers = $wgRequest->getBool( "within-external-identifiers" );
+		$output = $this->getOutput();
 
-		if ( !$withinWords && !$withinExternalIdentifiers ) {
-			$withinWords = $wgSearchWithinWordsDefaultValue;
-			$withinExternalIdentifiers = $wgSearchWithinExternalIdentifiersDefaultValue;
+		if ( ! $this->withinWords && ! $this->withinExternalIdentifiers ) {
+			$this->withinWords = $wgSearchWithinWordsDefaultValue;
+			$this->withinExternalIdentifiers = $wgSearchWithinExternalIdentifiersDefaultValue;
 		}
 
-		$languageName = languageIdAsText( $languageId );
 		$options = array();
-		$options[wfMsg( 'datasearch_search_text' )] = getTextBox( 'search-text', $searchText );
+		$options[wfMsg( 'datasearch_search_text' )] = getTextBox( 'search-text', $this->searchText );
 
-		$options[wfMsg( 'datasearch_language' )] = getSuggest( 'language', "language", array(), $languageId, $languageName );
+		$options[wfMsg( 'datasearch_language' )]
+			= getSuggest( 'language', "language", array(), $this->languageId, $this->languageName );
 
-		$options[wfMsg( 'ow_Collection_colon' )] = getSuggest( 'collection', 'collection', array(), $collectionId, collectionIdAsText( $collectionId ) );
+		$options[wfMsg( 'ow_Collection_colon' )]
+			= getSuggest( 'collection', 'collection', array(), $this->collectionId, collectionIdAsText( $this->collectionId ) );
 
-		if ( $wgShowSearchWithinWordsOption )
-			$options[wfMsg( 'datasearch_within_words' )] = getCheckBox( 'within-words', $withinWords );
-		else
-			$withinWords = $wgSearchWithinWordsDefaultValue;
-
-		if ( $wgShowSearchWithinExternalIdentifiersOption )
-			$options[wfMsg( 'datasearch_within_ext_ids' )] = getCheckBox( 'within-external-identifiers', $withinExternalIdentifiers );
-		else
-			$withinExternalIdentifiers = $wgSearchWithinExternalIdentifiersDefaultValue;
-
-		$wgOut->addHTML( getOptionPanel( $options ) );
-
-		if ( $withinWords ) {
-			if ( $languageId != 0 && $languageName != "" )
-				$wgOut->addHTML( '<h1>' . wfMsg( 'datasearch_match_words_lang', $languageName, $searchText ) . '</h1>' );
-			else
-				$wgOut->addHTML( '<h1>' . wfMsg( 'datasearch_match_words', $searchText ) . '</h1>' );
-
-			$resultCount = $this->searchWordsCount( $searchText, $collectionId, $languageId ) ;
-			$wgOut->addHTML( '<p>' . wfMsgExt( 'datasearch_showing_only', 'parsemag', 100 , $resultCount ) . '</p>' );
-
-			$wgOut->addHTML( $this->searchWords( $searchText, $collectionId, $languageId ) );
+		if ( $wgShowSearchWithinWordsOption ) {
+			$options[wfMsg( 'datasearch_within_words' )] = getCheckBox( 'within-words', $this->withinWords );
+		} else {
+			$this->withinWords = $wgSearchWithinWordsDefaultValue;
 		}
 
-		if ( $withinExternalIdentifiers ) {
-			$wgOut->addHTML( '<h1>' . wfMsg( 'datasearch_match_ext_ids', $searchText ) . '</i></h1>' );
-			// TODO: "datasearch_showing_only" requires a value for $2
-			$wgOut->addHTML( '<p>' . wfMsgExt( 'datasearch_showing_only', 'parsemag', 100 ) . '</p>' );
+		if ( $wgShowSearchWithinExternalIdentifiersOption ) {
+			$options[wfMsg( 'datasearch_within_ext_ids' )]
+				= getCheckBox( 'within-external-identifiers', $this->withinExternalIdentifiers );
+		} else {
+			$this->withinExternalIdentifiers = $wgSearchWithinExternalIdentifiersDefaultValue;
+		}
+		$output->addHTML( getOptionPanel( $options ) );
+	}
 
-			$wgOut->addHTML( $this->searchExternalIdentifiers( $searchText, $collectionId ) );
+	function search() {
+		$output = $this->getOutput();
+		if ( $this->withinWords ) {
+			if ( $this->languageId != 0 && $this->languageName != "" ) {
+				$output->addHTML( '<h1>' . wfMsg( 'datasearch_match_words_lang', $this->languageName, $this->searchText ) . '</h1>' );
+			} else {
+				$output->addHTML( '<h1>' . wfMsg( 'datasearch_match_words', $this->searchText ) . '</h1>' );
+			}
+			$resultCount = $this->searchWordsCount() ;
+			$output->addHTML( '<p>' . wfMsgExt( 'datasearch_showing_only', 'parsemag', 100 , $resultCount ) . '</p>' );
+
+			$output->addHTML( $this->searchWords() );
+		}
+
+		if ( $this->withinExternalIdentifiers ) {
+			$output->addHTML( '<h1>' . wfMsg( 'datasearch_match_ext_ids', $this->searchText ) . '</i></h1>' );
+
+			$resultCount = $this->searchExternalIdentifiersCount();
+			$output->addHTML( '<p>' . wfMsgExt( 'datasearch_showing_only', 'parsemag', 100, $resultCount) . '</p>' );
+
+			$output->addHTML( $this->searchExternalIdentifiers() );
 		}
 	}
 
@@ -180,35 +171,35 @@ class SpecialDatasearch extends SpecialPage {
 			return "";
 	}
 
-	function searchWords( $text, $collectionId, $languageId ) {
+	function searchWords() {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$sql =
-			"SELECT " . $this->getPositionSelectColumn( $text, "{$dc}_expression.spelling" ) . " {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id " .
+			"SELECT " . $this->getPositionSelectColumn( $this->searchText, "{$dc}_expression.spelling" ) . " {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id " .
 			"FROM {$dc}_expression, {$dc}_syntrans ";
 
-		if ( $collectionId > 0 )
+		if ( $this->collectionId > 0 )
 			$sql .= ", {$dc}_collection_contents ";
 
 		$sql .=
 			"WHERE {$dc}_expression.expression_id={$dc}_syntrans.expression_id AND {$dc}_syntrans.identical_meaning=1 " .
 			" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
 			" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) .
-			$this->getSpellingRestriction( $text, 'spelling' );
+			$this->getSpellingRestriction( $this->searchText, 'spelling' );
 
-		if ( $collectionId > 0 )
+		if ( $this->collectionId > 0 )
 			$sql .=
 				" AND {$dc}_collection_contents.member_mid={$dc}_syntrans.defined_meaning_id " .
-				" AND {$dc}_collection_contents.collection_id=" . $collectionId .
+				" AND {$dc}_collection_contents.collection_id=" . $this->collectionId .
 				" AND " . getLatestTransactionRestriction( "{$dc}_collection_contents" );
 
-		if ( $languageId > 0 )
+		if ( $this->languageId > 0 )
 			$sql .=
-				" AND {$dc}_expression.language_id=$languageId";
+				" AND {$dc}_expression.language_id={$this->languageId}";
 
 		$sql .=
-			" ORDER BY " . $this->getSpellingOrderBy( $text ) . "{$dc}_expression.spelling ASC limit 100";
+			" ORDER BY " . $this->getSpellingOrderBy( $this->searchText ) . "{$dc}_expression.spelling ASC limit 100";
 
 		$queryResult = $dbr->query( $sql );
 		$recordSet = $this->getWordsSearchResultAsRecordSet( $queryResult );
@@ -220,39 +211,49 @@ class SpecialDatasearch extends SpecialPage {
 	/**
 	 * Gives the exact number of results (not limited to 100)
 	 */
-	function searchWordsCount( $text, $collectionId, $languageId ) {
+	function searchWordsCount() {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$sql =
-			"SELECT COUNT(*) " .
-			"FROM {$dc}_expression, {$dc}_syntrans ";
+		$table = array(
+			'exp' => "{$dc}_expression",
+			'synt' => "{$dc}_syntrans"
+		);
 
-		if ( $collectionId > 0 )
-			$sql .= ", {$dc}_collection_contents ";
+		$wherecond = array(
+			'exp.expression_id = synt.expression_id',
+			'synt.identical_meaning' => 1,
+			'exp.remove_transaction_id' => null,
+			'synt.remove_transaction_id' => null
+		);
 
-		$sql .=
-			"WHERE {$dc}_expression.expression_id={$dc}_syntrans.expression_id AND {$dc}_syntrans.identical_meaning=1 " .
-			" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-			" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) .
-			$this->getSpellingRestriction( $text, 'spelling' );
+		if ( $this->searchText ) {
+			$wherecond[] = 'exp.spelling ' . $dbr->buildLike( $this->searchText, $dbr->anyString() );
+		}
 
-		if ( $collectionId > 0 )
-			$sql .=
-				" AND {$dc}_collection_contents.member_mid={$dc}_syntrans.defined_meaning_id " .
-				" AND {$dc}_collection_contents.collection_id=" . $collectionId .
-				" AND " . getLatestTransactionRestriction( "{$dc}_collection_contents" );
+		if ( $this->languageId > 0 ) {
+			$wherecond['exp.language_id'] = $this->languageId;
+		}
 
-		if ( $languageId > 0 )
-			$sql .=
-				" AND {$dc}_expression.language_id=$languageId";
+		if ( $this->collectionId > 0 ) {
+			$table['colcont'] = "{$dc}_collection_contents";
+			$wherecond[] = 'colcont.member_mid = synt.defined_meaning_id';
+			$wherecond['colcont.collection_id'] = $this->collectionId;
+			$wherecond['colcont.remove_transaction_id'] = null;
+		}
 
-		$queryResult_r = mysql_query( $sql );
-		$queryResult_a = mysql_fetch_row( $queryResult_r );
-		$queryResultCount = $queryResult_a[0];
+		$queryResultCount = $dbr->selectField(
+			$table,
+			'COUNT(*)',
+			$wherecond,
+			__METHOD__
+		);
 
 		return $queryResultCount ;
 	}
+
+
+
 
 	function getWordsSearchResultAsRecordSet( $queryResult ) {
 
@@ -293,32 +294,66 @@ class SpecialDatasearch extends SpecialPage {
 		return $editor;
 	}
 
-	function searchExternalIdentifiers( $text, $collectionId ) {
+	function searchExternalIdentifiers() {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$sql =
-			"SELECT " . $this->getPositionSelectColumn( $text, "{$dc}_collection_contents.internal_member_id" ) . " {$dc}_collection_contents.member_mid AS member_mid, {$dc}_collection_contents.internal_member_id AS external_identifier, {$dc}_collection.collection_mid AS collection_mid " .
+			"SELECT " . $this->getPositionSelectColumn( $this->searchText, "{$dc}_collection_contents.internal_member_id" ) . " {$dc}_collection_contents.member_mid AS member_mid, {$dc}_collection_contents.internal_member_id AS external_identifier, {$dc}_collection.collection_mid AS collection_mid " .
 			"FROM {$dc}_collection_contents, {$dc}_collection ";
 
 			$sql .=
 			"WHERE {$dc}_collection.collection_id={$dc}_collection_contents.collection_id " .
 			" AND " . getLatestTransactionRestriction( "{$dc}_collection" ) .
 			" AND " . getLatestTransactionRestriction( "{$dc}_collection_contents" ) .
-			$this->getSpellingRestriction( $text, "{$dc}_collection_contents.internal_member_id" );
+			$this->getSpellingRestriction( $this->searchText, "{$dc}_collection_contents.internal_member_id" );
 
-		if ( $collectionId > 0 )
+		if ( $this->collectionId > 0 )
 			$sql .=
-				" AND {$dc}_collection.collection_id=$collectionId ";
+				" AND {$dc}_collection.collection_id={$this->collectionId} ";
 
 		$sql .=
-			" ORDER BY " . $this->getSpellingOrderBy( $text ) . "{$dc}_collection_contents.internal_member_id ASC limit 100";
+			" ORDER BY " . $this->getSpellingOrderBy( $this->searchText ) . "{$dc}_collection_contents.internal_member_id ASC limit 100";
 
 		$queryResult = $dbr->query( $sql );
 		$recordSet = $this->getExternalIdentifiersSearchResultAsRecordSet( $queryResult );
 		$editor = $this->getExternalIdentifiersSearchResultEditor();
 
 		return $editor->view( new IdStack( "external-identifiers" ), $recordSet );
+	}
+
+	function searchExternalIdentifiersCount() {
+		$dc = wdGetDataSetContext();
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$table = array(
+			'colcont' => "{$dc}_collection_contents",
+			'col' => "{$dc}_collection"
+		);
+
+		$wherecond = array(
+			'col.collection_id = colcont.collection_id',
+			'col.remove_transaction_id' => null,
+			'colcont.remove_transaction_id' => null
+		);
+
+		if ( $this->searchText ) {
+			$wherecond[] = 'colcont.internal_member_id ' . $dbr->buildLike( $this->searchText, $dbr->anyString() );
+		}
+
+		if ( $this->collectionId > 0 ) {
+			$wherecond['colcont.collection_id'] = $this->collectionId;
+		}
+
+		$queryResultCount = $dbr->selectField(
+			$table,
+			'COUNT(*)',
+			$wherecond,
+			__METHOD__
+		);
+
+		return $queryResultCount ;
+
 	}
 
 	function getExternalIdentifiersSearchResultAsRecordSet( $queryResult ) {
