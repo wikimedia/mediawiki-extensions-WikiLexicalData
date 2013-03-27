@@ -3435,7 +3435,7 @@ $messages['diq'] = array(
 	'ow_uiprefs' => 'Wikimelumat',
 	'ow_none_selected' => 'Theba nêweçineya',
 	'ow_transaction_count' => 'Amar:',
-	'ow_transaction_user' => 'Karber:',
+	'ow_transaction_user' => 'Nameyê karberi:',
 	'ow_transaction_rollback_button' => 'Zey veri kerê',
 	'ow_transaction_rollback_header' => 'Zey veri kı',
 	'ow_transaction_no_action' => 'Qırşê mekı',
@@ -3499,6 +3499,7 @@ $messages['diq'] = array(
 	'ow_suggest_previous' => 'Verên',
 	'ow_suggest_next' => 'Bahdoyên',
 	'ow_suggest_clear' => 'Bestern',
+	'prefs-ow-lang' => 'Zıwani',
 );
 
 /** Lower Sorbian (dolnoserbski)

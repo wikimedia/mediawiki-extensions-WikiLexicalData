@@ -41,11 +41,25 @@ $messages['ja'] = array(
 	'apiow-desc' => 'MediaWiki api.php の OmegaWiki WikiLexicalData 拡張機能',
 );
 
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'apiow-desc' => '미디어위키 api.php의 OmegaWiki의 WikiLexicalData 확장 기능',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'apiow-desc' => 'Додаток WikiLexicalData за ОмегаВики на api.php на МедијаВики',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'apiow-desc' => 'De uitbreiding WikiLexicalData van Omegawiki',
 );
 
 /** tarandíne (tarandíne)
