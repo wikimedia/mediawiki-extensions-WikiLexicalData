@@ -294,7 +294,8 @@ $messages['qqq'] = array(
 	'languages' => '{{doc-special|Languages}}
 See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]',
 	'langman-desc' => '{{desc}}',
-	'langman_title' => 'Title in Language manager special page ([http://www.omegawiki.org/Special:Languages http://www.omegawiki.org/Special:Languages]).
+	'langman_title' => '{{doc-special|Languages}}
+See example: [http://www.omegawiki.org/Special:Languages http://www.omegawiki.org/Special:Languages]
 {{Identical|Language manager}}',
 	'langman_header' => 'Translate the word "English"; do not change it to your own language!',
 	'langman_adding' => "$1 is the language name; $2 is the language's ISO 639-3 code.",
@@ -303,6 +304,7 @@ See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Specia
 	'langman_addlang' => 'Button text when adding a new language in the Language Manager.',
 	'importlangnames' => '{{doc-special|ImportLangNames}}
 See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]',
+	'importlangnames_title' => '{{doc-special|ImportLangNames}}',
 	'importlangnames_added' => 'Parameters:
 * $1 - ISO 639-3 code for language. [[w:ISO 639-3]]',
 	'importlangnames_not_found' => 'Parameters:
@@ -360,6 +362,8 @@ Parameters:
 	'ow_transaction_remove' => '{{Identical|Remove}}',
 	'ow_transaction_object' => '{{Identical|Object}}',
 	'ow_transaction_summary' => '{{Identical|Summary}}',
+	'conceptmapping' => '{{doc-special|ConceptMapping}}',
+	'ow_conceptmapping_title' => '{{doc-special|ConceptMapping}}',
 	'ow_conceptmapping_uitext' => 'A "dataset" is an independant collection of data, such as an ontology, a thesaurus, or a specific dictionary.',
 	'ow_conceptmapping_no_action_specified' => '* $1 is a parameter that is not supported (for example manually changed in a URL). It can be anything that has been provided by a client.',
 	'ow_dm_OK' => '{{Identical|OK}}',
@@ -420,13 +424,17 @@ See also:
 * {{msg-mw|Ow meaningsoftitle}}',
 	'ow_Permission_denied' => "Visible on [http://www.omegawiki.org/Special:Copy this OmegaWiki page] (make sure you're not logged in)
 {{Identical|Permission denied}}",
-	'copy' => '{{Identical|Copy}}',
+	'copy' => '{{doc-special|Copy}}
+{{Identical|Copy}}',
 	'ow_class_attr_type_dm' => '{{Identical|Defined meaning}}',
 	'ow_class_attr_type_link' => '{{Identical|Link}}',
-	'ow_needs_xlation_title' => 'Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].',
+	'needstranslation' => '{{doc-special|NeedsTranslation}}',
+	'ow_needs_xlation_title' => '{{doc-special|NeedsTranslation}}
+Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].',
 	'ow_needs_xlation_source_lang' => 'Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].',
 	'ow_needs_xlation_dest_lang' => 'Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].',
 	'ow_needs_xlation_no_dest_lang' => 'Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].',
+	'ow_statistics' => '{{doc-special|Ow statistics}}',
 	'ow_show' => 'Button text to show results.
 Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].
 {{Identical|Show}}',
@@ -8011,7 +8019,7 @@ $messages['ja'] = array(
 	'ow_needs_xlation_source_lang' => '翻訳元言語:',
 	'ow_needs_xlation_dest_lang' => '翻訳先言語:',
 	'ow_needs_xlation_no_dest_lang' => '翻訳先言語を指定してください。',
-	'ow_statistics' => 'Wikidata: 統計',
+	'ow_statistics' => 'ウィキデータ: 統計',
 	'ow_show' => '表示',
 	'ow_upload' => 'アップロード',
 	'ow_create' => '作成',
