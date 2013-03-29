@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS /*$wgWDprefix*/expression (
   KEY /*$wgWDprefix*/versioned_end_spelling (`remove_transaction_id`,`spelling`(255),`expression_id`,`language_id`),
   KEY /*$wgWDprefix*/versioned_start_expression (`add_transaction_id`,`expression_id`,`language_id`),
   KEY /*$wgWDprefix*/versioned_start_language (`add_transaction_id`,`language_id`,`expression_id`),
-  KEY /*$wgWDprefix*/versioned_start_spelling (`add_transaction_id`,`spelling`,`expression_id`,`language_id`)
+  KEY /*$wgWDprefix*/versioned_start_spelling (`add_transaction_id`,`spelling`,`expression_id`,`language_id`),
   KEY /*$wgWDprefix*/spelling_idx (`spelling`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
