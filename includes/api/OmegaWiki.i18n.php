@@ -27,6 +27,13 @@ $messages['fr'] = array(
 	'apiow-desc' => 'Extension WikiLexicalData de OmegaWiki de api.php de MediaWiki',
 );
 
+/** Galician (galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'apiow-desc' => 'Extensión WikiLexicalData de OmegaWiki do api.php de MediaWiki',
+);
+
 /** Italian (italiano)
  * @author Beta16
  */

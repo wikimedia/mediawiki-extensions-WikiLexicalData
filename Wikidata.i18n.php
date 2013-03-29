@@ -6782,6 +6782,7 @@ Wubjer zběrku za eksport. Zapodaj do tekstoweho kašćika za rěče lisćinu r�
 /** Hungarian (magyar)
  * @author Bdamokos
  * @author Dani
+ * @author Dj
  * @author Glanthor Reviol
  * @author Gondnok
  */
@@ -6941,6 +6942,7 @@ Ellenőrizd a címet.',
 	'ow_OptionAttributeOptions' => 'Beállítások',
 	'ow_OptionAttributeValues' => 'Opció értékek',
 	'ow_OtherDefinedMeaning' => 'Egyéb definiált jelentés',
+	'ow_OtherLanguages' => 'További nyelvek:',
 	'ow_PopupAnnotation' => 'Annotáció',
 	'ow_RecordLifeSpan' => 'A rekord élettartama',
 	'ow_Relations' => 'Relációk',
@@ -7018,6 +7020,9 @@ Kérlek lépj kapcsolatba a szerver működtetőjével vagy adminisztrátorával
 	'ow_nstab_edit_copy' => 'másolat szerkesztése',
 	'right-addlanguage' => 'nyelvi beállítások hozzáadása és módosítása',
 	'ow_shown_datasets' => 'Adatkészletek megjelenítése',
+	'prefs-ow-lang' => 'Nyelvek',
+	'ow_pref_lang_switch' => 'Csak a kiválasztott nyelvek megjelenítése',
+	'ow_pref_lang_select' => 'Megjelenítendő nyelvek:',
 );
 
 /** Interlingua (interlingua)
@@ -12640,6 +12645,7 @@ Scacchie 'na collezzione da esportà. Jndr'à caselle de teste de le lènghe, mi
 	'ow_noedit_title' => 'Non ge tine le permesse pe fà cangiaminde',
 	'ow_noedit' => 'Non ge tìne \'u permesse de cangià le pàggene jndr\'à l\'inzieme de date "$1".<br />
 Pe piacere vide le [[{{MediaWiki:Ow editing policy url}}|reghele nuèstre pe le cangiaminde]].',
+	'ow_editing_policy_url' => 'Project:Regole de permesse',
 	'ow_uipref_datasets' => 'Viste de partenze:',
 	'ow_uiprefs' => 'Uicchidate',
 	'ow_none_selected' => 'Nisciuna selezione',
@@ -12750,6 +12756,7 @@ Pe piacere verifiche l'indirizze web.",
 	'ow_Link' => 'Collegamende',
 	'ow_LinkAttribute' => 'Proprietà',
 	'ow_LinkAttributeValues' => 'Collegaminde',
+	'ow_URL' => 'URL',
 	'ow_User' => 'Utende',
 	'ow_Property' => 'Proprietà',
 	'ow_Value' => 'Valore',
@@ -12775,6 +12782,8 @@ Pe piacere verifiche l'indirizze web.",
 	'ow_suggest_clear' => 'Pulizze',
 	'ow_nstab_definedmeaning' => 'significhete definite',
 	'ow_nstab_edit_copy' => "cange 'na copie",
+	'ow_shown_datasets' => "Fà vedè le 'nzieme de date",
+	'prefs-omegawiki' => 'OmegaWiki',
 	'prefs-ow-lang' => 'Lènghe',
 	'ow_pref_lang_select' => 'Lènghe da fà vedè:',
 );
