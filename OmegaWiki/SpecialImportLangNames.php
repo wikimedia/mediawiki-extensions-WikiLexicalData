@@ -1,7 +1,10 @@
 <?php
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-require_once( "Wikidata.php" );
+require_once( 'Wikidata.php' );
+require_once( 'WikiDataAPI.php' );
+require_once( 'Transaction.php' );
+require_once( 'languages.php' );
 
 class SpecialImportLangNames extends SpecialPage {
 	function SpecialImportLangNames() {
@@ -9,150 +12,103 @@ class SpecialImportLangNames extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgUser;
+		global $wgIso639_3CollectionId;
 		// These operations should always be on the community database.
+		$dbr = wfGetDB( DB_SLAVE );
+		$dbw = wfGetDB( DB_MASTER );
 		$dc = "uw";
-		require_once( 'Transaction.php' );
+		$output = $this->getOutput();
 
-		$wgOut->setPageTitle( wfMsg( 'importlangnames_title' ) );
+		$output->setPageTitle( wfMsg( 'importlangnames_title' ) );
 
-		if ( !$wgUser->isAllowed( 'languagenames' ) ) {
-			$wgOut->addHTML( wfMsg( 'importlangnames_not_allowed' ) );
+		if ( ! $this->getUser()->isAllowed( 'languagenames' ) ) {
+			$output->addHTML( wfMsg( 'importlangnames_not_allowed' ) );
 			return false;
 		}
 
-		$dbr = wfGetDB( DB_MASTER );
-
-		/* Get collection ID for "ISO 639-3 codes" collection.
-		 if we want to find $collection_id , we can use the following query */
-		/*
-		$sql = "SELECT collection_id FROM {$dc}_collection" .
-			" JOIN {$dc}_defined_meaning ON defined_meaning_id = collection_mid" .
-			" JOIN {$dc}_expression ON" .
-			" {$dc}_defined_meaning.expression_id = {$dc}_expression.expression_id" .
-			' WHERE spelling LIKE "ISO 639-3 codes"' .
-			' AND ' . getLatestTransactionRestriction( "{$dc}_collection" ) .
-			' LIMIT 1';
-		$collection_id_res = $dbr->query( $sql );
-		$collection_id = $this->fetchResult( $dbr->fetchRow( $collection_id_res ) );
-		*/
-		// but having "ISO 639-3 codes" hardcoded is the same as having "145264" hardcoded
-		$collection_id = 145264 ;
-
 		/* Get defined meaning IDs and ISO codes for languages in collection. */
-		$sql = "SELECT member_mid,internal_member_id FROM {$dc}_collection_contents" .
-			' WHERE collection_id = ' . $collection_id .
-			' AND ' . getLatestTransactionRestriction( "{$dc}_collection_contents" );
-		$lang_res = $dbr->query( $sql );
+		// wgIso639_3CollectionId is normally defined in LocalSettings.php
+		$lang_res = $dbr->select(
+			"{$dc}_collection_contents",
+			array( 'member_mid' , 'internal_member_id' ),
+			array(
+				'collection_id' => $wgIso639_3CollectionId,
+				'remove_transaction_id' => null
+			), __METHOD__
+		);
 		$editable = '';
 		$first = true;
 
-		while ( $lang_row = $dbr->fetchRow( $lang_res ) ) {
-			$iso_code = $lang_row['internal_member_id'];
-			$dm_id = $lang_row['member_mid'];
+		foreach ( $lang_res as $lang_row ) {
+			$iso_code = $lang_row->internal_member_id;
+			$dm_id = $lang_row->member_mid;
 
 			/*	Get the language ID for the current language. */
 			$lang_id = getLanguageIdForIso639_3( $iso_code ) ;
 
 			if ( $lang_id ) {
 				if ( !$first ) {
-					$wgOut->addHTML( '<br />' . "\n" );
+					$output->addHTML( '<br />' . "\n" );
 				} else {
 					$first = false;
 				}
-				$wgOut->addHTML( wfMsg( 'importlangnames_added', $iso_code ) );
+				$output->addHTML( wfMsg( 'importlangnames_added', $iso_code ) );
 
 				/* Add current language to list of portals/DMs. */
-				$sql = "SELECT spelling FROM {$dc}_expression" .
-					" JOIN {$dc}_defined_meaning ON {$dc}_defined_meaning.expression_id = {$dc}_expression.expression_id" .
-					' WHERE defined_meaning_id = ' . $dm_id .
-					' LIMIT 1';
-				$dm_expr_res = $dbr->query( $sql );
-				$dm_expr = $this->fetchResult( $dbr->fetchRow( $dm_expr_res ) );
+				// select definingExpression of a DM
+				$dm_expr = definingExpression( $dm_id );
 				if ( $editable != '' ) $editable .= "\n";
 				$editable .= '*[[Portal:' . $iso_code . ']] - [[DefinedMeaning:' . $dm_expr . ' (' . $dm_id . ')]]';
 
 				/*	Delete all language names that match current language ID. */
-				$sql = 'DELETE FROM language_names' .
-					' WHERE language_id = ' . $lang_id;
-				$dbr->query( $sql );
+				$dbw->delete(
+					'language_names',
+					array( 'language_id' => $lang_id ),
+					__METHOD__
+				);
 
 				/*	Get syntrans expressions for names of language and IDs for the languages the names are in. */
-				$sql = "SELECT spelling,language_id FROM {$dc}_expression" .
-					" JOIN {$dc}_syntrans" .
-					" ON {$dc}_expression.expression_id = {$dc}_syntrans.expression_id" .
-					' WHERE defined_meaning_id = ' . $dm_id .
-					' AND ' . getLatestTransactionRestriction( "{$dc}_expression" ) .
-					' AND ' . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-					' GROUP BY language_id ORDER BY NULL';
-				$syntrans_res = $dbr->query( $sql );
-				while ( $syntrans_row = $dbr->fetchRow( $syntrans_res ) ) {
-					$sql = 'INSERT INTO language_names' .
-						' (`language_id`,`name_language_id`,`language_name`)' .
-						' VALUES(' . $lang_id . ', ' .
-						$syntrans_row['language_id'] . ', ' .
-						$dbr->addQuotes( $syntrans_row['spelling'] ) . ')';
-					$dbr->query( $sql );
+				$syntrans_res = $dbr->select(
+					array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+					array( 'spelling', 'language_id' ),
+					array(
+						'defined_meaning_id' => $dm_id,
+						'exp.remove_transaction_id' => null
+					), __METHOD__,
+					array( 'GROUP BY' => 'language_id', 'ORDER BY' => null ),
+					array( 'synt' => array( 'JOIN', array(
+						'synt.expression_id = exp.expression_id',
+						'synt.remove_transaction_id' => null
+					)))
+				);
+
+				foreach ( $syntrans_res as $syntrans_row ) {
+					$dbw->insert(
+						'language_names',
+						array(
+							'language_id' => $lang_id,
+							'name_language_id' => $syntrans_row->language_id,
+							'language_name' => $syntrans_row->spelling
+						), __METHOD__
+					);
 				}
 
 			} else {
-				if ( !$first )
-					$wgOut->addHTML( '<br />' . "\n" );
-				else
+				// no $lang_id found
+				if ( !$first ) {
+					$output->addHTML( '<br />' . "\n" );
+				} else {
 					$first = false;
-				$wgOut->addHTML( wfMsg( 'importlangnames_not_found', $iso_code ) );
-				continue;
+				}
+				$output->addHTML( wfMsg( 'importlangnames_not_found', $iso_code ) );
 			}
 		}
 		$this->addDMsListToPage( $editable, 'Editable_languages' );
 	}
 
-	/* XXX: This is probably NOT the proper way to do this. It should be refactored. */
-	function addDMsListToPage( $content, $page ) {
-		$dbr = wfGetDB( DB_MASTER );
-
-		/* Get ID of the page we want to put the list on. */
-		$sql = 'SELECT page_id FROM page' .
-			' WHERE page_title LIKE ' . $dbr->addQuotes( $page ) .
-			' LIMIT 1';
-		$page_res = $dbr->query( $sql );
-		$page_id = $this->fetchResult( $dbr->fetchRow( $page_res ) );
-
-		/* Don't do anything if the old content is the same as the new. */
-		$sql = 'SELECT old_text FROM text' .
-			' JOIN revision ON rev_text_id = old_id' .
-			' WHERE rev_page = ' . $page_id .
-			' LIMIT 1';
-		$current_res = $dbr->query( $sql );
-		$current = $this->fetchResult( $dbr->fetchRow( $current_res ) );
-		if ( $content == $current )
-			return;
-
-		/* Insert new text and grab new row ID. */
-		$sql = 'INSERT INTO text (`old_text`,`old_flags`)' .
-			' VALUES(' . $dbr->addQuotes( $content ) . ',' .
-			$dbr->addQuotes( 'utf-8' ) . ')';
-		$dbr->query( $sql );
-		$text_id = $dbr->insertId();
-
-		/* Add new revision to database and update page entry. */
-		$time = wfTimestamp( TS_MW );
-		$sql = 'INSERT INTO revision (`rev_page`,`rev_text_id`,' .
-			'`rev_comment`,`rev_user_text`,`rev_timestamp`)' .
-			' VALUES(' . $page_id . ',' . $text_id . ',' .
-			$dbr->addQuotes( 'Set to latest DefinedMeanings list' ) .
-			',' . $dbr->addQuotes( 'ImportLangNames' ) . ',' . $time . ')';
-		$dbr->query( $sql );
-		$rev_id = $dbr->insertId();
-		$sql = 'UPDATE page SET page_latest = ' . $rev_id . ',page_touched = ' .
-			$time . ',page_is_new = 0,page_len = ' . strlen( $content ) .
-			' WHERE page_id = ' . $page_id;
-		$dbr->query( $sql );
+	function addDMsListToPage( $content, $title ) {
+		$titleObj = Title::makeTitle( NS_MAIN, $title );
+		$wikipage = new WikiPage( $titleObj );
+		$wikipage->doEdit( $content, 'updated via Special:ImportLangNames' );
 	}
-
-	/* Return first field in row. */
-	function fetchResult( $row ) {
-		return $row[0];
-	}
-
 }
