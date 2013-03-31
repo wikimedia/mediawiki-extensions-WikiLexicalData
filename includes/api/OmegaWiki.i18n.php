@@ -55,6 +55,13 @@ $messages['ko'] = array(
 	'apiow-desc' => '미디어위키 api.php의 OmegaWiki의 WikiLexicalData 확장 기능',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'apiow-desc' => 'Dem <i lang="en">OmegaWiki</i> sing Zohsazprojramm <i lang="en">WikiLexicalData</i>, wat dem MediaWiki singem MediaWiki <code lang="en">api.php</code> zosäzlejje Müjjeleschkeite jitt.',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

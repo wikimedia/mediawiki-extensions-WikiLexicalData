@@ -9056,6 +9056,9 @@ Wi et ußsüht, es de Datebangk nit mieh konsistent. Wikidata kunnt kein jöltij
 	'ow_nstab_edit_copy' => 'en Koppi ändere',
 	'right-addlanguage' => 'Enstellunge för Shprooche dobei donn udder ändere',
 	'ow_shown_datasets' => 'Aanjezeich Datesammlunge',
+	'prefs-ow-lang' => 'Schprooche',
+	'ow_pref_lang_switch' => 'Donn bloß de ußjewählte Schrooche aanzeije.',
+	'ow_pref_lang_select' => 'Schprooche för aanzezeije:',
 );
 
 /** Kurdish (Kurdî)
