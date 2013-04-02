@@ -34,6 +34,13 @@ $messages['gl'] = array(
 	'apiow-desc' => 'Extensión WikiLexicalData de OmegaWiki do api.php de MediaWiki',
 );
 
+/** Hebrew (עברית)
+ * @author Amire80
+ */
+$messages['he'] = array(
+	'apiow-desc' => 'הרחבת API של מדיה־ויקי בשביל WikiLexicalData של OmegaWiki',
+);
+
 /** Italian (italiano)
  * @author Beta16
  */
