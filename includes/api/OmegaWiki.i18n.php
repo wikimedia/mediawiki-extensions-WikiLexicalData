@@ -89,3 +89,10 @@ $messages['nl'] = array(
 $messages['roa-tara'] = array(
 	'apiow-desc' => "Estenzione WikiLexicalData de OmegaUicchi de l'api.php de MediaUicchi",
 );
+
+/** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
+ */
+$messages['vi'] = array(
+	'apiow-desc' => 'Phần mở rộng WikiLexicalData dành cho OmegaWiki nhằm mở rộng api.php của MediaWiki',
+);
