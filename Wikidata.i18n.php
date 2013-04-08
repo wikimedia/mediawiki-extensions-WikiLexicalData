@@ -10609,7 +10609,7 @@ Talen moeten een ISO 639-3 taalcode zijn.</p>',
 	'ow_exporttsv_title' => 'Collectie naar TSV exporteren',
 	'ow_exporttsv_header' => "<p>U kunt een verzameling exporteren naar een met tabs gescheiden tekstformaat dat u kunt importeren in OpenOffice.org, Excel of andere spreadsheetsoftware.<br />
 Selecteer een verzameling om te exporteren.
-In het tekstvak voor talen kunt u een door komma's gescheiden lijst van ISO 639-3 taalcodes ingeven.
+In het tekstvak voor talen kunt u een door komma's gescheiden lijst van ISO 639-3 taalcodes opgeven.
 Begin met de taal waarvandaan u vertaalt - kies er zoveel u wilt - en eindig met de taal waarin u vertaalt.
 Klik daarna op 'Aanmaken' om het bestand aan te laten maken.</p>",
 	'ow_exporttsv_languages' => 'Talen:',
@@ -10669,7 +10669,7 @@ Zie [[{{MediaWiki:Ow editing policy url}}|ons bewerkingsbeleid]].',
 	'ow_concept_panel' => 'Conceptpaneel',
 	'ow_dm_badtitle' => 'Deze pagina wijst niet naar enige BepaaldeBetekenis (concept).
 Controleer het webadres.',
-	'ow_dm_missing' => 'Deze pagina lijkt te wijzen naar een niet-bestaande DefinedMeaning (concept). Controleer alstublieft het webadres.',
+	'ow_dm_missing' => 'Deze pagina lijkt te wijzen naar een niet-bestaande DefinedMeaning (concept). Controleer het webadres.',
 	'ow_AddHint' => 'Nieuwe rijen toevoegen',
 	'ow_AlternativeDefinition' => 'Alternatieve definitie',
 	'ow_AlternativeDefinitions' => 'Alternatieve definities',
@@ -10743,16 +10743,16 @@ Controleer het webadres.',
 	'ow_meaningsofsubtitle' => '<em>Wikikoppeling:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>Toestemming geweigerd</h2>',
 	'copy' => 'Wikidata: Kopiëren',
-	'ow_copy_no_action_specified' => 'Geef alstublieft een handeling aan',
+	'ow_copy_no_action_specified' => 'Geef een handeling aan',
 	'ow_copy_help' => 'Een hulpfunctie is nog niet beschikbaar.',
-	'ow_please_proved_dmid' => 'Uw invoer mist een "?dmid=<ID>" (dmid=Defined Meaning-ID)<br />Neem alstublieft contact op met een systeembeheerder.',
-	'ow_please_proved_dc1' => 'Uw invoer mist een "?dc1=<iets>" (dc1=datasetcontext 1, dataset WAARVAN te kopiëren)<br />Neem alstublieft contact op met een systeembeheerder.',
-	'ow_please_proved_dc2' => 'Uw invoer mist een "?dc2==<iets>" (dc2=datasetcontext 2, dataset WAARNAAR te kopiëren)<br />Neem alstublieft contact op met een systeembeheerder.',
+	'ow_please_proved_dmid' => 'Uw invoer mist een "?dmid=<ID>" (dmid=Defined Meaning-ID)<br />Neem contact op met een systeembeheerder.',
+	'ow_please_proved_dc1' => 'Uw invoer mist een "?dc1=<iets>" (dc1=datasetcontext 1, dataset WAARVAN te kopiëren)<br />Neem contact op met een systeembeheerder.',
+	'ow_please_proved_dc2' => 'Uw invoer mist een "?dc2==<iets>" (dc2=datasetcontext 2, dataset WAARNAAR te kopiëren)<br />Neem contact op met een systeembeheerder.',
 	'ow_copy_successful' => '<h2>Kopiëren uitgevoerd</h2>Het lijkt erop dat het kopiëren van de gegevens goed gegaan is.
 Vergeet niet om dit te controleren!',
 	'ow_copy_unsuccessful' => '<h3>Kopiëren mislukt</h3> Er is niets gekopieerd.',
 	'ow_no_action_specified' => '<h3>Er is geen handeling opgegeven</h3> Mogelijk bent u direct naar deze pagina gekomen. Normaliter hoort dat niet te gebeuren.',
-	'ow_db_consistency_not_found' => '<h2>Fout</h2>Er is een probleem met de consistentie van de database. Wikidata kan geen valide gegevens vinden die met dit Defined Meaning-ID zijn verbonden. Wellicht zijn die gegevens verloren gegaan. Neem alstublieft contact op met een systeembeheerder.',
+	'ow_db_consistency_not_found' => '<h2>Fout</h2>Er is een probleem met de consistentie van de database. Wikidata kan geen valide gegevens vinden die met dit Defined Meaning-ID zijn verbonden. Wellicht zijn die gegevens verloren gegaan. Neem contact op met een systeembeheerder.',
 	'ow_history_transaction' => 'Transactie:',
 	'ow_history_show_life_span' => 'Levensduur van record weergeven:',
 	'ow_class_attr_type_dm' => 'Gedefinieerde betekenis',
@@ -16449,6 +16449,7 @@ $messages['zh-hans'] = array(
  * @author Mark85296341
  * @author Oapbtommy
  * @author Simon Shek
+ * @author Tntchn
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
@@ -16578,6 +16579,7 @@ $messages['zh-hant'] = array(
 	'ow_OptionAttributeOptions' => '選項',
 	'ow_OptionAttributeValues' => '選項值',
 	'ow_OtherDefinedMeaning' => '其他已定義的含義',
+	'ow_OtherLanguages' => '其他語言：',
 	'ow_PopupAnnotation' => '註解',
 	'ow_Relations' => '關係',
 	'ow_RelationType' => '關係類型',
@@ -16619,6 +16621,7 @@ $messages['zh-hant'] = array(
 	'ow_class_attr_type_option' => '選項列表',
 	'ow_needs_xlation_source_lang' => '來源語言：',
 	'ow_needs_xlation_dest_lang' => '目標語言：',
+	'ow_statistics' => '維基數據：統計',
 	'ow_show' => '顯示',
 	'ow_upload' => '上傳',
 	'ow_create' => '建立',
@@ -16629,6 +16632,9 @@ $messages['zh-hant'] = array(
 	'ow_nstab_edit_copy' => '編輯副本',
 	'right-addlanguage' => '新增和更改語言設定',
 	'ow_shown_datasets' => '所顯示的數據集',
+	'prefs-ow-lang' => '語言',
+	'ow_pref_lang_switch' => '僅顯示所選語言',
+	'ow_pref_lang_select' => '要顯示的語言：',
 );
 
 /** Chinese (Hong Kong) (‪中文(香港)‬) */
