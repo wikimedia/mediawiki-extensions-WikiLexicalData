@@ -13,6 +13,13 @@ $messages['qqq'] = array(
 	'apiow-desc' => '{{desc}}',
 );
 
+/** Asturian (asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'apiow-desc' => "Estensión de api.php de MediaWiki WikiLexicalData d'OmegaWiki",
+);
+
 /** German (Deutsch)
  * @author Metalhead64
  */
