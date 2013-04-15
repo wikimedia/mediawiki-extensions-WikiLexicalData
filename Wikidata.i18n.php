@@ -9047,7 +9047,7 @@ Wi et ußsüht, es de Datebangk nit mieh konsistent. Wikidata kunnt kein jöltij
 	'ow_needs_xlation_source_lang' => 'De Schprooch, fun woh övversäze:',
 	'ow_needs_xlation_dest_lang' => 'Shprooch woh hen övversäze:',
 	'ow_needs_xlation_no_dest_lang' => 'Bes esu joot, un donn de Shprooch aanjevve, woh hen ze övversäze.',
-	'ow_statistics' => 'Wikidata: Statistike',
+	'ow_statistics' => 'Wikidata: Schtatistike',
 	'ow_show' => 'Aanzeije!',
 	'ow_upload' => 'Huhlaade',
 	'ow_create' => 'Aanlääje',
@@ -13736,9 +13736,15 @@ $messages['so'] = array(
 );
 
 /** Albanian (shqip)
+ * @author Euriditi
  * @author Puntori
  */
 $messages['sq'] = array(
+	'wikidata-desc' => 'Shto databazë në formën wiki për llojet e ndryshme të përmbajtjes',
+	'wikidata-handler-namespace-move-error' => 'Faqet në hapësirat të trajtuara nga Wikidata nuk mund të zhvendosen',
+	'languages' => 'Wikidata: Menaxheri i gjuhëve',
+	'langman-desc' => 'Shto dhe ndrysho konfigurimin e gjuhëve me [[Special:Languages]]',
+	'langman_title' => 'Menaxheri i gjuhëve',
 	'ow_save' => 'Ruaje',
 	'ow_history' => 'Historia',
 	'ow_dm_OK' => 'Mirë',
