@@ -12594,7 +12594,7 @@ $messages['roa-tara'] = array(
 	'langman_wikimedia' => 'Codece Uicchimedia:',
 	'langman_field_optional' => '(opzionale)',
 	'langman_addlang' => "Aggiunge 'na lènghe",
-	'importlangnames' => "Uicchidata: 'Mborte le noe de le lènghe",
+	'importlangnames' => "Uicchidata: 'Mborte le nome de le lènghe",
 	'importlangnames_title' => "'Mborte le nome de le lènghe",
 	'importlangnames_not_allowed' => "Tu non ge tìne le permesse pe 'mbortà le nome de le lènghe.",
 	'importlangnames_added' => 'Nome de le lènghe pe "$1" aggiunde.',
@@ -12645,6 +12645,9 @@ Scacchie 'na collezzione da esportà. Jndr'à caselle de teste de le lènghe, mi
 	'ow_exporttsv_not_allowed' => "Tu non ge tìne 'u permesse pe esportà 'nu file TSV.",
 	'ow_exporttsv_export_failed' => 'Esportazione fallite',
 	'addcollection' => "Uicchidata: Aggiunge 'na collezzione",
+	'ow_searchnoresult' => "<p>Tu puè:<br />
+* '''Ccrejà l'espressione \"[[Expression:\$1]]\"''' (e aggiungere 'na definizione)<br />
+* '''ccrejà 'na pàgene \"[[:\$1]]\"''' ('na pàgene de uicchi standàrd)</p>",
 	'ow_save' => 'Reggìstre',
 	'ow_history' => 'Storie',
 	'ow_datasets' => "Scacchie l'inzieme de date",
@@ -12775,10 +12778,22 @@ Pe piacere verifiche l'indirizze web.",
 	'ow_copy_no_action_specified' => "Pe piacere specifiche 'n'azione",
 	'ow_copy_help' => "L'aiute angore non g'è presende.
 <!-- Quacche giurne, pò essere ca v'aiuteme. -->",
+	'ow_please_proved_dmid' => "Pare ca quidde ca è mise manghe de 'nu \"?dmid=<ID>\" (dmid=Defined Meaning ID)<br />
+Pe piacere condatte 'n'amminiistratore d'u server.",
+	'ow_please_proved_dc1' => "Pare ca quidde ca è mise manghe de 'nu \"?dc1=<something>\" (dc1=dataset context 1, dataset to copy FROM)<br />
+Pe piacere condatte 'n'amminiistratore d'u server.",
+	'ow_please_proved_dc2' => "Pare ca quidde ca è mise manghe de 'nu \"?dc2=<something>\" (dc2=dataset context 2, dataset to copy TO)<br />
+Pe piacere condatte 'n'amminiistratore d'u server.",
+	'ow_copy_unsuccessful' => '<h3>Copie non riuscite</h3>
+Nisciune operazione de copie ha state fatte.',
 	'ow_history_transaction' => 'Transazione:',
+	'ow_history_show_life_span' => "Fà vedè le mumende d'a vite strascecate:",
+	'ow_class_attr_type_dm' => 'Significate definite',
+	'ow_class_attr_type_xlate' => 'Teste traducibbile',
 	'ow_class_attr_type_plain' => 'Teste semblice',
 	'ow_class_attr_type_link' => 'Collegamende',
 	'ow_class_attr_type_option' => 'Elenghe de le opziune',
+	'needstranslation' => "Wikidata: Espressiune ca onne abbesogne de 'na traduzione",
 	'ow_needs_xlation_title' => 'Espressiune ca onne abbèsogne de traduzione',
 	'ow_needs_xlation_source_lang' => "Lènghe d'origgene:",
 	'ow_needs_xlation_dest_lang' => 'Lènghe de destinazione:',
