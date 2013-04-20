@@ -11763,7 +11763,7 @@ Për piasì, ch'a contròla l'adrëssa an sl'aragnà.",
 	'ow_Link' => 'Anliura',
 	'ow_LinkAttribute' => 'Propietà',
 	'ow_LinkAttributeValues' => 'Anliure',
-	'ow_URL' => 'URL',
+	'ow_URL' => "Liura an sl'aragnà",
 	'ow_User' => 'Utent',
 	'ow_Property' => 'Proprietà',
 	'ow_Value' => 'Valor',
@@ -12784,8 +12784,17 @@ Pe piacere condatte 'n'amminiistratore d'u server.",
 Pe piacere condatte 'n'amminiistratore d'u server.",
 	'ow_please_proved_dc2' => "Pare ca quidde ca è mise manghe de 'nu \"?dc2=<something>\" (dc2=dataset context 2, dataset to copy TO)<br />
 Pe piacere condatte 'n'amminiistratore d'u server.",
+	'ow_copy_successful' => "<h2>Copie assute</h2>
+Le date tune parene ca onne state copiate senza probbleme.
+Nò demendicà de fà 'na doppia verifiche pe essere secure!",
 	'ow_copy_unsuccessful' => '<h3>Copie non riuscite</h3>
 Nisciune operazione de copie ha state fatte.',
+	'ow_no_action_specified' => "<h3>Nisciune azione ha state specificate</h3>
+Forse tu è venute jndr'à sta pàgene direttamende? Normalmende tu non ge è abbesogne de sta aqquà.",
+	'ow_db_consistency_not_found' => "<h2>Errore</h2>
+Quiste jè 'nu probbleme de ingonsistenze d'u database, uicchidata non ge pò acchià 'nu date valide connesse a stu ID definite.
+Pò essere ca s'ha perse.
+Pe piacere condatte l'operatore o l'amministratore d'u server.",
 	'ow_history_transaction' => 'Transazione:',
 	'ow_history_show_life_span' => "Fà vedè le mumende d'a vite strascecate:",
 	'ow_class_attr_type_dm' => 'Significate definite',
