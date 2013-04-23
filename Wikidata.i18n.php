@@ -274,10 +274,7 @@ Please contact the server operator or administrator.",
 	'ow_pref_lang_select' => 'Languages to display:'
 );
 
-/** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always.
-
-It might be easier to translate it as "translation guidelines" or "translation help".
-{{Identical|Message documentation}})
+/** Message documentation (Message documentation)
  * @author Bennylin
  * @author EugeneZelenko
  * @author Fryed-peach
@@ -374,6 +371,7 @@ Parameters:
 	'ow_AddHint' => 'Hint that shows up when the mouse hovers the plus sign in table rows (such as Synonyms and Translations) while editing',
 	'ow_Annotation' => '{{Identical|Annotation}}',
 	'ow_ClassAttributeAttribute' => '{{Identical|Attribute}}',
+	'ow_ClassAttributeLevel' => '{{Identical|Level}}',
 	'ow_ClassAttributeType' => '{{Identical|Type}}',
 	'ow_Collection' => '{{Identical|Collection}}',
 	'ow_Collection_colon' => '{{Identical|Collection}}',
@@ -2720,10 +2718,11 @@ $messages['ca'] = array(
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'datasearch_search_text' => 'Йоза лахар:',
-	'ow_history' => 'Исторе',
+	'ow_history' => 'Истори',
 	'ow_ClassAttributeLevel' => 'Локхалла',
 	'ow_User' => 'Декъашхо',
 );
@@ -8883,7 +8882,7 @@ $messages['ksh'] = array(
 * '''…ene Ußdrok aanlääje „[[Expression:$1]]“''' (un winnishßdenß ein Bedüggdeniß dobei donn) udder<br />
 * '''…en Sigg aanlääje „[[:$1]]“''' (en janz jewöhnlijje Sigg em Wiki)</p>",
 	'ow_save' => 'Afspeichere',
-	'ow_history' => 'Versione',
+	'ow_history' => 'Väsjohne',
 	'ow_datasets' => 'Date-Knubbel ußsöke',
 	'ow_noedit_title' => 'De darfs hee nit ändere',
 	'ow_noedit' => 'Do häs kei Jenehmijung, öm em Date-Knubbel „$1“ jet ze ändere.
