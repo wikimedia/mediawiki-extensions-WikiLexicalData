@@ -9744,7 +9744,7 @@ $messages['mk'] = array(
 	'ow_transaction_rollback_header' => 'Отповикување',
 	'ow_transaction_no_action' => 'Не прави ништо',
 	'ow_transaction_previous_version' => 'Претходна верзија',
-	'ow_transaction_restore' => 'Врати',
+	'ow_transaction_restore' => 'Поврати',
 	'ow_transaction_remove' => 'Отстрани',
 	'ow_transaction_operation' => 'Операција',
 	'ow_transaction_is_latest' => 'Е најнова',
@@ -11345,6 +11345,7 @@ $messages['pfl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Chrumps
  * @author Derbeth
  * @author Masti
  * @author Sp5uhe
@@ -11352,7 +11353,7 @@ $messages['pfl'] = array(
  */
 $messages['pl'] = array(
 	'wikidata-desc' => 'Dodaje podobną do wiki bazę danych dla rozmaitych rodzajów zawartości',
-	'wikidata-handler-namespace-move-error' => 'Strony w przestrzeniach nazw obsługiwanych przez rozszerzenie Wikidata nie mogą być przenoszone.',
+	'wikidata-handler-namespace-move-error' => 'Strony w przestrzeniach nazw obsługiwanych przez rozszerzenie Wikidanych nie mogą być przenoszone.',
 	'languages' => 'Wikidata: Menadżer języków',
 	'langman-desc' => 'Dodawanie i zmiana ustawień językowych na [[Special:Languages]]',
 	'langman_title' => 'Menadżer języków',
@@ -16237,20 +16238,57 @@ $messages['vo'] = array(
  * @author පසිඳු කාවින්ද
  */
 $messages['yi'] = array(
+	'languages' => 'וויקידאטן:שפראכן־פארוואלטער',
+	'langman-desc' => 'צולייגן און ענדערן שפראכן שטעלונגען מיט [[Special:Languages]]',
+	'langman_title' => 'שפראכן־פארוואלטער',
+	'langman_not_allowed' => 'איר האט נישט קיין רשות צו ענדערן די שפראך שטעלונגען.',
+	'langman_header' => 'קלאפט אריין דעם קאד פון דער שפראך און איר נאמען אויף ענגליש אונטן:',
+	'langman_req_fields' => 'סיי דעם נאמען פון דער שפראך סיי איר ISO 639-3 זענען געפאדערט!',
+	'langman_adding' => 'צולייגן שפראך $1 מיט קאד $2.',
 	'langman_langname' => 'שפראַך נאָמען:',
+	'langman_iso639-3' => 'ISO 639-3 קאד:',
+	'langman_iso639-2' => 'ISO 639-2 קאד:',
 	'langman_wikimedia' => 'וויקימעדיע קאד',
+	'langman_field_optional' => '(ברירהדיק)',
 	'langman_addlang' => 'צולייגן שפראַך',
+	'importlangnames' => 'וויקידאטן: אימפארטירן שפראך נעמען',
+	'importlangnames_title' => 'אימפארטירן שפראך נעמען',
+	'importlangnames_not_allowed' => 'איר האט נישט קיין רשות צו אימפארטירן שפראך נעמען.',
+	'importlangnames_added' => 'שפראך נעמען פאר $1 צוגעלייגט.',
+	'importlangnames_not_found' => '<strong>קיין שפראך ליסטע־איינס פאר "$1" נישט געטראפן!</strong>',
+	'datasearch' => 'וויקידאטן:דאטן זוך',
 	'datasearch_language' => 'שפראַך:',
+	'datasearch_found_word' => 'געטראפן ווארט',
+	'datasearch_meaning' => 'באדייט',
+	'datasearch_search_text' => 'זוכטעקסט:',
+	'datasearch_within_words' => 'אין די ווערטער:',
+	'importtsv' => 'וויקידאטן: אימפארטירן TSV',
+	'ow_importtsv_title1' => 'אימפארטירן TSV',
+	'ow_importtsv_title2' => 'אימפארטירן דעפיניציעס און איבערזעצונגען',
+	'ow_importtsv_not_allowed' => 'איר האט נישט קיין רשות אדורכצופירן א TSV אימפארט.',
+	'ow_importtsv_importing' => 'אימפארטירן TSV דאטן',
+	'ow_importtsv_import_failed' => 'אימפארט אדורכגעפאלן',
+	'ow_importtsv_file' => 'TSV טעקע:',
+	'ow_exporttsv_languages' => 'שפּראַכן:',
+	'ow_exporttsv_not_allowed' => 'איר האט נישט קיין רשות אדורכצופירן א TSV עקספארט.',
+	'ow_exporttsv_export_failed' => 'עקספארט אדורכגעפאלן',
+	'addcollection' => 'וויקידאטן: צולייגן זאמלונג',
 	'ow_save' => 'אויפֿהיטן',
 	'ow_history' => 'היסטאריע',
+	'ow_uiprefs' => 'וויקידאטן',
+	'ow_none_selected' => 'גארנישט געקליבן',
 	'ow_transaction_user' => 'באַניצער נאָמען:',
 	'ow_transaction_rollback_button' => 'צוריקדרייען',
 	'ow_transaction_rollback_header' => 'צוריקדרייען',
+	'ow_transaction_no_action' => 'טון גאָרנישט',
 	'ow_transaction_previous_version' => 'פֿריערדיגע ווערסיע',
 	'ow_transaction_restore' => 'אויפֿריכטן',
 	'ow_transaction_remove' => 'אַראָפּנעמען',
+	'ow_Language' => 'שפראַך',
 	'ow_OptionAttributeOptions' => 'ברירות',
+	'ow_OtherLanguages' => 'אנדערע שפראַכן:',
 	'ow_Remove' => 'אַראָפּנעמען',
+	'ow_Spelling' => 'אויסלייג',
 	'ow_SuggestHint' => 'קליקט צו ענדערן אויסקלויב',
 	'ow_Source' => 'מקור',
 	'ow_Time' => 'צײַט',
@@ -16259,7 +16297,9 @@ $messages['yi'] = array(
 	'ow_show' => 'ווײַז',
 	'ow_create' => 'שאַפֿן',
 	'ow_suggest_previous' => 'פֿריערדיקער',
+	'ow_suggest_next' => 'נעקסט',
 	'ow_suggest_clear' => 'רייניקן',
+	'prefs-ow-lang' => 'שפּראַכן',
 );
 
 /** Cantonese (粵語)
