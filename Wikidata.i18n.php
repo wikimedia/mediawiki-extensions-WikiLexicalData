@@ -12402,6 +12402,13 @@ Por favor, contate o operador ou administrador do servidor.',
 	'ow_shown_datasets' => 'Mostrar conjuntos de dados',
 );
 
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'ow_exporttsv_languages' => 'Rimaykuna:',
+);
+
 /** Tarifit (Tarifit)
  * @author Jose77
  */
