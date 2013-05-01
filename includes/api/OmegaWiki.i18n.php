@@ -73,7 +73,7 @@ $messages['ko'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'apiow-desc' => 'Dem <i lang="en">OmegaWiki</i> sing Zohsazprojramm <i lang="en">WikiLexicalData</i>, wat dem MediaWiki singem MediaWiki <code lang="en">api.php</code> zosäzlejje Müjjeleschkeite jitt.',
+	'apiow-desc' => 'Dem <i lang="en">OmegaWiki</i> sing Zohsazprojramm <i lang="en">WikiLexicalData</i>, wat dem MediaWiki singem <code lang="en">api.php</code> zosäzlejje Müjjeleschkeite jitt.',
 );
 
 /** Macedonian (македонски)
