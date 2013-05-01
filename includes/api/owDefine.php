@@ -24,7 +24,7 @@
  */
 require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
 
-class define extends ApiBase {
+class Define extends ApiBase {
 
 	public $languageId, $text, $spelling, $spellingLanguageId;
 

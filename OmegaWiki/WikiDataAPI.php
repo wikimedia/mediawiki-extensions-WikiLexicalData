@@ -1273,6 +1273,46 @@ function getTextValueAttribute( $textValueAttributeId ) {
 	return $textAttributeValue;
 }
 
+/** get Text Attribute values id.
+ * returns value_id if exist
+ * returns false if not exist
+ */
+function getTextAttributeValueId( $objectId, $textAttributeId, $text ) {
+	$dbr = wfGetDB( DB_SLAVE );
+	$dc = wdGetDataSetContext();
+
+	$valueId = $dbr->selectField(
+		$dc . '_text_attribute_values',
+		'value_id',
+		array(
+			'object_id' => $objectId,
+			'attribute_mid' => $textAttributeId,
+			'text' => $text,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( $valueId ) {
+		return $valueId;
+	}
+	return false;
+}
+
+/** retrieve the attribute_mid using an array of defined_meaning_id
+ * acquired through expression_id.
+ * returns null if empty
+ */
+function getTextAttributeOptionsAttributeMidFromExpressionId( $expressionId ) {
+	$definedMeaningIds = getExpressionIdMeaningIds( $expressionId );
+	foreach ($definedMeaningIds as $definedMeaningId ) {
+		$candidate = verifyTextAttributeValueAttributeMid($definedMeaningId);
+		if ( $candidate ) {
+			return $candidate;
+		}
+	}
+	return null;
+}
+
 function addLinkAttributeValue( $objectId, $linkAttributeId, $url, $label = "" ) {
 	$dc = wdGetDataSetContext();
 	$linkValueAttributeId = newObjectId( "{$dc}_url_attribute_values" );
@@ -1448,7 +1488,15 @@ function removeOptionAttributeValue( $valueId ) {
 	);
 }
 
+function getOptionAttributeOptionsOptionId( $attributeId, $optionMeaningId, $languageId ) {
+	return optionAttributeOptionExistsOptions( $attributeId, $optionMeaningId, $languageId, 1 );
+}
+
 function optionAttributeOptionExists( $attributeId, $optionMeaningId, $languageId ) {
+	return optionAttributeOptionExistsOptions( $attributeId, $optionMeaningId, $languageId, 0 );
+}
+
+function optionAttributeOptionExistsOptions( $attributeId, $optionMeaningId, $languageId, $returnOption ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
 
@@ -1463,10 +1511,18 @@ function optionAttributeOptionExists( $attributeId, $optionMeaningId, $languageI
 		), __METHOD__
 	);
 
-	if ( $optionId ) {
-		return true;
+	if ( $returnOption == 1 ) {
+		$returnTrue = $optionId;
+		$returnFalse = null;
+	} else {
+		$returnTrue = true;
+		$returnFalse = false;
 	}
-	return false;
+
+	if ( $optionId ) {
+		return $returnTrue;
+	}
+	return $returnFalse;
 }
 
 function addOptionAttributeOption( $attributeId, $optionMeaningId, $languageId ) {
@@ -1519,6 +1575,117 @@ function removeOptionAttributeOption( $optionId ) {
 	} else {
 		echo "\nThe option $optionId cannot be deleted because it is still in use!\n" ;
 	}
+}
+
+/** retrieve the options Attribute option's attribute_id
+ * using an array of defined_meaning_id
+ * acquired through expression_id.
+ * returns null if empty
+ */
+function getOptionAttributeOptionsAttributeIdFromExpressionId ( $expressionId, $classMid, $levelMeaningId ) {
+	$definedMeaningIds = getExpressionIdMeaningIds( $expressionId );
+	foreach ($definedMeaningIds as $definedMeaningId ) {
+
+		$objectId = getOptionAttributeOptionsAttributeIdFromDM( $definedMeaningId, $classMid, $levelMeaningId );
+
+		if ( !$objectId && $classMid <> -1 ) {
+			$objectId = getOptionAttributeOptionsAttributeIdFromDM( $definedMeaningId, -1, $levelMeaningId );
+		}
+		if ( $objectId ) {
+			// returns the first objectId
+			// may produce the wrong Id.
+			return $objectId;
+		} else {
+			$attributeId = null;
+		}
+	}
+
+	if ( $attributeId ) {
+		return $attributeId;
+	}
+	return null;
+}
+
+function getOptionAttributeOptionsAttributeIdFromDM( $definedMeaningId, $classMid, $levelMeaningId ) {
+		$dc = wdGetDataSetContext();
+		$dbr = wfGetDB( DB_SLAVE );
+
+		// Quick Fix: Better if we find a way of providing
+		// the class_mid than to set a negative number
+		// if there is a possibility of a two dm attribute.
+		if ( $classMid == -1 ) {
+			$arrayIs = array(
+				'attribute_mid' => $definedMeaningId,
+				'object_id = attribute_id',
+				'attribute_type' => "OPTN",
+				'level_mid' => $levelMeaningId,
+				'ca.remove_transaction_id' => null
+			);
+		} else {
+			$arrayIs = array(
+				'attribute_mid' => $definedMeaningId,
+				'object_id = attribute_id',
+				'class_mid' => $classMid,
+				'attribute_type' => "OPTN",
+				'level_mid' => $levelMeaningId,
+				'ca.remove_transaction_id' => null
+			);
+		}
+		$objectId = $dbr->selectField(
+			array(
+				'ca' => $dc . '_class_attributes',
+				'ovo' => $dc . '_option_attribute_options'
+			),
+			'object_id',
+			$arrayIs
+			, __METHOD__
+		);
+
+		if ( $objectId ) {
+			return $objectId;
+		}
+		return null;
+}
+
+/** retrieve the options Attribute option's option_mid
+ * using an array of defined_meaning_id
+ * acquired through expression_id.
+ * returns null if empty
+ */
+function getOptionAttributeOptionsOptionMidFromExpressionId ( $expressionId ) {
+	$definedMeaningIds = getExpressionIdMeaningIds( $expressionId );
+	foreach ($definedMeaningIds as $definedMeaningId ) {
+		if ( $candidate = verifyOptionAttributeOptionsOptionMid($definedMeaningId) ) {
+			$optionMeaningId = $candidate;
+		}
+	}
+	if ( empty( $optionMeaningId ) ) {
+		return null;
+	}
+	return $optionMeaningId;
+}
+
+/** get Option Attribute values id.
+ * returns value_id if exist
+ * returns false if not exist
+ */
+function getOptionAttributeValueId( $objectId, $optionId ) {
+	$dbr = wfGetDB( DB_SLAVE );
+	$dc = wdGetDataSetContext();
+	$valueId = $dbr->selectField(
+		$dc . '_option_attribute_values',
+		'value_id',
+		array(
+			'object_id' => $objectId,
+			'option_id' => $optionId,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( $valueId ) {
+		return $valueId;
+	}
+	return false;
 }
 
 /**
@@ -1964,6 +2131,33 @@ function getExpressionMeaningIdsForLanguages( $spelling, $languageIds, $dc = nul
 	return $dmlist;
 }
 
+/** Get Defined Meaning Ids from Expression Id
+ */
+function getExpressionIdMeaningIds($expressionId, $dc = null) {
+	if ( is_null( $dc ) ) {
+		$dc = wdGetDataSetContext();
+	}
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$queryResult = $dbr->select(
+		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		'defined_meaning_id',
+		array(
+			'exp.expression_id' => $expressionId,
+			'exp.remove_transaction_id' => null,
+			'synt.remove_transaction_id' => null,
+			'exp.expression_id = synt.expression_id'
+		), __METHOD__
+	);
+
+	$dmlist = array();
+
+	foreach ( $queryResult as $synonymRecord ) {
+		$dmlist[] = $synonymRecord->defined_meaning_id;
+	}
+
+	return $dmlist;
+}
 
 /** Write a concept mapping to db
  * supply mapping as a valid
@@ -2429,15 +2623,19 @@ class ClassAttributes {
  * @param $isDc   if has DataSet Context(boolean)
  */
 function verifyColumn( $table, $column, $value, $isDc ) {
-	if ($isDc == 1) { $dc = wdGetDataSetContext() . "_"; }
-	else {$dc = '';}
+	if ( $isDc == 1 ) {
+		$dc = wdGetDataSetContext() . '_';
+	} else {
+		$dc = '';
+	}
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$existId = $dbr->selectField(
-		"{$dc}{$table}",
-		"$column",
+		$dc . $table,
+		$column,
 		array(
-			"$column" => $value
+			$column => $value,
+			"remove_transaction_id" => null
 		), __METHOD__
 	);
 
@@ -2452,7 +2650,20 @@ function verifyColumn( $table, $column, $value, $isDc ) {
  * null if not found
  */
 function verifyLanguageId( $languageId ) {
-	return verifyColumn('language', 'language_id', $languageId, 0 );
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$existId = $dbr->selectField(
+		'language',
+		'language_id',
+		array(
+			'language_id' => $languageId,
+		), __METHOD__
+	);
+
+	if ( $existId ) {
+		return $existId;
+	}
+	return null;
 }
 
 /**
@@ -2461,4 +2672,58 @@ function verifyLanguageId( $languageId ) {
  */
 function verifyDefinedMeaningId( $definedMeaningId ) {
 	return verifyColumn('defined_meaning', 'defined_meaning_id', $definedMeaningId, 1 );
+}
+
+/**
+ * returns back the attributeMid if it exist
+ * null if not found
+ */
+function verifyTextAttributeValueAttributeMid( $attributeMid ) {
+	return verifyColumn('text_attribute_values', 'attribute_mid', $attributeMid, 1 );
+}
+
+/**
+ * returns back the attributeMid if it exist
+ * null if not found
+ */
+function verifyOptionAttributeOptionsAttributeId( $attributeId ) {
+//	return verifyColumn('option_attribute_options', 'attribute_id', $attributeId, 1 );
+	return verifyColumn('class_attribute', 'attribute_mid', $attributeId, 1 );
+}
+
+/**
+ * returns back the optionMeaningId if it exist
+ * null if not found
+ */
+function verifyOptionAttributeOptionsOptionMid( $optionMeaningId ) {
+	return verifyColumn('option_attribute_options', 'option_mid', $optionMeaningId, 1 );
+}
+
+function verifyRelationtypeMId( $relationtypeMid ) {
+	return verifyColumn('meaning_relations', 'relationtype_mid', $relationtypeMid, 1 );
+}
+
+function getDefinedMeaningIdFromExpressionIdAndLanguageId( $expressionId, $languageId ) {
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$queryResult = $dbr->select(
+		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		'defined_meaning_id',
+		array(
+			'synt.expression_id' => $expressionId,
+			'language_id' => $languageId,
+			'exp.remove_transaction_id' => null,
+			'synt.remove_transaction_id' => null,
+			'exp.expression_id = synt.expression_id'
+		), __METHOD__
+	);
+
+	$dmlist = array();
+
+	foreach ( $queryResult as $synonymRecord ) {
+		$dmlist[] = $synonymRecord->defined_meaning_id;
+	}
+
+	return $dmlist;
 }

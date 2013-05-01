@@ -27,12 +27,14 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // Map class name to filename for autoloading
-	$wgAutoloadClasses['define'] = dirname( __FILE__ ) . '/owDefine.php';
-	$wgAutoloadClasses['addSyntrans'] = dirname( __FILE__ ) . '/owAddSyntrans.php';
+	$wgAutoloadClasses['Define'] = dirname( __FILE__ ) . '/owDefine.php';
+	$wgAutoloadClasses['AddSyntrans'] = dirname( __FILE__ ) . '/owAddSyntrans.php';
+	$wgAutoloadClasses['AddAnnotation'] = dirname( __FILE__ ) . '/owAddAnnotation.php';
 
 // Map module name to class name
-	$wgAPIModules['ow_define'] = 'define';
-	$wgAPIModules['ow_add_syntrans'] = 'addSyntrans';
+	$wgAPIModules['ow_define'] = 'Define';
+	$wgAPIModules['ow_add_syntrans'] = 'AddSyntrans';
+	$wgAPIModules['ow_add_annotation'] = 'AddAnnotation';
 
 // Load the internationalization file
 	$wgExtensionMessagesFiles['myextension']

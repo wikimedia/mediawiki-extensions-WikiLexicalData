@@ -2,7 +2,7 @@
 
 require_once( 'WikiDataGlobals.php' );
 
-/** 
+/**
  * @param $purge purge cache
  * @return array of language names for the user's language preference
  **/
@@ -48,10 +48,14 @@ function getLanguageIdForCode( $code ) {
 	return null;
 }
 
+/**
+ * returns the language_id corresponding to the
+ * iso639_3 $code
+ */
 function getLanguageIdForIso639_3( $code ) {
 
 	static $languages = null;
-	
+
 	if ( is_null( $languages ) ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$result = $dbr->select(
@@ -63,17 +67,21 @@ function getLanguageIdForIso639_3( $code ) {
 			$languages[$row->iso639_3] = $row->language_id;
 		}
 	}
-	
+
 	if ( is_array( $languages ) && array_key_exists( $code, $languages ) ) {
 		return $languages[$code];
 	}
 	return null;
 }
 
+/**
+ * returns the iso639_3 code corresponding to the
+ * language_id $id
+ */
 function getLanguageIso639_3ForId( $id ) {
 
 	static $languages = null;
-	
+
 	if ( is_null( $languages ) ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$result = $dbr->select(
@@ -85,12 +93,41 @@ function getLanguageIso639_3ForId( $id ) {
 			$languages['id' . $row->language_id] = $row->iso639_3;
 		}
 	}
-	
+
 	if ( is_array( $languages ) && array_key_exists( 'id' . $id, $languages ) ) {
 		return $languages['id' . $id];
 	}
 	return null;
 }
+
+/**
+ * returns the DM_id corresponding to the
+ * iso639_3 $code, according to the collection $wgIso639_3CollectionId
+ * null if not found
+ */
+function getDMIdForIso639_3( $code ) {
+
+	global $wgIso639_3CollectionId;
+	// should we use the static approach, as for the other functions?
+
+	$dbr = wfGetDB( DB_SLAVE );
+	$langdm = $dbr->selectField(
+		"{$dc}_collection_contents",
+		'member_mid',
+		array(
+			'collection_id' => $wgIso639_3CollectionId,
+			'internal_member_id' => $code,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	// langdm is false if not found
+	if ( $langdm ) {
+		return $langdm;
+	}
+	return null;
+}
+
 
 /**
  * Returns a SQL query string for fetching language names in a given language.
@@ -144,4 +181,22 @@ function getSQLForLanguageNames( $lang_code, $lang_subset = array() ) {
 	}
 
 	return $sqlQuery;
+}
+
+function getLanguageIdLanguageNameFromIds( $languageId, $nameLanguageId ) {
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$languageId = $dbr->selectField(
+		'language_names',
+		'language_name',
+		array(
+			'language_id' => $languageId,
+			'name_language_id' => $nameLanguageId
+		), __METHOD__
+	);
+
+	if ( $languageId )
+		return $languageId;
+
+	return null;
 }
