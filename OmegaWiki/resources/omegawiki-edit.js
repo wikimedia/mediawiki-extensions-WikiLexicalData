@@ -22,7 +22,7 @@ jQuery(document).ready(function( $ ) {
 		}, 100);
 	});
 
-	$("td.addemptyrow").click(function() {
+	$("body").on('click', "td.addemptyrow", function(event) {
 		addEmptyRow( this.parentNode.id );
 	});
 });
