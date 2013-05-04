@@ -80,7 +80,6 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$idStack = $this->getIdStack( $this->definedMeaningModel->getId() );
 		$html = $editor->view( $idStack, $this->definedMeaningModel->getRecord() );
 		$wgOut->addHTML( $html );
-		$this->outputViewFooter();
 	}
 
 	public function edit() {
@@ -149,8 +148,6 @@ class DefinedMeaning extends DefaultWikidataApplication {
 				$dmModel->getRecord()
 			)
 		);
-		
-		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
 	}
 
 	protected function save( $referenceQueryTransactionInformation ) {

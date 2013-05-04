@@ -1,8 +1,5 @@
 <?php
 
-require_once( "Wikidata.php" );
-require_once( "PropertyToColumnFilter.php" );
-
 // global variables should be named $wgWldVariable
 // where Wld stands for "WikiLexicalData".
 // TODO: rename the other variables

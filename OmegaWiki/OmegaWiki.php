@@ -35,8 +35,6 @@ class OmegaWiki extends DefaultWikidataApplication {
 				)
 			);
 		}
-
-		$this->outputViewFooter();
 	}
 
 	public function history() {
@@ -52,8 +50,6 @@ class OmegaWiki extends DefaultWikidataApplication {
 				getExpressionsRecordSet( $spelling, $this->viewInformation )
 			)
 		);
-
-		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
 	}
 
 	protected function save( $referenceQueryTransactionInformation ) {

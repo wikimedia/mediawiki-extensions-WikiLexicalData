@@ -1,3 +1,56 @@
+/* default expanded / collapsed editors
+ * .expand... is hidden for a closed editor
+ * .collapse... is hidden for an opened editor
+ */
+.expand-exact-record,
+.expand-approx-record,
+.collapse-exact,
+.collapse-approx,
+.collapse-defined-meaning-id,
+.collapse-def-add,
+.collapse-syntAtt,
+.collapse-def,
+.collapse-syntrans,
+.expand-classMembers,
+.expand-classAtt,
+.expand-colMembers,
+.expand-incomingRel
+{
+	display: none;
+}
+
+/*
+.collapsable-exact .expand-exact,
+.collapsable-approx .expand-approx,
+*/
+
+/* hide syntrans annotations in expression: pages */
+.ns-16 .expand-dmAtt
+{
+	display: none;
+}
+
+/* show syntrans annotations in definedmeaning: pages */
+.ns-24 .collapse-dmAtt
+{
+	display: none;
+}
+
+/* hide annotation subsections */
+.expand-rel,
+.expand-txtAttVal,
+.expand-translated-text-attribute-values,
+.expand-linkAttVal,
+.expand-optnAttVal
+{
+	display: none;
+}
+
+/* edit links for definedmeaning that shows next to a definition */
+div.dm_edit_link {
+	float:right;
+	font-size:60%;
+}
 
 /* Language filtering Icon Styling */
 .wld_lang_filter_on a, .wld_lang_filter_off a {
@@ -190,15 +243,15 @@
 	padding:5px;
 }
 
-li.exp-meanings-exact div.level3 {
+li.exact div.level3 {
 	font-weight: bold;
 }
 
-li.exp-meanings-exact>div>ul {
+li.exact>div>ul {
 	margin: 0px;
 }
 
-li.exp-meanings-approx {
+li.approx {
 	font-weight: normal;
 	font-style: italic;
 }

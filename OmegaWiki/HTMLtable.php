@@ -59,19 +59,16 @@ function addChildNodesToRows( TableHeaderNode $headerNode, &$rows, $currentDepth
 		$type = $attribute->type;
 		
 		if ( !$type instanceof Structure ) {
-			$skipRows = count( $rows );
-			$columnIndex = $childNode->column + $columnOffset;
-			$class = ' class="' . $type . ' ' . $attribute->id . '"';
+			$class = $type . ' ' . $attribute->id;
+		} else {
+			$class = $attribute->id;
 		}
-		else {
-			$class = ' class="' . $attribute->id . '"';
-		}
-
+		$id = $idPath->getId() . '-h';
 		$rowSpan = $height - $childNode->height;
-		$rows[$currentDepth] .= '<th id="' . $idPath->getId() . '-h" ' . $class .
-			' colspan="' . $childNode->width .  '" rowspan="' . $rowSpan .
-			'">' . $attribute->name . '</th>';
-									
+		$colSpan = $childNode->width;
+		$attr = array( 'id' => $id, 'class' => $class, 'rowspan' => $rowSpan, 'colspan' => $colSpan );
+		$rows[$currentDepth] .= Html::element( 'th', $attr, $attribute->name );
+
 		addChildNodesToRows( $childNode, $rows, $currentDepth + $rowSpan, $columnOffset, $idPath, $leftmost );
 		$idPath->popAttribute();
 	}

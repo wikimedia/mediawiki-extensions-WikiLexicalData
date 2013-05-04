@@ -47,13 +47,6 @@ class DefaultWikidataApplication {
 			$wgOut->addHTML( $this->getDataSetPanel() );
 	}
 
-	protected function outputViewFooter() {
-		global
-			$wgOut;
-		
-		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
-	}
-	
 	public function view() {
 		global $wgOut, $wgUser;
 
@@ -270,8 +263,6 @@ $title = $this->getTitle();
 		if ( $wgUser->isAnon() ) {
 			$wgOut->wrapWikiMsg( "<div id=\"mw-anon-edit-warning\">\n$1</div>", 'anoneditwarning' );
 		}
-
-		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
 	}
 }
 

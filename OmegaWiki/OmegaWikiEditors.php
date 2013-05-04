@@ -833,7 +833,8 @@ function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 
 	$headerLevel = 3 ;
 	$expressionMeaningsRecordEditor = new RecordUnorderedListEditor( $o->expressionMeanings, $headerLevel );
-	
+	$expressionMeaningsRecordEditor->setCollapsible( false );
+
 	$allowAdd = true;
 	$exactMeaningsEditor = getExpressionMeaningsEditor( $o->expressionExactMeanings, $allowAdd, $viewInformation );
 	$exactMeaningsEditor->setDisplayHeader(false);
@@ -842,8 +843,6 @@ function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 // add an approximate meaning editor (identicalMeaning = 0):
 	$approximateMeaningsEditor = getExpressionMeaningsEditor( $o->expressionApproximateMeanings, false, $viewInformation ) ;
 	$expressionMeaningsRecordEditor->addEditor( $approximateMeaningsEditor );
-
-	$expressionMeaningsRecordEditor->expandEditor( $exactMeaningsEditor );
 
 	// show all languages
 	$showAttributeNames = false;
@@ -929,13 +928,6 @@ function getDefinedMeaningEditor( ViewInformation $viewInformation, $insideExpre
 		
 		if ( $editor != null )
 			$definedMeaningEditor->addEditor( $editor );
-	}
-
-	$definedMeaningEditor->expandEditor( $definitionEditor );
-	$definedMeaningEditor->expandEditor( $synonymsAndTranslationsEditor );
-
-	if ( $insideExpression ) {
-		$definedMeaningEditor->expandEditor( $syntransAttributesWrappedEditor );
 	}
 
 	return new DefinedMeaningContextEditor( $definedMeaningEditor );

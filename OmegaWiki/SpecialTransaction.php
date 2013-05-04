@@ -81,8 +81,6 @@ class SpecialTransaction extends SpecialPage {
 				'</div>' .
 				'</form>'
 			);
-
-		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
 	}
 }
 
