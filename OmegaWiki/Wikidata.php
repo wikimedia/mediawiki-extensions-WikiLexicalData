@@ -28,11 +28,12 @@ class DefaultWikidataApplication {
 
 		$this->title = $title;
 
-		if ( isset( $wgShowClassicPageTitles ) )
+		if ( isset( $wgShowClassicPageTitles ) ) {
 			$this->showClassicPageTitles = $wgShowClassicPageTitles;
-			
-		if ( isset( $wgPropertyToColumnFilters ) )
+		}
+		if ( isset( $wgPropertyToColumnFilters ) ) {
 			$this->propertyToColumnFilters = $wgPropertyToColumnFilters;
+		}
 	}
 
 	public function getTitle() {
@@ -43,22 +44,23 @@ class DefaultWikidataApplication {
 		global
 			$wgOut;
 		
-		if ( $this->showDataSetPanel )
+		if ( $this->showDataSetPanel ) {
 			$wgOut->addHTML( $this->getDataSetPanel() );
+		}
 	}
 
 	public function view() {
 		global $wgOut, $wgUser;
 
-		$wgOut->enableClientCache( false );
+		$wgOut->enableClientCache( true );
 
-		$title = $this->title->getPrefixedText();
+		$myTitle = $this->title->getPrefixedText();
 
 		if ( !$this->showClassicPageTitles ) {
-			$title = $this->title;
+			$myTitle = $this->title;
 		}
 
-		$wgOut->setPageTitle( $title );
+		$wgOut->setPageTitle( $myTitle );
 
 		$this->queryTransactionInformation = new QueryLatestTransactionInformation();
 		
@@ -69,8 +71,9 @@ class DefaultWikidataApplication {
 		
 		$this->viewInformation = $viewInformation;
 
-		initializeOmegaWikiAttributes( $viewInformation );
-		initializeObjectAttributeEditors( $viewInformation );
+		// Not clear why this is here. Works well without.
+		// initializeOmegaWikiAttributes( $viewInformation );
+		// initializeObjectAttributeEditors( $viewInformation );
 	}
 	
 	protected function getDataSetPanel() {
@@ -122,19 +125,6 @@ class DefaultWikidataApplication {
 		$this->title->invalidateCache();
 
 		// Add change to RC log
-/*
-
-		if ( $wgTitle->getNamespace() == NS_DEFINEDMEANING ) {
-			// for definedmeaning, append a corresponding expression to look nicer in RC
-			$definedMeaningId = (int)$wgTitle->getText();
-
-			$expression = 
-		} else {
-			RecentChange::notifyEdit( $now, $wgTitle, false, $wgUser, $summary, 0, $now, false, '', 0, 0, 0 );
-		}
-
-$title = $this->getTitle();
-*/
 		$now = wfTimestampNow();
 		RecentChange::notifyEdit( $now, $this->title, false, $wgUser, $summary, 0, $now, false );
 	}

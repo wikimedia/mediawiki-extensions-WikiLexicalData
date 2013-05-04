@@ -20,29 +20,28 @@ require_once( 'WikiDataGlobals.php' );
  */
 class OmegaWiki extends DefaultWikidataApplication {
 	public function view() {
-		global $wgOut, $wgTitle;
+		global $wgOut;
 
+		// some initializations, including viewInformation
 		parent::view();
+
+		// adds dataset panel, if activated
 		$this->outputViewHeader();
 
-		$spelling = $wgTitle->getText();
+		$spelling = $this->getTitle()->getText();
 		if ( existSpelling ( $spelling ) ) {
 			$recordset = getExpressionsRecordSet( $spelling, $this->viewInformation );
-			$wgOut->addHTML(
-				getExpressionsEditor( $spelling, $this->viewInformation )->view(
-					$this->getIdStack(),
-					$recordset
-				)
-			);
+			$editor = getExpressionsEditor( $spelling, $this->viewInformation );
+			$wgOut->addHTML( $editor->view( $this->getIdStack(), $recordset ) );
 		}
 	}
 
 	public function history() {
-		global $wgOut, $wgTitle;
+		global $wgOut;
 
 		parent::history();
 
-		$spelling = $wgTitle->getText();
+		$spelling = $this->getTitle()->getText();
 
 		$wgOut->addHTML(
 			getExpressionsEditor( $spelling, $this->viewInformation )->view(
@@ -53,11 +52,10 @@ class OmegaWiki extends DefaultWikidataApplication {
 	}
 
 	protected function save( $referenceQueryTransactionInformation ) {
-		global $wgTitle;
 
 		parent::save( $referenceQueryTransactionInformation );
 
-		$spelling = $wgTitle->getText();
+		$spelling = $this->getTitle()->getText();
 		
 		getExpressionsEditor( $spelling, $this->viewInformation )->save(
 			$this->getIdStack(),
@@ -66,14 +64,14 @@ class OmegaWiki extends DefaultWikidataApplication {
 	}
 
 	public function edit() {
-		global $wgOut, $wgTitle, $wgUser;
+		global $wgOut, $wgUser;
 
 		if ( !parent::edit() ) {
 			return false;
 		}
 		$this->outputEditHeader();
 
-		$spelling = $wgTitle->getText();
+		$spelling = $this->getTitle()->getText();
 
 		$wgOut->addHTML(
 			getExpressionsEditor( $spelling, $this->viewInformation )->edit(
@@ -83,17 +81,6 @@ class OmegaWiki extends DefaultWikidataApplication {
 		);
 
 		$this->outputEditFooter();
-	}
-	
-	public function getTitle() {
-		global $wgTitle, $wgUseExpressionPageTitlePrefix;
-	
-		if ( $wgUseExpressionPageTitlePrefix ) {
-			$title = wfMsg( 'ow_Multiple_meanings', $wgTitle->getText() );
-		} else {
-			$title	= $wgTitle->getText();
-		}
-		return $title;
 	}
 
 	protected function getIdStack() {
