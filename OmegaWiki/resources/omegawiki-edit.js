@@ -21,6 +21,10 @@ jQuery(document).ready(function( $ ) {
 			$(tdurl).next("td").children("input").val(labelurl);
 		}, 100);
 	});
+
+	$("td.addemptyrow").click(function() {
+		addEmptyRow( this.parentNode.id );
+	});
 });
 
 // add a new row for translation or definition
