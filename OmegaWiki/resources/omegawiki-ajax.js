@@ -62,20 +62,12 @@ jQuery(document).ready(function( $ ) {
 			'ä':'ae', 'ö' : 'oe', 'ß': 'ss', 'ü':'ue' // German characters
 		});
 
-		// sort the definitions in the DM namespace
-		$("div.expand-dm-def-transl").children(".wiki-data-table")
+		// sort the definitions
+		$("div.expand-transl").children(".wiki-data-table")
 			.tablesorter().find("th.headerSort.language").click();
 
-		// sort the definitions in the Expression namespace
-		$("div.expand-exp-meanings-exact-dm-def-transl").children(".wiki-data-table")
-			.tablesorter().find("th.headerSort.language").click();
-
-		// sort the translations in the DM namespace
-		$("div.expand-dm-syntrans").children(".wiki-data-table")
-			.tablesorter().find("th.headerSort.exp:first").click();
-
-		// sort the translations in the Expression namespace
-		$("div.expand-exp-meanings-exact-dm-syntrans").children(".wiki-data-table")
+		// sort the translations
+		$("div.expand-syntrans").children(".wiki-data-table")
 			.tablesorter().find("th.headerSort.exp:first").click();
 
 		// now disable sorting for users
