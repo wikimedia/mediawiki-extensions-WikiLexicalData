@@ -109,8 +109,9 @@ function getDMIdForIso639_3( $code ) {
 
 	global $wgIso639_3CollectionId;
 	// should we use the static approach, as for the other functions?
-
+	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
+
 	$langdm = $dbr->selectField(
 		"{$dc}_collection_contents",
 		'member_mid',
