@@ -8737,7 +8737,7 @@ iso는 언어 코드입니다</p>",
 	'ow_meaningsofsubtitle' => '<em>위키 링크:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>권한 없음</h2>',
 	'copy' => '위키데이터: 복제',
-	'ow_copy_no_action_specified' => '행동을 지정하세요',
+	'ow_copy_no_action_specified' => '작업을 지정하세요',
 	'ow_copy_help' => '도움말을 아직 구현하지 않았습니다.',
 	'ow_please_proved_dmid' => '입력한 "?dmid=<ID>" (dmid=의미 정의 ID)가 없는 것 같습니다<br />
 서버 관리자에게 문의하세요.',
