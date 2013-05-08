@@ -2724,6 +2724,7 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'datasearch_search_text' => 'Йоза лахар:',
 	'ow_history' => 'Истори',
+	'ow_uiprefs' => 'Викихаамаш',
 	'ow_ClassAttributeLevel' => 'Локхалла',
 	'ow_User' => 'Декъашхо',
 );
