@@ -2726,7 +2726,9 @@ $messages['ce'] = array(
 	'ow_history' => 'Истори',
 	'ow_uiprefs' => 'Викихаамаш',
 	'ow_transaction_rollback_button' => 'Йухаяккха',
+	'ow_transaction_remove' => 'ДӀаяккхар',
 	'ow_ClassAttributeLevel' => 'Локхалла',
+	'ow_Remove' => 'ДӀаяккха',
 	'ow_User' => 'Декъашхо',
 );
 
