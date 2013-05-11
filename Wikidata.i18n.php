@@ -14,9 +14,9 @@ $messages['en'] = array(
 	'wikidata-desc' => 'Adds wiki-like database for various types of content',
 
 	# Messages related to the handler classes.
-	'wikidata-handler-namespace-move-error' => 'Pages in namespaces handled by the Wikidata extension cannot be moved.',
+	'wikidata-handler-namespace-move-error' => 'Pages in namespaces handled by the WikiLexicalData extension cannot be moved.',
 
-	'languages' => 'Wikidata: Language manager',
+	'languages' => 'Language manager',
 	'langman-desc' => 'Add and change language settings with [[Special:Languages]]',
 	'langman_title' => 'Language manager',
 	'langman_not_allowed' => 'You do not have permission to change language settings.',
@@ -30,13 +30,13 @@ $messages['en'] = array(
 	'langman_field_optional' => '(optional)',
 	'langman_addlang' => 'Add language',
 
-	'importlangnames' => 'Wikidata: Import language names',
+	'importlangnames' => 'Import language names',
 	'importlangnames_title' => 'Import language names',
 	'importlangnames_not_allowed' => 'You do not have permission to import language names.',
 	'importlangnames_added' => 'Language names for "$1" added.',
 	'importlangnames_not_found' => '<strong>No language entry for "$1" found!</strong>',
 
-	'datasearch' => 'Wikidata: Data search',
+	'datasearch' => 'Data search',
 	'datasearch_language' => 'Language:',
 	'datasearch_found_word' => 'Found word',
 	'datasearch_meaning' => 'Meaning',
@@ -49,7 +49,7 @@ $messages['en'] = array(
 	'datasearch_match_words' => 'Words matching <em>$1</em> and associated meanings',
 	'datasearch_match_words_lang' => 'Words in <em>$1</em> matching <em>$2</em> and associated meanings',
 
-	'importtsv' => 'Wikidata: Import TSV',
+	'importtsv' => 'Import TSV',
 	'ow_importtsv_title1' => 'Import TSV',
 	'ow_importtsv_title2' => 'Import definitions and translations',
 	'ow_importtsv_header' => '<p>Import definitions and translations from a tab delimited text file that you may have exported from OpenOffice.org, Excel or other spreadsheet software.</p>
@@ -77,7 +77,7 @@ where iso is the language code.</p>",
 	'ow_impexptsv_unknown_lang' => '<p>Unknown or incorrect language: $1.<br />
 Languages must be ISO 639-3 language codes.</p>',
 
-	'exporttsv' => 'Wikidata: Export TSV',
+	'exporttsv' => 'Export TSV',
 	'ow_exporttsv_title' => 'Export a collection to TSV',
 	'ow_exporttsv_header' => "<p>Export a collection to a tab separated text format that you can import in OpenOffice.org, Excel or other spreadsheet software.<br />
 	Select a collection to export. In the languages text box, enter a comma separated list of ISO 639-3 languages codes. Start with the languages that you will be translating from (pick as many as you like) and finish with the ones you'll be translating to. Then click 'Create' to create the file.</p>",
@@ -85,7 +85,7 @@ Languages must be ISO 639-3 language codes.</p>',
 	'ow_exporttsv_not_allowed' => 'You do not have permission to do a TSV export.',
 	'ow_exporttsv_export_failed' => 'Export failed',
 
-	'addcollection' => 'Wikidata: Add collection',
+	'addcollection' => 'Add collection',
 	'ow_searchnoresult' => "<p>You may:<br />
 * '''Create the expression \"[[Expression:\$1]]\"''' (and add a definition)<br />
 * '''Create the page \"[[:\$1]]\"''' (a standard wiki page)</p>",
@@ -97,10 +97,10 @@ Languages must be ISO 639-3 language codes.</p>',
 Please see [[{{MediaWiki:Ow editing policy url}}|our editing policy]].',
 	'ow_editing_policy_url' => 'Project:Permission policy',
 	'ow_uipref_datasets' => 'Default view:',
-	'ow_uiprefs' => 'Wikidata',
+	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_none_selected' => 'None selected',
 
-	'transaction' => 'Wikidata: Transaction log',
+	'transaction' => 'Transaction log',
 	'ow_transaction_from_transaction' => 'From transaction:',
 	'ow_transaction_count' => 'Count:',
 	'ow_transaction_user' => 'User name:',
@@ -119,7 +119,7 @@ Please see [[{{MediaWiki:Ow editing policy url}}|our editing policy]].',
 	'ow_transaction_second_dm' => 'Second defined meaning',
 	'ow_transaction_summary' => 'Summary',
 
-	'conceptmapping' => 'Wikidata: Concept mapping',
+	'conceptmapping' => 'Concept mapping',
 	'ow_conceptmapping_title' => 'Concept Mapping',
 	'ow_conceptmapping_help' => '<p>possible actions: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&... insert a mapping</li>
@@ -218,7 +218,7 @@ Please check the web address.',
 	'ow_meaningsoftitle' => 'Meanings of "$1"',
 	'ow_meaningsofsubtitle' => '<em>Wiki link:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>Permission denied</h2>',
-	'copy' => 'Wikidata: Copy',
+	'copy' => 'Copy',
 	'ow_copy_no_action_specified' => 'Please specify an action',
 	'ow_copy_help' => 'Help is not implemented yet.',
 	'ow_please_proved_dmid' => 'It seems your input is missing a "?dmid=<ID>" (dmid=Defined Meaning ID)<br />
@@ -235,7 +235,7 @@ No copy operation has taken place.',
 	'ow_no_action_specified' => "<h3>No action was specified</h3>
 Perhaps you came to this page directly? Normally you do not need to be here.",
 	'ow_db_consistency_not_found' => "<h2>Error</h2>
-There is an issue with database consistency, wikidata cannot find valid data connected to this defined meaning ID.
+There is an issue with database consistency, no valid data can be found that is connected to this defined meaning ID.
 It might be lost.
 Please contact the server operator or administrator.",
 	'ow_history_transaction' => 'Transaction:',
@@ -247,13 +247,13 @@ Please contact the server operator or administrator.",
 	'ow_class_attr_type_link' => 'Link',
 	'ow_class_attr_type_option' => 'Option list',
 
-	'needstranslation' => 'Wikidata: Expressions needing translation',
+	'needstranslation' => 'Expressions needing translation',
 	'ow_needs_xlation_title' => 'Expressions needing translation',
 	'ow_needs_xlation_source_lang' => 'Source language:',
 	'ow_needs_xlation_dest_lang' => 'Destination language:',
 	'ow_needs_xlation_no_dest_lang' => 'Please specify a destination language.',
 
-	'ow_statistics' => 'Wikidata: Statistics',
+	'ow_statistics' => 'WikiLexicalData statistics',
 
 	'ow_show' => 'Show',
 	'ow_upload' => 'Upload',
