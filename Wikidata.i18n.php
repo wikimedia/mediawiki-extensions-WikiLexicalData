@@ -10273,6 +10273,15 @@ $messages['nah'] = array(
 	'ow_copy_help' => 'In tēpalēhuiliztli aya chīhualo.',
 );
 
+/** Min Nan Chinese (Bân-lâm-gú)
+ * @author Hiong3-eng5
+ */
+$messages['nan'] = array(
+	'ow_save' => 'Pó-chûn',
+	'ow_history' => 'Le̍k-sú',
+	'ow_User' => 'Iōng-chiá',
+);
+
 /** Norwegian Bokmål (norsk bokmål)
  * @author Harald Khan
  * @author Nghtwlkr
