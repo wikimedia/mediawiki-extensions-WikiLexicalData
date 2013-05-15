@@ -2729,10 +2729,11 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'datasearch' => 'Викихаамаш: Лаха хаамаш',
 	'datasearch_search_text' => 'Йоза лахар:',
 	'ow_history' => 'Истори',
 	'ow_uiprefs' => 'Викихаамаш', # Fuzzy
-	'ow_transaction_rollback_button' => 'Йухаяккха',
+	'ow_transaction_rollback_button' => 'Юхаяккха',
 	'ow_transaction_remove' => 'ДӀаяккхар',
 	'ow_ClassAttributeLevel' => 'Локхалла',
 	'ow_Remove' => 'ДӀаяккха',
@@ -15477,6 +15478,7 @@ $messages['tly'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Emperyan
  * @author Incelemeelemani
  * @author InfoCan
  * @author Joseph
@@ -15487,38 +15489,38 @@ $messages['tly'] = array(
  */
 $messages['tr'] = array(
 	'wikidata-desc' => 'Farklı içerik türleri için viki benzeri bir veritabanı ekler',
-	'wikidata-handler-namespace-move-error' => 'Vikiveri eklentisi tarafından kontrol edilen isim alanındaki sayfalar taşınamıyor.', # Fuzzy
-	'languages' => 'Lisan idarecisi',
+	'wikidata-handler-namespace-move-error' => 'VikiSözcükselVeri (WikiLexicalData) eklentisi tarafından kontrol edilen ad alanındaki sayfalar taşınamıyor.',
+	'languages' => 'Dil yöneticisi',
 	'langman-desc' => '[[Special:Languages]] ile dil ayarlarını ekle ve değiştir',
-	'langman_title' => 'Lisan idarecisi',
+	'langman_title' => 'Dil yöneticisi',
 	'langman_not_allowed' => 'Dil ayarlarını değiştirme izniniz yok.',
 	'langman_header' => 'Dil kodunu ve İngilizce adını aşağıya girin:',
-	'langman_req_fields' => 'Hem dil adı hem ISO 693-3 kodu gerekiyor.',
-	'langman_adding' => '$1 dilini $2 anahtarı ile eklemek.',
-	'langman_langname' => 'Dilin adı:',
+	'langman_req_fields' => 'Hem dil adı hem ISO 693-3 kodu gerekiyor!',
+	'langman_adding' => '$1 dili $2 anahtarı ile ekleniyor.',
+	'langman_langname' => 'Dil adı:',
 	'langman_iso639-3' => 'ISO 639-3 kodu:',
 	'langman_iso639-2' => 'ISO 639-2 kodu:',
 	'langman_wikimedia' => 'Vikimedya kodu:',
-	'langman_field_optional' => '(seçmeli)',
+	'langman_field_optional' => '(isteğe bağlı)',
 	'langman_addlang' => 'Dil ekle',
 	'importlangnames' => 'Dil adlarını içe aktar',
 	'importlangnames_title' => 'Dil adlarını içe aktar',
-	'importlangnames_not_allowed' => 'Dil adlarını içe aktarmaya yetkiniz yok.',
-	'importlangnames_added' => '"$1" dili eklendi.',
+	'importlangnames_not_allowed' => 'Dil adlarını içe aktarmaya izniniz yok.',
+	'importlangnames_added' => '"$1" için dil adları eklendi.',
 	'importlangnames_not_found' => '<strong>"$1" için dil kaydı bulunamadı!</strong>',
 	'datasearch' => 'Veri arama',
 	'datasearch_language' => 'Dil:',
 	'datasearch_found_word' => 'Bulunan sözcük',
 	'datasearch_meaning' => 'Anlamı',
 	'datasearch_ext_identifier' => 'Harici tanımlayıcı',
-	'datasearch_search_text' => 'Metni ara:',
+	'datasearch_search_text' => 'Metin ara:',
 	'datasearch_within_words' => 'Kelimeler içinde:',
 	'datasearch_within_ext_ids' => 'Harici tanımlayıcılar içinde:',
-	'datasearch_showing_only' => '(Toplam $2 sonuçtan) azami $1 {{PLURAL:$1|tanesi|tanesi}} gösteriliyor.',
+	'datasearch_showing_only' => '(Toplam $2 sonuçtan) azami $1 {{PLURAL:$1|eşleşme|eşleşme}} gösteriliyor.',
 	'datasearch_match_ext_ids' => '<em>$1</em> ile eşleşen harici tanımlayıcılar',
 	'datasearch_match_words' => '<em>$1</em> ile eşleşen kelimeler ve ilişkili anlamları',
 	'datasearch_match_words_lang' => '<em>$1</em> dahilindeki <em>$2</em> ile eşleşen kelimeler ve ilişkili anlamları',
-	'importtsv' => 'Vikiveri: TSV’yi içe aktar', # Fuzzy
+	'importtsv' => 'TSV’yi içe aktar',
 	'ow_importtsv_title1' => "TSV'yi içe aktar",
 	'ow_importtsv_title2' => 'Tanım ve çevirileri içe aktar',
 	'ow_importtsv_not_allowed' => 'TSV içe aktarımı için izniniz yok.',
