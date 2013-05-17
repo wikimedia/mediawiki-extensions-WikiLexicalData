@@ -5643,7 +5643,7 @@ $messages['ga'] = array(
  */
 $messages['gl'] = array(
 	'wikidata-desc' => 'Engade un wiki como base de datos para varios tipos de contido',
-	'wikidata-handler-namespace-move-error' => 'Non se poden mover as páxinas que están no espazo de nomes manipulado pola extensión Wikidata.', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Non se poden mover as páxinas que están no espazo de nomes manipulado pola extensión WikiLexicalData.',
 	'languages' => 'Xestor de linguas',
 	'langman-desc' => 'Engadir e modificar a configuración de lingua con [[Special:Languages]]',
 	'langman_title' => 'Xestor de linguas',
@@ -5719,7 +5719,7 @@ Seleccione unha colección a exportar. Na caixa de texto das linguas, insira unh
 	'ow_noedit' => 'Non ten permiso para editar páxinas de datos fixados "$1".
 Por favor, vexa [[{{MediaWiki:Ow editing policy url}}|a nosa política de edición]].',
 	'ow_uipref_datasets' => 'Vista por defecto:',
-	'ow_uiprefs' => 'Wikidatos', # Fuzzy
+	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_none_selected' => 'Ningunha selección',
 	'transaction' => 'Rexistro de transaccións',
 	'ow_transaction_from_transaction' => 'Desde a transacción:',
@@ -5849,11 +5849,12 @@ Por favor, póñase en contacto cun administrador do servidor.',
 Parece que os seus datos foron copiados con éxito.
 Non esqueza volvelos comprobar para asegurarse!',
 	'ow_copy_unsuccessful' => '<h3>Copia sen éxito</h3> Ningunha operación de copiado tivo lugar.',
-	'ow_no_action_specified' => '<h3>Non foi especificada ningunha acción</h3> Quizais veu a esta páxina directamente? Normalmente non precisa estar aquí.',
+	'ow_no_action_specified' => '<h3>Non se especificou ningunha acción</h3>
+Se cadra, chegou ata esta páxina directamente? Normalmente non necesita estar aquí.',
 	'ow_db_consistency_not_found' => '<h2>Erro</h2>
-Hai un erro coa constancia da base de datos e os datos wiki non poden atopar datos válidos conectados con esta definición ID.
-Pode que se perderan.
-Por favor, póñase en contacto cun operador ou administrador do servidor.', # Fuzzy
+Hai un problema coa consistencia da base de datos e non se poden atopar datos válidos conectados con este identificador de significado definido.
+Poida que se perdesen.
+Por favor, póñase en contacto cun operador ou administrador do servidor.',
 	'ow_history_transaction' => 'Transacción:',
 	'ow_history_show_life_span' => 'Mostrar o tempo de vida do rexistro:',
 	'ow_class_attr_type_dm' => 'Significado definido',
@@ -5866,7 +5867,7 @@ Por favor, póñase en contacto cun operador ou administrador do servidor.', # F
 	'ow_needs_xlation_source_lang' => 'Lingua de orixe:',
 	'ow_needs_xlation_dest_lang' => 'Lingua de destino:',
 	'ow_needs_xlation_no_dest_lang' => 'Por favor, especifique unha lingua de destino.',
-	'ow_statistics' => 'Wikidata: Estatísticas', # Fuzzy
+	'ow_statistics' => 'Estatísticas do WikiLexicalData',
 	'ow_show' => 'Mostrar',
 	'ow_upload' => 'Cargar',
 	'ow_create' => 'Crear',
