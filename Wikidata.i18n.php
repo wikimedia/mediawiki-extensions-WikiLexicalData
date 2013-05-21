@@ -2084,6 +2084,7 @@ $messages['bg'] = array(
 );
 
 /** Bengali (বাংলা)
+ * @author Aftab1995
  * @author Bellayet
  */
 $messages['bn'] = array(
@@ -2093,7 +2094,7 @@ $messages['bn'] = array(
 	'langman_wikimedia' => 'উইকিমিডিয়া কোড:',
 	'langman_field_optional' => '(ঐচ্ছিক)',
 	'langman_addlang' => 'ভাষা যোগ',
-	'importlangnames' => 'উইকিডাটা: ভাষার নাম আমদানী করো', # Fuzzy
+	'importlangnames' => 'ভাষার নাম আমদানী করো',
 	'importlangnames_not_allowed' => 'ভাষার নাম আমদানী করতে আপনার অনুমতি নাই।',
 	'importlangnames_added' => '"$1" এর জন্য ভাষার নাম যোগ করা হয়েছে।',
 	'importlangnames_not_found' => '<strong>"$1"  এর জন্য কোনো ভাষার ভুক্তি পাওয়া যায়নি!</strong>',
@@ -5689,12 +5690,12 @@ Vostede é responsable de facer unha proba antes dunha importación.</p>',
 	'ow_importtsv_import_failed' => 'Fallou a importación',
 	'ow_importtsv_file' => 'Ficheiro TSV:',
 	'ow_importtsv_test_run' => 'Probar a escritura:',
-	'ow_importtsv_not_utf8' => '<p>Isto non parece ser un ficheiro con codificado UTF-8. O ficheiro <em>debe</em> ter a codificación UTF-8.
-Asegúrese de que a súa aplicación salvou ou exportou o ficheiro correctamente.</p>',
+	'ow_importtsv_not_utf8' => '<p>Isto non parece ser un ficheiro con codificación UTF-8. O ficheiro <em>debe</em> ter a codificación UTF-8.
+Asegúrese de que a súa aplicación gardou ou exportou o ficheiro correctamente.</p>',
 	'ow_importtsv_not_tsv' => '<p>Isto parece non ser un ficheiro TSV válido.</p>',
 	'ow_importtsv_bad_columns' => '<p>Nome de columna incorrecto "$1".<br />
-As columnas deberían ser nomeadas como "definition_iso" ou "translations_iso",
-onde tamén está o código de lingua ISO.</p>',
+As columnas deberían levar nomes como "definition_iso" ou "translations_iso",
+onde "iso" é o código de lingua.</p>',
 	'ow_importtsv_test_run_title' => 'Escritura de proba para importar datos TSV',
 	'ow_importtsv_nothing_added' => 'Non se engadiu nada.',
 	'ow_importtsv_nothing_added_test' => 'Non se engadiu nada (fixo unha proba).',
@@ -5755,10 +5756,10 @@ Por favor, vexa [[{{MediaWiki:Ow editing policy url}}|a nosa política de edici�
 	'ow_dm_not_found' => 'non atopado na base de datos ou malformado',
 	'ow_mapping_successful' => 'Mapeados todos os campos marcados con [OK]<br />',
 	'ow_mapping_unsuccessful' => 'Precísanse ter, polo menos, dúas definicións antes de poderen ser ligadas.',
-	'ow_will_insert' => 'Insertará o seguinte:',
-	'ow_contents_of_mapping' => 'Contidos do trazado dun mapa',
+	'ow_will_insert' => 'Ha inserir o seguinte:',
+	'ow_contents_of_mapping' => 'Contidos da cartografía',
 	'ow_available_contexts' => 'Contextos dispoñibles',
-	'ow_add_concept_link' => 'Engadir ligazón a outros conceptos',
+	'ow_add_concept_link' => 'Engadir unha ligazón a outros conceptos',
 	'ow_concept_panel' => 'Panel de conceptos',
 	'ow_dm_badtitle' => 'Esta páxina non sinala cara a ningunha definición (concepto).
 Por favor, comprobe o enderezo da páxina web.',
@@ -5787,7 +5788,7 @@ Por favor, comprobe o enderezo da páxina web.',
 	'ow_Expression' => 'Expresión',
 	'ow_ExpressionMeanings' => 'Significados da expresión',
 	'ow_Expressions' => 'Expresións',
-	'ow_IdenticalMeaning' => 'significado idéntico?',
+	'ow_IdenticalMeaning' => 'O significado é idéntico?',
 	'ow_IncomingRelations' => 'Relacións entrantes',
 	'ow_GotoSource' => 'Ir á orixe',
 	'ow_ID' => 'ID',
@@ -5796,7 +5797,7 @@ Por favor, comprobe o enderezo da páxina web.',
 	'ow_LinkAttributeHeader' => 'Atributo da ligazón',
 	'ow_Multiple_meanings' => 'Significados de "$1"',
 	'ow_NewExactMeaning' => 'Novo significado exacto',
-	'ow_OptionAttribute' => 'Característica',
+	'ow_OptionAttribute' => 'Propiedade',
 	'ow_OptionAttributeHeader' => 'Atributo da opción',
 	'ow_OptionAttributeOption' => 'Opción',
 	'ow_OptionAttributeOptions' => 'Opcións',
@@ -5814,13 +5815,13 @@ Por favor, comprobe o enderezo da páxina web.',
 	'ow_Synonyms' => 'Sinónimos',
 	'ow_SynonymsAndTranslations' => 'Sinónimos e traducións',
 	'ow_Source' => 'Orixe',
-	'ow_SourceIdentifier' => 'Identificador da Orixe',
+	'ow_SourceIdentifier' => 'Identificador da orixe',
 	'ow_Text' => 'Texto',
-	'ow_TextAttribute' => 'Característica',
+	'ow_TextAttribute' => 'Propiedade',
 	'ow_TextAttributeHeader' => 'Atributo do texto',
 	'ow_TextAttributeValues' => 'Textos simples',
 	'ow_Time' => 'Tempo',
-	'ow_TranslatedTextAttribute' => 'Característica',
+	'ow_TranslatedTextAttribute' => 'Propiedade',
 	'ow_TranslatedText' => 'Texto traducido',
 	'ow_TranslatedTextAttributeValue' => 'Texto',
 	'ow_TranslatedTextAttributeValues' => 'Textos traducibles',
@@ -5834,10 +5835,10 @@ Por favor, comprobe o enderezo da páxina web.',
 	'ow_added' => 'Engadido',
 	'ow_removed' => 'Eliminado',
 	'ow_meaningsoftitle' => 'Significados de "$1"',
-	'ow_meaningsofsubtitle' => '<em>Ligazón Wiki:</em> [[$1]]',
+	'ow_meaningsofsubtitle' => '<em>Ligazón wiki:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>Permisos rexeitados</h2>',
 	'copy' => 'Copiar',
-	'ow_copy_no_action_specified' => 'Precisar unha acción',
+	'ow_copy_no_action_specified' => 'Especifique unha acción',
 	'ow_copy_help' => 'Os contidos de axuda aínda non foron redactados.',
 	'ow_please_proved_dmid' => 'Parace que na súa contribución falta "?dmid=<ID>" (dmid=Definición ID)<br />
 Por favor, póñase en contacto cun administrador do servidor.',
@@ -5848,7 +5849,8 @@ Por favor, póñase en contacto cun administrador do servidor.',
 	'ow_copy_successful' => '<h2>Copia exitosa</h2>
 Parece que os seus datos foron copiados con éxito.
 Non esqueza volvelos comprobar para asegurarse!',
-	'ow_copy_unsuccessful' => '<h3>Copia sen éxito</h3> Ningunha operación de copiado tivo lugar.',
+	'ow_copy_unsuccessful' => '<h3>Copia sen éxito</h3>
+Non se produciu ningunha operación de copia.',
 	'ow_no_action_specified' => '<h3>Non se especificou ningunha acción</h3>
 Se cadra, chegou ata esta páxina directamente? Normalmente non necesita estar aquí.',
 	'ow_db_consistency_not_found' => '<h2>Erro</h2>
@@ -8845,8 +8847,8 @@ $messages['krl'] = array(
  */
 $messages['ksh'] = array(
 	'wikidata-desc' => 'Brengk en wiki_aadijje Dahtebangk met, för ungerscheidlijje Zoote Enhhalde.',
-	'wikidata-handler-namespace-move-error' => 'Sigge en de Appachtemangs vum Zohsazprojramm „Wikidata“ kam_mer nit ömnänne.', # Fuzzy
-	'languages' => 'Schproche verwallde för {{GRAMMAR:Acc|{{ucfirst:{{SITENAME}}}}}}.', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Sigge en de Appachtemangs vum Zohsazprojramm „<i lang="en">WikiLexicalData </i>“ kam_mer nit ömnänne.',
+	'languages' => 'Schprooche verwallde för {{GRAMMAR:Acc|{{ucfirst:{{SITENAME}}}}}}.',
 	'langman-desc' => 'Donn de Enstellunge för Schprooche dobei, udder ömmoodelle, met [[Special:Languages|{{#special:Languages}}]].',
 	'langman_title' => 'Schproche verwalde',
 	'langman_not_allowed' => 'Do häs kei Rääsch, de Enställonge för de Schprooche ze ändere.',
@@ -8898,7 +8900,7 @@ $messages['ksh'] = array(
 	'exporttsv' => 'En Datei uß Reije met Wääte met Tabulatore dozwesche expoteere',
 	'ow_exporttsv_title' => 'En Sammlong als en Datei uß Reije met Wääte met Tabulatore dozwesche expoteere',
 	'ow_exporttsv_header' => '<p>Donn en Sammlong expoteere als en Tex-Dattei uß Reije met Wääte met Tabulatore dozwesche (em TSV Fommaat). Di Dattei kanns De en OpenOffice.org, Excel, un ander Projramme en dä Aat empotteere.<br />Sök Der en Sammlong för et Expoteere us. En dämm Kaßte för de Shprooche jiß De en Leß met ISO 639-3 Koods för Shprooche en, met Kommas dozwesche. Fang aan met dä Shprooche, woh De fun övversäze wells, esu vill wie de bruche kanns, un am Eng maach die hen, en die De övversäze deijß. Dann dröck dä Knopp „{{int:ow_create}}“ öm de Dattei ußzejävve.</p>',
-	'ow_exporttsv_languages' => 'Shprooche:',
+	'ow_exporttsv_languages' => 'Schprooche:',
 	'ow_exporttsv_not_allowed' => 'Do häs nit dat Rääsch, en en Datei uß Reije met Wääte met Tabulatore dozwesche ze expoteere.',
 	'ow_exporttsv_export_failed' => 'Dä Expoot es donävve jejange',
 	'addcollection' => 'Sammlong dobei donn',
@@ -9057,7 +9059,9 @@ Kein Kopie es jemaat woode.',
 Velleisch bes De tiräk op di Sigg hee jespronge?
 Nomaal sullt me hee nit hen kumme.',
 	'ow_db_consistency_not_found' => '<h2>Fähler</h2>
-Wi et ußsüht, es de Datebangk nit mieh konsistänt. {{GRAMMAR:Nominativ|{{ucfirst:{{SITENAME}}}}}} kunnt kein jöltije Daate fenge, di met dä Nommer för en faßjelaate un explizeete Bedüggdeniß zosamme passe dääte. Se künnt verloore jejange sin. Bes esu joot, un saach dat enem Wiki-Köbes, udder ennem Administrator fun däm ẞööver.', # Fuzzy
+Wi et ußsüht, es de Datebangk nit mieh konsistänt. Mer kunnte kein jöltije Daate fenge, di met dä Nommer för di faßjelaate un explizeete Bedüggdeniß zosamme passe dääte.
+Se künnt verloore jejange sin.
+Bes esu joot, un saach dat enem Wiki-Köbes, udder ennem Administrator fun däm ẞööver.',
 	'ow_history_transaction' => 'Transakßjuhn:',
 	'ow_history_show_life_span' => 'Zeisch däm Datesatz sing Levvensduur:',
 	'ow_class_attr_type_dm' => 'Faßjelaate un explizeete Bedüggdeniß',
@@ -9070,7 +9074,7 @@ Wi et ußsüht, es de Datebangk nit mieh konsistänt. {{GRAMMAR:Nominativ|{{ucfi
 	'ow_needs_xlation_source_lang' => 'De Schprooch, fun woh övversäze:',
 	'ow_needs_xlation_dest_lang' => 'Schprooch woh hen övversäze:',
 	'ow_needs_xlation_no_dest_lang' => 'Bes esu joot, un donn en Schprooch aanjävve, woh hen ze övversäze.',
-	'ow_statistics' => 'Wikidata: Schtatistike', # Fuzzy
+	'ow_statistics' => 'Schtatistike vum WikiLexicalData',
 	'ow_show' => 'Aanzeije!',
 	'ow_upload' => 'Huhlaade',
 	'ow_create' => 'Aanlääje',
@@ -9206,7 +9210,7 @@ $messages['la'] = array(
  */
 $messages['lb'] = array(
 	'wikidata-desc' => 'Setzt Datebase déi de Wikië gläichen, fir verschidden Type vun Inhalt derbäi.',
-	'wikidata-handler-namespace-move-error' => 'Säiten an den Nummraim déi vun der Wikidata Erweiderung geréiert ginn kënnen net geréckelt ginn.', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Säiten an den Nummraim déi vun der WikiLexicalData Erweiderung geréiert ginn kënnen net geréckelt ginn.',
 	'languages' => 'Sproochmanager',
 	'langman-desc' => 'Sproochastellungen mat [[Special:Languages]] derbäisetzen an änneren',
 	'langman_title' => 'Sproochmanager',
@@ -9287,7 +9291,7 @@ Kuckt w.e.g. [[{{MediaWiki:Ow editing policy url}}|eis Ännerungsrichtlinnen]].'
 	'ow_transaction_first_dm' => 'Éischt definéiert Bedeitung',
 	'ow_transaction_second_dm' => 'Zweet definéiert Bedeitung',
 	'ow_transaction_summary' => 'Resumé',
-	'conceptmapping' => 'Wikidata : Korrespondenz vu Konzepter', # Fuzzy
+	'conceptmapping' => 'Korrespondenz vu Konzepter',
 	'ow_conceptmapping_title' => 'Korrespondenz vu Konzepter',
 	'ow_conceptmapping_help' => '<p>Méiglech Aktiounen: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&… Eng Verknëppung derbäisetzen</li>
@@ -9402,7 +9406,7 @@ Vläicht koumt Dir direkt op dës Säit: Normalerweis braucht Dir net hei ze sin
 	'ow_needs_xlation_source_lang' => 'Quellsprooch:',
 	'ow_needs_xlation_dest_lang' => 'Zilsprooch:',
 	'ow_needs_xlation_no_dest_lang' => 'Gitt w.e.g. eng Zilsprooch un.',
-	'ow_statistics' => 'Wikidata: Statistiken', # Fuzzy
+	'ow_statistics' => 'WikiLexicalData-Statistiken',
 	'ow_show' => 'Weisen',
 	'ow_upload' => 'Eroplueden',
 	'ow_create' => 'Uleeën',
