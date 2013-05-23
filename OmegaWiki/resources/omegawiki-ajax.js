@@ -3,13 +3,6 @@ jQuery(document).ready(function( $ ) {
 	 * Some javascript that is run when the page finished loading
 	 */
 
-	// document.OWnosort can be set in the user .js to disable
-	// sorting for faster page loads
-	if ( ! document.OWnosort ) {
-		// sort the tables on language
-		sortTablesOnLanguages();
-	}
-
 	// add and manage arrows to navigate the tabs
 	if ( $(".wd-tablist").length ) {
 		initializeTabs();
@@ -50,31 +43,6 @@ jQuery(document).ready(function( $ ) {
 		$(this).children("span").toggle();
 		$(this).next(".popupToggleable").toggle(100);
 	});
-	
-	/*
-	 * sortTablesOnLanguages sorts the wiki tables according to the language column
-	 * using the jquery tablesorter plugin
-	 */
-	function sortTablesOnLanguages() {
-		// optimally, different tableSorterCollation should be used according to the interface language
-		mw.config.set('tableSorterCollation', {
-			'é':'e', 'è':'e', // French characters
-			'ä':'ae', 'ö' : 'oe', 'ß': 'ss', 'ü':'ue' // German characters
-		});
-
-		// sort the definitions
-		$("div.expand-transl").children(".wiki-data-table")
-			.tablesorter().find("th.headerSort.language").click();
-
-		// sort the translations
-		$("div.expand-syntrans").children(".wiki-data-table")
-			.tablesorter().find("th.headerSort.exp:first").click();
-
-		// now disable sorting for users
-		$(".jquery-tablesorter").find("th").off("click");
-		$(".jquery-tablesorter").removeClass("jquery-tablesorter");
-	}
-
 
 	/*
 	 * initializeTabs adds tabs on the top of a page to navigate between languages

@@ -696,6 +696,19 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 		__METHOD__
 	);
 
+	// putting the sql result first in an array for sorting
+	// at the same time, an array of language names, used for sorting, is created.
+	$queryResultArray = array();
+	$sortOrderArray = array();
+	$languageNames = getOwLanguageNames();
+	foreach ( $queryResult as $row ) {
+		$queryResultArray[] = $row;
+		$sortOrderArray[] = $languageNames[$row->language_id];
+	}
+	// magic sort $queryResultArray on language names
+	array_multisort( $sortOrderArray, $queryResultArray );
+
+
 	$structure = $o->translatedTextStructure ;
 	if ( $viewInformation->showRecordLifeSpan ) {
 		// additional attributes for history view
@@ -705,7 +718,7 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 	$keyAttribute = $o->language ;
 	$recordSet = new ArrayRecordSet( $structure, new Structure( $keyAttribute ) );
 
-	foreach ( $queryResult as $row ) {
+	foreach ( $queryResultArray as $row ) {
 		$record = new ArrayRecord( $structure );
 		$record->language = $row->language_id;
 		$record->text = $row->text_id; // expanded below
@@ -767,6 +780,22 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 		array( 'ORDER BY' => 'identical_meaning DESC' )
 	);
 
+	// putting the sql result first in an array for sorting
+	// at the same time, an array of language names, used for sorting, is created.
+	$queryResultArray = array();
+	$sortOrderArray = array();
+	$languageNames = getOwLanguageNames();
+	foreach ( $queryResult as $row ) {
+		$queryResultArray[] = $row;
+		// since we want the inexact translations below the exact ones
+		// we add a "0" for exact trans, "1" for inexact trans (this is reverse compared to the value of the db)
+		$sortSuffix = ( $row->identical_meaning == 1 ) ? "0" : "1";
+		$sortOrderArray[] = $languageNames[$row->language_id] . $sortSuffix . $row->spelling;
+	}
+	// magic sort $queryResultArray on language names - then inexact flag - then orthography
+	array_multisort( $sortOrderArray, $queryResultArray );
+
+
 	// TODO; try with synTransExpressionStructure instead of synonymsTranslationsStructure
 	// so that expression is not a sublevel of the hierarchy, but on the same level
 	//	$structure = $o->synTransExpressionStructure ;
@@ -781,7 +810,7 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 	$keyAttribute = $o->syntransId ;
 	$recordSet = new ArrayRecordSet( $structure, new Structure( $keyAttribute ) );
 
-	foreach ( $queryResult as $row ) {
+	foreach ( $queryResultArray as $row ) {
 		$syntransId = $row->syntrans_sid;
 		if ( $syntransId == $excludeSyntransId ) {
 			continue;
