@@ -97,6 +97,13 @@ $messages['roa-tara'] = array(
 	'apiow-desc' => "Estenzione WikiLexicalData de OmegaUicchi de l'api.php de MediaUicchi",
 );
 
+/** Ukrainian (українська)
+ * @author Ата
+ */
+$messages['uk'] = array(
+	'apiow-desc' => 'OmegaWiki — розширення WikiLexicalData до MediaWiki api.php',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  */
