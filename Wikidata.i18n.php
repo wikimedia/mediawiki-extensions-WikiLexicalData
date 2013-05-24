@@ -9786,7 +9786,7 @@ $messages['mk'] = array(
 	'ow_conceptmapping_help' => '<p>можни дејства: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&... вметни пресликување</li>
 <li>&action=get&concept=<concept_id> прочитај соодветство</li>
-<li>&action=list_sets наведи список на можни префикси за контекст на податоци и местата кадешто тие упатуваат.</li>
+<li>&action=list_sets наведи список на можни претставки за контекст на податоци и местата кадешто тие упатуваат.</li>
 <li>&action=get_associated&dm=<defined_meaning_id>&dc=<dataset_context_prefix> за едно определено значење во концепт, наведи ги сите останати</li>
 <li>&action=help Прикажи корисни помошни информации.</li>
 </ul></p>',
@@ -10587,7 +10587,7 @@ $messages['niu'] = array(
  */
 $messages['nl'] = array(
 	'wikidata-desc' => 'Voegt een wiki-achtige database toe voor verschillende soorten inhoud',
-	'wikidata-handler-namespace-move-error' => "Pagina's in naamruimten die door de uitbreiding Wikidata beheerd worden kunnen niet verplaatst worden.", # Fuzzy
+	'wikidata-handler-namespace-move-error' => "Pagina's in naamruimten die door de uitbreiding WikiLexicalData worden beheerd, kunnen niet verplaatst worden.",
 	'languages' => 'Talen beheren',
 	'langman-desc' => 'Toevoegen en wijzigen van taalinstellingen via [[Special:Languages]]',
 	'langman_title' => 'Talen beheren',
@@ -10788,7 +10788,7 @@ Controleer het webadres.',
 Vergeet niet om dit te controleren!',
 	'ow_copy_unsuccessful' => '<h3>Kopiëren mislukt</h3> Er is niets gekopieerd.',
 	'ow_no_action_specified' => '<h3>Er is geen handeling opgegeven</h3> Mogelijk bent u direct naar deze pagina gekomen. Normaliter hoort dat niet te gebeuren.',
-	'ow_db_consistency_not_found' => '<h2>Fout</h2>Er is een probleem met de consistentie van de database. Wikidata kan geen valide gegevens vinden die met dit Defined Meaning-ID zijn verbonden. Wellicht zijn die gegevens verloren gegaan. Neem contact op met een systeembeheerder.', # Fuzzy
+	'ow_db_consistency_not_found' => '<h2>Fout</h2>Er is een probleem met de consistentie van de database. Er kunnen geen valide gegevens worden gevonden die zijn verbonden met dit Defined Meaning-ID. Wellicht zijn die gegevens verloren gegaan. Neem contact op met een systeembeheerder.',
 	'ow_history_transaction' => 'Transactie:',
 	'ow_history_show_life_span' => 'Levensduur van record weergeven:',
 	'ow_class_attr_type_dm' => 'Gedefinieerde betekenis',
@@ -10801,7 +10801,7 @@ Vergeet niet om dit te controleren!',
 	'ow_needs_xlation_source_lang' => 'Brontaal:',
 	'ow_needs_xlation_dest_lang' => 'Doeltaal:',
 	'ow_needs_xlation_no_dest_lang' => 'Geef een doeltaal op.',
-	'ow_statistics' => 'Wikidata: Statistieken', # Fuzzy
+	'ow_statistics' => 'Statistieken voor WikiLexicalData',
 	'ow_show' => 'Weergeven',
 	'ow_upload' => 'Uploaden',
 	'ow_create' => 'Aanmaken',
@@ -13823,6 +13823,7 @@ $messages['sq'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Milicevic01
  * @author Millosh
  * @author Rancher
  * @author Sasa Stefanovic
@@ -13830,7 +13831,7 @@ $messages['sq'] = array(
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'languages' => 'Википодаци: Управљање језицима',
+	'languages' => 'Управљање језицима',
 	'langman-desc' => 'Додајте језике и подешавајте их на [[Special:Languages]]',
 	'langman_title' => 'Менаџер за језике',
 	'langman_not_allowed' => 'Немате потребна права приступа, да бисте подешавали језике.',
@@ -13857,6 +13858,7 @@ $messages['sr-ec'] = array(
 	'datasearch_match_ext_ids' => 'Спољашњи идентификатори, који одговарају <em>$1</em>',
 	'datasearch_match_words' => 'Речи које одговарају <em>$1</em> и придруженим значењима',
 	'datasearch_match_words_lang' => 'Речи из <em>$1</em>, које одговарају <em>$2</em> и придруженим значењима',
+	'importtsv' => 'Увези TSV',
 	'ow_importtsv_title1' => 'Увези TSV',
 	'ow_importtsv_importing' => 'Увожење TSV података',
 	'ow_importtsv_import_failed' => 'Увоз није прошао',
@@ -13864,6 +13866,7 @@ $messages['sr-ec'] = array(
 	'ow_importtsv_nothing_added' => 'Ништа није додато.',
 	'ow_importtsv_nothing_added_test' => 'Ништа није додато (урадили сте тест покретање).',
 	'ow_importtsv_results' => '{{PLURAL:$1|Додата једна дефиниција|Додато $1 дефиниција}} и $2 {{PLURAL:$2|превод|превода}}.',
+	'exporttsv' => 'Извези TSV',
 	'ow_exporttsv_languages' => 'Језици:',
 	'ow_exporttsv_export_failed' => 'Извоз неуспешан',
 	'ow_save' => 'Сачувај',
@@ -13872,7 +13875,7 @@ $messages['sr-ec'] = array(
 	'ow_noedit_title' => 'Без дозволе за уређивање',
 	'ow_noedit' => 'Није ти дозвољено да мењаш стране у скупу података "$1". Види [[{{MediaWiki:Ow editing policy url}}|нашу уређивачку политику]].',
 	'ow_uipref_datasets' => 'Подразумевани приказ:',
-	'ow_uiprefs' => 'Викидата',
+	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_none_selected' => 'Ништа није изабрано',
 	'ow_transaction_count' => 'Број:',
 	'ow_transaction_user' => 'Корисничко име:',
@@ -13968,6 +13971,7 @@ $messages['sr-ec'] = array(
 	'ow_meaningsoftitle' => 'Значења "$1"',
 	'ow_meaningsofsubtitle' => '<em>Вики линк:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>ПРИСТУП НИЈЕ ДОЗВОЉЕН</h2>',
+	'copy' => 'Копирај',
 	'ow_copy_no_action_specified' => 'Одреди акцију',
 	'ow_copy_help' => 'Помоћ још увек није имплементирана.',
 	'ow_please_proved_dmid' => 'Ух, изгледа да у твом уносу недостаје ?dmid=<something> (dmid=Defined Meaning ID)<br />Хмм... Контактирај администратора сервера.',
@@ -13983,6 +13987,7 @@ $messages['sr-ec'] = array(
 	'ow_class_attr_type_plain' => 'Чист текст',
 	'ow_class_attr_type_link' => 'Веза',
 	'ow_class_attr_type_option' => 'Списак опција',
+	'needstranslation' => 'Изрази којима треба превод',
 	'ow_needs_xlation_title' => 'Изрази којима треба превод',
 	'ow_needs_xlation_source_lang' => 'Изворни језик:',
 	'ow_needs_xlation_dest_lang' => 'Потребан језик:',
@@ -16283,7 +16288,7 @@ $messages['vo'] = array(
  * @author පසිඳු කාවින්ද
  */
 $messages['yi'] = array(
-	'languages' => 'וויקידאטן:שפראכן־פארוואלטער',
+	'languages' => 'שפראכן־פארוואלטער',
 	'langman-desc' => 'צולייגן און ענדערן שפראכן שטעלונגען מיט [[Special:Languages]]',
 	'langman_title' => 'שפראכן־פארוואלטער',
 	'langman_not_allowed' => 'איר האט נישט קיין רשות צו ענדערן די שפראך שטעלונגען.',
@@ -16296,18 +16301,18 @@ $messages['yi'] = array(
 	'langman_wikimedia' => 'וויקימעדיע קאד',
 	'langman_field_optional' => '(ברירהדיק)',
 	'langman_addlang' => 'צולייגן שפראַך',
-	'importlangnames' => 'וויקידאטן: אימפארטירן שפראך נעמען',
+	'importlangnames' => 'אימפארטירן שפראך נעמען',
 	'importlangnames_title' => 'אימפארטירן שפראך נעמען',
 	'importlangnames_not_allowed' => 'איר האט נישט קיין רשות צו אימפארטירן שפראך נעמען.',
 	'importlangnames_added' => 'שפראך נעמען פאר $1 צוגעלייגט.',
 	'importlangnames_not_found' => '<strong>קיין שפראך ליסטע־איינס פאר "$1" נישט געטראפן!</strong>',
-	'datasearch' => 'וויקידאטן:דאטן זוך',
+	'datasearch' => ':דאטן זוך',
 	'datasearch_language' => 'שפראַך:',
 	'datasearch_found_word' => 'געטראפן ווארט',
 	'datasearch_meaning' => 'באדייט',
 	'datasearch_search_text' => 'זוכטעקסט:',
 	'datasearch_within_words' => 'אין די ווערטער:',
-	'importtsv' => 'וויקידאטן: אימפארטירן TSV',
+	'importtsv' => 'אימפארטירן TSV',
 	'ow_importtsv_title1' => 'אימפארטירן TSV',
 	'ow_importtsv_title2' => 'אימפארטירן דעפיניציעס און איבערזעצונגען',
 	'ow_importtsv_not_allowed' => 'איר האט נישט קיין רשות אדורכצופירן א TSV אימפארט.',
@@ -16317,10 +16322,10 @@ $messages['yi'] = array(
 	'ow_exporttsv_languages' => 'שפּראַכן:',
 	'ow_exporttsv_not_allowed' => 'איר האט נישט קיין רשות אדורכצופירן א TSV עקספארט.',
 	'ow_exporttsv_export_failed' => 'עקספארט אדורכגעפאלן',
-	'addcollection' => 'וויקידאטן: צולייגן זאמלונג',
+	'addcollection' => 'צולייגן זאמלונג',
 	'ow_save' => 'אויפֿהיטן',
 	'ow_history' => 'היסטאריע',
-	'ow_uiprefs' => 'וויקידאטן',
+	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_none_selected' => 'גארנישט געקליבן',
 	'ow_transaction_user' => 'באַניצער נאָמען:',
 	'ow_transaction_rollback_button' => 'צוריקדרייען',
@@ -16376,6 +16381,7 @@ $messages['zh-cn'] = array(
  * @author Liangent
  * @author Linforest
  * @author PhiLiP
+ * @author Stevenliuyi
  * @author Wilsonmess
  * @author Wmr89502270
  * @author Yfdyh000
@@ -16397,7 +16403,7 @@ $messages['zh-hans'] = array(
 	'langman_wikimedia' => '维基媒体代码：',
 	'langman_field_optional' => '（可选）',
 	'langman_addlang' => '增加语言',
-	'importlangnames' => 'Wikidata：导入语言名称', # Fuzzy
+	'importlangnames' => '导入语言名称',
 	'importlangnames_title' => '导入语言名称',
 	'importlangnames_not_allowed' => '你没有权限导入语言名称。',
 	'importlangnames_added' => '“$1”的语言名称已添加。',
@@ -16414,7 +16420,7 @@ $messages['zh-hans'] = array(
 	'datasearch_match_ext_ids' => '外部标识符匹配<em>$1</em>',
 	'datasearch_match_words' => '文字匹配<em>$1</em>和相关的含义',
 	'datasearch_match_words_lang' => '<em>$1</em>中的文字匹配<em>$2</em>和相关的含义',
-	'importtsv' => 'Wikidata：导入TSV（制表符分隔文件）', # Fuzzy
+	'importtsv' => '导入TSV（制表符分隔文件）',
 	'ow_importtsv_title1' => '导入TSV（制表符分隔文件）',
 	'ow_importtsv_title2' => '导入定义和翻译',
 	'ow_importtsv_not_allowed' => '你没有权限导入TSV。',
@@ -16434,7 +16440,7 @@ $messages['zh-hans'] = array(
 	'ow_importtsv_results' => '已添加$1个定义和$2个翻译。',
 	'ow_impexptsv_unknown_lang' => '<p>未知或错误的语言：$1<br />
 语言代码必须属于ISO 639-3。</p>',
-	'exporttsv' => 'Wikidata：导出TSV', # Fuzzy
+	'exporttsv' => '导出TSV',
 	'ow_exporttsv_languages' => '语言：',
 	'ow_exporttsv_not_allowed' => '你没有导出TSV的权限。',
 	'ow_exporttsv_export_failed' => '导出失败',
@@ -16463,7 +16469,7 @@ $messages['zh-hans'] = array(
 	'ow_transaction_first_dm' => '第一个定义的含义',
 	'ow_transaction_second_dm' => '第二个定义的含义',
 	'ow_transaction_summary' => '摘要',
-	'conceptmapping' => 'Wikidata：概念映射', # Fuzzy
+	'conceptmapping' => '概念映射',
 	'ow_conceptmapping_title' => '概念映射',
 	'ow_conceptmapping_help' => '<p>可能的action： <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  插入一个映射</li>
@@ -16540,7 +16546,7 @@ $messages['zh-hans'] = array(
 	'ow_meaningsoftitle' => '“$1”的含义',
 	'ow_meaningsofsubtitle' => '<em>Wiki链接：</em>[[$1]]',
 	'ow_Permission_denied' => '<h2>没有权限</h2>',
-	'copy' => 'Wikidata：复制', # Fuzzy
+	'copy' => '复制',
 	'ow_copy_no_action_specified' => '请指定一个动作',
 	'ow_copy_help' => '帮助还没有实现。',
 	'ow_class_attr_type_xlate' => '可翻译的文本',
