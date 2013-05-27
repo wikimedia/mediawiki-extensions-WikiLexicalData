@@ -270,10 +270,10 @@ class DefinedMeaningModel {
 			$wgUser, $wgOut;
 
 		if ( !$wgUser->isAllowed( 'wikidata-copy' ) ) {
- 			$wgOut->addWikiText( wfMsgSc( "noedit", $dc->fetchName() ) );
-			$wgOut->setPageTitle( wfMsgSc( "noedit_title" ) );
- 			return false;
- 		}
+			$wgOut->addWikiText( wfMessage( "noedit", $dc->fetchName() )->text() );
+			$wgOut->setPageTitle( wfMessage( "noedit_title" )->text() );
+			return false;
+		}
 		# $summary = $wgRequest->getText('summary');
 
 		

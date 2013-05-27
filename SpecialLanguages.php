@@ -28,14 +28,14 @@ class SpecialLanguages extends SpecialPage {
 
 	function execute( $par ) {
 		global $wgOut, $wgRequest, $wgUser;
-		$wgOut->setPageTitle( wfMsg( 'langman_title' ) );
+		$wgOut->setPageTitle( wfMessage( 'langman_title' )->text() );
 		if ( !$wgUser->isAllowed( 'addlanguage' ) ) {
-			$wgOut->addHTML( wfMsg( 'langman_not_allowed' ) );
+			$wgOut->addHTML( wfMessage( 'langman_not_allowed' )->text() );
 			return false;
 		}
 		$action = $wgRequest->getText( 'action' );
 		if ( !$action ) {
-			$wgOut->addWikiText( wfMsg( 'langman_header' ) );
+			$wgOut->addWikiText( wfMessage( 'langman_header' )->text() );
 		} else {
 			$dbr = wfGetDB( DB_MASTER );
 			$langname = $wgRequest->getText( 'langname' );
@@ -43,9 +43,9 @@ class SpecialLanguages extends SpecialPage {
 			$langiso6392 = $wgRequest->getText( 'langiso6392' );
 			$langwmf = $wgRequest->getText( 'langwmf' );
 			if ( !$langname || !$langiso6393 ) {
-				$wgOut->addHTML( "<strong>" . wfMsg( 'langman_req_fields' ) . "</strong>" );
+				$wgOut->addHTML( "<strong>" . wfMessage( 'langman_req_fields' )->text() . "</strong>" );
 			} else {
-				$wgOut->addHTML( "<strong>" . wfMsg( 'langman_adding', $langname, $langiso6393 ) . "</strong>" );
+				$wgOut->addHTML( "<strong>" . wfMessage( 'langman_adding', $langname, $langiso6393 )->text() . "</strong>" );
 				$sql = 'INSERT INTO language(iso639_2,iso639_3,wikimedia_key) values(' . $dbr->addQuotes( $langiso6392 ) . ',' . $dbr->addQuotes( $langiso6393 ) . ',' . $dbr->addQuotes( $langwmf ) . ')';
 
 				$dbr->query( $sql );
@@ -72,7 +72,7 @@ class SpecialLanguages extends SpecialPage {
 <tr>
 <td>
 END
-. wfMsg( 'langman_langname' ) .
+. wfMessage( 'langman_langname' )->text() .
 <<<END
 </td>
 <td>
@@ -82,7 +82,7 @@ END
 <tr>
 <td>
 END
-. wfMsg( 'langman_iso639-3' ) .
+. wfMessage( 'langman_iso639-3' )->text() .
 <<<END
 </td>
 <td>
@@ -92,33 +92,33 @@ END
 <tr>
 <td>
 END
-. wfMsg( 'langman_iso639-2' ) .
+. wfMessage( 'langman_iso639-2' )->text() .
 <<<END
 </td>
 <td>
 <input type="text" size="8" name="langiso6392"> 
 END
-. wfMsg( 'langman_field_optional' ) .
+. wfMessage( 'langman_field_optional' )->text() .
 <<<END
 </td>
 </tr>
 <tr>
 <td>
 END
-. wfMsg( 'langman_wikimedia' ) .
+. wfMessage( 'langman_wikimedia' )->text() .
 <<<END
 </td>
 <td>
 <input type="text" size="4" name="langwmf"> 
 END
-. wfMsg( 'langman_field_optional' ) .
+. wfMessage( 'langman_field_optional' )->text() .
 <<<END
 </td>
 </tr>
 <tr><td>
 <input type="submit" value="
 END
-. wfMsg( 'langman_addlang' ) .
+. wfMessage( 'langman_addlang' )->text() .
 <<<END
 ">
 </td></tr>

@@ -750,7 +750,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 		$result .= Html::openElement( 'thead' );
 
 		if ( $this->allowRemove ) {
-			$thattr = array( 'class' => 'wld-remove-header', 'rowspan' => count( $headerRows ), 'title' => wfMsgSc( "RemoveHint" ));
+			$thattr = array( 'class' => 'wld-remove-header', 'rowspan' => count( $headerRows ), 'title' => wfMessage( "RemoveHint" )->text());
 			$headerRows[0] = Html::element( 'th', $thattr  ).$headerRows[0];
 		}
 
@@ -869,7 +869,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 		# + is add new Fo o(but grep this file for Add.png for more)
 		if ( $allowRemove ) {
 			$imgsrc = $wgScriptPath . '/extensions/WikiLexicalData/Images/Add.png';
-			$imgtitle = wfMsgSc( "AddHint" );
+			$imgtitle = wfMessage( "AddHint" )->text();
 			$imgattr = array( 'src' => $imgsrc, 'title' => $imgtitle, 'alt' => 'Add' );
 
 			$result .= Html::openElement( 'td', array( 'class' => 'add addemptyrow') );
@@ -1156,7 +1156,7 @@ class TabLanguageEditor extends ScalarEditor {
 			asort($languageNameList);
 
 			$output .= Html::openElement('span', array('class' => 'wd-tablist' ));
-			$output .= wfMsg( 'ow_OtherLanguages' );
+			$output .= wfMessage( 'ow_OtherLanguages' )->text();
 
 			// now the <li> definining the menu
 			// display: none is also in the .css, but defined here to prevent the list to show
@@ -1181,7 +1181,7 @@ class TabLanguageEditor extends ScalarEditor {
 
 		// Add the "Language: German" part
 		$output .= Html::openElement('span', array('class' => 'wd-languagecurrent') ) ;
-		$output .= wfMsg( 'ow_Language' ) . ": " . languageIdAsText($value) ;
+		$output .= wfMessage( 'ow_Language' )->text() . ": " . languageIdAsText($value) ;
 		$output .= Html::closeElement('span');
 
 
@@ -1195,7 +1195,7 @@ class TabLanguageEditor extends ScalarEditor {
 	
 	public function add( IdStack $idPath ) {
 		$output = Html::openElement('div', array('class' => 'wd-languageadd') ) ;
-		$output .= wfMsg( 'ow_Language' ) . ": " ;
+		$output .= wfMessage( 'ow_Language' )->text() . ': ' ;
 		$output .= getSuggest( $this->addId( $idPath->getId() ), "language" );
 		$output .= Html::closeElement('div');
 
@@ -1282,7 +1282,7 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 		$definedMeaningAsLink = definedMeaningAsLink( $value );
 		$escapedDefinition = htmlspecialchars( $definition );
 		if ( $this->truncate && strlen( $definition ) > $this->truncateAt ) {
-			$spancontent = htmlspecialchars( mb_substr( $definition, 0, $this->truncateAt ) ) . wfMsg( 'ellipsis' );
+			$spancontent = htmlspecialchars( mb_substr( $definition, 0, $this->truncateAt ) ) . wfMessage( 'ellipsis' )->text();
 			$escapedDefinition = Html::element( 'span', array( 'title' => $escapedDefinition ), $spancontent );
 		}
 
@@ -1295,9 +1295,9 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 		$DMPageName = definingExpression( $value ) . " (" . $value . ")" ;
 		$DMTitle = Title::makeTitle( NS_DEFINEDMEANING , $DMPageName );
 		$editURL = $DMTitle->getLocalURL( 'action=edit' ) ;
-		$editLink = Html::openElement( 'div', array( 'class' => 'dm_edit_link' ) )
-			. Html::rawElement( 'sup', array(), '['. createLink( $editURL , wfMsg( 'edit') ) . ']' )
-			. Html::closeElement( 'div' );
+		$editLink = Html::openElement( 'span', array( 'class' => 'dm_edit_link' ) )
+			. Html::rawElement( 'sup', array(), '['. createLink( $editURL , wfMessage( 'edit')->text() ) . ']' )
+			. Html::closeElement( 'span' );
 
 		$output = $editLink . $definedMeaningAsLink . ": " . $escapedDefinition ;
 		return $output ;
@@ -1346,7 +1346,7 @@ class TextEditor extends ScalarEditor {
 		if ( !$this->truncate || strlen( $value ) <= $this->truncateAt ) {
 			return $escapedValue;// $parserOutput->getText();
 		} else {
-			$spancontent = htmlspecialchars( substr( $value, 0, $this->truncateAt ) ) . wfMsg( 'ellipsis' );
+			$spancontent = htmlspecialchars( substr( $value, 0, $this->truncateAt ) ) . wfMessage( 'ellipsis' )->text();
 			return Html::element( 'span', array( 'title' => $escapedValue ), $spancontent );
 		}
 	}
@@ -1641,12 +1641,12 @@ class ClassAttributesTypeEditor extends SelectEditor {
 	protected function getOptions() {
 /*
 	the translated version
-		'DM' => wfMsg( 'ow_class_attr_type_dm' ),
-		'TRNS' => wfMsg( 'ow_class_attr_type_xlate' ),
+		'DM' => wfMessage( 'ow_class_attr_type_dm' )->text(),
+		'TRNS' => wfMessage( 'ow_class_attr_type_xlate' )->text(),
 		'SYNT' => "SynTrans",
-		'TEXT' => wfMsg( 'ow_class_attr_type_plain' ),
-		'URL' => wfMsg( 'ow_class_attr_type_link' ),
-		'OPTN' => wfMsg( 'ow_class_attr_type_option' )
+		'TEXT' => wfMessage( 'ow_class_attr_type_plain' )->text(),
+		'URL' => wfMessage( 'ow_class_attr_type_link' )->text(),
+		'OPTN' => wfMessage( 'ow_class_attr_type_option' )->text()
 */
 	// more descriptive titles, but without translation for the moment
 	// this is only seen by the users who have access to adding new annotations
@@ -2185,11 +2185,11 @@ class PopUpEditor extends WrappingEditor {
 
 		$popupShow = Html::element('span', array(
 			'class' => "popupshow"
-			) , wfMsg( 'showtoc' ) . " ▿"  ) ;
+			) , wfMessage( 'showtoc' )->text() . " ▿"  ) ;
 		$popupHide = Html::element('span', array(
 			'class' => "popuphide",
 			'style' => "display:none;"
-			) , wfMsg( 'hidetoc' ) . " ▵"  ) ;
+			) , wfMessage( 'hidetoc' )->text() . " ▵"  ) ;
 
 		$result .= $popupShow . $popupHide ;
 		$result .= Html::closeElement('a');
@@ -2588,14 +2588,14 @@ class RollBackEditor extends ScalarEditor {
 		$operation = $value->operation;
 		
 		if ( $isLatest ) {
-			$options = array( 'do-nothing' => wfMsg( 'ow_transaction_no_action' ) );
+			$options = array( 'do-nothing' => wfMessage( 'ow_transaction_no_action' )->text() );
 			
 			if ( $this->hasValueFields ) {
-				$previousVersionLabel = wfMsg( 'ow_transaction_previous_version' );
+				$previousVersionLabel = wfMessage( 'ow_transaction_previous_version' )->text();
 				$rollBackChangeHandler = 'rollBackOptionChanged(this);';
 			}
 			else {
-				$previousVersionLabel = wfMsg( 'ow_transaction_restore' );
+				$previousVersionLabel = wfMessage( 'ow_transaction_restore' )->text();
 				$rollBackChangeHandler = '';
 			}
 				
@@ -2603,7 +2603,7 @@ class RollBackEditor extends ScalarEditor {
 				$options['previous-version'] = $previousVersionLabel;
 			}
 			if ( $operation != 'Removed' ) {
-				$options['remove'] = wfMsg( 'ow_transaction_remove' );
+				$options['remove'] = wfMessage( 'ow_transaction_remove' )->text();
 			}
 			$result = getSelect( $idPath->getId(), $options, 'do-nothing', $rollBackChangeHandler );
 		

@@ -47,7 +47,7 @@
 }
 
 /* edit links for definedmeaning that shows next to a definition */
-div.dm_edit_link {
+.dm_edit_link {
 	float:right;
 	font-size:60%;
 }

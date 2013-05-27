@@ -105,17 +105,18 @@ class PropertyToColumnFilter {
 		$this->attributeIDs = $attributeIDs;
 		$this->attribute = new Attribute( $identifier, $sectionCaption, "will-be-specified-later" );
 		
-		if ( $propertyCaption != "" )
+		if ( $propertyCaption != "" ) {
 			$this->propertyCaption = $propertyCaption;
-		else
-			$this->propertyCaption = "Property"; // wfMsgSc("Property"); does not work
-
-		if ( $valueCaption != "" )
+		} else {
+			$this->propertyCaption = "Property";
+		}
+		if ( $valueCaption != "" ) {
 			$this->valueCaption = $valueCaption;
-		else
-			$this->valueCaption = "Value"; // wfMsgSc("Value"); does not work
+		} else {
+			$this->valueCaption = "Value";
+		}
 	}
-                                                                	
+
 	public function getAttribute() {
 		return $this->attribute;
 	}

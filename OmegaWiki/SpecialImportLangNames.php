@@ -19,10 +19,10 @@ class SpecialImportLangNames extends SpecialPage {
 		$dc = "uw";
 		$output = $this->getOutput();
 
-		$output->setPageTitle( wfMsg( 'importlangnames_title' ) );
+		$output->setPageTitle( wfMessage( 'importlangnames_title' )->text() );
 
 		if ( ! $this->getUser()->isAllowed( 'languagenames' ) ) {
-			$output->addHTML( wfMsg( 'importlangnames_not_allowed' ) );
+			$output->addHTML( wfMessage( 'importlangnames_not_allowed' )->text() );
 			return false;
 		}
 
@@ -52,7 +52,7 @@ class SpecialImportLangNames extends SpecialPage {
 				} else {
 					$first = false;
 				}
-				$output->addHTML( wfMsg( 'importlangnames_added', $iso_code ) );
+				$output->addHTML( wfMessage( 'importlangnames_added', $iso_code )->text() );
 
 				/* Add current language to list of portals/DMs. */
 				// select definingExpression of a DM
@@ -67,7 +67,7 @@ class SpecialImportLangNames extends SpecialPage {
 					__METHOD__
 				);
 
-				/*	Get syntrans expressions for names of language and IDs for the languages the names are in. */
+				/* Get syntrans expressions for names of language and IDs for the languages the names are in. */
 				$syntrans_res = $dbr->select(
 					array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
 					array( 'spelling', 'language_id' ),
@@ -75,7 +75,7 @@ class SpecialImportLangNames extends SpecialPage {
 						'defined_meaning_id' => $dm_id,
 						'exp.remove_transaction_id' => null
 					), __METHOD__,
-					array( 'GROUP BY' => 'language_id', 'ORDER BY' => null ),
+					array( 'GROUP BY' => 'language_id' ),
 					array( 'synt' => array( 'JOIN', array(
 						'synt.expression_id = exp.expression_id',
 						'synt.remove_transaction_id' => null
@@ -100,7 +100,7 @@ class SpecialImportLangNames extends SpecialPage {
 				} else {
 					$first = false;
 				}
-				$output->addHTML( wfMsg( 'importlangnames_not_found', $iso_code ) );
+				$output->addHTML( wfMessage( 'importlangnames_not_found', $iso_code )->text() );
 			}
 		}
 		$this->addDMsListToPage( $editable, 'Editable_languages' );
