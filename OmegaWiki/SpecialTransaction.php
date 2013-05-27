@@ -53,7 +53,7 @@ class SpecialTransaction extends SpecialPage {
 		else
 			$transactionCount = min( $transactionCount, 20 );
 
-		$wgOut->setPageTitle( wfMessage( 'recentchanges' )->text() );
+		$wgOut->setPageTitle( wfMsg( 'recentchanges' ) );
 		$wgOut->addHTML( getFilterOptionsPanel( $fromTransactionId, $transactionCount, $userName, $showRollBackOptions ) );
 
 		if ( $showRollBackOptions )
@@ -73,10 +73,10 @@ class SpecialTransaction extends SpecialPage {
 				'<div class="option-panel">' .
 					'<table cellpadding="0" cellspacing="0">' .
 						'<tr>' .
-							'<th>' . wfMessage( "summary" )->text() . ': </th>' .
+							'<th>' . wfMsg( "summary" ) . ': </th>' .
 							'<td class="option-field">' . getTextBox( "summary" ) . '</td>' .
 						'</tr>' .
-						'<tr><th/><td>' . getSubmitButton( "roll-back", wfMessage( 'ow_transaction_rollback_button' )->text() ) . '</td></tr>' .
+						'<tr><th/><td>' . getSubmitButton( "roll-back", wfMsg( 'ow_transaction_rollback_button' ) ) . '</td></tr>' .
 					'</table>' .
 				'</div>' .
 				'</form>'
@@ -92,7 +92,7 @@ function getFilterOptionsPanel( $fromTransactionId, $transactionCount, $userName
 	
 	return getOptionPanel(
 		array(
-			wfMessage( 'ow_transaction_from_transaction' )->text() =>
+			wfMsg( 'ow_transaction_from_transaction' ) =>
 				getSuggest(
 					'from-transaction',
 					'transaction',
@@ -101,13 +101,13 @@ function getFilterOptionsPanel( $fromTransactionId, $transactionCount, $userName
 					getTransactionLabel( $fromTransactionId ),
 					array( 0, 2, 3 )
 				),
-			wfMessage( 'ow_transaction_count' )->text() =>
+			wfMsg( 'ow_transaction_count' ) =>
 				getSelect( 'transaction-count',
 					$countOptions,
 					$transactionCount
 				),
-			wfMessage( 'ow_transaction_user' )->text() => getTextBox( 'user-name', $userName ),
-			wfMessage( 'ow_transaction_show_rollback' )->text() => getCheckBox( 'show-roll-back-options', $showRollBackOptions )
+			wfMsg( 'ow_transaction_user' ) => getTextBox( 'user-name', $userName ),
+			wfMsg( 'ow_transaction_show_rollback' ) => getCheckBox( 'show-roll-back-options', $showRollBackOptions )
 		)
 	);
 }
@@ -116,11 +116,11 @@ function initializeAttributes() {
 
 	# malafaya: probably all these attributes need localization
 	$o = OmegaWikiAttributes::getInstance();
-	$o->operation = new Attribute( 'operation', wfMessage( 'ow_transaction_operation' )->text(), 'text' );
-	$o->isLatest = new Attribute( 'is-latest', wfMessage( 'ow_transaction_is_latest' )->text(), 'boolean' );
+	$o->operation = new Attribute( 'operation', wfMsg( 'ow_transaction_operation' ), 'text' );
+	$o->isLatest = new Attribute( 'is-latest', wfMsg( 'ow_transaction_is_latest' ), 'boolean' );
 
 	$o->rollBackStructure = new Structure( $o->isLatest, $o->operation );
-	$o->rollBack = new Attribute( 'roll-back', wfMessage( 'ow_transaction_rollback_header' )->text(), $o->rollBackStructure );
+	$o->rollBack = new Attribute( 'roll-back', wfMsg( 'ow_transaction_rollback_header' ), $o->rollBackStructure );
 	
 	$o->addTransactionId = new Attribute( 'add-transaction-id', 'Add transaction ID', 'identifier' );
 		
@@ -130,7 +130,7 @@ function initializeAttributes() {
 	$o->translatedContentId = new Attribute( 'translated-content-id', 'Translated content ID', 'object-id' );
 
 	$o->rollBackTranslatedContentStructure = new Structure( $o->isLatest, $o->operation, $o->translatedContentHistory );
-	$o->rollBackTranslatedContent = new Attribute( 'roll-back', wfMessage( 'ow_transaction_rollback_header' )->text(), $o->rollBackTranslatedContentStructure );
+	$o->rollBackTranslatedContent = new Attribute( 'roll-back', wfMsg( 'ow_transaction_rollback_header' ), $o->rollBackTranslatedContentStructure );
 
 	$o->updatedDefinitionStructure = new Structure(
 		$o->rollBackTranslatedContent,
@@ -143,7 +143,7 @@ function initializeAttributes() {
 		$o->isLatest
 	);
 	
-	$o->updatedDefinition = new Attribute( 'updated-definition', wfMessage( 'ow_Definition' )->text(), $o->updatedDefinitionStructure );
+	$o->updatedDefinition = new Attribute( 'updated-definition', wfMsg( 'ow_Definition' ), $o->updatedDefinitionStructure );
 
 	$o->updatedSyntransesStructure = new Structure(
 		$o->syntransId,
@@ -155,10 +155,10 @@ function initializeAttributes() {
 		$o->operation
 	);
 	
-	$o->updatedSyntranses = new Attribute( 'updated-syntranses', wfMessage( 'ow_SynonymsAndTranslations' )->text(), $o->updatedSyntransesStructure );
+	$o->updatedSyntranses = new Attribute( 'updated-syntranses', wfMsg( 'ow_SynonymsAndTranslations' ), $o->updatedSyntransesStructure );
 	
-	$o->firstMeaning = new Attribute( 'first-meaning', wfMessage( 'ow_transaction_first_dm' )->text(), $o->definedMeaningReferenceStructure );
-	$o->secondMeaning = new Attribute( 'second-meaning', wfMessage( 'ow_transaction_second_dm' )->text(), $o->definedMeaningReferenceStructure );
+	$o->firstMeaning = new Attribute( 'first-meaning', wfMsg( 'ow_transaction_first_dm' ), $o->definedMeaningReferenceStructure );
+	$o->secondMeaning = new Attribute( 'second-meaning', wfMsg( 'ow_transaction_second_dm' ), $o->definedMeaningReferenceStructure );
 
 	$o->updatedRelationsStructure = new Structure(
 		$o->rollBack,
@@ -170,9 +170,9 @@ function initializeAttributes() {
 		$o->isLatest
 	);
 	
-	$o->updatedRelations = new Attribute( 'updated-relations', wfMessage( 'ow_Relations' )->text(), $o->updatedRelationsStructure );
+	$o->updatedRelations = new Attribute( 'updated-relations', wfMsg( 'ow_Relations' ), $o->updatedRelationsStructure );
 	
-	$o->classMember = new Attribute( 'class-member', wfMessage( 'ow_transaction_class_member' )->text(), $o->definedMeaningReferenceStructure );
+	$o->classMember = new Attribute( 'class-member', wfMsg( 'ow_transaction_class_member' ), $o->definedMeaningReferenceStructure );
 	
 	$o->updatedClassMembershipStructure = new Structure(
 		$o->rollBack,
@@ -183,11 +183,11 @@ function initializeAttributes() {
 		$o->isLatest
 	);
 	
-	$o->updatedClassMembership = new Attribute( 'updated-class-membership', wfMessage( 'ow_ClassMembership' )->text(), $o->updatedClassMembershipStructure );
+	$o->updatedClassMembership = new Attribute( 'updated-class-membership', wfMsg( 'ow_ClassMembership' ), $o->updatedClassMembershipStructure );
 	
 
 		
-	$o->collectionMember = new Attribute( 'collection-member', wfMessage( 'ow_CollectionMember' )->text(), $o->definedMeaningReferenceStructure );
+	$o->collectionMember = new Attribute( 'collection-member', wfMsg( 'ow_CollectionMember' ), $o->definedMeaningReferenceStructure );
 	$o->collectionMemberId = new Attribute( 'collection-member-id', 'Collection member identifier', 'defined-meaning-id' );
 	
 	$o->updatedCollectionMembershipStructure = new Structure(
@@ -200,13 +200,13 @@ function initializeAttributes() {
 		$o->operation
 	);
 	
-	$o->updatedCollectionMembership = new Attribute( 'updated-collection-membership', wfMessage( 'ow_CollectionMembership' )->text(), $o->updatedCollectionMembershipStructure );
+	$o->updatedCollectionMembership = new Attribute( 'updated-collection-membership', wfMsg( 'ow_CollectionMembership' ), $o->updatedCollectionMembershipStructure );
 	
 
 		
-	$o->objectId = new Attribute( 'object-id', wfMessage( 'ow_transaction_object' )->text(), 'object-id' );
+	$o->objectId = new Attribute( 'object-id', wfMsg( 'ow_transaction_object' ), 'object-id' );
 	$o->valueId = new Attribute( 'value-id', 'Value identifier', 'object-id' );
-	$o->attribute = new Attribute( 'attribute', wfMessage( 'ow_ClassAttributeAttribute' )->text(), $o->definedMeaningReferenceStructure );
+	$o->attribute = new Attribute( 'attribute', wfMsg( 'ow_ClassAttributeAttribute' ), $o->definedMeaningReferenceStructure );
 		
 
 		
@@ -267,8 +267,8 @@ function initializeAttributes() {
 
 
 	$o->classId = new Attribute( 'class-attribute-id', 'Class attribute id', 'object-id' );
-	$o->level = new Attribute( 'level', wfMessage( 'ow_ClassAttributeLevel' )->text(), $o->definedMeaningReferenceStructure );
-	$o->type = new Attribute( 'type', wfMessage( 'ow_ClassAttributeType' )->text(), 'text' );
+	$o->level = new Attribute( 'level', wfMsg( 'ow_ClassAttributeLevel' ), $o->definedMeaningReferenceStructure );
+	$o->type = new Attribute( 'type', wfMsg( 'ow_ClassAttributeType' ), 'text' );
 
 	$o->updatedClassAttributesStructure = new Structure(
 		$o->rollBack,
@@ -281,10 +281,10 @@ function initializeAttributes() {
 		$o->isLatest
 	);
 	
-	$o->updatedClassAttributes = new Attribute( 'updated-class-attributes', wfMessage( 'ow_ClassAttributes' )->text(), $o->updatedClassAttributesStructure );
+	$o->updatedClassAttributes = new Attribute( 'updated-class-attributes', wfMsg( 'ow_ClassAttributes' ), $o->updatedClassAttributesStructure );
 
-	$o->alternativeDefinitionText = new Attribute( 'alternative-definition-text', wfMessage( 'ow_Definition' )->text(), $o->translatedTextStructure );
-	$o->source = new Attribute( 'source', wfMessage( 'ow_Source' )->text(), $o->definedMeaningReferenceStructure );
+	$o->alternativeDefinitionText = new Attribute( 'alternative-definition-text', wfMsg( 'ow_Definition' ), $o->translatedTextStructure );
+	$o->source = new Attribute( 'source', wfMsg( 'ow_Source' ), $o->definedMeaningReferenceStructure );
 
 	$o->updatedAlternativeDefinitionsStructure = new Structure(
 		$o->rollBack,
@@ -297,7 +297,7 @@ function initializeAttributes() {
 		$o->isLatest
 	);
 
-	$o->updatedAlternativeDefinitions = new Attribute( 'updated-alternative-definitions', wfMessage( 'ow_AlternativeDefinitions' )->text(), $o->updatedAlternativeDefinitionsStructure );
+	$o->updatedAlternativeDefinitions = new Attribute( 'updated-alternative-definitions', wfMsg( 'ow_AlternativeDefinitions' ), $o->updatedAlternativeDefinitionsStructure );
 
 		
 	$o->updatedAlternativeDefinitionTextStructure = new Structure(

@@ -33,7 +33,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 		# $wgOut->setPageTitle("Special:Copy");
 		if ( !$wgUser->isAllowed( 'wikidata-copy' ) ) {
 
-			$wgOut->addHTML( wfMessage( "Permission_denied" )->text() );
+			$wgOut->addHTML( wfMsgSc( "Permission_denied" ) );
 			return false;
 		}
 
@@ -47,8 +47,8 @@ class SpecialCopy extends UnlistedSpecialPage {
 		} elseif ( $action == "help" ) {
 			$this->help();
 		} else {
-			$wgOut->addWikiText( wfMessage( "no_action_specified", $action )->text() );
-			$wgOut->addWikiText( wfMessage( "copy_help" )->text() );
+			$wgOut->addWikiText( wfMsgSc( "no_action_specified", $action ) );
+			$wgOut->addWikiText( wfMsgSc( "copy_help" ) );
 		}
 	}
 
@@ -56,7 +56,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 	protected function ui() {
 
 		global $wgOut ;
-		$wgOut->addWikiText( wfMessage( "no_action_specified" )->text() );
+		$wgOut->addWikiText( wfMsgSc( "no_action_specified" ) );
 
 	}
 
@@ -66,7 +66,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 	protected function help() {
 		global $wgOut;
 		$wgOut->addWikiText( "<h2>Help</h2>" );
-		$wgOut->addWikiText( wfMessage( "copy_help" )->text() );
+		$wgOut->addWikiText( wfMsgSc( "copy_help" ) );
 	}
 	
 	/**read in and partially validate parameters,
@@ -83,15 +83,15 @@ class SpecialCopy extends UnlistedSpecialPage {
 		$abort = false; 	# check all input before aborting
 
 		if ( is_null( $dmid_dirty ) ) {
-			$wgOut->addWikiText( wfMessage( "please_provide_dmid" )->text() );
+			$wgOut->addWikiText( wfMsgSc( "please_provide_dmid" ) );
 			$abort = true;
 		}
 		if ( is_null( $dc1_dirty ) ) {
-			$wgOut->addWikiText( wfMessage( "please_provide_dc1" )->text() );
+			$wgOut->addWikiText( wfMsgSc( "please_provide_dc1" ) );
 			$abort = true;
 		}
 		if ( is_null( $dc2_dirty ) ) {
-			$wgOut->addWikiText( wfMessage( "please_provide_dc2" )->text() );
+			$wgOut->addWikiText( wfMsgSc( "please_provide_dc2" ) );
 			$abort = true;
 		}
 
@@ -103,7 +103,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 		if ( $success )
 			$this->autoredir();
 		else
-			$wgOut->addWikiText( wfMessage( "copy_unsuccessful" )->text() );
+			$wgOut->addWikiText( wfMsgSc( "copy_unsuccessful" ) );
 	}
 
 	/** automatically redirects to another page.
@@ -142,7 +142,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 
 		# check permission
 		if ( !( $wgUser->isAllowed( 'wikidata-copy' ) ) or $dc2 != $wgCommunity_dc ) {
-			$wgOut->addHTML( wfMessage( "Permission_denied" )->text() );
+			$wgOut->addHTML( wfMsgSc( "Permission_denied" ) );
 			return false; # we didn't perform the copy.
 		}
 
@@ -155,7 +155,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 		# having the dm be already_there() is ok.
 		# (hence commented out)
 		# if ($dmc->already_there() ) {
-		#	$wgOut->addHTML(wfMessage("already_there")->text());
+		#	$wgOut->addHTML(wfMsgSc("already_there"));
 		#	return false;
 		# }
 

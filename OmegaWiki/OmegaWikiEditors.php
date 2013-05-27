@@ -290,11 +290,11 @@ function initializeObjectAttributeEditors( ViewInformation $viewInformation ) {
 	
 	$leftOverAttributeIdFilter = $viewInformation->getLeftOverAttributeFilter();
 	
-	$wgWldDMValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMessage( "Property" )->text(), wfMessage( "Value" )->text(), $viewInformation,	WLD_ANNOTATION_MEANING_NAME, $leftOverAttributeIdFilter );
-	$wgWldTextValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMessage( "Property" )->text(), wfMessage( "Value" )->text(), $viewInformation, WLD_ANNOTATION_MEANING_NAME, $leftOverAttributeIdFilter );
-	$wgWldLinkValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMessage( "Property" )->text(), wfMessage( "Value" )->text(), $viewInformation, WLD_ANNOTATION_MEANING_NAME, $leftOverAttributeIdFilter );
-	$wgWldTranslatedTextValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMessage( "Property" )->text(), wfMessage( "Value" )->text(), $viewInformation, WLD_ANNOTATION_MEANING_NAME, $leftOverAttributeIdFilter );
-	$wgWldOptionValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMessage( "Property" )->text(), wfMessage( "Value" )->text(), $viewInformation, WLD_ANNOTATION_MEANING_NAME, $leftOverAttributeIdFilter );
+	$wgWldDMValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $viewInformation,	WLD_ANNOTATION_MEANING_NAME, $leftOverAttributeIdFilter );
+	$wgWldTextValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $viewInformation, WLD_ANNOTATION_MEANING_NAME, $leftOverAttributeIdFilter );
+	$wgWldLinkValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $viewInformation, WLD_ANNOTATION_MEANING_NAME, $leftOverAttributeIdFilter );
+	$wgWldTranslatedTextValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $viewInformation, WLD_ANNOTATION_MEANING_NAME, $leftOverAttributeIdFilter );
+	$wgWldOptionValueObjectAttributesEditors[] = new ObjectAttributeValuesEditor( $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $viewInformation, WLD_ANNOTATION_MEANING_NAME, $leftOverAttributeIdFilter );
 
 	foreach ( $wgWldDMValueObjectAttributesEditors as $editor ) {
 		$attributeIDFilter = $editor->getAttributeIDfilter();
@@ -384,8 +384,8 @@ function getDefinitionEditor( ViewInformation $viewInformation ) {
 	}
 
 	$editor->addEditor( new PopUpEditor(
-		createDefinitionObjectAttributesEditor( $viewInformation, $o->objectAttributes, wfMessage( "Property" )->text(), wfMessage( "Value" )->text(), $o->definedMeaningId, WLD_DEFINITION_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() ),
-		wfMessage( "PopupAnnotation" )->text()
+		createDefinitionObjectAttributesEditor( $viewInformation, $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $o->definedMeaningId, WLD_DEFINITION_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() ),
+		wfMsgSc( "PopupAnnotation" )
 	) );
 
 	return $editor;
@@ -528,7 +528,7 @@ function getClassAttributesEditor( ViewInformation $viewInformation ) {
 	$tableEditor->addEditor( new ClassAttributesLevelDefinedMeaningEditor( $o->classAttributeLevel, new SimplePermissionController( false ), true ) );
 	$tableEditor->addEditor( new DefinedMeaningReferenceEditor( $o->classAttributeAttribute, new SimplePermissionController( false ), true ) );
 	$tableEditor->addEditor( new ClassAttributesTypeEditor( $o->classAttributeType, new SimplePermissionController( false ), true ) );
-	$tableEditor->addEditor( new PopupEditor( getOptionAttributeOptionsEditor(), wfMessage( 'ow_OptionAttributeOptions' )->text() ) );
+	$tableEditor->addEditor( new PopupEditor( getOptionAttributeOptionsEditor(), wfMsg( 'ow_OptionAttributeOptions' ) ) );
 
 	if ( $viewInformation->showRecordLifeSpan ) {
 		$tableEditor->addEditor( createTableLifeSpanEditor( $o->recordLifeSpan ) );
@@ -572,8 +572,8 @@ function getSynonymsAndTranslationsEditor( ViewInformation $viewInformation ) {
 
 	// Add annotation editor on the rightmost column.
 	$tableEditor->addEditor( new PopUpEditor(
-		createObjectAttributesEditor( $viewInformation, $o->objectAttributes, wfMessage( "Property" )->text(), wfMessage( "Value" )->text(), $o->syntransId, WLD_SYNTRANS_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() ),
-		wfMessage( "PopupAnnotation" )->text()
+		createObjectAttributesEditor( $viewInformation, $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $o->syntransId, WLD_SYNTRANS_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() ),
+		wfMsgSc( "PopupAnnotation" )
 	) );
 
 	if ( $viewInformation->showRecordLifeSpan ) {
@@ -690,8 +690,8 @@ function getDefinedMeaningReciprocalRelationsEditor( ViewInformation $viewInform
 	addPropertyToColumnFilterEditors( $editor, $viewInformation, $o->relationId, WLD_RELATION_MEANING_NAME );
 
 	$editor->addEditor( new PopUpEditor(
-		createObjectAttributesEditor( $viewInformation, $o->objectAttributes, wfMessage( "Property" )->text(), wfMessage( "Value" )->text(), $o->relationId, WLD_RELATION_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() ),
-		wfMessage( "PopupAnnotation" )->text()
+		createObjectAttributesEditor( $viewInformation, $o->objectAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $o->relationId, WLD_RELATION_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() ),
+		wfMsgSc( "PopupAnnotation" )
 	) );
 
 	if ( $viewInformation->showRecordLifeSpan ) {
@@ -816,7 +816,7 @@ function getExpressionMeaningsEditor( Attribute $attribute, $allowAdd, ViewInfor
 	$definedMeaningEditor = getDefinedMeaningEditor( $viewInformation, $insideExpression );
 
 	$definedMeaningCaptionEditor = new DefinedMeaningHeaderEditor( $o->definedMeaningId, new SimplePermissionController( false ), false, 75 );
-	$definedMeaningCaptionEditor->setAddText( wfMessage( 'ow_NewExactMeaning' )->text() );
+	$definedMeaningCaptionEditor->setAddText( wfMsg( 'ow_NewExactMeaning' ) );
 
 	$expressionMeaningsEditor = new RecordSetListEditor( $attribute, new SimplePermissionController( true ), new ShowEditFieldChecker( true ), new AllowAddController( $allowAdd ), false, $allowAdd, new ExpressionMeaningController( ), 3, false );
 	$expressionMeaningsEditor->setCaptionEditor( $definedMeaningCaptionEditor );
@@ -900,11 +900,11 @@ function getDefinedMeaningEditor( ViewInformation $viewInformation, $insideExpre
 	foreach ( createPropertyToColumnFilterEditors( $viewInformation, $o->definedMeaningId, WLD_DM_MEANING_NAME ) as $propertyToColumnEditor )
 		$availableEditors->addEditor( $propertyToColumnEditor );
 	
-	$availableEditors->addEditor( createObjectAttributesEditor( $viewInformation, $o->definedMeaningAttributes, wfMessage( "Property" )->text(), wfMessage( "Value" )->text(), $o->definedMeaningId, WLD_DM_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() ) );
+	$availableEditors->addEditor( createObjectAttributesEditor( $viewInformation, $o->definedMeaningAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $o->definedMeaningId, WLD_DM_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() ) );
 
 	// if we come from Expression, or a syntransId is given, also add a syntrans annotations editor
 	if ( $insideExpression ) {
-		$syntransAttributesEditor = new ObjectAttributeValuesEditor( $o->syntransAttributes, wfMessage( "Property" )->text(), wfMessage( "Value" )->text(), $viewInformation, WLD_SYNTRANS_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() );
+		$syntransAttributesEditor = new ObjectAttributeValuesEditor( $o->syntransAttributes, wfMsgSc( "Property" ), wfMsgSc( "Value" ), $viewInformation, WLD_SYNTRANS_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() );
 
 		addObjectAttributesEditors(
 			$syntransAttributesEditor,

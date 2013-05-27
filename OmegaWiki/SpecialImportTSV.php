@@ -18,15 +18,15 @@
 // 
 // 		global $wgOut, $wgUser, $wgRequest;
 // 
-// 		$wgOut->setPageTitle( wfMessage( 'ow_importtsv_title1' )->text() );
+// 		$wgOut->setPageTitle( wfMsg( 'ow_importtsv_title1' ) );
 // 		if ( !$wgUser->isAllowed( 'importtsv' ) ) {
-// 			$wgOut->addHTML( wfMessage( 'ow_importtsv_not_allowed' )->text() );
+// 			$wgOut->addHTML( wfMsg( 'ow_importtsv_not_allowed' ) );
 // 			return false;
 // 		}
 // 		
 // 		$dbr = wfGetDB( DB_MASTER );
 // 		$dc = wdGetDataSetcontext();
-// 		$wgOut->setPageTitle( wfMessage( 'ow_importtsv_importing' )->text() );
+// 		$wgOut->setPageTitle( wfMsg( 'ow_importtsv_importing' ) );
 // 		setlocale( LC_ALL, 'en_US.UTF-8' );
 // 		if ( $wgRequest->getFileName( 'tsvfile' ) ) {
 // 			
@@ -48,8 +48,8 @@
 // 			$maxLineLength = 0;
 // 			while ( $myLine = fgets( $file ) ) {
 // 				if ( !preg_match( '/./u', $myLine ) ) {
-// 					$wgOut->setPageTitle( wfMessage( 'ow_importtsv_import_failed' )->text() );
-// 					$wgOut->addHTML( wfMessage( 'ow_importtsv_not_utf8' )->text() );
+// 					$wgOut->setPageTitle( wfMsg( 'ow_importtsv_import_failed' ) );
+// 					$wgOut->addHTML( wfMsg( 'ow_importtsv_not_utf8' ) );
 // 					return false;
 // 				}
 // 				$maxLineLength = max( $maxLineLength, strlen( $myLine ) + 2 );
@@ -60,8 +60,8 @@
 // 			$columns = fgetcsv( $file, $maxLineLength, "\t" );
 // 			// somehow testing for $columns[0] fails sometimes. Byte Order Mark?
 // 			if ( !$columns || count( $columns ) <= 2 || $columns[1] != "defining expression" ) {
-// 				$wgOut->setPageTitle( wfMessage( 'ow_importtsv_import_failed' )->text() );
-// 				$wgOut->addHTML( wfMessage( 'ow_importtsv_not_tsv' )->text() );
+// 				$wgOut->setPageTitle( wfMsg( 'ow_importtsv_import_failed' ) );
+// 				$wgOut->addHTML( wfMsg( 'ow_importtsv_not_tsv' ) );
 // 				return false;
 // 			}
 // 			for ( $i = 2; $i < count( $columns ); $i++ ) {
@@ -70,14 +70,14 @@
 // 				if ( $baseName == "definition" || $baseName == "translations" ) {
 // 					$langCode = substr( $columnName, strrpos( $columnName, '_' ) + 1 );
 // 					if ( !getLanguageIdForIso639_3( $langCode ) ) {
-// 						$wgOut->setPageTitle( wfMessage( 'ow_importtsv_import_failed' )->text() );
-// 						$wgOut->addHTML( wfMessage( 'ow_impexptsv_unknown_lang', $langCode )->text() );
+// 						$wgOut->setPageTitle( wfMsg( 'ow_importtsv_import_failed' ) );
+// 						$wgOut->addHTML( wfMsg( 'ow_impexptsv_unknown_lang', $langCode ) );
 // 						return false;
 // 					}
 // 				}
 // 				else { // column name does not start with definition or translations. 
-// 						$wgOut->setPageTitle( wfMessage( 'ow_importtsv_import_failed' )->text() );
-// 						$wgOut->addHTML( wfMessage( 'ow_importtsv_bad_columns', $columnName )->text() );
+// 						$wgOut->setPageTitle( wfMsg( 'ow_importtsv_import_failed' ) );
+// 						$wgOut->addHTML( wfMsg( 'ow_importtsv_bad_columns', $columnName ) );
 // 						return false;
 // 				}
 // 				
@@ -89,10 +89,10 @@
 // 			//
 // 
 // 			if ( $testRun ) {
-// 				$wgOut->setPageTitle( wfMessage( 'ow_importtsv_test_run_title' )->text() );
+// 				$wgOut->setPageTitle( wfMsg( 'ow_importtsv_test_run_title' ) );
 // 			}
 // 			else {
-// 				$wgOut->setPageTitle( wfMessage( 'ow_importtsv_importing' )->text() );
+// 				$wgOut->setPageTitle( wfMsg( 'ow_importtsv_importing' ) );
 // 			}
 // 			
 // 			startNewTransaction( $wgUser->getID(), wfGetIP(), "Bulk import via Special:ImportTSV", $dc );	# this string shouldn't be localized because it will be stored in the db
@@ -203,27 +203,27 @@
 // 			if ( $definitions == 0 && $translations == 0 ) {
 // 				$wgOut->addHTML( "<br />" );
 // 				if ( $testRun ) {
-// 					$wgOut->addHTML( wfMessage( 'ow_importtsv_nothing_added_test' )->text() );
+// 					$wgOut->addHTML( wfMsg( 'ow_importtsv_nothing_added_test' ) );
 // 				}
 // 				else {
-// 					$wgOut->addHTML( wfMessage( 'ow_importtsv_nothing_added' )->text() );
+// 					$wgOut->addHTML( wfMsg( 'ow_importtsv_nothing_added' ) );
 // 				}
 // 				$wgOut->addHTML( "<br />" );
 // 			}
 // 			else {
-// 				$wgOut->addHTML( "<br />" . wfMessage( 'ow_importtsv_results', $definitions, $translations )->text() . "<br />" );
+// 				$wgOut->addHTML( "<br />" . wfMsgExt( 'ow_importtsv_results', 'parsemag', $definitions, $translations ) . "<br />" );
 // 			}
 // 				
 // 		}
 // 		else {
 // 			// render the page
-// 			$wgOut->setPageTitle( wfMessage( 'ow_importtsv_title2' )->text() );
-// 			$wgOut->addHTML( wfMessage( 'ow_importtsv_header' )->text() );
+// 			$wgOut->setPageTitle( wfMsg( 'ow_importtsv_title2' ) );
+// 			$wgOut->addHTML( wfMsg( 'ow_importtsv_header' ) );
 // 			
 // 			$wgOut->addHTML( getOptionPanelForFileUpload(
 // 				array(
-// 					wfMessage( 'ow_importtsv_file' )->text() => getFileField( 'tsvfile' ),
-// 					wfMessage( 'ow_importtsv_test_run' )->text() => getCheckBox( 'testrun', true )
+// 					wfMsg( 'ow_importtsv_file' ) => getFileField( 'tsvfile' ),
+// 					wfMsg( 'ow_importtsv_test_run' ) => getCheckBox( 'testrun', true )
 // 				)
 // 			) );
 // 		}

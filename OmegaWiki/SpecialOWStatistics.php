@@ -12,16 +12,16 @@ class SpecialOWStatistics extends SpecialPage {
 	function execute( $par ) {
 		global $wgOut, $wgRequest;
 
-		$wgOut->setPageTitle( wfMessage( 'ow_statistics' )->text() );
+		$wgOut->setPageTitle( wfMsg( 'ow_statistics' ) );
 
 		$showstat = array_key_exists( 'showstat', $_GET ) ? $_GET['showstat']:'';
 
 		$headerText = Html::openElement('div', array( 'class' => 'owstatmainheader' ))
-			. $this->linkHeader ( wfMessage('ow_DefinedMeaning')->text(), "dm", $showstat ) . " — "
-			. $this->linkHeader ( wfMessage('ow_Definition')->text(), "def", $showstat ) . " — "
-			. $this->linkHeader ( wfMessage('ow_Expression')->text(), "exp", $showstat ) . " — "
+			. $this->linkHeader ( wfMsg('ow_DefinedMeaning'), "dm", $showstat ) . " — "
+			. $this->linkHeader ( wfMsg('ow_Definition'), "def", $showstat ) . " — "
+			. $this->linkHeader ( wfMsg('ow_Expression'), "exp", $showstat ) . " — "
 			. $this->linkHeader ( "Syntrans", "syntrans", $showstat ) . " — "
-			. $this->linkHeader ( wfMessage('ow_Annotation')->text(), "annot", $showstat )
+			. $this->linkHeader ( wfMsg('ow_Annotation'), "annot", $showstat )
 			. Html::closeElement('div')
 			. Html::element('br');
 
@@ -92,8 +92,8 @@ class SpecialOWStatistics extends SpecialPage {
 
 		$tableLang = Html::openElement( 'table', array( 'class' => 'sortable owstatmaintable' ));
 		$tableLang .= Html::openElement( 'tr' );
-		$tableLang .= Html::element( 'th', array(), wfMessage('ow_Language')->text() );
-		$tableLang .= Html::element( 'th', array(), wfMessage('ow_DefinedMeaning')->text() );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Language') );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_DefinedMeaning') );
 		$tableLang .= Html::closeElement( 'tr' );
 
 		arsort ( $nbDMArray ) ;
@@ -105,8 +105,8 @@ class SpecialOWStatistics extends SpecialPage {
 		$tableLang .= Html::closeElement( 'table' );
 
 		$output .= Html::openElement( 'table', array('class' => 'owstatbig') );
-		$output .= $this->addTableRow( array( wfMessage('ow_DefinedMeaning')->text(), $nbdm ) );
-		$output .= $this->addTableRow( array( wfMessage('ow_Language')->text(), $nblang ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_DefinedMeaning'), $nbdm ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_Language'), $nblang ) );
 		$output .= Html::closeElement( 'table' );
 
 		$output .= $tableLang;
@@ -147,8 +147,8 @@ class SpecialOWStatistics extends SpecialPage {
 
 		$tableLang = Html::openElement( 'table', array( 'class' => 'sortable owstatmaintable' ));
 		$tableLang .= Html::openElement( 'tr' );
-		$tableLang .= Html::element( 'th', array(), wfMessage('ow_Language')->text() );
-		$tableLang .= Html::element( 'th', array(), wfMessage('ow_Definition')->text() );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Language') );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Definition') );
 		$tableLang .= Html::closeElement( 'tr' );
 
 		arsort ( $nbDefArray ) ;
@@ -160,9 +160,9 @@ class SpecialOWStatistics extends SpecialPage {
 		$tableLang .= Html::closeElement( 'table' );
 
 		$output .= Html::openElement( 'table', array('class' => 'owstatbig') );
-		$output .= $this->addTableRow( array( wfMessage('ow_Definition')->text(), $nbDefTot ) );
-		$output .= $this->addTableRow( array( wfMessage('ow_DefinedMeaning')->text(), $nbdm ) );
-		$output .= $this->addTableRow( array( wfMessage('ow_Language')->text(), $nblang ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_Definition'), $nbDefTot ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_DefinedMeaning'), $nbdm ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_Language'), $nblang ) );
 		$output .= Html::closeElement( 'table' );
 
 		$output .= $tableLang;
@@ -199,8 +199,8 @@ class SpecialOWStatistics extends SpecialPage {
 
 		$tableLang = Html::openElement( 'table', array( 'class' => 'sortable owstatmaintable' ));
 		$tableLang .= Html::openElement( 'tr' );
-		$tableLang .= Html::element( 'th', array(), wfMessage('ow_Language')->text() );
-		$tableLang .= Html::element( 'th', array(), wfMessage('ow_Expression')->text() );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Language') );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Expression') );
 		$tableLang .= Html::closeElement( 'tr' );
 
 		arsort ( $nbexpArray ) ;
@@ -212,9 +212,9 @@ class SpecialOWStatistics extends SpecialPage {
 		$tableLang .= Html::closeElement( 'table' );
 
 		$output .= Html::openElement( 'table', array('class' => 'owstatbig') );
-		$output .= $this->addTableRow( array( wfMessage('ow_Expression')->text(), $nbexptot ) );
-		$output .= $this->addTableRow( array( wfMessage('ow_DefinedMeaning')->text(), $nbdm ) );
-		$output .= $this->addTableRow( array( wfMessage('ow_Language')->text(), $nblang ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_Expression'), $nbexptot ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_DefinedMeaning'), $nbdm ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_Language'), $nblang ) );
 		$output .= Html::closeElement( 'table' );
 
 		$output .= $tableLang ;
@@ -252,7 +252,7 @@ class SpecialOWStatistics extends SpecialPage {
 
 		$tableLang = Html::openElement( 'table', array( 'class' => 'sortable owstatmaintable' ));
 		$tableLang .= Html::openElement( 'tr' );
-		$tableLang .= Html::element( 'th', array(), wfMessage('ow_Language')->text() );
+		$tableLang .= Html::element( 'th', array(), wfMsg('ow_Language') );
 		$tableLang .= Html::element( 'th', array(), 'Syntrans' );
 		$tableLang .= Html::closeElement( 'tr' );
 
@@ -265,8 +265,8 @@ class SpecialOWStatistics extends SpecialPage {
 
 		$output .= Html::openElement( 'table', array('class' => 'owstatbig') );
 		$output .= $this->addTableRow( array( 'Syntrans', $nbSyntransTot ) );
-		$output .= $this->addTableRow( array( wfMessage('ow_DefinedMeaning')->text(), $nbdm ) );
-		$output .= $this->addTableRow( array( wfMessage('ow_Language')->text(), $nblang ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_DefinedMeaning'), $nbdm ) );
+		$output .= $this->addTableRow( array( wfMsg('ow_Language'), $nblang ) );
 		$output .= Html::closeElement( 'table' );
 
 		$output .= $tableLang ;
@@ -328,7 +328,7 @@ class SpecialOWStatistics extends SpecialPage {
 	function createTable( $nbAtt ) {
 		$table = Html::openElement( 'table', array( 'class' => 'sortable owstatmaintable' ) );
 		$table .= Html::openElement( 'tr' );
-		$table .= Html::element( 'th', array(), wfMessage('ow_Annotation')->text() );
+		$table .= Html::element( 'th', array(), wfMsg('ow_Annotation') );
 		$table .= Html::element( 'th', array(), '#' );
 		$table .= Html::closeElement( 'tr' );
 

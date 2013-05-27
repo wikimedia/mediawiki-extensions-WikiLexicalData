@@ -17,7 +17,7 @@ class SpecialNeedsTranslation extends SpecialPage {
 		require_once( "ViewInformation.php" );
 
 		initializeOmegaWikiAttributes( new ViewInformation() );
-		$wgOut->setPageTitle( wfMessage( 'ow_needs_xlation_title' )->text() );
+		$wgOut->setPageTitle( wfMsg( 'ow_needs_xlation_title' ) );
 
 		$destinationLanguageId = array_key_exists( 'to-lang', $_GET ) ? $_GET['to-lang']:'';
 		$collectionId = array_key_exists( 'collection', $_GET ) ? $_GET['collection'] : '';
@@ -25,17 +25,16 @@ class SpecialNeedsTranslation extends SpecialPage {
                                                                 
 		$wgOut->addHTML( getOptionPanel(
 			array(
-				wfMessage( 'ow_needs_xlation_source_lang' )->text() => getSuggest( 'from-lang', 'language', array(), $sourceLanguageId, languageIdAsText( $sourceLanguageId ) ),
-				wfMessage( 'ow_needs_xlation_dest_lang' )->text() => getSuggest( 'to-lang', 'language', array(), $destinationLanguageId, languageIdAsText( $destinationLanguageId ) ),
-				wfMessage( 'ow_Collection_colon' )->text() => getSuggest( 'collection', 'collection', array(), $collectionId, collectionIdAsText( $collectionId ) )
+				wfMsg( 'ow_needs_xlation_source_lang' ) => getSuggest( 'from-lang', 'language', array(), $sourceLanguageId, languageIdAsText( $sourceLanguageId ) ),
+				wfMsg( 'ow_needs_xlation_dest_lang' ) => getSuggest( 'to-lang', 'language', array(), $destinationLanguageId, languageIdAsText( $destinationLanguageId ) ),
+				wfMsg( 'ow_Collection_colon' ) => getSuggest( 'collection', 'collection', array(), $collectionId, collectionIdAsText( $collectionId ) )
 			)
 		) );
 
-		if ( $destinationLanguageId == '' ) {
-			$wgOut->addHTML( '<p>' . wfMessage( 'ow_needs_xlation_no_dest_lang' )->text() . '</p>' );
-		} else {
+		if ( $destinationLanguageId == '' )
+			$wgOut->addHTML( '<p>' . wfMsg( 'ow_needs_xlation_no_dest_lang' ) . '</p>' );
+		else
 			$this->showExpressionsNeedingTranslation( $sourceLanguageId, $destinationLanguageId, $collectionId );
-		}
 	}
 
 	protected function showExpressionsNeedingTranslation( $sourceLanguageId, $destinationLanguageId, $collectionId ) {
@@ -115,7 +114,7 @@ class SpecialNeedsTranslation extends SpecialPage {
 		$queryResult = $dbr->query( $sql );
 
 
-		$definitionAttribute = new Attribute( "definition", wfMessage( "ow_Definition" )->text(), "definition" );
+		$definitionAttribute = new Attribute( "definition", wfMsg( "ow_Definition" ), "definition" );
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->definedMeaningId, $o->expressionId, $o->expression, $definitionAttribute ), new Structure( $o->definedMeaningId, $o->expressionId ) );
 

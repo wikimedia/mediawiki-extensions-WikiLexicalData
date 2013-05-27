@@ -79,7 +79,7 @@ class DefaultWikidataApplication {
 	protected function getDataSetPanel() {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
-		$ow_datasets = wfMessage( "datasets" )->text();
+		$ow_datasets = wfMsgSc( "datasets" );
 		$html = "<div class=\"dataset-panel\">"; ;
 		$html .= "<table border=\"0\"><tr><th class=\"dataset-panel-heading\">$ow_datasets</th></tr>";
 		$dataSets = wdGetDataSets();
@@ -144,8 +144,8 @@ class DefaultWikidataApplication {
 
 		$dc = wdGetDataSetContext();
 		if ( !$wgUser->isAllowed( 'editwikidata-' . $dc ) ) {
-			$wgOut->addWikiText( wfMessage( "noedit", $dc->fetchName() )->text() );
-			$wgOut->setPageTitle( wfMessage( "noedit_title" )->text() );
+			$wgOut->addWikiText( wfMsgSc( "noedit", $dc->fetchName() ) );
+			$wgOut->setPageTitle( wfMsgSc( "noedit_title" ) );
 			return false;
 		}
 
@@ -176,7 +176,7 @@ class DefaultWikidataApplication {
 		if ( !$this->showClassicPageTitles )
 			$title = $this->title;
 
-		$wgOut->setPageTitle( wfMessage( "history", $title )->text() );
+		$wgOut->setPageTitle( wfMsgSc( "history", $title ) );
 
 		# Plain filter for the lifespan info about each record
 		if ( isset( $_GET['show'] ) ) {
@@ -198,8 +198,8 @@ class DefaultWikidataApplication {
 
 		$wgOut->addHTML( getOptionPanel(
 			array(
-				wfMessage( 'ow_history_transaction' )->text() => getSuggest( 'transaction', 'transaction', array(), $transactionId, getTransactionLabel( $transactionId ), array( 0, 2, 3 ) ),
-				wfMessage( 'ow_history_show_life_span' )->text() => getCheckBox( 'show-record-life-span', $this->showRecordLifeSpan )
+				wfMsg( 'ow_history_transaction' ) => getSuggest( 'transaction', 'transaction', array(), $transactionId, getTransactionLabel( $transactionId ), array( 0, 2, 3 ) ),
+				wfMsg( 'ow_history_show_life_span' ) => getCheckBox( 'show-record-life-span', $this->showRecordLifeSpan )
 			),
 			'history'
 		) );
@@ -224,7 +224,7 @@ class DefaultWikidataApplication {
 			$title = $this->title;
 
 		$wgOut->setPageTitle( $title );
-		$wgOut->setPageTitle( wfMessage( "editing", $title )->text() );
+		$wgOut->setPageTitle( wfMsg( "editing", $title ) );
 		if ( $wgUser->isAnon() ) {
 			$wgOut->wrapWikiMsg( "<div id=\"mw-anon-edit-warning\">\n$1</div>", 'anoneditwarning' );
 		}
@@ -241,10 +241,10 @@ class DefaultWikidataApplication {
 		$wgOut->addHTML(
 			'<div class="option-panel">' .
 				'<table cellpadding="0" cellspacing="0"><tr>' .
-					'<th>' . wfMessage( "summary" )->text() . '</th>' .
+					'<th>' . wfMsg( "summary" ) . '</th>' .
 					'<td class="option-field">' . getTextBox( "summary" ) . '</td>' .
 				'</tr></table>' .
-				getSubmitButton( "save", wfMessage( "save" )->text() ) .
+				getSubmitButton( "save", wfMsgSc( "save" ) ) .
 			'</div>'
 		);
 		

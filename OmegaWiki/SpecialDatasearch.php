@@ -55,23 +55,23 @@ class SpecialDatasearch extends SpecialPage {
 		global $definedMeaningReferenceType ;
 
 		$output = $this->getOutput();
-		$output->setPageTitle( wfMessage( 'search' )->text() );
+		$output->setPageTitle( wfMsg( 'search' ) );
 
-		$this->spellingAttribute = new Attribute( "found-word", wfMessage( 'datasearch_found_word' )->text(), "short-text" );
-		$this->languageAttribute = new Attribute( "language", wfMessage( 'ow_Language' )->text(), "language" );
+		$this->spellingAttribute = new Attribute( "found-word", wfMsg( 'datasearch_found_word' ), "short-text" );
+		$this->languageAttribute = new Attribute( "language", wfMsg( 'ow_Language' ), "language" );
 
 		$this->expressionStructure = new Structure( $this->spellingAttribute, $this->languageAttribute );
-		$this->expressionAttribute = new Attribute( "expression", wfMessage( 'ow_Expression' )->text(), $this->expressionStructure );
+		$this->expressionAttribute = new Attribute( "expression", wfMsg( 'ow_Expression' ), $this->expressionStructure );
 
-		$this->definedMeaningAttribute = new Attribute( WLD_DEFINED_MEANING, wfMessage( 'ow_DefinedMeaning' )->text(), $definedMeaningReferenceType );
-		$this->definitionAttribute = new Attribute( "definition", wfMessage( 'ow_Definition' )->text(), "definition" );
+		$this->definedMeaningAttribute = new Attribute( WLD_DEFINED_MEANING, wfMsg( 'ow_DefinedMeaning' ), $definedMeaningReferenceType );
+		$this->definitionAttribute = new Attribute( "definition", wfMsg( 'ow_Definition' ), "definition" );
 
 		$this->meaningStructure = new Structure( $this->definedMeaningAttribute, $this->definitionAttribute );
-		$this->meaningAttribute = new Attribute( "meaning", wfMessage( 'datasearch_meaning' )->text(), $this->meaningStructure );
+		$this->meaningAttribute = new Attribute( "meaning", wfMsg( 'datasearch_meaning' ), $this->meaningStructure );
 
-		$this->externalIdentifierAttribute = new Attribute( "external-identifier", wfMessage( 'datasearch_ext_identifier' )->text(), "short-text" );
-		$this->collectionAttribute = new Attribute( "collection", wfMessage( 'ow_Collection' )->text(), $definedMeaningReferenceType );
-		$this->collectionMemberAttribute = new Attribute( "collection-member", wfMessage( 'ow_CollectionMember' )->text(), $definedMeaningReferenceType );
+		$this->externalIdentifierAttribute = new Attribute( "external-identifier", wfMsg( 'datasearch_ext_identifier' ), "short-text" );
+		$this->collectionAttribute = new Attribute( "collection", wfMsg( 'ow_Collection' ), $definedMeaningReferenceType );
+		$this->collectionMemberAttribute = new Attribute( "collection-member", wfMsg( 'ow_CollectionMember' ), $definedMeaningReferenceType );
 
 		$this->externalIdentifierMatchStructure = new Structure(
 			$this->externalIdentifierAttribute,
@@ -99,22 +99,22 @@ class SpecialDatasearch extends SpecialPage {
 		}
 
 		$options = array();
-		$options[wfMessage( 'datasearch_search_text' )->text()] = getTextBox( 'search-text', $this->searchText );
+		$options[wfMsg( 'datasearch_search_text' )] = getTextBox( 'search-text', $this->searchText );
 
-		$options[wfMessage( 'datasearch_language' )->text()]
+		$options[wfMsg( 'datasearch_language' )]
 			= getSuggest( 'language', "language", array(), $this->languageId, $this->languageName );
 
-		$options[wfMessage( 'ow_Collection_colon' )->text()]
+		$options[wfMsg( 'ow_Collection_colon' )]
 			= getSuggest( 'collection', 'collection', array(), $this->collectionId, collectionIdAsText( $this->collectionId ) );
 
 		if ( $wgShowSearchWithinWordsOption ) {
-			$options[wfMessage( 'datasearch_within_words' )->text()] = getCheckBox( 'within-words', $this->withinWords );
+			$options[wfMsg( 'datasearch_within_words' )] = getCheckBox( 'within-words', $this->withinWords );
 		} else {
 			$this->withinWords = $wgSearchWithinWordsDefaultValue;
 		}
 
 		if ( $wgShowSearchWithinExternalIdentifiersOption ) {
-			$options[wfMessage( 'datasearch_within_ext_ids' )->text()]
+			$options[wfMsg( 'datasearch_within_ext_ids' )]
 				= getCheckBox( 'within-external-identifiers', $this->withinExternalIdentifiers );
 		} else {
 			$this->withinExternalIdentifiers = $wgSearchWithinExternalIdentifiersDefaultValue;
@@ -126,21 +126,21 @@ class SpecialDatasearch extends SpecialPage {
 		$output = $this->getOutput();
 		if ( $this->withinWords ) {
 			if ( $this->languageId != 0 && $this->languageName != "" ) {
-				$output->addHTML( '<h1>' . wfMessage( 'datasearch_match_words_lang', $this->languageName, $this->searchText )->text() . '</h1>' );
+				$output->addHTML( '<h1>' . wfMsg( 'datasearch_match_words_lang', $this->languageName, $this->searchText ) . '</h1>' );
 			} else {
-				$output->addHTML( '<h1>' . wfMessage( 'datasearch_match_words', $this->searchText )->text() . '</h1>' );
+				$output->addHTML( '<h1>' . wfMsg( 'datasearch_match_words', $this->searchText ) . '</h1>' );
 			}
 			$resultCount = $this->searchWordsCount() ;
-			$output->addHTML( '<p>' . wfMessage( 'datasearch_showing_only', 100 , $resultCount )->text() . '</p>' );
+			$output->addHTML( '<p>' . wfMsgExt( 'datasearch_showing_only', 'parsemag', 100 , $resultCount ) . '</p>' );
 
 			$output->addHTML( $this->searchWords() );
 		}
 
 		if ( $this->withinExternalIdentifiers ) {
-			$output->addHTML( '<h1>' . wfMessage( 'datasearch_match_ext_ids', $this->searchText )->text() . '</i></h1>' );
+			$output->addHTML( '<h1>' . wfMsg( 'datasearch_match_ext_ids', $this->searchText ) . '</i></h1>' );
 
 			$resultCount = $this->searchExternalIdentifiersCount();
-			$output->addHTML( '<p>' . wfMessage( 'datasearch_showing_only', 100, $resultCount)->text() . '</p>' );
+			$output->addHTML( '<p>' . wfMsgExt( 'datasearch_showing_only', 'parsemag', 100, $resultCount) . '</p>' );
 
 			$output->addHTML( $this->searchExternalIdentifiers() );
 		}

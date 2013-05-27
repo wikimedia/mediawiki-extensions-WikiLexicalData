@@ -24,10 +24,10 @@ class SpecialConceptMapping extends SpecialPage {
 
 	function execute( $par ) {
 		global $wgOut, $wgRequest, $wgUser, $wdTermDBDataSet;
-		$wgOut->setPageTitle( wfMessage( 'ow_conceptmapping_title' )->text() );
+		$wgOut->setPageTitle( wfMsg( 'ow_conceptmapping_title' ) );
 
 		if ( !$wgUser->isAllowed( 'editwikidata-' . $wdTermDBDataSet ) ) {
-			$wgOut->addHTML( wfMessage( "Permission_denied" )->text() );
+			$wgOut->addHTML( wfMsgSc( "Permission_denied" ) );
 			return false;
 		}
 		$action = $wgRequest->getText( 'action' );
@@ -44,8 +44,8 @@ class SpecialConceptMapping extends SpecialPage {
 		} elseif ( $action == "get_associated" ) {
 			$this->get_associated();
 		} else {
-			$wgOut->addWikiText( wfMessage( "conceptmapping_no_action_specified", $action )->text() );
-			$wgOut->addWikiText( wfMessage( "conceptmapping_help" )->text() );
+			$wgOut->addWikiText( wfMsgSc( "conceptmapping_no_action_specified", $action ) );
+			$wgOut->addWikiText( wfMsgSc( "conceptmapping_help" ) );
 		}
 	}
 
@@ -54,7 +54,7 @@ class SpecialConceptMapping extends SpecialPage {
 		global $wgOut, $wgRequest, $wgLang;
 		$lang = $wgLang->getCode();
 		require_once( "forms.php" );
-		$wgOut->addHTML( wfMessage( "conceptmapping_uitext" )->text() );
+		$wgOut->addHTML( wfMsgSc( "conceptmapping_uitext" ) );
 		$sets = wdGetDataSets();
 		$options = array();
 		$html = "";
@@ -81,7 +81,7 @@ class SpecialConceptMapping extends SpecialPage {
 		foreach ( $sets as $key => $setObject ) {
 			$set = $setObject->getPrefix();
 			if ( !$rq[$set] ) {
-				$wgOut->addHTML( ' <span style="color:yellow">[' . wfMessage( "dm_not_present" )->text() . ']</span>' );
+				$wgOut->addHTML( ' <span style="color:yellow">[' . wfMsgSc( "dm_not_present" ) . ']</span>' );
 			} else  {
 				$dmModel = new DefinedMeaningModel( $rq[$set], array( "dataset" => $setObject ) );
 				$dmModel->checkExistence();
@@ -98,11 +98,11 @@ class SpecialConceptMapping extends SpecialPage {
 				if ( $id != null ) {
 					$mappings[$key] = $id;
 					if ( !$noerror ) {
-						$wgOut->addHTML( ' <span style="color:green">[' . wfMessage( "dm_OK" )->text() . ']</span>' );
+						$wgOut->addHTML( ' <span style="color:green">[' . wfMsgSc( "dm_OK" ) . ']</span>' );
 					}
 				} else {
 					if ( !$noerror ) {
-						$wgOut->addHTML( ' <span style="color:red">[' . wfMessage( "dm_not_found" )->text() . ']</span>' );
+						$wgOut->addHTML( ' <span style="color:red">[' . wfMsgSc( "dm_not_found" ) . ']</span>' );
 					}
 				}
 			}
@@ -110,9 +110,9 @@ class SpecialConceptMapping extends SpecialPage {
 		}
 		if ( sizeOf( $mappings ) > 1 ) {
 			createConceptMapping( $mappings );
-			$wgOut->addHTML( wfMessage( "mapping_successful" )->text() );
+			$wgOut->addHTML( wfMsgSc( "mapping_successful" ) );
 		} else {
-			$wgOut->addHTML( wfMessage( "mapping_unsuccessful" )->text() );
+			$wgOut->addHTML( wfMsgSc( "mapping_unsuccessful" ) );
 		}
 
 	}
@@ -129,7 +129,7 @@ class SpecialConceptMapping extends SpecialPage {
 	protected function help() {
 		global $wgOut;
 		$wgOut->addWikiText( "<h2>Help</h2>" );
-		$wgOut->addWikiText( wfMessage( "conceptmapping_help" )->text() );
+		$wgOut->addWikiText( wfMsgSc( "conceptmapping_help" ) );
 	}
 	
 	protected function insert() {
@@ -139,7 +139,7 @@ class SpecialConceptMapping extends SpecialPage {
 		# $wgRequest->getText( 'page' );
 		$sets = wdGetDataSets();
 		# $requests=$wgRequest->getValues();
-		$wgOut->addWikiText( "<h2>" . wfMessage( "will_insert" )->text() . "</h2>" );
+		$wgOut->addWikiText( "<h2>" . wfMsgSc( "will_insert" ) . "</h2>" );
 		$map = array();
 		foreach ( $sets as $key => $set ) {
 			$dc = $set->getPrefix();
@@ -160,7 +160,7 @@ class SpecialConceptMapping extends SpecialPage {
 		global
 			$wgOut, $wgRequest;
 		$concept_id = $wgRequest->getText( "concept" );
-		$wgOut->addWikiText( "<h2>" . wfMessage( "contents_of_mapping" )->text() . "</h2>" );
+		$wgOut->addWikiText( "<h2>" . wfMsgSc( "contents_of_mapping" ) . "</h2>" );
 		$map = readConceptMapping( $concept_id );
 		# $sets=wdGetDataSets();
 
@@ -171,7 +171,7 @@ class SpecialConceptMapping extends SpecialPage {
 
 	protected function list_sets() {
 		global $wgOut;
-		$wgOut->addWikiText( "<h2>" . wfMessage( "available contexts" )->text() . "</h2>" );
+		$wgOut->addWikiText( "<h2>" . wfMsgSc( "available contexts" ) . "</h2>" );
 		$sets = wdGetDataSets();
 		foreach ( $sets as $key => $set ) {
 			$name = $set->fetchName();
