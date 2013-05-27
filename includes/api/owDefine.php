@@ -1,27 +1,17 @@
 <?php
 
-/*
+/** O m e g a W i k i   A P I ' s   D e f i n e   c l a s s
+ *
  * Created on March 14, 2013
  *
- * API for WikiData
- *
- * Copyright (C) 2013
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- * http://www.gnu.org/copyleft/gpl.html
  */
+
+/** HISTORY
+ * - 2013-05-23: Created separate defining and definingByAnyLanguage functions.
+ *		Can be useful for E x p r e s s   c l a s s  ~he
+ * - 2013-03-14: Creation date ~he
+ */
+
 require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
 
 class Define extends ApiBase {
@@ -38,34 +28,16 @@ class Define extends ApiBase {
 		// Get the parameters
 		$params = $this->extractRequestParams();
 
-		if ($params['lang']) {
-			$languageId = $params['lang'];
-			$text = getDefinedMeaningDefinitionForLanguage( $params['dm'], $languageId );
-			$spelling = getDefinedMeaningSpellingForLanguage( $params['dm'], $languageId );
-			$spellingLanguageId = $languageId ;
-			if (!$text) {
-				$languageId = 85;
-				$text = getDefinedMeaningDefinitionForLanguage( $params['dm'], $languageId );
-			}
+		// Optional parameter
+		if ( $params['lang'] ) {
+			$this->languageId = $params['lang'];
+			$defined = defining( $params['dm'], $params['lang'], $this->getModuleName() );
 		} else {
-			$languageId = getDefinedMeaningDefinitionLanguageForAnyLanguage( $params['dm'] );
-			$text = getDefinedMeaningDefinitionForAnyLanguage( $params['dm'] );
-			$spelling = getDefinedMeaningSpellingForAnyLanguage( $params['dm'] );
-			// spellingLanguageId is wrong
-			$spellingLanguageId = getDefinedMeaningSpellingLanguageId( $params['dm'] );
+			$defined = definingForAnyLanguage( $params['dm'], $this->getModuleName() );
 		}
 
-		// Top level
-		$this->getResult()->addValue( null, $this->getModuleName(), array ( 'dmid' => $params['dm'] ) );
-		$this->getResult()->addValue( null, $this->getModuleName(), array ( 'spelling' => $spelling ) );
-		$this->getResult()->addValue( null, $this->getModuleName(), array ( 'spelllang' => $spellingLanguageId ) );
-
-		// definition
-		$this->getResult()->addValue( null, $this->getModuleName()
-			, array ( 'definition' => array (
-				'lang' => $languageId ,
-				'text' => $text
-			) ) );
+		$defined = $defined[ $this->getModuleName() ];
+		$this->getResult()->addValue( null, $this->getModuleName(), $defined );
 		return true;
 	}
 
@@ -112,4 +84,68 @@ class Define extends ApiBase {
 			'api.php?action=ow_define&dm=8218&lang=107&format=xml'
 		);
 	}
+
+}
+
+function defining( $definedMeaningId, $languageId, $moduleName = null ) {
+
+	if ( !$moduleName ) {
+		$moduleName = 'ow_define';
+	}
+
+	$text = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId );
+	$spelling = getDefinedMeaningSpellingForLanguage( $definedMeaningId, $languageId );
+	$spellingLanguageId = $languageId ;
+
+	if ( !$text ) {
+		$languageId = 85;
+		$text = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId );
+	}
+
+	// Add later when I have time
+	//$definitionSpelling = getSpellingForLanguage( $definedMeaningId, $languageCode, 'en' );
+
+	return array(
+		$moduleName => array(
+			'dmid'=> $definedMeaningId,
+			'spelling'=>$spelling,
+			'spelllang'=>$spellingLanguageId,
+			'definition' =>array (
+			/*	'spelling'=>$definitionSpelling,
+			*/	'lang'=>$languageId,
+				'text'=>$text
+			)
+		)
+	);
+
+}
+
+function definingForAnyLanguage( $definedMeaningId, $moduleName = null ) {
+
+	if ( !$moduleName ) {
+		$moduleName = 'ow_define';
+	}
+
+	$languageId = getDefinedMeaningDefinitionLanguageForAnyLanguage( $definedMeaningId );
+	$text = getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId );
+	$spelling = getDefinedMeaningSpellingForAnyLanguage( $definedMeaningId );
+
+	$spellingLanguageId = getDefinedMeaningSpellingLanguageId( $definedMeaningId );
+
+	// Add later when I have time
+	//$definitionSpelling = getSpellingForLanguage( $definedMeaningId, $languageCode, 'en' );
+
+	return array(
+		$moduleName => array(
+			'dmid'=> $definedMeaningId,
+			'spelling'=>$spelling,
+			'spelllang'=>$spellingLanguageId,
+			'definition' =>array (
+			/*	'spelling'=>$definitionSpelling,
+			*/	'lang'=>$languageId,
+				'text'=>$text
+			)
+		)
+	);
+
 }
