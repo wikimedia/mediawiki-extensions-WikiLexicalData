@@ -30,10 +30,10 @@ class SpecialAddCollection extends SpecialPage {
 			$collectionName = $wgRequest->getText( 'collection' );
 			startNewTransaction( $wgUser->getID(), wfGetIP(), 'Add collection ' . $collectionName );
 			bootstrapCollection( $collectionName, $wgRequest->getText( 'language' ), $wgRequest->getText( 'type' ), $dc );
-			$wgOut->addHTML( wfMsg( 'ow_collection_added', $collectionName ) . "<br />" );
+			$wgOut->addHTML( wfMessage( 'ow_collection_added', $collectionName )->text() . "<br />" );
 		}
 		$datasets = wdGetDatasets();
-		$datasetarray[''] = wfMsgSc( "none_selected" );
+		$datasetarray[''] = wfMessage( "ow_none_selected" )->text();
 		foreach ( $datasets as $datasetid => $dataset ) {
 			$datasetarray[$datasetid] = $dataset->fetchName();
 		}
@@ -59,7 +59,7 @@ class SpecialAddCollection extends SpecialPage {
 				'Collection type:' => getSelect( 'type', $collectionTypes ),
 				'Dataset:' => getSelect( 'dataset', $datasetarray )
 			),
-			'', array( 'create' => wfMsg( 'ow_create' ) )
+			'', array( 'create' => wfMessage( 'ow_create' )->text() )
 		) );
 	}
 }

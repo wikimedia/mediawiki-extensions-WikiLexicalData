@@ -524,8 +524,8 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 	
-		$relationTypeAttribute = new Attribute( "relation-type", wfMsg( 'ow_RelationType' ), "short-text" );
-		$collectionAttribute = new Attribute( "collection", wfMsg( 'ow_Collection' ), "short-text" );
+		$relationTypeAttribute = new Attribute( "relation-type", wfMessage( 'ow_RelationType' )->text(), "short-text" );
+		$collectionAttribute = new Attribute( "collection", wfMessage( 'ow_Collection' )->text(), "short-text" );
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $relationTypeAttribute, $collectionAttribute ), new Structure( $o->id ) );
 
@@ -551,8 +551,8 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 		// Setting the two column, with titles
-		$classAttribute = new Attribute( "class", wfMsg( 'ow_Class' ), "short-text" );
-		$definitionAttribute = new Attribute( "definition", wfMsg( 'ow_Definition' ), "short-text" );
+		$classAttribute = new Attribute( "class", wfMessage( 'ow_Class' )->text(), "short-text" );
+		$definitionAttribute = new Attribute( "definition", wfMessage( 'ow_Definition' )->text(), "short-text" );
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $classAttribute, $definitionAttribute ), new Structure( $o->id ) );
 
@@ -572,7 +572,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 	
-		$definedMeaningAttributeAttribute = new Attribute( WLD_DM_ATTRIBUTES, wfMsgSc( "DefinedMeaningAttributes" ), "short-text" );
+		$definedMeaningAttributeAttribute = new Attribute( WLD_DM_ATTRIBUTES, wfMessage( "ow_DefinedMeaningAttributes" )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $definedMeaningAttributeAttribute ), new Structure( $o->id ) );
 	
 		while ( $row = $dbr->fetchObject( $queryResult ) )
@@ -590,7 +590,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$textAttributeAttribute = new Attribute( "text-attribute", wfMsg( 'ow_TextAttributeHeader' ), "short-text" );
+		$textAttributeAttribute = new Attribute( "text-attribute", wfMessage( 'ow_TextAttributeHeader' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $textAttributeAttribute ), new Structure( $o->id ) );
 
 		while ( $row = $dbr->fetchObject( $queryResult ) )
@@ -607,7 +607,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$linkAttributeAttribute = new Attribute( WLD_LINK_ATTRIBUTE, wfMsg( 'ow_LinkAttributeHeader' ), "short-text" );
+		$linkAttributeAttribute = new Attribute( WLD_LINK_ATTRIBUTE, wfMessage( 'ow_LinkAttributeHeader' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $linkAttributeAttribute ), new Structure( $o->id ) );
 
 		while ( $row = $dbr->fetchObject( $queryResult ) )
@@ -642,7 +642,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$optionAttributeAttribute = new Attribute( WLD_OPTION_ATTRIBUTE, wfMsg( 'ow_OptionAttributeHeader' ), "short-text" );
+		$optionAttributeAttribute = new Attribute( WLD_OPTION_ATTRIBUTE, wfMessage( 'ow_OptionAttributeHeader' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $optionAttributeAttribute ), new Structure( $o->id ) );
 
 		while ( $row = $dbr->fetchObject( $queryResult ) )
@@ -664,7 +664,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$definitionAttribute = new Attribute( "definition", wfMsg( 'ow_Definition' ), "definition" );
+		$definitionAttribute = new Attribute( "definition", wfMessage( 'ow_Definition' )->text(), "definition" );
 
 		$spellingLangDefStructure = new Structure( $o->id, $o->spelling, $o->language, $definitionAttribute );
 		$recordSet = new ArrayRecordSet( $spellingLangDefStructure, new Structure( $o->id ) );
@@ -695,7 +695,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$definitionAttribute = new Attribute( "definition", wfMsg( 'ow_Definition' ), "definition" );
+		$definitionAttribute = new Attribute( "definition", wfMessage( 'ow_Definition' )->text(), "definition" );
 
 		$spellingLangDefStructure = new Structure( $o->id, $o->spelling, $o->language, $definitionAttribute );
 		$recordSet = new ArrayRecordSet( $spellingLangDefStructure, new Structure( $o->id ) );
@@ -722,7 +722,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$classAttributeLevelAttribute = new Attribute( "class-attribute-level", wfMsg( 'ow_ClassAttributeLevel' ), "short-text" );
+		$classAttributeLevelAttribute = new Attribute( "class-attribute-level", wfMessage( 'ow_ClassAttributeLevel' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $classAttributeLevelAttribute ), new Structure( $o->id ) );
 
 		while ( $row = $dbr->fetchObject( $queryResult ) )
@@ -739,7 +739,7 @@ class SpecialSuggest extends SpecialPage {
 		$o = OmegaWikiAttributes::getInstance();
 
 		$dbr = wfGetDB( DB_SLAVE );
-		$collectionAttribute = new Attribute( "collection", wfMsg( 'ow_Collection' ), "short-text" );
+		$collectionAttribute = new Attribute( "collection", wfMessage( 'ow_Collection' )->text(), "short-text" );
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $collectionAttribute ), new Structure( $o->id ) );
 
@@ -757,7 +757,7 @@ class SpecialSuggest extends SpecialPage {
 		$o = OmegaWikiAttributes::getInstance();
 
 		$dbr = wfGetDB( DB_SLAVE );
-		$languageAttribute = new Attribute( "language", wfMsg( 'ow_Language' ), "short-text" );
+		$languageAttribute = new Attribute( "language", wfMessage( 'ow_Language' )->text(), "short-text" );
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $languageAttribute ), new Structure( $o->id ) );
 
@@ -776,9 +776,9 @@ class SpecialSuggest extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$userAttribute = new Attribute( "user", wfMsg( 'ow_User' ), "short-text" );
-		$timestampAttribute = new Attribute( "timestamp", wfMsg( 'ow_Time' ), "timestamp" );
-		$summaryAttribute = new Attribute( "summary", wfMsg( 'ow_transaction_summary' ), "short-text" );
+		$userAttribute = new Attribute( "user", wfMessage( 'ow_User' )->text(), "short-text" );
+		$timestampAttribute = new Attribute( "timestamp", wfMessage( 'ow_Time' )->text(), "timestamp" );
+		$summaryAttribute = new Attribute( "summary", wfMessage( 'ow_transaction_summary' )->text(), "short-text" );
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $userAttribute, $timestampAttribute, $summaryAttribute ), new Structure( $o->id ) );
 

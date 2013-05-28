@@ -41,18 +41,18 @@ class WikiLexicalDataHooks {
 			'type' => 'multiselect',
 			'options' => $datasetarray,
 			'section' => 'omegawiki',
-			'label' => wfMsg( 'ow_shown_datasets' ),
+			'label' => wfMessage( 'ow_shown_datasets' )->text(),
 		);
 */
 		// allow the user to select the languages to display
 		$preferences['ow_language_filter'] = array(
 			'type' => 'check',
-			'label' => '<b>' . wfMsg( 'ow_pref_lang_switch' ) . '</b>',
+			'label' => '<b>' . wfMessage( 'ow_pref_lang_switch' )->text() . '</b>',
 			'section' => 'omegawiki/ow-lang',
 		);
 		$preferences['ow_language_filter_list'] = array(
 			'type' => 'multiselect',
-			'label' => wfMsg( 'ow_pref_lang_select' ),
+			'label' => wfMessage( 'ow_pref_lang_select' )->text(),
 			'options' => array(), // to be filled later
 			'section' => 'omegawiki/ow-lang',
 		);
@@ -95,7 +95,7 @@ class WikiLexicalDataHooks {
 
 	public static function onAbortMove( $oldtitle, $newtitle, $user, &$error, $reason ) {
 		if ( self::isWikidataNs( $oldtitle ) ) {
-			$error = wfMsg( 'wikidata-handler-namespace-move-error' );
+			$error = wfMessage( 'wikidata-handler-namespace-move-error' )->text();
 			return false;
 		}
 		return true;

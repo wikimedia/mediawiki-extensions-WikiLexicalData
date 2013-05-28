@@ -15,7 +15,7 @@ class SpecialExportTSV extends SpecialPage {
 		global $wgOut, $wgUser, $wgRequest;
 
 		if ( !$wgUser->isAllowed( 'exporttsv' ) ) {
-			$wgOut->addHTML( wfMsg( 'ow_exporttsv_not_allowed' ) );
+			$wgOut->addHTML( wfMessage( 'ow_exporttsv_not_allowed' )->text() );
 			return false;
 		}
 		
@@ -35,8 +35,8 @@ class SpecialExportTSV extends SpecialPage {
 			for ( $i = 0; $i < count( $isoCodes ); $i++ ) {
 				$isoCodes[$i] = trim( $isoCodes[$i] );
 				if ( !getLanguageIdForIso639_3( $isoCodes[$i] ) ) {
-					$wgOut->setPageTitle( wfMsg( 'ow_exporttsv_export_failed' ) );
-					$wgOut->addHTML( wfMsg( 'ow_impexptsv_unknown_lang', $isoCodes[$i] ) );
+					$wgOut->setPageTitle( wfMessage( 'ow_exporttsv_export_failed' )->text() );
+					$wgOut->addHTML( wfMessage( 'ow_impexptsv_unknown_lang', $isoCodes[$i] )->text() );
 					return false;
 				}
 			}
@@ -177,15 +177,15 @@ class SpecialExportTSV extends SpecialPage {
 			}
 								
 			// render the page
-			$wgOut->setPageTitle( wfMsg( 'ow_exporttsv_title' ) );
-			$wgOut->addHTML( wfMsg( 'ow_exporttsv_header' ) );
+			$wgOut->setPageTitle( wfMessage( 'ow_exporttsv_title' )->text() );
+			$wgOut->addHTML( wfMessage( 'ow_exporttsv_header' )->text() );
 			
 			$wgOut->addHTML( getOptionPanel(
 				array(
-					wfMsg( 'ow_Collection_colon' ) => getSelect( 'collection', $collections, 'cid376322' ),
-					wfMsg( 'ow_exporttsv_languages' ) => getTextBox( 'languages', 'ita, eng, deu, fra, cat' ),
+					wfMessage( 'ow_Collection_colon' )->text() => getSelect( 'collection', $collections, 'cid376322' ),
+					wfMessage( 'ow_exporttsv_languages' )->text() => getTextBox( 'languages', 'ita, eng, deu, fra, cat' ),
 				),
-				'', array( 'create' => wfMsg( 'ow_create' ) )
+				'', array( 'create' => wfMessage( 'ow_create' )->text() )
 			) );
 		}
 
