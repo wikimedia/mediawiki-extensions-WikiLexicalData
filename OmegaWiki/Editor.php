@@ -312,12 +312,10 @@ abstract class DefaultEditor implements Editor {
 		global $wgLang;
 		$arrow = ( $wgLang->getDir() == 'ltr' ) ? "▶" : "◀" ;
 		$prefix = Html::element('span', array(
-			'id' => "prefix-collapsed-$elementId" ,
-			'class' => "collapse-$class"
+			'class' => "prefix collapse-$class"
 			) , $arrow ) ;
 		$prefix .= Html::element('span', array(
-			'id' => "prefix-expanded-$elementId" ,
-			'class' => "expand-$class"
+			'class' => "prefix expand-$class"
 			) , "▼" ) ;
 
 		return $prefix ;

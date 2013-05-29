@@ -30,7 +30,7 @@ jQuery(document).ready(function( $ ) {
 
 	// toggle the togglable elements
 	$(".toggle").click(function() {
-		$(this).children("span").toggle();
+		$(this).children(".prefix").toggle();
 		$(this).parent().next().fadeToggle('fast');
 	});
 	$("a").click(function(event) {
