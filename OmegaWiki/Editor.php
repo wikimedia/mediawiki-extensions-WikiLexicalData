@@ -310,7 +310,7 @@ abstract class DefaultEditor implements Editor {
 
 		// if it is collapsible, continue
 		global $wgLang;
-		$arrow = ( $wgLang->getDir() == 'ltr' ) ? "▶" : "◀" ;
+		$arrow = ( $wgLang->getDir() == 'ltr' ) ? "►" : "◄" ;
 		$prefix = Html::element('span', array(
 			'class' => "prefix collapse-$class"
 			) , $arrow ) ;
@@ -2183,11 +2183,11 @@ class PopUpEditor extends WrappingEditor {
 
 		$popupShow = Html::element('span', array(
 			'class' => "popupshow"
-			) , wfMessage( 'showtoc' )->text() . " ▿"  ) ;
+			) , wfMessage( 'showtoc' )->plain() . " ▼"  ) ;
 		$popupHide = Html::element('span', array(
 			'class' => "popuphide",
 			'style' => "display:none;"
-			) , wfMessage( 'hidetoc' )->text() . " ▵"  ) ;
+			) , wfMessage( 'hidetoc' )->plain() . " ▲"  ) ;
 
 		$result .= $popupShow . $popupHide ;
 		$result .= Html::closeElement('a');
