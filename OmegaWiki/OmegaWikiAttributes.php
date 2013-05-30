@@ -99,9 +99,7 @@ class OmegaWikiAttributes {
 		$this->classMembershipId = new Attribute( "class-membership-id", "Class membership id", "integer" );
 		$this->collectionId = new Attribute( "collection", "Collection", "collection-id" );
 
-		// text was wfMessage( "ow_DefinedMeaningAttributes" ).
-		// Using a non-i18n text until we agree on a label
-		$this->definedMeaningAttributes = new Attribute( WLD_DM_ATTRIBUTES, "Semantic annotations", "will-be-specified-below" );
+		$this->definedMeaningAttributes = new Attribute( WLD_DM_ATTRIBUTES, wfMessage( 'ow_AnnotationDefinedMeaning' )->plain(), "will-be-specified-below" );
 		$this->definedMeaningDefiningExpression = new Attribute( "defined-meaning-defining-expression", "Defined meaning defining expression", "short-text" );
 		$this->definedMeaningLabel = new Attribute( "defined-meaning-label", "Defined meaning label", "short-text" );
 		$this->definedMeaningId = new Attribute( "defined-meaning-id", "Defined meaning identifier", "defined-meaning-id" );
@@ -175,7 +173,7 @@ class OmegaWikiAttributes {
 		$this->relationType = new Attribute( "relation-type", wfMessage( "ow_RelationType" )->plain(), $this->definedMeaningReferenceStructure );
 
 		// otherObject is what the relation links to. It could be a DM or a Syntrans or anything else.
-		$this->otherObject = new Attribute( WLD_OTHER_OBJECT, "related to", $this->objectId );
+		$this->otherObject = new Attribute( WLD_OTHER_OBJECT, wfMessage( "ow_RelatedTo" )->plain(), $this->objectId );
 
 		$this->relationStructure = new Structure( WLD_RELATIONS, $this->relationId, $this->relationType, $this->otherObject );
 		$this->relations = new Attribute( WLD_RELATIONS, wfMessage( "ow_Relations" )->plain(), $this->relationStructure );
@@ -244,8 +242,7 @@ class OmegaWikiAttributes {
 		$this->objectAttributes->setAttributeType( $this->objectAttributesStructure );
 		$this->definedMeaningAttributes->setAttributeType( $this->objectAttributesStructure );
 
-		// TODO: use i18n text when we agree on a label
-		$this->syntransAttributes = new Attribute( WLD_SYNT_ATTRIBUTES, "Lexical annotations", $this->objectAttributesStructure );
+		$this->syntransAttributes = new Attribute( WLD_SYNT_ATTRIBUTES, wfMessage( 'ow_AnnotationSyntrans' )->plain(), $this->objectAttributesStructure );
 
 		$this->definedMeaningStructure = new Structure(
 			WLD_DEFINED_MEANING,
