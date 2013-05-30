@@ -65,12 +65,12 @@
 
 .wld_lang_filter_on a {
 	/* @embed */
-	background-image: url("../../Images/my_lang.png");
+	background-image: url(images/my_lang.png);
 }
 
 .wld_lang_filter_off a {
 	/* @embed */
-	background-image: url("../../Images/all_lang.png");
+	background-image: url(images/all_lang.png);
 }
 
 
@@ -152,7 +152,7 @@
 
 .wld-remove-header {
 	/* @embed */
-	background: url("../../Images/Delete.png") no-repeat center;
+	background: url(images/Delete.png) no-repeat center;
 }
 
 .wd-languagecurrent {

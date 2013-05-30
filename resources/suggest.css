@@ -8,7 +8,7 @@
 	border-style: solid;
 	border-color: #7F9DB9;
 	/* @embed */
-	background-image: url("../../Images/ArrowButtonDown1px.png");
+	background: url(images/ArrowButtonDown1px.png);
 	background-repeat: no-repeat;
 	background-position: center right;
 }
@@ -22,18 +22,6 @@
 	top: 1px;
 	bottom: 0px;
 	background-color: #FFFFFF;
-}
-
-/* Internet Explorer hack */
-* html .suggest-link {
-	/* @embed */
-	background-image: url("../../Images/ArrowButtonDown2px.png");
-}
-
-/* Internet Explorer hack */
-* html .wiki-data-table td .suggest-link {
-	/* @embed */
-	background-image: url("../../Images/ArrowButtonDown1px.png");
 }
 
 .suggest-link,

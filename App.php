@@ -45,28 +45,27 @@ $wgExtensionMessagesFiles['Wikidata'] = $dir . 'Wikidata.i18n.php';
 // Resource modules
 
 $resourcePathArray = array(
-	'localBasePath' => dirname( __FILE__ ),
-	'remoteExtPath' => 'Wikidata'
+	'localBasePath' => dirname( __FILE__ ) . '/resources',
+	'remoteExtPath' => 'WikiLexicalData/resources'
 );
 
 // separated css with position "top" to avoid
 // so-called Flash of unstyled content
 $wgResourceModules['ext.Wikidata.css'] = $resourcePathArray + array(
-	'styles' => array( 'OmegaWiki/resources/suggest.css', 'OmegaWiki/resources/tables.css' ),
+	'styles' => array( 'suggest.css', 'tables.css' ),
 	'position' => 'top'
 );
 
 $wgResourceModules['ext.Wikidata.ajax'] = $resourcePathArray + array(
-	'scripts' => 'OmegaWiki/resources/omegawiki-ajax.js',
-	'dependencies' => array( 'jquery.tablesorter' )
+	'scripts' => 'omegawiki-ajax.js'
 );
 
 $wgResourceModules['ext.Wikidata.edit'] = $resourcePathArray + array(
-	'scripts' => 'OmegaWiki/resources/omegawiki-edit.js'
+	'scripts' => 'omegawiki-edit.js'
 );
 
 $wgResourceModules['ext.Wikidata.suggest'] = $resourcePathArray + array(
-	'scripts' => 'OmegaWiki/resources/suggest.js',
+	'scripts' => 'suggest.js',
 	'messages' => array( 'ow_suggest_clear', 'ow_suggest_previous', 'ow_suggest_next' )
 );
 

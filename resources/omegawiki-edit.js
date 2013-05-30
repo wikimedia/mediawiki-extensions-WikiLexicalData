@@ -1,5 +1,5 @@
 jQuery(document).ready(function( $ ) {
-	
+
 	// automatically fills in the label when a url is pasted.
 	$("td.url").bind('paste', function() {
 		var tdurl = this ;
