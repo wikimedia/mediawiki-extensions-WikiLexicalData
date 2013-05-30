@@ -127,26 +127,21 @@ function fetchDefinedMeaningDefiningExpressions( array &$definedMeaningIds, arra
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	
-	# Query building
-	$frontQuery = "SELECT {$dc}_defined_meaning.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling" .
-		" FROM {$dc}_defined_meaning, {$dc}_expression " .
-		" WHERE {$dc}_defined_meaning.expression_id={$dc}_expression.expression_id " .
-		" AND {$dc}_defined_meaning.remove_transaction_id IS NULL " .
-		" AND {$dc}_expression.remove_transaction_id IS NULL " .
-		" AND {$dc}_defined_meaning.defined_meaning_id = ";
 
-	// copy the definedMeaningIds array to create one query for each DM id
-	$definedMeaningQueries = $definedMeaningIds;
-	unset( $value );
-	foreach ( $definedMeaningQueries as &$value ) {
-		$value = $frontQuery . $value;
-	}
-	unset( $value );
-	# Union of the atoms
-	$finalQuery = implode( ' UNION ', $definedMeaningQueries );
-	
-	$queryResult = $dbr->query( $finalQuery );
+	$queryResult = $dbr->select(
+		array(
+			'dm' => "{$dc}_defined_meaning",
+			'exp' => "{$dc}_expression"
+		), array( /* fields to select */
+			'defined_meaning_id' => "dm.defined_meaning_id",
+			'spelling' => "exp.spelling"
+		), array( /* where */
+			'exp.expression_id = dm.expression_id', // getting defining expression
+			'dm.defined_meaning_id' => $definedMeaningIds,
+			'exp.remove_transaction_id' => null,
+			'dm.remove_transaction_id' => null
+		), __METHOD__
+	);
 
 	foreach ( $queryResult as $row ) {
 		if ( isset( $definedMeaningReferenceRecords[$row->defined_meaning_id] ) ) {
@@ -252,15 +247,21 @@ function getSyntransReferenceRecords( array $syntransIds, $usedAs ) {
 	// an array of records
 	$result = array();
 
-	// find the spelling of a syntrans (of all syntrans from array syntransIds)
-	$sql = "SELECT /* getSyntransReferenceRecords */ syntrans_sid, spelling"
-		. " FROM {$dc}_syntrans, {$dc}_expression "
-		. " WHERE syntrans_sid IN (" . implode( ", ", $syntransIds ) . ")"
-		. " AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id ";
-
-	$queryResult = $dbr->query( $sql );
 	$structure = new Structure( WLD_SYNONYMS_TRANSLATIONS, $o->syntransId, $o->spelling );
 	$structure->setStructureType( $usedAs );
+
+	$queryResult = $dbr->select(
+		array(
+			'synt' => "{$dc}_syntrans",
+			'exp' => "{$dc}_expression"
+		), array (
+			'syntrans_sid',
+			'spelling'
+		), array (
+			'syntrans_sid' => $syntransIds,
+			'exp.expression_id = synt.expression_id'
+		), __METHOD__
+	);
 
 	foreach ( $queryResult as $row ) {
 		$record = new ArrayRecord( $structure );
@@ -313,20 +314,14 @@ function getExpressionSpellings( array $expressionIds ) {
 	if ( count( $expressionIds ) > 0 ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		
-		# Prepare steady components
-		$frontQuery = "SELECT expression_id, spelling FROM {$dc}_expression WHERE expression_id =";
-		$queueQuery	= " AND {$dc}_expression.remove_transaction_id IS NULL ";
-		# Build atomic queries
-		foreach ( $expressionIds as &$value ) {
-			$value = $frontQuery . $value . $queueQuery;
-		}
-		unset( $value );
-		# Union of the atoms
-		$finalQuery = implode( ' UNION ', $expressionIds );
-		
-		$queryResult = $dbr->query( $finalQuery );
-		
-		$result = array();
+		$queryResult = $dbr->select(
+			"{$dc}_expression",
+			array( 'expression_id', 'spelling' ),
+			array( /* where */
+				'expression_id' => $expressionIds,
+				'remove_transaction_id' => null
+			), __METHOD__
+		);
 
 		foreach ( $queryResult as $row ) {
 			$result[$row->expression_id] = $row->spelling;
@@ -356,24 +351,15 @@ function getTextReferences( array $textIds ) {
 	$dc = wdGetDataSetContext();
 	if ( count( $textIds ) > 0 ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		
-		# Query building
-		$frontQuery = "SELECT text_id, text_text" .
-			" FROM {$dc}_text" .
-			" WHERE text_id = ";
 
-		# Build atomic queries
-		foreach ( $textIds as &$value ) {
-			$value = $frontQuery . $value;
-		}
-		unset( $value );
-		# Union of the atoms
-		$finalQuery = implode( ' UNION ', $textIds );
-		
-		$queryResult = $dbr->query( $finalQuery );
-		
-		$result = array();
-	
+		$queryResult = $dbr->select(
+			"{$dc}_text",
+			array( 'text_id', 'text_text' ),
+			array( /* where */
+				'text_id' => $textIds
+			), __METHOD__
+		);
+
 		foreach ( $queryResult as $row ) {
 			$result[$row->text_id] = $row->text_text;
 		}
@@ -415,10 +401,15 @@ function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInfor
 	$recordSet = new ArrayRecordSet( $o->expressionMeaningStructure, new Structure( $o->definedMeaningId ) );
 
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query(
-		"SELECT defined_meaning_id, syntrans_sid FROM {$dc}_syntrans" .
-		" WHERE expression_id=$expressionId AND identical_meaning=" . $identicalMeaning .
-		" AND {$dc}_syntrans.remove_transaction_id IS NULL "
+
+	$queryResult = $dbr->select(
+		array( 'synt' => "{$dc}_syntrans" ),
+		array( 'defined_meaning_id', 'syntrans_sid' ),
+		array(
+			'expression_id' => $expressionId,
+			'identical_meaning' => $identicalMeaning,
+			'synt.remove_transaction_id' => null
+		), __METHOD__
 	);
 
 	foreach ( $queryResult as $syntrans ) {
