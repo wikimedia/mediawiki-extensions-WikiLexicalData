@@ -1,18 +1,17 @@
 <?php
 
 /** OmegaWiki API's Express class
- * Created on May 21, 2013
  *
  * Returns an array of datas similar to the one given by the Expression Namespace.
  *
- */
-
-/** PURPOSE
+ * PURPOSE
  * To provide a way for Developers and/or contributors of Wiktionary
  * to access OmegaWiki's data that can be easily parsed.
- */
-
- /** TODO
+ *
+ * HISTORY
+ * - 2013-05-21 Creation Date ~ he
+ *
+ * TODO
  * - Improve definition by improving owDefine.php
  *		Need to make Class Define return output similar to what
  *		OmegaWiki outputs in the DefinedMeaning Namespace.
@@ -49,17 +48,20 @@ class Express extends ApiBase {
 		// Check if spelling exist
 		if ( existSpelling( $spelling ) ) {
 			$dmlist = getExpressionMeaningIds( $spelling );
+			$options['e'] = $spelling;
 			// There are duplicates using getExpressionMeaningIds !!!
 			$dmlist = array_unique ( $dmlist );
 			$express['expression'] = $spelling;
 			$dmlistCtr = 1;
 			foreach ( $dmlist as $dmrow ) {
-				$defining = definingForAnyLanguage( $dmrow );
-				$express['dm' . $dmlistCtr] = $defining;
+				$defining = definingForAnyLanguage( $dmrow, $options );
+				foreach ( $defining as $definingRow) {
+					$express['ow_define_' . $dmlistCtr] = $definingRow;
+				}
 				$dmlistCtr += 1;
 			}
-			$this->getResult()->addValue( null, $this->getModuleName(), array ( 'expression'=>$express ) );
-	
+			$this->getResult()->addValue( null, $this->getModuleName(), $express );
+
 		} else {
 			$this->dieUsage( 'the search word does not exist.', 'non-existent spelling' );
 		}

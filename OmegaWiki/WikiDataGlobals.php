@@ -7,6 +7,7 @@
 define( 'NS_EXPRESSION', 16 );
 define( 'NS_DEFINEDMEANING', 24 );
 define( 'WLD_ENGLISH_LANG_ID', 85 );
+define( 'WLD_ENGLISH_LANG_WMKEY', "en" );
 
 // Achtung: the following defines should match the strings used in
 // the Javascript files
@@ -47,7 +48,7 @@ $wgIso639_3CollectionId = null;
 
 // Defined meaning editor
 global $wdDefinedMeaningAttributesOrder;
-	
+
 $wdDefinedMeaningAttributesOrder = array(
 	WLD_SYNT_ATTRIBUTES,
 	WLD_DEFINITION,
@@ -83,15 +84,15 @@ $wgShowSearchWithinWordsOption = true;
 
 global
 	$wgPropertyToColumnFilters;
-	
-/** 
- * $wgPropertyToColumnFilters is an array of property to column filters 
- * 
+
+/**
+ * $wgPropertyToColumnFilters is an array of property to column filters
+ *
  * Example:
  *   $wgPropertyToColumnFilters = array(
  *     new PropertyToColumnFilter("references", "References", array(1000, 2000, 3000)) // Defined meaning ids are the attribute ids to filter
  *   )
- * 
+ *
  */
 $wgPropertyToColumnFilters = array();
 
@@ -174,5 +175,3 @@ function &wdGetDataSets() {
 	}
 	return $datasets;
 }
-
-?>

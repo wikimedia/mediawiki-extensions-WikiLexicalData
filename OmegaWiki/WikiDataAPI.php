@@ -1762,6 +1762,31 @@ function getDefinedMeaningSpellingLanguageId( $definedMeaning ) {
 	return "";
 }
 
+/** Returns the LanguageId using definedMeaningId and spelling
+ * returns null if not exist
+ */
+function getLanguageIdForDefinedMeaningAndExpression( $definedMeaningId, $spelling ) {
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
+	$languageId = $dbr->selectField(
+		array(
+			'e' => "{$dc}_expression",
+			'st' => "{$dc}_syntrans"
+		),
+		'language_id',
+		array(
+			'defined_meaning_id' => $definedMeaningId,
+			'spelling' => $spelling,
+			'st.expression_id = e.expression_id',
+			'st.remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( $languageId ) {
+		return $languageId;
+	}
+	return null;
+}
 
 /**
  * Returns the definition of a definedMeaning in a given language
@@ -1883,6 +1908,32 @@ function getDefinedMeaningDefinitionLanguageForAnyLanguage( $definedMeaningId ) 
 	return "";
 }
 
+function getDefinedMeaningDefinitionLanguageIdForDefinition( $definedMeaningId, $text ) {
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$languageId = $dbr->selectField(
+		array(
+			'dm' => "{$dc}_defined_meaning",
+			'tc' => "{$dc}_translated_content",
+			't' => "{$dc}_text"
+		),
+		'tc.language_id',
+		array(
+			'dm.defined_meaning_id' => $definedMeaningId,
+			'dm.remove_transaction_id' => null,
+			'tc.remove_transaction_id' => null,
+			'dm.meaning_text_tcid = tc.translated_content_id',
+			't.text_id = tc.text_id',
+			't.text_text' => $text
+		), __METHOD__
+	);
+
+	if ( $languageId ) {
+		return $languageId;
+	}
+	return 0;
+}
 
 /**
 * returns one of the possible translations of
@@ -1891,16 +1942,29 @@ function getDefinedMeaningDefinitionLanguageForAnyLanguage( $definedMeaningId ) 
 * or in English otherwise.
 * null if not found
 */
-function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = 'en', $dc = null ) {
+function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = WLD_ENGLISH_LANG_WMKEY, $dc = null ) {
+
+	$userLanguageId = getLanguageIdForCode( $languageCode );
+	$fallbackLanguageId = getLanguageIdForCode( $fallbackLanguageCode );
+
+	return getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallbackLanguageId, $dc );
+
+}
+
+/**
+* returns one of the possible translations of
+* a given DefinedMeaning ( $definedMeaningId )
+* preferably in a given language ( $languageId )
+* or in English otherwise.
+* null if not found
+*/
+function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallbackLanguageId = WLD_ENGLISH_LANG_ID, $dc = null ) {
 	if ( is_null ( $dc ) ) {
 		$dc = wdGetDataSetContext( $dc );
 	}
 	$dbr = wfGetDB( DB_SLAVE );
 
-	$userLanguageId = getLanguageIdForCode( $languageCode );
-
 	# wfDebug("User language: $userLanguageId\n");
-	$fallbackLanguageId = getLanguageIdForCode( $fallbackLanguageCode );
 
 	if ( $userLanguageId ) {
 		$spelling = $dbr->selectField(
