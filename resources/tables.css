@@ -52,7 +52,9 @@
 	font-size:60%;
 }
 
-/* Language filtering Icon Styling */
+/*****
+ * Language filtering Icon Styling (icon on top of page)
+ */
 .wld_lang_filter_on a, .wld_lang_filter_off a {
 	margin: 0;
 	padding: 0;
@@ -74,7 +76,9 @@
 }
 
 
-/* Wikidata tables */
+/****
+ * Wikidata tables
+ */
 
 .wiki-data-table td, .wiki-data-table th {
 	padding-top: 0px;
@@ -155,6 +159,9 @@
 	background: url(images/Delete.png) no-repeat center;
 }
 
+/******
+ * language header on top of expression pages
+ */
 .wd-languagecurrent {
 	font-size:large ;
 	background-color: #ffe0eb;
@@ -167,6 +174,9 @@
 	-moz-border-radius: 100px;
 }
 
+/******
+ * language tabs on top of expression pages
+ */
 .wd-tablist {
 	white-space: nowrap;
 	font-size: small;
@@ -225,6 +235,9 @@
 	-moz-border-radius: 100px;
 }
 
+/******
+ * other hierarchical elements
+ */
 .level3 {
 	font-size:120% ;
 	background-color: #e0ffff;
@@ -260,7 +273,9 @@ td.add {
 	text-align: center;
 }
 
-/* Toggle */
+/*
+ * Toggle, clickable elements that can be folded/unfolded
+ */
 
 .toggle {
 	cursor: pointer;
@@ -283,7 +298,9 @@ td.add {
 	padding: 4px;
 }
 
-/* Attribute list */
+/****
+ * Attribute list
+ */
 
 ul.collapsable-items {
 	list-style: none;
@@ -303,7 +320,9 @@ ul.collapsable-items {
 	opacity:1;
 }
 
-/* Option panel */
+/*****
+ * Option panel
+ */
 
 .option-panel {
 	margin: 8px 4px 4px 4px;
@@ -333,6 +352,9 @@ ul.collapsable-items {
 	padding-bottom: 1px;
 }
 
+/*****
+ * Dataset panel
+ */
 .dataset-panel {
 	float:right;
 	margin-left:0.5em;
@@ -359,6 +381,10 @@ ul.collapsable-items {
 	border-width:1px;
 	font-size:110%;
 }
+
+/*****
+ * Special:OwStatistics
+ */
 
 div.owstatmainheader {
 	text-align:center;
@@ -389,4 +415,15 @@ table.owstatbig {
 }
 table.owstatbig td {
 	padding: 0px 5px;
+}
+
+/*****
+ * User preferences, tab OmegaWiki
+ */
+/* get a vertical scrollbar on the language list when it is too long */
+table#mw-htmlform-ow-lang {
+  display: block;
+  height: 500px;
+  width: 500px;
+  overflow-y: scroll;
 }
