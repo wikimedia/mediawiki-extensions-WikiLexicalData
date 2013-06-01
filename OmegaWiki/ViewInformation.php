@@ -21,8 +21,7 @@ class ViewInformation {
 	public $filterLanguageList;
 
 	/**
-	* The language of the expression being displayed in the Expression: namespace
-	* i.e. the word being consulted
+	* The language of the expression to display, according to the url &explang=...
 	*/
 	public $expressionLanguageId;
 

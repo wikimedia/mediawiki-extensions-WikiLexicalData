@@ -45,6 +45,11 @@ class WikiLexicalDataHooks {
 		);
 */
 		// allow the user to select the languages to display
+		$preferences['ow_alt_layout'] = array(
+			'type' => 'check',
+			'label' => 'Alternative layout',
+			'section' => 'omegawiki',
+		);
 		$preferences['ow_language_filter'] = array(
 			'type' => 'check',
 			'label' => '<b>' . wfMessage( 'ow_pref_lang_switch' )->text() . '</b>',

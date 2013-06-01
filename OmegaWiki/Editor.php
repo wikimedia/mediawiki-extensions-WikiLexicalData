@@ -1261,47 +1261,95 @@ class DefinedMeaningEditor extends ScalarEditor {
 
 
 class DefinedMeaningHeaderEditor extends ScalarEditor {
-	protected $truncate;
+
+	/** Integer type
+	 * indicates where the definition should be truncated. 0 for no truncation
+	 */
 	protected $truncateAt;
 	protected $addText = "";
 
-	public function __construct( $attribute, $permissionController, $truncate = false, $truncateAt = 0 ) {
-		parent::__construct( $attribute, $permissionController, false );
+	public function __construct( $attribute, $truncateAt = 0 ) {
+		parent::__construct( $attribute, new SimplePermissionController( false ), false );
 
-		$this->truncate = $truncate;
 		$this->truncateAt = $truncateAt;
 	}
 
-	public function getViewHTML( IdStack $idPath, $value ) {
-		global $wgOut;
+	public function getViewHTML( IdStack $idPath, $definedMeaningId ) {
+		global $wgOut, $wgLang, $wgUser;
+
+		/**
+		 * the first definition will be used as a meta descriptor for search engines
+		 * then isMetaDescSet is set to one, to indicate that the meta descriptor is already set
+		 */
 		static $isMetaDescSet = 0 ;
 
-		$definition = getDefinedMeaningDefinition( $value );
-		$definedMeaningAsLink = definedMeaningAsLink( $value );
+		$output = "";
+
+		$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
+		$definition = getDefinedMeaningDefinition( $definedMeaningId );
+		$definingExpression = definingExpression( $definedMeaningId );
+
+		// word being currently viewed (typically title of page "Expression:word")
+		// the "peek(1)" part is a bit of a mystery
+		$expressionId = $idPath->getKeyStack()->peek( 1 )->expressionId;
+		$expression = getExpression( $expressionId );
+
+		// getting the truncated definition
 		$escapedDefinition = htmlspecialchars( $definition );
-		if ( $this->truncate && strlen( $definition ) > $this->truncateAt ) {
+		if ( ( $this->truncateAt > 0 ) && ( strlen( $definition ) > $this->truncateAt ) ) {
 			$spancontent = htmlspecialchars( mb_substr( $definition, 0, $this->truncateAt ) ) . wfMessage( 'ellipsis' )->text();
 			$escapedDefinition = Html::element( 'span', array( 'title' => $escapedDefinition ), $spancontent );
 		}
 
+		// setting the definition as meta description for the page
 		if ( $isMetaDescSet == 0 ) {
-			$expression = definedMeaningExpression ( $value ) ;
-			$wgOut->addMeta( 'Description', $expression . ": " . $definition );
+			$wgOut->addMeta( 'Description', $definition );
 			$isMetaDescSet = 1 ;
 		}
 
-		$DMPageName = definingExpression( $value ) . " (" . $value . ")" ;
+		// creating the link to edit the DM directly, that will be displayed on the right
+		$DMPageName = $definingExpression . " (" . $definedMeaningId . ")" ;
 		$DMTitle = Title::makeTitle( NS_DEFINEDMEANING , $DMPageName );
 		$editURL = $DMTitle->getLocalURL( 'action=edit' ) ;
-		$editLink = Html::openElement( 'span', array( 'class' => 'dm_edit_link' ) )
-			. Html::rawElement( 'sup', array(), '['. createLink( $editURL , wfMessage( 'edit')->text() ) . ']' )
-			. Html::closeElement( 'span' );
+		$editLink = Html::openElement( 'span', array( 'class' => 'dm_edit_link' ) );
+		$editLink .= Html::rawElement( 'sup', array(), '['. createLink( $editURL , wfMessage( 'edit')->text() ) . ']' );
+		$editLink .= Html::closeElement( 'span' );
 
-		$output = $editLink . $definedMeaningAsLink . ": " . $escapedDefinition ;
+		if ( $wgUser->getOption( 'ow_alt_layout' ) ) {
+			// EXPERIMENTAL LAYOUT:
+			// DMlink (expression of page) : translation \n definition
+			$translation = "";
+			$definedMeaningAsLink = definedMeaningReferenceAsLink( $definedMeaningId, $definingExpression, $expression->spelling );
+
+			if ( ( $userLanguageId != $expression->languageId ) && ( $userLanguageId > 0 )) {
+				// find a translation in the user language if exists
+				// returns "" if not found
+				$translation = definedMeaningExpressionForLanguage( $definedMeaningId, $userLanguageId );
+			}
+			$output = $editLink ;
+			$output .= $definedMeaningAsLink;
+			if ( $translation != "" ) {
+				$output .= " : " . $translation;
+			}
+			$output .= Html::element('br') . $escapedDefinition ;
+
+		} else {
+			// STANDARD CLASSIC LAYOUT:
+			// DMlink (translated if possible) : definition
+			if ( $userLanguageId == $expression->languageId ) {
+				// no translation needed
+				$definedMeaningAsLink = definedMeaningReferenceAsLink( $definedMeaningId, $definingExpression, $expression->spelling );
+			} else {
+				// try to get a translation
+				$definedMeaningAsLink = definedMeaningAsLink( $definedMeaningId );
+			}
+			$output = $editLink . $definedMeaningAsLink . ": " . $escapedDefinition ;
+		}
+
 		return $output ;
 	}
 
-	public function getEditHTML( IdStack $idPath, $value ) {
+	public function getEditHTML( IdStack $idPath, $definedMeaningId ) {
 		return "";
 	}
 
