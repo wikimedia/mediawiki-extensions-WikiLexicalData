@@ -122,6 +122,11 @@ jQuery(document).ready(function( $ ) {
 		var suggestOffset = document.getElementById(suggestPrefix + "offset").value;
 		var dataSet = document.getElementById(suggestPrefix + "dataset").value;
 
+		if ( table == null ) {
+			// just in case
+			return;
+		}
+
 		suggestText = $("#" + suggestPrefix + "text");
 		suggestText.addClass("suggest-loading");
 		var suggestTextVal = suggestText.val() ; // we copy the value to compare it later to the current value
@@ -174,8 +179,7 @@ jQuery(document).ready(function( $ ) {
 						}
 					}
 				}
-				
-				table.parentNode.replaceChild(newTable.firstChild, table);
+				$(table).replaceWith( newTable.firstChild );
 			}
 			suggestText.removeClass("suggest-loading");
 

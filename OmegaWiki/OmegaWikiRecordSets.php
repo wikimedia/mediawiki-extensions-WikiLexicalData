@@ -708,8 +708,10 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 		$sortOrderArray[] = $languageNames[$row->language_id];
 	}
 	// magic sort $queryResultArray on language names
-	array_multisort( $sortOrderArray, $queryResultArray );
-
+	array_multisort(
+		$sortOrderArray, SORT_ASC, SORT_LOCALE_STRING | SORT_FLAG_CASE,
+		$queryResultArray // sorted like the one above
+	);
 
 	$structure = $o->translatedTextStructure ;
 	if ( $viewInformation->showRecordLifeSpan ) {
@@ -795,7 +797,10 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 		$sortOrderArray[] = $languageNames[$row->language_id] . $sortSuffix . $row->spelling;
 	}
 	// magic sort $queryResultArray on language names - then inexact flag - then orthography
-	array_multisort( $sortOrderArray, $queryResultArray );
+	array_multisort(
+		$sortOrderArray, SORT_ASC, SORT_LOCALE_STRING | SORT_FLAG_CASE,
+		$queryResultArray // sorted like the one above
+	);
 
 
 	// TODO; try with synTransExpressionStructure instead of synonymsTranslationsStructure
