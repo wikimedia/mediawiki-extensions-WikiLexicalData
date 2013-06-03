@@ -851,8 +851,8 @@ $messages['an'] = array(
  */
 $messages['ar'] = array(
 	'wikidata-desc' => 'يضيف قاعدة بيانات ذات طابع الويكي لأنواع عديدة من المحتويات',
-	'wikidata-handler-namespace-move-error' => 'لا يمكن نقل الصفحات ضمن النطاقات التي يديرها امتداد ويكيبيانات.',
-	'languages' => 'ويكيبيانات: مدير اللغة',
+	'wikidata-handler-namespace-move-error' => 'لا يمكن نقل الصفحات ضمن النطاقات التي يديرها امتداد ويكيبيانات.', # Fuzzy
+	'languages' => 'ويكيبيانات: مدير اللغة', # Fuzzy
 	'langman-desc' => 'إضافة وتغيير إعدادات اللغات مع [[Special:Languages]]',
 	'langman_title' => 'مدير اللغة',
 	'langman_not_allowed' => 'أنت لا تمتلك السماح لتغيير إعدادات اللغة.',
@@ -865,12 +865,12 @@ $messages['ar'] = array(
 	'langman_wikimedia' => 'كود ويكيميديا:',
 	'langman_field_optional' => '(اختياري)',
 	'langman_addlang' => 'أضف اللغة',
-	'importlangnames' => 'ويكيبيانات: استيراد أسماء اللغات',
+	'importlangnames' => 'ويكيبيانات: استيراد أسماء اللغات', # Fuzzy
 	'importlangnames_title' => 'استيراد أسماء اللغات',
 	'importlangnames_not_allowed' => 'أنت لا تمتلك السماح لاستيراد أسماء اللغات.',
 	'importlangnames_added' => 'أسماء اللغات ل"$1" تمت إضافتها.',
 	'importlangnames_not_found' => '<strong>لا مدخلة لغة ل"$1" تم العثور عليها!</strong>',
-	'datasearch' => 'ويكيبيانات: بحث البيانات',
+	'datasearch' => 'ويكيبيانات: بحث البيانات', # Fuzzy
 	'datasearch_language' => 'اللغة:',
 	'datasearch_found_word' => 'وجد الكلمة',
 	'datasearch_meaning' => 'المعنى',
@@ -882,7 +882,7 @@ $messages['ar'] = array(
 	'datasearch_match_ext_ids' => 'المعرفات الخارجية تطابق <em>$1</em>',
 	'datasearch_match_words' => 'الكلمات التي تطابق <em>$1</em> والمعاني المصاحبة',
 	'datasearch_match_words_lang' => 'الكلمات باللغة <em>$1</em> التي تطابق <em>$2</em> والمعاني المصاحبة',
-	'importtsv' => 'ويكيبيانات: استيراد ملف البيانات TSV',
+	'importtsv' => 'ويكيبيانات: استيراد ملف البيانات TSV', # Fuzzy
 	'ow_importtsv_title1' => 'استيراد تي إس في',
 	'ow_importtsv_title2' => 'استيراد التعريفات والترجمات',
 	'ow_importtsv_header' => "<p>استورد التعريفات والترجمات من ملف نص محدد بألسنة ربما تكون صدرته من OpenOffice.org، إكسل أو برنامج صحائف آخر.</p>
@@ -905,14 +905,14 @@ $messages['ar'] = array(
 	'ow_importtsv_results' => 'أضاف {{PLURAL:$1||تعريفًا واحدًا|تعريفين|$1 تعريفات|$1 تعريفًا|$1 تعريف}} و{{PLURAL:$2||ترجمة واحدة|ترجمتين|$2 ترجمات|$2 ترجمة|$2 ترجمة}}.',
 	'ow_impexptsv_unknown_lang' => '<p>لغة غير معروفة أو غير صحيحة: $1.<br />
 اللغات يجب أن تكون أكواد لغات ISO 639-3.</p>',
-	'exporttsv' => 'ويكيبيانات: تصدير ملف البيانات TSV',
+	'exporttsv' => 'ويكيبيانات: تصدير ملف البيانات TSV', # Fuzzy
 	'ow_exporttsv_title' => 'تصدير مجموعة إلى TSV',
 	'ow_exporttsv_header' => "<p>صدر مجموعة إلى صيغة نص مفصول بألسنة الذي يمكنك استيراده في OpenOffice.org، إكسل أو برنامج صحائف آخر.<br />
 اختر مجموعة للتصدير. في صندوق نص اللغات، أدخل قائمة مفصولة بفاصلات لأكواد لغات ISO 639-3. ابدأ باللغة التي ستترجم منها (اختر كما تحب) وانه بالتي ستترجم إليها. ثم اضغط 'إنشاء' لإنشاء الملف.</p>",
 	'ow_exporttsv_languages' => 'اللغات:',
 	'ow_exporttsv_not_allowed' => 'لا تمتلك السماح لعمل تصدير TSV.',
 	'ow_exporttsv_export_failed' => 'التصدير فشل',
-	'addcollection' => 'ويكيبيانات: إضافة مجموعة',
+	'addcollection' => 'ويكيبيانات: إضافة مجموعة', # Fuzzy
 	'ow_searchnoresult' => "<p>بإمكانك:<br />
 * '''إنشاء التعبير \"[[Expression:\$1]]\"''' (وإضافة تعريف)<br />
 * '''إنشاء الصفحة \"[[:\$1]]\"''' (صفحة ويكي قياسية)</p>",
@@ -923,9 +923,9 @@ $messages['ar'] = array(
 	'ow_noedit' => 'أنت غير مسموح لك بتعديل الصفحات في مجموعة البيانات "$1".
 من فضلك انظر [[{{MediaWiki:Ow editing policy url}}|سياسة التحرير الخاصة بنا]].',
 	'ow_uipref_datasets' => 'عرض افتراضي:',
-	'ow_uiprefs' => 'ويكيبيانات',
+	'ow_uiprefs' => 'ويكيبيانات', # Fuzzy
 	'ow_none_selected' => 'لا شيء تم اختياره',
-	'transaction' => 'ويكيبيانات: سجل المعاملات',
+	'transaction' => 'ويكيبيانات: سجل المعاملات', # Fuzzy
 	'ow_transaction_from_transaction' => 'من الانتقال:',
 	'ow_transaction_count' => 'العدد:',
 	'ow_transaction_user' => 'اسم المستخدم:',
@@ -943,7 +943,7 @@ $messages['ar'] = array(
 	'ow_transaction_first_dm' => 'المعنى المعرف الأول',
 	'ow_transaction_second_dm' => 'المعنى المعرف الثاني',
 	'ow_transaction_summary' => 'ملخص',
-	'conceptmapping' => 'ويكيبيانات: تخطيط المبدأ',
+	'conceptmapping' => 'ويكيبيانات: تخطيط المبدأ', # Fuzzy
 	'ow_conceptmapping_title' => 'تخطيط المبدأ',
 	'ow_conceptmapping_help' => '<p>الأفعال الممكنة: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  إدراج رابطة</li>
@@ -1040,7 +1040,7 @@ $messages['ar'] = array(
 	'ow_meaningsoftitle' => 'معاني "$1"',
 	'ow_meaningsofsubtitle' => '<em>وصلة ويكي:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>السماح مرفوض</h2>',
-	'copy' => 'ويكيبيانات: نسخ',
+	'copy' => 'ويكيبيانات: نسخ', # Fuzzy
 	'ow_copy_no_action_specified' => 'من فضلك حدد فعلا',
 	'ow_copy_help' => 'المساعدة ليست مطبقة حاليا.',
 	'ow_please_proved_dmid' => 'على ما يبدو دخلك يفقد ?dmid=<something>  (dmid=رقم المعنى المعرف)<br />
@@ -1059,7 +1059,7 @@ $messages['ar'] = array(
 	'ow_db_consistency_not_found' => '<h2>خطأ</h2>
 توجد مشكلة في تناسق قاعدة البيانات، ويكيبيانات لا يمكنها العثور على بيانات صحيحة متصلة برقم المعنى المعرف هذا.
 ربما تكون قد ضاعت.
-من فضلك اتصل بمشغل أو إداري الخادم.',
+من فضلك اتصل بمشغل أو إداري الخادم.', # Fuzzy
 	'ow_history_transaction' => 'الانتقال:',
 	'ow_history_show_life_span' => 'اعرض مدة الحياة المسجلة:',
 	'ow_class_attr_type_dm' => 'معنى معرف',
@@ -1067,12 +1067,12 @@ $messages['ar'] = array(
 	'ow_class_attr_type_plain' => 'نص بحت',
 	'ow_class_attr_type_link' => 'وصلة',
 	'ow_class_attr_type_option' => 'قائمة الخيارات',
-	'needstranslation' => 'ويكيبيانات: تعبيرات تحتاج الترجمة',
+	'needstranslation' => 'ويكيبيانات: تعبيرات تحتاج الترجمة', # Fuzzy
 	'ow_needs_xlation_title' => 'التعبيرات المحتاجة لترجمة',
 	'ow_needs_xlation_source_lang' => 'اللغة المصدر:',
 	'ow_needs_xlation_dest_lang' => 'اللغة الهدف:',
 	'ow_needs_xlation_no_dest_lang' => 'من فضلك حدد لغة هدف.',
-	'ow_statistics' => 'Wikidata: إحصاءات',
+	'ow_statistics' => 'Wikidata: إحصاءات', # Fuzzy
 	'ow_show' => 'اعرض',
 	'ow_upload' => 'رفع',
 	'ow_create' => 'أنشئ',
@@ -1151,7 +1151,7 @@ $messages['arc'] = array(
  * @author Ramsis II
  */
 $messages['arz'] = array(
-	'languages' => 'ويكى داتا: مدير اللغة',
+	'languages' => 'ويكى داتا: مدير اللغة', # Fuzzy
 	'langman_title' => 'مدير اللغة',
 	'langman_not_allowed' => 'أنت لا تمتلك السماح لتغيير إعدادات اللغة.',
 	'langman_header' => 'اكتب كود اللغة واسمها الإنجليزى بالأسفل:',
@@ -1163,12 +1163,12 @@ $messages['arz'] = array(
 	'langman_wikimedia' => 'كود ويكيميديا:',
 	'langman_field_optional' => '(اختيارى)',
 	'langman_addlang' => 'ضيف اللغه:',
-	'importlangnames' => 'ويكى داتا: استيراد أسماء اللغات',
+	'importlangnames' => 'ويكى داتا: استيراد أسماء اللغات', # Fuzzy
 	'importlangnames_title' => 'استيراد أسماء اللغات',
 	'importlangnames_not_allowed' => 'أنت لا تمتلك السماح لاستيراد أسماء اللغات.',
 	'importlangnames_added' => 'أسماء اللغات ل"$1" تمت إضافتها.',
 	'importlangnames_not_found' => '<strong>لا مدخلة لغة ل"$1" تم العثور عليها!</strong>',
-	'datasearch' => 'ويكى داتا: بحث البيانات',
+	'datasearch' => 'ويكى داتا: بحث البيانات', # Fuzzy
 	'datasearch_language' => 'اللغة:',
 	'datasearch_found_word' => 'وجد الكلمة',
 	'datasearch_meaning' => 'المعنى',
@@ -1180,7 +1180,7 @@ $messages['arz'] = array(
 	'datasearch_match_ext_ids' => 'المعرفات الخارجية تطابق <em>$1</em>',
 	'datasearch_match_words' => 'الكلمات التى تطابق <em>$1</em> والمعانى المصاحبة',
 	'datasearch_match_words_lang' => 'الكلمات باللغة <em>$1</em> التى تطابق <em>$2</em> والمعانى المصاحبة',
-	'importtsv' => 'ويكى داتا: استيراد تى إس فى',
+	'importtsv' => 'ويكى داتا: استيراد تى إس فى', # Fuzzy
 	'ow_importtsv_title1' => 'استيراد تى إس فى',
 	'ow_importtsv_title2' => 'استيراد التعريفات والترجمات',
 	'ow_importtsv_header' => "<p>استورد التعريفات والترجمات من ملف نص محدد بألسنة ربما تكون صدرته من OpenOffice.org، إكسل أو برنامج صحائف آخر.</p>
@@ -1203,14 +1203,14 @@ $messages['arz'] = array(
 	'ow_importtsv_results' => 'أضاف $1 {{PLURAL:$1|تعريف|تعريف}} و $2 {{PLURAL:$2|ترجمة|ترجمة}}.',
 	'ow_impexptsv_unknown_lang' => '<p>لغة غير معروفة أو غير صحيحة: $1.<br />
 اللغات يجب أن تكون أكواد لغات ISO 639-3.</p>',
-	'exporttsv' => 'ويكى داتا: تصدير تى إس فى',
+	'exporttsv' => 'ويكى داتا: تصدير تى إس فى', # Fuzzy
 	'ow_exporttsv_title' => 'تصدير مجموعة إلى TSV',
 	'ow_exporttsv_header' => "<p>صدر مجموعة إلى صيغة نص مفصول بألسنة الذى يمكنك استيراده فى OpenOffice.org، إكسل أو برنامج صحائف آخر.<br />
 اختر مجموعة للتصدير. فى صندوق نص اللغات، أدخل قائمة مفصولة بفاصلات لأكواد لغات ISO 639-3. ابدأ باللغة التى ستترجم منها (اختر كما تحب) وانه بالتى ستترجم إليها. ثم اضغط 'إنشاء' لإنشاء الملف.</p>",
 	'ow_exporttsv_languages' => 'اللغات:',
 	'ow_exporttsv_not_allowed' => 'أنت لا تمتلك السماح لعمل تصدير TSV.',
 	'ow_exporttsv_export_failed' => 'التصدير فشل',
-	'addcollection' => 'ويكى داتا: إضافة مجموعة',
+	'addcollection' => 'ويكى داتا: إضافة مجموعة', # Fuzzy
 	'ow_save' => 'حفظ',
 	'ow_history' => 'تاريخ',
 	'ow_datasets' => 'اختيار مجموعة البيانات',
@@ -1218,9 +1218,9 @@ $messages['arz'] = array(
 	'ow_noedit' => 'أنت غير مسموح لك بتعديل الصفحات فى مجموعة البيانات "$1".
 من فضلك انظر [[{{MediaWiki:Ow editing policy url}}|سياسة التحرير الخاصة بنا]].',
 	'ow_uipref_datasets' => 'عرض افتراضى:',
-	'ow_uiprefs' => 'ويكى داتا',
+	'ow_uiprefs' => 'ويكى داتا', # Fuzzy
 	'ow_none_selected' => 'لا شيء تم اختياره',
-	'transaction' => 'ويكى داتا: سجل الانتقال',
+	'transaction' => 'ويكى داتا: سجل الانتقال', # Fuzzy
 	'ow_transaction_from_transaction' => 'من الانتقال:',
 	'ow_transaction_count' => 'العدد:',
 	'ow_transaction_user' => 'اسم اليوزر:',
@@ -1238,7 +1238,7 @@ $messages['arz'] = array(
 	'ow_transaction_first_dm' => 'المعنى المعرف الأول',
 	'ow_transaction_second_dm' => 'المعنى المعرف الثانى',
 	'ow_transaction_summary' => 'ملخص',
-	'conceptmapping' => 'ويكى داتا: تخطيط المبدأ',
+	'conceptmapping' => 'ويكى داتا: تخطيط المبدأ', # Fuzzy
 	'ow_conceptmapping_title' => 'تخطيط المبدأ',
 	'ow_conceptmapping_help' => '<p>الأفعال الممكنة: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  إدراج رابطة</li>
@@ -1351,7 +1351,7 @@ $messages['arz'] = array(
 	'ow_db_consistency_not_found' => '<h2>خطأ</h2>
 توجد مشكلة فى ثبات قاعدة البيانات، ويكى داتا لا يمكنها العثور على بيانات صحيحة تتصل برقم المعنى المعرف هذا.
 ربما يكون قد ضاع.
-من فضلك اتصل بمشغل أو إدارى الخادم.',
+من فضلك اتصل بمشغل أو إدارى الخادم.', # Fuzzy
 	'ow_history_transaction' => 'الانتقال:',
 	'ow_history_show_life_span' => 'اعرض مدة الحياة المسجلة:',
 	'ow_class_attr_type_dm' => 'معنى معرف',
@@ -1359,7 +1359,7 @@ $messages['arz'] = array(
 	'ow_class_attr_type_plain' => 'نص بحت',
 	'ow_class_attr_type_link' => 'وصلة',
 	'ow_class_attr_type_option' => 'قائمة الخيارات',
-	'needstranslation' => 'ويكى داتا: التعبيرات المحتاجة للترجمة',
+	'needstranslation' => 'ويكى داتا: التعبيرات المحتاجة للترجمة', # Fuzzy
 	'ow_needs_xlation_title' => 'التعبيرات المحتاجة لترجمة',
 	'ow_needs_xlation_source_lang' => 'اللغة المصدر:',
 	'ow_needs_xlation_dest_lang' => 'اللغة الهدف:',
@@ -2750,8 +2750,8 @@ $messages['ce'] = array(
  * @author Marmzok
  */
 $messages['ckb'] = array(
-	'wikidata-handler-namespace-move-error' => 'پەڕەکانی بۆشایی ناو کە لە لایەن پاشبەندی ویکیدراوە دەکاردەگیرێ ناگوازرێتەوە.',
-	'languages' => 'ویکیدراوە: بەڕێوەبەری زمان',
+	'wikidata-handler-namespace-move-error' => 'پەڕەکانی بۆشایی ناو کە لە لایەن پاشبەندی ویکیدراوە دەکاردەگیرێ ناگوازرێتەوە.', # Fuzzy
+	'languages' => 'ویکیدراوە: بەڕێوەبەری زمان', # Fuzzy
 	'langman-desc' => 'به [[Special:Languages]] زمان زیاد بکە و هەڵبژاردەکانی بگۆڕە ‌',
 	'langman_title' => 'جێبەجێکەری زمان',
 	'langman_not_allowed' => 'ڕێگەت پێ‌نەدراوە بۆ گۆڕانی هەڵبژاردەکانی زمان.',
@@ -2764,29 +2764,29 @@ $messages['ckb'] = array(
 	'langman_wikimedia' => 'کۆدی ویکیمدیا:',
 	'langman_field_optional' => '(دڵخوازانه‌)',
 	'langman_addlang' => 'زمان زیاد بکە',
-	'importlangnames' => 'ویکیدراوە: ھاوردنی ناوەکانی زمان',
+	'importlangnames' => 'ویکیدراوە: ھاوردنی ناوەکانی زمان', # Fuzzy
 	'importlangnames_not_allowed' => 'ڕێگەت پێ‌نەدراوە بۆ گۆڕانی هەڵبژاردەکانی زمان.',
 	'importlangnames_added' => 'ناوه‌کانی زمان بۆ "$1" زیاد کرا.',
-	'datasearch' => 'ویکیدراوە: گەڕانی دراوەکان',
+	'datasearch' => 'ویکیدراوە: گەڕانی دراوەکان', # Fuzzy
 	'datasearch_language' => 'زمان:',
 	'datasearch_search_text' => 'گه‌ڕان بۆ ئه‌م ده‌قه‌:',
 	'datasearch_within_words' => 'بریتی بێت له‌م وشانه‌:',
-	'importtsv' => 'ویکیدراوە: ھاوردنی TSV',
+	'importtsv' => 'ویکیدراوە: ھاوردنی TSV', # Fuzzy
 	'ow_importtsv_nothing_added' => 'هیچ‌شتێک زیاد نەکرا.',
 	'ow_importtsv_nothing_added_test' => 'هیچ‌شتێک زیاد نەکرا (تاکە تاقی‌کردنەوەیەکت کرد).',
 	'ow_impexptsv_unknown_lang' => '<p>$1: زمانێکی هەڵە یان نەناسراو.<br />
 زمانەکان دەبێ لە کۆدی زمانەکانی ISO 639-3 ببێت.</p>',
-	'exporttsv' => 'ویکیدراوە: ھەناردنی TSV',
+	'exporttsv' => 'ویکیدراوە: ھەناردنی TSV', # Fuzzy
 	'ow_exporttsv_languages' => 'زمانەکان:',
 	'ow_exporttsv_export_failed' => 'هەناردن سەرکەوتوو نەبوو',
-	'addcollection' => 'ویکیدراوە: زیادکردنی کۆمەڵ',
+	'addcollection' => 'ویکیدراوە: زیادکردنی کۆمەڵ', # Fuzzy
 	'ow_save' => 'پاشەکەوت‌کردن',
 	'ow_history' => 'مێژوو',
 	'ow_noedit_title' => 'ڕێگە نەدراوە بۆ دەستکاری‌کردن',
 	'ow_uipref_datasets' => 'نمای بنەڕەت:',
-	'ow_uiprefs' => 'ویکیدراوە',
+	'ow_uiprefs' => 'ویکیدراوە', # Fuzzy
 	'ow_none_selected' => 'هیچ هەڵنەبژێردراوە',
-	'transaction' => 'ویکیدراوە: لۆگی دانوستان',
+	'transaction' => 'ویکیدراوە: لۆگی دانوستان', # Fuzzy
 	'ow_transaction_user' => 'ناوی بەکارهێنەر:',
 	'ow_transaction_previous_version' => 'وەشانی پێشوو',
 	'ow_transaction_restore' => 'گەڕاندنەوە',
@@ -2795,7 +2795,7 @@ $messages['ckb'] = array(
 	'ow_transaction_is_latest' => 'داویینە',
 	'ow_transaction_object' => 'تەن',
 	'ow_transaction_summary' => 'پوختە',
-	'conceptmapping' => 'ویکیدراوە: ھێڵکاریی چەمک',
+	'conceptmapping' => 'ویکیدراوە: ھێڵکاریی چەمک', # Fuzzy
 	'ow_conceptmapping_no_action_specified' => 'ئەنجامی "$1" پاڵپشت‌نەکراوە',
 	'ow_ClassAttributeLevel' => 'ئاست',
 	'ow_ClassAttributeType' => 'جۆر',
@@ -2827,7 +2827,7 @@ $messages['ckb'] = array(
 	'ow_Value' => 'نرخ',
 	'ow_added' => 'زیادکرا',
 	'ow_removed' => 'لابردرا',
-	'copy' => 'ویکیدراوە: کۆپی',
+	'copy' => 'ویکیدراوە: کۆپی', # Fuzzy
 	'ow_copy_help' => 'یارمەتی ئێستا بە ئاستی دڵخواز نەگەیشتە.',
 	'ow_copy_successful' => '<h2>ڕوونووسین سەرکەوتوو بوو</h2><br />
 لەوە دەچی دراوەت بە سەرکەوتوویی ڕوونووسین کرا.<br />
@@ -2837,16 +2837,16 @@ $messages['ckb'] = array(
 	'ow_db_consistency_not_found' => '<h2>ھەڵە</h2>
 گرفتێک لە سازانی بنکەدراوە دۆزرایەوە، ویکیدراوە ناتوانێ دراوە دروستە پەیوەندیدارەکان بە پێناسەی مانای دیاریکراو بدۆزێتەوە.
 لەوانەیە بزر بووبێ.
-تکایە لەگەڵ بەڕێوەبەر یان ئۆپەراتۆر پەیوەندی بگرن.',
+تکایە لەگەڵ بەڕێوەبەر یان ئۆپەراتۆر پەیوەندی بگرن.', # Fuzzy
 	'ow_class_attr_type_xlate' => 'ئەو دەقانەی توانای وەرگێرانیان هەیە',
 	'ow_class_attr_type_plain' => 'دەقی سادە',
 	'ow_class_attr_type_link' => 'بەستەر',
 	'ow_class_attr_type_option' => 'پێرستی ھەڵبژاردن',
-	'needstranslation' => 'ویکیدراوە: دەستەواژەکانی پێویست بە وەرگێڕان',
+	'needstranslation' => 'ویکیدراوە: دەستەواژەکانی پێویست بە وەرگێڕان', # Fuzzy
 	'ow_needs_xlation_source_lang' => 'زمانی سەرچاوە:',
 	'ow_needs_xlation_dest_lang' => 'زمانی مەبەست:',
 	'ow_needs_xlation_no_dest_lang' => 'تکایە زمانێکی مەبەست دیاری بکە.',
-	'ow_statistics' => 'ویکیدراوە: ئامارەکان',
+	'ow_statistics' => 'ویکیدراوە: ئامارەکان', # Fuzzy
 	'ow_show' => 'نیشانیبدە',
 	'ow_upload' => 'بارکردن',
 	'ow_create' => 'درووست‌کردن',
@@ -3429,7 +3429,7 @@ Ihre Daten scheinen erfolgreich kopiert worden zu sein.
 Bitte vergessen Sie nicht nochmals zu prüfen um sicherzugehen!',
 	'ow_no_action_specified' => '<h3>Es wurde keine Aktion angegeben</h3>
 Vielleicht kamen Sie direkt zu dieser Seite?',
-	'ow_db_consistency_not_found' => '<h2>Fehler</h2>Die Datenbank ist nicht mehr konsistent. Wikidata kann keine gültigen Daten zu der ID finden. Bitte kontaktieren Sie den Server-Administrator.',
+	'ow_db_consistency_not_found' => '<h2>Fehler</h2>Die Datenbank ist nicht mehr konsistent. Wikidata kann keine gültigen Daten zu der ID finden. Bitte kontaktieren Sie den Server-Administrator.', # Fuzzy
 );
 
 /** Zazaki (Zazaki)
@@ -4683,8 +4683,8 @@ Mesedez harremanetan ipini zerbitzari operadore edo administratzailearekin.', # 
  */
 $messages['fa'] = array(
 	'wikidata-desc' => 'پایگاه دادهٔ ویکی‌پیوند را برای انواع گوناگون محتواها می‌افزاید',
-	'wikidata-handler-namespace-move-error' => 'صفحه‌های فضاهای نامی که توسط افزونهٔ ویکی‌داده اداره می‌شوند قابل انتقال نیستند.',
-	'languages' => 'ویکی‌داده: مدیریت زبان',
+	'wikidata-handler-namespace-move-error' => 'صفحه‌های فضاهای نامی که توسط افزونهٔ ویکی‌داده اداره می‌شوند قابل انتقال نیستند.', # Fuzzy
+	'languages' => 'ویکی‌داده: مدیریت زبان', # Fuzzy
 	'langman-desc' => 'افزودن و تغییر تنظیمات زبان با [[Special:Languages]]',
 	'langman_title' => 'مدیریت زبان',
 	'langman_not_allowed' => 'شما دسترسی تغییر تنظیمات زبان را ندارید.',
@@ -4697,12 +4697,12 @@ $messages['fa'] = array(
 	'langman_wikimedia' => 'کد ویکی‌مدیا:',
 	'langman_field_optional' => '(اختیاری)',
 	'langman_addlang' => 'افزودن زبان',
-	'importlangnames' => 'ویکی‌داده: درون‌ریزی نام زبان‌ها',
+	'importlangnames' => 'ویکی‌داده: درون‌ریزی نام زبان‌ها', # Fuzzy
 	'importlangnames_title' => 'درون‌ریزی نام زبان‌ها',
 	'importlangnames_not_allowed' => 'شما دسترسی درون‌ریزی نام زبان‌ها را ندارید.',
 	'importlangnames_added' => 'نام‌های زبان برای «$1» افزوده شد.',
 	'importlangnames_not_found' => '<strong>هیچ ورودی زبانی برای «$1» یافت نشد!</strong>',
-	'datasearch' => 'ویکی‌داده: جستجوی داده‌ها',
+	'datasearch' => 'ویکی‌داده: جستجوی داده‌ها', # Fuzzy
 	'datasearch_language' => 'زبان:',
 	'datasearch_found_word' => 'واژهٔ پیداشده',
 	'datasearch_meaning' => 'معنی',
@@ -4714,7 +4714,7 @@ $messages['fa'] = array(
 	'datasearch_match_ext_ids' => 'شناسهٔ تطابق بیرونی <em>$1</em>',
 	'datasearch_match_words' => 'واژه‌های مطابق با <em>$1</em> و معنی‌های مرتبط',
 	'datasearch_match_words_lang' => 'واژه‌های موجود در <em>$1</em> مطابق با <em>$2</em> و معنی‌های مرتبط',
-	'importtsv' => 'ویکی‌داده: درون‌ریزی تی‌اس‌وی',
+	'importtsv' => 'ویکی‌داده: درون‌ریزی تی‌اس‌وی', # Fuzzy
 	'ow_importtsv_title1' => 'درون‌ریزی تی‌اس‌وی',
 	'ow_importtsv_title2' => 'درون‌ریزی معانی و ترجمه‌ها',
 	'ow_importtsv_header' => '<p>درون‌ریزی تعاریف و ترجمه‌ها از پرونده‌های متن بازی که ممکن است از اپن‌آفیس، اکسل یا نرم‌افزارهای صفحه‌گسترده‌ٔ دیگر به دست آمده باشد.</p>
@@ -4741,7 +4741,7 @@ $messages['fa'] = array(
 	'ow_importtsv_results' => '$1 {{PLURAL:$1|معنی|معنی}} و $2 {{PLURAL:$2|ترجمه|ترجمه}} افزوده شد.',
 	'ow_impexptsv_unknown_lang' => '<p>زبان ناشناخته یا نادرست: $1.<br />
 زبان باید از کدهای ISO 639-3 باشد.</p>',
-	'exporttsv' => 'ویکی‌داده: برون‌ریزی تی‌اس‌وی',
+	'exporttsv' => 'ویکی‌داده: برون‌ریزی تی‌اس‌وی', # Fuzzy
 	'ow_exporttsv_title' => 'برون‌ریزی یک مجموعه به تی‌اس‌وی',
 	'ow_exporttsv_header' => '<p>برون‌ریزی یک مجموعه به صورت یک متن تب‌های جداشده که شما می‌توانید در برنامه اپن‌آفیس، اکسل یا برنامه‌های دیگر صفحه گسترده درون‌ریزی نمائید.<br />
 یک مجموعه را برای برون‌ریزی انتخاب کنید. در جعبه متن زبان، کد زبان مورد نظر را بر پایه استاندارد ۶۳۹-۳ وارد نمائید.
@@ -4749,7 +4749,7 @@ $messages['fa'] = array(
 	'ow_exporttsv_languages' => 'زبان‌ها:',
 	'ow_exporttsv_not_allowed' => 'شما دسترسی برای برون‌ریزی تی‌اس‌وی ندارید.',
 	'ow_exporttsv_export_failed' => 'برون‌ریزی ناموفق بود',
-	'addcollection' => 'ویکی‌داده: افزودن مجموعه',
+	'addcollection' => 'ویکی‌داده: افزودن مجموعه', # Fuzzy
 	'ow_searchnoresult' => "<p>شما ممکن است:<br />
 * '''ساخت اصطلاح  \"[[Expression:\$1]]\"''' (و افزودن تعریف)<br />
 * '''ایجاد صفحهٔ \"[[:\$1]]\"''' (یک صفحهٔ استاندارد ویکی)</p>",
@@ -4760,9 +4760,9 @@ $messages['fa'] = array(
 	'ow_noedit' => 'شما مجاز به ویرایش صفحه‌ها در مجموعهٔ داده «$1» نیستید.
 لطفاً [[{{MediaWiki:Ow editing policy url}}|سیاست‌های ویرایشی]] را مطالعه کنید.',
 	'ow_uipref_datasets' => 'نمای پیش‌فرض:',
-	'ow_uiprefs' => 'ویکی‌داده',
+	'ow_uiprefs' => 'ویکی‌داده', # Fuzzy
 	'ow_none_selected' => 'هیچ‌کدام انتخاب نشده‌اند',
-	'transaction' => 'ویکی‌داده: سیاههٔ تبادل',
+	'transaction' => 'ویکی‌داده: سیاههٔ تبادل', # Fuzzy
 	'ow_transaction_from_transaction' => 'از تبادل:',
 	'ow_transaction_count' => 'تعداد دفعات:',
 	'ow_transaction_user' => 'نام کاربری:',
@@ -4780,7 +4780,7 @@ $messages['fa'] = array(
 	'ow_transaction_first_dm' => 'معنی تعریف‌شدهٔ نخست',
 	'ow_transaction_second_dm' => 'معنی تعریف‌شدهٔ دوم',
 	'ow_transaction_summary' => 'خلاصه',
-	'conceptmapping' => 'ویکی‌داده: ترسیم مفاهیم',
+	'conceptmapping' => 'ویکی‌داده: ترسیم مفاهیم', # Fuzzy
 	'ow_conceptmapping_title' => 'ترسیم مفاهیم',
 	'ow_conceptmapping_help' => '<p>کارهای قابل انجام: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&... افزودن یک ترسیم</li>
@@ -4878,7 +4878,7 @@ $messages['fa'] = array(
 	'ow_meaningsoftitle' => 'معنی «$1»',
 	'ow_meaningsofsubtitle' => '<em>پیوند درون‌ویکی:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>عدم دسترسی</h2>',
-	'copy' => 'ویکی‌داده: رونویسی',
+	'copy' => 'ویکی‌داده: رونویسی', # Fuzzy
 	'ow_copy_no_action_specified' => 'لطفاً عملی را مشخص کنید',
 	'ow_copy_help' => 'کمک هنوز اجرا نشده‌است.',
 	'ow_please_proved_dmid' => 'به نظر می‌رسد در ورودی شما «?dmid=<ID>» (که dmid=Defined Meaning ID، یعنی شناسهٔ معنی تعریف‌شده) وجود ندارد.<br />
@@ -4897,7 +4897,7 @@ $messages['fa'] = array(
 	'ow_db_consistency_not_found' => '<h2>خطا</h2>
 مشکلی پیرامون ثبات پایگاه داده وجود دارد. ویکی‌داده نمی‌تواند داده‌های معتبر مرتبط با این شناسهٔ معنی تعریف‌شده را بیابد.
 ممکن است از دست رفته باشد.
-با مدیر یا اپراتور سرور تماس بگیرید.',
+با مدیر یا اپراتور سرور تماس بگیرید.', # Fuzzy
 	'ow_history_transaction' => 'تبادل:',
 	'ow_history_show_life_span' => 'نمایش ذخیرهٔ دورهٔ عمر:',
 	'ow_class_attr_type_dm' => 'معنی تعریف‌شده',
@@ -4905,12 +4905,12 @@ $messages['fa'] = array(
 	'ow_class_attr_type_plain' => 'متن ساده',
 	'ow_class_attr_type_link' => 'پیوند',
 	'ow_class_attr_type_option' => 'فهرست اختیاری',
-	'needstranslation' => 'ویکی‌داده: اصطلاحات نیازمند ترجمه',
+	'needstranslation' => 'ویکی‌داده: اصطلاحات نیازمند ترجمه', # Fuzzy
 	'ow_needs_xlation_title' => 'اصطلاحات نیازمند ترجمه',
 	'ow_needs_xlation_source_lang' => 'زبان مبدأ:',
 	'ow_needs_xlation_dest_lang' => 'زبان مقصد:',
 	'ow_needs_xlation_no_dest_lang' => 'لطفاً یک زبان مقصد مشخص کنید.',
-	'ow_statistics' => 'ویکی‌داده: آمار',
+	'ow_statistics' => 'ویکی‌داده: آمار', # Fuzzy
 	'ow_show' => 'نمایش',
 	'ow_upload' => 'بارگذاری',
 	'ow_create' => 'ایجاد',
@@ -5901,8 +5901,8 @@ $messages['grc'] = array(
 	'langman_wikimedia' => 'Κῶδιξ Wikimedia:',
 	'langman_field_optional' => '(Προαιρετικόν)',
 	'langman_addlang' => 'Προστιθέναι γλῶττα',
-	'importlangnames' => 'Βικιδεδομένα: Εἰσάγειν ὀνόματα γλωσσῶν',
-	'datasearch' => 'Βικιδεδομένα: Ἀναζήτησις δεδομένων',
+	'importlangnames' => 'Βικιδεδομένα: Εἰσάγειν ὀνόματα γλωσσῶν', # Fuzzy
+	'datasearch' => 'Βικιδεδομένα: Ἀναζήτησις δεδομένων', # Fuzzy
 	'datasearch_language' => 'Γλῶττα:',
 	'datasearch_found_word' => 'Εὑρεθεῖσα λέξις',
 	'datasearch_meaning' => 'Νόημα',
@@ -5915,7 +5915,7 @@ $messages['grc'] = array(
 	'ow_save' => 'Γράφειν',
 	'ow_history' => 'Αἱ προτέραι',
 	'ow_datasets' => 'Ἐκλογὴ συνόλου δεδομένων',
-	'ow_uiprefs' => 'Βικιδεδομένα',
+	'ow_uiprefs' => 'Βικιδεδομένα', # Fuzzy
 	'ow_transaction_count' => 'Μέτρησις:',
 	'ow_transaction_user' => 'Ὄνομα χρωμένου:',
 	'ow_transaction_rollback_button' => 'Ἀναστροφή',
@@ -7640,7 +7640,7 @@ $messages['io'] = array(
 $messages['is'] = array(
 	'ow_save' => 'Vista',
 	'ow_uipref_datasets' => 'Sjálfgefið útlit', # Fuzzy
-	'ow_uiprefs' => 'Wikigögn',
+	'ow_uiprefs' => 'Wikigögn', # Fuzzy
 	'ow_dm_OK' => 'Í lagi',
 );
 
@@ -8200,8 +8200,8 @@ Mangga hubungi operator server utawa pangurus.', # Fuzzy
  */
 $messages['ka'] = array(
 	'wikidata-desc' => 'სვამს ვიკი-მსგავს მონამცემთა ბაზას სხვადასხვა ტიპის მონაცემებისთვის',
-	'wikidata-handler-namespace-move-error' => 'ვიკიმონაცემთა (Wikidata) სახელთა სივრცეში არსებული გვერდების გადატანა შეუძლებელია.',
-	'languages' => 'ვიკიმონაცემები:ენათა მართვა',
+	'wikidata-handler-namespace-move-error' => 'ვიკიმონაცემთა (Wikidata) სახელთა სივრცეში არსებული გვერდების გადატანა შეუძლებელია.', # Fuzzy
+	'languages' => 'ვიკიმონაცემები:ენათა მართვა', # Fuzzy
 	'langman-desc' => 'ენის პარამეტრების დამატება და შეცვლა [[Special:Languages]] მეშვეობით',
 	'langman_title' => 'ენების მართვა',
 	'langman_not_allowed' => 'თქვენ არ გაქვთ ენების კონფიგურაციის შეცვლის უფლება.',
@@ -8214,12 +8214,12 @@ $messages['ka'] = array(
 	'langman_wikimedia' => 'ვიკიმედიის კოდი:',
 	'langman_field_optional' => '(არასავალდებულო)',
 	'langman_addlang' => 'ენის დამატება',
-	'importlangnames' => 'ვიკიმონაცემები: ენების სახელების იმპორტი',
+	'importlangnames' => 'ვიკიმონაცემები: ენების სახელების იმპორტი', # Fuzzy
 	'importlangnames_title' => 'ენების სახელების იმპორტი',
 	'importlangnames_not_allowed' => 'თქვენ არ გაქვთ ენების იმპორტის განხორციელების უფლება.',
 	'importlangnames_added' => 'დაემატა ენების სახელები „$1“-თვის.',
 	'importlangnames_not_found' => '<strong>არ არის აღმოჩენილი «$1» ენობრიცი ჩანაწერი!</strong>',
-	'datasearch' => 'ვიკიმონაცემები: მონაცემთა ძიება',
+	'datasearch' => 'ვიკიმონაცემები: მონაცემთა ძიება', # Fuzzy
 	'datasearch_language' => 'ენა:',
 	'datasearch_found_word' => 'აღმოჩენილია სიტყვა',
 	'datasearch_meaning' => 'მნიშვნელობა',
@@ -8227,22 +8227,22 @@ $messages['ka'] = array(
 	'datasearch_search_text' => 'ტექსტის ძიება:',
 	'datasearch_within_words' => 'სიტყვებს შორის:',
 	'datasearch_within_ext_ids' => 'გარე იდენტიფიკატორთა შორის:',
-	'importtsv' => 'ვიკიმონაცემები:TSV იმპორტი',
+	'importtsv' => 'ვიკიმონაცემები:TSV იმპორტი', # Fuzzy
 	'ow_importtsv_file' => 'TSV ფაილი:',
 	'ow_importtsv_test_run' => 'ტესტური გაშვება:',
-	'exporttsv' => 'ვიკიმონაცემები:TSV ექსპორტი',
+	'exporttsv' => 'ვიკიმონაცემები:TSV ექსპორტი', # Fuzzy
 	'ow_exporttsv_languages' => 'ენები:',
 	'ow_exporttsv_export_failed' => 'ექსპორტი ვერ განხორციელდა',
-	'addcollection' => 'ვიკიმონაცემები: კოლექციის დამატება',
+	'addcollection' => 'ვიკიმონაცემები: კოლექციის დამატება', # Fuzzy
 	'ow_save' => 'შენახვა',
 	'ow_history' => 'ისტორია',
 	'ow_datasets' => 'მონაცემთა ნაკრების შერჩევა',
 	'ow_noedit_title' => 'თქვენ არ გაქვთ რედაქტირების უფლება',
 	'ow_noedit' => 'თქვენ არ გაქვთ მონაცემთა ნაკრებში "$1" გვერდების რედაქტირების ნებართვა. იხილეთ [[{{MediaWiki:Ow editing policy url}}|ჩვენი სარედაქციო პოლიტიკა]].',
 	'ow_uipref_datasets' => 'სტანდარტული ჩვენება:',
-	'ow_uiprefs' => 'ვიკიმონაცემები',
+	'ow_uiprefs' => 'ვიკიმონაცემები', # Fuzzy
 	'ow_none_selected' => 'არაფერია შერჩეული',
-	'transaction' => 'ვიკიმონაცემები:ტრანზაქციების ჟურნალი',
+	'transaction' => 'ვიკიმონაცემები:ტრანზაქციების ჟურნალი', # Fuzzy
 	'ow_transaction_count' => 'რაოდენობა:',
 	'ow_transaction_user' => 'მომხმარებელი:',
 	'ow_transaction_rollback_button' => 'სწრაფი გაუქმება',
@@ -8256,7 +8256,7 @@ $messages['ka'] = array(
 	'ow_transaction_class_member' => 'კლასის წევრი',
 	'ow_transaction_object' => 'ობიექტი',
 	'ow_transaction_summary' => 'რეზიუმე',
-	'conceptmapping' => 'ვიკიმონაცემები:კონცეპტების შესაბამისობა',
+	'conceptmapping' => 'ვიკიმონაცემები:კონცეპტების შესაბამისობა', # Fuzzy
 	'ow_conceptmapping_uitext' => '<p>ცნებათა შესაბამისობა (Concept Mapping) საშუალებას გაძლევთ დაადგინოთ, ამა თუ იმ მონაცემთა ნაკრებში რომელი განსაზღვრული მნიშვნელობაა სხვა მონაცემთა ნაკრებებში არსებულ განსაზღვრულ მნიშვნელობათა იდენტური.</p>',
 	'ow_conceptmapping_no_action_specified' => 'მოქმედება "$1" არ არის გათვალისწინებული.',
 	'ow_dm_OK' => 'კარგი',
@@ -8332,7 +8332,7 @@ $messages['ka'] = array(
 	'ow_removed' => 'წაშლილია',
 	'ow_meaningsoftitle' => '"$1"-ის მნიშვნელობები',
 	'ow_meaningsofsubtitle' => '<em>ვიკი ბმული:</em> [[$1]]',
-	'copy' => 'ვიკიმონაცემები: ასლი',
+	'copy' => 'ვიკიმონაცემები: ასლი', # Fuzzy
 	'ow_copy_no_action_specified' => 'თუ შეიძლება, მიუთითეთ მოქმედება',
 	'ow_copy_help' => 'დახმარება ჯერ არ მოქმედებს.',
 	'ow_please_proved_dmid' => 'როგორც ჩანს, თქვენს მიერ შეტანილ მონაცემებს აკლია "?dmid=<ID>" (dmid=განსაზღვრული მნიშვნელობის იდენტიფიკატორი)<br />თუ შეიძლება დაუკავშირდით სერვერის ადმინისტრატორს.',
@@ -8344,12 +8344,12 @@ $messages['ka'] = array(
 	'ow_class_attr_type_plain' => 'უბრალო ტექსტი',
 	'ow_class_attr_type_link' => 'ბმული',
 	'ow_class_attr_type_option' => 'არჩევის სია',
-	'needstranslation' => 'ვიკიმონაცემები:თარგმნის საჭიროების მქონე გამოთქმები',
+	'needstranslation' => 'ვიკიმონაცემები:თარგმნის საჭიროების მქონე გამოთქმები', # Fuzzy
 	'ow_needs_xlation_title' => 'სათარგმნი გამოთქმები',
 	'ow_needs_xlation_source_lang' => 'საწყისი ენა:',
 	'ow_needs_xlation_dest_lang' => 'სამიზნე ენა:',
 	'ow_needs_xlation_no_dest_lang' => 'თუ შეიძლება, მიუთითეთ სამიზნე ენა.',
-	'ow_statistics' => 'ვიკიმონაცემები: სტატისტიკა',
+	'ow_statistics' => 'ვიკიმონაცემები: სტატისტიკა', # Fuzzy
 	'ow_show' => 'ჩვენება',
 	'ow_upload' => 'ატვირთვა',
 	'ow_create' => 'შექმნა',
@@ -9165,7 +9165,7 @@ $messages['la'] = array(
 	'ow_exporttsv_languages' => 'Linguae:',
 	'ow_save' => 'Servare',
 	'ow_history' => 'Historia',
-	'ow_uiprefs' => 'Vicidata',
+	'ow_uiprefs' => 'Vicidata', # Fuzzy
 	'ow_transaction_count' => 'Census:',
 	'ow_transaction_user' => 'Nomen usoris:',
 	'ow_transaction_restore' => 'Restituere',
@@ -9605,7 +9605,7 @@ $messages['lzz'] = array(
  */
 $messages['mai'] = array(
 	'langman_title' => 'भाषा प्रबंधक',
-	'datasearch' => 'विकी सूचनाकोष: सूचनाकोष ताकू',
+	'datasearch' => 'विकी सूचनाकोष: सूचनाकोष ताकू', # Fuzzy
 );
 
 /** Malagasy (Malagasy)
@@ -9946,7 +9946,7 @@ $messages['ml'] = array(
 	'ow_history' => 'നാൾവഴി',
 	'ow_noedit_title' => 'തിരുത്തുവാനുള്ള അനുമതി ഇല്ല',
 	'ow_uipref_datasets' => 'സ്വതേയുള്ള ദൃശ്യം:',
-	'ow_uiprefs' => 'വിക്കിഡാറ്റ',
+	'ow_uiprefs' => 'വിക്കിഡാറ്റ', # Fuzzy
 	'ow_none_selected' => 'ഒന്നും തിരഞ്ഞെടുത്തിട്ടില്ല',
 	'ow_conceptmapping_no_action_specified' => '"$1" എന്ന പ്രവൃത്തി പിന്തുണയ്ക്കുന്നില്ല.',
 	'ow_dm_OK' => 'ശരി',
@@ -10000,16 +10000,16 @@ $messages['mn'] = array(
  * @author Mahitgar
  */
 $messages['mr'] = array(
-	'languages' => 'विकिविदा:भाषाप्रबंधक',
+	'languages' => 'विकिविदा:भाषाप्रबंधक', # Fuzzy
 	'langman_title' => 'भाषा प्रबंधक',
-	'datasearch' => 'विकिविदा:विदा शोध',
+	'datasearch' => 'विकिविदा:विदा शोध', # Fuzzy
 	'ow_save' => 'जतन करा',
 	'ow_history' => 'इतिहास',
 	'ow_datasets' => 'विदा-संच निवड',
 	'ow_noedit_title' => 'संपादनाकरिता परवानगी नाही',
 	'ow_noedit' => 'विदासंच "$1"मधील पाने संपादीत करण्याची तुम्हाला परवानगी नाही.कृपया [[{{MediaWiki:Ow editing policy url}}|आमची संपादन निती]]पहा.',
 	'ow_uipref_datasets' => 'अविचल दृश्य', # Fuzzy
-	'ow_uiprefs' => 'विकिविदा',
+	'ow_uiprefs' => 'विकिविदा', # Fuzzy
 	'ow_none_selected' => 'कोणतेही निवडले नाही',
 	'ow_conceptmapping_help' => '<p>शक्य क्रिया: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  एक मॅपिंग टाका</li>
@@ -10096,7 +10096,7 @@ $messages['mr'] = array(
 	'ow_copy_successful' => '<h2>नक्कल यशस्वी</h2>तुमची विदा यशस्वीपणे नकलली गेल्याचे दिसते.निश्चित करण्यासाठी पुन्हाएकदा पडताळून पहा!',
 	'ow_copy_unsuccessful' => '<h3>नक्कल अयशस्वी</h3> नकलण्याचे कोणतेही काम झाले नाही.',
 	'ow_no_action_specified' => '<h3>कोणतीही कृती सांगीतली नाही</h3>काय तुम्ही या पानापाशी सरळच पोहचले आहात? सर्वसाधारणता तुम्ही येथे पोहचण्याची आवशकता नाही.',
-	'ow_db_consistency_not_found' => '<h2>त्रूटी</h2>विदेच्या सुरळीतपणाचा प्रश्न आहे ,विकिविदा या व्यक्त ID शी संबधीत सुयोग्य विदा शोधूशकत नाही.ती हरवली असण्याची शक्यता आहे.कृपया प्रचालक अथवा प्रबंधकांशी संपर्क करा.',
+	'ow_db_consistency_not_found' => '<h2>त्रूटी</h2>विदेच्या सुरळीतपणाचा प्रश्न आहे ,विकिविदा या व्यक्त ID शी संबधीत सुयोग्य विदा शोधूशकत नाही.ती हरवली असण्याची शक्यता आहे.कृपया प्रचालक अथवा प्रबंधकांशी संपर्क करा.', # Fuzzy
 );
 
 /** Malay (Bahasa Melayu)
@@ -10210,13 +10210,13 @@ $messages['mwl'] = array(
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
-	'languages' => 'Келень кирдий',
+	'languages' => 'Келень кирдий', # Fuzzy
 	'langman_title' => 'Келень кирдий',
 	'langman_req_fields' => 'Келенть лемезэ ды ISO 639-3 кодозо кавтонест эрявить!',
 	'langman_langname' => 'Келенть лемезэ:',
 	'langman_field_optional' => '(мелень коряс)',
 	'langman_addlang' => 'Поладомс кель',
-	'datasearch' => 'Викидата: Датань вешнема',
+	'datasearch' => 'Викидата: Датань вешнема', # Fuzzy
 	'datasearch_language' => 'Келесь:',
 	'datasearch_found_word' => 'Муезь вал',
 	'datasearch_meaning' => 'Смустезэ',
@@ -10226,7 +10226,7 @@ $messages['myv'] = array(
 	'ow_exporttsv_languages' => 'Кельтне:',
 	'ow_save' => 'Ванстомс',
 	'ow_history' => 'Путовксонзо-йуронзо',
-	'ow_uiprefs' => 'Викидата',
+	'ow_uiprefs' => 'Викидата', # Fuzzy
 	'ow_none_selected' => 'Вейкеяк апакКочка',
 	'ow_transaction_restore' => 'Вельмевтемс',
 	'ow_transaction_remove' => 'Нардамс',
@@ -10271,7 +10271,7 @@ $messages['myv'] = array(
 $messages['nah'] = array(
 	'ow_save' => 'Ticpiyāz',
 	'ow_history' => 'Tlahcuilōlloh',
-	'ow_uiprefs' => 'Huiquidatah',
+	'ow_uiprefs' => 'Huiquidatah', # Fuzzy
 	'ow_dm_OK' => 'Cualli',
 	'ow_Language' => 'Tlâtòlli',
 	'ow_Synonyms' => 'Neneuhtlahtōl',
@@ -10566,12 +10566,12 @@ $messages['ne'] = array(
 	'langman_wikimedia' => 'विकिमीडिया कोड:',
 	'langman_field_optional' => '(वैकल्पिक)',
 	'langman_addlang' => 'भाषा थप्ने',
-	'importlangnames' => 'विकिमीडिया: भाषा नामहरु आयात गर्ने',
+	'importlangnames' => 'विकिमीडिया: भाषा नामहरु आयात गर्ने', # Fuzzy
 	'importlangnames_title' => 'भाषा नामहरु आयात गर्ने',
 	'importlangnames_not_allowed' => 'तपाईंलाई  भाषा आयात गर्ने अनुमति छैन।',
 	'importlangnames_added' => ' "$1" को लागि भाषा नाम थपियो।',
 	'importlangnames_not_found' => '<strong>पाइएको  "$1" को लागि भाषा प्रवेश अनुमति नभएको found!</strong>',
-	'datasearch' => 'विकिडेटा: डेटा खोज',
+	'datasearch' => 'विकिडेटा: डेटा खोज', # Fuzzy
 	'datasearch_language' => 'भाषा:',
 	'datasearch_found_word' => 'शव्द पाइयो',
 	'datasearch_meaning' => 'अर्थ',
@@ -11305,7 +11305,7 @@ Contactatz l’administrator.',
 	'ow_shown_datasets' => 'Afichar los ensembles de donadas',
 );
 
-/** Oriya (ଓଡ଼ିଆ)
+/** Oriya (ଓଡ଼ିଆ)
  * @author Jose77
  * @author Psubhashish
  */
@@ -12890,8 +12890,8 @@ Pe piacere condatte l'operatore o l'amministratore d'u server.",
  */
 $messages['ru'] = array(
 	'wikidata-desc' => 'Добавляет вики-подобную базу данных для различных видов контента',
-	'wikidata-handler-namespace-move-error' => 'Страницы в пространстве имён, обрабатываемых расширением Викиданные (Wikidata) не могут быть переименованы.',
-	'languages' => 'Викиданные: Языковой менеджер',
+	'wikidata-handler-namespace-move-error' => 'Страницы в пространстве имён, обрабатываемых расширением Викиданные (Wikidata) не могут быть переименованы.', # Fuzzy
+	'languages' => 'Викиданные: Языковой менеджер', # Fuzzy
 	'langman-desc' => 'Добавление и изменение языковых настроек с помощью [[Special:Languages]]',
 	'langman_title' => 'Языковой менеджер',
 	'langman_not_allowed' => 'У вас нет разрешения изменять языковые настройки.',
@@ -12904,12 +12904,12 @@ $messages['ru'] = array(
 	'langman_wikimedia' => 'Код Викимедии:',
 	'langman_field_optional' => '(необязательно)',
 	'langman_addlang' => 'Добавить язык',
-	'importlangnames' => 'Викиданные: импорт названий языков',
+	'importlangnames' => 'Викиданные: импорт названий языков', # Fuzzy
 	'importlangnames_title' => 'Импорт названий языков',
 	'importlangnames_not_allowed' => 'У вас нет разрешения импортировать названия языков.',
 	'importlangnames_added' => 'Добавлены названия языков для «$1».',
 	'importlangnames_not_found' => '<strong>Не найдено языковых записей для «$1»!</strong>',
-	'datasearch' => 'Викиданные: Поиск данных',
+	'datasearch' => 'Викиданные: Поиск данных', # Fuzzy
 	'datasearch_language' => 'Язык:',
 	'datasearch_found_word' => 'Найденное слово',
 	'datasearch_meaning' => 'Значение',
@@ -12921,7 +12921,7 @@ $messages['ru'] = array(
 	'datasearch_match_ext_ids' => 'Внешние идентификаторы, соответствующие «$1»',
 	'datasearch_match_words' => 'Слова, соответствующие «$1», и связанные значения',
 	'datasearch_match_words_lang' => 'Слова на <em>$1</em>, соответствующие «$2», и связанные значения',
-	'importtsv' => 'Викиданные: Импорт TSV',
+	'importtsv' => 'Викиданные: Импорт TSV', # Fuzzy
 	'ow_importtsv_title1' => 'Импорт TSV',
 	'ow_importtsv_title2' => 'Импорт определений и переводов',
 	'ow_importtsv_header' => '<p>Импорт определений и переводов из файла, содержащего значения разделёнными запятыми, который может быть получен из OpenOffice.org, Excel или иной программы работы с электронными таблицами.</p>
@@ -12944,14 +12944,14 @@ $messages['ru'] = array(
 	'ow_importtsv_results' => '{{PLURAL:$1|Добавлено $1 определение|Добавлено $1 определения|Добавлено $1 определений}} и $2 {{PLURAL:$2|перевод|перевода|переводов}}.',
 	'ow_impexptsv_unknown_lang' => '<p>Неизвестный или ошибочный язык: $1.<br />
 Языки должны быть записаны в виде кодов ISO 639-3.</p>',
-	'exporttsv' => 'Викиданные: Экспорт TSV',
+	'exporttsv' => 'Викиданные: Экспорт TSV', # Fuzzy
 	'ow_exporttsv_title' => 'Экспорт коллекции в TSV',
 	'ow_exporttsv_header' => '<p>Экспорт коллекции в текстовый файл, содержащий значения разделённые запятыми. Данный файл можно будет импортировать в OpenOffice.org, Excel или другую программу работы с электронными таблицами.<br />
 Выберите коллекцию для экспорта. В поле языков введите через запятую ISO 639-3 коды языков. Начните с тех языков, с которых вы собираетесь переводить (выберите столько, сколько вам нужно), и закончите теми, на которые вы собираетесь делать переводы. Нажмите «Создать», чтобы создать файл.</p>',
 	'ow_exporttsv_languages' => 'Языки:',
 	'ow_exporttsv_not_allowed' => 'У вас нет разрешения делать экспорт TSV.',
 	'ow_exporttsv_export_failed' => 'Ошибка экспорта',
-	'addcollection' => 'Викиданные: Добавление коллекции',
+	'addcollection' => 'Викиданные: Добавление коллекции', # Fuzzy
 	'ow_searchnoresult' => "<p>Вы можете:<br />
 *'''Создать выражение «[[Expression:$1]]»''' (и добавить определение)<br />
 *'''Создать страницу «[[:$1]]»''' (обычную вики-страницу)</p>",
@@ -12961,9 +12961,9 @@ $messages['ru'] = array(
 	'ow_noedit_title' => 'Нет прав для редактирования',
 	'ow_noedit' => 'Вам не разрешено редактировать страницы в наборе данных «$1». Обратите внимание на [[{{MediaWiki:Ow editing policy url}}|наши правила редактирования]].',
 	'ow_uipref_datasets' => 'Вид по умолчанию:',
-	'ow_uiprefs' => 'Викиданные',
+	'ow_uiprefs' => 'Викиданные', # Fuzzy
 	'ow_none_selected' => 'Ничего не выбрано',
-	'transaction' => 'Викиданные: Журнал транзакций',
+	'transaction' => 'Викиданные: Журнал транзакций', # Fuzzy
 	'ow_transaction_from_transaction' => 'Из транзакции:',
 	'ow_transaction_count' => 'Количество:',
 	'ow_transaction_user' => 'Имя участника:',
@@ -12981,7 +12981,7 @@ $messages['ru'] = array(
 	'ow_transaction_first_dm' => 'Первое определённое значение',
 	'ow_transaction_second_dm' => 'Второе определённое значение',
 	'ow_transaction_summary' => 'Описание',
-	'conceptmapping' => 'Викиданные: Соответствие концептов',
+	'conceptmapping' => 'Викиданные: Соответствие концептов', # Fuzzy
 	'ow_conceptmapping_title' => 'Соответствие концептов',
 	'ow_conceptmapping_help' => '<p>возможные действия: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  вставить соответствие</li>
@@ -13074,7 +13074,7 @@ $messages['ru'] = array(
 	'ow_meaningsoftitle' => 'Значение «$1»',
 	'ow_meaningsofsubtitle' => '<em>Вики-ссылка:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>Доступ запрещён</h2>',
-	'copy' => 'Викиданные: Копирование',
+	'copy' => 'Викиданные: Копирование', # Fuzzy
 	'ow_copy_no_action_specified' => 'Пожалуйста, укажите действие',
 	'ow_copy_help' => 'Справка ещё не реализована.',
 	'ow_please_proved_dmid' => 'Похоже, что во входных данных отсутствует «?dmid=<ID>» (dmid — идентификатор определённого значения)<br /> Пожалуйста, свяжитесь с администратором сервера.',
@@ -13083,7 +13083,7 @@ $messages['ru'] = array(
 	'ow_copy_successful' => '<h2>Копирование успешно выполнено</h2>Похоже, что ваши данные были успешно скопированы. Но будет нелишним проверить это ещё раз.',
 	'ow_copy_unsuccessful' => '<h3>Копирование неудачно</h3> Не было выполнено операции копирования.',
 	'ow_no_action_specified' => '<h3>Не было указано действие</h3> Возможно, вы зашли непосредственно на эту страницу? В ходе нормальной работы вы не должны были здесь очутиться.',
-	'ow_db_consistency_not_found' => '<h2>Ошибка</h2>В связи с нарушением целостности базы данных, Викиданные не могут найти верных данных, связанных с этим значением идентификатора. Возможно, они потеряны. Пожалуйста, свяжитесь с оператором сервера или администратором.',
+	'ow_db_consistency_not_found' => '<h2>Ошибка</h2>В связи с нарушением целостности базы данных, Викиданные не могут найти верных данных, связанных с этим значением идентификатора. Возможно, они потеряны. Пожалуйста, свяжитесь с оператором сервера или администратором.', # Fuzzy
 	'ow_history_transaction' => 'Транзакция:',
 	'ow_history_show_life_span' => 'Показать время жизни записи:',
 	'ow_class_attr_type_dm' => 'Определённое значение',
@@ -13091,12 +13091,12 @@ $messages['ru'] = array(
 	'ow_class_attr_type_plain' => 'Простой текст',
 	'ow_class_attr_type_link' => 'Ссылка',
 	'ow_class_attr_type_option' => 'Список выбора',
-	'needstranslation' => 'Викиданные: Выражения, требующие перевода',
+	'needstranslation' => 'Викиданные: Выражения, требующие перевода', # Fuzzy
 	'ow_needs_xlation_title' => 'Выражения, требующие перевода',
 	'ow_needs_xlation_source_lang' => 'Исходный язык:',
 	'ow_needs_xlation_dest_lang' => 'Целевой язык:',
 	'ow_needs_xlation_no_dest_lang' => 'Пожалуйста, укажите целевой язык',
-	'ow_statistics' => 'Викиданные: Статистика',
+	'ow_statistics' => 'Викиданные: Статистика', # Fuzzy
 	'ow_show' => 'Показать',
 	'ow_upload' => 'Загрузить',
 	'ow_create' => 'Создать',
@@ -13114,14 +13114,14 @@ $messages['ru'] = array(
  * @author Gazeb
  */
 $messages['rue'] = array(
-	'languages' => 'Вікідата: Языковый манажер',
+	'languages' => 'Вікідата: Языковый манажер', # Fuzzy
 	'langman_title' => 'Языковый манажер',
 	'langman_langname' => 'Назва языка:',
 	'langman_iso639-3' => 'Код ISO 639-3:',
 	'langman_iso639-2' => 'Код ISO 639-2:',
 	'langman_wikimedia' => 'Код Вікімедіа:',
 	'langman_addlang' => 'Придати язык',
-	'importlangnames' => 'Вікідата: імпорт назв языків',
+	'importlangnames' => 'Вікідата: імпорт назв языків', # Fuzzy
 	'datasearch_language' => 'Язык:',
 	'datasearch_search_text' => 'Глядати текст:',
 	'datasearch_within_words' => 'Серед слов:',
@@ -13170,10 +13170,10 @@ $messages['rue'] = array(
 	'ow_added' => 'Придане',
 	'ow_removed' => 'Одстранене',
 	'ow_meaningsoftitle' => 'Значіня «$1»',
-	'copy' => 'Вікідата: копіровати',
+	'copy' => 'Вікідата: копіровати', # Fuzzy
 	'ow_history_transaction' => 'Трансакція:',
 	'ow_class_attr_type_link' => 'Одказ',
-	'ow_statistics' => 'Вікідата: Штатістікы',
+	'ow_statistics' => 'Вікідата: Штатістікы', # Fuzzy
 	'ow_show' => 'Вказати',
 	'ow_upload' => 'Награти',
 	'ow_create' => 'Створити',
@@ -13298,8 +13298,8 @@ $messages['sh'] = array(
  */
 $messages['si'] = array(
 	'wikidata-desc' => 'විවධ වර්ගයේ අන්තර්ගතයන්ට විකි-ආකාරයේ දත්ත සමුදායන් එක් කරයි',
-	'wikidata-handler-namespace-move-error' => 'විකිදත්ත දිඟුව මඟින් හසුරුවන ලබන නාම අවකාශවල ඇති පිටු චලනය කළ නොහැක.',
-	'languages' => 'විකිදත්ත: භාෂා කළමනාකරු',
+	'wikidata-handler-namespace-move-error' => 'විකිදත්ත දිඟුව මඟින් හසුරුවන ලබන නාම අවකාශවල ඇති පිටු චලනය කළ නොහැක.', # Fuzzy
+	'languages' => 'විකිදත්ත: භාෂා කළමනාකරු', # Fuzzy
 	'langman-desc' => '[[Special:Languages]] සමඟ භාෂා සිටවුම් එකතු කිරීම හා වෙනස් කිරීම සිදු කරයි.',
 	'langman_title' => 'භාෂා කළමනාකරු',
 	'langman_not_allowed' => 'භාෂා පිහිටවුම් වෙනස් කිරීමට ඔබට අවසර නොමැත.',
@@ -13312,12 +13312,12 @@ $messages['si'] = array(
 	'langman_wikimedia' => 'විකිමීඩියා කේතය:',
 	'langman_field_optional' => '(වෛකල්පිත)',
 	'langman_addlang' => 'භාෂාව එකතු කිරීම',
-	'importlangnames' => 'විකිදත්ත: භාෂා නම් ආයාත කරන්න',
+	'importlangnames' => 'විකිදත්ත: භාෂා නම් ආයාත කරන්න', # Fuzzy
 	'importlangnames_title' => 'භාෂා නම් ආයාත කරන්න',
 	'importlangnames_not_allowed' => 'ඔබට භාෂා නම් ආයාත කිරීමට අවසර නොමැත.',
 	'importlangnames_added' => '"$1" සඳහා භාෂා නම් එකතු කරන ලදී.',
 	'importlangnames_not_found' => '<strong> "$1" සඳහා භාෂා ඇතුළත් කිරීමක් හමු නොවුණි!</strong>',
-	'datasearch' => 'විකිදත්ත: දත්ත සෙවීම',
+	'datasearch' => 'විකිදත්ත: දත්ත සෙවීම', # Fuzzy
 	'datasearch_language' => 'භාෂාව:',
 	'datasearch_found_word' => 'සොයාගත් වචනය',
 	'datasearch_meaning' => 'අර්ථය',
@@ -13329,7 +13329,7 @@ $messages['si'] = array(
 	'datasearch_match_ext_ids' => 'භාහිර හඳුන්වන්නන් <em>$1</em> ගළපයි',
 	'datasearch_match_words' => 'වචන ගැළපීම <em>$1</em> හා ආශ්‍රිත අර්ථයන්',
 	'datasearch_match_words_lang' => ' <em>$1</em>හි වචන <em>$2</em> ගැළපීම හා ආශ්‍රිත අර්ථයන්',
-	'importtsv' => 'විකිදත්ත: TSV ආයාත කරන්න',
+	'importtsv' => 'විකිදත්ත: TSV ආයාත කරන්න', # Fuzzy
 	'ow_importtsv_title1' => 'TSV ආයාත කරන්න',
 	'ow_importtsv_title2' => 'නිර්වචන හා පරිවර්තන ආයාත කරන්න',
 	'ow_importtsv_not_allowed' => 'ඔබට TSV ආයාතයක් සිදු කිරීමට අවසර නොමැත.',
@@ -13349,14 +13349,14 @@ $messages['si'] = array(
 	'ow_importtsv_results' => ' $1 {{PLURAL:$1|definition|definitions}} සහ $2 {{PLURAL:$2|translation|translations}} එකතු කරන ලදී.',
 	'ow_impexptsv_unknown_lang' => '<p>නොහඳුනන හෝ වැරදි භාෂාව : $1.<br />
 භාෂාවන්  ISO 639-3 භාෂා කේතයන් විය යුතුය.</p>',
-	'exporttsv' => 'විකිදත්ත: TSV ආයාත කරන්න',
+	'exporttsv' => 'විකිදත්ත: TSV ආයාත කරන්න', # Fuzzy
 	'ow_exporttsv_title' => 'TSV වෙත එකතුවක් නිර්යාත කරන්න',
 	'ow_exporttsv_header' => "<p>ඔබට  OpenOffice.org, Excel හෝ වෙනත් පැතුරුම්පත් මෘදුකාංගයකින් ආයාත කළ හැකි පටිති වෙන්කළ පෙළ හැඩතලයකට එකතුවක් නිර්යාත කරන්න.<br />
 නිර්යාත කිරීමට එකතුවක් තෝරාගන්න.භාෂා පෙළ කොටුවේ,කොමා මඟින් වෙන් කළ ISO 639-3 භාෂා කේත ලැයිස්තුවක් ඇතුල් කරන්න. ඔබ පරිවර්තනයට ලක් කරන භාෂාවෙන් අරඹා, (ඔබ කැමති තරම් තෝරාගන්න ) ඔබ පරිවර්තනය සිදු කරන භාෂාවෙන් අවසන් කරන්න. මීළඟට ගොනුව නිර්මාණය කිරීම සඳහා 'Create' ක්ලික් කරන්න.</p>",
 	'ow_exporttsv_languages' => 'භාෂාවන්:',
 	'ow_exporttsv_not_allowed' => 'ඔබට TSV නිර්යාතයක් සිදු කිරීමට අවසර නොමැත.',
 	'ow_exporttsv_export_failed' => 'නිර්යාතය අසාර්ථකයි',
-	'addcollection' => 'විකිදත්ත: එකතුව එකතු කිරීම',
+	'addcollection' => 'විකිදත්ත: එකතුව එකතු කිරීම', # Fuzzy
 	'ow_save' => 'සුරකින්න',
 	'ow_history' => 'ඉතිහාසය',
 	'ow_datasets' => 'දත්ත-කුලක තේරීම',
@@ -13364,9 +13364,9 @@ $messages['si'] = array(
 	'ow_noedit' => '"$1" දත්ත කුලකයේ පිටු සංස්කරණය කිරීමට ඔබට අවසර නොමැත.
 කරුණාකර  [[{{MediaWiki:Ow editing policy url}}|අපේ සංස්කරණ ප්‍රතිපත්තිය]] බලන්න.',
 	'ow_uipref_datasets' => 'පෙර නිමි දසුන:',
-	'ow_uiprefs' => 'විකිදත්ත',
+	'ow_uiprefs' => 'විකිදත්ත', # Fuzzy
 	'ow_none_selected' => 'කිසිවක් තෝරාගෙන නොමැත',
-	'transaction' => 'විකිදත්ත: ක්‍රියාදාම ලඝු සටහන',
+	'transaction' => 'විකිදත්ත: ක්‍රියාදාම ලඝු සටහන', # Fuzzy
 	'ow_transaction_from_transaction' => 'ක්‍රියාදාමයන්ගෙන්:',
 	'ow_transaction_count' => 'ගැණිම:',
 	'ow_transaction_user' => 'පරිශීලක නාමය:',
@@ -13384,7 +13384,7 @@ $messages['si'] = array(
 	'ow_transaction_first_dm' => 'පළමුව නිර්වචනය කළ අර්ථය',
 	'ow_transaction_second_dm' => 'දෙවනුව නිර්වචනය කළ අර්ථය',
 	'ow_transaction_summary' => 'සාරාංශය',
-	'conceptmapping' => 'විකිදත්ත: සංකල්ප අනුරූපනය',
+	'conceptmapping' => 'විකිදත්ත: සංකල්ප අනුරූපනය', # Fuzzy
 	'ow_conceptmapping_title' => 'සංකල්ප අනුරූපනය',
 	'ow_conceptmapping_help' => '<p>සිදුකළ හැකි ක්‍රියාවන්: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&... නිරූපනයක් ඇතුල් කිරීම</li>
@@ -13479,7 +13479,7 @@ $messages['si'] = array(
 	'ow_meaningsoftitle' => '"$1" හි අර්ථය',
 	'ow_meaningsofsubtitle' => '<em>විකි සබැඳුම:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>අවසරය ප්‍රතික්ෂේප කරන ලදී</h2>',
-	'copy' => 'විකි දත්ත: පිටපත',
+	'copy' => 'විකි දත්ත: පිටපත', # Fuzzy
 	'ow_copy_no_action_specified' => 'කරුණාකර ක්‍රියාවක් සඳහන් කරන්න',
 	'ow_copy_help' => 'උපකාරය තවමත් ක්‍රියාත්මක නොවේ.',
 	'ow_please_proved_dmid' => 'ඔබේ ආදානයට "?dmid=<ID>" (dmid=Defined Meaning ID) ගිලිහී ඇති බවක් පෙනේ.<br />
@@ -13498,7 +13498,7 @@ $messages['si'] = array(
 	'ow_db_consistency_not_found' => '<h2>දෝෂය</h2>
 දත්ත ගබඩාවේ ස්ථායිතාව සම්බන්ධයෙන් ගැටළුවක් ඇත,මෙම නිර්වචනය කළ අර්ථයේ IDට සම්බන්ධවූ වලංගු දත්ත සොයා ගැනීම විකිදත්ත විසින් කළ නොහැක.
 එය නැතිවී විය හැක.
-කරුණාකර සේවාදායක ක්‍රියාකරු හෝ පරිපාලක හා සම්බන්ධ වෙන්න.',
+කරුණාකර සේවාදායක ක්‍රියාකරු හෝ පරිපාලක හා සම්බන්ධ වෙන්න.', # Fuzzy
 	'ow_history_transaction' => 'ක්‍රියාසමුදාය:',
 	'ow_history_show_life_span' => 'ජීවන අවධි වාර්තාව පෙන්වන්න:',
 	'ow_class_attr_type_dm' => 'නිර්වචනය කළ අර්ථය',
@@ -13506,12 +13506,12 @@ $messages['si'] = array(
 	'ow_class_attr_type_plain' => 'සාමාන්‍ය පෙළ',
 	'ow_class_attr_type_link' => 'සබැඳුම',
 	'ow_class_attr_type_option' => 'විකල්ප ලැයිස්තුව',
-	'needstranslation' => 'විකිදත්ත: පරිවර්තනයට අවශ්‍ය ප්‍රකාශන',
+	'needstranslation' => 'විකිදත්ත: පරිවර්තනයට අවශ්‍ය ප්‍රකාශන', # Fuzzy
 	'ow_needs_xlation_title' => 'පරිවර්තනයට අවශ්‍ය ප්‍රකාශන',
 	'ow_needs_xlation_source_lang' => 'මූලාශ්‍ර භාෂාව',
 	'ow_needs_xlation_dest_lang' => 'ගමනාන්ත භාෂාව',
 	'ow_needs_xlation_no_dest_lang' => 'කරුණාකර ගමනාන්ත භාෂාවක් සඳහන් කරන්න.',
-	'ow_statistics' => 'විකිදත්ත: සංඛ්‍යාන',
+	'ow_statistics' => 'විකිදත්ත: සංඛ්‍යාන', # Fuzzy
 	'ow_show' => 'පෙන්වන්න',
 	'ow_upload' => 'උඩුගත කරන්න',
 	'ow_create' => 'නිර්මාණය කරන්න',
@@ -14020,7 +14020,7 @@ $messages['sr-ec'] = array(
  * @author Жељко Тодоровић
  */
 $messages['sr-el'] = array(
-	'languages' => 'Vikipodaci: Upravljanje jezicima',
+	'languages' => 'Vikipodaci: Upravljanje jezicima', # Fuzzy
 	'langman-desc' => 'Dodajte jezike i podešavajte ih na [[Special:Languages]]',
 	'langman_title' => 'Menadžer za jezike',
 	'langman_not_allowed' => 'Nemate potrebna prava pristupa, da biste podešavali jezike.',
@@ -14062,7 +14062,7 @@ $messages['sr-el'] = array(
 	'ow_noedit_title' => 'Bez dozvole za uređivanje',
 	'ow_noedit' => 'Nije ti dozvoljeno da menjaš strane u skupu podataka "$1". Vidi [[{{MediaWiki:Ow editing policy url}}|našu uređivačku politiku]].',
 	'ow_uipref_datasets' => 'Podrazumevani prikaz:',
-	'ow_uiprefs' => 'Vikidata',
+	'ow_uiprefs' => 'Vikidata', # Fuzzy
 	'ow_none_selected' => 'Ništa nije izabrano',
 	'ow_transaction_count' => 'Broj:',
 	'ow_transaction_user' => 'Korisničko ime:',
@@ -14660,16 +14660,16 @@ Var god kontakta serveroperatören eller systemadministratören.', # Fuzzy
  * @author Lajsikonik
  */
 $messages['szl'] = array(
-	'languages' => 'Wikidata:Menadżyr godek',
+	'languages' => 'Wikidata:Menadżyr godek', # Fuzzy
 	'langman_title' => 'Menadżyr godek',
-	'datasearch' => 'Wikidata:Sznupańy za danymi',
+	'datasearch' => 'Wikidata:Sznupańy za danymi', # Fuzzy
 	'ow_save' => 'Naszkryflej',
 	'ow_history' => 'Historjo',
 	'ow_datasets' => 'Wybjerańy zbjora danych',
 	'ow_noedit_title' => 'Brak uprowńyń do uůnaczyńo sprowjyń',
 	'ow_noedit' => 'Ńy mosz uprowńyń coby sprowjać zbjůr danych "$1". Uobejzdrzij [[{{MediaWiki:Ow editing policy url}}|rule nadowańo uprowńyń do sprowjańo]].',
 	'ow_uipref_datasets' => 'Widok důmyślny', # Fuzzy
-	'ow_uiprefs' => 'Dane wiki',
+	'ow_uiprefs' => 'Dane wiki', # Fuzzy
 	'ow_none_selected' => 'Ńic ńy je zaznoczůne',
 	'ow_conceptmapping_help' => '<p>możliwe dziołańo: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  wstowjo mapowańy</li>
@@ -14753,7 +14753,7 @@ Sprowdź eli jeij adres je poprawny.',
 	'ow_copy_successful' => '<h2>Kopjowańy je fertig</h2>Dane nojrowdopodobńij udało śe bezpjeczńt skopjować. Zalecane je nale sprowdzyńe aże kopijo je zuůnaczůne do porzůndku.',
 	'ow_copy_unsuccessful' => '<h3>Kopjowańy ńy udoło śe</h3>Ńy zuůnaczůno uoperacyji kopjowańo.',
 	'ow_no_action_specified' => '<h3>Ńy podano dźołańo</h3>Może przelozżeś do tyj zajty bezpostrzedńo? Nojczyńśćij użytkowńiki ńy majům potrzeby coby tu filować.',
-	'ow_db_consistency_not_found' => '<h2>Feler</h2>Zdorzył śe feler we spůjnośći bazy danych. Dane wiki ńy poradzům znejść uopowjedńich danych skojarzůnych s uokreślůnym identyfikatorym. Dane mogům być utracůne Skůntaktuj śe s uoperatorym abo admińistratorym serwera.',
+	'ow_db_consistency_not_found' => '<h2>Feler</h2>Zdorzył śe feler we spůjnośći bazy danych. Dane wiki ńy poradzům znejść uopowjedńich danych skojarzůnych s uokreślůnym identyfikatorym. Dane mogům być utracůne Skůntaktuj śe s uoperatorym abo admińistratorym serwera.', # Fuzzy
 );
 
 /** Tamil (தமிழ்)
@@ -14843,7 +14843,7 @@ $messages['ta'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
-	'languages' => 'వికీడాటా: భాషా నిర్వహణ',
+	'languages' => 'వికీడాటా: భాషా నిర్వహణ', # Fuzzy
 	'langman-desc' => '[[Special:Languages]]తో భాషా అమరికలను చేర్చండి లేదా మార్చండి',
 	'langman_title' => 'భాషా నిర్వహణ',
 	'langman_not_allowed' => 'ఈ భాష యొక్క సెట్టింగులను మార్చుటకు మీకు అధికారము లేదు.',
@@ -14855,10 +14855,10 @@ $messages['te'] = array(
 	'langman_wikimedia' => 'వికీమీడియా కోడ్:',
 	'langman_field_optional' => '(ఐచ్ఛికం)',
 	'langman_addlang' => 'భాషని చేర్చు',
-	'importlangnames' => 'వికిడాటా: భాష పేర్లను దిగుమతి చేసుకోండి',
+	'importlangnames' => 'వికిడాటా: భాష పేర్లను దిగుమతి చేసుకోండి', # Fuzzy
 	'importlangnames_title' => 'భాషల పేర్ల దిగుమతి',
 	'importlangnames_added' => '"$1" కొరకు భాషల పేర్లని చేర్చాం.',
-	'datasearch' => 'వికీడాటా: డాటా అన్వేషణ',
+	'datasearch' => 'వికీడాటా: డాటా అన్వేషణ', # Fuzzy
 	'datasearch_language' => 'భాష:',
 	'datasearch_meaning' => 'అర్ధము',
 	'datasearch_search_text' => 'పాఠ్యంలో వెతకండి:',
@@ -14875,9 +14875,9 @@ $messages['te'] = array(
 	'ow_history' => 'చరిత్ర',
 	'ow_datasets' => 'డాటాసెట్ ఎంపిక',
 	'ow_noedit_title' => 'మార్చడానికి అనుమతి లేదు',
-	'ow_uiprefs' => 'వికీడాటా',
+	'ow_uiprefs' => 'వికీడాటా', # Fuzzy
 	'ow_none_selected' => 'ఏమీ ఎంచుకోలేదు',
-	'transaction' => 'వికీడాటా: లావాదేవీల చిట్టా',
+	'transaction' => 'వికీడాటా: లావాదేవీల చిట్టా', # Fuzzy
 	'ow_transaction_from_transaction' => 'అనువాదాల నుంచి:',
 	'ow_transaction_count' => 'లెక్క:',
 	'ow_transaction_user' => 'వాడుకరి పేరు:',
@@ -14973,7 +14973,7 @@ $messages['te'] = array(
 	'ow_needs_xlation_source_lang' => 'మూల భాష:',
 	'ow_needs_xlation_dest_lang' => 'లక్ష్యిత భాష:',
 	'ow_needs_xlation_no_dest_lang' => 'ఒక లక్ష్యిత భాషను పేర్కొనండి.',
-	'ow_statistics' => 'Wikidata: గణాంకాలు',
+	'ow_statistics' => 'Wikidata: గణాంకాలు', # Fuzzy
 	'ow_show' => 'చూపించు',
 	'ow_upload' => 'ఎక్కించు',
 	'ow_create' => 'సృష్టించు',
@@ -15009,13 +15009,13 @@ $messages['tet'] = array(
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
-	'languages' => 'Викидода: Идоракуни забон',
+	'languages' => 'Викидода: Идоракуни забон', # Fuzzy
 	'langman_title' => 'Идоракуни забон',
 	'langman_langname' => 'Номи забон:',
 	'langman_wikimedia' => 'Рамзи Викимедиа:',
 	'langman_field_optional' => '(ихтиёрӣ)',
 	'langman_addlang' => 'Иловаи забон',
-	'datasearch' => 'Викидода: Ҷустуҷӯи дода',
+	'datasearch' => 'Викидода: Ҷустуҷӯи дода', # Fuzzy
 	'datasearch_language' => 'Забон:',
 	'datasearch_search_text' => 'Ҷустуҷӯи матн:',
 	'datasearch_within_words' => 'Байни вожаҳо:',
@@ -15023,7 +15023,7 @@ $messages['tg-cyrl'] = array(
 	'ow_history' => 'Таърих',
 	'ow_noedit_title' => 'Барои вироиш иҷозат нест',
 	'ow_uipref_datasets' => 'Намуди пешфарз:',
-	'ow_uiprefs' => 'Викидода',
+	'ow_uiprefs' => 'Викидода', # Fuzzy
 	'ow_transaction_user' => 'Номи корбарӣ:',
 	'ow_transaction_restore' => 'Барқарор',
 	'ow_transaction_remove' => 'Ҳазф',
@@ -15088,13 +15088,13 @@ $messages['tg-cyrl'] = array(
  * @author Liangent
  */
 $messages['tg-latn'] = array(
-	'languages' => 'Vikidoda: Idorakuni zabon',
+	'languages' => 'Vikidoda: Idorakuni zabon', # Fuzzy
 	'langman_title' => 'Idorakuni zabon',
 	'langman_langname' => 'Nomi zabon:',
 	'langman_wikimedia' => 'Ramzi Vikimedia:',
 	'langman_field_optional' => '(ixtijorī)',
 	'langman_addlang' => 'Ilovai zabon',
-	'datasearch' => 'Vikidoda: Çustuçūi doda',
+	'datasearch' => 'Vikidoda: Çustuçūi doda', # Fuzzy
 	'datasearch_language' => 'Zabon:',
 	'datasearch_search_text' => 'Çustuçūi matn:',
 	'datasearch_within_words' => 'Bajni voƶaho:',
@@ -15102,7 +15102,7 @@ $messages['tg-latn'] = array(
 	'ow_history' => "Ta'rix",
 	'ow_noedit_title' => 'Baroi viroiş içozat nest',
 	'ow_uipref_datasets' => 'Namudi peşfarz:',
-	'ow_uiprefs' => 'Vikidoda',
+	'ow_uiprefs' => 'Vikidoda', # Fuzzy
 	'ow_transaction_user' => 'Nomi korbarī:',
 	'ow_transaction_restore' => 'Barqaror',
 	'ow_transaction_remove' => 'Hazf',
@@ -15212,7 +15212,7 @@ $messages['tk'] = array(
 	'ow_exporttsv_languages' => 'Diller:',
 	'ow_save' => 'Ýazdyr',
 	'ow_history' => 'Geçmiş',
-	'ow_uiprefs' => 'Wikimaglumat',
+	'ow_uiprefs' => 'Wikimaglumat', # Fuzzy
 	'ow_transaction_user' => 'Ulanyjy ady:',
 	'ow_transaction_no_action' => 'Hiç zat etme',
 	'ow_transaction_previous_version' => 'Öňki wersiýa',
@@ -15713,7 +15713,7 @@ $messages['ug-latn'] = array(
  */
 $messages['uk'] = array(
 	'wikidata-desc' => 'Додає вікі-подібну базу даних для різних типів контенту',
-	'languages' => 'Вікідані: Мовний менеджер',
+	'languages' => 'Вікідані: Мовний менеджер', # Fuzzy
 	'langman-desc' => 'Додавання або зміна мовних налаштувань за допомогою [[Special:Languages]]',
 	'langman_title' => 'Мовний менеджер',
 	'langman_not_allowed' => 'Ви не маєте дозволу змінювати налаштування мови.',
@@ -15726,12 +15726,12 @@ $messages['uk'] = array(
 	'langman_wikimedia' => 'Код Вікімедіа:',
 	'langman_field_optional' => "(необов'язково)",
 	'langman_addlang' => 'Додати мову',
-	'importlangnames' => 'Вікідані: імпорт назв мов',
+	'importlangnames' => 'Вікідані: імпорт назв мов', # Fuzzy
 	'importlangnames_title' => 'Імпорт назв мов',
 	'importlangnames_not_allowed' => 'У вас нема дозволу імпортувати назви мов.',
 	'importlangnames_added' => 'Назви мов для "$1" додано.',
 	'importlangnames_not_found' => '<strong>Мовних записів для "$1" не знайдено!</strong>',
-	'datasearch' => 'Вікідані: Пошук даних',
+	'datasearch' => 'Вікідані: Пошук даних', # Fuzzy
 	'datasearch_language' => 'Мова:',
 	'datasearch_found_word' => 'Знайдене слово',
 	'datasearch_meaning' => 'Значення',
@@ -15754,9 +15754,9 @@ $messages['uk'] = array(
 	'ow_noedit' => 'Вам не дозволено редагувати сторінки з набору даних "$1".
 Можете глянути [[{{MediaWiki:Ow editing policy url}}|наші правила редагування]].',
 	'ow_uipref_datasets' => 'Звичайний вигляд:',
-	'ow_uiprefs' => 'Вікідані',
+	'ow_uiprefs' => 'Вікідані', # Fuzzy
 	'ow_none_selected' => 'Нічого не обрано',
-	'transaction' => 'Вікідані: Журнал транзакцій',
+	'transaction' => 'Вікідані: Журнал транзакцій', # Fuzzy
 	'ow_transaction_from_transaction' => 'З транзакції:',
 	'ow_transaction_count' => 'Кількість:',
 	'ow_transaction_user' => "Ім'я користувача:",
@@ -15774,7 +15774,7 @@ $messages['uk'] = array(
 	'ow_transaction_first_dm' => 'Перше визначене значення',
 	'ow_transaction_second_dm' => 'Друге визначене значення',
 	'ow_transaction_summary' => 'Опис',
-	'conceptmapping' => 'Вікідані: Відповідність концепціям',
+	'conceptmapping' => 'Вікідані: Відповідність концепціям', # Fuzzy
 	'ow_conceptmapping_title' => 'Відповідність концепціям',
 	'ow_conceptmapping_help' => '<p>можливі дії: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  вставити відповідність</li>
@@ -15869,7 +15869,7 @@ $messages['uk'] = array(
 	'ow_meaningsoftitle' => 'Значення «$1»',
 	'ow_meaningsofsubtitle' => '<em>Вікі-посилання:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>Доступ заборонений</h2>',
-	'copy' => 'Вікідані: Копіювання',
+	'copy' => 'Вікідані: Копіювання', # Fuzzy
 	'ow_copy_no_action_specified' => 'Будь ласка, зазначте дію',
 	'ow_copy_help' => 'Довідка ще не реалізована.',
 	'ow_please_proved_dmid' => "Схоже, що у вхідних даних відсутнє «?dmid=<ID>» (dmid — ідентифікатор певного значення)<br />
@@ -15884,12 +15884,12 @@ $messages['uk'] = array(
 	'ow_class_attr_type_plain' => 'Простий текст',
 	'ow_class_attr_type_link' => 'Посилання',
 	'ow_class_attr_type_option' => 'Список опцій',
-	'needstranslation' => 'Вікідані: Вирази, що потребують перекладу',
+	'needstranslation' => 'Вікідані: Вирази, що потребують перекладу', # Fuzzy
 	'ow_needs_xlation_title' => 'Вирази, що потребують перекладу',
 	'ow_needs_xlation_source_lang' => 'Мова оригіналу:',
 	'ow_needs_xlation_dest_lang' => 'Цільова мова:',
 	'ow_needs_xlation_no_dest_lang' => 'Будь ласка, вкажіть цільову мову.',
-	'ow_statistics' => 'Вікідані: Статистика',
+	'ow_statistics' => 'Вікідані: Статистика', # Fuzzy
 	'ow_show' => 'Показати',
 	'ow_upload' => 'Завантажити',
 	'ow_create' => 'Створити',
