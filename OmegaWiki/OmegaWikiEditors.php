@@ -827,6 +827,9 @@ function getExpressionMeaningsEditor( Attribute $attribute, $allowAdd, ViewInfor
 
 /**
  * the corresponding RecordSet function is getExpressionMeaningsRecord
+ * returns the main expressions editor, which has two parts
+ * first, the list of exact meaning expressions
+ * second, the list of approximate meaning expressions
  */
 function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
@@ -840,7 +843,7 @@ function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 	$exactMeaningsEditor->setDisplayHeader(false);
 	$expressionMeaningsRecordEditor->addEditor( $exactMeaningsEditor );
 
-// add an approximate meaning editor (identicalMeaning = 0):
+	// add an approximate meaning editor (identicalMeaning = 0):
 	$approximateMeaningsEditor = getExpressionMeaningsEditor( $o->expressionApproximateMeanings, false, $viewInformation ) ;
 	$expressionMeaningsRecordEditor->addEditor( $approximateMeaningsEditor );
 

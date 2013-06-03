@@ -2272,17 +2272,34 @@ class RecordSetListEditor extends RecordSetEditor {
 		$this->editors[1] = $editor;
 	}
 
-	public function view( IdStack $idPath, $value ) {
-		$recordCount = $value->getRecordCount();
+	public function view( IdStack $idPath, $arrayRecordSet ) {
+		$recordCount = $arrayRecordSet->getRecordCount();
 
 		if ( $recordCount > 0 ) {
 			$result = Html::openElement ('ul', array( 'class' => 'collapsable-items')) ;
-			$key = $value->getKey();
+			$key = $arrayRecordSet->getKey();
 			$captionAttribute = $this->captionEditor->getAttribute();
 			$valueAttribute = $this->valueEditor->getAttribute();
-		
+			$extraLevelUlOpen = false;
+
 			for ( $i = 0; $i < $recordCount; $i++ ) {
-				$record = $value->getRecord( $i );
+				// check if we have an extraHierarchyCaption to add
+				// this can happen for example if we sort by part of speeches and want to display that.
+				$extraLevelName = $arrayRecordSet->getExtraHierarchyCaption( $i );
+				if ( ! is_null( $extraLevelName ) ) {
+					// close the previous extraHierarchy if needed
+					if ( $extraLevelUlOpen ) {
+						$result .= Html::closeElement ('ul') ;
+					}
+					$extraLevelClass = $idPath->getClass() . "-sortcaption";
+					$result .= Html::openElement ('li', array('class' => $extraLevelClass));
+					$result .= Html::rawElement ('span', array(), $extraLevelName) ;
+					$result .= Html::closeElement ('li') ;
+					$result .= Html::openElement ('ul', array( 'class' => 'collapsable-items')) ;
+					$extraLevelUlOpen = true;
+				}
+
+				$record = $arrayRecordSet->getRecord( $i );
 				$idPath->pushKey( project( $record, $key ) );
 				$recordId = $idPath->getId();
 				$captionClass = $idPath->getClass() . "-record";
@@ -2318,6 +2335,11 @@ class RecordSetListEditor extends RecordSetEditor {
 				$idPath->popKey();
 			}
 
+			// close the extraHierarchy if needed
+			if ( $extraLevelUlOpen ) {
+				$result .= Html::closeElement ('ul') ;
+			}
+
 			$result .= Html::closeElement ('ul');
 		
 			return $result;
@@ -2325,17 +2347,17 @@ class RecordSetListEditor extends RecordSetEditor {
 		return "";
 	}
 
-	public function edit( IdStack $idPath, $value ) {
-		$recordCount = $value->getRecordCount();
+	public function edit( IdStack $idPath, $arrayRecordSet ) {
+		$recordCount = $arrayRecordSet->getRecordCount();
 		
 		if ( $recordCount > 0 || $this->allowAddController->check( $idPath ) ) {
 			$result = Html::openElement ('ul', array( 'class' => "collapsable-items" )) ;
-			$key = $value->getKey();
+			$key = $arrayRecordSet->getKey();
 			$captionAttribute = $this->captionEditor->getAttribute();
 			$valueAttribute = $this->valueEditor->getAttribute();
 	
 			for ( $i = 0; $i < $recordCount; $i++ ) {
-				$record = $value->getRecord( $i );
+				$record = $arrayRecordSet->getRecord( $i );
 				$idPath->pushKey( project( $record, $key ) );
 	
 				$recordId = $idPath->getId();

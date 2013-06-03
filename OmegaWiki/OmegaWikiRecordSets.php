@@ -15,21 +15,18 @@ function getSynonymSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 
 	$sqlQuery = $dbr->selectSQLText(
 		array(
-			'dm' => "{$dc}_defined_meaning",
 			'synt' => "{$dc}_syntrans",
 			'exp' => "{$dc}_expression"
 		), array( /* fields to select */
-			'defined_meaning_id' => "dm.defined_meaning_id",
-			'label' => "exp.spelling"
+			'defined_meaning_id' => 'synt.defined_meaning_id',
+			'label' => 'exp.spelling'
 		), array( /* where */
-			'dm.defined_meaning_id' => $definedMeaningIds,
+			'synt.defined_meaning_id' => $definedMeaningIds,
 			'exp.language_id' => $languageId,
 			'synt.identical_meaning' => 1,
 			'synt.remove_transaction_id' => null,
 			'exp.remove_transaction_id' => null,
-			'dm.remove_transaction_id' => null,
 			'exp.expression_id = synt.expression_id',
-			'dm.defined_meaning_id = synt.defined_meaning_id'
 		), __METHOD__
 	);
 
@@ -42,20 +39,17 @@ function getSynonymSQLForAnyLanguage( array &$definedMeaningIds ) {
 
 	$sqlQuery = $dbr->selectSQLText(
 		array(
-			'dm' => "{$dc}_defined_meaning",
 			'synt' => "{$dc}_syntrans",
 			'exp' => "{$dc}_expression"
 		), array( /* fields to select */
-			'defined_meaning_id' => "dm.defined_meaning_id",
-			'label' => "exp.spelling"
+			'defined_meaning_id' => 'synt.defined_meaning_id',
+			'label' => 'exp.spelling'
 		), array( /* where */
-			'dm.defined_meaning_id' => $definedMeaningIds,
+			'synt.defined_meaning_id' => $definedMeaningIds,
 			'synt.identical_meaning' => 1,
 			'synt.remove_transaction_id' => null,
 			'exp.remove_transaction_id' => null,
-			'dm.remove_transaction_id' => null,
 			'exp.expression_id = synt.expression_id',
-			'dm.defined_meaning_id = synt.defined_meaning_id'
 		), __METHOD__
 	);
 
@@ -73,22 +67,19 @@ function getDefiningSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 
 	$sqlQuery = $dbr->selectSQLText(
 		array(
-			'dm' => "{$dc}_defined_meaning",
 			'synt' => "{$dc}_syntrans",
 			'exp' => "{$dc}_expression"
 		), array( /* fields to select */
-			'defined_meaning_id' => "dm.defined_meaning_id",
-			'label' => "exp.spelling"
+			'defined_meaning_id' => 'synt.defined_meaning_id',
+			'label' => 'exp.spelling'
 		), array( /* where */
-			'dm.defined_meaning_id' => $definedMeaningIds,
+			'synt.defined_meaning_id' => $definedMeaningIds,
 			'exp.language_id' => $languageId,
 			'exp.expression_id = dm.expression_id', // getting defining expression
 			'synt.identical_meaning' => 1,
 			'synt.remove_transaction_id' => null,
 			'exp.remove_transaction_id' => null,
-			'dm.remove_transaction_id' => null,
 			'exp.expression_id = synt.expression_id',
-			'dm.defined_meaning_id = synt.defined_meaning_id'
 		), __METHOD__
 	);
 
@@ -393,15 +384,16 @@ function expandTextReferencesInRecordSet( RecordSet $recordSet, array $textAttri
 * $exactMeaning is a boolean
 */
 function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInformation $viewInformation ) {
+	global $wgWldSortingAnnotationDM;
+
 	$o = OmegaWikiAttributes::getInstance();
-
 	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
 	$identicalMeaning = $exactMeaning ? 1 : 0;
-
 	$recordSet = new ArrayRecordSet( $o->expressionMeaningStructure, new Structure( $o->definedMeaningId ) );
 
-	$dbr = wfGetDB( DB_SLAVE );
-
+	// returns all syntrans-dm corresponding to a given expressionId
+	// which are one for each meaning of a word in a language.
 	$queryResult = $dbr->select(
 		array( 'synt' => "{$dc}_syntrans" ),
 		array( 'defined_meaning_id', 'syntrans_sid' ),
@@ -412,20 +404,58 @@ function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInfor
 		), __METHOD__
 	);
 
+	if ( ! is_null ( $wgWldSortingAnnotationDM ) ) {
+		$sortArray = array();
+	}
 	foreach ( $queryResult as $syntrans ) {
 		$definedMeaningId = $syntrans->defined_meaning_id;
 		$syntransId = $syntrans->syntrans_sid;
 		$dmModelParams = array( "viewinformation" => $viewInformation, "syntransid" => $syntransId );
 		$dmModel = new DefinedMeaningModel( $definedMeaningId, $dmModelParams );
+		$dmModelRecord = $dmModel->getRecord();
 		$recordSet->addRecord(
 			array(
 				$definedMeaningId,
 				getDefinedMeaningDefinition( $definedMeaningId ),
-				$dmModel->getRecord()
+				$dmModelRecord
 			)
 		);
-	}
 
+		if ( ! is_null ( $wgWldSortingAnnotationDM ) ) {
+			// create the sortArray for sorting the records according to some annotations
+			// we sort according to syntrans_attributes (lexical annotations) and among
+			// them we use only the option attributes (i.e. annotations from a closed list)
+			// We could sort with other attributes, or semantic annotations, which would require a more complex
+			// system if we want something that is user-configurable or modular.
+			$synTransAttributesRecord = $dmModelRecord->syntransAttributes; // getObjectAttributesRecord
+			$optionAttributeValues = $synTransAttributesRecord->optionAttributeValues; // getOptionAttributeValuesRecordSet
+
+			// undefined annotations to be sorted at the end.
+			$sortingValue = 'zzz';
+
+			if ( $optionAttributeValues->getRecordCount() > 0 ) {
+				// there are option attributes in there (i.e. annotations from a closed list)
+
+				// we have to go through all optionAttributeValues and find the one which has
+				// the correct option_mid that is needed for sort (such as option_mid = dm of partofspeech)
+				for ( $i = 0; $i < $optionAttributeValues->getRecordCount(); $i++ ) {
+					$record = $optionAttributeValues->getRecord( $i );
+					// record->optionAttribute->definedMeaningId is the DM id of the attribute ("part of speech")
+					// record->optionAttributeOption->definedMeaningId is the DM id of the value ("noun", "verb", etc.)
+					// record->optionAttributeOption->definedMeaningLabel is its label, string ("noun", "verb", etc.)
+					if ( $record->optionAttribute->definedMeaningId == $wgWldSortingAnnotationDM ) {
+						$sortingValue = ucfirst( $record->optionAttributeOption->definedMeaningLabel );
+					}
+				}
+			}
+			$sortArray[] = $sortingValue;
+		} // if not null wgWldSortingAnnotationDM
+	} // foreachs $syntrans
+
+	if ( ! is_null ( $wgWldSortingAnnotationDM ) ) {
+		// here we can sort the recordSet according to annotations
+		$recordSet->sortRecord( $sortArray );
+	}
 	return $recordSet;
 }
 
@@ -444,54 +474,53 @@ function getExpressionMeaningsRecord( $expressionId, ViewInformation $viewInform
 	return $record;
 }
 
+/**
+ * Returns an arrayRecord of one expression (since we have only one language per page)
+ * and the corresponding language_id, for a given $spelling
+ * The language returned depends on several criteria
+ */
 function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $dc = null ) {
 	global $wgLang;
-	$dc = wdGetDataSetContext( $dc );
 	$o = OmegaWikiAttributes::getInstance();
 
-	$dbr = wfGetDB( DB_SLAVE );
-	$sqlbase =
-		"SELECT expression_id, language_id " .
-		" FROM {$dc}_expression" .
-		" WHERE spelling= " . $dbr->addQuotes( $spelling ) .
-		" AND {$dc}_expression.remove_transaction_id IS NULL " ;
-
 	$queryResult = null;
+	$expressionLang = WLD_ENGLISH_LANG_ID ; // default english
+
 	if ( $viewInformation->expressionLanguageId != 0 ) {
-		// display the expression in that language
-		$sql = $sqlbase . " AND language_id=" . $viewInformation->expressionLanguageId ;
-		$queryResult = $dbr->query( $sql );
+		// display the expression in the requested language (url &explang=...)
+		// if there is nothing, display nothing (doesn't try to find another language)
+		$expressionLang = $viewInformation->expressionLanguageId;
+		$expressionId = getExpressionId( $spelling, $expressionLang );
+
 	} else {
 		// default: is there an expression in the user language?
 		$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
 		if ( $userLanguageId ) {
-			$sql = $sqlbase . " AND language_id=" . $userLanguageId ;
-		} else {
-			// no $userLanguageId, try English
-			$sql = $sqlbase . " AND language_id=" . WLD_ENGLISH_LANG_ID ;
+			$expressionLang = $userLanguageId;
 		}
-		$queryResult = $dbr->query( $sql );
+		// else expressionLang is WLD_ENGLISH_LANG_ID , as defined above
+		$expressionId = getExpressionId( $spelling, $expressionLang );
 
-		if ( $dbr->numRows( $queryResult ) == 0 ) {
-			// nothing in the user language, any language will do
-			$sql = $sqlbase . " LIMIT 1";
-			$queryResult = $dbr->query( $sql );
+		if ( ! $expressionId ) {
+			// nothing in the user language (or English). Find anything
+			$expression = getExpressionIdAnyLanguage( $spelling );
+			$expressionId = $expression->expression_id;
+			$expressionLang = $expression->language_id;
 		}
 	}
 
+	// filling ArrayRecord with what was found.
 	$result = new ArrayRecordSet( $o->expressionsStructure, new Structure( "expression-id", $o->expressionId ) );
 	$languageStructure = new Structure( "language", $o->language );
 
-	foreach ( $queryResult as $expression ) {
-		$expressionRecord = new ArrayRecord( $languageStructure );
-		$expressionRecord->language = $expression->language_id;
+	$expressionRecord = new ArrayRecord( $languageStructure );
+	$expressionRecord->language = $expressionLang;
 
-		$result->addRecord( array(
-			$expression->expression_id,
-			$expressionRecord,
-			getExpressionMeaningsRecord( $expression->expression_id, $viewInformation )
-		) );
-	}
+	$result->addRecord( array(
+		$expressionId,
+		$expressionRecord,
+		getExpressionMeaningsRecord( $expressionId, $viewInformation )
+	) );
 	return $result;
 }
 

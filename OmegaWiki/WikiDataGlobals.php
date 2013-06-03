@@ -46,6 +46,13 @@ $wdCurrentContext = null;
 global $wgIso639_3CollectionId;
 $wgIso639_3CollectionId = null;
 
+/**
+ * the DM of an annotation to use for sorting expression
+ * such as the DM representing the concept "part of speech"
+ */
+global $wgWldSortingAnnotationDM;
+$wgWldSortingAnnotationDM = null;
+
 // Defined meaning editor
 global $wdDefinedMeaningAttributesOrder;
 

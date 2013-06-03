@@ -48,7 +48,17 @@ abstract class RecordSet {
 class ArrayRecordSet extends RecordSet {
 	protected $structure;
 	protected $key;
+
+	/**
+	 * an ArrayRecordSet basically contains $records, an array of Record
+	 */
 	protected $records = array();
+
+	/**
+	 * extraCaption stores an array of caption that can be added above a record
+	 * such as a "noun", "verb" (if sorted by pos) or an "etymology 1" (if sorted by etym)
+	 */
+	protected $extraHierarchyCaption = array();
 	
 	public function __construct( Structure $structure, $key ) {
 		$this->structure = $structure;
@@ -78,6 +88,10 @@ class ArrayRecordSet extends RecordSet {
 		return $this->key;
 	}
 	
+	/**
+	 * returns the number of records contained by the ArrayRecordSet
+	 * (size of array $records)
+	 */
 	public function getRecordCount() {
 		return count( $this->records );
 	}
@@ -85,7 +99,54 @@ class ArrayRecordSet extends RecordSet {
 	public function getRecord( $index ) {
 		return $this->records[$index];
 	}
-	
+
+	// returns the value of extraHierarchyCaption[$index] if it exists
+	// null if not
+	// Note: The value of extraHierarchyCaption[$index] might
+	// exist, but be null.
+	public function getExtraHierarchyCaption( $index ) {
+		if ( array_key_exists ( $index, $this->extraHierarchyCaption ) ) {
+			return $this->extraHierarchyCaption[$index];
+		}
+		// else
+		return null;
+	}
+
+	/**
+	 * sort the ArrayRecordSet using php array_multisort
+	 * the given $arrayForSorting is sorted like a normal array
+	 * and the ArrayRecordSet is sorted similarly to $arrayForSorting
+	 */
+	public function sortRecord( $arrayForSorting ) {
+		if ( empty( $arrayForSorting ) ) {
+			return;
+		}
+		array_multisort( $arrayForSorting, SORT_LOCALE_STRING | SORT_FLAG_CASE, $this->records );
+
+		// if 'zzz' is the first value, it is also all values. Do nothing.
+		if ( $arrayForSorting[0] == 'zzz' ) {
+			return;
+		}
+		$lastValue = '';
+
+		// now read arrayForSorting and fill in extraHierarchyCaption accordingly
+		foreach ( $arrayForSorting as $i => $sortValue ) {
+			// default value
+			$this->extraHierarchyCaption[$i] = null;
+
+			// records having the same sort value are under the same hierarchycaption
+			if ( $sortValue != $lastValue ) {
+				$lastValue = $sortValue;
+				if ( $arrayForSorting[$i] == 'zzz' ) {
+					// 'zzz' is only to be sorted last. Put something more meaningful instead.
+					$this->extraHierarchyCaption[$i] = '??';
+				} else {
+					$this->extraHierarchyCaption[$i] = $sortValue;
+				}
+			}
+		}
+	}
+
 	public function tostring_indent( $depth = 0, $key = "", $myname = "" ) {
 		return parent::tostring_indent( $depth, $key, $myname . "_ArrayRecordSet" );
 	}

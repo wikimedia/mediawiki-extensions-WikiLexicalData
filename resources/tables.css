@@ -160,21 +160,6 @@
 }
 
 /******
- * language header on top of expression pages
- */
-.wd-languagecurrent {
-	font-size:large ;
-	background-color: #ffe0eb;
-	border-style:solid; 
-	border-width:1px;
-	border-color:grey;
-/* 	top and bottom are 5px, left and right are 10px */
-	padding:5px 10px;
-	border-radius: 100px;
-	-moz-border-radius: 100px;
-}
-
-/******
  * language tabs on top of expression pages
  */
 .wd-tablist {
@@ -233,6 +218,34 @@
 	padding:5px;
 	border-radius: 100px;
 	-moz-border-radius: 100px;
+}
+
+/******
+ * language header on top of expression pages
+ */
+.wd-languagecurrent {
+	font-size:large ;
+	background-color: #ffe0eb;
+	border-style:solid;
+	border-width:1px;
+	border-color:grey;
+/* 	top and bottom are 5px, left and right are 10px */
+	padding:5px 10px;
+	border-radius: 100px;
+	-moz-border-radius: 100px;
+}
+
+/******
+ * meaning sort caption, such as part of speech
+ */
+li.exact-sortcaption {
+	margin-top:10px;
+}
+
+li.exact-sortcaption span {
+	font-size:large ;
+	font-weight: bold;
+	padding:2px 2px;
 }
 
 /******

@@ -56,6 +56,10 @@ function getTableNameWithObjectId( $objectId ) {
 	return "";
 }
 
+/**
+ * Returns the expressionId corresponding to $spelling and $languageId
+ * returns null if not exist
+ */
 function getExpressionId( $spelling, $languageId ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
@@ -72,6 +76,31 @@ function getExpressionId( $spelling, $languageId ) {
 
 	if ( $expressionId ) {
 		return $expressionId;
+	}
+	return null;
+}
+
+/**
+ * Returns the expression->expression_id corresponding to a $spelling and
+ * also returns the corresponding expression->languageId (the first found in the DB)
+ * returns null if not exist
+ */
+function getExpressionIdAnyLanguage( $spelling ) {
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
+
+	// selectRow returns only one. false if not exists.
+	$expression = $dbr->selectRow(
+		"{$dc}_expression",
+		array( 'expression_id', 'language_id' ),
+		array(
+			'spelling' => $spelling,
+			'remove_transaction_id' => null
+		), __METHOD__
+	);
+
+	if ( $expression ) {
+		return $expression;
 	}
 	return null;
 }
