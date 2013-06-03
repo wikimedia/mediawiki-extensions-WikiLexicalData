@@ -76,6 +76,13 @@ $messages['ksh'] = array(
 	'apiow-desc' => 'Dem <i lang="en">OmegaWiki</i> sing Zohsazprojramm <i lang="en">WikiLexicalData</i>, wat dem MediaWiki singem <code lang="en">api.php</code> zosäzlejje Müjjeleschkeite jitt.',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'apiow-desc' => 'WikiLexicalData OmegaWiki-Erweiderung vun der MediaWiki api.php',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -88,6 +95,13 @@ $messages['mk'] = array(
  */
 $messages['nl'] = array(
 	'apiow-desc' => 'De uitbreiding WikiLexicalData van Omegawiki',
+);
+
+/** Portuguese (português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'apiow-desc' => 'Extensão WikiLexicalData do OmegaWiki de api.php do MediaWiki',
 );
 
 /** tarandíne (tarandíne)

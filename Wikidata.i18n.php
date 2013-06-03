@@ -2730,13 +2730,16 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'languages' => 'Викихаамаш:Меттан менеджер',
 	'datasearch' => 'Викихаамаш: Лаха хаамаш',
+	'datasearch_language' => 'Мотт:',
 	'datasearch_search_text' => 'Йоза лахар:',
 	'ow_history' => 'Истори',
 	'ow_uiprefs' => 'Викихаамаш', # Fuzzy
 	'ow_transaction_rollback_button' => 'Юхаяккха',
 	'ow_transaction_remove' => 'ДӀаяккхар',
 	'ow_ClassAttributeLevel' => 'Локхалла',
+	'ow_Language' => 'Мотт',
 	'ow_Remove' => 'ДӀаяккха',
 	'ow_User' => 'Декъашхо',
 );
@@ -6208,10 +6211,13 @@ Bitte kontaktier dr Serveradminschtrator.',
 );
 
 /** Gujarati (ગુજરાતી)
+ * @author Ashok modhvadia
  * @author Dineshjk
  */
 $messages['gu'] = array(
+	'languages' => 'ભાષા પ્રબંધક',
 	'ow_transaction_user' => 'સભ્ય નામ:',
+	'copy' => 'નકલ કરો',
 );
 
 /** Manx (Gaelg)
@@ -11957,7 +11963,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'wikidata-desc' => 'Adiciona uma base de dados tipo wiki para vários tipos de conteúdo',
-	'wikidata-handler-namespace-move-error' => 'Páginas em espaços nominais geridos pela extensão Wikidata não podem ser movidas.', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Páginas em espaços nominais geridos pela extensão WikiLexicalData não podem ser movidas.',
 	'languages' => 'Gestor de línguas',
 	'langman-desc' => 'Adicione e modifique configurações de línguas com [[Special:Languages]]',
 	'langman_title' => 'Gestor de línguas',
@@ -12164,7 +12170,10 @@ Os seus dados aparentam ter sido copiados com sucesso. Não se esqueça de verif
 Não foi feita nenhuma operação de cópia.',
 	'ow_no_action_specified' => '<h3>Nenhuma ação foi especificada</h3>
 Talvez tenha vindo a esta página diretamente? Em condições normais, não precisa de estar aqui.',
-	'ow_db_consistency_not_found' => '<h2>Erro</h2>Há um problema com a consistência da base de dados, wikidata não consegue encontrar dados válidos relacionados com o ID deste significado definido, poderá ter-se perdido. Por favor, contacte o operador ou administrador do servidor.', # Fuzzy
+	'ow_db_consistency_not_found' => '<h2>Erro</h2>
+Há um problema com a consistência da base de dados, não é possível encontrar dados válidos relacionados com o ID deste significado definido.
+Poderá ter-se perdido.
+Por favor, contacte o operador ou administrador do servidor.',
 	'ow_history_transaction' => 'Transação:',
 	'ow_history_show_life_span' => 'Mostrar tempo de vida do registo:',
 	'ow_class_attr_type_dm' => 'Significado definido',
@@ -12177,7 +12186,7 @@ Talvez tenha vindo a esta página diretamente? Em condições normais, não prec
 	'ow_needs_xlation_source_lang' => 'Língua origem:',
 	'ow_needs_xlation_dest_lang' => 'Língua destino:',
 	'ow_needs_xlation_no_dest_lang' => 'Por favor, especifique uma língua destino.',
-	'ow_statistics' => 'Wikidata: Estatísticas', # Fuzzy
+	'ow_statistics' => 'WikiLexicalData: Estatísticas',
 	'ow_show' => 'Mostrar',
 	'ow_upload' => 'Carregar',
 	'ow_create' => 'Criar',
