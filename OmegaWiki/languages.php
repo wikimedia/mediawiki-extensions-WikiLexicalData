@@ -160,7 +160,7 @@ function getSQLForLanguageNames( $lang_code, $lang_subset = array() ) {
 		$cond = array( 'eng.name_language_id' => WLD_ENGLISH_LANG_ID );
 
 		if ( ! empty( $lang_subset ) ) {
-			$cond['language_id'] = $lang_subset;
+			$cond['eng.language_id'] = $lang_subset;
 		}
 
 		$sqlQuery = $dbr->selectSQLText(
