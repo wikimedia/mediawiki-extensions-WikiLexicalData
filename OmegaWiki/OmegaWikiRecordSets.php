@@ -485,6 +485,7 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 
 	$queryResult = null;
 	$expressionLang = WLD_ENGLISH_LANG_ID ; // default english
+	$result = new ArrayRecordSet( $o->expressionsStructure, new Structure( "expression-id", $o->expressionId ) );
 
 	if ( $viewInformation->expressionLanguageId != 0 ) {
 		// display the expression in the requested language (url &explang=...)
@@ -504,13 +505,16 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 		if ( ! $expressionId ) {
 			// nothing in the user language (or English). Find anything
 			$expression = getExpressionIdAnyLanguage( $spelling );
+			if ( is_null ( $expression ) ) {
+				// nothing at all, return the empty arrayrecord
+				return $result;
+			}
 			$expressionId = $expression->expression_id;
 			$expressionLang = $expression->language_id;
 		}
 	}
 
 	// filling ArrayRecord with what was found.
-	$result = new ArrayRecordSet( $o->expressionsStructure, new Structure( "expression-id", $o->expressionId ) );
 	$languageStructure = new Structure( "language", $o->language );
 
 	$expressionRecord = new ArrayRecord( $languageStructure );
