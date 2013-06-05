@@ -27,12 +27,14 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // Map class name to filename for autoloading
+	$wgAutoloadClasses['SynonymTranslation'] = dirname( __FILE__ ) . '/owSyntrans.php';
 	$wgAutoloadClasses['Define'] = dirname( __FILE__ ) . '/owDefine.php';
 	$wgAutoloadClasses['Express'] = dirname( __FILE__ ) . '/owExpress.php';
 	$wgAutoloadClasses['AddSyntrans'] = dirname( __FILE__ ) . '/owAddSyntrans.php';
 	$wgAutoloadClasses['AddAnnotation'] = dirname( __FILE__ ) . '/owAddAnnotation.php';
 
 // Map module name to class name
+	$wgAPIModules['ow_syntrans'] = 'SynonymTranslation';
 	$wgAPIModules['ow_define'] = 'Define';
 	$wgAPIModules['ow_express'] = 'Express';
 	$wgAPIModules['ow_add_syntrans'] = 'AddSyntrans';

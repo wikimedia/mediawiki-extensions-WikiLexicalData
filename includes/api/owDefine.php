@@ -19,11 +19,13 @@
  * - Add optional translation list option. &trans=on. default off
  * - Add optional translation limit option. &transLang=nan-POJ|eng
  * - Add optional lang parameter. &lang=cmn-Hant
+ * - readjust defining and definingByAnyLanguage functions into class Define.
+ *		Express Class now extends Define Class
  */
 
 require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
 
-class Define extends ApiBase {
+class Define extends SynonymTranslation {
 
 	public $languageId, $text, $spelling, $spellingLanguageId;
 
