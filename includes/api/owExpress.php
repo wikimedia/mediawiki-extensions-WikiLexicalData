@@ -54,7 +54,7 @@ class Express extends Define {
 			$express['expression'] = $spelling;
 			$dmlistCtr = 1;
 			foreach ( $dmlist as $dmrow ) {
-				$defining = definingForAnyLanguage( $dmrow, $options );
+				$defining = $this->definingForAnyLanguage( $dmrow, $options );
 				foreach ( $defining as $definingRow) {
 					$express['ow_define_' . $dmlistCtr] = $definingRow;
 				}

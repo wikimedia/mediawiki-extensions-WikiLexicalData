@@ -3,6 +3,8 @@
 /** O m e g a W i k i   A P I ' s   D e f i n e   c l a s s
  *
  * HISTORY
+ * - 2013-06-05: Readjusted defining and definingByAnyLanguage functions into
+ *		class Define. Express Class now extends Define Class.
  * - 2013-05-31: Readjusted the array produced. The Language Name added.
  * 		Language name defaults to the language of their respective
  *		expression/definition.  When the language name does not exist,
@@ -19,8 +21,7 @@
  * - Add optional translation list option. &trans=on. default off
  * - Add optional translation limit option. &transLang=nan-POJ|eng
  * - Add optional lang parameter. &lang=cmn-Hant
- * - readjust defining and definingByAnyLanguage functions into class Define.
- *		Express Class now extends Define Class
+ *
  */
 
 require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
@@ -40,15 +41,26 @@ class Define extends SynonymTranslation {
 		// Get the parameters
 		$params = $this->extractRequestParams();
 
+		// Required parameter
+		// Check if dm is valid
+		if ( !isset( $params['dm'] ) ) {
+			$this->dieUsage( 'parameter dm for adding syntrans is missing', 'param dm is missing' );
+		} else {
+			// check that defined_meaning_id exists
+			if ( !verifyDefinedMeaningId( $params['dm'] ) ) {
+				$this->dieUsage( 'Non existent dm id (' . $params['dm'] . ').', "dm not found." );
+			}
+		}
+
 		// Optional parameter
 		if ( $params['e'] ) {
 			$options['e'] = $params['e'];
 		}
 		if ( $params['lang'] ) {
 			$this->languageId = $params['lang'];
-			$defined = defining( $params['dm'], $params['lang'], $options, $this->getModuleName() );
+			$defined = $this->defining( $params['dm'], $params['lang'], $options, $this->getModuleName() );
 		} else {
-			$defined = definingForAnyLanguage( $params['dm'], $options, $this->getModuleName() );
+			$defined = $this->definingForAnyLanguage( $params['dm'], $options, $this->getModuleName() );
 		}
 
 		$defined = $defined[ $this->getModuleName() ];
@@ -104,103 +116,104 @@ class Define extends SynonymTranslation {
 		);
 	}
 
-}
+	/**
+	 * Define expression when the language is not specified.
+	 */
+	function defining( $definedMeaningId, $languageId, $options = array(), $moduleName = null ) {
 
-/** Define expression when the language is not specified.
- *
- */
-function defining( $definedMeaningId, $languageId, $options = null, $moduleName = null ) {
-
-	if ( !$moduleName ) {
-		$moduleName = 'ow_define';
-	}
-
-	if ( $options['e'] ) {
-		$spelling = $options['e'];
-	} else {
-		$spelling = getDefinedMeaningSpellingForLanguage( $definedMeaningId, $languageId );
-	}
-	$spellingLanguageId = $languageId;
-
-	// get language name. Use English as fall back.
-	$spellingLanguage = getLanguageIdLanguageNameFromIds( $spellingLanguageId, $spellingLanguageId );
-	if ( !$spellingLanguage ) {
-		$spellingLanguage = getLanguageIdLanguageNameFromIds( $spellingLanguageId, WLD_ENGLISH_LANG_ID );
-	}
-
-	$text = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $spellingLanguageId );
-
-	if ( !$text ) {
-		$languageId = 85;
-		$text = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId );
-	}
-
-	$definitionLanguageId = getDefinedMeaningDefinitionLanguageIdForDefinition( $definedMeaningId, $text );
-	$definitionLanguage = getLanguageIdLanguageNameFromIds( $definitionLanguageId, $definitionLanguageId );
-	$definitionSpelling = getSpellingForLanguageId( $definedMeaningId, $DefinitionLanguageId, 85 );
-
-	return array(
-		$moduleName => array(
-			'dmid' => $definedMeaningId,
-			'spelling' => $spelling,
-			'langid' => $spellingLanguageId,
-			'lang' => $spellingLanguage,
-			'definition' => array (
-				'spelling' => $definitionSpelling,
-				'langid' => $definitionLanguageId,
-				'lang' => $definitionLanguage,
-				'text' => $text
-			)
-		)
-	);
-
-}
-
-/** Define expression when the language is not specified.
- *
- */
-function definingForAnyLanguage( $definedMeaningId, $options = null, $moduleName = null ) {
-
-	$remove_langIdArray = 0;
-	if ( !$moduleName ) {
-		$moduleName = 'ow_define';
-	}
-
-	if ( $options['e'] ) {
-		$spelling = $options['e'];
-		$languageId = getLanguageIdForDefinedMeaningAndExpression( $definedMeaningId, $spelling );
-		$language = getLanguageIdLanguageNameFromIds( $languageId, $languageId );
-		if ( !$language ) {
-			$language = getLanguageIdLanguageNameFromIds( $languageId, WLD_ENGLISH_LANG_ID );
+		if ( is_null( $moduleName ) ) {
+			$moduleName = 'ow_define';
 		}
-	} else {
-		$remove_langIdArray = 1;
-	}
 
-	$text = getDefinedMeaningDefinition( $definedMeaningId );
-	$definitionLanguageId = getDefinedMeaningDefinitionLanguageIdForDefinition( $definedMeaningId, $text );
-	$definitionLanguage = getLanguageIdLanguageNameFromIds( $definitionLanguageId, $definitionLanguageId );
-	$definitionSpelling = getSpellingForLanguageId( $definedMeaningId, $definitionLanguageId, WLD_ENGLISH_LANG_ID );
+		if ( isset( $options['e'] ) ) {
+			$spelling = $options['e'];
+		} else {
+			$spelling = getDefinedMeaningSpellingForLanguage( $definedMeaningId, $languageId );
+		}
+		$spellingLanguageId = $languageId;
 
-	$definition = array(
-		$moduleName => array(
-			'dmid' => $definedMeaningId,
-			'langid' => $languageId,
-			'lang' => $language,
-			'definition' => array (
-				'spelling' => $definitionSpelling,
-				'langid' => $definitionLanguageId,
-				'lang' => $definitionLanguage,
-				'text'=> $text
+		// get language name. Use English as fall back.
+		$spellingLanguage = getLanguageIdLanguageNameFromIds( $spellingLanguageId, $spellingLanguageId );
+		if ( !$spellingLanguage ) {
+			$spellingLanguage = getLanguageIdLanguageNameFromIds( $spellingLanguageId, WLD_ENGLISH_LANG_ID );
+		}
+
+		$text = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $spellingLanguageId );
+
+		if ( !$text ) {
+			$languageId = WLD_ENGLISH_LANG_ID;
+			$text = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId );
+		}
+
+		$definitionLanguageId = getDefinedMeaningDefinitionLanguageIdForDefinition( $definedMeaningId, $text );
+		$definitionLanguage = getLanguageIdLanguageNameFromIds( $definitionLanguageId, $definitionLanguageId );
+		$definitionSpelling = getSpellingForLanguageId( $definedMeaningId, $definitionLanguageId, WLD_ENGLISH_LANG_ID );
+
+		return array(
+			$moduleName => array(
+				'dmid' => $definedMeaningId,
+				'spelling' => $spelling,
+				'langid' => $spellingLanguageId,
+				'lang' => $spellingLanguage,
+				'definition' => array (
+					'spelling' => $definitionSpelling,
+					'langid' => $definitionLanguageId,
+					'lang' => $definitionLanguage,
+					'text' => $text
+				)
 			)
-		)
-	);
+		);
 
-	if ( $remove_langIdArray == 1 ) {
-		unset( $definition[$moduleName]['langid']);
-		unset( $definition[$moduleName]['lang']);
 	}
 
-	return $definition;
+	/**
+	 * Define expression when the language is not specified.
+	 */
+	function definingForAnyLanguage( $definedMeaningId, $options = array(), $moduleName = null ) {
+		$languageId = null;
+		$language = null;
 
+		$remove_langIdArray = 0;
+		if ( is_null( $moduleName ) ) {
+			$moduleName = 'ow_define';
+		}
+
+		if ( isset( $options['e'] ) ) {
+			$spelling = $options['e'];
+			$languageId = getLanguageIdForDefinedMeaningAndExpression( $definedMeaningId, $spelling );
+			$language = getLanguageIdLanguageNameFromIds( $languageId, $languageId );
+			if ( !$language ) {
+				$language = getLanguageIdLanguageNameFromIds( $languageId, WLD_ENGLISH_LANG_ID );
+			}
+		} else {
+			$remove_langIdArray = 1;
+		}
+
+		$text = getDefinedMeaningDefinition( $definedMeaningId );
+		$definitionLanguageId = getDefinedMeaningDefinitionLanguageIdForDefinition( $definedMeaningId, $text );
+		$definitionLanguage = getLanguageIdLanguageNameFromIds( $definitionLanguageId, $definitionLanguageId );
+		$definitionSpelling = getSpellingForLanguageId( $definedMeaningId, $definitionLanguageId, WLD_ENGLISH_LANG_ID );
+
+		$definition = array(
+			$moduleName => array(
+				'dmid' => $definedMeaningId,
+				'langid' => $languageId,
+				'lang' => $language,
+				'definition' => array (
+					'spelling' => $definitionSpelling,
+					'langid' => $definitionLanguageId,
+					'lang' => $definitionLanguage,
+					'text'=> $text
+				)
+			)
+		);
+
+		if ( $remove_langIdArray == 1 ) {
+			unset( $definition[$moduleName]['langid']);
+			unset( $definition[$moduleName]['lang']);
+		}
+
+		return $definition;
+
+	}
 }
