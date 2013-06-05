@@ -25,7 +25,7 @@
 require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
 require_once( 'owDefine.php' );
 
-class Express extends ApiBase {
+class Express extends Define {
 
 	public function __construct( $main, $action ) {
 		parent :: __construct( $main, $action, null);
