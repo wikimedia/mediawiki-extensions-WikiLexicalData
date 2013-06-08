@@ -119,7 +119,7 @@ class Define extends SynonymTranslation {
 	/**
 	 * Define expression when the language is not specified.
 	 */
-	function defining( $definedMeaningId, $languageId, $options = array(), $moduleName = null ) {
+	protected function defining( $definedMeaningId, $languageId, $options = array(), $moduleName = null ) {
 
 		if ( is_null( $moduleName ) ) {
 			$moduleName = 'ow_define';
@@ -169,7 +169,7 @@ class Define extends SynonymTranslation {
 	/**
 	 * Define expression when the language is not specified.
 	 */
-	function definingForAnyLanguage( $definedMeaningId, $options = array(), $moduleName = null ) {
+	protected function definingForAnyLanguage( $definedMeaningId, $options = array(), $moduleName = null ) {
 		$languageId = null;
 		$language = null;
 
@@ -209,8 +209,8 @@ class Define extends SynonymTranslation {
 		);
 
 		if ( $remove_langIdArray == 1 ) {
-			unset( $definition[$moduleName]['langid']);
-			unset( $definition[$moduleName]['lang']);
+			unset( $definition[$moduleName]['langid'] );
+			unset( $definition[$moduleName]['lang'] );
 		}
 
 		return $definition;

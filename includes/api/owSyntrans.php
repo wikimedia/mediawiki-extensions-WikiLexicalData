@@ -3,23 +3,30 @@
 /** O m e g a W i k i   A P I ' s   S y n t r a n s   c l a s s
  *
  * PARAMETERS
- *	@param	req'd	int	dm
+ *	@param	req'd	int	dm	'the defined meaning id'
+ *	@param	opt'l	str	part	'synonym or translation'
+ *	@param	opt'l	int	prtlangid	'the param part's language id'
  *
  * HISTORY
- * - 2013-06-04: Add basic structure
- *		@param	req'd	int	dm
+ * - 2013-06-08: Added
+ *		@param	opt'l	str	part	'synonym or translation'
+ *		@param	opt'l	int	prtlangid	'the param part's language id'
+ * - 2013-06-04: Added basic structure
+ *		@param	req'd	int	dm	'the defined meaning id'
  * - 2013-06-04: Creation date ~he
  *
  * TODO
  * - Integrate with Define Class
  * - Transfer getSynonymAndTranslation function to WikiDataAPI when ready.
+ * - Add parameter
+ *		@param	opt'l	str	part
+ *			'return only synonyms or translations (syn or trans)'
  *
  * QUESTION
  * - none
  */
 
 require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
-require_once( 'extensions/WikiLexicalData/OmegaWiki/OmegaWikiRecordSets.php' );
 
 class SynonymTranslation extends ApiBase {
 
@@ -49,10 +56,39 @@ class SynonymTranslation extends ApiBase {
 		}
 
 		// Optional parameter
+		$options = array();
+		$part = 'all';
+
+		if ( isset( $params['part'] ) ) {
+			$part = $params['part'];
+		}
+
+		// error if $params['part'] is empty
+		if ( $part == '' ) {
+			$this->dieUsage( 'parameter part for adding syntrans is empty', 'param part is empty' );
+		}
 
 		// get syntrans
+		// When returning synonyms or translation only
+		if ( $part == 'syn' or $part == 'trans') {
+			if ( !isset( $params['part_lang_id'] ) ) {
+				$this->dieUsage( 'parameter part_lang_id for adding syntrans is missing', 'param part_lang_id is missing' );
+			}
+			$options['part'] = $part;
+			if ( $params['part_lang_id'] ) {
+				$trueOrFalse = LanguageIdExist( $params['part_lang_id']);
+				if ( $trueOrFalse == true ) {
+					$options['part_lang_id'] = $params['part_lang_id'];
+				} else {
+					$this->dieUsage( 'parameter part_lang_id for adding syntrans does not exist', 'param part_lang_id does not exist' );
+				}
+			} else {
+				$this->dieUsage( 'parameter part_lang_id for adding syntrans is empty', 'param part_lang_id empty' );
+			}
+		}
+
 		// When only dm is given
-		$syntrans = $this->synTrans( $syntrans['dm'] );
+		$syntrans = $this->synTrans( $syntrans['dm'], $options );
 
 		$this->getResult()->addValue( null, $this->getModuleName(), $syntrans );
 		return true;
@@ -65,7 +101,7 @@ class SynonymTranslation extends ApiBase {
 
 	// Description
 	public function getDescription() {
-		return 'Get the definition of a defined meaning.' ;
+		return 'Get a list of synonyms and translations from of a defined meaning.' ;
 	}
 
 	// Parameters.
@@ -75,13 +111,21 @@ class SynonymTranslation extends ApiBase {
 				ApiBase::PARAM_TYPE => 'integer',
 				ApiBase::PARAM_REQUIRED => true
 			),
+			'part' => array (
+				ApiBase::PARAM_TYPE => 'string',
+			),
+			'part_lang_id' => array (
+				ApiBase::PARAM_TYPE => 'integer',
+			),
 		);
 	}
 
 	// Describe the parameter
 	public function getParamDescription() {
 		return array(
-			'dm' => 'The defined meaning id to be defined',
+			'dm' => 'The defined meaning id to be used to get synonyms and translations',
+			'part' => 'set whether output are synonyms or translations. requires param langid',
+			'part_lang_id' => 'The defined meaning language id to be used to get synonyms or translations',
 		);
 	}
 
@@ -90,6 +134,10 @@ class SynonymTranslation extends ApiBase {
 		return array(
 			'Get the synonyms and translations of a defined meaning id',
 			'api.php?action=ow_syntrans&dm=8218',
+			'Get the synonyms of a defined meaning id',
+			'api.php?action=ow_syntrans&dm=8218&part=syn&part_lang_id=120',
+			'Get the translations of a defined meaning id',
+			'api.php?action=ow_syntrans&dm=8218&part=trans&part_lang_id=120',
 		);
 	}
 
@@ -97,29 +145,58 @@ class SynonymTranslation extends ApiBase {
 
 	/**
 	 * Returns an array of syntrans via defined meaning id
-	 * Returns null if empty
+	 * Returns array() when empty
 	 */
-	private function synTrans ( $definedMeaningId ) {
+	protected function synTrans ( $definedMeaningId, $options = array() ) {
+		$syntrans = array();
 		$stList = getSynonymAndTranslation( $definedMeaningId );
 
+	//	var_dump($stList); die;
 		$ctr = 1;
-		foreach ($stList as $row ) {
+		foreach ( $stList as $row ) {
 			$language = getLanguageIdLanguageNameFromIds( $row[1], WLD_ENGLISH_LANG_ID );
-			$syntrans[$ctr . '.'] = array(
-				'syntrans_sid' => $row[3],
-				'e' => $row[0],
-				'langid' => $row[1],
-				'lang' => $language,
-				'im' => $row[2]
-			);
-			$ctr += 1;
+
+			if ( isset( $options['part'] ) ) {
+				if ( $options['part'] == 'syn' and $options['part_lang_id'] == $row[1] ) {
+					$syntrans[$ctr . '.'] = array(
+						'syntrans_sid' => $row[3],
+						'e' => $row[0],
+						'langid' => $row[1],
+						'lang' => $language,
+						'im' => $row[2]
+					);
+					$ctr += 1;
+				}
+
+				if ( $options['part'] == 'trans' and $options['part_lang_id'] != $row[1] ) {
+					$syntrans[$ctr . '.'] = array(
+						'syntrans_sid' => $row[3],
+						'e' => $row[0],
+						'langid' => $row[1],
+						'lang' => $language,
+						'im' => $row[2]
+					);
+					$ctr += 1;
+				}
+			}
+
+			if ( $options == array() ) {
+				$syntrans[$ctr . '.'] = array(
+					'syntrans_sid' => $row[3],
+					'e' => $row[0],
+					'langid' => $row[1],
+					'lang' => $language,
+					'im' => $row[2]
+				);
+				$ctr += 1;
+			}
 		}
 
-		return $this->returns( $syntrans, null );
+		return $this->returns( $syntrans, array( 'error' => 'no result' ) );
 
 	}
 
-	private function returns( $returning , $else ) {
+	protected function returns( $returning , $else ) {
 		if ( $returning ) {
 			return $returning;
 		}

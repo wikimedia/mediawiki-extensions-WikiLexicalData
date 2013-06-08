@@ -196,8 +196,26 @@ function getLanguageIdLanguageNameFromIds( $languageId, $nameLanguageId ) {
 		), __METHOD__
 	);
 
-	if ( $languageId )
+	if ( $languageId ) {
 		return $languageId;
-
+	}
 	return null;
+}
+
+// Returns true or false
+function LanguageIdExist( $languageId ) {
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$languageId = $dbr->selectField(
+		'language',
+		'language_id',
+		array(
+			'language_id' => $languageId
+		), __METHOD__
+	);
+
+	if ( $languageId ) {
+		return true;
+	}
+	return false;
 }
