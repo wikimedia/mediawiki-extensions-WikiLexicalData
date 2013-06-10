@@ -387,12 +387,10 @@ Parameters:
 	'ow_Collection' => '{{Identical|Collection}}',
 	'ow_Collection_colon' => '{{Identical|Collection}}',
 	'ow_Definition' => '{{Identical|Definition}}',
-	'ow_DefinedMeaningAttributes' => '{{Identical|Annotation}}',
 	'ow_DefinedMeaning' => '{{Identical|Defined meaning}}',
 	'ow_DefinedMeaningReference' => '{{Identical|Defined meaning}}',
 	'ow_ID' => '{{Identical|ID}}',
 	'ow_Language' => '{{Identical|Language}}',
-	'ow_LevelAnnotation' => '{{Identical|Annotation}}',
 	'ow_Multiple_meanings' => 'Used as page title. Parameters:
 * $1 - page title',
 	'ow_OptionAttribute' => '{{Identical|Property}}',
@@ -2747,6 +2745,7 @@ $messages['ce'] = array(
 	'ow_ClassAttributeLevel' => 'Локхалла',
 	'ow_Language' => 'Мотт',
 	'ow_Remove' => 'ДӀаяккха',
+	'ow_Source' => 'Хьост',
 	'ow_User' => 'Декъашхо',
 );
 
@@ -6956,7 +6955,6 @@ Ellenőrizd a címet.',
 	'ow_CollectionMember' => 'Gyűjtemény tag',
 	'ow_CollectionMembership' => 'Gyűjtemény tagság',
 	'ow_Definition' => 'Definíció',
-	'ow_DefinedMeaningAttributes' => 'Jegyzetek',
 	'ow_DefinedMeaning' => 'Definiált jelentés',
 	'ow_DefinedMeaningReference' => 'Definiált jelentés',
 	'ow_ExactMeanings' => 'Pontos jelentések',
@@ -6967,7 +6965,6 @@ Ellenőrizd a címet.',
 	'ow_IncomingRelations' => 'Bejövő kapcsolatok',
 	'ow_GotoSource' => 'Menj a forráshoz',
 	'ow_Language' => 'Nyelv',
-	'ow_LevelAnnotation' => 'Annotáció',
 	'ow_LinkAttributeHeader' => 'Attribútum csatolása',
 	'ow_Multiple_meanings' => '„$1” definíciói',
 	'ow_NewExactMeaning' => 'Új pontos jelentés',
@@ -8580,9 +8577,9 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'wikidata-desc' => '내용의 다양한 종류에 대한 위키 데이터베이스를 추가합니다',
-	'wikidata-handler-namespace-move-error' => '위키데이터 확장 기능에 의해 처리되는 이름공간의 문서는 이동할 수 없습니다.', # Fuzzy
-	'languages' => '위키데이터: 언어 관리자', # Fuzzy
-	'langman-desc' => '[[Special:Languages]]를 사용해 언어 설정을 추가하거나 바꾸는 기능',
+	'wikidata-handler-namespace-move-error' => '위키어휘데이터 확장 기능에 의해 처리되는 이름공간의 문서는 이동할 수 없습니다.',
+	'languages' => '언어 관리자',
+	'langman-desc' => '[[Special:Languages]]를 사용해 언어 설정을 추가하거나 바꿉니다',
 	'langman_title' => '언어 관리자',
 	'langman_not_allowed' => '언어 설정을 바꿀 권한이 없습니다.',
 	'langman_header' => '언어 코드와 해당 언어의 영어명을 입력해 주세요:',
@@ -8594,24 +8591,24 @@ $messages['ko'] = array(
 	'langman_wikimedia' => '위키미디어 코드:',
 	'langman_field_optional' => '(선택 사항)',
 	'langman_addlang' => '언어 추가',
-	'importlangnames' => '위키데이터: 언어 이름 불러오기', # Fuzzy
-	'importlangnames_title' => '언어 이름 불러오기',
-	'importlangnames_not_allowed' => '언어 이름을 불러올 권한이 없습니다.',
+	'importlangnames' => '언어 이름 가져오기',
+	'importlangnames_title' => '언어 이름 가져오기',
+	'importlangnames_not_allowed' => '언어 이름을 가져올 권한이 없습니다.',
 	'importlangnames_added' => '"$1" 언어 이름이 추가되었습니다.',
 	'importlangnames_not_found' => '<strong>"$1"에 대한 언어를 찾을 수 없습니다!</strong>',
-	'datasearch' => '위키데이터: 자료 검색', # Fuzzy
+	'datasearch' => '데이터 찾기',
 	'datasearch_language' => '언어:',
 	'datasearch_found_word' => '일치하는 단어:',
 	'datasearch_meaning' => '의미',
 	'datasearch_ext_identifier' => '외부 식별자',
-	'datasearch_search_text' => '본문 검색:',
+	'datasearch_search_text' => '본문 찾기:',
 	'datasearch_within_words' => '단어:',
 	'datasearch_within_ext_ids' => '외부 식별자:',
 	'datasearch_showing_only' => '($2개 이외의) {{PLURAL:$1|일치하는}} 최대 $1개만 봅니다.',
 	'datasearch_match_ext_ids' => '일치하는 외부 식별자 <em>$1</em>',
 	'datasearch_match_words' => '<em>$1</em>(와)과 일치하는 단어 및 관련 의미',
 	'datasearch_match_words_lang' => '<em>$1</em>에서 <em>$2</em>(와)과 일치하는 단어 및 관련 의미',
-	'importtsv' => '위키데이터: TSV 가져오기', # Fuzzy
+	'importtsv' => 'TSV 가져오기',
 	'ow_importtsv_title1' => 'TSV 가져오기',
 	'ow_importtsv_title2' => '정의와 번역 가져오기',
 	'ow_importtsv_header' => '<p>정의를 가져오고 OpenOffice.org, Excel 또는 다른 스프레드시트 소프트웨어에서 보낼 수 있는 탭으로 구분된 텍스트 파일에서 번역합니다.</p>
@@ -8638,14 +8635,14 @@ iso는 언어 코드입니다</p>",
 	'ow_importtsv_results' => '{{PLURAL:$1|정의}} $1개와 {{PLURAL:$2|번역}} $2개를 추가했습니다.',
 	'ow_impexptsv_unknown_lang' => '<p>알 수 없거나 잘못된 언어: $1.<br />
 언어는 ISO 639-3 언어 코드여야 합니다.</p>',
-	'exporttsv' => '위키데이터: TSV 내보내기', # Fuzzy
+	'exporttsv' => 'TSV 내보내기',
 	'ow_exporttsv_title' => 'TSV로 모음집 내보내기',
 	'ow_exporttsv_header' => "<p>OpenOffice.org, Excel 또는 다른 스프레드시트 소프트웨어에서 가져올 수 있는 탭으로 구분된 텍스트 형식으로 모음집을 내보냅니다.<br />
 	내보낼 모음집을 선택하세요. 언어 텍스트 상자에 ISO 639-3 언어 코드를 쉼표로 구분한 목록을 입력하세요. 번역할 언어(개수는 자유)로 시작하여 번역 대상 언어로 끝내세요. 그런 다음 파일을 만드려면 '만들기'을 클릭하세요.</p>",
 	'ow_exporttsv_languages' => '언어:',
 	'ow_exporttsv_not_allowed' => 'TSV 내보내기할 수 있는 권한이 없습니다.',
 	'ow_exporttsv_export_failed' => '내보내기 실패',
-	'addcollection' => '위키데이터: 모음집 추가', # Fuzzy
+	'addcollection' => '모음집 추가',
 	'ow_searchnoresult' => "<p>다음을 할 수 있습니다:<br />
 * '''\"[[Expression:\$1]]\" 표현을 만드세요''' (그리고 의미를 추가하세요)<br />
 * '''\"[[:\$1]]\" 문서를 만드세요''' (표준 위키 문서)</p>",
@@ -8656,9 +8653,9 @@ iso는 언어 코드입니다</p>",
 	'ow_noedit' => '"$1" 데이터 집합에서 문서를 편집할 수 없습니다.
 [[{{MediaWiki:Ow editing policy url}}|편집 정책]]을 참고하세요.',
 	'ow_uipref_datasets' => '기본 보기',
-	'ow_uiprefs' => '위키데이터', # Fuzzy
+	'ow_uiprefs' => '위키어휘데이터',
 	'ow_none_selected' => '선택하지 않음',
-	'transaction' => '위키데이터: 트랜잭션 기록', # Fuzzy
+	'transaction' => '트랜잭션 기록',
 	'ow_transaction_from_transaction' => '트랜젝션:',
 	'ow_transaction_count' => '갯수:',
 	'ow_transaction_user' => '사용자 이름:',
@@ -8676,7 +8673,7 @@ iso는 언어 코드입니다</p>",
 	'ow_transaction_first_dm' => '첫 번째 의미 정의',
 	'ow_transaction_second_dm' => '두 번째 의미 정의',
 	'ow_transaction_summary' => '요약',
-	'conceptmapping' => '위키데이터: 개념 매핑', # Fuzzy
+	'conceptmapping' => '개념 매핑',
 	'ow_conceptmapping_title' => '개념 매핑',
 	'ow_conceptmapping_help' => '<p>가능한 동작: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&... 매핑을 넣습니다</li>
@@ -8717,7 +8714,6 @@ iso는 언어 코드입니다</p>",
 	'ow_CollectionMember' => '모음집 구성원',
 	'ow_CollectionMembership' => '모음집 귀속 관계',
 	'ow_Definition' => '정의',
-	'ow_DefinedMeaningAttributes' => '주석',
 	'ow_DefinedMeaning' => '의미 정의',
 	'ow_DefinedMeaningReference' => '의미 정의',
 	'ow_ExactMeanings' => '엄밀한 의미',
@@ -8726,10 +8722,9 @@ iso는 언어 코드입니다</p>",
 	'ow_Expressions' => '표현',
 	'ow_IdenticalMeaning' => '같은 의미입니까?',
 	'ow_IncomingRelations' => '들어오는 관계',
-	'ow_GotoSource' => '원본으로 가기',
+	'ow_GotoSource' => '원본 보기',
 	'ow_ID' => 'ID',
 	'ow_Language' => '언어',
-	'ow_LevelAnnotation' => '주석',
 	'ow_LinkAttributeHeader' => '링크 속성',
 	'ow_Multiple_meanings' => '"$1"의 의미',
 	'ow_NewExactMeaning' => '새로운 엄밀한 의미',
@@ -8773,7 +8768,7 @@ iso는 언어 코드입니다</p>",
 	'ow_meaningsoftitle' => '"$1"의 의미',
 	'ow_meaningsofsubtitle' => '<em>위키 링크:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>권한 없음</h2>',
-	'copy' => '위키데이터: 복제', # Fuzzy
+	'copy' => '복제',
 	'ow_copy_no_action_specified' => '작업을 지정하세요',
 	'ow_copy_help' => '도움말을 아직 구현하지 않았습니다.',
 	'ow_please_proved_dmid' => '입력한 "?dmid=<ID>" (dmid=의미 정의 ID)가 없는 것 같습니다<br />
@@ -8790,9 +8785,9 @@ iso는 언어 코드입니다</p>",
 	'ow_no_action_specified' => '<h3>작업을 지정하지 않았습니다</h3>
 아마도 직접 이 문서에 왔습니까? 일반적으로 여기에 있을 필요가 없습니다.',
 	'ow_db_consistency_not_found' => '<h2>오류</h2>
-데이터베이스 일관성에 문제가 있습니다, 위키데이터가 의미 정의 ID에 연결한 유효한 데이터를 찾을 수 없습니다.
+데이터베이스 일관성에 문제가 있습니다, 의미 정의 ID에 연결한 찾을 수 있는 올바른 데이터가 없습니다.
 잃었을 수도 있습니다.
-서버 운영자 또는 관리자에게 문의하세요.', # Fuzzy
+서버 운영자 또는 관리자에게 문의하세요.',
 	'ow_history_transaction' => '트랜잭션:',
 	'ow_history_show_life_span' => '기록 수명 보기:',
 	'ow_class_attr_type_dm' => '의미 정의',
@@ -8800,12 +8795,12 @@ iso는 언어 코드입니다</p>",
 	'ow_class_attr_type_plain' => '일반 텍스트',
 	'ow_class_attr_type_link' => '링크',
 	'ow_class_attr_type_option' => '선택지 목록',
-	'needstranslation' => '위키데이터: 번역이 필요한 표현', # Fuzzy
+	'needstranslation' => '번역이 필요한 표현',
 	'ow_needs_xlation_title' => '번역이 필요한 표현',
 	'ow_needs_xlation_source_lang' => '원본 언어:',
 	'ow_needs_xlation_dest_lang' => '대상 언어:',
 	'ow_needs_xlation_no_dest_lang' => '대상 언어를 지정하세요.',
-	'ow_statistics' => '위키데이터: 통계', # Fuzzy
+	'ow_statistics' => '위키어휘데이터 통계',
 	'ow_show' => '보이기',
 	'ow_upload' => '올리기',
 	'ow_create' => '만들기',
@@ -9146,12 +9141,12 @@ $messages['kw'] = array(
 	'langman_wikimedia' => 'Koden Wikimedia:',
 	'langman_addlang' => 'Keworra an yeth',
 	'importlangnames_title' => 'Ymperthi henwyn yethow',
-	'importlangnames_added' => 'Henwyn yethow rag "$1" keworrys.',
+	'importlangnames_added' => 'Y keworras henwyn yethow rag "$1".',
 	'datasearch_language' => 'Yeth:',
 	'ow_exporttsv_languages' => 'Yethow:',
 	'ow_save' => 'Gwitha',
 	'ow_history' => 'Istori',
-	'ow_transaction_no_action' => 'Na wra tra veth',
+	'ow_transaction_no_action' => 'Na wra tra vyth',
 	'ow_dm_OK' => 'Sur',
 );
 
@@ -12105,7 +12100,6 @@ Selecione uma coleção para exportar. Introduza uma lista de códigos de língu
 	'ow_CollectionMember' => 'Membro da coleção',
 	'ow_CollectionMembership' => 'Associação a coleções',
 	'ow_Definition' => 'Definição',
-	'ow_DefinedMeaningAttributes' => 'Anotação',
 	'ow_DefinedMeaning' => 'Significado definido',
 	'ow_DefinedMeaningReference' => 'Significado definido',
 	'ow_ExactMeanings' => 'Significados exatos',
@@ -12117,7 +12111,6 @@ Selecione uma coleção para exportar. Introduza uma lista de códigos de língu
 	'ow_GotoSource' => 'Ir para fonte',
 	'ow_ID' => 'ID',
 	'ow_Language' => 'Língua',
-	'ow_LevelAnnotation' => 'Anotação',
 	'ow_LinkAttributeHeader' => 'Atributo do link',
 	'ow_Multiple_meanings' => 'Definições de "$1"',
 	'ow_NewExactMeaning' => 'Novo significado exato',
