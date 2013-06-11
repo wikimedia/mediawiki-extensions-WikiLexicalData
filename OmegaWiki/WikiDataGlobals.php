@@ -78,15 +78,18 @@ $wgUseExpressionPageTitlePrefix = true;	# malafaya: Use the expression prefix "M
 // Search page
 
 global
-	$wgSearchWithinExternalIdentifiersDefaultValue,
-	$wgSearchWithinWordsDefaultValue,
-	$wgShowSearchWithinExternalIdentifiersOption,
-	$wgShowSearchWithinWordsOption;
+	$wgWldSearchExternalIDDefault,
+	$wgWldSearchWordsDefault,
+	$wgWldSearchExternalIDOption,
+	$wgWldSearchWordsOption;
 
-$wgSearchWithinExternalIdentifiersDefaultValue = true;
-$wgSearchWithinWordsDefaultValue = true;
-$wgShowSearchWithinExternalIdentifiersOption = true;
-$wgShowSearchWithinWordsOption = true;
+$wgWldSearchExternalIDDefault = false;
+$wgWldSearchWordsDefault = true;
+
+// KIP: disabled for now, it's only confusing
+// todo: replace with a radiobox
+$wgWldSearchExternalIDOption = false;
+$wgWldSearchWordsOption = false;
 
 
 global
