@@ -5,17 +5,17 @@ require_once( 'Record.php' );
 require_once( 'RecordSet.php' );
 require_once( 'Wikidata.php' );
 
-/** 
+/**
  * Transaction.php
  *
  * Manage internal transactions (NOT mysql transactions... confuzzeled yet?)
  *
- * To use: 
- * 
- * startNewTransaction($userId, $userIP, $comment, $dc) 
+ * To use:
+ *
+ * startNewTransaction($userId, $userIP, $comment, $dc)
  * then do a getUpdateTransactionId() to find the id you need for
  * add_transaction_id.
- * 
+ *
  * Since this is not a mysql transaction, I don't THINK you need
  * to close it. If you do, it wasn't documented.
  *
@@ -39,7 +39,7 @@ class DefaultQueryTransactionInformation implements QueryTransactionInformation 
 	public function getRestriction( Table $table ) {
 		return "1";
 	}
-	
+
 	public function getTables() {
 		return array();
 	}
@@ -47,19 +47,19 @@ class DefaultQueryTransactionInformation implements QueryTransactionInformation 
 	public function versioningAttributes() {
 		return array();
 	}
-	
+
 	public function versioningFields( $tableName ) {
 		return array();
 	}
-	
+
 	public function versioningOrderBy() {
 		return array();
 	}
-	
+
 	public function versioningGroupBy( Table $table ) {
 		return array();
 	}
-	
+
 	public function setVersioningAttributes( Record $record, $row ) {
 	}
 
@@ -72,7 +72,7 @@ class QueryLatestTransactionInformation extends DefaultQueryTransactionInformati
 	public function getRestriction( Table $table ) {
 		return getLatestTransactionRestriction( $table->getIdentifier() );
 	}
-	
+
 	public function setVersioningAttributes( Record $record, $row ) {
 	}
 }
@@ -81,7 +81,7 @@ class QueryHistoryTransactionInformation extends DefaultQueryTransactionInformat
 	public function versioningAttributes() {
 
 		$o = OmegaWikiAttributes::getInstance();
-			
+
 		return array( $o->recordLifeSpan );
 	}
 
@@ -92,11 +92,11 @@ class QueryHistoryTransactionInformation extends DefaultQueryTransactionInformat
 	public function versioningOrderBy() {
 		return array( 'is_live DESC', 'add_transaction_id DESC' );
 	}
-	
+
 	public function setVersioningAttributes( Record $record, $row ) {
 
 		$o = OmegaWikiAttributes::getInstance();
-			
+
 		$record->recordLifeSpan = getRecordLifeSpanTuple( $row['add_transaction_id'], $row['remove_transaction_id'] );
 	}
 }
@@ -104,34 +104,34 @@ class QueryHistoryTransactionInformation extends DefaultQueryTransactionInformat
 class QueryAtTransactionInformation extends DefaultQueryTransactionInformation {
 	protected $transactionId;
 	protected $addAttributes;
-	
+
 	public function __construct( $transactionId, $addAttributes ) {
 		$this->transactionId = $transactionId;
 		$this->addAttributes = $addAttributes;
 	}
-	
+
 	public function getRestriction( Table $table ) {
 		return getAtTransactionRestriction( $table->getIdentifier(), $this->transactionId );
 	}
-	
+
 	public function versioningAttributes() {
 
 		$o = OmegaWikiAttributes::getInstance();
-		
+
 		if ( $this->addAttributes )
 			return array( $o->recordLifeSpan );
 		else
 			return array();
 	}
-	
+
 	public function versioningFields( $tableName ) {
 		return array( $tableName . '.add_transaction_id', $tableName . '.remove_transaction_id', $tableName . '.remove_transaction_id IS NULL AS is_live' );
 	}
-	
+
 	public function setVersioningAttributes( Record $record, $row ) {
 
 		$o = OmegaWikiAttributes::getInstance();
-			
+
 		if ( $this->addAttributes )
 			$record->recordLifeSpan = getRecordLifeSpanTuple( $row['add_transaction_id'], $row['remove_transaction_id'] );
 	}
@@ -139,21 +139,21 @@ class QueryAtTransactionInformation extends DefaultQueryTransactionInformation {
 
 class QueryUpdateTransactionInformation extends DefaultQueryTransactionInformation {
 	protected $transactionId;
-	
+
 	public function __construct( $transactionId ) {
 		$this->transactionId = $transactionId;
 	}
-	
+
 	public function getRestriction( Table $table ) {
 		return
 			" " . $table->getIdentifier() . ".add_transaction_id =" . $this->transactionId .
 			" OR " . $table->getIdentifier() . ".removeTransactionId =" . $this->transactionId;
 	}
-	
+
 //	public function versioningAttributes() {
 //		global
 //			$recordLifeSpanAttribute;
-//			
+//
 //		return array();
 //	}
 
@@ -164,7 +164,7 @@ class QueryUpdateTransactionInformation extends DefaultQueryTransactionInformati
 //	public function setVersioningAttributes($record, $row) {
 //		global
 //			$recordLifeSpanAttribute;
-//			
+//
 //		$record->setAttributeValue($recordLifeSpanAttribute, getRecordLifeSpanTuple($row['add_transaction_id'], $row['remove_transaction_id']));
 //	}
 }
@@ -182,21 +182,24 @@ function startNewTransaction( $userID, $userIP, $comment, $dc = null ) {
 		$dc = wdGetDataSetContext();
 	}
 
-	$dbr = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_MASTER );
 	$timestamp = wfTimestampNow();
-	
+
 
 	// do not store IP for logged in users
 	if ( $userID > 0 ) {
 		$userIP = "";
 	}
 
-	$sql = "INSERT INTO {$dc}_transactions (user_id, user_ip, timestamp, comment) "
-		. "VALUES (" . $userID . ", " . $dbr->addQuotes( $userIP )
-		. ', ' . $timestamp . ', ' . $dbr->addQuotes( $comment ) . ')' ;
-
-	$dbr->query( $sql );
-	$updateTransactionId = $dbr->insertId();
+	$dbw->insert(
+		"{$dc}_transactions",
+		array( 'user_id' => $userID,
+			'user_ip' => $userIP,
+			'timestamp' => $timestamp,
+			'comment' => $comment
+		), __METHOD__
+	);
+	$updateTransactionId = $dbw->insertId();
 }
 
 function getUpdateTransactionId() {
@@ -229,9 +232,9 @@ function getAtTransactionRestriction( $table, $transactionId ) {
 function getViewTransactionRestriction( $table ) {
 	global
 		$wgRequest;
-	
+
 	$action = $wgRequest->getText( 'action' );
-	
+
 	if ( $action == 'edit' ) {
 		return getLatestTransactionRestriction( $table );
 	} elseif ( $action == 'history' ) {
@@ -249,16 +252,20 @@ function getInTransactionRestriction( $table, $transactionId ) {
 	return " ($table.add_transaction_id=$transactionId OR $table.remove_transaction_id=$transactionId) ";
 }
 
-
 function getUserName( $userId ) {
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT user_name FROM user WHERE user_id=$userId" );
-	
-	if ( $user = $dbr->fetchObject( $queryResult ) ) {
-		return $user->user_name;
-	} else {
-		return "";
+	$userName = $dbr->selectField(
+		'user',
+		'user_name',
+		array(
+			'user_id' => $userId
+		), __METHOD__
+	);
+
+	if ( $userName ) {
+		return $userName;
 	}
+	return '';
 }
 
 function getUserLabel( $userId, $userIP ) {
@@ -294,15 +301,15 @@ function expandTransactionIdsInRecordSet( RecordSet $recordSet ) {
 function getTransactionRecord( $transactionId ) {
 
 	$o = OmegaWikiAttributes::getInstance();
-	
+
 	$dc = wdGetDataSetContext();
 	$result = new ArrayRecord( $o->transactionStructure );
 	$result->transactionId = $transactionId;
-	
+
 	if ( $transactionId > 0 ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$queryResult = $dbr->query( "SELECT user_id, user_ip, timestamp, comment FROM {$dc}_transactions WHERE transaction_id=$transactionId" );
-		
+
 		if ( $transaction = $dbr->fetchObject( $queryResult ) ) {
 			$result->user = getUserLabel( $transaction->user_id, $transaction->user_ip );
 			if ( $result->user == null ) $result->user = "userId " . $transaction->user_id . " not found" ;
@@ -315,7 +322,7 @@ function getTransactionRecord( $transactionId ) {
 			$result->user = "Unknown";
 		else
 			$result->user = "";
-				
+
 		$result->timestamp = "";
 		$result->summary = "";
 	}
@@ -326,30 +333,30 @@ function getTransactionRecord( $transactionId ) {
 function getRecordLifeSpanTuple( $addTransactionId, $removeTransactionId ) {
 
 	$o = OmegaWikiAttributes::getInstance();
-	
+
 	$result = new ArrayRecord( $o->recordLifeSpanStructure );
 	$result->addTransaction = getTransactionRecord( $addTransactionId );
 	$result->removeTransaction = getTransactionRecord( $removeTransactionId );
-	
+
 	return $result;
 }
 
 function getTransactionLabel( $transactionId ) {
 
 	$o = OmegaWikiAttributes::getInstance();
-	
+
 	if ( $transactionId > 0 ) {
 		$record = getTransactionRecord( $transactionId );
-		
+
 		$label =
 			timestampAsText( $record->timestamp ) . ', ' .
 			$record->user;
-			
+
 		$summary = $record->summary;
-		
+
 		if ( $summary != "" )
 			$label .= ', ' . $summary;
-			
+
 		return $label;
 	}
 	else
