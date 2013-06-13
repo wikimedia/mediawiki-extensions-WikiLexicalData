@@ -9,11 +9,12 @@
  *	@param	opt'l	str	part	'synonym or translation'
  *
  * HISTORY
+ * - 2013-06-13: Minimized data output, corrections. Error were
+ *		generated last time.
  * - 2013-06-11:
  *		* simplified synTrans function
  *		* renamed part_lang_id to lang
  *		* added option to exclude an expression from synonyms
- *
  * - 2013-06-08: Added
  *		@param	opt'l	str	part	'synonym or translation'
  *		@param	opt'l	int	prtlangid	'the param part's language id'
@@ -25,7 +26,8 @@
  * - Integrate with Define Class
  * - Transfer getSynonymAndTranslation function to WikiDataAPI when ready
  * - Add parameter
- *		@param	opt'l	str	e	'the expression spelling'
+ *		see below.
+ * - Add parameters to include sid, langid and im to output.
  *
  * QUESTION
  * - none
@@ -182,16 +184,28 @@ class SynonymTranslation extends ApiBase {
 		$syntrans = array();
 		$stList = getSynonymAndTranslation( $definedMeaningId );
 
+		$ctr = 1;
 		foreach ( $stList as $row ) {
 			$language = getLanguageIdLanguageNameFromIds( $row[1], WLD_ENGLISH_LANG_ID );
 
 			$syntransRow = array (
-				'syntrans_sid' => $row[3],
-				'e' => $row[0],
+				'sid' => $row[3],
 				'langid' => $row[1],
 				'lang' => $language,
+				'e' => $row[0],
 				'im' => $row[2]
 			);
+
+			// Minimal output
+			if ( !isset( $options['iLangId'] ) ) {
+				unset( $syntransRow['langid'] );
+			}
+			if ( !isset( $options['iSId'] ) ) {
+				unset( $syntransRow['sid'] );
+			}
+			if ( !isset( $options['iIm'] ) ) {
+				unset( $syntransRow['im'] );
+			}
 
 			if ( isset( $options['part'] ) ) {
 				if ( $options['part'] == 'syn' and $options['lang'] == $row[1] ) {
@@ -199,25 +213,30 @@ class SynonymTranslation extends ApiBase {
 						// skip the expression for the language id
 						if ( $options['lang'] == $row[1] && $options['e'] == $row[0] ) {
 						} else {
-							$syntrans[] = $syntransRow;
+							$syntrans["$ctr."] = $syntransRow;
+							$ctr ++;
 						}
 					} else {
-						$syntrans[] = $syntransRow;
+						$syntrans["$ctr."] = $syntransRow;
+						$ctr ++;
 					}
 				}
 
 				if ( $options['part'] == 'trans' and $options['lang'] != $row[1] ) {
-					$syntrans[] = $syntransRow;
+					$syntrans["$ctr."] = $syntransRow;
+					$ctr ++;
 				}
 			} else {
 				if ( isset( $options['lang']) && isset( $options['e'] ) ) {
 					// skip the expression for the language id
 					if ( $options['lang'] == $row[1] && $options['e'] == $row[0] ) {
 					} else {
-						$syntrans[] = $syntransRow;
+						$syntrans["$ctr."] = $syntransRow;
+						$ctr ++;
 					}
 				} else {
-					$syntrans[] = $syntransRow;
+					$syntrans["$ctr."] = $syntransRow;
+					$ctr ++;
 				}
 			}
 		}
