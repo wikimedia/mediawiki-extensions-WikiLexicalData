@@ -136,18 +136,23 @@ class SpecialDatasearch extends SpecialPage {
 			}
 			$output->addHTML( Html::rawElement( 'h1', array(), $headerText ) );
 			$resultCount = $this->searchWordsCount() ;
-			$output->addHTML( Html::rawElement( 'p', array(), wfMessage( 'datasearch_showing_only', $this->limit , $resultCount )->text() ) );
 
-			$prevNextLinks = $this->getPrevNextLinkHtml( $resultCount );
+			if ( $resultCount > $this->limit ) {
+				$output->addHTML( Html::rawElement( 'p', array(), wfMessage( 'datasearch_showing_only', $this->limit , $resultCount )->text() ) );
 
-			// links "previous" and "next" on top
-			$output->addHTML( $prevNextLinks );
+				$prevNextLinks = $this->getPrevNextLinkHtml( $resultCount );
+
+				// links "previous" and "next" on top
+				$output->addHTML( $prevNextLinks );
+			}
 
 			// the actual output of the words that were found
 			$output->addHTML( $this->searchWords() );
 
-			// links "previous" and "next" at the bottom
-			$output->addHTML( $prevNextLinks );
+			if ( $resultCount > $this->limit ) {
+				// links "previous" and "next" at the bottom
+				$output->addHTML( $prevNextLinks );
+			}
 		}
 
 		if ( $this->withinExternalIdentifiers ) {
