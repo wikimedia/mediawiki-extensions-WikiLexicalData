@@ -529,9 +529,9 @@ class SpecialSuggest extends SpecialPage {
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $relationTypeAttribute, $collectionAttribute ), new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) )
+		foreach ( $queryResult as $row ) {
 			$recordSet->addRecord( array( $row->member_mid, $row->spelling, definedMeaningExpression( $row->collection_mid ) ) );
-
+		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $relationTypeAttribute ) );
 		$editor->addEditor( createShortTextViewer( $collectionAttribute ) );
@@ -556,7 +556,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $classAttribute, $definitionAttribute ), new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		foreach ( $queryResult as $row ) {
 			$recordSet->addRecord( array( $row->member_mid, $row->spelling, getDefinedMeaningDefinition( $row->member_mid ) ) );
 		}
 
@@ -571,13 +571,13 @@ class SpecialSuggest extends SpecialPage {
 		$o = OmegaWikiAttributes::getInstance();
 
 		$dbr = wfGetDB( DB_SLAVE );
-	
-		$definedMeaningAttributeAttribute = new Attribute( WLD_DM_ATTRIBUTES, wfMessage( "ow_DefinedMeaningAttributes" )->text(), "short-text" );
+
+		$definedMeaningAttributeAttribute = new Attribute( WLD_DM_ATTRIBUTES, wfMessage( 'ow_Relations' )->plain(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $definedMeaningAttributeAttribute ), new Structure( $o->id ) );
 	
-		while ( $row = $dbr->fetchObject( $queryResult ) )
+		foreach ( $queryResult as $row ) {
 			$recordSet->addRecord( array( $row->attribute_mid, $row->spelling ) );
-
+		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $definedMeaningAttributeAttribute ) );
 
@@ -593,9 +593,9 @@ class SpecialSuggest extends SpecialPage {
 		$textAttributeAttribute = new Attribute( "text-attribute", wfMessage( 'ow_TextAttributeHeader' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $textAttributeAttribute ), new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) )
+		foreach ( $queryResult as $row ) {
 			$recordSet->addRecord( array( $row->attribute_mid, $row->spelling ) );
-
+		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $textAttributeAttribute ) );
 
@@ -610,9 +610,9 @@ class SpecialSuggest extends SpecialPage {
 		$linkAttributeAttribute = new Attribute( WLD_LINK_ATTRIBUTE, wfMessage( 'ow_LinkAttributeHeader' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $linkAttributeAttribute ), new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) )
+		foreach ( $queryResult as $row ) {
 			$recordSet->addRecord( array( $row->attribute_mid, $row->spelling ) );
-
+		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $linkAttributeAttribute ) );
 
@@ -628,9 +628,9 @@ class SpecialSuggest extends SpecialPage {
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $translatedTextAttributeAttribute ), new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) )
+		foreach ( $queryResult as $row ) {
 			$recordSet->addRecord( array( $row->attribute_mid, $row->spelling ) );
-
+		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $translatedTextAttributeAttribute ) );
 
@@ -645,9 +645,9 @@ class SpecialSuggest extends SpecialPage {
 		$optionAttributeAttribute = new Attribute( WLD_OPTION_ATTRIBUTE, wfMessage( 'ow_OptionAttributeHeader' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $optionAttributeAttribute ), new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) )
+		foreach ( $queryResult as $row ) {
 			$recordSet->addRecord( array( $row->object_id, $row->spelling ) );
-
+		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $optionAttributeAttribute ) );
 
@@ -669,7 +669,7 @@ class SpecialSuggest extends SpecialPage {
 		$spellingLangDefStructure = new Structure( $o->id, $o->spelling, $o->language, $definitionAttribute );
 		$recordSet = new ArrayRecordSet( $spellingLangDefStructure, new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		foreach ( $queryResult as $row ) {
 			$definition = getDefinedMeaningDefinition( $row->defined_meaning_id );
 
 			$recordSet->addRecord( array( $row->defined_meaning_id, $row->spelling, $row->language_id, $definition ) );
@@ -700,7 +700,7 @@ class SpecialSuggest extends SpecialPage {
 		$spellingLangDefStructure = new Structure( $o->id, $o->spelling, $o->language, $definitionAttribute );
 		$recordSet = new ArrayRecordSet( $spellingLangDefStructure, new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) ) {
+		foreach ( $queryResult as $row ) {
 			$definition = getDefinedMeaningDefinition( $row->defined_meaning_id );
 
 			$recordSet->addRecord( array( $row->syntrans_sid, $row->spelling, $row->language_id, $definition ) );
@@ -725,9 +725,9 @@ class SpecialSuggest extends SpecialPage {
 		$classAttributeLevelAttribute = new Attribute( "class-attribute-level", wfMessage( 'ow_ClassAttributeLevel' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $classAttributeLevelAttribute ), new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) )
+		foreach ( $queryResult as $row ) {
 			$recordSet->addRecord( array( $row->defined_meaning_id, $row->spelling ) );
-
+		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $classAttributeLevelAttribute ) );
 
@@ -743,9 +743,9 @@ class SpecialSuggest extends SpecialPage {
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $collectionAttribute ), new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) )
+		foreach ( $queryResult as $row ) {
 			$recordSet->addRecord( array( $row->collection_id, $row->spelling ) );
-
+		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $collectionAttribute ) );
 
@@ -761,7 +761,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $languageAttribute ), new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) )  {
+		foreach ( $queryResult as $row )  {
 			$recordSet->addRecord( array( $row->row_id, $row->language_name ) );
 		}
 		$editor = createSuggestionsTableViewer( null );
@@ -782,9 +782,9 @@ class SpecialSuggest extends SpecialPage {
 
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $userAttribute, $timestampAttribute, $summaryAttribute ), new Structure( $o->id ) );
 
-		while ( $row = $dbr->fetchObject( $queryResult ) )
+		foreach ( $queryResult as $row ) {
 			$recordSet->addRecord( array( $row->transaction_id, getUserLabel( $row->user_id, $row->user_ip ), $row->time, $row->comment ) );
-
+		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $timestampAttribute ) );
 		$editor->addEditor( createShortTextViewer( $o->id ) );
