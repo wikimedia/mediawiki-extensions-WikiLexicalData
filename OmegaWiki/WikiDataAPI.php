@@ -29,7 +29,7 @@ function newObjectId( $table ) {
 	$dc = wdGetDataSetContext();
 
 	$dbw = wfGetDB( DB_MASTER );
-	$uuid = $dbw->selectField( '', 'UUID()', '', __METHOD__);
+	$uuid = UIDGenerator::newUUIDv4();
 	$dbw->insert(
 		"{$dc}_objects",
 		array(  '`table`' => $table, '`UUID`' => $uuid ),
@@ -179,28 +179,14 @@ function getPageTitle( $spelling ) {
 
 
 function createPage( $namespace, $title ) {
-	$dbw = wfGetDB( DB_MASTER );
-	$timestamp = $dbw->timestamp();
+	$wikipage = new Wikipage( Title::makeTitle( $namespace , $title ) );
 
-	$pageId = $dbw->selectField(
-		'page',
-		'page_id',
-		array( 'page_namespace' => $namespace, 'page_title' => $title ),
-		__METHOD__
-	);
-
-	if ( $pageId ) {
-		return $pageId;
+	if ( $wikipage->exists() ) {
+		return $wikipage;
 	} else {
-		$dbw->insert(
-			'page',
-			array( 'page_namespace' => $namespace,
-				'page_title' => $title,
-				'page_is_new' => 1,
-				'page_touched' => $timestamp
-			), __METHOD__
-		);
-		return $dbw->insertId();
+		$dbw = wfGetDB( DB_MASTER );
+		$wikipage->insertOn( $dbw );
+		return $wikipage;
 	}
 }
 
@@ -214,13 +200,14 @@ function setPageLatestRevision( $pageId, $latestRevision ) {
 		), __METHOD__
 	);
 }
-function createInitialRevisionForPage( $pageId, $comment ) {
+function createInitialRevisionForPage( $wikipage, $comment ) {
 	global $wgUser;
 
 	$dbw = wfGetDB( DB_MASTER );
 	$userId = $wgUser->getID();
 	$userName = $wgUser->getName();
 	$timestamp = $dbw->timestamp();
+	$pageId = $wikipage->getId();
 
 	$dbw->insert(
 		'revision',
@@ -229,7 +216,8 @@ function createInitialRevisionForPage( $pageId, $comment ) {
 			'rev_user' => $userId,
 			'rev_user_text' => $userName,
 			'rev_timestamp' => $timestamp,
-			'rev_parent_id' => 0
+			'rev_parent_id' => 0,
+			'rev_text_id' => 0
 		), __METHOD__
 	);
 
@@ -1191,8 +1179,8 @@ function addDefinedMeaning( $definingExpressionId ) {
 
 	$expression = getExpression( $definingExpressionId );
 	$spelling = $expression->spelling;
-	$pageId = createPage( NS_DEFINEDMEANING, getPageTitle( "$spelling ($definedMeaningId)" ) );
-	createInitialRevisionForPage( $pageId, 'Created by adding defined meaning' );
+	$wikipage = createPage( NS_DEFINEDMEANING, "$spelling ($definedMeaningId)" );
+	createInitialRevisionForPage( $wikipage, 'Created by adding defined meaning' );
 
 	return $definedMeaningId;
 }
@@ -2265,18 +2253,12 @@ function getUUID( $concepts ) {
 	}
 
 	if ( $uuid == - 1 ) {
-		$query = "SELECT uuid() AS id";
-		$queryResult = $dbr->query( $query );
-		$row = $dbr->fetchObject( $queryResult );
-		$uuid = isset( $row->id ) ? $row->id : - 1;
+		$uuid = UIDGenerator::newUUIDv4();
 	}
 
 	foreach ( $concepts as $dc => $dm_id ) {
 		if ( $uuid_array[$dc] == - 1 ) {
 			$uuid_array[$dc] = $uuid;
-		}
-		else {
-			$uuid_array[$dc] = - 1;
 		}
 	}
 	return $uuid_array;
