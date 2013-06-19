@@ -18,6 +18,7 @@ class InstallWikiLexicalData extends Maintenance {
 		$this->mDescription = "Installation by creating the tables and filling them with the minimal necessary data\n"
 			. 'Example usage: php install.php --prefix=uw '
 			. '--template=wikidataTemplate.sql --datasetname="OmegaWiki community"' ;
+		$this->addOption( 'freshInstall', 'Drop all tables before creating new ones' );
 		$this->addOption( 'prefix', 'The prefix to use for the relational tables. e.g. --prefix=uw' );
 		$this->addOption( 'template', 'A sql template describing the relational tables. e.g. --template=databaseTemplate.sql' );
 		$this->addOption( 'datasetname', 'A name for your dataset. e.g. --datasetname="OmegaWiki community"' );
@@ -42,6 +43,11 @@ class InstallWikiLexicalData extends Maintenance {
 		$datasetname = $this->getOption( 'datasetname' );
 		$wdCurrentContext = $prefix ;
 
+		if ( $this->hasOption( 'freshInstall' ) ) {
+			$this->output( "Dropping all tables\n");
+			$this->dropTables( $prefix );
+		}
+
 		$this->output( "Creating relational tables...\n" );
 
 		$this->ReadTemplateSQLFile( "/*\$wgWDprefix*/", $prefix . "_", dirname( __FILE__ ) . DIRECTORY_SEPARATOR . $template );
@@ -64,24 +70,38 @@ class InstallWikiLexicalData extends Maintenance {
 
 	protected function createLanguageEnglish( $dc ) {
 		$dbw = wfGetDB( DB_MASTER );
+		global $wgDBtype;
+		$options = array();
+		if ( $wgDBtype == 'sqlite' ) {
+			$options = array( 'IGNORE' => true );
+		}
 
 		$langname = "English";
 		$langiso6392 = "en";
 		$langiso6393 = "eng";
 		$langwmf = "en";
-		$sql = 'INSERT IGNORE INTO language(language_id, iso639_2,iso639_3,wikimedia_key) values('
-			. WLD_ENGLISH_LANG_ID . ','
-			. $dbw->addQuotes( $langiso6392 ) . ','
-			. $dbw->addQuotes( $langiso6393 ) . ','
-			. $dbw->addQuotes( $langwmf ) . ')';
+		$langid = WLD_ENGLISH_LANG_ID;
 
-		$dbw->query( $sql );
+		$dbw->insert(
+			'language',
+			array(
+				'language_id' => $langid,
+				'iso639_2' => $langiso6392,
+				'iso639_3' => $langiso6393,
+				'wikimedia_key' => $langwmf
+			), __METHOD__,
+			$options
+		);
 
-		$sql = 'INSERT IGNORE INTO language_names(language_id,name_language_id,language_name) values ('
-			. WLD_ENGLISH_LANG_ID . ','
-			. WLD_ENGLISH_LANG_ID . ','
-			. $dbw->addQuotes( $langname ) . ')';
-		$dbw->query( $sql );
+		$dbw->insert(
+			'language_names',
+			array(
+				'language_id' => $langid,
+				'name_language_id' => $langid,
+				'language_name' => $langname
+			), __METHOD__,
+			$options
+		);
 	}
 
 	protected function bootStrappedDefinedMeanings( $dc ) {
@@ -99,7 +119,6 @@ class InstallWikiLexicalData extends Maintenance {
 			$this->printDropTablesCommand( $dc );
 			exit(0);
 		}
-
 
 		startNewTransaction( $userId, 0, "Script bootstrap class attribute meanings", $dc );
 		$collectionId = bootstrapCollection( "Class attribute levels", WLD_ENGLISH_LANG_ID, "LEVL", $dc );
@@ -165,35 +184,47 @@ class InstallWikiLexicalData extends Maintenance {
 	}
 
 
+	protected function dropTables( $dc ) {
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->delete(
+			'page',
+			array( 'page_namespace' => NS_EXPRESSION ),
+			__METHOD__
+		);
+		$dbw->delete(
+			'page',
+			array( 'page_namespace' => NS_DEFINEDMEANING ),
+			__METHOD__
+		);
+		$owTableNames = $this->getWLDtableNamesAddtl();
+		foreach ( $owTableNames as $drop ) {
+			$dbw->dropTable( $drop, __METHOD__ );
+		}
+		$owTableNames = $this->getWLDtableNames();
+		foreach ( $owTableNames as $drop ) {
+			$dbw->dropTable( $dc . $drop, __METHOD__ );
+		}
+	}
+
 	protected function printDropTablesCommand( $dc ) {
 		$dropCommand = "drop table ";
-		$dropCommand .= $dc . "_alt_meaningtexts, ";
-		$dropCommand .= $dc . "_bootstrapped_defined_meanings, ";
-		$dropCommand .= $dc . "_class_attributes, ";
-		$dropCommand .= $dc . "_class_membership, ";
-		$dropCommand .= $dc . "_collection, ";
-		$dropCommand .= $dc . "_collection_contents, ";
-		$dropCommand .= $dc . "_collection_language, ";
-		$dropCommand .= $dc . "_defined_meaning, ";
-		$dropCommand .= $dc . "_expression, ";
-		$dropCommand .= $dc . "_meaning_relations, ";
-		$dropCommand .= $dc . "_objects, ";
-		$dropCommand .= $dc . "_option_attribute_options, ";
-		$dropCommand .= $dc . "_option_attribute_values, ";
-		$dropCommand .= $dc . "_script_log, ";
-		$dropCommand .= $dc . "_syntrans, ";
-		$dropCommand .= $dc . "_text, ";
-		$dropCommand .= $dc . "_text_attribute_values, ";
-		$dropCommand .= $dc . "_transactions, ";
-		$dropCommand .= $dc . "_translated_content, ";
-		$dropCommand .= $dc . "_translated_content_attribute_values, ";
-		$dropCommand .= $dc . "_url_attribute_values ";
 
+		$owTableNames = $this->getWLDtableNamesAddtl();
+		foreach ( $owTableNames as $drop ) {
+			$dropCommand .= "$drop, ";
+		}
+
+		$owTableNames = $this->getWLDtableNames();
+		foreach ( $owTableNames as $drop ) {
+			$dropCommand .= $dc . "$drop, ";
+		}
+		$dropCommand = preg_replace( '/, $/', '', $dropCommand );
 		echo "\n\n$dropCommand\n\n";
 	}
 
 	protected function ReadTemplateSQLFile( $pattern, $prefix, $filename ) {
 		$dbw = wfGetDB( DB_MASTER );
+		global $wgDBtype;
 
 		$fp = fopen( $filename, 'r' );
 		if ( false === $fp ) {
@@ -218,6 +249,10 @@ class InstallWikiLexicalData extends Maintenance {
 			if ( '' != $cmd ) { $cmd .= ' '; }
 			$cmd .= "$line\n";
 
+			if ( $wgDBtype == 'sqlite' ) {
+				$cmd = $this->sqliteLineReplace( $cmd );
+			}
+
 			if ( $done ) {
 				$cmd = str_replace( ';;', ";", $cmd );
 				$cmd = trim( str_replace( $pattern, $prefix, $cmd ) );
@@ -236,6 +271,55 @@ class InstallWikiLexicalData extends Maintenance {
 		return true;
 	}
 
+	protected function sqliteLineReplace( $string ) {
+		$string = preg_replace( '/ int(eger|) /i', ' INTEGER ', $string );
+		$string = preg_replace( '/ int(eger|)\(/i', " INTEGER(", $string );
+		$string = str_replace( ' auto_increment', " AUTO_INCREMENT", $string );
+
+		$string = str_replace( 'CREATE INDEX', "CREATE INDEX IF NOT EXISTS", $string );
+		if ( preg_match( '/CREATE INDEX /', $string ) ) {
+			if ( preg_match( '/`user` ON/', $string ) ) {
+				$string = str_replace( "`user`", "`user_id`", $string );
+			}
+			$string = preg_replace( '/(\(\d+\))/', ' ', $string );
+		}
+		$string = str_replace( ' unsigned', '', $string );
+		$string = preg_replace( '/INTEGER\(\d+\)/', 'INTEGER', $string );
+		$string = str_replace( 'AUTO_INCREMENT', "AUTOINCREMENT", $string );
+		$string = str_replace( 'collate utf8_bin', "collate binary", $string );
+		$string = str_replace( ') ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci', ")", $string );
+		return ( $string );
+	}
+
+	protected function getWLDtableNames() {
+		return array(
+			"_alt_meaningtexts",
+			"_bootstrapped_defined_meanings",
+			"_class_attributes",
+			"_class_membership",
+			"_collection",
+			"_collection_contents",
+			"_collection_language",
+			"_defined_meaning",
+			"_expression",
+			"_meaning_relations",
+			"_objects",
+			"_option_attribute_options",
+			"_option_attribute_values",
+			"_script_log",
+			"_syntrans",
+			"_text",
+			"_text_attribute_values",
+			"_transactions",
+			"_translated_content",
+			"_translated_content_attribute_values",
+			"_url_attribute_values"
+		);
+	}
+
+	protected function getWLDtableNamesAddtl() {
+		return array( "language", "language_names" );
+	}
 }
 
 $maintClass = 'InstallWikiLexicalData';

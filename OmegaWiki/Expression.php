@@ -7,7 +7,6 @@ class Expression {
 	public $id;
 	public $spelling;
 	public $languageId;
-	public $pageId;
 	public $meaningIds = array();
 	public $dataset;
 
@@ -23,11 +22,11 @@ class Expression {
 	}
 
 	function createNewInDatabase() {
-		$this->pageId = $this->createPage();
-		createInitialRevisionForPage( $this->pageId, 'Created by adding expression' );
+		$wikipage = $this->createExpressionPage();
+		createInitialRevisionForPage( $wikipage, 'Created by adding expression' );
 	}
 
-	function createPage() {
+	function createExpressionPage() {
 		return createPage( NS_EXPRESSION, getPageTitle( $this->spelling ) );
 	}
 
