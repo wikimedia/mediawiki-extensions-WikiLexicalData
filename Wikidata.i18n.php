@@ -449,8 +449,8 @@ Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki pag
 	'ow_needs_xlation_source_lang' => 'Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].',
 	'ow_needs_xlation_dest_lang' => 'Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].',
 	'ow_needs_xlation_no_dest_lang' => 'Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].',
+	'ow_data search' => '{{doc-special|Ow data search}}',
 	'ow_statistics' => '{{doc-special|Ow statistics}}',
-	'ow_data_search' => '{{doc-special|Ow data search}}',
 	'ow_downloads' => '{{doc-special|Ow downloads}}',
 	'ow_show' => 'Button text to show results.
 Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].
@@ -5006,7 +5006,7 @@ Kielen pitää olla ISO 639-3 -kielikoodi.</p>',
 	'exporttsv' => 'TSV:n vienti',
 	'ow_exporttsv_title' => 'Vie kokoelma TSV-muotoon',
 	'ow_exporttsv_header' => "<p>Vie kokoelma sarkaimin erotetussa tekstimuodossa, jonka voit tuoda OpenOffice.org, Excel tai muuhun taulukkolaskentaohjelmistoon.<br />
-Valitse vietävä kokoelma. Syötä kielten tekstikenttään pilkuilla eroteltu luettelo ISO 639-3 -kielikoodeista. Aloita kielistä, joista tulet kääntämään (valitse niin monta kuin haluat), ja lisää lopuksi ne joihin sinä käännät. Napsauta sitten 'Create' luodaksesi tiedoston.</p>", # Fuzzy
+Valitse vietävä kokoelma. Syötä kielten tekstikenttään pilkuilla eroteltu luettelo ISO 639-3 -kielikoodeista. Aloita kielistä, joista tulet kääntämään (valitse niin monta kuin haluat), ja lisää lopuksi ne joihin sinä käännät. Napsauta sitten 'Create' luodaksesi tiedoston.</p>",
 	'ow_exporttsv_languages' => 'Kielet:',
 	'ow_exporttsv_not_allowed' => 'Sinulla ei ole lupaa tehdä TSV-vientiä.',
 	'ow_exporttsv_export_failed' => 'Vienti epäonnistui',
@@ -5060,7 +5060,6 @@ Lisätietoja on [[{{MediaWiki:Ow editing policy url}}|muokkauskäytännöistä]]
 	'ow_CollectionMember' => 'Kokoelman jäsen',
 	'ow_CollectionMembership' => 'Kokoelman jäsenyys',
 	'ow_Definition' => 'Määritelmä',
-	'ow_DefinedMeaningAttributes' => 'Huomautus',
 	'ow_DefinedMeaning' => 'Määritelty merkitys',
 	'ow_DefinedMeaningReference' => 'Määritelty merkitys',
 	'ow_ExactMeanings' => 'Tarkat merkitykset',
@@ -5072,7 +5071,6 @@ Lisätietoja on [[{{MediaWiki:Ow editing policy url}}|muokkauskäytännöistä]]
 	'ow_GotoSource' => 'Siirry lähdetekstiin',
 	'ow_ID' => 'Tunniste',
 	'ow_Language' => 'Kieli',
-	'ow_LevelAnnotation' => 'Annotaatio',
 	'ow_LinkAttributeHeader' => 'Linkin määre',
 	'ow_Multiple_meanings' => 'Kohteen ”$1” merkitykset',
 	'ow_NewExactMeaning' => 'Uusi täsmällinen merkitys',
