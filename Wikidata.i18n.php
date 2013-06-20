@@ -254,7 +254,9 @@ Please contact the server operator or administrator.",
 	'ow_needs_xlation_dest_lang' => 'Destination language:',
 	'ow_needs_xlation_no_dest_lang' => 'Please specify a destination language.',
 
+	'ow_data search' => 'WikiLexicalData data search',
 	'ow_statistics' => 'WikiLexicalData statistics',
+	'ow_downloads' => "WikiLexicalData downloads",
 
 	'ow_show' => 'Show',
 	'ow_upload' => 'Upload',
@@ -272,7 +274,7 @@ Please contact the server operator or administrator.",
 	'prefs-omegawiki' => 'OmegaWiki',
 	'prefs-ow-lang' => 'Languages',
 	'ow_pref_lang_switch' => 'Show only the selected languages',
-	'ow_pref_lang_select' => 'Languages to display:'
+	'ow_pref_lang_select' => 'Languages to display:',
 );
 
 /** Message documentation (Message documentation)
@@ -448,6 +450,8 @@ Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki pag
 	'ow_needs_xlation_dest_lang' => 'Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].',
 	'ow_needs_xlation_no_dest_lang' => 'Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].',
 	'ow_statistics' => '{{doc-special|Ow statistics}}',
+	'ow_data_search' => '{{doc-special|Ow data search}}',
+	'ow_downloads' => '{{doc-special|Ow downloads}}',
 	'ow_show' => 'Button text to show results.
 Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].
 {{Identical|Show}}',
@@ -5001,7 +5005,7 @@ jossa ''iso'' on kielikoodi.</p>",
 Kielen pitää olla ISO 639-3 -kielikoodi.</p>',
 	'exporttsv' => 'TSV:n vienti',
 	'ow_exporttsv_title' => 'Vie kokoelma TSV-muotoon',
-	'ow_exporttsv_header' => "<p>Vie kokoelma sarkaimin erotetussa tekstimuodossa, jonka voit tuoda OpenOffice.org, Excel tai muuhun taulukkolaskentaohjelmistoon.<br /> 
+	'ow_exporttsv_header' => "<p>Vie kokoelma sarkaimin erotetussa tekstimuodossa, jonka voit tuoda OpenOffice.org, Excel tai muuhun taulukkolaskentaohjelmistoon.<br />
 Valitse vietävä kokoelma. Syötä kielten tekstikenttään pilkuilla eroteltu luettelo ISO 639-3 -kielikoodeista. Aloita kielistä, joista tulet kääntämään (valitse niin monta kuin haluat), ja lisää lopuksi ne joihin sinä käännät. Napsauta sitten 'Create' luodaksesi tiedoston.</p>", # Fuzzy
 	'ow_exporttsv_languages' => 'Kielet:',
 	'ow_exporttsv_not_allowed' => 'Sinulla ei ole lupaa tehdä TSV-vientiä.',
