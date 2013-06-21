@@ -1297,12 +1297,13 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 		// getting the truncated definition
 		if ( ( $this->truncateAt > 0 ) && ( strlen( $definition ) > $this->truncateAt ) ) {
 			$escapedDefinition = htmlspecialchars( $definition );
-			$spancontent = htmlspecialchars( mb_substr( $definition, 0, $this->truncateAt ) ) . wfMessage( 'ellipsis' )->text();
-			$definition = Html::element( 'span', array( 'title' => $escapedDefinition ), $spancontent );
+			$shortdef = htmlspecialchars( mb_substr( $definition, 0, $this->truncateAt ) ) . wfMessage( 'ellipsis' )->text();
+
+			$htmlDefinition = Html::element('span', array( 'class' => 'defheader', 'title' => $escapedDefinition ), $shortdef );
+		} else {
+			// normal situation, no truncation
+			$htmlDefinition = Html::element('span', array( 'class' => 'defheader' ), $definition );
 		}
-
-		$htmlDefinition = Html::element('span', array( 'class' => 'defheader' ), $definition );
-
 		// setting the definition as meta description for the page
 		if ( $isMetaDescSet == 0 ) {
 			$wgOut->addMeta( 'Description', $definition );
