@@ -1295,11 +1295,13 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 		$expression = getExpression( $expressionId );
 
 		// getting the truncated definition
-		$escapedDefinition = htmlspecialchars( $definition );
 		if ( ( $this->truncateAt > 0 ) && ( strlen( $definition ) > $this->truncateAt ) ) {
+			$escapedDefinition = htmlspecialchars( $definition );
 			$spancontent = htmlspecialchars( mb_substr( $definition, 0, $this->truncateAt ) ) . wfMessage( 'ellipsis' )->text();
-			$escapedDefinition = Html::element( 'span', array( 'title' => $escapedDefinition ), $spancontent );
+			$definition = Html::element( 'span', array( 'title' => $escapedDefinition ), $spancontent );
 		}
+
+		$htmlDefinition = Html::element('span', array( 'class' => 'defheader' ), $definition );
 
 		// setting the definition as meta description for the page
 		if ( $isMetaDescSet == 0 ) {
@@ -1311,9 +1313,8 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 		$DMPageName = $definingExpression . " (" . $definedMeaningId . ")" ;
 		$DMTitle = Title::makeTitle( NS_DEFINEDMEANING , $DMPageName );
 		$editURL = $DMTitle->getLocalURL( 'action=edit' ) ;
-		$editLink = Html::openElement( 'span', array( 'class' => 'dm_edit_link' ) );
-		$editLink .= Html::rawElement( 'sup', array(), '['. createLink( $editURL , wfMessage( 'edit')->text() ) . ']' );
-		$editLink .= Html::closeElement( 'span' );
+		$editLinkContent = '['. createLink( $editURL , wfMessage( 'edit')->text() ) . ']';
+		$editLink = Html::rawElement( 'span', array( 'class' => 'dm_edit_link' ), $editLinkContent );
 
 		if ( $wgUser->getOption( 'ow_alt_layout' ) ) {
 			// EXPERIMENTAL LAYOUT:
@@ -1331,7 +1332,7 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 			if ( $translation != "" ) {
 				$output .= " : " . $translation;
 			}
-			$output .= Html::element('br') . $escapedDefinition ;
+			$output .= Html::element('br') . $htmlDefinition ;
 
 		} else {
 			// STANDARD CLASSIC LAYOUT:
@@ -1343,7 +1344,7 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 				// try to get a translation
 				$definedMeaningAsLink = definedMeaningAsLink( $definedMeaningId );
 			}
-			$output = $editLink . $definedMeaningAsLink . ": " . $escapedDefinition ;
+			$output =  $definedMeaningAsLink . $editLink . " : " . $htmlDefinition ;
 		}
 
 		return $output ;

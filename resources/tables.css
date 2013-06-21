@@ -46,11 +46,6 @@
 	display: none;
 }
 
-/* edit links for definedmeaning that shows next to a definition */
-.dm_edit_link {
-	float:right;
-	font-size:60%;
-}
 
 /*****
  * Language filtering Icon Styling (icon on top of page)
@@ -251,15 +246,43 @@ li.exact-sortcaption span {
 /******
  * other hierarchical elements
  */
+
+/* edit links for definedmeaning that shows next to a definition */
+.dm_edit_link {
+	/* does not work well with float because of text-overflow of the definitions */
+	position:absolute;
+	right:0;
+
+	/* a bit up */
+	top:-0.5em;
+
+	/* <sup> */
+	font-size:50%;
+	vertical-align: super;
+
+	/* for a bit of prettiness, to avoid text overlaps */
+	/* same color as below */
+	background-color: #e0ffff;
+	/* top right bottom left - color extends a bit on the sides, except right */
+	padding: 0.5em 0em 0.5em 0.5em;
+}
+
 .level3 {
-	font-size:120% ;
+	/* main definitions on one line */
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+
+	/* need position relative so that the absolute dm_edit_link use this as parent */
+	position:relative;
+	font-size:110% ;
 	background-color: #e0ffff;
 	margin-top:10px;
 	padding:5px;
 }
 
 .level4 {
-	font-size:110% ;
+	font-size:105% ;
 	font-weight: bold;
 	padding:5px;
 }
