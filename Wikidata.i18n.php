@@ -10015,7 +10015,9 @@ $messages['mn'] = array(
  */
 $messages['mr'] = array(
 	'languages' => 'विकिविदा:भाषाप्रबंधक', # Fuzzy
+	'langman-desc' => '[[Special:Languages]] ने लॅंग्वेज सेटींग जोडणे आणि  बदलणे',
 	'langman_title' => 'भाषा प्रबंधक',
+	'langman_not_allowed' => 'भाषा सेटींग बदलण्याची आपणास परवानगी नाही.',
 	'datasearch' => 'विकिविदा:विदा शोध', # Fuzzy
 	'ow_save' => 'जतन करा',
 	'ow_history' => 'इतिहास',
@@ -10060,7 +10062,6 @@ $messages['mr'] = array(
 	'ow_Collection' => 'कलेक्शन',
 	'ow_CollectionMembership' => 'कलेक्शन सदस्यत्व',
 	'ow_Definition' => 'व्याख्या',
-	'ow_DefinedMeaningAttributes' => 'टीका-टिप्पणी',
 	'ow_DefinedMeaning' => 'दिलेला अर्थ',
 	'ow_DefinedMeaningReference' => 'दिलेला अर्थ',
 	'ow_ExactMeanings' => 'नेमका अर्थ',
@@ -10071,7 +10072,6 @@ $messages['mr'] = array(
 	'ow_IncomingRelations' => 'येते संबध',
 	'ow_GotoSource' => 'स्रोताकडे जा',
 	'ow_Language' => 'भाषा',
-	'ow_LevelAnnotation' => 'टीका-टिप्पणी',
 	'ow_OptionAttribute' => 'वैशिष्ट्य',
 	'ow_OptionAttributeOption' => 'पर्याय',
 	'ow_OptionAttributeOptions' => 'पर्याय',
@@ -15956,6 +15956,13 @@ $messages['ur'] = array(
 	'ow_Definition' => 'تعریف',
 	'ow_Expression' => 'اظہار',
 	'ow_Expressions' => 'اظہار',
+);
+
+/** Uzbek (oʻzbekcha)
+ * @author Sociologist
+ */
+$messages['uz'] = array(
+	'datasearch_language' => 'Til:',
 );
 
 /** Veps (vepsän kel’)
