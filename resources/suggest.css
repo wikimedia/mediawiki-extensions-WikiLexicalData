@@ -48,6 +48,7 @@ td .suggest-link:visited {
 	display: none;
 	background-color: white;
 	padding: 4px;
+	z-index: 2;
 }
 
 .suggest-drop-down {
