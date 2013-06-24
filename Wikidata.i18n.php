@@ -10119,7 +10119,7 @@ $messages['mr'] = array(
  */
 $messages['ms'] = array(
 	'wikidata-desc' => 'Menambahkan pangkalan data seakan wiki untuk pelbagai jenis kandungan',
-	'wikidata-handler-namespace-move-error' => 'Laman-laman dalam ruang nama yang diurus oleh sambungan Wikidata tidak boleh dipindahkan.', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Halaman-halaman dalam ruang nama yang diurus oleh sambungan WikiLexicalData tidak boleh dipindahkan.',
 	'languages' => 'Pengelola bahasa',
 	'langman-desc' => 'Tambahkan dan ubah tetapan bahasa dengan [[Special:Languages]]',
 	'langman_title' => 'Pengelola bahasa',
