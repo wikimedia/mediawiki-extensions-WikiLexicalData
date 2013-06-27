@@ -2743,6 +2743,7 @@ $messages['ce'] = array(
 	'datasearch_language' => 'Мотт:',
 	'datasearch_search_text' => 'Йоза лахар:',
 	'ow_history' => 'Истори',
+	'ow_uipref_datasets' => 'Гар Iад йитарца:',
 	'ow_uiprefs' => 'Викихаамаш', # Fuzzy
 	'ow_transaction_rollback_button' => 'Юхаяккха',
 	'ow_transaction_remove' => 'ДӀаяккхар',
