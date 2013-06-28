@@ -42,6 +42,8 @@ class SpecialDatasearch extends SpecialPage {
 	private $limit = 100;
 	private $offset = 0;
 
+	private $resultCount = 0;
+
 	function SpecialDatasearch() {
 		parent::__construct( 'ow_data_search' );
 
@@ -92,6 +94,9 @@ class SpecialDatasearch extends SpecialPage {
 		}
 	}
 
+	/**
+	 * the basic form, with fields to fill in, and checkboxes to click
+	 */
 	function displayForm() {
 		global $wgWldSearchExternalIDDefault,
 			$wgWldSearchWordsDefault,
@@ -127,6 +132,9 @@ class SpecialDatasearch extends SpecialPage {
 		$this->getOutput()->addHTML( getOptionPanel( $options ) );
 	}
 
+	/**
+	 * outputs the html of the search result as a table
+	 */
 	function search() {
 		$output = $this->getOutput();
 		if ( $this->withinWords ) {
@@ -136,26 +144,34 @@ class SpecialDatasearch extends SpecialPage {
 				$headerText = wfMessage( 'datasearch_match_words', $this->searchText )->text();
 			}
 			$output->addHTML( Html::rawElement( 'h1', array(), $headerText ) );
-			$resultCount = $this->searchWordsCount() ;
 
-			if ( $resultCount > $this->limit ) {
-				$output->addHTML( Html::rawElement( 'p', array(), wfMessage( 'datasearch_showing_only', $this->limit , $resultCount )->text() ) );
+			$searchResultHtmlTable = $this->searchWords();
 
-				$prevNextLinks = $this->getPrevNextLinkHtml( $resultCount );
+			if ( $this->resultCount > $this->limit ) {
+				// the number of results is more than the limit of displayed results
+				$ptext = wfMessage( 'datasearch_showing_only', $this->limit, $this->resultCount )->text();
+				$output->addHTML( Html::rawElement( 'p', array(), $ptext ) );
+
+				$prevNextLinks = $this->getPrevNextLinkHtml( $this->resultCount );
 
 				// links "previous" and "next" on top
 				$output->addHTML( $prevNextLinks );
+			} else {
+				// less than $this->limit results
+				$ptext = wfMessage( 'search-interwiki-default', $this->resultCount )->text();
+				$output->addHTML( Html::rawElement( 'p', array(), $ptext ) );
 			}
 
 			// the actual output of the words that were found
-			$output->addHTML( $this->searchWords() );
+			$output->addHTML( $searchResultHtmlTable );
 
-			if ( $resultCount > $this->limit ) {
+			if ( $this->resultCount > $this->limit ) {
 				// links "previous" and "next" at the bottom
 				$output->addHTML( $prevNextLinks );
 			}
 		}
 
+/* disabled for the moment
 		if ( $this->withinExternalIdentifiers ) {
 			$headerText = wfMessage( 'datasearch_match_ext_ids', $this->searchText )->plain();
 			$output->addHTML( Html::rawElement( 'h1', array(), $headerText ) );
@@ -166,6 +182,7 @@ class SpecialDatasearch extends SpecialPage {
 
 			$output->addHTML( $this->searchExternalIdentifiers() );
 		}
+*/
 	}
 
 	function getSpellingRestriction( $spelling, $tableColumn ) {
@@ -193,6 +210,11 @@ class SpecialDatasearch extends SpecialPage {
 			return "";
 	}
 
+	/**
+	 * performs the search according to the given parameters
+	 * returns a html table with the result
+	 * and fills in the class variable resultCount
+	 */
 	function searchWords() {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
@@ -251,7 +273,16 @@ class SpecialDatasearch extends SpecialPage {
 			$whereClause['colcont.remove_transaction_id'] = null;
 		}
 
-		// The query itself!
+		// The query for the total number of results
+		$this->resultCount = $dbr->selectField(
+			$tables,
+			'COUNT(*)',
+			$whereClause,
+			__METHOD__
+		);
+
+
+		// The query for the search itself! Uses limit and offset
 		$queryResult = $dbr->select(
 			$tables,
 			$fields,
@@ -264,54 +295,10 @@ class SpecialDatasearch extends SpecialPage {
 		$recordSet = $this->getWordsSearchResultAsRecordSet( $queryResult );
 		$editor = $this->getWordsSearchResultEditor();
 
+		$output = $editor->view( new IdStack( "words" ), $recordSet );
+
 		return $editor->view( new IdStack( "words" ), $recordSet );
 	}
-
-	/**
-	 * Gives the exact number of results (not limited to 100)
-	 */
-	function searchWordsCount() {
-		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
-
-		$table = array(
-			'exp' => "{$dc}_expression",
-			'synt' => "{$dc}_syntrans"
-		);
-
-		$wherecond = array(
-			'exp.expression_id = synt.expression_id',
-			'synt.identical_meaning' => 1,
-			'exp.remove_transaction_id' => null,
-			'synt.remove_transaction_id' => null
-		);
-
-		if ( $this->searchText ) {
-			$wherecond[] = 'exp.spelling ' . $dbr->buildLike( $this->searchText, $dbr->anyString() );
-		}
-
-		if ( $this->languageId > 0 ) {
-			$wherecond['exp.language_id'] = $this->languageId;
-		}
-
-		if ( $this->collectionId > 0 ) {
-			$table['colcont'] = "{$dc}_collection_contents";
-			$wherecond[] = 'colcont.member_mid = synt.defined_meaning_id';
-			$wherecond['colcont.collection_id'] = $this->collectionId;
-			$wherecond['colcont.remove_transaction_id'] = null;
-		}
-
-		$queryResultCount = $dbr->selectField(
-			$table,
-			'COUNT(*)',
-			$wherecond,
-			__METHOD__
-		);
-
-		return $queryResultCount ;
-	}
-
-
 
 
 	function getWordsSearchResultAsRecordSet( $queryResult ) {
