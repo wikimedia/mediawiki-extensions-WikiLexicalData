@@ -2,15 +2,16 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-require_once( "Wikidata.php" );
-require_once( "WikiDataGlobals.php" );
-require_once( "WikiDataAPI.php" );
-require_once( "forms.php" );
-require_once( "type.php" );
-require_once( "ViewInformation.php" );
-require_once( "OmegaWikiAttributes.php" );
-require_once( "OmegaWikiRecordSets.php" );
-require_once( "OmegaWikiEditors.php" );
+global $wgWldOwScriptPath;
+require_once( $wgWldOwScriptPath . "Wikidata.php" );
+require_once( $wgWldOwScriptPath . "WikiDataGlobals.php" );
+require_once( $wgWldOwScriptPath . "WikiDataAPI.php" );
+require_once( $wgWldOwScriptPath . "forms.php" );
+require_once( $wgWldOwScriptPath . "type.php" );
+require_once( $wgWldOwScriptPath . "ViewInformation.php" );
+require_once( $wgWldOwScriptPath . "OmegaWikiAttributes.php" );
+require_once( $wgWldOwScriptPath . "OmegaWikiRecordSets.php" );
+require_once( $wgWldOwScriptPath . "OmegaWikiEditors.php" );
 
 class SpecialDatasearch extends SpecialPage {
 	protected $externalIdentifierAttribute;
@@ -42,7 +43,7 @@ class SpecialDatasearch extends SpecialPage {
 	private $offset = 0;
 
 	function SpecialDatasearch() {
-		parent::__construct( 'DataSearch' );
+		parent::__construct( 'ow_data_search' );
 
 		$request = $this->getRequest();
 		$this->collectionId = $request->getInt( "collection" ); // default is 0

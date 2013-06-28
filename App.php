@@ -4,9 +4,15 @@ if ( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 
 $dir = dirname( __FILE__ ) . '/';
 
+$dir = str_replace( '\\', '/', $dir );
+
+require_once( $dir . 'OmegaWiki/WikiDataGlobals.php' );
 require_once( $dir . 'OmegaWiki/Wikidata.php' );
-require_once( $dir . 'SpecialLanguages.php' );
-require_once( $dir . 'includes/api/OmegaWikiExt.php');
+
+require_once( $wgWldScriptPath . 'SpecialLanguages.php' );
+
+// API
+require_once( $wgWldAPIScriptPath . 'OmegaWikiExt.php');
 
 $wgExtensionCredits['other'][] = array(
 	'path'            => __FILE__,
@@ -23,24 +29,7 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg'  => 'wikidata-desc',
 );
 
-$wgExtensionCredits['specialpage'][] = array(
-	'name' => 'SpecialConceptMapping',
-	'author' => 'Kim Bruning',
-);
-
-$wgExtensionCredits['specialpage'][] = array(
-	'name' => 'SpecialCopy',
-	'author' => 'Alan Smithee',
-);
-
-/* the API "wikidata" does not work.
- * Should be repaired, if someone has the courage to go through
- * the undocumented code...
- */
-// $wgAPIModules['wikidata'] = 'ApiWikiData';
-
 $wgExtensionMessagesFiles['Wikidata'] = $dir . 'Wikidata.i18n.php';
-
 
 // Resource modules
 
@@ -74,11 +63,6 @@ $wgAutoloadClasses['WikiLexicalDataHooks'] = $dir . 'Wikidata.hooks.php';
 $wgAutoloadClasses['WikidataArticle'      ] = $dir . 'includes/WikidataArticle.php';
 $wgAutoloadClasses['WikidataEditPage'     ] = $dir . 'includes/WikidataEditPage.php';
 $wgAutoloadClasses['WikidataPageHistory'  ] = $dir . 'includes/WikidataPageHistory.php';
-// api wikidata is disabled since it does not work
-// $wgAutoloadClasses['ApiWikiData'          ] = $dir . 'includes/api/ApiWikiData.php';
-// $wgAutoloadClasses['ApiWikiDataFormatBase'] = $dir . 'includes/api/ApiWikiDataFormatBase.php';
-// $wgAutoloadClasses['ApiWikiDataFormatXml' ] = $dir . 'includes/api/ApiWikiDataFormatXml.php';
-
 
 # FIXME: Rename this to reduce chance of collision.
 $wgAutoloadClasses['OmegaWiki'] = $dir . 'OmegaWiki/OmegaWiki.php';
@@ -91,15 +75,14 @@ $wgAutoloadClasses['Search'] = $dir . 'OmegaWiki/Search.php';
 
 $wgAutoloadClasses['SpecialSuggest'] = $dir . 'OmegaWiki/SpecialSuggest.php';
 $wgAutoloadClasses['SpecialSelect'] = $dir . 'OmegaWiki/SpecialSelect.php';
-$wgAutoloadClasses['SpecialDatasearch'] = $dir . 'OmegaWiki/SpecialDatasearch.php';
 // $wgAutoloadClasses['SpecialTransaction'] = $dir . 'OmegaWiki/SpecialTransaction.php';
 $wgAutoloadClasses['SpecialNeedsTranslation'] = $dir . 'OmegaWiki/SpecialNeedsTranslation.php';
 $wgAutoloadClasses['SpecialImportLangNames'] = $dir . 'OmegaWiki/SpecialImportLangNames.php';
 $wgAutoloadClasses['SpecialAddCollection'] = $dir . 'OmegaWiki/SpecialAddCollection.php';
 $wgAutoloadClasses['SpecialConceptMapping'] = $dir . 'OmegaWiki/SpecialConceptMapping.php';
 $wgAutoloadClasses['SpecialCopy'] = $dir . 'OmegaWiki/SpecialCopy.php';
-$wgAutoloadClasses['SpecialOWStatistics'] = $dir . 'OmegaWiki/SpecialOWStatistics.php';
 
+require_once( $wgWldSetupScriptPath . "OWSpecials.php" );
 
 # FIXME: These should be modified to make Wikidata more reusable.
 $wgAvailableRights[] = 'editwikidata-uw';
@@ -109,7 +92,7 @@ $wgAvailableRights[] = 'languagenames';
 $wgAvailableRights[] = 'addcollection';
 $wgAvailableRights[] = 'editClassAttributes';
 
-$wgGroupPermissions['*']['editClassAttributes'] = false;  
+$wgGroupPermissions['*']['editClassAttributes'] = false;
 
 $wgGroupPermissions['wikidata-omega']['editwikidata-uw'] = true;
 $wgGroupPermissions['wikidata-omega']['deletewikidata-uw'] = true;
@@ -136,7 +119,7 @@ $wdHandlerClasses = array();
 $wdTermDBDataSet = 'uw';
 
 # This is the dataset that should be shown to all users by default.
-# It _must_ exist for the Wikidata application to be executed 
+# It _must_ exist for the Wikidata application to be executed
 # successfully.
 $wdDefaultViewDataSet = 'uw';
 
@@ -164,17 +147,14 @@ $wgExpressionPageTitlePrefix = 'Multiple meanings';
 # in a single database.
 if ( !isset( $wdSiteContext ) ) $wdSiteContext = "uw";
 
-
 $wgSpecialPages['Suggest'] = 'SpecialSuggest';
 $wgSpecialPages['Select'] = 'SpecialSelect';
-$wgSpecialPages['Datasearch'] = 'SpecialDatasearch';
 // $wgSpecialPages['Transaction'] = 'SpecialTransaction';
 $wgSpecialPages['NeedsTranslation'] = 'SpecialNeedsTranslation';
 $wgSpecialPages['ImportLangNames'] = 'SpecialImportLangNames';
 $wgSpecialPages['AddCollection'] = 'SpecialAddCollection';
 $wgSpecialPages['ConceptMapping'] = 'SpecialConceptMapping';
 $wgSpecialPages['Copy'] = 'SpecialCopy';
-$wgSpecialPages['ow_statistics'] = 'SpecialOWStatistics';
 
 #
 ## Hooks
@@ -190,6 +170,12 @@ $wgHooks['SpecialSearchNogomatch'][] = 'WikiLexicalDataHooks::onNoGoMatchHook';
 $wgHooks['SearchGetNearMatchBefore'][] = 'WikiLexicalDataHooks::onGoClicked';
 $wgHooks['PageContentLanguage'][] = 'WikiLexicalDataHooks::onPageContentLanguage';
 $wgHooks['SkinTemplateNavigation'][] = 'WikiLexicalDataHooks::onSkinTemplateNavigation';
+
+// Job Classes
+$wgAutoloadClasses['CreateExpressionListJob'] = $wgWldJobsScriptPath . 'OWExpressionListJob.php';
+$wgJobClasses['CreateExpressionList'] = 'CreateExpressionListJob';
+$wgAutoloadClasses['CreateDefinedExpressionListJob'] = $wgWldJobsScriptPath . 'OWDefinedExpressionListJob.php';
+$wgJobClasses['CreateDefinedExpressionList'] = 'CreateDefinedExpressionListJob';
 
 // LocalApp.php is optional. Its function is like LocalSettings.php,
 // if you want to separate the MediaWiki configuration from the Wikidata configuration

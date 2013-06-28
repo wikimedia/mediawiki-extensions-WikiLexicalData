@@ -40,22 +40,30 @@ define ( 'WLD_TEXT_ATTRIBUTES_VALUES', "txtAttVal" );
 define ( 'WLD_TRANSLATED_TEXT', "transl" );
 
 # Global context override. This is an evil hack to allow saving, basically.
-global $wdCurrentContext;
 $wdCurrentContext = null;
 
-global $wgIso639_3CollectionId;
 $wgIso639_3CollectionId = null;
+
+// paths
+$wgWldScriptPath       = __DIR__ . '/';
+$wgWldScriptPath = str_replace( '\\', '/', $wgWldScriptPath );
+$wgWldScriptPath = str_replace( 'OmegaWiki/', '', $wgWldScriptPath );
+
+$wgWldOwScriptPath     = $wgWldScriptPath . "OmegaWiki/";
+$wgWldDownloadScriptPath = $IP . "/downloads/";
+$wgWldIncludesScriptPath = $wgWldScriptPath . "includes/";
+$wgWldSpecialsScriptPath = $wgWldIncludesScriptPath . "specials/";
+$wgWldAPIScriptPath      = $wgWldIncludesScriptPath . "api/";
+$wgWldSetupScriptPath    = $wgWldIncludesScriptPath . "setup/";
+$wgWldJobsScriptPath     = $wgWldIncludesScriptPath . "jobs/";
 
 /**
  * the DM of an annotation to use for sorting expression
  * such as the DM representing the concept "part of speech"
  */
-global $wgWldSortingAnnotationDM;
 $wgWldSortingAnnotationDM = null;
 
 // Defined meaning editor
-global $wdDefinedMeaningAttributesOrder;
-
 $wdDefinedMeaningAttributesOrder = array(
 	WLD_SYNT_ATTRIBUTES,
 	WLD_DEFINITION,
@@ -70,19 +78,9 @@ $wdDefinedMeaningAttributesOrder = array(
 );
 
 // Page titles
-
-global $wgUseExpressionPageTitlePrefix;
-
 $wgUseExpressionPageTitlePrefix = true;	# malafaya: Use the expression prefix "Multiple meanings:" from message ow_Multiple_meanings
 
 // Search page
-
-global
-	$wgWldSearchExternalIDDefault,
-	$wgWldSearchWordsDefault,
-	$wgWldSearchExternalIDOption,
-	$wgWldSearchWordsOption;
-
 $wgWldSearchExternalIDDefault = false;
 $wgWldSearchWordsDefault = true;
 
@@ -91,9 +89,6 @@ $wgWldSearchWordsDefault = true;
 $wgWldSearchExternalIDOption = false;
 $wgWldSearchWordsOption = false;
 
-
-global
-	$wgPropertyToColumnFilters;
 
 /**
  * $wgPropertyToColumnFilters is an array of property to column filters
