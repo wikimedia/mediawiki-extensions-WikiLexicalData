@@ -315,6 +315,7 @@ See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Specia
 	'datasearch' => '{{doc-special|Datasearch}}
 See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]',
 	'datasearch_language' => '{{Identical|Language}}',
+	'datasearch_meaning' => '{{Identical|Meaning}}',
 	'datasearch_showing_only' => 'Parameters:
 * $1 - 100 (hard-coded)
 * $2 - number of results (number of matches), or empty string(?)',
@@ -369,7 +370,9 @@ Parameters:
 	'ow_transaction_user' => '{{Identical|Username}}',
 	'ow_transaction_rollback_button' => '{{Identical|Rollback}}',
 	'ow_transaction_rollback_header' => '{{Identical|Rollback}}',
+	'ow_transaction_restore' => '{{Identical|Restore}}',
 	'ow_transaction_remove' => '{{Identical|Remove}}',
+	'ow_transaction_operation' => '{{Identical|Operation}}',
 	'ow_transaction_object' => '{{Identical|Object}}',
 	'ow_transaction_summary' => '{{Identical|Summary}}',
 	'conceptmapping' => '{{doc-special|ConceptMapping}}',
@@ -391,6 +394,8 @@ Parameters:
 	'ow_Definition' => '{{Identical|Definition}}',
 	'ow_DefinedMeaning' => '{{Identical|Defined meaning}}',
 	'ow_DefinedMeaningReference' => '{{Identical|Defined meaning}}',
+	'ow_Expression' => '{{Identical|Expression}}',
+	'ow_Expressions' => '{{Identical|Expression}}',
 	'ow_ID' => '{{Identical|ID}}',
 	'ow_Language' => '{{Identical|Language}}',
 	'ow_Multiple_meanings' => 'Used as page title. Parameters:
@@ -425,6 +430,7 @@ This is visible when a SynTrans is annotated, or while editing a page.
 	'ow_Property' => '{{Identical|Property}}',
 	'ow_Value' => '{{Identical|Value}}',
 	'ow_added' => '{{Identical|Added}}',
+	'ow_removed' => '{{Identical|Removed}}',
 	'ow_meaningsoftitle' => 'Unused at this time.
 
 Used as page title. Parameters:
