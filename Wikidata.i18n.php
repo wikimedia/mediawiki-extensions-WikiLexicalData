@@ -415,6 +415,7 @@ This is visible when a SynTrans is annotated, or while editing a page.
 {{Identical|Remove}}',
 	'ow_RemoveHint' => 'Hint that shows up when the mouse hovers the Remove column header while editing',
 	'ow_SuggestHint' => 'Hint that shows up when the mouse hovers a choice box containing items such as languages, annotation types, etc.',
+	'ow_Synonyms' => '{{Identical|Synonym}}',
 	'ow_Source' => '{{Identical|Source}}',
 	'ow_Text' => '{{Identical|Text}}',
 	'ow_TextAttribute' => '{{Identical|Property}}',
@@ -447,6 +448,7 @@ See also:
 {{Identical|Permission denied}}",
 	'copy' => '{{doc-special|Copy}}
 {{Identical|Copy}}',
+	'ow_history_transaction' => '{{Identical|Transaction}}',
 	'ow_class_attr_type_dm' => '{{Identical|Defined meaning}}',
 	'ow_class_attr_type_link' => '{{Identical|Link}}',
 	'needstranslation' => '{{doc-special|NeedsTranslation}}',
@@ -10669,7 +10671,7 @@ Kolommen moeten de naam "definition_iso" of "translations_iso" hebben, waar iso 
 	'ow_impexptsv_unknown_lang' => '<p>Onbekende of onjuiste taal: $1.<br />
 Talen moeten een ISO 639-3 taalcode zijn.</p>',
 	'exporttsv' => 'TSV exporteren',
-	'ow_exporttsv_title' => 'Collectie naar TSV exporteren',
+	'ow_exporttsv_title' => 'Verzameling naar TSV exporteren',
 	'ow_exporttsv_header' => "<p>U kunt een verzameling exporteren naar een met tabs gescheiden tekstformaat dat u kunt importeren in OpenOffice.org, Excel of andere spreadsheetsoftware.<br />
 Selecteer een verzameling om te exporteren.
 In het tekstvak voor talen kunt u een door komma's gescheiden lijst van ISO 639-3 taalcodes opgeven.
@@ -10678,7 +10680,7 @@ Klik daarna op 'Aanmaken' om het bestand aan te laten maken.</p>",
 	'ow_exporttsv_languages' => 'Talen:',
 	'ow_exporttsv_not_allowed' => 'U hebt geen rechten om naar een TSV te exporteren.',
 	'ow_exporttsv_export_failed' => 'Er is iets verkeerd gegaan tijdens het exporteren',
-	'addcollection' => 'Collectie toevoegen',
+	'addcollection' => 'Verzameling toevoegen',
 	'ow_searchnoresult' => "<p>U mag:<br />
 * '''De expressie \"[[Expression:\$1]]\"''' aanmaken (en een definitie toevoegen)<br />
 * '''De pagina \"[[:\$1]]\"''' aanmaken (een standaard wikipagina)</p>",
@@ -13317,6 +13319,7 @@ $messages['sh'] = array(
 
 /** Sinhala (සිංහල)
  * @author Calcey
+ * @author පසිඳු කාවින්ද
  * @author රොමානිස් සැමුවෙල්
  */
 $messages['si'] = array(
@@ -13448,7 +13451,6 @@ $messages['si'] = array(
 	'ow_CollectionMember' => 'එකතුකිරීම් සාමාජික',
 	'ow_CollectionMembership' => 'එකතු කිරීම් සාමාජිකත්වය',
 	'ow_Definition' => 'නිර්වචනය',
-	'ow_DefinedMeaningAttributes' => 'ටීකාව',
 	'ow_DefinedMeaning' => 'නිර්වචනය කළ අර්ථය',
 	'ow_DefinedMeaningReference' => 'නිර්වචනය කළ අර්ථයන්',
 	'ow_ExactMeanings' => 'නිවැරදිම අර්ථය',
@@ -13459,7 +13461,6 @@ $messages['si'] = array(
 	'ow_IncomingRelations' => 'ඇතුලට එන සබඳතා',
 	'ow_GotoSource' => ' මූලාශ්‍රය වෙත යන්න',
 	'ow_Language' => 'භාෂාව',
-	'ow_LevelAnnotation' => 'ටීකාව',
 	'ow_LinkAttributeHeader' => 'උපලක්ෂණය සම්බන්ධ කරන්න',
 	'ow_Multiple_meanings' => '"$1" හි නිර්වචනයන්',
 	'ow_NewExactMeaning' => 'නව නිවැරදිම අර්ථය',
@@ -13502,7 +13503,7 @@ $messages['si'] = array(
 	'ow_meaningsoftitle' => '"$1" හි අර්ථය',
 	'ow_meaningsofsubtitle' => '<em>විකි සබැඳුම:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>අවසරය ප්‍රතික්ෂේප කරන ලදී</h2>',
-	'copy' => 'විකි දත්ත: පිටපත', # Fuzzy
+	'copy' => 'පිටපත් කරන්න',
 	'ow_copy_no_action_specified' => 'කරුණාකර ක්‍රියාවක් සඳහන් කරන්න',
 	'ow_copy_help' => 'උපකාරය තවමත් ක්‍රියාත්මක නොවේ.',
 	'ow_please_proved_dmid' => 'ඔබේ ආදානයට "?dmid=<ID>" (dmid=Defined Meaning ID) ගිලිහී ඇති බවක් පෙනේ.<br />
