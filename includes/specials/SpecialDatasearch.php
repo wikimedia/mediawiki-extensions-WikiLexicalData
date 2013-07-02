@@ -3,8 +3,6 @@
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
 global $wgWldOwScriptPath;
-require_once( $wgWldOwScriptPath . "Wikidata.php" );
-require_once( $wgWldOwScriptPath . "WikiDataGlobals.php" );
 require_once( $wgWldOwScriptPath . "WikiDataAPI.php" );
 require_once( $wgWldOwScriptPath . "forms.php" );
 require_once( $wgWldOwScriptPath . "type.php" );

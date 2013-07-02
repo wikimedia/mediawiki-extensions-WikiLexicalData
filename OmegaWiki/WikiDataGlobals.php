@@ -78,7 +78,16 @@ $wdDefinedMeaningAttributesOrder = array(
 );
 
 // Page titles
-$wgUseExpressionPageTitlePrefix = true;	# malafaya: Use the expression prefix "Multiple meanings:" from message ow_Multiple_meanings
+$wgWldUseExpressionPageTitlePrefix = true;	# malafaya: Use the expression prefix "Multiple meanings:" from message ow_Multiple_meanings
+$wgWldShowClassicPageTitles = false;
+$wgWldExpressionPageTitlePrefix = 'Multiple meanings';
+// NOTE: both wgWldUseExpressionPageTitlePrefix and wgWldExpressionPageTitles
+//	seems to be unused based on ...
+//		git grep -e wgWldUseExpressionPageTitlePrefix
+//		and
+//		git grep -e wgWldExpressionPageTitlePrefix
+//
+//	If not going to be used. Should ow_Multiple_meanings @ Wikidata.i18n.php be removed also? ~he
 
 // Search page
 $wgWldSearchExternalIDDefault = false;
@@ -100,7 +109,6 @@ $wgWldSearchWordsOption = false;
  *
  */
 $wgPropertyToColumnFilters = array();
-
 
 
 /**

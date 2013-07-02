@@ -13,7 +13,7 @@ class DefaultWikidataApplication {
 	protected $transaction;
 	protected $queryTransactionInformation;
 	protected $showCommunityContribution;
-	
+
 	// The following member variables control some application specific preferences
 	protected $showClassicPageTitles = true;	// Show classic page titles instead of prettier page titles
 
@@ -24,12 +24,12 @@ class DefaultWikidataApplication {
 	protected $showDataSetPanel = false;
 
 	public function __construct( $title ) {
-		global $wgShowClassicPageTitles, $wgPropertyToColumnFilters;
+		global $wgWldShowClassicPageTitles, $wgPropertyToColumnFilters;
 
 		$this->title = $title;
 
-		if ( isset( $wgShowClassicPageTitles ) ) {
-			$this->showClassicPageTitles = $wgShowClassicPageTitles;
+		if ( isset( $wgWldShowClassicPageTitles ) ) {
+			$this->showClassicPageTitles = $wgWldShowClassicPageTitles;
 		}
 		if ( isset( $wgPropertyToColumnFilters ) ) {
 			$this->propertyToColumnFilters = $wgPropertyToColumnFilters;
@@ -41,9 +41,8 @@ class DefaultWikidataApplication {
 	}
 
 	protected function outputViewHeader() {
-		global
-			$wgOut;
-		
+		global $wgOut;
+
 		if ( $this->showDataSetPanel ) {
 			$wgOut->addHTML( $this->getDataSetPanel() );
 		}
@@ -63,19 +62,19 @@ class DefaultWikidataApplication {
 		$wgOut->setPageTitle( $myTitle );
 
 		$this->queryTransactionInformation = new QueryLatestTransactionInformation();
-		
+
 		$viewInformation = new ViewInformation();
 		$viewInformation->showRecordLifeSpan = false;
 		$viewInformation->queryTransactionInformation = $this->queryTransactionInformation;
 		$viewInformation->setPropertyToColumnFilters( $this->propertyToColumnFilters );
-		
+
 		$this->viewInformation = $viewInformation;
 
 		// Not clear why this is here. Works well without.
 		// initializeOmegaWikiAttributes( $viewInformation );
 		// initializeObjectAttributeEditors( $viewInformation );
 	}
-	
+
 	protected function getDataSetPanel() {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
@@ -103,13 +102,13 @@ class DefaultWikidataApplication {
 		$viewInformation->queryTransactionInformation = $referenceQueryTransactionInformation;
 		$viewInformation->setPropertyToColumnFilters( $this->propertyToColumnFilters );
 		$viewInformation->viewOrEdit = "edit";
-		
+
 		$this->viewInformation = $viewInformation;
 
 		initializeOmegaWikiAttributes( $this->viewInformation );
 		initializeObjectAttributeEditors( $this->viewInformation );
 	}
-	
+
 	public function saveWithinTransaction() {
 		global $wgUser, $wgRequest;
 
@@ -131,7 +130,7 @@ class DefaultWikidataApplication {
 
 	/**
 	 * @return true if permission to edit, false if not
-	**/
+	 */
 	public function edit() {
 		global $wgOut, $wgRequest, $wgUser;
 
@@ -139,7 +138,7 @@ class DefaultWikidataApplication {
 
 		if ( $wgUser->isBlockedFrom( $this->getTitle(), false ) ) {
 			$wgOut->blockedPage() ;
-			return false;                                                 
+			return false;
 		}
 
 		$dc = wdGetDataSetContext();
@@ -157,18 +156,18 @@ class DefaultWikidataApplication {
 		$viewInformation->queryTransactionInformation = new QueryLatestTransactionInformation();
 		$viewInformation->viewOrEdit = "edit";
 		$viewInformation->setPropertyToColumnFilters( $this->propertyToColumnFilters );
-		
+
 		$this->viewInformation = $viewInformation;
-		
+
 		initializeOmegaWikiAttributes( $this->viewInformation );
 		initializeObjectAttributeEditors( $this->viewInformation );
 
 		return true;
 	}
-	
+
 	public function history() {
 		global $wgOut, $wgRequest;
-			
+
 		$wgOut->enableClientCache( false );
 
 		$title = $this->title->getPrefixedText();
@@ -187,13 +186,13 @@ class DefaultWikidataApplication {
 			$this->showRecordLifeSpan = true;
 			$this->transaction = 0;
 		}
-		
+
 		# Up to which transaction to view the data
 		if ( $this->transaction == 0 )
 			$this->queryTransactionInformation = new QueryHistoryTransactionInformation();
 		else
 			$this->queryTransactionInformation = new QueryAtTransactionInformation( $this->transaction, $this->showRecordLifeSpan );
-			
+
 		$transactionId = $wgRequest->getInt( 'transaction' );
 
 		$wgOut->addHTML( getOptionPanel(
@@ -208,16 +207,16 @@ class DefaultWikidataApplication {
 		$viewInformation->showRecordLifeSpan = $this->showRecordLifeSpan;
 		$viewInformation->queryTransactionInformation = $this->queryTransactionInformation;
 		$viewInformation->setPropertyToColumnFilters( $this->propertyToColumnFilters );
-		
+
 		$this->viewInformation = $viewInformation;
 
 		initializeOmegaWikiAttributes( $this->viewInformation );
 		initializeObjectAttributeEditors( $viewInformation );
 	}
-	
+
 	protected function outputEditHeader() {
 		global $wgOut, $wgUser;
-			
+
 		$title = $this->title->getPrefixedText();
 
 		if ( !$this->showClassicPageTitles )
@@ -231,13 +230,13 @@ class DefaultWikidataApplication {
 
 		$wgOut->addHTML(
 			'<form method="post" action="">' .
-				'<input type="hidden" name="transaction" value="' . getLatestTransactionId() . '"/>'
+			'<input type="hidden" name="transaction" value="' . getLatestTransactionId() . '"/>'
 		);
 	}
-	
+
 	protected function outputEditFooter() {
 		global $wgOut, $wgUser;
-		
+
 		$wgOut->addHTML(
 			'<div class="option-panel">' .
 				'<table cellpadding="0" cellspacing="0"><tr>' .
@@ -247,7 +246,7 @@ class DefaultWikidataApplication {
 				getSubmitButton( "save", wfMessage( "ow_save" )->text() ) .
 			'</div>'
 		);
-		
+
 		$wgOut->addHTML( '</form>' );
 
 		if ( $wgUser->isAnon() ) {

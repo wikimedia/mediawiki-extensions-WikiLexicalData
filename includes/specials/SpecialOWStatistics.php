@@ -2,7 +2,6 @@
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
 global $wgWldOwScriptPath;
-require_once( $wgWldOwScriptPath . 'Wikidata.php' );
 require_once( $wgWldOwScriptPath . 'languages.php' );
 
 class SpecialOWStatistics extends SpecialPage {

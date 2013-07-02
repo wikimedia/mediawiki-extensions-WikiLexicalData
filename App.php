@@ -73,15 +73,7 @@ $wgAutoloadClasses['DefinedMeaningModel'] = $dir . 'OmegaWiki/DefinedMeaningMode
 $wgAutoloadClasses['NeedsTranslationTo'] = $dir . 'OmegaWiki/NeedsTranslationTo.php';
 $wgAutoloadClasses['Search'] = $dir . 'OmegaWiki/Search.php';
 
-$wgAutoloadClasses['SpecialSuggest'] = $dir . 'OmegaWiki/SpecialSuggest.php';
-$wgAutoloadClasses['SpecialSelect'] = $dir . 'OmegaWiki/SpecialSelect.php';
-// $wgAutoloadClasses['SpecialTransaction'] = $dir . 'OmegaWiki/SpecialTransaction.php';
-$wgAutoloadClasses['SpecialNeedsTranslation'] = $dir . 'OmegaWiki/SpecialNeedsTranslation.php';
-$wgAutoloadClasses['SpecialImportLangNames'] = $dir . 'OmegaWiki/SpecialImportLangNames.php';
-$wgAutoloadClasses['SpecialAddCollection'] = $dir . 'OmegaWiki/SpecialAddCollection.php';
-$wgAutoloadClasses['SpecialConceptMapping'] = $dir . 'OmegaWiki/SpecialConceptMapping.php';
-$wgAutoloadClasses['SpecialCopy'] = $dir . 'OmegaWiki/SpecialCopy.php';
-
+// Special Pages
 require_once( $wgWldSetupScriptPath . "OWSpecials.php" );
 
 # FIXME: These should be modified to make Wikidata more reusable.
@@ -103,7 +95,7 @@ $wgGroupPermissions['bureaucrat']['languagenames'] = true;
 $wgGroupPermissions['bureaucrat']['addcollection'] = true;
 $wgGroupPermissions['bureaucrat']['editClassAttributes'] = true;
 
-// Wikidata Configuration.
+// WikiLexicalData Configuration.
 
 # Array of namespace ids and the handler classes they use.
 $wdHandlerClasses = array();
@@ -138,23 +130,10 @@ $wgCommunityEditPermission = 'editwikidata-uw';
 $wdCopyAltDefinitions = false;
 $wdCopyDryRunOnly = false;
 
-# FIXME: Should be renamed to prefix with wd rather than wg.
-$wgShowClassicPageTitles = false;
-$wgExpressionPageTitlePrefix = 'Multiple meanings';
-
 # The site prefix allows us to have multiple sets of customized
 # messages (for different, typically site-specific UIs)
 # in a single database.
 if ( !isset( $wdSiteContext ) ) $wdSiteContext = "uw";
-
-$wgSpecialPages['Suggest'] = 'SpecialSuggest';
-$wgSpecialPages['Select'] = 'SpecialSelect';
-// $wgSpecialPages['Transaction'] = 'SpecialTransaction';
-$wgSpecialPages['NeedsTranslation'] = 'SpecialNeedsTranslation';
-$wgSpecialPages['ImportLangNames'] = 'SpecialImportLangNames';
-$wgSpecialPages['AddCollection'] = 'SpecialAddCollection';
-$wgSpecialPages['ConceptMapping'] = 'SpecialConceptMapping';
-$wgSpecialPages['Copy'] = 'SpecialCopy';
 
 #
 ## Hooks
@@ -171,11 +150,8 @@ $wgHooks['SearchGetNearMatchBefore'][] = 'WikiLexicalDataHooks::onGoClicked';
 $wgHooks['PageContentLanguage'][] = 'WikiLexicalDataHooks::onPageContentLanguage';
 $wgHooks['SkinTemplateNavigation'][] = 'WikiLexicalDataHooks::onSkinTemplateNavigation';
 
-// Job Classes
-$wgAutoloadClasses['CreateExpressionListJob'] = $wgWldJobsScriptPath . 'OWExpressionListJob.php';
-$wgJobClasses['CreateExpressionList'] = 'CreateExpressionListJob';
-$wgAutoloadClasses['CreateDefinedExpressionListJob'] = $wgWldJobsScriptPath . 'OWDefinedExpressionListJob.php';
-$wgJobClasses['CreateDefinedExpressionList'] = 'CreateDefinedExpressionListJob';
+// Jobs
+require_once( $wgWldSetupScriptPath . "OWJobs.php" );
 
 // LocalApp.php is optional. Its function is like LocalSettings.php,
 // if you want to separate the MediaWiki configuration from the Wikidata configuration
