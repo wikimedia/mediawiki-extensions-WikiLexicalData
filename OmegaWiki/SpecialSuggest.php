@@ -51,7 +51,7 @@ class SpecialSuggest extends SpecialPage {
 			case 'class':
 				$sql = $this->getSQLForClasses( $langCode );
 				break;
-			case WLD_RELATIONS:
+			case WLD_RELATIONS: // 'rel'
 				if ( $attributesLevel == "DefinedMeaning" ) {
 					$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'DM' );
 				} elseif ( $attributesLevel == "SynTrans" ) {

@@ -125,22 +125,37 @@ function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = 
 	if ( $label == "" ) {
 		$label = '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;';
 	}
-	$result =
-		'<span class="suggest">' .
-			'<input type="hidden" id="' . $name . '-suggest-query" value="' . $query . '"/>' .
-			'<input type="hidden" id="' . $name . '-suggest-offset" value="0"/>' .
-			'<input type="hidden" id="' . $name . '-suggest-label-columns" value="' . implode( ', ', $displayLabelColumns ) . '"/>' .
-			'<input type="hidden" id="' . $name . '" name="' . $name . '" value="' . $value . '"/>' .
-			'<input type="hidden" id="' . $name . '-suggest-dataset" value="' . $dc . '"/>';
 
-	foreach ( $parameters as $parameter => $parameterValue ) {
-		$inputID = $name . '-suggest-parameter-' . $parameter;
-		$result .= HTML::hidden( $parameter, $parameterValue , array( "id" => $inputID ) );
+	$result = Html::openElement('span', array( 'class' => 'suggest' ) );
+
+	// the input that will contain the value selected with suggest.js
+	$inputOptions = array(
+		'id' => $name,
+		'name' => $name,
+		'value' => $value,
+		'type' => 'hidden'
+	);
+	$result .= Html::element('input', $inputOptions);
+
+	$spanOptions = array(
+		'id' => $name . '-suggest-link',
+		'name' => $name . '-suggest-link',
+		'class' => 'suggest-link',
+		'title' => wfMessage( "ow_SuggestHint" )->text(),
+		'query' => $query,
+		'offset' => 0,
+		'label-columns' => implode( ', ', $displayLabelColumns ),
+		'dataset' => $dc
+	);
+
+	foreach( $parameters as $parameter => $parameterValue ) {
+		// parameters like level, definedMeaningId, annotationAttributeId, syntransId
+		$spanOptions[$parameter] = $parameterValue;
 	}
 
-	$result .=
-		'<span id="' . $name . '-suggest-link" class="suggest-link" title="' . wfMessage( "ow_SuggestHint" )->text() . '">' . $label . '</span>' .
-		'</span>';
+	$result .= Html::rawElement('span', $spanOptions, $label);
+
+	$result .= Html::closeElement('span');
 
 	// The table that then allows to select from a dropdown list
 	// is generated with javascript (cf. suggest.js)
@@ -152,25 +167,35 @@ function getStaticSuggest( $name, $suggestions, $idColumns = 1, $value = 0, $lab
 	if ( $label == "" ) {
 		$label = '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;';
 	}
-	$result =
-		'<span class="suggest">' .
-//			'<input type="hidden" id="'. $name .'-suggest-query" value="'. $query .'"/>' .
-			'<input type="hidden" id="' . $name . '-suggest-label-columns" value="' . implode( ', ', $displayLabelColumns ) . '"/>' .
-			'<input type="hidden" id="' . $name . '" name="' . $name . '" value="' . $value . '"/>';
+
+	$result = Html::openElement('span', array( 'class' => 'suggest' ) );
+
+	// the input that will contain the value selected with suggest.js
+	$inputOptions = array(
+		'id' => $name,
+		'name' => $name,
+		'value' => $value,
+		'type' => 'hidden'
+	);
+	$result .= Html::element('input', $inputOptions);
+	$spanOptions = array(
+		'id' => $name . '-suggest-link',
+		'name' => $name . '-suggest-link',
+		'class' => 'suggest-link',
+		'title' => wfMessage( "ow_SuggestHint" )->text(),
+		'query' => $query,
+		'offset' => 0,
+		'label-columns' => implode( ', ', $displayLabelColumns ),
+		'dataset' => $dc
+	);
 
 	if ( $idColumns > 1 ) {
-		$result .= '<input type="hidden" id="' . $name . '-suggest-id-columns" value="' . $idColumns . '"/>';
+		$spanOptions['id-columns'] = $idColumns;
 	}
-	$result .=
-			'<a id="' . $name . '-suggest-link" class="suggest-link" title="' . wfMessage( "ow_SuggestHint" )->text() . '">' . $label . '</a>' .
-		'</span>' .
-		'<div class="suggest-drop-down" style="position: relative"><div id="' . $name . '-suggest-div" style="position: absolute; left: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
-			'<div><table><tr><td>' .
-			'</td><td><a id="' . $name . '-suggest-clear" href="javascript:void(0)" class="suggest-clear">' . wfMessage( 'ow_suggest_clear' )->text() . '</a></td>' .
-			'<td><a id="' . $name . '-suggest-close" href="#' . $name . '-suggest-link" class="suggest-close">[X]</a></td></tr></table></div>' .
-			'<div>' . $suggestions .
-			'</div>' .
-		'</div></div>';
+
+	$result .= Html::rawElement('span', $spanOptions, $label);
+
+	$result .= Html::closeElement('span');
 
 	return $result;
 }
