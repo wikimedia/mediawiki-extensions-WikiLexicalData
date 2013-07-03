@@ -121,12 +121,14 @@ class SpecialDatasearch extends SpecialPage {
 			$this->withinWords = $wgWldSearchWordsDefault;
 		}
 
-		if ( $wgWldSearchExternalIDOption ) {
-			$options[wfMessage( 'datasearch_within_ext_ids' )->plain()]
-				= getCheckBox( 'within-external-identifiers', $this->withinExternalIdentifiers );
-		} else {
-			$this->withinExternalIdentifiers = $wgWldSearchExternalIDDefault;
-		}
+		// external ID search disabled for now
+// 		if ( $wgWldSearchExternalIDOption ) {
+// 			$options[wfMessage( 'datasearch_within_ext_ids' )->plain()]
+// 				= getCheckBox( 'within-external-identifiers', $this->withinExternalIdentifiers );
+// 		} else {
+// 			$this->withinExternalIdentifiers = $wgWldSearchExternalIDDefault;
+// 		}
+//
 		$this->getOutput()->addHTML( getOptionPanel( $options ) );
 	}
 
@@ -156,7 +158,7 @@ class SpecialDatasearch extends SpecialPage {
 				$output->addHTML( $prevNextLinks );
 			} else {
 				// less than $this->limit results
-				$ptext = wfMessage( 'search-interwiki-default', $this->resultCount )->text();
+				$ptext = wfMessage( 'showingresultsnum', '', $this->offset, $this->resultCount )->text();
 				$output->addHTML( Html::rawElement( 'p', array(), $ptext ) );
 			}
 
@@ -240,6 +242,7 @@ class SpecialDatasearch extends SpecialPage {
 			'ORDER BY' => 'exp.spelling ASC',
 			'LIMIT' => $this->limit
 		);
+		$options[] = 'SQL_CALC_FOUND_ROWS';
 		if ( $this->offset > 0 ) {
 			$options['OFFSET'] = $this->offset;
 		}
@@ -271,15 +274,6 @@ class SpecialDatasearch extends SpecialPage {
 			$whereClause['colcont.remove_transaction_id'] = null;
 		}
 
-		// The query for the total number of results
-		$this->resultCount = $dbr->selectField(
-			$tables,
-			'COUNT(*)',
-			$whereClause,
-			__METHOD__
-		);
-
-
 		// The query for the search itself! Uses limit and offset
 		$queryResult = $dbr->select(
 			$tables,
@@ -289,8 +283,10 @@ class SpecialDatasearch extends SpecialPage {
 			$options
 		);
 
+		$this->resultCount = $dbr->selectField( '', 'FOUND_ROWS()', '', __METHOD__ );
 
 		$recordSet = $this->getWordsSearchResultAsRecordSet( $queryResult );
+
 		$editor = $this->getWordsSearchResultEditor();
 
 		$output = $editor->view( new IdStack( "words" ), $recordSet );
