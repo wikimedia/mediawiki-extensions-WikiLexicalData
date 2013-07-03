@@ -147,27 +147,29 @@ class SpecialDatasearch extends SpecialPage {
 
 			$searchResultHtmlTable = $this->searchWords();
 
-			if ( $this->resultCount > $this->limit ) {
-				// the number of results is more than the limit of displayed results
-				$ptext = wfMessage( 'datasearch_showing_only', $this->limit, $this->resultCount )->text();
-				$output->addHTML( Html::rawElement( 'p', array(), $ptext ) );
+			$ptext = wfMessage( 'showingresultsnum', '', $this->offset, $this->resultCount )->text();
+			$output->addHTML( Html::rawElement( 'p', array(), $ptext ) );
 
-				$prevNextLinks = $this->getPrevNextLinkHtml( $this->resultCount );
+			// resultCount is not the total theoretical number of results
+			// but only the number of results displayed.
+			// (searching for the theoretical number is too long)
+			// If equal to the limit, there might be more.
+			if ( ( $this->resultCount >= $this->limit ) || ( $this->offset > 0 ) ) {
+				// the number of results is more than the limit of displayed results
+				$prevNextLinks = $this->getPrevNextLinkHtml();
 
 				// links "previous" and "next" on top
 				$output->addHTML( $prevNextLinks );
-			} else {
-				// less than $this->limit results
-				$ptext = wfMessage( 'showingresultsnum', '', $this->offset, $this->resultCount )->text();
-				$output->addHTML( Html::rawElement( 'p', array(), $ptext ) );
 			}
 
 			// the actual output of the words that were found
 			$output->addHTML( $searchResultHtmlTable );
 
-			if ( $this->resultCount > $this->limit ) {
-				// links "previous" and "next" at the bottom
-				$output->addHTML( $prevNextLinks );
+			if ( ( $this->resultCount >= $this->limit ) || ( $this->offset > 0 ) ) {
+				if ( $this->resultCount > 0 ) {
+					// links "previous" and "next" at the bottom
+					$output->addHTML( $prevNextLinks );
+				}
 			}
 		}
 
@@ -242,7 +244,7 @@ class SpecialDatasearch extends SpecialPage {
 			'ORDER BY' => 'exp.spelling ASC',
 			'LIMIT' => $this->limit
 		);
-		$options[] = 'SQL_CALC_FOUND_ROWS';
+
 		if ( $this->offset > 0 ) {
 			$options['OFFSET'] = $this->offset;
 		}
@@ -283,7 +285,7 @@ class SpecialDatasearch extends SpecialPage {
 			$options
 		);
 
-		$this->resultCount = $dbr->selectField( '', 'FOUND_ROWS()', '', __METHOD__ );
+		$this->resultCount = $queryResult->numRows() ;
 
 		$recordSet = $this->getWordsSearchResultAsRecordSet( $queryResult );
 
@@ -426,10 +428,10 @@ class SpecialDatasearch extends SpecialPage {
 	}
 
 	/**
-	 * $resultCount is a number of results displayed on the page
+	 * $this->resultCount is a number of results displayed on the page
 	 * that must be compared to "limit" to see if there are more results
 	 */
-	function getPrevNextLinkHtml( $resultCount ) {
+	function getPrevNextLinkHtml() {
 		$linksHtml = Html::openElement('p');
 		// currentQuery, an array of the parameters passed in the url
 		$currentQuery = $this->getRequest()->getValues();
@@ -461,11 +463,13 @@ class SpecialDatasearch extends SpecialPage {
 		// NEXT
 		$nextText = $this->msg( 'nextn' )->numParams( $this->limit )->escaped();
 		$linksHtml .= '(';
-		if ( $this->limit + $this->offset > $resultCount ) {
+		if ( $this->limit > $this->resultCount ) {
 			// no link
 			$linksHtml .= $nextText;
 		} else {
-			// no link
+			// add a link
+			// here is also the case where limit == resultCount, since resultCount
+			// is only the number of results displayed
 			$nextQuery = $currentQuery;
 			$nextOffset = $this->offset + $this->limit;
 			$nextQuery['offset'] = $nextOffset;
