@@ -235,7 +235,6 @@ class SpecialDatasearch extends SpecialPage {
 		$whereClause = array(
 			'exp.expression_id = synt.expression_id',
 			'synt.identical_meaning' => 1,
-			'exp.remove_transaction_id' => null,
 			'synt.remove_transaction_id' => null
 		);
 
@@ -244,6 +243,8 @@ class SpecialDatasearch extends SpecialPage {
 			'ORDER BY' => 'exp.spelling ASC',
 			'LIMIT' => $this->limit
 		);
+
+		$join = array();
 
 		if ( $this->offset > 0 ) {
 			$options['OFFSET'] = $this->offset;
@@ -271,9 +272,12 @@ class SpecialDatasearch extends SpecialPage {
 		if ( $this->collectionId > 0 ) {
 			$tables['colcont'] = "{$dc}_collection_contents";
 
-			$whereClause[] = 'colcont.member_mid = synt.defined_meaning_id';
-			$whereClause['colcont.collection_id'] = $this->collectionId;
-			$whereClause['colcont.remove_transaction_id'] = null;
+			// without straight join, the query takes too long
+			$join['colcont'] = array( 'STRAIGHT_JOIN', array(
+				'colcont.member_mid = synt.defined_meaning_id',
+				'colcont.collection_id' => $this->collectionId,
+				'colcont.remove_transaction_id' => null
+			));
 		}
 
 		// The query for the search itself! Uses limit and offset
