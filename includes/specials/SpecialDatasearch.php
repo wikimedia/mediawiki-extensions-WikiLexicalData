@@ -233,9 +233,7 @@ class SpecialDatasearch extends SpecialPage {
 		);
 
 		$whereClause = array(
-			'exp.expression_id = synt.expression_id',
-			'synt.identical_meaning' => 1,
-			'synt.remove_transaction_id' => null
+			'exp.remove_transaction_id' => null
 		);
 
 		// default, order by is changed below in the case of a searchText
@@ -245,6 +243,13 @@ class SpecialDatasearch extends SpecialPage {
 		);
 
 		$join = array();
+
+		$join['synt'] = array( 'STRAIGHT_JOIN', array(
+			'exp.expression_id = synt.expression_id',
+			'synt.identical_meaning' => 1,
+			'synt.remove_transaction_id' => null
+		));
+
 
 		if ( $this->offset > 0 ) {
 			$options['OFFSET'] = $this->offset;
@@ -286,7 +291,8 @@ class SpecialDatasearch extends SpecialPage {
 			$fields,
 			$whereClause,
 			__METHOD__,
-			$options
+			$options,
+			$join
 		);
 
 		$this->resultCount = $queryResult->numRows() ;
