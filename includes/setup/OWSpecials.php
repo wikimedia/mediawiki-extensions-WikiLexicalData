@@ -79,6 +79,7 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgAutoloadClasses['SpecialCopy'] = $dir . 'OmegaWiki/SpecialCopy.php';
 $wgAutoloadClasses['SpecialSelect'] = $dir . 'OmegaWiki/SpecialSelect.php';
 $wgAutoloadClasses['SpecialSuggest'] = $dir . 'OmegaWiki/SpecialSuggest.php';
+$wgAutoloadClasses['SpecialPopupEditor'] = $dir . 'OmegaWiki/SpecialPopupEditor.php';
 
 $wgAutoloadClasses['SpecialAddCollection'] = $dir . 'OmegaWiki/SpecialAddCollection.php';
 $wgAutoloadClasses['SpecialConceptMapping'] = $dir . 'OmegaWiki/SpecialConceptMapping.php';
@@ -95,6 +96,7 @@ $wgAutoloadClasses['SpecialOWDownloads'] = $wgWldSpecialsScriptPath . 'SpecialOW
 $wgSpecialPages['Copy'] = 'SpecialCopy';
 $wgSpecialPages['Select'] = 'SpecialSelect';
 $wgSpecialPages['Suggest'] = 'SpecialSuggest';
+$wgSpecialPages['PopupEditor'] = 'SpecialPopupEditor';
 
 $wgSpecialPages['AddCollection'] = 'SpecialAddCollection';
 $wgSpecialPages['ConceptMapping'] = 'SpecialConceptMapping';

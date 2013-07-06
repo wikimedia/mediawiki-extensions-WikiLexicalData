@@ -73,6 +73,10 @@ jQuery(document).ready(function( $ ) {
 		return source.substr(0, source.length - suffix.length);
 	}
 
+	/*
+	 * creates the suggest form, when a field to type a word
+	 * and buttons next, previous and clear
+	 */
 	function createSuggestStructure( element, suggestPrefix ) {
 		var imgPath =  mw.config.get( 'wgExtensionAssetsPath' ) + '/WikiLexicalData/Images/' ;
 		var suggestStructure =
@@ -116,7 +120,6 @@ jQuery(document).ready(function( $ ) {
 	* or to the arrows "next" "previous"
 	* suggestPrefix is of the form "add-dm-269-syntrans-423-objAtt-rel-relation-type-suggest-"
 	*/
-
 	function updateSuggestions( suggestPrefix ) {
 		// table is created by the createSuggestStructure function
 		var table = $('#' + suggestPrefix + 'table');
@@ -250,6 +253,7 @@ jQuery(document).ready(function( $ ) {
 		*/
 
 	$(document).ajaxComplete(function() {
+		// highlight the background when the cursor is over it
 		$(".suggestion-row").mouseover(function() {
 			$(this).addClass('active');
 		}).mouseout(function() {

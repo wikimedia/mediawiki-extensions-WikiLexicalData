@@ -309,7 +309,7 @@ td.add {
 	text-align: center;
 }
 
-/*
+/*****
  * Toggle, clickable elements that can be folded/unfolded
  */
 
@@ -318,6 +318,11 @@ td.add {
 	text-indent: 0px;
 	margin: 0px;
 }
+
+
+/*****
+ * Popup
+ */
 
 .togglePopup {
 	cursor: pointer;
@@ -334,6 +339,23 @@ td.add {
 	padding: 4px;
 	z-index: 1;
 }
+
+.popupButtons {
+	text-align: center;
+}
+
+.owPopupEdit {
+	cursor: pointer;
+	color: blue;
+}
+
+/* hidden by default */
+.owPopupSave, .owPopupCancel {
+	cursor: pointer;
+	color: blue;
+	display: none;
+}
+
 
 /****
  * Attribute list

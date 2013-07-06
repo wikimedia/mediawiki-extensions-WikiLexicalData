@@ -176,20 +176,3 @@ function equalRecords( Structure $structure, Record $lhs, Record $rhs ) {
 	return $result;
 }
 
-class RecordStack {
-	protected $stack = array();
-	
-	public function push( Record $record ) {
-		$this->stack[] = $record;
-	}
-	
-	public function pop() {
-		return array_pop( $this->stack );
-	}
-	
-	public function peek( $level ) {
-		return $this->stack[count( $this->stack ) - $level - 1];
-	}
-}
-
-

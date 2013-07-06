@@ -9,15 +9,11 @@ class WikiLexicalDataHooks {
 
 		$out->addModules( 'ext.Wikidata.css' );
 		$out->addModules( 'ext.Wikidata.ajax' );
-		
-		if ( $wgRequest->getText( 'action' )=='edit' ) {
-			$out->addModules( 'ext.Wikidata.edit' );
-			$out->addModules( 'ext.Wikidata.suggest' );
-		}
 
-		if ( $skin->getTitle()->isSpecialPage() ) {
-			$out->addModules( 'ext.Wikidata.suggest' );
-		}
+		// for editing, but also needed in view mode when dynamically editing annotations
+		$out->addModules( 'ext.Wikidata.edit' );
+		$out->addModules( 'ext.Wikidata.suggest' );
+
 		return true;
 	}
 

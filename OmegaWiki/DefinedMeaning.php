@@ -1,5 +1,6 @@
 <?php
 
+require_once( 'IdStack.php' );
 require_once( 'Wikidata.php' );
 require_once( 'OmegaWikiRecordSets.php' );
 require_once( 'OmegaWikiEditors.php' );
@@ -121,8 +122,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 	}
 	
 	public function history() {
-		global
-			$wgOut, $wgTitle ;
+		global $wgOut, $wgTitle ;
 
 		$definedMeaningId = $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
 		// Title doesn't have an ID in it (or ID 0)
@@ -142,12 +142,10 @@ class DefinedMeaning extends DefaultWikidataApplication {
 			return false;
 		}
 
-		$wgOut->addHTML(
-			getDefinedMeaningEditor( $this->viewInformation )->view(
-				new IdStack( WLD_DEFINED_MEANING ),
-				$dmModel->getRecord()
-			)
-		);
+		$dmIdStack = $this->getIdStack( $definedMeaningId );
+		$dmRecord = $dmModel->getRecord();
+		$dmEditor = getDefinedMeaningEditor( $this->viewInformation );
+		$wgOut->addHTML( $dmEditor->view( $dmIdStack, $dmRecord ) );
 	}
 
 	protected function save( $referenceQueryTransactionInformation ) {

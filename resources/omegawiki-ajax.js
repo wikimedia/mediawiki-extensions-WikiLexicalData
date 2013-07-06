@@ -29,10 +29,12 @@ jQuery(document).ready(function( $ ) {
 	 */
 
 	// toggle the togglable elements
-	$(".toggle").click(function() {
+	// delegated event
+	$("body").on('click', ".toggle", function(event) {
 		$(this).children(".prefix").toggle();
 		$(this).parent().next().fadeToggle('fast');
 	});
+
 	$("a").click(function(event) {
 		// avoid the toggling if a link is clicked
 		event.stopPropagation();
@@ -41,7 +43,146 @@ jQuery(document).ready(function( $ ) {
 	// toggle the annotation popups
 	$(".togglePopup").click(function() {
 		$(this).children("span").toggle();
-		$(this).next(".popupToggleable").toggle(100);
+
+		// if no corresponding popupToggleable (in edit mode): create it
+		// and get the values
+		if ( $(this).next(".popupToggleable").length == 0 ) {
+
+			var popupOpenHideLink = this;
+			var myAction = $(this).attr('action');
+
+			var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' )
+			URL = URL + '/Special:PopupEditor';
+
+			var postdata = {
+				syntransid: $(popupOpenHideLink).attr('syntransid'),
+				dmid: $(popupOpenHideLink).attr('dmid'),
+				idpathflat: $(popupOpenHideLink).attr('idpathflat')
+			};
+			if ( myAction === 'history' ) {
+				postdata['action'] = 'history';
+			}
+			$.post( URL, postdata, function(data) {
+				// insert the data and show it
+				$(popupOpenHideLink).after( data );
+				$(popupOpenHideLink).next(".popupToggleable").show(100);
+			});
+
+		} else {
+			// there is already data, toggle it
+			$(this).next(".popupToggleable").toggle(100);
+		}
+	});
+
+
+	// POPUP EDITING BUTTONS
+	// *** Edit ***
+	$('body').on('click', '.owPopupEdit', function(event) {
+
+		var popupContent = $(this).parents('.popupToggleable');
+		var popupOpenHideLink = $(popupContent).prev('.togglePopup');
+
+		var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' )
+		URL = URL + '/Special:PopupEditor';
+
+		var postdata = {
+			syntransid: $(popupOpenHideLink).attr('syntransid'),
+			dmid: $(popupOpenHideLink).attr('dmid'),
+			idpathflat: $(popupOpenHideLink).attr('idpathflat'),
+			action: 'edit'
+		};
+		$.post( URL, postdata, function(data) {
+			// insert the data and show it
+			$(popupContent).replaceWith( data );
+			// it has been replaced, we need to get the new element
+			popupContent = $(popupOpenHideLink).next(".popupToggleable");
+			$(popupContent).find('.owPopupEdit').hide();
+			$(popupContent).find('.owPopupSave').show();
+			$(popupContent).find('.owPopupCancel').show();
+			// open all links
+			$(popupContent).find('[class*="expand"]').show();
+			$(popupContent).find('[class*="collapse"]').hide();
+			// slow show, because a simple show() does not draw the element correctly
+			$(popupContent).show(100);
+		});
+	});
+
+	// *** Cancel ***
+	// just reload the normal view
+	// alternatively, we could store the old element instead of reloading a new one
+	$('body').on('click', '.owPopupCancel', function(event) {
+
+		var popupContent = $(this).parents('.popupToggleable');
+		var popupOpenHideLink = $(popupContent).prev('.togglePopup');
+
+		var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' )
+		URL = URL + '/Special:PopupEditor';
+
+		var postdata = {
+			syntransid: $(popupOpenHideLink).attr('syntransid'),
+			dmid: $(popupOpenHideLink).attr('dmid'),
+			idpathflat: $(popupOpenHideLink).attr('idpathflat')
+		};
+		$.post( URL, postdata, function(data) {
+			// insert the data and show it
+			$(popupContent).replaceWith( data );
+			popupContent = $(popupOpenHideLink).next(".popupToggleable");
+			$(popupContent).find('.owPopupEdit').show();
+			$(popupContent).find('.owPopupSave').hide();
+			$(popupContent).find('.owPopupCancel').hide();
+			// slow show, because a simple show() does not draw the element correctly
+			$(popupContent).show(100);
+		});
+	});
+
+	// *** Save ***
+	$('body').on('click', '.owPopupSave', function(event) {
+
+		var popupContent = $(this).parents('.popupToggleable');
+		var popupOpenHideLink = $(popupContent).prev('.togglePopup');
+
+		var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' )
+		URL = URL + '/Special:PopupEditor';
+
+		var postdata = {
+			syntransid: $(popupOpenHideLink).attr('syntransid'),
+			dmid: $(popupOpenHideLink).attr('dmid'),
+			idpathflat: $(popupOpenHideLink).attr('idpathflat'),
+			action: 'save'
+		};
+
+		// find the values to update / add / remove
+		// several items in $(popupContent).find('input, textarea, select')
+		$(popupContent).find('input, textarea, select').each( function() {
+			var thisName = $(this).attr('name');
+			var thisVal = $(this).val();
+			var thisType = $(this).attr('type');
+
+			// but the value for checkboxes does not indicate that it is checked
+			if ( thisType && thisType==='checkbox' ) {
+				if ( $(this).is(':checked') ) {
+					// checkbox is checked, send its data
+					postdata[thisName] = thisVal;
+				}
+			} else {
+				// not a checkbox, normal behavior
+				if ( thisName && thisVal ) {
+					// add it to the data sent to the server
+					postdata[thisName] = thisVal;
+				}
+			}
+		});
+
+		$.post( URL, postdata, function(data) {
+			// insert the data and show it
+			$(popupContent).replaceWith( data );
+			popupContent = $(popupOpenHideLink).next(".popupToggleable");
+			$(popupContent).find('.owPopupEdit').show();
+			$(popupContent).find('.owPopupSave').hide();
+			$(popupContent).find('.owPopupCancel').hide();
+			// slow show, because a simple show() does not draw the element correctly
+			$(popupContent).show(100);
+		});
 	});
 
 	/*

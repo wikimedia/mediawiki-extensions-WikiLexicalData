@@ -1,7 +1,7 @@
 jQuery(document).ready(function( $ ) {
 
 	// automatically fills in the label when a url is pasted.
-	$("td.url").bind('paste', function() {
+	$("body").on('paste', "td.url", function() {
 		var tdurl = this ;
 		// timeout is needed, otherwise the paste is not finished when .val() is called.
 		setTimeout(function () {
