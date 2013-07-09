@@ -2750,6 +2750,7 @@ $messages['ce'] = array(
 	'datasearch' => 'Викихаамаш: Лаха хаамаш',
 	'datasearch_language' => 'Мотт:',
 	'datasearch_search_text' => 'Йоза лахар:',
+	'ow_exporttsv_languages' => 'Меттанаш:',
 	'ow_history' => 'Истори',
 	'ow_uipref_datasets' => 'Гар Iад йитарца:',
 	'ow_uiprefs' => 'Викихаамаш', # Fuzzy
@@ -2760,6 +2761,7 @@ $messages['ce'] = array(
 	'ow_Remove' => 'ДӀаяккха',
 	'ow_Source' => 'Хьост',
 	'ow_User' => 'Декъашхо',
+	'ow_nstab_edit_copy' => 'нисйé копи',
 );
 
 /** Sorani Kurdish (کوردی)
