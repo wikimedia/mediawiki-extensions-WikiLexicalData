@@ -45,9 +45,12 @@ $wdCurrentContext = null;
 $wgIso639_3CollectionId = null;
 
 // paths
-$wgWldScriptPath       = __DIR__ . '/';
+$wgWldScriptPath = __DIR__ . '/';
 $wgWldScriptPath = str_replace( '\\', '/', $wgWldScriptPath );
 $wgWldScriptPath = str_replace( 'OmegaWiki/', '', $wgWldScriptPath );
+if ( !isset( $IP ) ) {
+	$IP = $wgWldScriptPath . '../../';
+}
 
 $wgWldOwScriptPath     = $wgWldScriptPath . "OmegaWiki/";
 $wgWldDownloadScriptPath = $IP . "/downloads/";
