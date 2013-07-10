@@ -76,21 +76,10 @@ class SpecialSuggest extends SpecialPage {
 				$rowText = 'language_name';
 				break;
 			case WLD_DEFINED_MEANING:
-				$sql =
-					"SELECT STRAIGHT_JOIN {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id " .
-					" FROM {$dc}_expression JOIN {$dc}_syntrans " .
-					" ON {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
-					" AND {$dc}_syntrans.identical_meaning=1 " .
-					" AND {$dc}_syntrans.remove_transaction_id is NULL ";
+				$sql = $this->getSQLForDMs( $dc );
 				break;
 			case WLD_SYNONYMS_TRANSLATIONS:
-				$sql =
-					"SELECT STRAIGHT_JOIN {$dc}_syntrans.syntrans_sid AS syntrans_sid, {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, " .
-					" {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id " .
-					" FROM {$dc}_expression JOIN {$dc}_syntrans " .
-					" ON {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
-					" AND {$dc}_syntrans.identical_meaning=1 " .
-					" AND {$dc}_syntrans.remove_transaction_id is NULL ";
+				$sql = $this->getSQLForSyntranses( $dc );
 				break;
 			case 'class-attributes-level':
 				$sql = $this->getSQLForLevels();
@@ -406,6 +395,62 @@ class SpecialSuggest extends SpecialPage {
 		return $result;
 	}
 
+	/**
+	 * sql query used to select a DM in a DM-DM relation
+	 */
+	private function getSQLForDMs( $dc ) {
+		$dbr = wfGetDB( DB_SLAVE );
+		$sql = $dbr->selectSQLText(
+			array( // tables
+				'exp' => "{$dc}_expression",
+				'synt' => "{$dc}_syntrans"
+			),
+			array( // fields
+				'defined_meaning_id' => 'synt.defined_meaning_id',
+				'spelling' => 'exp.spelling',
+				'language_id' => 'exp.language_id'
+			),
+			array( // where
+				'exp.remove_transaction_id' => null
+			), __METHOD__,
+			array( 'STRAIGHT_JOIN' ), // options
+			array( 'synt' => array( 'JOIN', array(
+				'exp.expression_id = synt.expression_id',
+				'synt.identical_meaning' => 1,
+				'synt.remove_transaction_id' => null
+			)))
+		);
+		return $sql;
+	}
+
+	/**
+	 * sql query used to select a syntrans in a syntrans-syntrans relation
+	 */
+	private function getSQLForSyntranses( $dc ) {
+		$dbr = wfGetDB( DB_SLAVE );
+		$sql = $dbr->selectSQLText(
+			array( // tables
+				'exp' => "{$dc}_expression",
+				'synt' => "{$dc}_syntrans"
+			),
+			array( // fields
+				'syntrans_sid' => 'synt.syntrans_sid',
+				'defined_meaning_id' => 'synt.defined_meaning_id',
+				'spelling' => 'exp.spelling',
+				'language_id' => 'exp.language_id'
+			),
+			array( // where
+				'exp.remove_transaction_id' => null
+			), __METHOD__,
+			array( 'STRAIGHT_JOIN' ), // options
+			array( 'synt' => array( 'JOIN', array(
+				'exp.expression_id = synt.expression_id',
+				'synt.identical_meaning' => 1,
+				'synt.remove_transaction_id' => null
+			)))
+		);
+		return $sql;
+	}
 
 	/**
 	 * Returns the name of all classes and their spelling in the user language or in English

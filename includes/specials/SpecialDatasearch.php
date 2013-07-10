@@ -239,12 +239,13 @@ class SpecialDatasearch extends SpecialPage {
 		// default, order by is changed below in the case of a searchText
 		$options = array(
 			'ORDER BY' => 'exp.spelling ASC',
-			'LIMIT' => $this->limit
+			'LIMIT' => $this->limit,
+			'STRAIGHT_JOIN' // mysql only
 		);
 
 		$join = array();
 
-		$join['synt'] = array( 'STRAIGHT_JOIN', array(
+		$join['synt'] = array( 'JOIN', array(
 			'exp.expression_id = synt.expression_id',
 			'synt.identical_meaning' => 1,
 			'synt.remove_transaction_id' => null
@@ -278,7 +279,7 @@ class SpecialDatasearch extends SpecialPage {
 			$tables['colcont'] = "{$dc}_collection_contents";
 
 			// without straight join, the query takes too long
-			$join['colcont'] = array( 'STRAIGHT_JOIN', array(
+			$join['colcont'] = array( 'JOIN', array(
 				'colcont.member_mid = synt.defined_meaning_id',
 				'colcont.collection_id' => $this->collectionId,
 				'colcont.remove_transaction_id' => null
