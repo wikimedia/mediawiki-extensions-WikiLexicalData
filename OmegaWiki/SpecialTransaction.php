@@ -20,6 +20,7 @@ class SpecialTransaction extends SpecialPage {
 		require_once( "RecordSetQueries.php" );
 		require_once( "Transaction.php" );
 		require_once( "Editor.php" );
+		require_once( "WrappingEditor.php" );
 		require_once( "Controller.php" );
 		require_once( "type.php" );
 		require_once( "ViewInformation.php" );

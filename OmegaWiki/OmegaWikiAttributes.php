@@ -110,7 +110,7 @@ class OmegaWikiAttributes {
 
 		// instead of " ", could be wfMessage( "ow_IdenticalMeaning" ), but then the header is too long
 		// and the column in the table is too large
-		$this->identicalMeaning = new Attribute( WLD_IDENTICAL_MEANING, " ", "combobox" );
+		$this->identicalMeaning = new Attribute( WLD_IDENTICAL_MEANING, " ", "identmeaning" );
 
 		$this->language = new Attribute( "language", wfMessage( "ow_Language" )->plain(), "language" );
 
@@ -242,6 +242,9 @@ class OmegaWikiAttributes {
 		$this->objectAttributes->setAttributeType( $this->objectAttributesStructure );
 		$this->definedMeaningAttributes->setAttributeType( $this->objectAttributesStructure );
 
+		// this is only Syntrans Attributes that are displayed at the DM level
+		// the other syntrans attributes (column in translation table) are in fact objectAttributes
+		// TODO: maybe change that?
 		$this->syntransAttributes = new Attribute( WLD_SYNT_ATTRIBUTES, wfMessage( 'ow_AnnotationSyntrans' )->plain(), $this->objectAttributesStructure );
 
 		$this->definedMeaningStructure = new Structure(

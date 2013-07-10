@@ -200,11 +200,20 @@ function startNewTransaction( $userID, $userIP, $comment, $dc = null ) {
 		), __METHOD__
 	);
 	$updateTransactionId = $dbw->insertId();
+	// return is not really needed, as the global variable is set,
+	// but this solves the case where $trans = startNewTransaction(...) would be used
+	return $updateTransactionId;
 }
 
 function getUpdateTransactionId() {
-	global
-		$updateTransactionId;
+	global $updateTransactionId;
+
+	if ( ! isset ( $updateTransactionId ) ) {
+		// normally startNewTransaction is invoqued before this function
+		// but actually we can call it from here directly, it should work the same
+		global $wgUser;
+		startNewTransaction( $wgUser->getID(), wfGetIP(), '' );
+	}
 
 	return $updateTransactionId;
 }
@@ -212,12 +221,18 @@ function getUpdateTransactionId() {
 function getLatestTransactionId() {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT max(transaction_id) AS transaction_id FROM {$dc}_transactions" );
+	// false if not found
+	$transactionId = $dbr->selectField(
+		"{$dc}_transactions",
+		'MAX(transaction_id)',
+		'',
+		__METHOD__
+	);
 
-	if ( $transaction = $dbr->fetchObject( $queryResult ) )
-		return $transaction->transaction_id;
-	else
-		return 0;
+	if ( $transactionId ) {
+		return $transactionId;
+	}
+	return 0;
 }
 
 function getLatestTransactionRestriction( $table ) {

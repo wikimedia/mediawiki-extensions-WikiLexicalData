@@ -1,161 +1,18 @@
 <?php
 
 require_once( "WikiDataGlobals.php" );
+require_once( 'IdStack.php' );
 require_once( "HTMLtable.php" );
 require_once( "Controller.php" );
 require_once( "type.php" );
 require_once( "Wikidata.php" );
 require_once( "ContextFetcher.php" );
 
-function addCollapsablePrefixToClass( $class ) {
-	return "collapsable-$class";
-}
-
 
 # End of line string for readable HTML, set to "\n" for testing
 define( 'EOL', "\n" ); # Makes human (and vim :-p) readable output (somewhat...)
 # define('EOL',""); # Output only readable by browsers
 
-/**
- * Class IdStack is used to keep track of context during the rendering of
- * a hierarchical structure of Records and RecordSets. The name IdStack might
- * not be accurate anymore and might be renamed to something else like RenderContext.
- */
-
-class IdStack {
-	protected $keyStack;
-	protected $idStack = array();
-	protected $currentId;
-	protected $classStack = array();
-	protected $currentClass;
-	protected $definedMeaningIdStack = array(); 	// Used to keep track of which defined meaning is being rendered
-	protected $annotationAttributeStack = array();	// Used to keep track of which annotation attribute currently is being rendered
-	protected $classAttributesStack = array();		// Used to keep track of the class attributes that are currently in effect
-
-	public function __construct( $prefix ) {
-	 	$this->keyStack = new RecordStack();
-	 	$this->currentId = $prefix;
-	 	$this->currentClass = $prefix;
-	}
-
-	protected function getKeyIds( Record $record ) {
-		$ids = array();
-
-		foreach ( $record->getStructure()->getAttributes() as $attribute )
-			$ids[] = $record->getAttributeValue( $attribute );
-
-		return $ids;
-	}
-
-	protected function pushId( $id ) {
-		$this->idStack[] = $this->currentId;
-		$this->currentId .= '-' . $id;
-	}
-
-	protected function popId() {
-		$this->currentId = array_pop( $this->idStack );
-	}
-
-	protected function pushClass( $class ) {
-		$this->classStack[] = $this->currentClass;
-		$this->currentClass = $class;
-	}
-
-	protected function popClass() {
-		$this->currentClass = array_pop( $this->classStack );
-	}
-
-	public function pushKey( Record $record ) {
-		$this->keyStack->push( $record );
-		$this->pushId( implode( "-", $this->getKeyIds( $record ) ) );
-	}
-
-	public function pushAttribute( Attribute $attribute ) {
-		# FIXME: check attribute id existence
-		@$id = $attribute->id;
-		$this->pushId( $id );
-		$this->pushClass( $id );
-	}
-
-	public function popKey() {
-		$this->popId();
-		return $this->keyStack->pop();
-	}
-
-	public function popAttribute() {
-		$this->popId();
-		$this->popClass();
-	}
-
-	public function getId() {
-		return $this->currentId;
-	}
-
-	public function getClass() {
-		return $this->currentClass;
-	}
-
-	public function getKeyStack() {
-		return $this->keyStack;
-	}
-	
-	public function pushDefinedMeaningId( $definedMeaningId ) {
-		$this->definedMeaningIdStack[] = $definedMeaningId;
-	}
-	
-	public function popDefinedMeaningId() {
-		return array_pop( $this->definedMeaningIdStack );
-	}
-	
-	public function getDefinedMeaningId() {
-		$stackSize = count( $this->definedMeaningIdStack );
-		
-		if ( $stackSize > 0 )
-			return $this->definedMeaningIdStack[$stackSize - 1];
-		else
-			throw new Exception( "There is no defined meaning defined in the current context" );
-	}
-
-	public function pushAnnotationAttribute( Attribute $annotationAttribute ) {
-		$this->annotationAttributeStack[] = $annotationAttribute;
-	}
-	
-	public function popAnnotationAttribute() {
-		return array_pop( $this->annotationAttributeStack );
-	}
-	
-	public function getAnnotationAttribute() {
-		$stackSize = count( $this->annotationAttributeStack );
-		
-		if ( $stackSize > 0 ) {
-			return $this->annotationAttributeStack[$stackSize - 1];
-		} else {
-			throw new Exception( "There is no annotation attribute in the current context" );
-		}
-	}
-
-	public function pushClassAttributes( ClassAttributes $classAttributes ) {
-		$this->classAttributesStack[] = $classAttributes;
-	}
-	
-	public function popClassAttributes() {
-		return array_pop( $this->classAttributesStack );
-	}
-	
-	public function getClassAttributes() {
-		$stackSize = count( $this->classAttributesStack );
-		
-		if ( $stackSize > 0 ) {
-			return $this->classAttributesStack[$stackSize - 1];
-		} else {
-			throw new Exception( "There are no class attributes in the current context" );
-		}
-	}
-
-	public function __tostring() {
-		return "IdStack(" . $this->getId() . ")\n" ;
-	}
-}
 
 // added the "allow add controller" to be able to control the usage of the add field in different circumstances
 // instances of this class are used instead of the boolean "allowAdd" in the editors
@@ -297,6 +154,9 @@ abstract class DefaultEditor implements Editor {
 		return $this->displayHeader;
 	}
 
+	public function addCollapsablePrefixToClass( $class ) {
+		return "collapsable-$class";
+	}
 
 	/**
 	 * returns two spans elements, each containing an arrow.
@@ -547,6 +407,10 @@ abstract class RecordSetEditor extends DefaultEditor {
 			}
 		}
 
+		if ( !$value ) {
+			// RecordSetEditor has no value, can happen with new edit mode
+			return;
+		}
 		// update the existing and modified fields (definition, translation, ...)
 		$recordCount = $value->getRecordCount();
 		$key = $value->getKey();
@@ -890,6 +754,9 @@ class RecordSetTableEditor extends RecordSetEditor {
 	}
 }
 
+/**
+ * RecordEditor
+ */
 abstract class RecordEditor extends DefaultEditor {
 	protected function getUpdateStructure() {
 		$attributes = array();
@@ -1091,6 +958,11 @@ abstract class ScalarEditor extends DefaultEditor {
 	}
 }
 
+/**
+ * LanguageEditor manages the languages that are editable at omegawiki
+ * it displays the language name in the user language
+ * and in edit mode, it give a combobox to select the language
+ */
 class LanguageEditor extends ScalarEditor {
 	public function getViewHTML( IdStack $idPath, $value ) {
 		return languageIdAsText( $value );
@@ -1866,6 +1738,11 @@ class RecordListEditor extends RecordEditor {
 		$this->headerLevel = $headerLevel;
 	}
 	
+	/**
+	 * hierarchical showsData, returns true
+	 * if at least on of its childEditors (and their childEditors...)
+	 * has at least one value to show
+	 */
 	public function showsData( $value ) {
 		if ( !$value ) {
 			return false;
@@ -2030,7 +1907,7 @@ class RecordListEditor extends RecordEditor {
 
 		$spanclass = $class;
 		if ( $this->isCollapsible ) {
-			$spanclass = 'toggle ' . addCollapsablePrefixToClass( $class ) ;
+			$spanclass = 'toggle ' . $this->addCollapsablePrefixToClass( $class ) ;
 		}
 		$spanattribs = array('class' => $spanclass );
 		$spantext = $expansionPrefix . '&#160;' . $attribute->name ;
@@ -2138,121 +2015,6 @@ class RecordDivListEditor extends RecordListEditor {
 	}
 }
 
-class WrappingEditor implements Editor {
-	protected $wrappedEditor;
-	
-	public function __construct( Editor $wrappedEditor ) {
-		$this->wrappedEditor = $wrappedEditor;
-	}
-
-	public function getAttribute() {
-		return $this->wrappedEditor->getAttribute();
-	}
-	
-	public function getUpdateAttribute() {
-		return $this->wrappedEditor->getUpdateAttribute();
-	}
-	
-	public function getAddAttribute() {
-		return $this->wrappedEditor->getAddAttribute();
-	}
-
-	public function showsData( $value ) {
-		return $this->wrappedEditor->showsData( $value );
-	}
-	
-	public function showEditField( IdStack $idPath ) {
-		return $this->wrappedEditor->showEditField( $idPath );
-	}
-	
-	public function view( IdStack $idPath, $value ) {
-		return $this->wrappedEditor->view( $idPath, $value );
-	}
-	
-	public function edit( IdStack $idPath, $value ) {
-		return $this->wrappedEditor->edit( $idPath, $value );
-	}
-	
-	public function add( IdStack $idPath ) {
-		return $this->wrappedEditor->add( $idPath );
-	}
-	
-	public function save( IdStack $idPath, $value ) {
-		$this->wrappedEditor->save( $idPath, $value );
-	}
-
-	public function getUpdateValue( IdStack $idPath ) {
-		return $this->wrappedEditor->getUpdateValue( $idPath );
-	}
-	
-	public function getAddValues( IdStack $idPath ) {
-		return $this->wrappedEditor->getAddValues( $idPath );
-	}
-
-	public function getEditors() {
-		return $this->wrappedEditor->getEditors();
-	}
-	
-	public function getAttributeEditorMap() {
-		return $this->wrappedEditor->getAttributeEditorMap();
-	}
-
-	public function getDisplayHeader() {
-		// only used for DefaultEditor so far.
-		// here returns only default true.
-		return true;
-	}
-}
-
-class PopUpEditor extends WrappingEditor {
-	protected $linkCaption;
-	
-	public function __construct( Editor $wrappedEditor, $linkCaption ) {
-		parent::__construct( $wrappedEditor );
-				
-		$this->linkCaption = $linkCaption;
-	}
-
-	public function view( IdStack $idPath, $value ) {
-		return
-			$this->startToggleCode( $idPath->getId() ) .
-			$this->wrappedEditor->view( $idPath, $value ) .
-			$this->endToggleCode( $idPath->getId() );
-	}
-	
-	public function edit( IdStack $idPath, $value ) {
-		return
-			$this->startToggleCode( $idPath->getId() ) .
-			$this->wrappedEditor->edit( $idPath, $value ) .
-			$this->endToggleCode( $idPath->getId() );
-	}
-
-	protected function startToggleCode( $attributeId ) {
-		$id = 'popup-' . $attributeId . '-link' ;
-		$result = Html::openElement ('a', array( 'class' => "togglePopup", 'id' => $id));
-
-		$popupShow = Html::element('span', array(
-			'class' => "popupshow"
-			) , wfMessage( 'showtoc' )->plain() . " ▼"  ) ;
-		$popupHide = Html::element('span', array(
-			'class' => "popuphide",
-			'style' => "display:none;"
-			) , wfMessage( 'hidetoc' )->plain() . " ▲"  ) ;
-
-		$result .= $popupShow . $popupHide ;
-		$result .= Html::closeElement('a');
-
-		$id = 'popup-' . $attributeId . '-toggleable' ;
-		$result .= Html::openElement ('div', array( 'class' => "popupToggleable", 'id' => $id ));
-
-		return $result ;
-	}
-
-	protected function endToggleCode( $attributeId ) {
-		return  Html::closeElement('div');
-	}
-}
-
 class RecordSetListEditor extends RecordSetEditor {
 	protected $headerLevel;
 	protected $captionEditor;
@@ -2319,7 +2081,7 @@ class RecordSetListEditor extends RecordSetEditor {
 				$attribs = array(); // default if not collapsible
 				if ( $this->isCollapsible ) {
 					// collapsible element
-					$class = 'toggle ' . addCollapsablePrefixToClass( $captionClass ) ;
+					$class = 'toggle ' . $this->addCollapsablePrefixToClass( $captionClass ) ;
 					$attribs = array('class' => $class );
 				}
 				$result .= Html::rawElement ('span', $attribs, $text ) ;
@@ -2378,7 +2140,7 @@ class RecordSetListEditor extends RecordSetEditor {
 				$spanattribs = array(); // default if not collapsible
 				if ( $this->isCollapsible ) {
 					// add toggle as a class
-					$spanclass = 'toggle ' . addCollapsablePrefixToClass( $captionClass ) ;
+					$spanclass = 'toggle ' . $this->addCollapsablePrefixToClass( $captionClass ) ;
 					$spanattribs = array('class' => $spanclass );
 				}
 				$result .= Html::rawElement ('span', $spanattribs, $spantext ) ;
@@ -2417,7 +2179,7 @@ class RecordSetListEditor extends RecordSetEditor {
 				$spanattribs = array(); // default if not collapsible
 				if ( $this->isCollapsible ) {
 					// add toggle as a class
-					$spanclass = 'toggle ' . addCollapsablePrefixToClass( $class ) ;
+					$spanclass = 'toggle ' . $this->addCollapsablePrefixToClass( $class ) ;
 					$spanattribs = array('class' => $spanclass );
 				}
 				$result .= Html::rawElement ('span', $spanattribs, $spantext ) ;
@@ -2460,7 +2222,7 @@ class RecordSetListEditor extends RecordSetEditor {
 
 		$spanattr = array();
 		if ( $this->isCollapsible ) {
-			$spanclass = 'toggle ' . addCollapsablePrefixToClass( $class );
+			$spanclass = 'toggle ' . $this->addCollapsablePrefixToClass( $class );
 			$spanattr['class'] = $spanclass;
 		}
 		$result .= Html::openElement( 'span', $spanattr );
@@ -2713,16 +2475,6 @@ class RollBackEditor extends ScalarEditor {
 	}
 }
 
-class RecordSetRecordSelector extends WrappingEditor {
-	public function view( IdStack $idPath, $value ) {
-		return getStaticSuggest(
-			$idPath->getId(),
-			$this->wrappedEditor->view( $idPath, $value ),
-			count( $value->getKey()->getAttributes() )
-		);
-	}
-}
-
 class RecordSubRecordEditor extends RecordEditor {
 	protected $subRecordEditor;
 	
@@ -2934,114 +2686,3 @@ class ObjectPathEditor extends Viewer {
 	}
 }
 
-class DefinedMeaningContextEditor extends WrappingEditor {
-	public function view( IdStack $idPath, $value ) {
-		if ( is_null( $value ) ) {
-			return;
-		}
-		$definedMeaningId = (int) $value->definedMeaningId;
-
-		$idPath->pushDefinedMeaningId( $definedMeaningId );
-		$idPath->pushClassAttributes( new ClassAttributes( $definedMeaningId ) );
-
-		$result = $this->wrappedEditor->view( $idPath, $value );
-
-		$idPath->popClassAttributes();
-		$idPath->popDefinedMeaningId();
-		
-		return $result;
-	}
-	
-	public function edit( IdStack $idPath, $value ) {
-		if ( is_null( $idPath ) ) {
-			throw new Exception( "Null provided for idPath while trying to edit()" );
-		}
-
-		if ( is_null( $value ) ) {
-			throw new Exception( "Null provided for value while trying to edit()" );
-		}
-
-		$definedMeaningId = (int) $value->definedMeaningId;
-		
-		$idPath->pushDefinedMeaningId( $definedMeaningId );
-		$idPath->pushClassAttributes( new ClassAttributes( $definedMeaningId ) );
-			
-		$result = $this->wrappedEditor->edit( $idPath, $value );
-		
-		$idPath->popClassAttributes();
-		$idPath->popDefinedMeaningId();
-		
-		return $result;
-	}
-	
-	public function save( IdStack $idPath, $value ) {
-		$definedMeaningId = (int) $value->definedMeaningId;
-		
-		$idPath->pushDefinedMeaningId( $definedMeaningId );
-		$idPath->pushClassAttributes( new ClassAttributes( $definedMeaningId ) );
-
-		$this->wrappedEditor->save( $idPath, $value );
-
-		$idPath->popClassAttributes();
-		$idPath->popDefinedMeaningId();
-	}
-}
-
-
-class ObjectContextEditor extends WrappingEditor {
-	public function view( IdStack $idPath, $value ) {
-		if ( is_null( $value ) ) {
-			return;
-		}
-		$o = OmegaWikiAttributes::getInstance();
-
-		$objectId = (int) $value->objectId;
-		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId) ) ;
-		$objectIdRecord->setAttributeValue( $o->objectId, $objectId );
-
-		$idPath->pushKey( $objectIdRecord );
-
-		$result = $this->wrappedEditor->view( $idPath, $value );
-
-		$idPath->popKey();
-
-		return $result;
-	}
-
-	public function edit( IdStack $idPath, $value ) {
-		if ( is_null( $idPath ) ) {
-			throw new Exception( "SyntransContextEditor: Null provided for idPath while trying to edit()" );
-		}
-
-		if ( is_null( $value ) ) {
-			throw new Exception( "SyntransContextEditor: Null provided for value while trying to edit()" );
-		}
-
-		$o = OmegaWikiAttributes::getInstance();
-		$objectId = (int) $value->objectId;
-		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId) ) ;
-		$objectIdRecord->setAttributeValue( $o->objectId, $objectId );
-
-		$idPath->pushKey( $objectIdRecord );
-
-		$result = $this->wrappedEditor->edit( $idPath, $value );
-
-		$idPath->popKey();
-
-		return $result;
-	}
-
-	public function save( IdStack $idPath, $value ) {
-		$o = OmegaWikiAttributes::getInstance();
-
-		$objectId = (int) $value->objectId;
-		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId) ) ;
-		$objectIdRecord->setAttributeValue( $o->objectId, $objectId );
-
-		$idPath->pushKey( $objectIdRecord );
-
-		$this->wrappedEditor->save( $idPath, $value );
-
-		$idPath->popKey();
-	}
-}

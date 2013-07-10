@@ -867,7 +867,8 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 		$record->expression = $expressionRecord;
 
 		// adds the annotations (if any)
-		$record->objectAttributes = getObjectAttributesRecord( $syntransId, $viewInformation, null, "SYNT" );
+		// don't load the annotations, they are loaded dynamically when clicked, with ajax.
+		// $record->objectAttributes = getObjectAttributesRecord( $syntransId, $viewInformation, null, "SYNT" );
 
 		// adds transaction details for history view
 		if ( $viewInformation->showRecordLifeSpan ) {

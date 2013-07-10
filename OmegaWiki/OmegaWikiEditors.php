@@ -1,6 +1,7 @@
 <?php
 
 require_once( "Editor.php" );
+require_once( "WrappingEditor.php" );
 require_once( "OmegaWikiAttributes.php" );
 require_once( "WikiDataBootstrappedMeanings.php" );
 require_once( "ContextFetcher.php" );
@@ -17,228 +18,6 @@ class DummyViewer extends Viewer {
 	}
 }
 
-class ObjectAttributeValuesEditor extends WrappingEditor {
-	protected $recordSetTableEditor;
-	protected $propertyAttribute;
-	protected $valueAttribute;
-	protected $attributeIDFilter;
-	protected $levelName;
-	protected $showPropertyColumn;
-	
-	public function __construct( Attribute $attribute, $propertyCaption, $valueCaption, ViewInformation $viewInformation, $levelName, AttributeIDFilter $attributeIDFilter ) {
-		parent::__construct( new RecordUnorderedListEditor( $attribute, 5 ) );
-		
-		$this->levelName = $levelName;
-		$this->attributeIDFilter = $attributeIDFilter;
-		$this->showPropertyColumn = !$attributeIDFilter->leavesOnlyOneOption();
-		
-		$this->recordSetTableEditor = new RecordSetTableEditor(
-			$attribute,
-			new SimplePermissionController( false ),
-			new ShowEditFieldChecker( true ),
-			new AllowAddController( false ),
-			false,
-			false,
-			null
-		);
-		
-		$this->propertyAttribute = new Attribute( "property", $propertyCaption, "short-text" );
-		$this->valueAttribute = new Attribute( "value", $valueCaption, "short-text" );
-		
-		foreach ( $viewInformation->getPropertyToColumnFilters() as $propertyToColumnFilter )
-			$this->recordSetTableEditor->addEditor( new DummyViewer( $propertyToColumnFilter->getAttribute() ) );
-
-		$o = OmegaWikiAttributes::getInstance();
-			
-		$this->recordSetTableEditor->addEditor( new DummyViewer( $o->objectAttributes ) );
-
-		if ( $viewInformation->showRecordLifeSpan ) {
-			$this->recordSetTableEditor->addEditor( createTableLifeSpanEditor( $o->recordLifeSpan ) );
-		}
-	}
-	
-	public function getAttributeIDFilter() {
-		return $this->attributeIDFilter;
-	}
-	
-	public function getLevelName() {
-		return $this->levelName;
-	}
-	
-	protected function attributeInStructure( Attribute $attribute, Structure $structure ) {
-		$result = false;
-		$attributes = $structure->getAttributes();
-		$i = 0;
-		
-		while ( !$result && $i < count( $attributes ) ) {
-			$result = $attribute->id == $attributes[$i]->id;
-			$i++;
-		}
-		
-		return $result;
-	}
-	
-	protected function attributeInStructures( Attribute $attribute, array &$structures ) {
-		$result = false;
-		$i = 0;
-		
-		while ( !$result && $i < count( $structures ) ) {
-			$result = $this->attributeInStructure( $attribute, $structures[$i] );
-			$i++;
-		}
-		
-		return $result;
-	}
-	
-	protected function getSubStructureForAttribute( Structure $structure, Attribute $attribute ) {
-		$attributes = $structure->getAttributes();
-		$result = null;
-		$i = 0;
-		
-		while ( $result == null && $i < count( $attributes ) )
-			if ( $attribute->id == $attributes[$i]->id )
-				$result = $attributes[$i]->type;
-			else
-				$i++;
-		
-		return $result;
-	}
-	
-	protected function filterStructuresOnAttribute( array &$structures, Attribute $attribute ) {
-		$result = array();
-		
-		foreach ( $structures as $structure ) {
-			$subStructure = $this->getSubStructureForAttribute( $structure, $attribute );
-			
-			if ( $subStructure != null )
-				$result[] = $subStructure;
-		}
-		
-		return $result;
-	}
-	
-	protected function filterAttributesByStructures( array &$attributes, array &$structures ) {
-		$result = array();
-
-		foreach ( $attributes as $attribute ) {
-			if ( $attribute->type instanceof Structure ) {
-				// recursively run filterAttributesByStructures on subAttributes
-				$subAttributes = $attribute->type->getAttributes();
-				$filteredStructures = $this->filterStructuresOnAttribute( $structures, $attribute );
-				$filteredAttributes = $this->filterAttributesByStructures( $subAttributes, $filteredStructures );
-
-				if ( count( $filteredAttributes ) > 0 ) {
-					$result[] = new Attribute( $attribute->id, $attribute->name, new Structure( $filteredAttributes ) );
-				}
-			}
-			elseif ( $this->attributeInStructures( $attribute, $structures ) ) {
-				$result[] = $attribute;
-			}
-		}
-
-		return $result;
-	}
-	
-	public function determineVisibleSuffixAttributes( IdStack $idPath, $value ) {
-		$visibleStructures = array();
-		
-		foreach ( $this->getEditors() as $editor ) {
-			$visibleStructure = $editor->getTableStructureForView( $idPath, $value->getAttributeValue( $editor->getAttribute() ) );
-			
-			if ( count( $visibleStructure->getAttributes() ) > 0 ) {
-				$visibleStructures[] = $visibleStructure;
-			}
-		}
-
-		$tableStructure = $this->recordSetTableEditor->getTableStructure( $this->recordSetTableEditor );
-		$attributes = $tableStructure->getAttributes();
-		$result = $this->filterAttributesByStructures( $attributes, $visibleStructures );
-		return $result;
-	}
-	
-	public function addEditor( Editor $editor ) {
-		$this->wrappedEditor->addEditor( $editor );
-	}
-	
-	protected function getVisibleStructureForEditor( Editor $editor, $showPropertyColumn, array &$suffixAttributes ) {
-		$leadingAttributes = array();
-		$childEditors = $editor->getEditors();
-		
-		for ( $i = $showPropertyColumn ? 0 : 1; $i < 2; $i++ ) {
-			$leadingAttributes[] = $childEditors[$i]->getAttribute();
-		}
-
-		return new Structure( array_merge( $leadingAttributes, $suffixAttributes ) );
-	}
-
-	public function view( IdStack $idPath, $value ) {
-		$visibleAttributes = array();
-
-		if ( $this->showPropertyColumn ) {
-			$visibleAttributes[] = $this->propertyAttribute;
-		}
-
-		$visibleAttributes[] = $this->valueAttribute;
-
-		$idPath->pushAnnotationAttribute( $this->getAttribute() );
-		$visibleSuffixAttributes = $this->determineVisibleSuffixAttributes( $idPath, $value );
-		
-		$visibleStructure = new Structure( array_merge( $visibleAttributes, $visibleSuffixAttributes ) );
-		
-		$result = $this->recordSetTableEditor->viewHeader( $idPath, $visibleStructure );
-
-		foreach ( $this->getEditors() as $editor ) {
-			$attribute = $editor->getAttribute();
-			$idPath->pushAttribute( $attribute );
-			$result .= $editor->viewRows(
-				$idPath,
-				$value->getAttributeValue( $attribute ),
-				$this->getVisibleStructureForEditor( $editor, $this->showPropertyColumn, $visibleSuffixAttributes )
-			);
-			$idPath->popAttribute();
-		}
-		
-		$result .= $this->recordSetTableEditor->viewFooter( $idPath, $visibleStructure );
-
-		$idPath->popAnnotationAttribute();
-
-		return $result;
-	}
-
-	public function edit( IdStack $idPath, $value ) {
-		$idPath->pushAnnotationAttribute( $this->getAttribute() );
-		$result = $this->wrappedEditor->edit( $idPath, $value );
-		$idPath->popAnnotationAttribute();
-		
-		return $result;
-	}
-	
-	public function add( IdStack $idPath ) {
-		$idPath->pushAnnotationAttribute( $this->getAttribute() );
-		$result = $this->wrappedEditor->add( $idPath );
-		$idPath->popAnnotationAttribute();
-		
-		return $result;
-	}
-	
-	public function save( IdStack $idPath, $value ) {
-		$idPath->pushAnnotationAttribute( $this->getAttribute() );
-		$this->wrappedEditor->save( $idPath, $value );
-		$idPath->popAnnotationAttribute();
-	}
-	
-	protected function getAttributeOptionCount( IdStack $idPath ) {
-		$classAttributes = $idPath->getClassAttributes()->filterClassAttributesOnLevel( $this->getLevelName() );
-		$classAttributes = $this->getAttributeIDFilter()->filter( $classAttributes );
-		
-		return count( $classAttributes );
-	}
-
-	// displays the field only if there is at least one attribute of that type
-	public function showEditField( IdStack $idPath ) {
-		return $this->getAttributeOptionCount( $idPath ) > 0;
-	}
-}
 
 class ShowEditFieldForAttributeValuesChecker extends ShowEditFieldChecker {
 	protected $levelDefinedMeaningName;
@@ -446,7 +225,7 @@ function createObjectAttributesEditor( ViewInformation $viewInformation, Attribu
 	$o = OmegaWikiAttributes::getInstance();
 	
 	$result = new ObjectAttributeValuesEditor( $attribute, $propertyCaption, $valueCaption, $viewInformation, $levelName, $attributeIDFilter );
-	
+
 	addObjectAttributesEditors(
 		$result,
 		$viewInformation,
@@ -571,9 +350,19 @@ function getSynonymsAndTranslationsEditor( ViewInformation $viewInformation ) {
 	addPropertyToColumnFilterEditors( $tableEditor, $viewInformation, $o->syntransId, WLD_SYNTRANS_MEANING_NAME );
 
 	// Add annotation editor on the rightmost column.
-	$tableEditor->addEditor( new PopUpEditor(
-		createObjectAttributesEditor( $viewInformation, $o->objectAttributes, wfMessage( "ow_Property" )->text(), wfMessage( "ow_Value" )->text(), $o->syntransId, WLD_SYNTRANS_MEANING_NAME, $viewInformation->getLeftOverAttributeFilter() ),
-		wfMessage( "ow_PopupAnnotation" )->text()
+	$objectAttributesEditor = createObjectAttributesEditor(
+		$viewInformation,
+		$o->objectAttributes,
+		wfMessage( "ow_Property" )->text(),
+		wfMessage( "ow_Value" )->text(),
+		$o->syntransId,
+		WLD_SYNTRANS_MEANING_NAME,
+		$viewInformation->getLeftOverAttributeFilter()
+	);
+	$tableEditor->addEditor( new SyntransPopupEditor(
+		$objectAttributesEditor,
+		wfMessage( "ow_PopupAnnotation" )->text(),
+		$viewInformation
 	) );
 
 	if ( $viewInformation->showRecordLifeSpan ) {
@@ -723,8 +512,6 @@ function getTextAttributeValuesEditor( ViewInformation $viewInformation, UpdateC
 }
 
 function getLinkAttributeValuesEditor( ViewInformation $viewInformation, UpdateController $controller, $levelDefinedMeaningName, AttributeIDFilter $attributeIDFilter ) {
-	global $wgWldLinkValueObjectAttributesEditors;
-
 	$o = OmegaWikiAttributes::getInstance();
 
 	$showEditFieldChecker = new ShowEditFieldForAttributeValuesChecker( $levelDefinedMeaningName, "URL", $attributeIDFilter );
@@ -743,6 +530,7 @@ function getLinkAttributeValuesEditor( ViewInformation $viewInformation, UpdateC
 	$editor->addEditor( $linkEditor );
 
 	// what does this do?
+	// global $wgWldLinkValueObjectAttributesEditors;
 	// addPopupEditors( $editor, $wgWldLinkValueObjectAttributesEditors );
 
 	if ( $viewInformation->showRecordLifeSpan ) {
