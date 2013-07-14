@@ -10022,10 +10022,11 @@ $messages['mn'] = array(
  * @author Htt
  * @author Kaustubh
  * @author Mahitgar
+ * @author V.narsikar
  */
 $messages['mr'] = array(
 	'languages' => 'विकिविदा:भाषाप्रबंधक', # Fuzzy
-	'langman-desc' => '[[Special:Languages]] ने लॅंग्वेज सेटींग जोडणे आणि  बदलणे',
+	'langman-desc' => '[[Special:Languages|भाषा]] ने लॅंग्वेज सेटींग जोडणे आणि  बदलणे',
 	'langman_title' => 'भाषा प्रबंधक',
 	'langman_not_allowed' => 'भाषा सेटींग बदलण्याची आपणास परवानगी नाही.',
 	'datasearch' => 'विकिविदा:विदा शोध', # Fuzzy
@@ -11421,7 +11422,7 @@ $messages['pfl'] = array(
  */
 $messages['pl'] = array(
 	'wikidata-desc' => 'Dodaje podobną do wiki bazę danych dla rozmaitych rodzajów zawartości',
-	'wikidata-handler-namespace-move-error' => 'Strony w przestrzeniach nazw obsługiwanych przez rozszerzenie Wikidanych nie mogą być przenoszone.', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Strony w przestrzeniach nazw obsługiwanych przez rozszerzenie WikiLexicalData nie mogą być przenoszone.',
 	'languages' => 'Menadżer języków',
 	'langman-desc' => 'Dodawanie i zmiana ustawień językowych na [[Special:Languages]]',
 	'langman_title' => 'Menadżer języków',
@@ -11492,7 +11493,7 @@ Wybierz kolekcję do wyeksportowania. W polu tekstowym „Języki” wpisz rozdz
 	'ow_noedit_title' => 'Brak uprawnień do wykonania edycji',
 	'ow_noedit' => 'Nie masz uprawnień do wykonania edycji w zbiorze danych „$1”. Zobacz [[{{MediaWiki:Ow editing policy url}}|zasady nadawania uprawnień do edycji]].',
 	'ow_uipref_datasets' => 'Widok domyślny',
-	'ow_uiprefs' => 'Dane wiki', # Fuzzy
+	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_none_selected' => 'Nic nie zaznaczono',
 	'transaction' => 'Rejestr transakcji',
 	'ow_transaction_from_transaction' => 'Od transakcji:',
@@ -11539,6 +11540,8 @@ Wybierz kolekcję do wyeksportowania. W polu tekstowym „Języki” wpisz rozdz
 	'ow_AlternativeDefinition' => 'Inna defnicja',
 	'ow_AlternativeDefinitions' => 'Alternatywne definicje',
 	'ow_Annotation' => 'Adnotacja',
+	'ow_AnnotationDefinedMeaning' => 'Adnotacje semantyczne',
+	'ow_AnnotationSyntrans' => 'Adnotacje leksykalne',
 	'ow_ApproximateMeanings' => 'Zbliżone znaczenia',
 	'ow_Class' => 'Klasa',
 	'ow_ClassAttributeAttribute' => 'Atrybut',
@@ -11551,7 +11554,6 @@ Wybierz kolekcję do wyeksportowania. W polu tekstowym „Języki” wpisz rozdz
 	'ow_CollectionMember' => 'Element kolekcji',
 	'ow_CollectionMembership' => 'Członkostwo w kolekcji',
 	'ow_Definition' => 'Definicja',
-	'ow_DefinedMeaningAttributes' => 'Adnotacja',
 	'ow_DefinedMeaning' => 'Zdefiniowane znaczenie',
 	'ow_DefinedMeaningReference' => 'Zdefiniowane znaczenie',
 	'ow_ExactMeanings' => 'Dokładne znaczenia',
@@ -11562,7 +11564,6 @@ Wybierz kolekcję do wyeksportowania. W polu tekstowym „Języki” wpisz rozdz
 	'ow_IncomingRelations' => 'Zależności wchodzące',
 	'ow_GotoSource' => 'Idź do źródła',
 	'ow_Language' => 'Język',
-	'ow_LevelAnnotation' => 'Adnotacja',
 	'ow_LinkAttributeHeader' => 'Atrybut łącza',
 	'ow_Multiple_meanings' => 'Znaczenia „$1”',
 	'ow_NewExactMeaning' => 'Nowe wąskie znaczenie',
@@ -11572,6 +11573,7 @@ Wybierz kolekcję do wyeksportowania. W polu tekstowym „Języki” wpisz rozdz
 	'ow_OptionAttributeOptions' => 'Opcje',
 	'ow_OptionAttributeValues' => 'Wartość opcji',
 	'ow_OtherDefinedMeaning' => 'Inaczej zdefiniowane pojęcie',
+	'ow_OtherLanguages' => 'Inne języki:',
 	'ow_PopupAnnotation' => 'Adnotacja',
 	'ow_RecordLifeSpan' => 'Czas życia rekordu',
 	'ow_Relations' => 'Zależności',
@@ -11627,7 +11629,7 @@ Wybierz kolekcję do wyeksportowania. W polu tekstowym „Języki” wpisz rozdz
 	'ow_needs_xlation_source_lang' => 'Język źródłowy',
 	'ow_needs_xlation_dest_lang' => 'Język docelowy',
 	'ow_needs_xlation_no_dest_lang' => 'Proszę określić język docelowy.',
-	'ow_statistics' => 'Wikidata: Statystyki', # Fuzzy
+	'ow_statistics' => 'Statystyki WikiLexicalData',
 	'ow_show' => 'Pokaż',
 	'ow_upload' => 'Prześlij',
 	'ow_create' => 'Utwórz',
@@ -11639,6 +11641,8 @@ Wybierz kolekcję do wyeksportowania. W polu tekstowym „Języki” wpisz rozdz
 	'ow_nstab_edit_copy' => 'edytuj kopię',
 	'right-addlanguage' => 'Dodawanie i zmiana ustawień językowych',
 	'ow_shown_datasets' => 'Widoczne zbiory danych',
+	'prefs-ow-lang' => 'Języki',
+	'ow_pref_lang_switch' => 'Pokaż tylko wybrane języki',
 );
 
 /** Piedmontese (Piemontèis)
