@@ -2755,6 +2755,7 @@ $messages['ce'] = array(
 	'ow_history' => 'Истори',
 	'ow_uipref_datasets' => 'Гар Iад йитарца:',
 	'ow_uiprefs' => 'Викихаамаш', # Fuzzy
+	'ow_transaction_user' => 'Декъашхон цӀе:',
 	'ow_transaction_rollback_button' => 'Юхаяккха',
 	'ow_transaction_remove' => 'ДӀаяккхар',
 	'ow_ClassAttributeLevel' => 'Локхалла',
