@@ -426,7 +426,8 @@ This is visible when a SynTrans is annotated, or while editing a page.
 	'ow_Link' => '{{Identical|Link}}',
 	'ow_LinkAttribute' => '{{Identical|Property}}',
 	'ow_LinkAttributeValues' => '{{Identical|Link}}',
-	'ow_URL' => '{{optional}}',
+	'ow_URL' => '{{optional}}
+{{Identical|URL}}',
 	'ow_User' => '{{Identical|User}}',
 	'ow_Property' => '{{Identical|Property}}',
 	'ow_Value' => '{{Identical|Value}}',
@@ -3122,6 +3123,7 @@ Nastal problém s konzistencí databáze. Wikidata nemůže najít platné údaj
  * @author ОйЛ
  */
 $messages['cu'] = array(
+	'ow_history' => 'їсторїꙗ',
 	'ow_Language' => 'ѩꙁꙑ́къ',
 	'ow_LinkAttributeValues' => 'съвѧ́ꙁи',
 );
