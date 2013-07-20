@@ -9,15 +9,21 @@ jQuery(document).ready(function( $ ) {
 	// some delegated handlers for elements added dynamically
 	$("body").on('click', ".suggest-next", function(event) {
 		var suggestPrefix = getSuggestPrefix( this, 'next');
-		var suggestOffset = document.getElementById(suggestPrefix + 'offset');
-		suggestOffset.value = parseInt(suggestOffset.value) + 10;
+		var suggestLink = '#' + suggestPrefix + 'link';
+		var suggestOffset = $(suggestLink).attr('offset');
+		$(suggestLink).attr('offset', parseInt(suggestOffset) + 10);
+
 		updateSuggestions(suggestPrefix);
 	});
 
 	$("body").on('click', ".suggest-previous", function(event) {
 		var suggestPrefix = getSuggestPrefix( this, 'previous');
-		var suggestOffset = document.getElementById(suggestPrefix + 'offset');
-		suggestOffset.value = Math.max(parseInt(suggestOffset.value) - 10, 0);
+
+		var suggestLink = '#' + suggestPrefix + 'link';
+		var suggestOffset = $(suggestLink).attr('offset');
+		var newOffset = Math.max( parseInt(suggestOffset) - 10, 0 );
+		$(suggestLink).attr('offset', newOffset);
+
 		updateSuggestions(suggestPrefix);
 	});
 
@@ -63,7 +69,7 @@ jQuery(document).ready(function( $ ) {
 		if ( suggestionTimeOut != null ) {
 			clearTimeout( suggestionTimeOut );
 		}
-		$("#" + suggestPrefix + "offset").val( 0 );
+		$("#" + suggestPrefix + "link").attr( 'offset', 0 );
 		suggestionTimeOut = setTimeout(function() {
 			updateSuggestions( suggestPrefix )
 		}, 600);
@@ -109,9 +115,14 @@ jQuery(document).ready(function( $ ) {
 		suggestDiv.style.display = 'none';
 		suggestLink.focus();
 
-		var suggestOnUpdate = $('#' + suggestLinkId).attr('onUpdate');
-		if(suggestOnUpdate != null) {
-			eval(suggestOnUpdate + "," + value + ")");
+		// if an option is changed, change also the content of the option value comobobox selector
+		if ( $('#' + suggestLinkId).attr('query') == 'optnAtt' ) {
+			var inputId = stripSuffix( suggestPrefix, '-suggest-');
+			var objAtt = $('#' + suggestLinkId).attr('syntransid');
+			if ( ! objAtt ) {
+				objAtt = $('#' + suggestLinkId).attr('definedmeaningid');
+			}
+			updateSelectOptions( inputId + 'Optn', objAtt, value );
 		}
 	}
 
@@ -273,6 +284,7 @@ jQuery(document).ready(function( $ ) {
 				var columnValue = this.getElementsByTagName('td')[displayLabelColumnIndices[i]].innerHTML;
 
 				if (columnValue != "") {
+					// remove the bold that we added for highlight
 					columnValue = columnValue.replace ("<b>","");
 					columnValue = columnValue.replace ("</b>","");
 					labels.push(columnValue);

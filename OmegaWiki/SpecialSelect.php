@@ -26,14 +26,22 @@ class SpecialSelect extends SpecialPage {
 
 		$objectLanguage = 0 ;
 		if ( $attributeObject != 0 ) {
-			$sql = 'SELECT language_id' .
-					" FROM {$dc}_syntrans" .
-					" JOIN {$dc}_expression ON {$dc}_expression.expression_id = {$dc}_syntrans.expression_id" .
-					" WHERE {$dc}_syntrans.syntrans_sid = " . $attributeObject .
-					' AND ' . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-					' AND ' . getLatestTransactionRestriction( "{$dc}_expression" );
-			$lang_res = $dbr->query( $sql );
-			$objectLanguage = $dbr->fetchObject( $lang_res )->language_id;
+			$objectLanguage = $dbr->selectField(
+				array(
+					'synt' => "{$dc}_syntrans",
+					'exp' => "{$dc}_expression"
+				),
+				'language_id',
+				array(
+					'synt.syntrans_sid' => $attributeObject,
+					'synt.remove_transaction_id' => null
+				), __METHOD__,
+				array(),
+				array( 'exp' => array( 'JOIN', array(
+					'exp.expression_id = synt.expression_id',
+					'exp.remove_transaction_id' => null
+				)))
+			);
 			// language is not always defined, for example for a DM Option Attribute
 			if ( ! $objectLanguage ) $objectLanguage = 0 ;
 		}

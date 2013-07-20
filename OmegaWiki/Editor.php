@@ -1690,12 +1690,10 @@ class OptionAttributeEditor extends AttributeEditor {
 
 	public function add( IdStack $idPath ) {
 		if ( $this->isAddField ) {
-			// note: it is normal that the "updateSelectOptions(" has no closing parenthesis. An additional parameter and ')' is added by the function updateSuggestValue (suggest.js)
 			$parameters = array(
 				"level" => $this->attributesLevelName,
 				"definedMeaningId" => $idPath->getDefinedMeaningId(),
-				"annotationAttributeId" => $idPath->getAnnotationAttribute()->getId(),
-				"onUpdate" => "updateSelectOptions('" . $this->addId( $idPath->getId() ) . WLD_OPTION_SUFFIX . "',0"
+				"annotationAttributeId" => $idPath->getAnnotationAttribute()->getId()
 			);
 
 			if ( $this->attributesLevelName == WLD_SYNTRANS_MEANING_NAME ) {
@@ -1707,7 +1705,6 @@ class OptionAttributeEditor extends AttributeEditor {
 				}
 				if ( $syntransId != "" ) {
 					$parameters["syntransId"] = $syntransId;
-					$parameters["onUpdate"] = 'updateSelectOptions(\'' . $this->addId( $idPath->getId() ) . WLD_OPTION_SUFFIX . '\',' . $syntransId ;
 				}
 			}
 
@@ -1717,10 +1714,8 @@ class OptionAttributeEditor extends AttributeEditor {
 	}
 
 	public function getEditHTML( IdStack $idPath, $value ) {
-		// note: it is normal that the "updateSelectOptions(" has no closing parenthesis. An additional parameter and ')' is added by the function updateSuggestValue (suggest.js)
 		$parameters = array(
-			"level" => $this->attributesLevelName,
-			"onUpdate" => 'updateSelectOptions(\'' . $this->updateId( $idPath->getId() ) . WLD_OPTION_SUFFIX . '\''
+			"level" => $this->attributesLevelName
 		);
 
 		return getSuggest( $this->updateId( $idPath->getId() ), $this->suggestType(), $parameters );
