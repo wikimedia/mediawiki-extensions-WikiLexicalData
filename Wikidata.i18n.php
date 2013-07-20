@@ -3123,9 +3123,12 @@ Nastal problém s konzistencí databáze. Wikidata nemůže najít platné údaj
  * @author ОйЛ
  */
 $messages['cu'] = array(
+	'datasearch_language' => 'ѩꙁꙑкъ :',
+	'ow_exporttsv_languages' => 'ѩꙁꙑци :',
 	'ow_history' => 'їсторїꙗ',
-	'ow_Language' => 'ѩꙁꙑ́къ',
+	'ow_Language' => 'ѩꙁꙑкъ',
 	'ow_LinkAttributeValues' => 'съвѧ́ꙁи',
+	'prefs-ow-lang' => 'ѩꙁꙑци',
 );
 
 /** Danish (dansk)
