@@ -3128,6 +3128,7 @@ $messages['cu'] = array(
 	'ow_history' => 'їсторїꙗ',
 	'ow_Language' => 'ѩꙁꙑкъ',
 	'ow_LinkAttributeValues' => 'съвѧ́ꙁи',
+	'ow_User' => 'польꙃєватєл҄ь',
 	'prefs-ow-lang' => 'ѩꙁꙑци',
 );
 
