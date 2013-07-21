@@ -41,6 +41,13 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgExtensionCredits['specialpage'][] = array(
+	'name' => 'SpecialPopupEditor',
+	'author' => array(
+		'Kipcool',
+	),
+);
+
+$wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SpecialAddCollection',
 	'author' => array(
 		'Erik Möller',
@@ -110,11 +117,15 @@ $wgSpecialPages['ow_downloads'] = 'SpecialOWDownloads';
 // $wgSpecialPages['Transaction'] = 'SpecialTransaction';
 
 # Tell MediaWiki about which group the new special page belongs to
+# maintenance = Maintenance reports
+# wiki = Data and tools
+# others = Other Special pages
 /**
  * == UnlistedSpecialPage ==
  *	SpecialCopy
  *	SpecialSelect
  *	SpecialSuggest
+ *	SpecialPopupEditor
  */
 
 $wgSpecialPageGroups[ 'AddCollection' ] = 'other';

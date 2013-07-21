@@ -44,3 +44,56 @@ class Expression {
 		}
 	}
 }
+
+class Expressions {
+
+	public function __construct() {
+	}
+
+	/**
+	 * returns an array of "Expression" objects
+	 * for a language
+	 *
+	 * else returns null
+	 */
+	public static function getLanguageIdExpressions( $languageId, $options = array(), $dc = null ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		if ( isset( $options['ORDER BY'] ) ) {
+			$cond['ORDER BY']= $options['ORDER BY'];
+		} else {
+			$cond['ORDER BY']= 'spelling';
+		}
+
+		if ( isset( $options['LIMIT'] ) ) {
+			$cond['LIMIT']= $options['LIMIT'];
+		}
+		if ( isset( $options['OFFSET'] ) ) {
+			$cond['OFFSET']= $options['OFFSET'];
+		}
+
+		$queryResult = $dbr->select(
+			"{$dc}_expression",
+			'spelling',
+			array(
+				'language_id' => $languageId,
+				'remove_transaction_id' => null
+			),
+			__METHOD__,
+			$cond
+		);
+
+		$expression = array();
+		foreach ( $queryResult as $exp ) {
+			$expression[] = $exp;
+		}
+
+		if ( $expression ) {
+			return $expression;
+		}
+		return null;
+	}
+}

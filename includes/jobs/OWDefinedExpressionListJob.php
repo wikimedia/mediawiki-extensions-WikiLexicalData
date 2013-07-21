@@ -4,7 +4,7 @@
  *
  */
 global $wgWldOwScriptPath, $wgWldIncludesScriptPath;
-require_once( $wgWldOwScriptPath . 'languages.php' );
+require_once( $wgWldOwScriptPath . 'Expression.php' );
 require_once( $wgWldIncludesScriptPath . 'formatCSV.php' );
 
 Class CreateDefinedExpressionListJob extends Job {
@@ -69,7 +69,7 @@ Class CreateDefinedExpressionListJob extends Job {
 
 		// language specifics
 		$languageId = getLanguageIdForIso639_3( $code );
-		$languageExpressions = $this->getLanguageIdExpressions( $languageId, $options );
+		$languageExpressions = Expressions::getLanguageIdExpressions( $languageId, $options );
 
 		// create File name
 		$fileName = $wgWldDownloadScriptPath;
@@ -140,52 +140,5 @@ Class CreateDefinedExpressionListJob extends Job {
 		}
 		$dmlist = array();
 		return $express;
-	}
-
-	/**
-	 * returns an array of "Expression" objects
-	 * for a language
-	 *
-	 * else returns null
-	 */
-	function getLanguageIdExpressions( $languageId, $options = array(), $dc = null ) {
-		if ( is_null( $dc ) ) {
-			$dc = wdGetDataSetContext();
-		}
-		$dbr = wfGetDB( DB_SLAVE );
-
-		if ( isset( $options['ORDER BY'] ) ) {
-			$cond['ORDER BY']= $options['ORDER BY'];
-		} else {
-			$cond['ORDER BY']= 'spelling';
-		}
-
-		if ( isset( $options['LIMIT'] ) ) {
-			$cond['LIMIT']= $options['LIMIT'];
-		}
-		if ( isset( $options['OFFSET'] ) ) {
-			$cond['OFFSET']= $options['OFFSET'];
-		}
-
-		$queryResult = $dbr->select(
-			"{$dc}_expression",
-			'spelling',
-			array(
-				'language_id' => $languageId,
-				'remove_transaction_id' => null
-			),
-			__METHOD__,
-			$cond
-		);
-
-		$expression = array();
-		foreach ( $queryResult as $exp ) {
-			$expression[] = $exp;
-		}
-
-		if ( $expression ) {
-			return $expression;
-		}
-		return null;
 	}
 }
