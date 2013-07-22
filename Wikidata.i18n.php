@@ -2748,6 +2748,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'languages' => 'Викихаамаш:Меттан менеджер',
+	'langman_langname' => 'Меттан цӀе:',
 	'langman_addlang' => 'ТӀетоха мотт',
 	'datasearch' => 'Викихаамаш: Лаха хаамаш',
 	'datasearch_language' => 'Мотт:',
@@ -2756,13 +2757,15 @@ $messages['ce'] = array(
 	'ow_history' => 'Истори',
 	'ow_uipref_datasets' => 'Гар Iад йитарца:',
 	'ow_uiprefs' => 'Викихаамаш', # Fuzzy
-	'ow_transaction_user' => 'Декъашхон цӀе:',
+	'ow_transaction_user' => 'Декъашхочун цӀе:',
 	'ow_transaction_rollback_button' => 'Юхаяккха',
 	'ow_transaction_remove' => 'ДӀаяккхар',
 	'ow_ClassAttributeLevel' => 'Локхалла',
+	'ow_ClassAttributeType' => 'Тайп',
 	'ow_Language' => 'Мотт',
 	'ow_Remove' => 'ДӀаяккха',
 	'ow_Source' => 'Хьост',
+	'ow_Time' => 'Хан',
 	'ow_User' => 'Декъашхо',
 	'ow_nstab_edit_copy' => 'нисйé копи',
 );
