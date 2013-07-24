@@ -419,6 +419,7 @@ This is visible when a SynTrans is annotated, or while editing a page.
 	'ow_Source' => '{{Identical|Source}}',
 	'ow_Text' => '{{Identical|Text}}',
 	'ow_TextAttribute' => '{{Identical|Property}}',
+	'ow_TextAttributeValues' => '{{Identical|Plain text}}',
 	'ow_Time' => '{{Identical|Time}}',
 	'ow_TranslatedTextAttribute' => '{{Identical|Property}}',
 	'ow_TranslatedTextAttributeValue' => '{{Identical|Text}}',
@@ -451,6 +452,7 @@ See also:
 {{Identical|Copy}}',
 	'ow_history_transaction' => '{{Identical|Transaction}}',
 	'ow_class_attr_type_dm' => '{{Identical|Defined meaning}}',
+	'ow_class_attr_type_plain' => '{{Identical|Plain text}}',
 	'ow_class_attr_type_link' => '{{Identical|Link}}',
 	'needstranslation' => '{{doc-special|NeedsTranslation}}',
 	'ow_needs_xlation_title' => '{{doc-special|NeedsTranslation}}
@@ -2752,6 +2754,7 @@ $messages['ce'] = array(
 	'langman_addlang' => 'ТӀетоха мотт',
 	'datasearch' => 'Викихаамаш: Лаха хаамаш',
 	'datasearch_language' => 'Мотт:',
+	'datasearch_meaning' => 'МаьӀна',
 	'datasearch_search_text' => 'Йоза лахар:',
 	'ow_exporttsv_languages' => 'Меттанаш:',
 	'ow_history' => 'Истори',
@@ -2768,6 +2771,8 @@ $messages['ce'] = array(
 	'ow_Source' => 'Хьост',
 	'ow_Time' => 'Хан',
 	'ow_User' => 'Декъашхо',
+	'ow_Value' => 'МаьӀна',
+	'ow_meaningsoftitle' => 'МаьӀна «$1»',
 	'ow_nstab_edit_copy' => 'нисйé копи',
 );
 
@@ -14451,6 +14456,7 @@ $messages['su'] = array(
 
 /** Swedish (svenska)
  * @author Ainali
+ * @author Jopparn
  * @author Lokal Profil
  * @author M.M.S.
  * @author Micke
@@ -14593,7 +14599,6 @@ Var god kolla webbadressen.',
 	'ow_CollectionMember' => 'Medlem i samling',
 	'ow_CollectionMembership' => 'Samlingsmedlemskap',
 	'ow_Definition' => 'Definition',
-	'ow_DefinedMeaningAttributes' => 'Anmärkning',
 	'ow_DefinedMeaning' => 'Definierad betydelse',
 	'ow_DefinedMeaningReference' => 'Definierad betydelse',
 	'ow_ExactMeanings' => 'Exakt betydelse',
@@ -14605,7 +14610,6 @@ Var god kolla webbadressen.',
 	'ow_GotoSource' => 'Gå till källa',
 	'ow_ID' => 'ID',
 	'ow_Language' => 'Språk',
-	'ow_LevelAnnotation' => 'Anmärkning',
 	'ow_LinkAttributeHeader' => 'Länkattribut',
 	'ow_Multiple_meanings' => 'Betydelser av $1:',
 	'ow_NewExactMeaning' => 'Ny exakt betydelse',
@@ -14618,6 +14622,7 @@ Var god kolla webbadressen.',
 	'ow_OtherLanguages' => 'Andra språk:',
 	'ow_PopupAnnotation' => 'Anmärkning',
 	'ow_RecordLifeSpan' => 'Postens historik',
+	'ow_RelatedTo' => 'Relaterat till',
 	'ow_Relations' => 'Släktskap',
 	'ow_RelationType' => 'Släktskapstyp',
 	'ow_Remove' => 'Ta bort',
