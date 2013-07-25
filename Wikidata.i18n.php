@@ -2750,6 +2750,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'languages' => 'Викихаамаш:Меттан менеджер',
+	'langman_header' => 'ДӀаязъе меттан код я цунна ингалсан цӀе а:',
 	'langman_langname' => 'Меттан цӀе:',
 	'langman_addlang' => 'ТӀетоха мотт',
 	'datasearch' => 'Викихаамаш: Лаха хаамаш',
