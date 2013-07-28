@@ -2771,6 +2771,7 @@ $messages['ce'] = array(
 	'ow_Remove' => 'ДӀаяккха',
 	'ow_Source' => 'Хьост',
 	'ow_Time' => 'Хан',
+	'ow_Label' => 'Билгало',
 	'ow_User' => 'Декъашхо',
 	'ow_Value' => 'МаьӀна',
 	'ow_meaningsoftitle' => 'МаьӀна «$1»',
@@ -12009,6 +12010,7 @@ $messages['ps'] = array(
  * @author Giro720
  * @author Hamilton Abreu
  * @author Jorge Morais
+ * @author Luckas
  * @author Malafaya
  * @author Waldir
  */
@@ -12061,7 +12063,7 @@ Se adicionou colunas, estas deverão ter a forma 'definitions_iso' ou 'translati
 	'ow_importtsv_file' => 'Ficheiro TSV:',
 	'ow_importtsv_test_run' => 'Testar execução:',
 	'ow_importtsv_not_utf8' => '<p>Este ficheiro não aparenta ser um ficheiro com codificação UTF-8. O ficheiro <em>tem</em> de ter codificação UTF-8
-Certifique-se de que a sua aplicação gravou ou exportou o ficheiro correctamente.</p>',
+Certifique-se de que a sua aplicação gravou ou exportou o ficheiro corretamente.</p>',
 	'ow_importtsv_not_tsv' => '<p>Este ficheiro não aparenta ser um ficheiro TSV válido.</p>',
 	'ow_importtsv_bad_columns' => "<p>Nome de coluna '$1' incorreto.<br />
 As colunas deverão ter o nome 'definition_iso' ou 'translations_iso',
