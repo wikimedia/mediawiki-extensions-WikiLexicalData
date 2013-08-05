@@ -16453,6 +16453,7 @@ $messages['zh-cn'] = array(
  * @author Liangent
  * @author Linforest
  * @author PhiLiP
+ * @author Qiyue2001
  * @author Stevenliuyi
  * @author Wilsonmess
  * @author Wmr89502270
@@ -16523,7 +16524,7 @@ $messages['zh-hans'] = array(
 	'ow_noedit' => '您无权在 "$1" 中编辑页面。
 请见[[{{MediaWiki:Ow editing policy url}}|我们的编辑政策]]。',
 	'ow_uipref_datasets' => '默认视图：',
-	'ow_uiprefs' => 'Wiki数据', # Fuzzy
+	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_none_selected' => '未选择',
 	'ow_transaction_count' => '计数：',
 	'ow_transaction_user' => '用户名：',
@@ -16566,7 +16567,6 @@ $messages['zh-hans'] = array(
 	'ow_ClassAttributeType' => '类型',
 	'ow_ClassMembership' => '类成员',
 	'ow_Definition' => '定义',
-	'ow_DefinedMeaningAttributes' => '注解',
 	'ow_DefinedMeaning' => '已定义的含义',
 	'ow_DefinedMeaningReference' => '已定义的含义',
 	'ow_ExactMeanings' => '精确含义',
@@ -16576,7 +16576,6 @@ $messages['zh-hans'] = array(
 	'ow_IdenticalMeaning' => '相同含义？',
 	'ow_GotoSource' => '转到源代码',
 	'ow_Language' => '语言',
-	'ow_LevelAnnotation' => '注解',
 	'ow_LinkAttributeHeader' => '链接属性',
 	'ow_Multiple_meanings' => '$1 的定义：',
 	'ow_NewExactMeaning' => '新的精确含义',
