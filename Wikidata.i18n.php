@@ -7101,6 +7101,13 @@ Kérlek lépj kapcsolatba a szerver működtetőjével vagy adminisztrátorával
 	'ow_pref_lang_select' => 'Megjelenítendő nyelvek:',
 );
 
+/** Armenian (Հայերեն)
+ * @author Chaojoker
+ */
+$messages['hy'] = array(
+	'wikidata-desc' => 'Ավելացնում է վիքիանման տվյալների բազա զանազան բովանդակության տեսակների համար',
+);
+
 /** Interlingua (interlingua)
  * @author Malafaya
  * @author McDutchie
@@ -12012,6 +12019,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Dianakc
  * @author Giro720
  * @author Hamilton Abreu
  * @author Jorge Morais
@@ -12244,7 +12252,7 @@ Por favor, contacte o operador ou administrador do servidor.',
 	'ow_needs_xlation_no_dest_lang' => 'Por favor, especifique uma língua destino.',
 	'ow_statistics' => 'WikiLexicalData: Estatísticas',
 	'ow_show' => 'Mostrar',
-	'ow_upload' => 'Carregar',
+	'ow_upload' => 'Enviar',
 	'ow_create' => 'Criar',
 	'ow_collection_added' => '<strong>Coleção $1 adicionada.</strong>',
 	'ow_suggest_previous' => 'Anterior',
@@ -12260,6 +12268,7 @@ Por favor, contacte o operador ou administrador do servidor.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Dianakc
  * @author Eduardo.mps
  * @author Giro720
  * @author Helder.wiki
@@ -12404,7 +12413,6 @@ Por favor, verifique o endereço ''web''.",
 	'ow_CollectionMember' => 'Membro da coleção',
 	'ow_CollectionMembership' => 'Associação a coleções',
 	'ow_Definition' => 'Definição',
-	'ow_DefinedMeaningAttributes' => 'Anotação',
 	'ow_DefinedMeaning' => 'Significado definido',
 	'ow_DefinedMeaningReference' => 'Significado definido',
 	'ow_ExactMeanings' => 'Significados exatos',
@@ -12415,7 +12423,6 @@ Por favor, verifique o endereço ''web''.",
 	'ow_IncomingRelations' => 'Relações afluentes',
 	'ow_GotoSource' => 'Ir para fonte',
 	'ow_Language' => 'Idioma',
-	'ow_LevelAnnotation' => 'Anotação',
 	'ow_LinkAttributeHeader' => 'Atributo da ligação',
 	'ow_Multiple_meanings' => 'Definições de "$1"',
 	'ow_NewExactMeaning' => 'Novo significado exato',
@@ -12492,7 +12499,7 @@ Por favor, contate o operador ou administrador do servidor.', # Fuzzy
 	'ow_needs_xlation_no_dest_lang' => 'Por favor, especifique uma língua de destino.',
 	'ow_statistics' => 'Wikidata: Estatísticas', # Fuzzy
 	'ow_show' => 'Exibir',
-	'ow_upload' => 'Carregar',
+	'ow_upload' => 'Enviar',
 	'ow_create' => 'Criar',
 	'ow_collection_added' => '<strong>Coleção $1 adicionada.</strong>',
 	'ow_suggest_previous' => 'Anterior',
