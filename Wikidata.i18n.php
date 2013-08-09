@@ -16454,6 +16454,7 @@ $messages['zh-cn'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Byfserag
  * @author Chenzw
  * @author Gaoxuewei
  * @author Jimmy xu wrk
@@ -16469,7 +16470,7 @@ $messages['zh-cn'] = array(
  */
 $messages['zh-hans'] = array(
 	'wikidata-desc' => '为各种类型的内容添加类wiki数据库',
-	'wikidata-handler-namespace-move-error' => '在由Wikidata扩展处理的名字空间中的页面不能被移动。', # Fuzzy
+	'wikidata-handler-namespace-move-error' => '在由WikiLexicaldata扩展处理的名字空间中的页面不能被移动。',
 	'languages' => '语言管理员',
 	'langman-desc' => '在[[Special:Languages]]添加或更改语言设置',
 	'langman_title' => '语言管理员',
