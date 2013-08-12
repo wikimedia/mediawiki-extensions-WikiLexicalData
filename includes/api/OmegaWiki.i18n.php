@@ -8,9 +8,10 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
-	'apiow-desc' => '{{desc}}',
+	'apiow-desc' => '{{desc|name=OmegaWiki|url=http://www.omegawiki.org/Help:OmegaWiki_API}}',
 );
 
 /** Asturian (asturianu)

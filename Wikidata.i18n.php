@@ -296,7 +296,7 @@ $messages['qqq'] = array(
 	'wikidata-desc' => '{{desc|name=Wiki Lexical Data|url=http://www.mediawiki.org/wiki/Extension:WikiLexicalData}}',
 	'languages' => '{{doc-special|Languages}}
 See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]',
-	'langman-desc' => '{{desc}}',
+	'langman-desc' => 'Shot description of [[Special:Languages]] (Language manager)',
 	'langman_title' => '{{doc-special|Languages}}
 See example: [http://www.omegawiki.org/Special:Languages http://www.omegawiki.org/Special:Languages]
 {{Identical|Language manager}}',
