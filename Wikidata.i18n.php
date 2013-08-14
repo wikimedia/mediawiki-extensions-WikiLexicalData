@@ -302,7 +302,7 @@ See example: [http://www.omegawiki.org/Special:Languages http://www.omegawiki.or
 {{Identical|Language manager}}',
 	'langman_header' => 'Translate the word "English"; do not change it to your own language!',
 	'langman_adding' => "$1 is the language name; $2 is the language's ISO 639-3 code.",
-	'langman_field_optional' => "Here, '''optional''' refers to the fields labeled with text from {{msg-mw|langman_iso639-2}} and {{msg-mw|langman_wikimedia}}
+	'langman_field_optional' => "Here, '''optional''' refers to the fields labeled with text from {{msg-mw|Langman iso639-2}} and {{msg-mw|Langman wikimedia}}.
 {{Identical|Optional}}",
 	'langman_addlang' => 'Button text when adding a new language in the Language Manager.',
 	'importlangnames' => '{{doc-special|ImportLangNames}}
@@ -338,8 +338,7 @@ Parameters:
 * $2 - number of translations which have been added',
 	'ow_impexptsv_unknown_lang' => 'Parameters:
 * $1 - language code
-
-The page title for this message is {{msg-mw|ow_exporttsv_export_failed}}.',
+The page title for this message is {{msg-mw|Ow exporttsv export failed}}.',
 	'exporttsv' => 'TSV (tab separated value).
 
 See also:
@@ -347,8 +346,7 @@ See also:
 	'ow_exporttsv_languages' => '{{Identical|Language}}',
 	'ow_exporttsv_export_failed' => 'Used as page title.
 
-The page body for this message is:
-* {{msg-mw|ow_impexptsv_unknown_lang}}.',
+The page body for this message is {{msg-mw|Ow impexptsv unknown lang}}.',
 	'addcollection' => '{{doc-special|AddCollection}}
 See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]',
 	'ow_searchnoresult' => "Don't translate the word ''Expression'' in ''<nowiki>[[Expression:$1]]</nowiki>''",
@@ -407,7 +405,10 @@ Parameters:
 	'ow_PopupAnnotation' => 'The small link next to elements which can be annotated, such as Synonyms and Translations.
 This is visible when a SynTrans is annotated, or while editing a page.
 {{Identical|Annotation}}',
-	'ow_RecordLifeSpan' => '"Record" is a noun, i.e.: "Life span of the database record". See also {{msg-mw|Ow_history_show_life_span}}',
+	'ow_RecordLifeSpan' => '"Record" is a noun, i.e.: "Life span of the database record".
+
+See also:
+* {{msg-mw|Ow history show life span}}',
 	'ow_RelatedTo' => 'The header of a column where the user enters the second member of a relation',
 	'ow_Relations' => 'Title of a section containing a list of relations between different words or concepts (e.g. hypernym, antonym)',
 	'ow_RelationType' => 'The header of a column where the user selects a relation from a list of relations (e.g. hypernym, antonym)',
