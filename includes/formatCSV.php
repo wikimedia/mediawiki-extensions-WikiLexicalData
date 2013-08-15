@@ -16,6 +16,10 @@ class WldFormatCSV {
 		if( preg_match( '/\"/', $column ) ) {
 			$column = str_replace( '"', '""', $column );
 		}
-		return '"' . $column . '"';
+		$column = '"' . $column . '"';
+		if ( $column == '""') {
+			return '';
+		}
+		return $column;
 	}
 }
