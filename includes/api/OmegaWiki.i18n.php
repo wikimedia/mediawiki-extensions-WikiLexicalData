@@ -67,7 +67,7 @@ $messages['ja'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
-	'apiow-desc' => '미디어위키 api.php의 OmegaWiki의 WikiLexicalData 확장 기능',
+	'apiow-desc' => '미디어위키 api.php의 오메가위키의 위키어휘데이터 확장 기능',
 );
 
 /** Colognian (Ripoarisch)
