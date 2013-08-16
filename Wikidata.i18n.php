@@ -2773,9 +2773,11 @@ $messages['ce'] = array(
 	'ow_Source' => 'Хьост',
 	'ow_Time' => 'Хан',
 	'ow_Label' => 'Билгало',
+	'ow_Link' => 'Хьажориг',
 	'ow_User' => 'Декъашхо',
 	'ow_Value' => 'МаьӀна',
 	'ow_meaningsoftitle' => 'МаьӀна «$1»',
+	'ow_class_attr_type_link' => 'Хьажориг',
 	'ow_nstab_edit_copy' => 'нисйé копи',
 );
 
@@ -15769,6 +15771,7 @@ $messages['ug-latn'] = array(
  * @author AS
  * @author Ahonc
  * @author Aleksandrit
+ * @author Andriykopanytsia
  * @author Base
  * @author Olvin
  * @author Prima klasy4na
@@ -15777,7 +15780,8 @@ $messages['ug-latn'] = array(
  */
 $messages['uk'] = array(
 	'wikidata-desc' => 'Додає вікі-подібну базу даних для різних типів контенту',
-	'languages' => 'Вікідані: Мовний менеджер', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Сторінки в просторів імен, які обробляються розширенням WikiLexicalData, не можна перемістити.',
+	'languages' => 'Мовний менеджер',
 	'langman-desc' => 'Додавання або зміна мовних налаштувань за допомогою [[Special:Languages]]',
 	'langman_title' => 'Мовний менеджер',
 	'langman_not_allowed' => 'Ви не маєте дозволу змінювати налаштування мови.',
@@ -15790,12 +15794,12 @@ $messages['uk'] = array(
 	'langman_wikimedia' => 'Код Вікімедіа:',
 	'langman_field_optional' => "(необов'язково)",
 	'langman_addlang' => 'Додати мову',
-	'importlangnames' => 'Вікідані: імпорт назв мов', # Fuzzy
+	'importlangnames' => 'Імпорт назв мов',
 	'importlangnames_title' => 'Імпорт назв мов',
 	'importlangnames_not_allowed' => 'У вас нема дозволу імпортувати назви мов.',
 	'importlangnames_added' => 'Назви мов для "$1" додано.',
 	'importlangnames_not_found' => '<strong>Мовних записів для "$1" не знайдено!</strong>',
-	'datasearch' => 'Вікідані: Пошук даних', # Fuzzy
+	'datasearch' => 'Пошук даних',
 	'datasearch_language' => 'Мова:',
 	'datasearch_found_word' => 'Знайдене слово',
 	'datasearch_meaning' => 'Значення',
@@ -15806,11 +15810,40 @@ $messages['uk'] = array(
 	'datasearch_showing_only' => 'Показано не більше $1 {{PLURAL:$1|результату|результатів}} (з $2).',
 	'datasearch_match_ext_ids' => 'Зовнішні ідентифікатори, що відповідають <em>$1</em>',
 	'datasearch_match_words' => 'Слова, що відповідають "$1", і пов\'язані значення',
+	'datasearch_match_words_lang' => "Слова на <em>$1</em>, відповідні «$2», і пов'язані значення",
+	'importtsv' => 'Імпорт TSV',
+	'ow_importtsv_title1' => 'Імпорт TSV',
+	'ow_importtsv_title2' => 'Імпорт визначень та перекладів',
+	'ow_importtsv_header' => '<p>Імпорт визначень і перекладів з файлу, що містить розділені комами значення, який може бути отриманий з OpenOffice.org Calc, Excel або іншої програми для роботи з електронними таблицями.</p>
+<p>Формат файлу повинен збігатися з форматом експорту сторінки [[Special:ExportTSV|ExportTSV]]. Імпорт не відбудеться, якщо ви зміните назву стовпчиків. Якщо ви зміните ідентифікатор або визначальний вираз будь-якого визначеного значення, то рядок із змінною буде проігнорований. Якщо ви додаєте стовпці, то вони повинні бути у вигляді «definitions_iso» або «translations_iso», де замість «iso» повинен бути код мови ISO 639-3.</p>
+<p>Якщо стоїть позначка «пробний запуск», то незважаючи на повідомлення, ніяких дій в дійсності виконано не буде. Рекомендує зробити пробний запуск перед цим імпортом.</p>',
+	'ow_importtsv_not_allowed' => 'Ви не маєте дозволу виконати імпорт TSV.',
+	'ow_importtsv_importing' => 'Імпорт даних TSV',
 	'ow_importtsv_import_failed' => 'Помилка при імпортуванні',
+	'ow_importtsv_file' => 'TSV-файл:',
 	'ow_importtsv_test_run' => 'Тестовий запуск:',
+	'ow_importtsv_not_utf8' => "<p>Вірогідно, кодування файлу відрізняється від UTF-8. Файл повинен <em>обов'язково</em> використовувати UTF-8.
+Переконайтеся, що ваш додаток правильно зберігає або експортує файл.</p>",
+	'ow_importtsv_not_tsv' => '<p>Це, здається, недопустимий файл TSV.</p>',
+	'ow_importtsv_bad_columns' => "<p>Помилкове ім'я стовпця «$1».<br />
+Стовпці повинні називатися «definition_iso» або «translations_iso», де замість «iso» повинен бути код мови.</p>",
+	'ow_importtsv_test_run_title' => 'Тестовий запуск для імпорту даних TSV',
 	'ow_importtsv_nothing_added' => 'Нічого не додано.',
+	'ow_importtsv_nothing_added_test' => 'Нічого не додано (ви зробили пробний запуск).',
+	'ow_importtsv_results' => 'Додано  $1   {{PLURAL:$1|означення|означення|означень}} і  $2   {{PLURAL:$2|переклад|переклади|перекладів}}.',
+	'ow_impexptsv_unknown_lang' => '<p>Невідома або помилкова мова: $1.<br />
+Мови повинні бути записані у вигляді кодів ISO 639-3.</p>',
+	'exporttsv' => 'Експорт TSV',
+	'ow_exporttsv_title' => 'Експорт збірки у TSV',
+	'ow_exporttsv_header' => '<p>Експорт збірки в текстовий файл, що містить значення, розділені комами. Даний файл можна буде імпортувати в OpenOffice.org Calc, Excel або іншу програму для роботи з електронними таблицями.<br />
+Виберіть колекцію для експорту. В полі мов введіть через кому коди мов ISO 639-3 . Почніть з тих мов, з яких ви збираєтеся перекладати (виберіть стільки, скільки вам потрібно), і закінчіть тими, на які ви збираєтеся робити переклади. Натисніть «Створити», щоб створити файл.</p>',
 	'ow_exporttsv_languages' => 'Мови:',
+	'ow_exporttsv_not_allowed' => 'Ви не маєте дозволу зробити експорт TSV.',
 	'ow_exporttsv_export_failed' => 'Збій при експорті',
+	'addcollection' => 'Додати збірку',
+	'ow_searchnoresult' => '<p>Ви можете:<br />
+*"\'Створити вираз «[[Expression:$1]]»"\' (і додати означення)<br />
+*"\'Створити сторінку«[[:$1]]»"\' (звичайну вікі-сторінку)</p>',
 	'ow_save' => 'Зберегти',
 	'ow_history' => 'Історія',
 	'ow_datasets' => 'Вибір набору даних',
@@ -15818,9 +15851,9 @@ $messages['uk'] = array(
 	'ow_noedit' => 'Вам не дозволено редагувати сторінки з набору даних "$1".
 Можете глянути [[{{MediaWiki:Ow editing policy url}}|наші правила редагування]].',
 	'ow_uipref_datasets' => 'Звичайний вигляд:',
-	'ow_uiprefs' => 'Вікідані', # Fuzzy
+	'ow_uiprefs' => 'Лексичні Вікідані',
 	'ow_none_selected' => 'Нічого не обрано',
-	'transaction' => 'Вікідані: Журнал транзакцій', # Fuzzy
+	'transaction' => 'Журнал транзакцій',
 	'ow_transaction_from_transaction' => 'З транзакції:',
 	'ow_transaction_count' => 'Кількість:',
 	'ow_transaction_user' => "Ім'я користувача:",
@@ -15838,7 +15871,7 @@ $messages['uk'] = array(
 	'ow_transaction_first_dm' => 'Перше визначене значення',
 	'ow_transaction_second_dm' => 'Друге визначене значення',
 	'ow_transaction_summary' => 'Опис',
-	'conceptmapping' => 'Вікідані: Відповідність концепціям', # Fuzzy
+	'conceptmapping' => 'Відповідність концепціям',
 	'ow_conceptmapping_title' => 'Відповідність концепціям',
 	'ow_conceptmapping_help' => '<p>можливі дії: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  вставити відповідність</li>
@@ -15865,6 +15898,8 @@ $messages['uk'] = array(
 	'ow_AlternativeDefinition' => 'Альтернативне визначення',
 	'ow_AlternativeDefinitions' => 'Альтернативні визначення',
 	'ow_Annotation' => 'Анотація',
+	'ow_AnnotationDefinedMeaning' => 'Семантичні анотації',
+	'ow_AnnotationSyntrans' => 'Лексичні анотації',
 	'ow_ApproximateMeanings' => 'Приблизні значення',
 	'ow_Class' => 'Клас',
 	'ow_ClassAttributeAttribute' => 'Атрибут',
@@ -15877,7 +15912,6 @@ $messages['uk'] = array(
 	'ow_CollectionMember' => 'Член колекції',
 	'ow_CollectionMembership' => 'Присутні в колекціях',
 	'ow_Definition' => 'Визначення',
-	'ow_DefinedMeaningAttributes' => 'Анотація',
 	'ow_DefinedMeaning' => 'Задане значення',
 	'ow_DefinedMeaningReference' => 'Задане значення',
 	'ow_ExactMeanings' => 'Точне значення',
@@ -15889,7 +15923,6 @@ $messages['uk'] = array(
 	'ow_GotoSource' => 'Перейти до початкового коду',
 	'ow_ID' => 'ID',
 	'ow_Language' => 'Мова',
-	'ow_LevelAnnotation' => 'Анотація',
 	'ow_LinkAttributeHeader' => 'Атрибут посилання',
 	'ow_Multiple_meanings' => 'Визначення «$1»',
 	'ow_NewExactMeaning' => 'Нове точне значення',
@@ -15902,6 +15935,7 @@ $messages['uk'] = array(
 	'ow_OtherLanguages' => 'Інші мови:',
 	'ow_PopupAnnotation' => 'Анотація',
 	'ow_RecordLifeSpan' => 'Час існування запису',
+	'ow_RelatedTo' => "Пов'язані з",
 	'ow_Relations' => 'Відношення',
 	'ow_RelationType' => 'Тип відношення',
 	'ow_Remove' => 'Вилучити',
@@ -15933,14 +15967,21 @@ $messages['uk'] = array(
 	'ow_meaningsoftitle' => 'Значення «$1»',
 	'ow_meaningsofsubtitle' => '<em>Вікі-посилання:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>Доступ заборонений</h2>',
-	'copy' => 'Вікідані: Копіювання', # Fuzzy
+	'copy' => 'Копіювання',
 	'ow_copy_no_action_specified' => 'Будь ласка, зазначте дію',
 	'ow_copy_help' => 'Довідка ще не реалізована.',
 	'ow_please_proved_dmid' => "Схоже, що у вхідних даних відсутнє «?dmid=<ID>» (dmid — ідентифікатор певного значення)<br />
 Будь ласка, зв'яжіться з адміністратором сервера.",
 	'ow_please_proved_dc1' => "Схоже, що у вхідних даних відсутнє «?dc1=<щось>» (dc1 — контекст набору даних; набір даних, звідки копіювати)<br /> Будь ласка, зв'яжіться з адміністратором сервера.",
+	'ow_please_proved_dc2' => "Здається, що у вхідних даних відсутній „?dc2=<something>“ (dc2 - контекст набору даних; набір даних, куди треба копіювати)<br /> будь Ласка, зв'яжіться з адміністратором сервера.",
+	'ow_copy_successful' => '<h2>Копіювання успішно виконано</h2>Здається, ваші дані були успішно скопійовані. Але не буде зайвим перевірити це ще раз.',
 	'ow_copy_unsuccessful' => '<h3>Копіювання невдале</h3>
 Не була виконана операція копіювання.',
+	'ow_no_action_specified' => '<h3>Не було зазначено дію</h3> Можливо, ви зайшли безпосередньо на цю сторінку? В ході нормальної роботи ви не повинні були тут опинитися.',
+	'ow_db_consistency_not_found' => "<h2>Помилка</h2>
+Існує проблема узгодженості з базою даних, дійсні дані не можуть бути знайдені при підключенні до цього визначеного значення ідентифікатора.
+Це може бути втрачено.
+Будь ласка, зв'яжіться з оператором або адміністратором сервера.",
 	'ow_history_transaction' => 'Транзакція:',
 	'ow_history_show_life_span' => 'Показати час існування запису:',
 	'ow_class_attr_type_dm' => 'Визначене значення',
@@ -15948,12 +15989,14 @@ $messages['uk'] = array(
 	'ow_class_attr_type_plain' => 'Простий текст',
 	'ow_class_attr_type_link' => 'Посилання',
 	'ow_class_attr_type_option' => 'Список опцій',
-	'needstranslation' => 'Вікідані: Вирази, що потребують перекладу', # Fuzzy
+	'needstranslation' => 'Вирази, які потребують перекладу',
 	'ow_needs_xlation_title' => 'Вирази, що потребують перекладу',
 	'ow_needs_xlation_source_lang' => 'Мова оригіналу:',
 	'ow_needs_xlation_dest_lang' => 'Цільова мова:',
 	'ow_needs_xlation_no_dest_lang' => 'Будь ласка, вкажіть цільову мову.',
-	'ow_statistics' => 'Вікідані: Статистика', # Fuzzy
+	'ow_data_search' => 'WikiLexicalData пошук даних',
+	'ow_statistics' => 'Статистика WikiLexicalData',
+	'ow_downloads' => 'WikiLexicalData завантаження',
 	'ow_show' => 'Показати',
 	'ow_upload' => 'Завантажити',
 	'ow_create' => 'Створити',
@@ -15965,6 +16008,9 @@ $messages['uk'] = array(
 	'ow_nstab_edit_copy' => 'редагувати копію',
 	'right-addlanguage' => 'Додавання і зміна мовних налаштувань',
 	'ow_shown_datasets' => 'Показані набори даних',
+	'prefs-ow-lang' => 'Мови',
+	'ow_pref_lang_switch' => 'Показувати лише вибрані мови',
+	'ow_pref_lang_select' => 'Мови для відображення:',
 );
 
 /** Urdu (اردو)
