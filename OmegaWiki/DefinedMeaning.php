@@ -42,7 +42,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 			$dmInfo["expression"] = null;
 			$match = $this->definedMeaningModel->checkExistence( true, true );
 		}
-		
+
 		// The defining expression is either bad or missing. Let's redirect
 		// to the correct URL.
 		if ( empty( $dmInfo["expression"] ) && !is_null( $match ) ) {
@@ -111,7 +111,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 			$wgOut->addHTML( wfMessage( "ow_db_consistency__not_found" )->text() . " ID:$definedMeaningId" );
 			return;
 		}
-		
+
 		$wgOut->addHTML(
 			getDefinedMeaningEditor( $this->viewInformation )->edit(
 				$this->getIdStack( $dmModel->getId() ),
@@ -120,7 +120,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		);
 		$this->outputEditFooter();
 	}
-	
+
 	public function history() {
 		global $wgOut, $wgTitle ;
 
@@ -167,7 +167,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 			$this->getIdStack( $definedMeaningId ),
 			$dmModel->getRecord()
 		);
-	
+
 	}
 
 	public function getTitle() {
@@ -182,10 +182,10 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$definedMeaningIdStructure = new Structure( $o->definedMeaningId );
 		$definedMeaningIdRecord = new ArrayRecord( $definedMeaningIdStructure, $definedMeaningIdStructure );
 		$definedMeaningIdRecord->definedMeaningId = $definedMeaningId;
-		
+
 		$idStack = new IdStack( WLD_DEFINED_MEANING );
 		$idStack->pushKey( $definedMeaningIdRecord );
-		
+
 		return $idStack;
 	}
 
@@ -202,13 +202,13 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		return $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
 	}
 
-	/** 
+	/**
 	 * Creates sidebar HTML for indicating concepts which exist
 	 * in multiple datasets, and providing a link to add new
 	 * mappings.
 	 *
 	 * Potential refactor candidate!
-	*/
+	 */
 	protected function getConceptPanel() {
 		global $wgTitle, $wgUser, $wdShowCopyPanel;
 		$active = true; # wrong place, but hey
@@ -226,7 +226,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 				$active = ( $dataset->getPrefix() == $dc->getPrefix() );
 				$name = $dataset->fetchName();
 				$prefix = $dataset->getPrefix();
-	
+
 				$class = $active ? 'dataset-panel-active' : 'dataset-panel-inactive';
 				$slot = $active ? "$name" : $sk->makeLinkObj( $dm->getTitleObject(), $name, "dataset=$prefix" );
 				$html .= "<tr><td class=\"$class\">$slot</td></tr>";
@@ -246,15 +246,15 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$html .= "</div>\n";
 		return $html;
 	}
-	
+
 	/** @returns user interface html for copying Defined Meanings
 	 * between datasets. returns an empty string if the user
 	 * actually doesn't have permission to edit.
 	 */
 	protected function getCopyPanel() {
 
-		# mostly same code as in SpecialAddCollection... possibly might 
-		# make a nice separate function 
+		# mostly same code as in SpecialAddCollection... possibly might
+		# make a nice separate function
 
 		global
 			$wgUser;
@@ -269,7 +269,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		}
 
 		/* Deprecated for now
-		
+
 		$html= getOptionPanel( array (
 			'Copy to' => getSelect('CopyTo', $datasetarray)
 		));
@@ -277,7 +277,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$html = $this->getCopyPanel2();
 		return $html;
 	}
-	
+
 	/** links to futt bugly alternate copy mechanism, the
 	 * latter being something that actually is somewhat
 	 * understandable (though not yet refactored into
@@ -286,7 +286,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 	protected function getCopyPanel2() {
 		global
 			$wgScriptPath, $wgCommunity_dc;
-		
+
 		$html = "Copy to:<br />\n";
 		$datasets = wdGetDatasets();
 		$dataset = $datasets[$wgCommunity_dc];
@@ -301,3 +301,64 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 }
 
+class DefinedMeanings {
+
+	public function __construct() {
+	}
+
+	/**
+	 * returns an array of "Defined Meaning Id" objects
+	 * for a language
+	 *
+	 * else returns null
+	 */
+	public static function getLanguageIdDefinedMeaningId( $languageId, $options = array(), $dc = null ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		if ( isset( $options['ORDER BY'] ) ) {
+			$cond['ORDER BY']= $options['ORDER BY'];
+		} else {
+			$cond['ORDER BY']= 'defined_meaning_id';
+		}
+
+		if ( isset( $options['LIMIT'] ) ) {
+			$cond['LIMIT']= $options['LIMIT'];
+		}
+		if ( isset( $options['OFFSET'] ) ) {
+			$cond['OFFSET']= $options['OFFSET'];
+		}
+
+		$cond[] = 'DISTINCT';
+
+		$queryResult = $dbr->select(
+			array(
+				'synt' => "{$dc}_syntrans",
+				'exp' => "{$dc}_expression"
+			),
+			'defined_meaning_id',
+			array(
+				'synt.expression_id = exp.expression_id',
+				'language_id' => $languageId,
+				'synt.remove_transaction_id' => null,
+				'exp.remove_transaction_id' => null
+			),
+			__METHOD__,
+			$cond
+		);
+
+
+		$definedMeaningId = array();
+		foreach ( $queryResult as $dm ) {
+			$definedMeaningId[] = $dm->defined_meaning_id;
+		}
+		$queryResult = array();
+
+		if ( $definedMeaningId ) {
+			return $definedMeaningId;
+		}
+		return null;
+	}
+}

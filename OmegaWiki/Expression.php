@@ -75,6 +75,8 @@ class Expressions {
 			$cond['OFFSET']= $options['OFFSET'];
 		}
 
+		$cond[] = 'DISTINCT';
+
 		$queryResult = $dbr->select(
 			"{$dc}_expression",
 			'spelling',
@@ -96,4 +98,60 @@ class Expressions {
 		}
 		return null;
 	}
+
+	/**
+	 * returns an array of "Expression" objects
+	 * for a defined meaning id for a language
+	 *
+	 * else returns null
+	 */
+	public static function getDefinedMeaningIdAndLanguageIdExpressions( $languageId, $definedMeaningId, $options = array(), $dc = null ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		if ( isset( $options['ORDER BY'] ) ) {
+			$cond['ORDER BY']= $options['ORDER BY'];
+		} else {
+			$cond['ORDER BY']= 'spelling';
+		}
+
+		if ( isset( $options['LIMIT'] ) ) {
+			$cond['LIMIT']= $options['LIMIT'];
+		}
+		if ( isset( $options['OFFSET'] ) ) {
+			$cond['OFFSET']= $options['OFFSET'];
+		}
+
+		$cond[] = 'DISTINCT';
+
+		$queryResult = $dbr->select(
+			array(
+				'synt' => "{$dc}_syntrans",
+				'exp' => "{$dc}_expression"
+			),
+			'spelling',
+			array(
+				'synt.expression_id = exp.expression_id',
+				'language_id' => $languageId,
+				'defined_meaning_id' => $definedMeaningId,
+				'synt.remove_transaction_id' => null,
+				'exp.remove_transaction_id' => null
+			),
+			__METHOD__,
+			$cond
+		);
+
+		$expression = array();
+		foreach ( $queryResult as $exp ) {
+			$expression[] = $exp->spelling;
+		}
+
+		if ( $expression ) {
+			return $expression;
+		}
+		return null;
+	}
+
 }

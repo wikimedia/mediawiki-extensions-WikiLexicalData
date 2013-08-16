@@ -59,6 +59,18 @@ class SpecialOWDownloads extends SpecialPage {
 					JobQueueGroup::singleton()->push( $job ); // mediawiki >= 1.21
 				}
 			}
+			// update Owd
+			if ( preg_match( '/^owd_/', $fileName ) ) {
+				preg_match( '/_(.+)\.(.+)/', $fileName, $match );
+				$jobName = 'JobQuery/' . $fileName;
+				$jobParams = array( 'type' => 'owd', 'langcode' => $match[1], 'format' => $match[2], 'start' => '1' );
+				$jobExist = $wldJobs->downloadJobExist( $jobName );
+				if ( $jobExist == false ) {
+					$title = Title::newFromText( 'User:' . $jobName );
+					$job = new CreateOwdListJob( $title, $jobParams );
+					JobQueueGroup::singleton()->push( $job ); // mediawiki >= 1.21
+				}
+			}
 		}
 
 		// Segregate by groups
@@ -74,6 +86,10 @@ class SpecialOWDownloads extends SpecialPage {
 			// translations
 			if ( preg_match( '/^trans_/', $files ) ) {
 				$translations[] = "$files";
+			}
+			// OmegaWiki Development
+			if ( preg_match( '/^owd_.+zip$/', $files ) ) {
+				$development[] = "$files";
 			}
 		}
 
@@ -98,6 +114,13 @@ class SpecialOWDownloads extends SpecialPage {
 			$wikitext[] = $myLine . "\n|}\n";
 		}
 
+		// Process Development
+		if ( $development ) {
+			$wikitext[] = '===Development===';
+			$myLine = $this->processText( $development );
+			$wikitext[] = $myLine . "\n|}\n";
+		}
+
 		// output wikitext
 		foreach( $wikitext as $wikilines ) {
 			$output->addWikiText( $wikilines );
@@ -114,6 +137,9 @@ class SpecialOWDownloads extends SpecialPage {
 				$language = $match[1];
 			}
 			if ( preg_match( '/^def_(.+)\./', $line, $match ) ) {
+				$language = $match[1];
+			}
+			if ( preg_match( '/^owd_(.+)_csv\./', $line, $match ) ) {
 				$language = $match[1];
 			}
 			$languageId = getLanguageIdForIso639_3( $language );
