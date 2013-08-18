@@ -1112,7 +1112,7 @@ $messages['ar'] = array(
  * @author Michaelovic
  */
 $messages['arc'] = array(
-	'langman_title' => 'ܡܕܒܪܢܐ ܕܠܫܢܐ',
+	'langman_title' => 'ܦܪܢܣܢܐ ܕܠܫܢܐ',
 	'langman_adding' => 'ܬܘܣܦܬܐ ܕܠܫܢܐ $1 ܥܡ ܩܠܝܕܐ $2.',
 	'langman_langname' => 'ܫܡܐ ܕܠܫܢܐ:',
 	'langman_addlang' => 'ܐܘܣܦ ܠܫܢܐ',
@@ -1132,10 +1132,8 @@ $messages['arc'] = array(
 	'ow_Annotation' => 'ܣܦܐ',
 	'ow_ClassAttributeLevel' => 'ܫܘܝܐ',
 	'ow_ClassAttributeType' => 'ܐܕܫܐ',
-	'ow_DefinedMeaningAttributes' => 'ܣܦܐ',
 	'ow_GotoSource' => 'ܙܠ ܠܡܒܘܥܐ',
 	'ow_Language' => 'ܠܫܢܐ',
-	'ow_LevelAnnotation' => 'ܣܦܐ',
 	'ow_OptionAttributeOption' => 'ܓܒܝܬܐ',
 	'ow_OptionAttributeOptions' => 'ܓܒܝܬ̈ܐ',
 	'ow_OptionAttributeValues' => 'ܛܝܡ̈ܐ ܕܓܒܝܬܐ',
@@ -8820,7 +8818,7 @@ iso는 언어 코드입니다</p>",
 	'ow_Property' => '속성',
 	'ow_Value' => '값',
 	'ow_added' => '추가됨',
-	'ow_removed' => '제거함',
+	'ow_removed' => '제거됨',
 	'ow_meaningsoftitle' => '"$1"의 의미',
 	'ow_meaningsofsubtitle' => '<em>위키 링크:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>권한 없음</h2>',
