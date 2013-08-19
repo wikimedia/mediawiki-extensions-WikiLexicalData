@@ -6034,6 +6034,7 @@ $messages['grc'] = array(
  * @author Als-Chlämens
  * @author Als-Holder
  * @author Malafaya
+ * @author Shirayuki
  */
 $messages['gsw'] = array(
 	'wikidata-desc' => 'Fiegt Wiki-artigi Datebanke yy fir verschideni Inhaltstype',
@@ -6167,7 +6168,6 @@ Lueg [[{{MediaWiki:Ow editing policy url}}|unseri Richtlinie]].',
 	'ow_CollectionMember' => 'Collection Mitglid',
 	'ow_CollectionMembership' => 'Sammligszuegherigkeit',
 	'ow_Definition' => 'Definition',
-	'ow_DefinedMeaningAttributes' => 'Annotation',
 	'ow_DefinedMeaning' => 'DefinedMeaning',
 	'ow_DefinedMeaningReference' => 'DefinedMeaning',
 	'ow_ExactMeanings' => 'Exakti Bedytige',
@@ -6178,7 +6178,6 @@ Lueg [[{{MediaWiki:Ow editing policy url}}|unseri Richtlinie]].',
 	'ow_IncomingRelations' => 'Relatione, wu yygange sin',
 	'ow_GotoSource' => 'Gang zue dr Quälle',
 	'ow_Language' => 'Sproch',
-	'ow_LevelAnnotation' => 'Annotation',
 	'ow_LinkAttributeHeader' => 'Link-Attribut',
 	'ow_Multiple_meanings' => 'Definitione fir „$1“',
 	'ow_NewExactMeaning' => 'Neji exakti Bedytig',
@@ -7356,6 +7355,7 @@ Per favor contacta le operator o administrator del servitor.', # Fuzzy
  * @author Iwan Novirion
  * @author Kandar
  * @author Rex
+ * @author Shirayuki
  */
 $messages['id'] = array(
 	'wikidata-desc' => 'Menambahkan basis data serupa-wiki untuk beragam tipe isi',
@@ -7496,7 +7496,6 @@ Mohon periksa alamat web.',
 	'ow_CollectionMember' => 'Anggota koleksi',
 	'ow_CollectionMembership' => 'Keanggotaan koleksi',
 	'ow_Definition' => 'Definisi',
-	'ow_DefinedMeaningAttributes' => 'Anotasi',
 	'ow_DefinedMeaning' => 'Makna terdefinisikan',
 	'ow_DefinedMeaningReference' => 'Makna terdefinisikan',
 	'ow_ExactMeanings' => 'Arti pasti',
@@ -7507,7 +7506,6 @@ Mohon periksa alamat web.',
 	'ow_IncomingRelations' => 'Hubungan tak diduga',
 	'ow_GotoSource' => 'Pergi ke sumber',
 	'ow_Language' => 'Bahasa',
-	'ow_LevelAnnotation' => 'Anotasi',
 	'ow_LinkAttributeHeader' => 'Pranala atribut',
 	'ow_Multiple_meanings' => 'Definisi "$1"',
 	'ow_NewExactMeaning' => 'Arti pasti yang baru',
@@ -10649,6 +10647,7 @@ $messages['niu'] = array(
 /** Dutch (Nederlands)
  * @author GerardM
  * @author SPQRobin
+ * @author Shirayuki
  * @author Siebrand
  * @author Tvdm
  */
@@ -12154,6 +12153,8 @@ Selecione uma coleção para exportar. Introduza uma lista de códigos de língu
 	'ow_AlternativeDefinition' => 'Definição alternativa',
 	'ow_AlternativeDefinitions' => 'Definições alternativas',
 	'ow_Annotation' => 'Anotação',
+	'ow_AnnotationDefinedMeaning' => 'Anotações semânticas',
+	'ow_AnnotationSyntrans' => 'Anotações lexicais',
 	'ow_ApproximateMeanings' => 'Significados aproximados',
 	'ow_Class' => 'Classe',
 	'ow_ClassAttributeAttribute' => 'Atributo',
@@ -12189,6 +12190,7 @@ Selecione uma coleção para exportar. Introduza uma lista de códigos de língu
 	'ow_OtherLanguages' => 'Outras línguas:',
 	'ow_PopupAnnotation' => 'Anotação',
 	'ow_RecordLifeSpan' => 'Tempo de vida do registo',
+	'ow_RelatedTo' => 'Relacionado com',
 	'ow_Relations' => 'Relações',
 	'ow_RelationType' => 'Tipo de relação',
 	'ow_Remove' => 'Remover',
@@ -12251,7 +12253,9 @@ Por favor, contacte o operador ou administrador do servidor.',
 	'ow_needs_xlation_source_lang' => 'Língua origem:',
 	'ow_needs_xlation_dest_lang' => 'Língua destino:',
 	'ow_needs_xlation_no_dest_lang' => 'Por favor, especifique uma língua destino.',
+	'ow_data_search' => 'Pesquisa de dados WikiLexicalData',
 	'ow_statistics' => 'WikiLexicalData: Estatísticas',
+	'ow_downloads' => 'Descargas WikiLexicalData',
 	'ow_show' => 'Mostrar',
 	'ow_upload' => 'Enviar',
 	'ow_create' => 'Criar',
