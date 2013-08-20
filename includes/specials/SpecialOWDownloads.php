@@ -117,6 +117,7 @@ class SpecialOWDownloads extends SpecialPage {
 		// Process Development
 		if ( $development ) {
 			$wikitext[] = '===Development===';
+			$wikitext[] = 'These files are still in alpha development.  Column numbers may change.';
 			$myLine = $this->processText( $development );
 			$wikitext[] = $myLine . "\n|}\n";
 		}
@@ -167,6 +168,9 @@ class SpecialOWDownloads extends SpecialPage {
 			$wldJobs = new WldJobs();
 			$jobExist = $wldJobs->downloadJobExist( $jobName );
 			if ( $jobExist == false ) {
+				if ( preg_match( '/^(owd_.+)_csv\./', $line, $match ) ) {
+					$line = $match[1] . '.csv';
+				}
 				$action = "[$wgServer$wgScript?title=Special:Ow_downloads&update=$line Regenerate]";
 				$status = "latest";
 			} else {

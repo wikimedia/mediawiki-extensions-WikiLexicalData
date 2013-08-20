@@ -60,7 +60,7 @@ Class CreateOwdListJob extends Job {
 		// the greater the value of $sqlLimit the faster the download file is
 		// finished but the slower each web page loads while the job is being
 		// processed.
-		$sqlLimit = 100;
+		$sqlLimit = 125;
 		$ctrOver = $sqlLimit + 1;
 
 		$options['OFFSET'] = $start;
@@ -84,6 +84,7 @@ Class CreateOwdListJob extends Job {
 		// create File name
 		$zippedAs = $type . "_$code" . ".$format";
 		$synZippedAs = $type . '_syn_' . $code . ".$format";
+		$iniZippedAs = $type . "_$code" . '.ini';
 
 		$zipName = $wgWldDownloadScriptPath . $type . "_$code" . "_$format" . ".zip";
 
@@ -95,11 +96,16 @@ Class CreateOwdListJob extends Job {
 		$tempFileName .= $format . "_$type" . "_$code.tmp";
 		$tempSynFileName = $wgWldDownloadScriptPath;
 		$tempSynFileName .= $format . "_$type" . '_syn_' . "$code.tmp";
+		$tempIniFileName = $wgWldDownloadScriptPath;
+		$tempIniFileName .= $iniZippedAs;
 
 		if ( $start == 1 ) {
 			$translations = array();
 			$fh = fopen ( $tempFileName, 'w' );
 			$fhsyn = fopen ( $tempSynFileName, 'w' );
+			$fhini = fopen ( $tempIniFileName, 'w' );
+			fwrite( $fhini, "version:1.0\n" );
+			fclose( $fhini );
 		} else {
 			$fh = fopen ( $tempFileName, 'a' );
 			$fhsyn = fopen ( $tempSynFileName, 'a' );
@@ -121,6 +127,7 @@ Class CreateOwdListJob extends Job {
 					$this->Attributes = new Attributes;
 					foreach ( $expressions as $spelling ) {
 						$IPA = null;
+						$pinyin = null;
 						$hyphenation = null;
 						$example = null;
 						$usage = null;
@@ -130,9 +137,14 @@ Class CreateOwdListJob extends Job {
 						$textAttributes = Attributes::getTextAttributes( $syntransId, array( 'languageId' => WLD_ENGLISH_LANG_ID ) );
 						foreach ( $textAttributes as $row ) {
 							$row['text'] = preg_replace( '/\n/', '\\n', $row['text'] );
-							$row['text'] = preg_replace( '/\t/', '\\t', $row['text'] );
+							// Convert tabs to space
+							$row['text'] = preg_replace( '/\t/', ' ', $row['text'] );
 							if ( $row['attribute_name'] == 'International Phonetic Alphabet') {
 								$IPA .= $row['text'] . ';';
+								$row = array( 'text' => null, 'attribute_name' => null );
+							}
+							if ( $row['attribute_name'] == 'pinyin') {
+								$pinyin .= $row['text'] . ';';
 								$row = array( 'text' => null, 'attribute_name' => null );
 							}
 							if ( $row['attribute_name'] == 'hyphenation') {
@@ -147,23 +159,29 @@ Class CreateOwdListJob extends Job {
 								$usage .= $row['text'] . ';';
 								$row = array( 'text' => null, 'attribute_name' => null );
 							}
-						//	if ( $row['text'] != null ) {
-						//		echo "TEXT: " . $row['attribute_name'] . " => ";
-						//		echo $row['text'] . "\n";
-						//	}
+							if ( $row['text'] != null ) {
+								echo "SYNTRANS TEXT: " . $row['attribute_name'] . " => ";
+								echo $row['text'] . "\n";
+							}
 						}
 						$textAttributes = array();
 						$IPA = preg_replace( '/;$/', '', $IPA );
+						$pinyin = preg_replace( '/;$/', '', $pinyin );
 						$hyphenation = preg_replace( '/;$/', '', $hyphenation );
 						$example = preg_replace( '/;$/', '', $example );
 						$usage = preg_replace( '/;$/', '', $usage );
 
 						$POS = null;
 						$oUsage = null;
+						$area = null;
+						$grammaticalProperty = null;
+						$number = null;
+						$gender = null;
 						$optionAttributes = Attributes::getOptionAttributes( $syntransId, array( 'languageId' => WLD_ENGLISH_LANG_ID ) );
 						foreach ( $optionAttributes as $row ) {
 							$row['attribute_option_name'] = preg_replace( '/\n/', '\\n', $row['attribute_option_name'] );
-							$row['attribute_option_name'] = preg_replace( '/\t/', '\\t', $row['attribute_option_name'] );
+							// convert tabs to space
+							$row['attribute_option_name'] = preg_replace( '/\t/', ' ', $row['attribute_option_name'] );
 							if ( $row['attribute_name'] == 'part of speech' ) {
 								$POS .= $row['attribute_option_name'] . ';';
 								$row = array( 'attribute_option_name' => null, 'attribute_name' => null );
@@ -172,19 +190,38 @@ Class CreateOwdListJob extends Job {
 								$oUsage .= $row['attribute_option_name'] . ';';
 								$row = array( 'attribute_option_name' => null, 'attribute_name' => null );
 							}
-						//	if ( $row['attribute_name'] != null ) {
-						//		echo "OPTN: " . $row['attribute_name'] . " => ";
-						//		echo $row['attribute_option_name'] . "\n";
-						//	}
+							if ( $row['attribute_name'] == 'area' ) {
+								$area .= $row['attribute_option_name'] . ';';
+								$row = array( 'attribute_option_name' => null, 'attribute_name' => null );
+							}
+							if ( $row['attribute_name'] == 'grammatical property' ) {
+								$grammaticalProperty .= $row['attribute_option_name'] . ';';
+								$row = array( 'attribute_option_name' => null, 'attribute_name' => null );
+							}
+							if ( $row['attribute_name'] == 'number' ) {
+								$number .= $row['attribute_option_name'] . ';';
+								$row = array( 'attribute_option_name' => null, 'attribute_name' => null );
+							}
+							if ( $row['attribute_name'] == 'gender' ) {
+								$gender .= $row['attribute_option_name'] . ';';
+								$row = array( 'attribute_option_name' => null, 'attribute_name' => null );
+							}
+							if ( $row['attribute_name'] != null ) {
+								echo "SYNTRANS OPTN: " . $row['attribute_name'] . " => ";
+								echo $row['attribute_option_name'] . "\n";
+							}
 						}
 						$optionAttributes = array();
 						$POS = preg_replace( '/;$/', '', $POS );
 						$oUsage = preg_replace( '/;$/', '', $oUsage );
+						$area = preg_replace( '/;$/', '', $area );
+						$grammaticalProperty = preg_replace( '/;$/', '', $grammaticalProperty );
+						$number = preg_replace( '/;$/', '', $number );
+						$gender = preg_replace( '/;$/', '', $gender );
 
 						fwrite( $fhsyn,
 							$definedMeaningId .
 							',' . $languageId .
-							',' . $syntransId .
 							',' . $csv->formatCSVcolumn( $spelling ) .
 							',' . $csv->formatCSVcolumn( $IPA ) .
 							',' . $csv->formatCSVcolumn( $hyphenation ) .
@@ -192,15 +229,38 @@ Class CreateOwdListJob extends Job {
 							',' . $csv->formatCSVcolumn( $usage ) .
 							',' . $csv->formatCSVcolumn( $POS ) .
 							',' . $csv->formatCSVcolumn( $oUsage ) .
+							',' . $csv->formatCSVcolumn( $area ) .
+							',' . $csv->formatCSVcolumn( $grammaticalProperty ) .
+							',' . $csv->formatCSVcolumn( $number ) .
+							',' . $csv->formatCSVcolumn( $pinyin ) .
+							',' . $csv->formatCSVcolumn( $gender ) .
 							"\n"
 						);
 
 					}
 
+					$optionAttributes = Attributes::getOptionAttributes( $definedMeaningId, array( 'languageId' => WLD_ENGLISH_LANG_ID ) );
+					$subject = null;
+					foreach ( $optionAttributes as $row ) {
+						if (
+							$row['attribute_name'] == 'subject' OR
+							$row['attribute_name'] == 'topic'
+						) {
+							$subject .= $row['attribute_option_name'] . ';';
+							$row = array( 'attribute_option_name' => null, 'attribute_name' => null );
+						}
+						if ( $row['attribute_name'] != null ) {
+							echo "DM OPTN: " . $row['attribute_name'] . " => ";
+							echo $row['attribute_option_name'] . "\n";
+						}
+					}
+					$subject = preg_replace( '/;$/', '', $subject );
+
 					fwrite( $fh,
 						$definedMeaningId .
 						',' . $languageId .
 						',' . $text .
+						',' . $subject .
 						"\n"
 					);
 				}
