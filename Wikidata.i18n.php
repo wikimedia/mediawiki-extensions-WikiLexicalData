@@ -3828,6 +3828,7 @@ $messages['ee'] = array(
  * @author Evropi
  * @author Geraki
  * @author Glavkos
+ * @author Nikosguard
  * @author Omnipaedista
  * @author ZaDiak
  */
@@ -3888,7 +3889,7 @@ $messages['el'] = array(
 	'ow_save' => 'Αποθηκεύστε',
 	'ow_history' => 'Ιστορικό',
 	'ow_datasets' => 'Επιλογή συνόλου δεδομένων',
-	'ow_noedit_title' => 'Δεν έχετε άδεια για να επεξεργαστείτε',
+	'ow_noedit_title' => 'Δεν έχετε άδεια να επεξεργαστείτε',
 	'ow_uipref_datasets' => 'Προβολή προεπιλογής:',
 	'ow_uiprefs' => 'Βικιδεδομένα', # Fuzzy
 	'ow_none_selected' => 'Καμία επιλεγμένη',
@@ -3938,7 +3939,6 @@ $messages['el'] = array(
 	'ow_CollectionMember' => 'Μέλος της συλλογής',
 	'ow_CollectionMembership' => 'Σώμα μελών της συλλογής',
 	'ow_Definition' => 'Ορισμός',
-	'ow_DefinedMeaningAttributes' => 'Σχολιασμός',
 	'ow_DefinedMeaning' => 'Ορισμένη έννοια',
 	'ow_DefinedMeaningReference' => 'Ορισμένη έννοια',
 	'ow_ExactMeanings' => 'Ακριβείς έννοιες',
@@ -3950,7 +3950,6 @@ $messages['el'] = array(
 	'ow_GotoSource' => 'Μετάβαση στην πηγή',
 	'ow_ID' => 'Αναγνωριστικό',
 	'ow_Language' => 'Γλώσσα',
-	'ow_LevelAnnotation' => 'Σχολιασμός',
 	'ow_LinkAttributeHeader' => 'Ιδιότητες συνδέσμων',
 	'ow_Multiple_meanings' => 'Σημασίες του "$1"',
 	'ow_NewExactMeaning' => 'Νέα ακριβής έννοια',
