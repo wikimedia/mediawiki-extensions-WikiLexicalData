@@ -12279,6 +12279,7 @@ Por favor, contacte o operador ou administrador do servidor.',
  * @author Heldergeovane
  * @author Jaideraf
  * @author Jorge Morais
+ * @author Luckas
  * @author 555
  */
 $messages['pt-br'] = array(
@@ -12405,6 +12406,8 @@ Por favor, verifique o endereço ''web''.",
 	'ow_AlternativeDefinition' => 'Definição alternativa',
 	'ow_AlternativeDefinitions' => 'Definições alternativas',
 	'ow_Annotation' => 'Anotação',
+	'ow_AnnotationDefinedMeaning' => 'Anotações semânticas',
+	'ow_AnnotationSyntrans' => 'Anotações léxicas',
 	'ow_ApproximateMeanings' => 'Significados aproximados',
 	'ow_Class' => 'Classe',
 	'ow_ClassAttributeAttribute' => 'Atributo',
@@ -12426,6 +12429,7 @@ Por favor, verifique o endereço ''web''.",
 	'ow_IdenticalMeaning' => 'Significado idêntico?',
 	'ow_IncomingRelations' => 'Relações afluentes',
 	'ow_GotoSource' => 'Ir para fonte',
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Idioma',
 	'ow_LinkAttributeHeader' => 'Atributo da ligação',
 	'ow_Multiple_meanings' => 'Definições de "$1"',
@@ -12436,6 +12440,7 @@ Por favor, verifique o endereço ''web''.",
 	'ow_OptionAttributeOptions' => 'Opções',
 	'ow_OptionAttributeValues' => 'Valores da opção',
 	'ow_OtherDefinedMeaning' => 'Outro significado definido',
+	'ow_OtherLanguages' => 'Outras línguas:',
 	'ow_PopupAnnotation' => 'Anotação',
 	'ow_RecordLifeSpan' => 'Tempo de vida do registro',
 	'ow_Relations' => 'Relações',
@@ -12513,6 +12518,7 @@ Por favor, contate o operador ou administrador do servidor.', # Fuzzy
 	'ow_nstab_edit_copy' => 'editar cópia',
 	'right-addlanguage' => 'Adicionar e modificar configurações de língua',
 	'ow_shown_datasets' => 'Mostrar conjuntos de dados',
+	'prefs-ow-lang' => 'Línguas',
 );
 
 /** Quechua (Runa Simi)
