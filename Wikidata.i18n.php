@@ -328,7 +328,12 @@ See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Specia
 See also:
 * {{msg-mw|Exporttsv}}',
 	'ow_importtsv_header' => "'test run' comes from {{msg-mw|ow importtsv test run}}.",
-	'ow_importtsv_bad_columns' => "Do not translate 'definition_iso' and 'translations_iso'.",
+	'ow_importtsv_bad_columns' => "Unused (commented out) at this time.
+
+Do not translate 'definition_iso' and 'translations_iso'.
+
+Parameters:
+* $1 - column name",
 	'ow_importtsv_results' => 'Commented out because the code is outdated.
 
 This message indicates that definitions and translations have been added.
@@ -7938,8 +7943,8 @@ $messages['ja'] = array(
 	'ow_importtsv_test_run' => '試験実行:',
 	'ow_importtsv_not_utf8' => '<p>これは UTF-8 で符号化されたファイルではないようです。ファイルの文字コードは<b>必ず</b> UTF-8 でなければなりません。あなたが使っているアプリケーションがファイルを正しく保存もしくはインポートしたか確かめてください。</p>',
 	'ow_importtsv_not_tsv' => '<p>これは正しいTSVファイルではないようです。</p>',
-	'ow_importtsv_bad_columns' => '<p>「$1」という列名は不正です。<br />
-列の名前は「definition_iso」もしくは「translations_iso」です。iso とは言語コードのことです。</p>',
+	'ow_importtsv_bad_columns' => '<p>「$1」という列名は正しくありません。<br />
+列の名前は「definition_iso」または「translations_iso」です。iso とは言語コードのことです。</p>',
 	'ow_importtsv_test_run_title' => 'TSVデータ取り込みの試験実行',
 	'ow_importtsv_nothing_added' => '追加なし。',
 	'ow_importtsv_nothing_added_test' => '追加なし(試験実行です)。',
@@ -11141,7 +11146,7 @@ $messages['nso'] = array(
  */
 $messages['oc'] = array(
 	'wikidata-desc' => 'Apond de basa de donadas que se semblan als wikis per diferents tipes de contengut',
-	'wikidata-handler-namespace-move-error' => "Las paginas dins los espacis de noms preses en carga per l'extension Wikidata pòdon pas èsser desplaçadas.", # Fuzzy
+	'wikidata-handler-namespace-move-error' => "Las paginas dins los espacis de noms preses en carga per l'extension WikiLexicaldata pòdon pas èsser desplaçadas.",
 	'languages' => 'Gestion de las lengas',
 	'langman-desc' => 'Apondre e modificar los paramètres de lengas amb [[Special:Languages]]',
 	'langman_title' => 'Gestion de las lengas',
@@ -11155,7 +11160,7 @@ $messages['oc'] = array(
 	'langman_wikimedia' => 'Còde de Wikimedia :',
 	'langman_field_optional' => '(opcional)',
 	'langman_addlang' => 'Apondre la lenga',
-	'importlangnames' => 'Wikidata : Importar los noms de las lengas', # Fuzzy
+	'importlangnames' => 'Importar de noms de lengas',
 	'importlangnames_title' => 'Importar lo nom de las lengas',
 	'importlangnames_not_allowed' => "Avètz pas la permission d'importar lo nom de las lengas.",
 	'importlangnames_added' => 'Nom de lengas per « $1 » aponduts.',
@@ -11172,7 +11177,7 @@ $messages['oc'] = array(
 	'datasearch_match_ext_ids' => 'Identificators extèrnes que correspondon a <em>$1</em>',
 	'datasearch_match_words' => 'Mots que correspondon a <em>$1</em> e lor significacion associada',
 	'datasearch_match_words_lang' => 'Los mots en <em>$1</em> que correspondon a <em>$2</em> e lor significacion',
-	'importtsv' => 'Wikidata : Importar TSV', # Fuzzy
+	'importtsv' => 'Importacion de donadas TSV',
 	'ow_importtsv_title1' => 'Importar TSV',
 	'ow_importtsv_title2' => 'Importar las definicions e las traduccions',
 	'ow_importtsv_header' => "<p>Importar de definicions e de traduccions dempuèi un fichièr delimitat per de tabulacions que pòt èsser exportat dempuèi OpenOffice.org, Excel o un autre logicia. </p>
@@ -11195,14 +11200,14 @@ ont iso es lo còde de lenga.</p>',
 	'ow_importtsv_results' => '$1 {{PLURAL:$1|definicion|definicions}} e $2 {{PLURAL:$2|traduccion|traduccions}} son estadas apondudas.',
 	'ow_impexptsv_unknown_lang' => '<p>Lenga desconeguda o incorrècta : $1.<br />
 Las lengas devon èsser un còde ISO 639-3.</p>',
-	'exporttsv' => 'Wikidata : Exportar en TSV', # Fuzzy
+	'exporttsv' => 'Exportacion de donadas TSV',
 	'ow_exporttsv_title' => 'Exportar una colleccion en TSV',
 	'ow_exporttsv_header' => "<p>Exportar de definicions e de traduccions dins un fichièr delimitat per de tabulacions que pòt èsser importat dins OpenOffice.org, Excel o un autre logicial.<br />
 Seleccionatz una colleccion d'exportar. Dins la bóstia de tèxte de lengas, picatz una lista de còdes de lengas ISO 639-3 separadas per de virgulas. Començatz per las lengas qu'anatz utilizar per las traduccions (metètz-ne tant coma volètz) e acabatz amb las que seràn traduchas. Clicatz sul boton « Crear » per crear lo fichièr.</p>",
 	'ow_exporttsv_languages' => 'Lengas :',
 	'ow_exporttsv_not_allowed' => 'Avètz pas la permission d’efectuar una exportacion al format TSV.',
 	'ow_exporttsv_export_failed' => "L'expòrt a fracassat",
-	'addcollection' => 'Wikidata : Apondre una colleccion', # Fuzzy
+	'addcollection' => 'Apondre una colleccion',
 	'ow_searchnoresult' => "<p>Podètz :<br />
 * '''Crear l’expression « [[Expression:$1]] »''' (e apondre una definicion)<br />
 * '''Crear la pagina « [[:$1]] »''' (una page wiki estandarda)</p>",
@@ -11213,9 +11218,9 @@ Seleccionatz una colleccion d'exportar. Dins la bóstia de tèxte de lengas, pic
 	'ow_noedit' => "Sètz pas autorizat a editar las paginas dins las donadas preestablidas « $1 ».
 Vejatz [[{{MediaWiki:Ow editing policy url}}|nòstras règlas d'edicion]].",
 	'ow_uipref_datasets' => 'Vista per defaut :',
-	'ow_uiprefs' => 'Donadas wiki', # Fuzzy
+	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_none_selected' => 'Cap de seleccion',
-	'transaction' => 'Wikidata : Jornal de las transaccions', # Fuzzy
+	'transaction' => 'Jornal de las transaccions',
 	'ow_transaction_from_transaction' => 'Dempuèi la transaccion :',
 	'ow_transaction_count' => 'Compte :',
 	'ow_transaction_user' => "Nom d'utilizaire :",
@@ -11262,6 +11267,8 @@ als senses definits dins las autras donadas.</p>",
 	'ow_AlternativeDefinition' => 'Definicion alternativa',
 	'ow_AlternativeDefinitions' => 'Definicions alternativas',
 	'ow_Annotation' => 'Anotacion',
+	'ow_AnnotationDefinedMeaning' => 'Anotacions semanticas',
+	'ow_AnnotationSyntrans' => 'Anotacions lexicalas',
 	'ow_ApproximateMeanings' => 'Senses aproximatius',
 	'ow_Class' => 'Classa',
 	'ow_ClassAttributeAttribute' => 'Atribut',
@@ -11274,7 +11281,6 @@ als senses definits dins las autras donadas.</p>",
 	'ow_CollectionMember' => 'Membre de la colleccion',
 	'ow_CollectionMembership' => 'Colleccions',
 	'ow_Definition' => 'Definicion',
-	'ow_DefinedMeaningAttributes' => 'Anotacion',
 	'ow_DefinedMeaning' => 'Sens definit',
 	'ow_DefinedMeaningReference' => 'Sens definit',
 	'ow_ExactMeanings' => 'Senses exactes',
@@ -11284,8 +11290,8 @@ als senses definits dins las autras donadas.</p>",
 	'ow_IdenticalMeaning' => 'Sens identic ?',
 	'ow_IncomingRelations' => 'Relacions entrantas',
 	'ow_GotoSource' => 'Veire la font',
+	'ow_ID' => 'ID',
 	'ow_Language' => 'Lenga',
-	'ow_LevelAnnotation' => 'Anotacion',
 	'ow_LinkAttributeHeader' => 'Atribut del ligam',
 	'ow_Multiple_meanings' => 'Definicions de « $1 »',
 	'ow_NewExactMeaning' => 'Sens exacte novèl',
@@ -11295,8 +11301,10 @@ als senses definits dins las autras donadas.</p>",
 	'ow_OptionAttributeOptions' => 'Opcions',
 	'ow_OptionAttributeValues' => 'Valors de las opcions',
 	'ow_OtherDefinedMeaning' => 'Autre sens definit',
+	'ow_OtherLanguages' => 'Autras lengas :',
 	'ow_PopupAnnotation' => 'Anotacion',
 	'ow_RecordLifeSpan' => 'Enregistrar la durada de vida',
+	'ow_RelatedTo' => 'Relatiu a',
 	'ow_Relations' => 'Relacions',
 	'ow_RelationType' => 'Tipe de relacion',
 	'ow_Remove' => 'Levar',
@@ -11313,7 +11321,7 @@ als senses definits dins las autras donadas.</p>",
 	'ow_TextAttributeValues' => 'Tèxte liure',
 	'ow_Time' => 'Data',
 	'ow_TranslatedTextAttribute' => 'Proprietat',
-	'ow_TranslatedText' => 'Tèxte traduch',
+	'ow_TranslatedText' => 'Tèxte tradusit',
 	'ow_TranslatedTextAttributeValue' => 'Tèxte',
 	'ow_TranslatedTextAttributeValues' => 'Tèxtes tradusibles',
 	'ow_Label' => 'Labèl',
@@ -11328,7 +11336,7 @@ als senses definits dins las autras donadas.</p>",
 	'ow_meaningsoftitle' => 'Sens de "$1"',
 	'ow_meaningsofsubtitle' => '<em>ligam wiki :</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>PERMISSION REFUSADA</h2>',
-	'copy' => 'Wikidata : Copiar', # Fuzzy
+	'copy' => 'Copiar',
 	'ow_copy_no_action_specified' => "Mercé d'especificar una accion",
 	'ow_copy_help' => "L'ajuda es pas encara estada implementada.",
 	'ow_please_proved_dmid' => 'Sembla que manca un "?dmid=<...>" (dmid=SensDefinit ID)<br />Contactatz l’administrator del servidor.',
@@ -11347,7 +11355,7 @@ Contactatz l’administrator.',
 	'ow_class_attr_type_plain' => 'Tèxte plen',
 	'ow_class_attr_type_link' => 'Ligam',
 	'ow_class_attr_type_option' => "Lista d'opcions",
-	'needstranslation' => "Wikidata : L'expression necessita una traduccion", # Fuzzy
+	'needstranslation' => 'Expressions que necessitan una traduccion',
 	'ow_needs_xlation_title' => "D'expressions necessitan de traduccions",
 	'ow_needs_xlation_source_lang' => 'Lenga font :',
 	'ow_needs_xlation_dest_lang' => 'Lenga de destinacion :',
@@ -11363,6 +11371,8 @@ Contactatz l’administrator.',
 	'ow_nstab_edit_copy' => 'modificar la còpia',
 	'right-addlanguage' => 'Apondre e modificar los paramètres de lengas',
 	'ow_shown_datasets' => 'Afichar los ensembles de donadas',
+	'prefs-ow-lang' => 'Lengas',
+	'ow_pref_lang_select' => "Lengas d'afichar :",
 );
 
 /** Oriya (ଓଡ଼ିଆ)
