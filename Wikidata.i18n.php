@@ -301,7 +301,9 @@ See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Specia
 See example: [http://www.omegawiki.org/Special:Languages http://www.omegawiki.org/Special:Languages]
 {{Identical|Language manager}}',
 	'langman_header' => 'Translate the word "English"; do not change it to your own language!',
-	'langman_adding' => "$1 is the language name; $2 is the language's ISO 639-3 code.",
+	'langman_adding' => "Used to indicate the system is adding the language. Parameters:
+* $1 - the language name
+* $2 - the language's ISO 639-3 code",
 	'langman_field_optional' => "Here, '''optional''' refers to the fields labeled with text from {{msg-mw|Langman iso639-2}} and {{msg-mw|Langman wikimedia}}.
 {{Identical|Optional}}",
 	'langman_addlang' => 'Button text when adding a new language in the Language Manager.',
@@ -5901,8 +5903,8 @@ Por favor, póñase en contacto cun administrador do servidor.',
 Por favor, póñase en contacto cun administrador do servidor.',
 	'ow_please_proved_dc2' => 'Parace que na súa contribución falta "?dc2=<algo>" (dc2=contexto do conxunto de datos 2, conxunto de datos AO cual copiar)<br />
 Por favor, póñase en contacto cun administrador do servidor.',
-	'ow_copy_successful' => '<h2>Copia exitosa</h2>
-Parece que os seus datos foron copiados con éxito.
+	'ow_copy_successful' => '<h2>A copia realizouse correctamente</h2>
+Parece que os seus datos se copiaron correctamente.
 Non esqueza volvelos comprobar para asegurarse!',
 	'ow_copy_unsuccessful' => '<h3>Copia sen éxito</h3>
 Non se produciu ningunha operación de copia.',
@@ -7921,7 +7923,7 @@ $messages['ja'] = array(
 	'langman_not_allowed' => 'あなたには言語設定を変更する権限がありません。',
 	'langman_header' => '言語コードとその英語名を下に入力してください:',
 	'langman_req_fields' => '言語名と ISO 639-3 コードの両方が必要です!',
-	'langman_adding' => '言語 $1 をコード $2 で追加中',
+	'langman_adding' => '言語 $1 をコード $2 で追加しています。',
 	'langman_langname' => '言語名:',
 	'langman_iso639-3' => 'ISO 639-3 コード:',
 	'langman_iso639-2' => 'ISO 639-2 コード:',
@@ -8702,8 +8704,8 @@ $messages['ko'] = array(
 열은 'definition_iso' 또는 'translations_iso'로 이름지어야 합니다.
 iso는 언어 코드입니다</p>",
 	'ow_importtsv_test_run_title' => 'TSV 데이터 가져오기에 대한 테스트 실행',
-	'ow_importtsv_nothing_added' => '아무것도 추가하지 않았습니다.',
-	'ow_importtsv_nothing_added_test' => '아무것도 추가하지 않았습니다. (시험 삼아 했습니다)',
+	'ow_importtsv_nothing_added' => '아무 것도 추가하지 않았습니다.',
+	'ow_importtsv_nothing_added_test' => '아무 것도 추가하지 않았습니다. (시험 실행했습니다)',
 	'ow_importtsv_results' => '{{PLURAL:$1|정의}} $1개와 {{PLURAL:$2|번역}} $2개를 추가했습니다.',
 	'ow_impexptsv_unknown_lang' => '<p>알 수 없거나 잘못된 언어: $1.<br />
 언어는 ISO 639-3 언어 코드여야 합니다.</p>',
