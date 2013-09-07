@@ -2158,7 +2158,8 @@ function getExpressionMeaningIdsForLanguages( $spelling, $languageIds, $dc = nul
 			'exp.expression_id = synt.expression_id',
 			'synt.remove_transaction_id' => null,
 			'exp.remove_transaction_id' => null
-		), __METHOD__
+		), __METHOD__,
+		'DISTINCT'
 	);
 
 	$dmlist = array();

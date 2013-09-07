@@ -128,9 +128,7 @@ Class CreateDefinedExpressionListJob extends Job {
 	}
 
 	function getDefineList( $spelling, $languageId ) {
-		$dmlist = getExpressionMeaningIds( $spelling );
-		// There are duplicates using getExpressionMeaningIds !!!
-		$dmlist = array_unique ( $dmlist );
+		$dmlist = getExpressionMeaningIdsForLanguages( $spelling, array( $languageId ) );
 		$express = array();
 		foreach ( $dmlist as $definedMeaningId ) {
 			$text = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId );
