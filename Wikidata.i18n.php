@@ -383,7 +383,9 @@ Parameters:
 	'conceptmapping' => '{{doc-special|ConceptMapping}}',
 	'ow_conceptmapping_title' => '{{doc-special|ConceptMapping}}',
 	'ow_conceptmapping_uitext' => 'A "dataset" is an independant collection of data, such as an ontology, a thesaurus, or a specific dictionary.',
-	'ow_conceptmapping_no_action_specified' => '* $1 is a parameter that is not supported (for example manually changed in a URL). It can be anything that has been provided by a client.',
+	'ow_conceptmapping_no_action_specified' => 'Parameters:
+* $1 - unsupported action. It can be anything that has been provided by a client.
+Supported actions are: insert, get, help, get_associated',
 	'ow_dm_OK' => '{{Identical|OK}}',
 	'ow_dm_not_present' => 'Used on [http://www.omegawiki.org/index.php?title=Special:ConceptMapping Special:ConceptMapping]',
 	'ow_AddHint' => 'Hint that shows up when the mouse hovers the plus sign in table rows (such as Synonyms and Translations) while editing',
@@ -8962,8 +8964,8 @@ $messages['ksh'] = array(
 	'datasearch_within_ext_ids' => 'En Wööter un Ußdröck vun ußerhallef:',
 	'datasearch_showing_only' => 'Mer zeije heh {{PLURAL:$1|{{PLURAL:$2|der einzje|jenou eine|keine}}|nur bes $1|keine}} Treffer{{PLURAL:$2||&#32;vun enßjesamp $2|, et jidd_er kein}}.',
 	'datasearch_match_ext_ids' => 'Wööter un Ußdröck vun ußerhallef, woh <em>$1</em> drop paß',
-	'datasearch_match_words' => 'Wööter, di op <em>$1</em> passe donn, un dänne ier Bedüggdeniß',
-	'datasearch_match_words_lang' => 'Wööter en <em>$1</em>, di op <em>$2</em> passe donn, un dänne ier Bedüggdeniß',
+	'datasearch_match_words' => 'Wööter, di op <em>„$1“</em> passe donn, un dänne ier Bedüggdeniß',
+	'datasearch_match_words_lang' => 'Wööter en <em>$1</em>, di op <em>„$2“</em> passe donn, un dänne ier Bedüggdeniß',
 	'importtsv' => 'En Datei uß Reije met Wääte met Tabulatore dozwesche empoteere',
 	'ow_importtsv_title1' => 'En Datei uß Reije met Wääte met Tabulatore dozwesche empoteere',
 	'ow_importtsv_title2' => 'Donn Bedüggdeniße un Övversäzonge empoteere',
@@ -8999,6 +9001,7 @@ $messages['ksh'] = array(
 	'ow_noedit_title' => 'De darfs hee nit ändere',
 	'ow_noedit' => 'Do häs kei Jenehmijung, öm em Date-Knubbel „$1“ jet ze ändere.
 Jangk Der de [[{{MediaWiki:Ow editing policy url}}|Räjelle un wat nüdesch es zom Ändere]] beloore.',
+	'ow_editing_policy_url' => 'Project:Permission policy',
 	'ow_uipref_datasets' => 'Shtandat-Ansich:',
 	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_none_selected' => 'Nix ußjewählt',
@@ -9049,6 +9052,8 @@ Don ens noh dä Webaddress loore.',
 	'ow_AlternativeDefinition' => 'De Bedüggdeniß ens anders explezeet',
 	'ow_AlternativeDefinitions' => 'Bedüggdeniß anders explezeet',
 	'ow_Annotation' => 'Aanmärkong',
+	'ow_AnnotationDefinedMeaning' => 'Senn un Bedüggdeneß',
+	'ow_AnnotationSyntrans' => 'Läxekaalesche Eijeschaffte',
 	'ow_ApproximateMeanings' => 'Onjefähr Bedüggdeniße',
 	'ow_Class' => 'Klaß',
 	'ow_ClassAttributeAttribute' => 'Eijeschaff',
@@ -9061,7 +9066,6 @@ Don ens noh dä Webaddress loore.',
 	'ow_CollectionMember' => 'En dä Sammlong',
 	'ow_CollectionMembership' => 'Zohjehüüreschkeit bei Sammlonge',
 	'ow_Definition' => 'Bedüggdeniß',
-	'ow_DefinedMeaningAttributes' => 'Aanmärkong',
 	'ow_DefinedMeaning' => 'Faßjelaate un explizeete Bedüggdeniß',
 	'ow_DefinedMeaningReference' => 'Faßjelaate un explizeete Bedüggdeniß',
 	'ow_ExactMeanings' => 'Akoraat Bedüggdeniße',
@@ -9073,7 +9077,6 @@ Don ens noh dä Webaddress loore.',
 	'ow_GotoSource' => 'Jangk noh de Quell',
 	'ow_ID' => 'Datesatz-Kennong',
 	'ow_Language' => 'Schprooch',
-	'ow_LevelAnnotation' => 'Aanmärkong',
 	'ow_LinkAttributeHeader' => 'Lengk-Eijeschaff',
 	'ow_Multiple_meanings' => 'Bedüggdeniße vun „$1“',
 	'ow_NewExactMeaning' => 'Noch en neu akoraate Bedüggdeneß',
@@ -9086,6 +9089,7 @@ Don ens noh dä Webaddress loore.',
 	'ow_OtherLanguages' => 'Ander Schprooche:',
 	'ow_PopupAnnotation' => 'Aanmärkong',
 	'ow_RecordLifeSpan' => 'Däm Datesatz sing Levvensduur',
+	'ow_RelatedTo' => 'hädd ene Bezoch zoh',
 	'ow_Relations' => 'Op wat sesch dat heh och betrick',
 	'ow_RelationType' => 'Di Aat, wie et sesch betrick',
 	'ow_Remove' => 'Nemm fott!',
@@ -9160,7 +9164,9 @@ Bes esu joot, un saach dat enem Wiki-Köbes, udder ennem Administrator fun däm 
 	'ow_needs_xlation_source_lang' => 'De Schprooch, fun woh övversäze:',
 	'ow_needs_xlation_dest_lang' => 'Schprooch woh hen övversäze:',
 	'ow_needs_xlation_no_dest_lang' => 'Bes esu joot, un donn en Schprooch aanjävve, woh hen ze övversäze.',
+	'ow_data_search' => 'Läxekaalesche Daate Söhke',
 	'ow_statistics' => 'Schtatistike vum WikiLexicalData',
+	'ow_downloads' => 'Läxekaalesche Daate eronger laade',
 	'ow_show' => 'Aanzeije!',
 	'ow_upload' => 'Huhlaade',
 	'ow_create' => 'Aanlääje',
@@ -12049,6 +12055,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Cainamarques
  * @author Dianakc
  * @author Giro720
  * @author Hamilton Abreu
@@ -12284,7 +12291,7 @@ Por favor, contacte o operador ou administrador do servidor.',
 	'ow_needs_xlation_dest_lang' => 'Língua destino:',
 	'ow_needs_xlation_no_dest_lang' => 'Por favor, especifique uma língua destino.',
 	'ow_data_search' => 'Pesquisa de dados WikiLexicalData',
-	'ow_statistics' => 'WikiLexicalData: Estatísticas',
+	'ow_statistics' => 'Estatísticas WikiLexicalData',
 	'ow_downloads' => 'Descargas WikiLexicalData',
 	'ow_show' => 'Mostrar',
 	'ow_upload' => 'Enviar',
@@ -12303,6 +12310,7 @@ Por favor, contacte o operador ou administrador do servidor.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Cainamarques
  * @author Dianakc
  * @author Eduardo.mps
  * @author Giro720
@@ -12537,7 +12545,7 @@ Por favor, contate o operador ou administrador do servidor.', # Fuzzy
 	'ow_needs_xlation_source_lang' => 'Língua de origem:',
 	'ow_needs_xlation_dest_lang' => 'Língua de destino:',
 	'ow_needs_xlation_no_dest_lang' => 'Por favor, especifique uma língua de destino.',
-	'ow_statistics' => 'Wikidata: Estatísticas', # Fuzzy
+	'ow_statistics' => 'Estatísticas WikiLexicalData',
 	'ow_show' => 'Exibir',
 	'ow_upload' => 'Enviar',
 	'ow_create' => 'Criar',
