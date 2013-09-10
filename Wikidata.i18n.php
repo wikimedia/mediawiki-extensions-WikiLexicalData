@@ -364,11 +364,14 @@ See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Specia
 The page body for this message is {{msg-mw|Ow noedit}}.',
 	'ow_noedit' => 'Used as page body.
 
+Uses the message {{msg-mw|Ow editing policy url}}.
+
 The title for this message is {{msg-mw|Ow noedit title}}.
 
 Parameters:
 * $1 - dataset name',
-	'ow_editing_policy_url' => '{{notranslate}}',
+	'ow_editing_policy_url' => '{{notranslate}}
+Used as link target in {{msg-mw|Ow noedit}}',
 	'ow_none_selected' => '{{Identical|None selected}}',
 	'transaction' => "A 'transaction' is a database transaction: a set of database operations considered as a whole.",
 	'ow_transaction_count' => '{{Identical|Count}}',
