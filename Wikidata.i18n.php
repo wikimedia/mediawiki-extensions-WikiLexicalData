@@ -880,29 +880,30 @@ $messages['an'] = array(
  * @author Meno25
  * @author OsamaK
  * @author Tarawneh
+ * @author زكريا
  */
 $messages['ar'] = array(
 	'wikidata-desc' => 'يضيف قاعدة بيانات ذات طابع الويكي لأنواع عديدة من المحتويات',
-	'wikidata-handler-namespace-move-error' => 'لا يمكن نقل الصفحات ضمن النطاقات التي يديرها امتداد ويكيبيانات.', # Fuzzy
-	'languages' => 'ويكيبيانات: مدير اللغة', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'لا يمكن نقل الصفحات ضمن النطاقات التي يديرها امتداد WikiLexicalData.',
+	'languages' => 'إدارة اللغات',
 	'langman-desc' => 'إضافة وتغيير إعدادات اللغات مع [[Special:Languages]]',
-	'langman_title' => 'مدير اللغة',
+	'langman_title' => 'إدارة اللغات',
 	'langman_not_allowed' => 'أنت لا تمتلك السماح لتغيير إعدادات اللغة.',
 	'langman_header' => 'اكتب كود اللغة واسمها الإنجليزي بالأسفل:',
-	'langman_req_fields' => 'اسم اللغة وكود ISO 639-3 كلاهما مطلوبان!',
-	'langman_adding' => 'جاري إضافة اللغة $1 بالمفتاح $2.',
+	'langman_req_fields' => 'اسم اللغة وكود ISO 639-3 كلاهما مطلوب!',
+	'langman_adding' => 'يجري إضافة اللغة $1 بالمفتاح $2.',
 	'langman_langname' => 'اسم اللغة:',
 	'langman_iso639-3' => 'كود ISO 639-3:',
 	'langman_iso639-2' => 'كود ISO 639-2:',
 	'langman_wikimedia' => 'كود ويكيميديا:',
 	'langman_field_optional' => '(اختياري)',
 	'langman_addlang' => 'أضف اللغة',
-	'importlangnames' => 'ويكيبيانات: استيراد أسماء اللغات', # Fuzzy
+	'importlangnames' => 'ويكي بيانات: استيراد أسماء اللغات',
 	'importlangnames_title' => 'استيراد أسماء اللغات',
 	'importlangnames_not_allowed' => 'أنت لا تمتلك السماح لاستيراد أسماء اللغات.',
 	'importlangnames_added' => 'أسماء اللغات ل"$1" تمت إضافتها.',
 	'importlangnames_not_found' => '<strong>لا مدخلة لغة ل"$1" تم العثور عليها!</strong>',
-	'datasearch' => 'ويكيبيانات: بحث البيانات', # Fuzzy
+	'datasearch' => 'ويكي بيانات: بحث البيانات',
 	'datasearch_language' => 'اللغة:',
 	'datasearch_found_word' => 'وجد الكلمة',
 	'datasearch_meaning' => 'المعنى',
@@ -914,7 +915,7 @@ $messages['ar'] = array(
 	'datasearch_match_ext_ids' => 'المعرفات الخارجية تطابق <em>$1</em>',
 	'datasearch_match_words' => 'الكلمات التي تطابق <em>$1</em> والمعاني المصاحبة',
 	'datasearch_match_words_lang' => 'الكلمات باللغة <em>$1</em> التي تطابق <em>$2</em> والمعاني المصاحبة',
-	'importtsv' => 'ويكيبيانات: استيراد ملف البيانات TSV', # Fuzzy
+	'importtsv' => 'ويكي بيانات: استيراد ملف البيانات TSV',
 	'ow_importtsv_title1' => 'استيراد تي إس في',
 	'ow_importtsv_title2' => 'استيراد التعريفات والترجمات',
 	'ow_importtsv_header' => "<p>استورد التعريفات والترجمات من ملف نص محدد بألسنة ربما تكون صدرته من OpenOffice.org، إكسل أو برنامج صحائف آخر.</p>
@@ -937,14 +938,14 @@ $messages['ar'] = array(
 	'ow_importtsv_results' => 'أضاف {{PLURAL:$1||تعريفًا واحدًا|تعريفين|$1 تعريفات|$1 تعريفًا|$1 تعريف}} و{{PLURAL:$2||ترجمة واحدة|ترجمتين|$2 ترجمات|$2 ترجمة|$2 ترجمة}}.',
 	'ow_impexptsv_unknown_lang' => '<p>لغة غير معروفة أو غير صحيحة: $1.<br />
 اللغات يجب أن تكون أكواد لغات ISO 639-3.</p>',
-	'exporttsv' => 'ويكيبيانات: تصدير ملف البيانات TSV', # Fuzzy
+	'exporttsv' => 'تصدير ملف البيانات TSV',
 	'ow_exporttsv_title' => 'تصدير مجموعة إلى TSV',
 	'ow_exporttsv_header' => "<p>صدر مجموعة إلى صيغة نص مفصول بألسنة الذي يمكنك استيراده في OpenOffice.org، إكسل أو برنامج صحائف آخر.<br />
 اختر مجموعة للتصدير. في صندوق نص اللغات، أدخل قائمة مفصولة بفاصلات لأكواد لغات ISO 639-3. ابدأ باللغة التي ستترجم منها (اختر كما تحب) وانه بالتي ستترجم إليها. ثم اضغط 'إنشاء' لإنشاء الملف.</p>",
 	'ow_exporttsv_languages' => 'اللغات:',
 	'ow_exporttsv_not_allowed' => 'لا تمتلك السماح لعمل تصدير TSV.',
 	'ow_exporttsv_export_failed' => 'التصدير فشل',
-	'addcollection' => 'ويكيبيانات: إضافة مجموعة', # Fuzzy
+	'addcollection' => 'إضافة مجموعة',
 	'ow_searchnoresult' => "<p>بإمكانك:<br />
 * '''إنشاء التعبير \"[[Expression:\$1]]\"''' (وإضافة تعريف)<br />
 * '''إنشاء الصفحة \"[[:\$1]]\"''' (صفحة ويكي قياسية)</p>",
@@ -955,9 +956,9 @@ $messages['ar'] = array(
 	'ow_noedit' => 'أنت غير مسموح لك بتعديل الصفحات في مجموعة البيانات "$1".
 من فضلك انظر [[{{MediaWiki:Ow editing policy url}}|سياسة التحرير الخاصة بنا]].',
 	'ow_uipref_datasets' => 'عرض افتراضي:',
-	'ow_uiprefs' => 'ويكيبيانات', # Fuzzy
+	'ow_uiprefs' => 'ويكي لكسكل داتا',
 	'ow_none_selected' => 'لا شيء تم اختياره',
-	'transaction' => 'ويكيبيانات: سجل المعاملات', # Fuzzy
+	'transaction' => 'سجل المعاملات',
 	'ow_transaction_from_transaction' => 'من الانتقال:',
 	'ow_transaction_count' => 'العدد:',
 	'ow_transaction_user' => 'اسم المستخدم:',
@@ -975,7 +976,7 @@ $messages['ar'] = array(
 	'ow_transaction_first_dm' => 'المعنى المعرف الأول',
 	'ow_transaction_second_dm' => 'المعنى المعرف الثاني',
 	'ow_transaction_summary' => 'ملخص',
-	'conceptmapping' => 'ويكيبيانات: تخطيط المبدأ', # Fuzzy
+	'conceptmapping' => 'تخطيط المبدأ',
 	'ow_conceptmapping_title' => 'تخطيط المبدأ',
 	'ow_conceptmapping_help' => '<p>الأفعال الممكنة: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  إدراج رابطة</li>
@@ -1004,6 +1005,8 @@ $messages['ar'] = array(
 	'ow_AlternativeDefinition' => 'تعريف بديل',
 	'ow_AlternativeDefinitions' => 'تعريفات بديلة',
 	'ow_Annotation' => 'هامش',
+	'ow_AnnotationDefinedMeaning' => 'تذييلات معنوية',
+	'ow_AnnotationSyntrans' => 'تذييلات لفظية',
 	'ow_ApproximateMeanings' => 'معاني تقريبية',
 	'ow_Class' => 'رتبة',
 	'ow_ClassAttributeAttribute' => 'نسب',
@@ -1016,7 +1019,6 @@ $messages['ar'] = array(
 	'ow_CollectionMember' => 'عضو المجموعة',
 	'ow_CollectionMembership' => 'عضوية المجموعة',
 	'ow_Definition' => 'تعريف',
-	'ow_DefinedMeaningAttributes' => 'هامش',
 	'ow_DefinedMeaning' => 'معنى معرف',
 	'ow_DefinedMeaningReference' => 'معنى معرف',
 	'ow_ExactMeanings' => 'معاني مطابقة',
@@ -1028,7 +1030,6 @@ $messages['ar'] = array(
 	'ow_GotoSource' => 'اذهب إلى المصدر',
 	'ow_ID' => 'رقم',
 	'ow_Language' => 'اللغة',
-	'ow_LevelAnnotation' => 'هامش',
 	'ow_LinkAttributeHeader' => 'صفة الوصلة',
 	'ow_Multiple_meanings' => 'معاني "$1"',
 	'ow_NewExactMeaning' => 'معنى دقيق جديد',
@@ -1038,8 +1039,10 @@ $messages['ar'] = array(
 	'ow_OptionAttributeOptions' => 'خيارات',
 	'ow_OptionAttributeValues' => 'قيم الخيار',
 	'ow_OtherDefinedMeaning' => 'معنى معرف آخر',
+	'ow_OtherLanguages' => 'لغات أخرى:',
 	'ow_PopupAnnotation' => 'هامش',
 	'ow_RecordLifeSpan' => 'سجل مدة الحياة',
+	'ow_RelatedTo' => 'بالنسبة إلى',
 	'ow_Relations' => 'علاقات',
 	'ow_RelationType' => 'نوع العلاقة',
 	'ow_Remove' => 'إزالة',
@@ -1072,7 +1075,7 @@ $messages['ar'] = array(
 	'ow_meaningsoftitle' => 'معاني "$1"',
 	'ow_meaningsofsubtitle' => '<em>وصلة ويكي:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>السماح مرفوض</h2>',
-	'copy' => 'ويكيبيانات: نسخ', # Fuzzy
+	'copy' => 'نسخ',
 	'ow_copy_no_action_specified' => 'من فضلك حدد فعلا',
 	'ow_copy_help' => 'المساعدة ليست مطبقة حاليا.',
 	'ow_please_proved_dmid' => 'على ما يبدو دخلك يفقد ?dmid=<something>  (dmid=رقم المعنى المعرف)<br />
@@ -1089,9 +1092,9 @@ $messages['ar'] = array(
 	'ow_no_action_specified' => '<h3>لا فعل تم تحديده</h3>
 ربما أتيت إلى هذه الصفحة مباشرة؟ عادة أنت لا تحتاج إلى أن تكون هنا.',
 	'ow_db_consistency_not_found' => '<h2>خطأ</h2>
-توجد مشكلة في تناسق قاعدة البيانات، ويكيبيانات لا يمكنها العثور على بيانات صحيحة متصلة برقم المعنى المعرف هذا.
+توجد مشكلة في تناسق قاعدة البيانات، لا يمكنها العثور على بيانات صحيحة متصلة برقم المعنى المعرف هذا.
 ربما تكون قد ضاعت.
-من فضلك اتصل بمشغل أو إداري الخادم.', # Fuzzy
+من فضلك اتصل بمشغل أو إداري الخادم.',
 	'ow_history_transaction' => 'الانتقال:',
 	'ow_history_show_life_span' => 'اعرض مدة الحياة المسجلة:',
 	'ow_class_attr_type_dm' => 'معنى معرف',
@@ -1099,12 +1102,14 @@ $messages['ar'] = array(
 	'ow_class_attr_type_plain' => 'نص بحت',
 	'ow_class_attr_type_link' => 'وصلة',
 	'ow_class_attr_type_option' => 'قائمة الخيارات',
-	'needstranslation' => 'ويكيبيانات: تعبيرات تحتاج الترجمة', # Fuzzy
+	'needstranslation' => 'تعبيرات تحتاج الترجمة',
 	'ow_needs_xlation_title' => 'التعبيرات المحتاجة لترجمة',
 	'ow_needs_xlation_source_lang' => 'اللغة المصدر:',
 	'ow_needs_xlation_dest_lang' => 'اللغة الهدف:',
 	'ow_needs_xlation_no_dest_lang' => 'من فضلك حدد لغة هدف.',
-	'ow_statistics' => 'Wikidata: إحصاءات', # Fuzzy
+	'ow_data_search' => 'بحث بيانات ويكي لكسكل داتا',
+	'ow_statistics' => 'إحصاءات ويكي لكسكل داتا',
+	'ow_downloads' => 'تحميلات ويكي لكسكل داتا',
 	'ow_show' => 'اعرض',
 	'ow_upload' => 'رفع',
 	'ow_create' => 'أنشئ',
@@ -1117,6 +1122,9 @@ $messages['ar'] = array(
 	'right-addlanguage' => 'إضافة وتغيير إعدادات اللغات',
 	'ow_shown_datasets' => 'مجموعات البيانات الظاهرة.',
 	'prefs-omegawiki' => 'أوميجاويكي',
+	'prefs-ow-lang' => 'لغات',
+	'ow_pref_lang_switch' => 'أظهر اللغات المحددة فقط',
+	'ow_pref_lang_select' => 'عرض اللغات:',
 );
 
 /** Aramaic (ܐܪܡܝܐ)
