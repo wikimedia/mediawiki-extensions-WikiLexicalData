@@ -105,6 +105,13 @@ $messages['pt'] = array(
 	'apiow-desc' => 'Extensão WikiLexicalData do OmegaWiki de api.php do MediaWiki',
 );
 
+/** Brazilian Portuguese (português do Brasil)
+ * @author Cainamarques
+ */
+$messages['pt-br'] = array(
+	'apiow-desc' => 'Implementação pela OmegaWiki da extensão WikiLexicalData da api.php do MediaWiki',
+);
+
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
