@@ -356,7 +356,7 @@ See also:
 The page body for this message is {{msg-mw|Ow impexptsv unknown lang}}.',
 	'addcollection' => '{{doc-special|AddCollection}}
 See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]',
-	'ow_searchnoresult' => "Don't translate the word ''Expression'' in ''<nowiki>[[Expression:$1]]</nowiki>''",
+	'ow_searchnoresult' => "{{doc-important|Don't translate the word <code>Expression</code> in <code><nowiki>[[Expression:$1]]</nowiki></code>.}}",
 	'ow_save' => '{{Identical|Save}}',
 	'ow_history' => '{{Identical|History}}',
 	'ow_noedit_title' => 'Used as page title.
@@ -13879,8 +13879,10 @@ Prosím, pozrite si [[{{MediaWiki:Ow editing policy url}}|našu politiku ohľadn
 
 /** Slovenian (slovenščina)
  * @author Dbc334
+ * @author Eleassar
  */
 $messages['sl'] = array(
+	'languages' => 'Upravljalnik jezikov',
 	'langman_title' => 'Upravljavec jezikov',
 	'langman_adding' => 'Dodajanje jezika $1 s ključem $2.',
 	'langman_langname' => 'Ime jezika:',
