@@ -13009,6 +13009,7 @@ Pe piacere condatte l'operatore o l'amministratore d'u server.",
  * @author Eleferen
  * @author Ferrer
  * @author Kaganer
+ * @author Okras
  * @author Osd
  * @author Temuri rajavi
  * @author Александр Сигачёв
@@ -13017,7 +13018,7 @@ Pe piacere condatte l'operatore o l'amministratore d'u server.",
 $messages['ru'] = array(
 	'wikidata-desc' => 'Добавляет вики-подобную базу данных для различных видов контента',
 	'wikidata-handler-namespace-move-error' => 'Страницы в пространстве имён, обрабатываемых расширением Викиданные (Wikidata) не могут быть переименованы.', # Fuzzy
-	'languages' => 'Викиданные: Языковой менеджер', # Fuzzy
+	'languages' => 'Языковой менеджер',
 	'langman-desc' => 'Добавление и изменение языковых настроек с помощью [[Special:Languages]]',
 	'langman_title' => 'Языковой менеджер',
 	'langman_not_allowed' => 'У вас нет разрешения изменять языковые настройки.',
@@ -13030,12 +13031,12 @@ $messages['ru'] = array(
 	'langman_wikimedia' => 'Код Викимедии:',
 	'langman_field_optional' => '(необязательно)',
 	'langman_addlang' => 'Добавить язык',
-	'importlangnames' => 'Викиданные: импорт названий языков', # Fuzzy
+	'importlangnames' => 'Импорт названий языков',
 	'importlangnames_title' => 'Импорт названий языков',
 	'importlangnames_not_allowed' => 'У вас нет разрешения импортировать названия языков.',
 	'importlangnames_added' => 'Добавлены названия языков для «$1».',
 	'importlangnames_not_found' => '<strong>Не найдено языковых записей для «$1»!</strong>',
-	'datasearch' => 'Викиданные: Поиск данных', # Fuzzy
+	'datasearch' => 'Поиск данных',
 	'datasearch_language' => 'Язык:',
 	'datasearch_found_word' => 'Найденное слово',
 	'datasearch_meaning' => 'Значение',
@@ -13047,7 +13048,7 @@ $messages['ru'] = array(
 	'datasearch_match_ext_ids' => 'Внешние идентификаторы, соответствующие «$1»',
 	'datasearch_match_words' => 'Слова, соответствующие «$1», и связанные значения',
 	'datasearch_match_words_lang' => 'Слова на <em>$1</em>, соответствующие «$2», и связанные значения',
-	'importtsv' => 'Викиданные: Импорт TSV', # Fuzzy
+	'importtsv' => 'Импорт TSV',
 	'ow_importtsv_title1' => 'Импорт TSV',
 	'ow_importtsv_title2' => 'Импорт определений и переводов',
 	'ow_importtsv_header' => '<p>Импорт определений и переводов из файла, содержащего значения разделёнными запятыми, который может быть получен из OpenOffice.org, Excel или иной программы работы с электронными таблицами.</p>
@@ -13070,14 +13071,14 @@ $messages['ru'] = array(
 	'ow_importtsv_results' => '{{PLURAL:$1|Добавлено $1 определение|Добавлено $1 определения|Добавлено $1 определений}} и $2 {{PLURAL:$2|перевод|перевода|переводов}}.',
 	'ow_impexptsv_unknown_lang' => '<p>Неизвестный или ошибочный язык: $1.<br />
 Языки должны быть записаны в виде кодов ISO 639-3.</p>',
-	'exporttsv' => 'Викиданные: Экспорт TSV', # Fuzzy
+	'exporttsv' => 'Экспорт TSV',
 	'ow_exporttsv_title' => 'Экспорт коллекции в TSV',
 	'ow_exporttsv_header' => '<p>Экспорт коллекции в текстовый файл, содержащий значения разделённые запятыми. Данный файл можно будет импортировать в OpenOffice.org, Excel или другую программу работы с электронными таблицами.<br />
 Выберите коллекцию для экспорта. В поле языков введите через запятую ISO 639-3 коды языков. Начните с тех языков, с которых вы собираетесь переводить (выберите столько, сколько вам нужно), и закончите теми, на которые вы собираетесь делать переводы. Нажмите «Создать», чтобы создать файл.</p>',
 	'ow_exporttsv_languages' => 'Языки:',
 	'ow_exporttsv_not_allowed' => 'У вас нет разрешения делать экспорт TSV.',
 	'ow_exporttsv_export_failed' => 'Ошибка экспорта',
-	'addcollection' => 'Викиданные: Добавление коллекции', # Fuzzy
+	'addcollection' => 'Добавление коллекции',
 	'ow_searchnoresult' => "<p>Вы можете:<br />
 *'''Создать выражение «[[Expression:$1]]»''' (и добавить определение)<br />
 *'''Создать страницу «[[:$1]]»''' (обычную вики-страницу)</p>",
@@ -13087,9 +13088,9 @@ $messages['ru'] = array(
 	'ow_noedit_title' => 'Нет прав для редактирования',
 	'ow_noedit' => 'Вам не разрешено редактировать страницы в наборе данных «$1». Обратите внимание на [[{{MediaWiki:Ow editing policy url}}|наши правила редактирования]].',
 	'ow_uipref_datasets' => 'Вид по умолчанию:',
-	'ow_uiprefs' => 'Викиданные', # Fuzzy
+	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_none_selected' => 'Ничего не выбрано',
-	'transaction' => 'Викиданные: Журнал транзакций', # Fuzzy
+	'transaction' => 'Журнал транзакций',
 	'ow_transaction_from_transaction' => 'Из транзакции:',
 	'ow_transaction_count' => 'Количество:',
 	'ow_transaction_user' => 'Имя участника:',
@@ -13107,7 +13108,7 @@ $messages['ru'] = array(
 	'ow_transaction_first_dm' => 'Первое определённое значение',
 	'ow_transaction_second_dm' => 'Второе определённое значение',
 	'ow_transaction_summary' => 'Описание',
-	'conceptmapping' => 'Викиданные: Соответствие концептов', # Fuzzy
+	'conceptmapping' => 'Соответствие концептов',
 	'ow_conceptmapping_title' => 'Соответствие концептов',
 	'ow_conceptmapping_help' => '<p>возможные действия: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  вставить соответствие</li>
@@ -13146,7 +13147,6 @@ $messages['ru'] = array(
 	'ow_CollectionMember' => 'Член коллекции',
 	'ow_CollectionMembership' => 'Присутствует в коллекциях',
 	'ow_Definition' => 'Определение',
-	'ow_DefinedMeaningAttributes' => 'Аннотация',
 	'ow_DefinedMeaning' => 'Определённое значение',
 	'ow_DefinedMeaningReference' => 'Определённое значение',
 	'ow_ExactMeanings' => 'Точные значения',
@@ -13157,7 +13157,6 @@ $messages['ru'] = array(
 	'ow_IncomingRelations' => 'Входящие отношения',
 	'ow_GotoSource' => 'Перейти к исходнику',
 	'ow_Language' => 'Язык',
-	'ow_LevelAnnotation' => 'Аннотация',
 	'ow_LinkAttributeHeader' => 'Ссылочный атрибут',
 	'ow_Multiple_meanings' => 'Значения «$1»',
 	'ow_NewExactMeaning' => 'Новое точное значение',
@@ -13200,7 +13199,7 @@ $messages['ru'] = array(
 	'ow_meaningsoftitle' => 'Значение «$1»',
 	'ow_meaningsofsubtitle' => '<em>Вики-ссылка:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>Доступ запрещён</h2>',
-	'copy' => 'Викиданные: Копирование', # Fuzzy
+	'copy' => 'Копирование',
 	'ow_copy_no_action_specified' => 'Пожалуйста, укажите действие',
 	'ow_copy_help' => 'Справка ещё не реализована.',
 	'ow_please_proved_dmid' => 'Похоже, что во входных данных отсутствует «?dmid=<ID>» (dmid — идентификатор определённого значения)<br /> Пожалуйста, свяжитесь с администратором сервера.',
@@ -13217,7 +13216,7 @@ $messages['ru'] = array(
 	'ow_class_attr_type_plain' => 'Простой текст',
 	'ow_class_attr_type_link' => 'Ссылка',
 	'ow_class_attr_type_option' => 'Список выбора',
-	'needstranslation' => 'Викиданные: Выражения, требующие перевода', # Fuzzy
+	'needstranslation' => 'Выражения, требующие перевода',
 	'ow_needs_xlation_title' => 'Выражения, требующие перевода',
 	'ow_needs_xlation_source_lang' => 'Исходный язык:',
 	'ow_needs_xlation_dest_lang' => 'Целевой язык:',
@@ -14541,6 +14540,7 @@ $messages['su'] = array(
  * @author Per
  * @author Rotsee
  * @author Sannab
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'wikidata-desc' => 'Lägger till en databas i wiki-stil för olika typer av innehåll',
@@ -14763,7 +14763,7 @@ Var god kontakta serveroperatören eller systemadministratören.', # Fuzzy
 	'ow_needs_xlation_source_lang' => 'Källspråk:',
 	'ow_needs_xlation_dest_lang' => 'Målspråk:',
 	'ow_needs_xlation_no_dest_lang' => 'Ange ett målspråk.',
-	'ow_statistics' => 'Wikidata: Statistik', # Fuzzy
+	'ow_statistics' => 'WikiLexicalData-statistik',
 	'ow_show' => 'Visa',
 	'ow_upload' => 'Skicka in',
 	'ow_create' => 'Skapa',
