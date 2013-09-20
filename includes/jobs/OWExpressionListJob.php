@@ -65,6 +65,7 @@ Class CreateExpressionListJob extends Job {
 		fwrite( $fh, '"Expression"' . "\n" );
 		foreach( $languageExpressions as $row ) {
 			$spelling = $csv->formatCSVcolumn( $row->spelling );
+			$spelling = preg_replace( '/\\n/', ' ', $spelling );
 			fwrite( $fh, $spelling . "\n" );
 		}
 		fclose( $fh );

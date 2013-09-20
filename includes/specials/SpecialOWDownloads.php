@@ -22,7 +22,15 @@ class SpecialOWDownloads extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgWldDownloadScriptPath;
+		global $wgWldDownloadScriptPath, $wgWldOwScriptPath;
+
+		require_once( $wgWldOwScriptPath . 'Expression.php' );
+		require_once( $wgWldOwScriptPath . 'DefinedMeaning.php' );
+
+		$this->Expressions = new Expressions;
+		$this->DefinedMeanings = new DefinedMeanings;
+		$this->Attributes = new Attributes;
+		$this->Transactions = new Transactions;
 		$request = $this->getRequest();
 		$output = $this->getOutput();
 		$this->setHeaders();
@@ -30,109 +38,189 @@ class SpecialOWDownloads extends SpecialPage {
 		# Get requests
 		$fileName = $request->getText( 'update' );
 
-		$wikitext = array();
-		$definitions = array();
-		$expressions = array();
-		$translations = array();
+		// This should change if non csv files will be produced.
+		$filePrefix = array(
+			'def',
+			'exp',
+			'owd'
+		);
 
+		$this->checkMode = false;
+		$this->checkLanguage = null;
+		$this->checkOwdFilename = null;
+
+		$htmlContents = array();
+		$this->definitions = array();
+		$this->expressions = array();
+		$this->translations = array();
+		$this->development = array();
+		$this->downloadIniExist = false;
+
+		// scan directory for filenames
 		$downloadDir = scandir( $wgWldDownloadScriptPath ) ;
 
+		// Segregate by groups
+		$this->segregateGroups( $downloadDir );
+
+		$this->updateCheck = null;
+		$this->updateCheckList = array();
+		$this->updateCheckChecked = false;
+		$this->processingOwd = false;
+
+		// This should change if non csv files will be produced.
+		foreach( $filePrefix as $row ) {
+			// check if "create-" . $prefix in url, translate it to fileName
+			if ( $request->getInt( 'create-' . $row ) ) {
+				$langId = $request->getInt( 'create-' . $row );
+				$langCode = getLanguageIso639_3ForId( $langId );
+				$fileName = $row . '_' . $langCode . '.csv';
+			}
+			// check if "check-" . $prefix . "status" in url
+			if ( $request->getInt( 'check_' . $row . '_status' ) ) {
+				$langId = $request->getInt( 'check_' . $row . '_status');
+				$langCode = getLanguageIso639_3ForId( $langId );
+				$fileName = $wgWldDownloadScriptPath . $row . '_' . $langCode . '.csv';
+				if ( $row == 'owd' ) {
+					$wldJobs = new WldJobs();
+					$this->checkMode = true;
+					$this->checkLanguage = $langId;
+					$this->checkOwdFilename = 'owd_' . $langCode . '.csv';
+
+					$jobName = 'JobQuery/' . $this->checkOwdFilename;
+					$jobExist = $wldJobs->downloadJobExist( $jobName );
+					if ( $jobExist ) {
+						$this->processingOwd = true;
+					} else {
+						// Get Update Check variables
+						$this->getUpdateChecks();
+						$this->updateCheckChecked = false;
+						$this->updateOwdStatus( $fileName );
+					}
+				}
+			}
+		}
+
+		if ( !$this->updateCheckChecked ) {
+			// Get Update Check variables
+			$this->getUpdateChecks();
+		}
+
+		$this->update_definition_notice = null;
+		$this->update_expression_notice = null;
+		$this->update_owd_notice = null;
 		if ( $fileName ) {
 			$wldJobs = new WldJobs();
 			// update Expression
 			if ( preg_match( '/^exp_/', $fileName ) ) {
 				preg_match( '/_(.+)\.(.+)/', $fileName, $match );
-				$jobParams = array( 'type' => 'exp', 'langcode' => $match[1], 'format' => $match[2] );
-				$title = Title::newFromText('User:JobQuery/exp_' . $match[1] . '.' . $match[2] );
-				$job = new CreateExpressionListJob( $title, $jobParams );
-				JobQueueGroup::singleton()->push( $job ); // mediawiki >= 1.21
+				// check if language exist
+				$languageId = getLanguageIdForIso639_3( $match[1] );
+				if ( !$languageId ) {
+					$this->update_expression_notice = "\n$fileName does not have a valid language<br/>\n";
+				} else {
+					$this->update_expression_notice = "\n$fileName has been requested<br/>\n";
+					$jobParams = array( 'type' => 'exp', 'langcode' => $match[1], 'format' => $match[2] );
+					$title = Title::newFromText('User:JobQuery/exp_' . $match[1] . '.' . $match[2] );
+					$job = new CreateExpressionListJob( $title, $jobParams );
+					JobQueueGroup::singleton()->push( $job ); // mediawiki >= 1.21
+				}
 			}
 			// update Definition
 			if ( preg_match( '/^def_/', $fileName ) ) {
 				preg_match( '/_(.+)\.(.+)/', $fileName, $match );
-				$jobName = 'JobQuery/' . $fileName;
-				$jobParams = array( 'type' => 'def', 'langcode' => $match[1], 'format' => $match[2], 'start' => '1' );
-				$jobExist = $wldJobs->downloadJobExist( $jobName );
-				if ( $jobExist == false ) {
-					$title = Title::newFromText( 'User:' . $jobName );
-					$job = new CreateDefinedExpressionListJob( $title, $jobParams );
-					JobQueueGroup::singleton()->push( $job ); // mediawiki >= 1.21
+				// check if language exist
+				$languageId = getLanguageIdForIso639_3( $match[1] );
+				if ( !$languageId ) {
+					$this->update_definition_notice = "\n$fileName does not have a valid language<br/>\n";
+				} else {
+					$this->update_definition_notice = "\n$fileName has been requested<br/>\n";
+					$jobName = 'JobQuery/' . $fileName;
+					$jobParams = array( 'type' => 'def', 'langcode' => $match[1], 'format' => $match[2], 'start' => '1' );
+					$jobExist = $wldJobs->downloadJobExist( $jobName );
+					if ( !$jobExist ) {
+						$title = Title::newFromText( 'User:' . $jobName );
+						$job = new CreateDefinedExpressionListJob( $title, $jobParams );
+						JobQueueGroup::singleton()->push( $job ); // mediawiki >= 1.21
+					}
 				}
 			}
 			// update Owd
 			if ( preg_match( '/^owd_/', $fileName ) ) {
 				preg_match( '/_(.+)\.(.+)/', $fileName, $match );
-				$jobName = 'JobQuery/' . $fileName;
-				$jobParams = array( 'type' => 'owd', 'langcode' => $match[1], 'format' => $match[2], 'start' => '1' );
-				$jobExist = $wldJobs->downloadJobExist( $jobName );
-				if ( $jobExist == false ) {
-					$title = Title::newFromText( 'User:' . $jobName );
-					$job = new CreateOwdListJob( $title, $jobParams );
-					JobQueueGroup::singleton()->push( $job ); // mediawiki >= 1.21
+				// check if language exist
+				$languageId = getLanguageIdForIso639_3( $match[1] );
+				if ( !$languageId ) {
+					$this->update_owd_notice = "<br/>\n$fileName does not have a valid language<br/>\n";
+				} else {
+					$this->update_owd_notice = "<br/>\n$fileName has been requested<br/>\n";
+					$jobName = 'JobQuery/' . $fileName;
+					$jobParams = array( 'type' => 'owd', 'langcode' => $match[1], 'format' => $match[2], 'start' => '1' );
+					$jobExist = $wldJobs->downloadJobExist( $jobName );
+					if ( !$jobExist ) {
+						// Check if zip file exist, if not create an empty archive.
+						$zipName = $wgWldDownloadScriptPath . 'owd_' . $match[1] . '_csv.zip';
+						if ( !file_exists( $zipName ) ) {
+							$zip = new ZipArchive();
+							$zip->open( $zipName, ZipArchive::CREATE );
+							$zip->addEmptyDir('.');
+							$zip->close();
+						}
+						$title = Title::newFromText( 'User:' . $jobName );
+						$job = new CreateOwdListJob( $title, $jobParams );
+						JobQueueGroup::singleton()->push( $job ); // mediawiki >= 1.21
+					}
 				}
 			}
 		}
 
-		// Segregate by groups
-		foreach( $downloadDir as $files ) {
-			// definitions
-			if ( preg_match( '/^def_/', $files ) ) {
-				$definitions[] = "$files";
-			}
-			// definitions
-			if ( preg_match( '/^exp_/', $files ) ) {
-				$expressions[] = "$files";
-			}
-			// translations
-			if ( preg_match( '/^trans_/', $files ) ) {
-				$translations[] = "$files";
-			}
-			// OmegaWiki Development
-			if ( preg_match( '/^owd_.+zip$/', $files ) ) {
-				$development[] = "$files";
-			}
-		}
-
 		// Process Definitions
-		if ( $definitions ) {
-			$wikitext[] = '===Definitions===';
-			$myLine = $this->processText( $definitions );
-			$wikitext[] = $myLine . "\n|}\n";
-		}
-
-		// Process Expressions
-		if ( $expressions ) {
-			$wikitext[] = '====List of Expressions====';
-			$myLine = $this->processText( $expressions );
-			$wikitext[] = $myLine . "\n|}\n";
-		}
-
-		// Process Translations
-		if ( $translations ) {
-			$wikitext[] = '===Translations===';
-			$myLine = $this->processText( $translations );
-			$wikitext[] = $myLine . "\n|}\n";
+		if ( $this->definitions ) {
+			$htmlContents[] = '<h3>Definitions</h3>' . $this->update_definition_notice;
+			$myLine = $this->processText( $this->definitions );
+			$htmlContents[] = $myLine . '</table>' . "\n";
 		}
 
 		// Process Development
-		if ( $development ) {
-			$wikitext[] = '===Development===';
-			$wikitext[] = 'These files are still in alpha development.  Column numbers may change.';
-			$myLine = $this->processText( $development );
-			$wikitext[] = $myLine . "\n|}\n";
+		if ( $this->development ) {
+			$htmlContents[] = '<h3>Development</h3>';
+			$htmlContents[] = 'These files are still in alpha development.  Column numbers may change.' . $this->update_owd_notice;
+			$myLine = $this->processText( $this->development );
+			$htmlContents[] = $myLine . '</table>' . "\n";
 		}
 
-		// output wikitext
-		foreach( $wikitext as $wikilines ) {
-			$output->addWikiText( $wikilines );
+		// Process Expressions
+		if ( $this->expressions ) {
+			$htmlContents[] = '<h3>List of Expressions</h3>' . $this->update_expression_notice;
+			$myLine = $this->processText( $this->expressions );
+			$htmlContents[] = $myLine . '</table>' . "\n";
 		}
+
+		// Process Translations
+		if ( $this->translations ) {
+			$htmlContents[] = '<h3>Translations</h3>';
+			$myLine = $this->processText( $this->translations );
+			$htmlContents[] = $myLine . '</table>' . "\n";
+		}
+
+		// output html
+		foreach( $htmlContents as $htmlLine ) {
+			$output->addHTML( $htmlLine );
+		}
+
 	}
 
 	protected function processText( $text ) {
 		global $wgServer, $wgScriptPath, $wgScript, $wgWldDownloadScriptPath;
 
-		$presetMyLine = "{| class=\"wikitable\"\n! Language !! Date !! Size (bytes) !! Status !! Action \n|-\n";
+		$presetMyLine = '<table class="wikitable">' . "\n" .
+		'<tr>' . "\n" .
+		'<th> Language </th>' . "\n" .
+		'<th> Date </th>' . "\n" .
+		'<th> Size (bytes) </th>' . "\n" .
+		'<th> Status </th>'	. "\n" .
+		'<th> Action </th></tr>' . "\n";
 		$myLine = $presetMyLine;
+
 		foreach( $text as $line ) {
 			if ( preg_match( '/^exp_(.+)\./', $line, $match ) ) {
 				$language = $match[1];
@@ -149,39 +237,240 @@ class SpecialOWDownloads extends SpecialPage {
 
 			$languageName = getLanguageIdLanguageNameFromIds( $languageId, $nameLanguageId );
 
-			$wikiRow = '';
+			$theRow = '';
 			if( $myLine != $presetMyLine ) {
-				$wikiRow = "|-\n";
+				$theRow = '<tr>' . "\n";
 			}
-			$myLink = "[$wgServer$wgScriptPath/downloads/$line $languageName]";
-			$myLine .= "$wikiRow| $myLink ";
+			$myLink = '<a href="' . $wgServer . $wgScriptPath . '/downloads/' . $line . '">' . $languageName . '</a>';
+			$myLine .= $theRow . '<td>' . $myLink . '</td>' . "\n";
 			$filestats = stat( $wgWldDownloadScriptPath . $line );
 
 			$date = new DateTime();
 			$date->setTimestamp( $filestats['mtime'] );
-			$dateTime = $date->format('Y-m-d H:i:s') . "\n";
+			$dateTime = $date->format('Y-m-d H:i:s');
 
-			$myLine .= "|| " . $dateTime . " ";
-			$myLine .= "| align=\"right\" | " . $filestats['size'] . " ";
+			$myLine .= '<td>' . $dateTime . '</td>' . "\n";
+			$myLine .= '<td align="right">' . $filestats['size'] . '</td>' . "\n";
+
+			if ( preg_match( '/^(owd_.+)_csv\./', $line, $match ) ) {
+				$line = $match[1] . '.csv';
+			}
 
 			$jobName = 'JobQuery/' . $line;
 			$wldJobs = new WldJobs();
 			$jobExist = $wldJobs->downloadJobExist( $jobName );
-			if ( $jobExist == false ) {
-				if ( preg_match( '/^(owd_.+)_csv\./', $line, $match ) ) {
-					$line = $match[1] . '.csv';
-				}
-				$action = "[$wgServer$wgScript?title=Special:Ow_downloads&update=$line Regenerate]";
-				$status = "latest";
+			if ( !$jobExist ) {
+				$action = '<a href="' . $wgServer . $wgScript . '?title=Special:Ow_downloads&update=' . $line . '">Regenerate</a>' . "\n";
+				$status = $this->getStatus( $languageId, $line );
 			} else {
 				$action = ' ';
-				$status = "update requested";
+				$status = "updating";
 			}
 			// ability to update the file
-			$myLine .= "|| $status || $action";
-			$myLine .= "\n";
+			$myLine .= '<td>' . $status . '</td><td>' . $action . '</td>' . "\n" . '</tr>' . "\n";
+		}
+		if ( preg_match( '/^(owd|exp|def)_.+\./', $line, $match ) ) {
+			$myLine .= '<tr>' . "\n" . '<td colspan="5" >' . "\n" . $this->createNewForm( $match[1] ) . "\n" . '</td></tr>' . "\n";
 		}
 		return $myLine;
+	}
+
+	protected function getStatus( $languageId, $line ) {
+
+		// Create a check if latest if not make status 'outdated'
+		if ( preg_match( '/^owd_(.+)\./', $line, $match ) ) {
+			global $wgServer, $wgScript;
+			$languageCode = $match[1];
+
+			$owdFile = 'owd_' . $languageCode . '.csv';
+
+			if ( $this->checkMode == true && $this->checkLanguage == $languageId && $this->checkOwdFilename == $owdFile ) {
+				if ( $this->processingOwd ) {
+					return 'updating';
+				} else {
+					// get ow transaction
+					$owTransactionId = Transactions::getLanguageIdLatestTransactionId( $languageId );
+					$owTransactionRecord = getTransactionRecord( $owTransactionId );
+
+					if ( $owTransactionId == -2 ) {
+						return 'unavailable';
+					} else {
+						// get owd transaction
+						$owdTransactionId = $this->updateCheck;
+						$owdTransactionRecord = getTransactionRecord( $owdTransactionId );
+
+						$old = false;
+						if ( $owTransactionId > $owdTransactionId ) {
+							$old = true;
+						}
+
+						if ( $old == true ) {
+							return 'outdated(' . timestampAsText( $owdTransactionRecord->timestamp ) . ');new(' . timestampAsText( $owTransactionRecord->timestamp ) . ')';
+							return 'outdated( ' . timestampAsText( $owdTransactionRecord->timestamp ) . ' )';
+						}
+					//	return 'up-to-date(' . timestampAsText( $owdTransactionRecord->timestamp ) . ');new(' . timestampAsText( $owTransactionRecord->timestamp ) . ')';
+						return 'up-to-date( ' . timestampAsText( $owdTransactionRecord->timestamp ) . ' )';
+					}
+				}
+			}
+			return '<a href="' . "$wgServer$wgScript/Special:Ow_downloads" . '?' . 'check_owd_status=' . $languageId  . '">check status</a>';
+			return 'check status';
+		}
+		// temporarily output this:
+		return 'latest';
+	}
+
+	protected function createNewForm( $prefix ) {
+
+		global $wgServer, $wgScript;
+
+		$form = '';
+		$formOptions = array(
+			'method' => 'GET',
+			'action' => "$wgServer$wgScript/Special:Ow_downloads"
+		);
+		$form .= Html::openElement( 'form', $formOptions );
+
+		// suggest combobox
+		$form .= getSuggest(
+			'create' . "-$prefix", // name, parameter transmitted in url
+			'language', // query
+			array() // html parameters
+		);
+
+		// submit button
+		$form .= Html::element( 'input', array(
+			'type' => 'submit',
+//			'name' => $prefix . '-submit',
+			'value' => 'Generate'
+		) );
+
+		$form .= Html::closeElement( 'form' );
+		return $form;
+	}
+
+	function updateOwdStatus( $fileName ) {
+		global $wgWldDownloadScriptPath;
+		$downloadIni = $wgWldDownloadScriptPath . 'downloads.ini';
+
+		$zipName = preg_replace( '/\.csv/', '_csv.zip', $fileName );
+		if ( preg_match( '/(owd\_.+\.csv)/', $fileName, $match ) ) {
+			$fnPattern = $match[1];
+		}
+		$iniZippedAs = preg_replace( '/\.csv/', '.ini', $fileName );
+		if ( preg_match( '/(owd\_.+\.ini)/', $iniZippedAs, $match ) ) {
+			$iniZippedAs = $match[1];
+		}
+
+		$rh = zip_open( $zipName );
+		while ( $zipEntry = zip_read( $rh ) ) {
+			if ( zip_entry_name( $zipEntry ) == $iniZippedAs ) {
+				while ( $file = zip_entry_read( $zipEntry ) ) {
+					$lines = explode( "\n", $file );
+					foreach ( $lines as $line ) {
+						if ( preg_match( '/^version\:(.+)$/', $line, $match ) ) {
+							$owdVersionId = $match[1];
+						}
+						// version 1.0
+						if ( preg_match( '/^transaction_id\: (.+)$/', $line, $match ) ) {
+							$owdTransactionId = $match[1];
+						}
+					}
+				}
+			}
+			$fhz = zip_entry_open( $rh, $zipEntry );
+		}
+		zip_close( $rh );
+
+		$matchFound = false;
+		$latest = true;
+		$reconstructedLine = array();
+
+		foreach( $this->updateCheckList as $row ) {
+			if ( $row[0] == $fnPattern ) {
+				$matchFound = true;
+
+				if ( $row[1] != $owdTransactionId ) {
+					$newLine = $fnPattern . "	" . $owdTransactionId . "	" . $owdVersionId . "\n";
+					$latest = false;
+				} else {
+					$newLine = $row[0] . "	" . $row[1] . "	" .  $row[2] . "\n";
+				}
+			} else {
+				$newLine = $row[0] . "	" . $row[1] . "	" .  $row[2] . "\n";
+			}
+			$reconstructedLine[] = $newLine;
+		}
+
+		if ( !$matchFound ) {
+			$fh = fopen( $downloadIni, 'a');
+			fwrite( $fh, $fnPattern . "	" . $owdTransactionId . "	" . $owdVersionId  . "\n" );
+			fclose( $fh );
+		}
+
+		if ( $matchFound && !$latest ) {
+			$fh = fopen( $downloadIni, 'w');
+			foreach( $reconstructedLine as $row ) {
+				fwrite( $fh, $row );
+			}
+			fclose( $fh );
+		}
+		$reconstructedLine = array();
+	}
+
+	protected function segregateGroups( $directory ) {
+		foreach( $directory as $files ) {
+			// definitions
+			if ( preg_match( '/^def_/', $files ) ) {
+				$this->definitions[] = "$files";
+			}
+			// definitions
+			if ( preg_match( '/^exp_/', $files ) ) {
+				$this->expressions[] = "$files";
+			}
+			// translations
+			if ( preg_match( '/^trans_/', $files ) ) {
+				$this->translations[] = "$files";
+			}
+			// OmegaWiki Development
+			if ( preg_match( '/^owd_.+zip$/', $files ) ) {
+				$this->development[] = "$files";
+			}
+			// check if 'downloads.ini' exists
+			if ( 'downloads.ini' == $files ) {
+				$this->downloadIniExist = true;
+			}
+		}
+	}
+
+	protected function getUpdateChecks() {
+		// if 'downloads.ini' exists and check status is needed
+		// get updateCheck's transaction number else create blank file
+		global $wgWldDownloadScriptPath;
+		$downloadIni = $wgWldDownloadScriptPath . 'downloads.ini';
+
+		$updateCheck = array();
+		if ( $this->downloadIniExist == true ) {
+			$contents = file_get_contents( $downloadIni );
+			$lines = explode( "\n", $contents );
+			foreach ( $lines as $content ) {
+				$line = explode( "	", $content );
+				if ( $line[0] == $this->checkOwdFilename && isset( $line[1] ) ) {
+					$this->updateCheck = $line[1];
+				}
+				if ( isset( $line[1] ) ) {
+					$this->updateCheckList[] = array (
+						$line[0],
+						$line[1],
+						$line[2]
+					);
+				}
+			}
+		} else {
+			$fh = fopen ( $downloadIni, 'w' );
+			fclose( $fh );
+		}
+		$contents = null;
 	}
 
 }

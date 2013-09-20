@@ -161,9 +161,12 @@ class Attributes {
 	}
 
 	/**
-	 * returns an array of the Text Attributes name and the text itself
-	 * for a language
-	 *
+	 * returns:
+	 * array(
+	 *	'text' => $string,
+	 *	'attribute_name' => $string,
+	 *	'attribute_id' => $integer
+	 * )
 	 * else returns array()
 	 *
 	 * Note: $options can be used to introduce new variables
@@ -187,6 +190,8 @@ class Attributes {
 		if ( isset( $options['OFFSET'] ) ) {
 			$cond['OFFSET']= $options['OFFSET'];
 		}
+
+		$cond[] = 'DISTINCT';
 
 		$languageId = null;
 		if ( isset( $options['languageId'] ) ) {
@@ -212,12 +217,88 @@ class Attributes {
 		foreach ( $queryResult as $ta ) {
 			$textAttributes[] = array(
 				'text' => $ta->text,
-				'attribute_name' => $attributes->getAttributeName( $ta->attribute_mid, $languageId )
+				'attribute_name' => $attributes->getAttributeName( $ta->attribute_mid, $languageId ),
+				'attribute_id' => $ta->attribute_mid
 			);
 		}
 
 		if ( $textAttributes ) {
 			return $textAttributes;
+		}
+		return array();
+	}
+
+	/**
+	 * returns:
+	 * array(
+	 *	'attribute_name' => $string,
+	 *	'attribute_option_name' => $string,
+	 *	'attribute_id' => $integer
+	 * )
+	 * else returns array()
+	 *
+	 * @param $objectId can be either syntransId or definedMeaningId
+	 *
+	 * Note: $options can be used to introduce new variables
+	 */
+	public static function getOptionAttributes( $objectId, $options = array(), $dc = null ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$vars = array(
+				'oav.object_id' => $objectId,
+				'oav.option_id = oao.option_id',
+				'ca.object_id = oao.attribute_id',
+				'oav.remove_transaction_id' => null,
+				'oao.remove_transaction_id' => null,
+				'ca.remove_transaction_id' => null
+		);
+
+		$cond = array();
+		if ( isset( $options['LIMIT'] ) ) {
+			$cond['LIMIT'] = $options['LIMIT'];
+		}
+		if ( isset( $options['OFFSET'] ) ) {
+			$cond['OFFSET'] = $options['OFFSET'];
+		}
+
+		$cond[] = 'DISTINCT';
+
+		$languageId = null;
+		if ( isset( $options['languageId'] ) ) {
+			$languageId = $options['languageId'];
+		}
+
+		$queryResult = $dbr->select(
+			array(
+				'oav' => "{$dc}_option_attribute_values",
+				'oao' => "{$dc}_option_attribute_options",
+				'ca' => "{$dc}_class_attributes"
+			),
+			array(
+				'attribute_mid',
+				'option_mid'
+			),
+			$vars,
+			__METHOD__,
+			$cond
+		);
+
+		$optionAttributes = array();
+		$attributes = new Attributes;
+		foreach ( $queryResult as $oa ) {
+			$optionAttributes[] = array(
+				'attribute_name' => $attributes->getAttributeName( $oa->attribute_mid, $languageId ),
+				'attribute_option_name' => $attributes->getAttributeName( $oa->option_mid, $languageId ),
+				'attribute_id' => $oa->attribute_mid,
+				'option_id' => $oa->option_mid
+			);
+		}
+
+		if ( $optionAttributes ) {
+			return $optionAttributes;
 		}
 		return array();
 	}
@@ -262,71 +343,48 @@ class Attributes {
 	}
 
 	/**
-	 * returns an array of the Options Attributes Values etc name and the text itself
-	 * for a language
+	 * returns the Option Attribute Id
 	 *
-	 * @param $objectId can be either syntransId or definedMeaningId
+	 * else returns null
 	 *
-	 * else returns array()
-	 *
-	 * Note: $options can be used to introduce new variables
 	 */
-	public static function getOptionAttributes( $objectId, $options = array(), $dc = null ) {
+	public static function getClassAttributeId( $attributeExpression, $languageId = null, $dc = null ) {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$vars = array(
-				'oav.object_id' => $objectId,
-				'oav.option_id = oao.option_id',
-				'ca.object_id = oao.attribute_id',
-				'oav.remove_transaction_id' => null,
-				'oao.remove_transaction_id' => null,
-				'ca.remove_transaction_id' => null
+			'synt.expression_id = exp.expression_id',
+			'ca.attribute_mid = synt.defined_meaning_id',
+			'spelling' => $attributeExpression,
+			'language_id' => $languageId,
+			'synt.remove_transaction_id' => null,
+			'exp.remove_transaction_id' => null,
+			'ca.remove_transaction_id' => null
 		);
 
-		$cond = array();
-		if ( isset( $options['LIMIT'] ) ) {
-			$cond['LIMIT'] = $options['LIMIT'];
-		}
-		if ( isset( $options['OFFSET'] ) ) {
-			$cond['OFFSET'] = $options['OFFSET'];
+		if ( $languageId ) {
+			$vars['exp.language_id'] = $languageId;
 		}
 
-		$languageId = null;
-		if ( isset( $options['languageId'] ) ) {
-			$languageId = $options['languageId'];
-		}
+		$cond[] = 'DISTINCT';
 
-		$queryResult = $dbr->select(
+		$attributeId = $dbr->selectField(
 			array(
-				'oav' => "{$dc}_option_attribute_values",
-				'oao' => "{$dc}_option_attribute_options",
-				'ca' => "{$dc}_class_attributes"
+				'exp' => "{$dc}_expression",
+				'synt' => "{$dc}_syntrans",
+				'ca' => "{$dc}_class_attributes",
 			),
-			array(
-				'attribute_mid',
-				'option_mid'
-			),
+			'attribute_mid',
 			$vars,
 			__METHOD__,
 			$cond
 		);
 
-		$optionAttributes = array();
-		$attributes = new Attributes;
-		foreach ( $queryResult as $oa ) {
-			$optionAttributes[] = array(
-				'attribute_name' => $attributes->getAttributeName( $oa->attribute_mid, $languageId ),
-				'attribute_option_name' => $attributes->getAttributeName( $oa->option_mid, $languageId )
-			);
+		if ( $attributeId ) {
+			return $attributeId;
 		}
-
-		if ( $optionAttributes ) {
-			return $optionAttributes;
-		}
-		return array();
+		return null;
 	}
-
 }

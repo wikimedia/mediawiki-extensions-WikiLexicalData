@@ -54,12 +54,10 @@ Class CreateDefinedExpressionListJob extends Job {
 		// finished but the slower each web page loads while the job is being
 		// processed.
 		$sqlLimit = 100;
-		$ctrOver = $sqlLimit + 1;
 
 		$options['OFFSET'] = $start;
 
-		// we need an extra line to determine if a new job is needed.
-		$options['LIMIT'] = $sqlLimit + 1;
+		$options['LIMIT'] = $sqlLimit;
 
 		// Why order by expression_id? To avoid duplication of words
 		// and skipping of some. When a language is constantly edited,
@@ -92,26 +90,21 @@ Class CreateDefinedExpressionListJob extends Job {
 		if ( $start != 0 ) {
 			foreach( $languageExpressions as $row ) {
 				$spelling = $csv->formatCSVcolumn( $row->spelling );
+				$spelling = preg_replace( '/\\n/', ' ', $spelling );
 				// create a function to check if the expression has
 				// a dm translated, if so write it to the file
-				if ( $ctr != $ctrOver ) {
-					$defineList = $this->getDefineList( $row->spelling, $languageId );
-					foreach ( $defineList as $text ) {
-						fwrite( $fh, $spelling . ',' . $csv->formatCSVcolumn( $text ) . "\n" );
-					}
-					$defineList = array();
+				$defineList = $this->getDefineList( $row->spelling, $languageId );
+				foreach ( $defineList as $text ) {
+					fwrite( $fh, $spelling . ',' . $csv->formatCSVcolumn( $text ) . "\n" );
 				}
+				$defineList = array();
 				$ctr ++;
 			}
 		}
 		fclose( $fh );
 
-		// If the number of lines processed is $sqlLimit . we can't be sure
-		// if it has a complete job or not. It's safer to assume that
-		// it is not. ~he
-
 		// incomplete job
-		if( $ctr >= $sqlLimit ) {
+		if( $ctr == $sqlLimit ) {
 			$jobParams = array( 'type' => $type, 'langcode' => $code, 'format' => $format );
 			$jobParams['start'] = $start + $sqlLimit;
 			$jobName = 'User:JobQuery/' . $type . '_' . $code . '.' . $format;

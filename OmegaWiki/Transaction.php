@@ -378,4 +378,93 @@ function getTransactionLabel( $transactionId ) {
 		return "";
 }
 
+class Transactions {
 
+	/**
+	 * Checks the latest transaction id from syntrans (added transactions).
+	 *
+	 * Other transaction ids were excluded because of the slow speed to generate them.
+	 * (any search for transaction ids which are not present will search for all
+	 * the rows in a column which causes the long query time).
+	 * Syntrans seems to cover most of the changes. This function will change
+	 * when a new table is in place to cover this. Doing so will make the function
+	 * faster (since the latest ids are already set) and accurate ( since it would
+	 * not be limited to added syntrans only ).
+	 *
+	 * @param $languageId integer
+	 * @param $dc string
+	 *
+	 * @return $transaction_id integer The latest transaction_id.
+	 * else @return -1 If the language_id is non numeric or no transaction_id was found
+	 * else @return -2 if a there are any current jobs pending, this function is skipped
+	 */
+	public static function getLanguageIdLatestTransactionId( $languageId, $options = array(), $dc = null ) {
+
+		// If non numeric, skip this function and return -1
+		if ( !is_numeric( $languageId ) ) {
+			return -1;
+		}
+
+		$dbr = wfGetDB( DB_SLAVE );
+
+		// If jobs exist, skip this function and return -2
+		// unless if it is the same job that requires a transaction_id
+		$jobExists = $dbr->selectField(
+			"job",
+			'job_id',
+			null, __METHOD__,
+			array(
+				'LIMIT' => 1
+			)
+		);
+
+		if ( !isset( $options['is_the_job'] ) ) {
+			$options['is_the_job'] = false;
+		}
+
+		if ( $jobExists && !$options['is_the_job'] ) {
+			return -2;
+		}
+
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+
+		$DefinedMeanings = new DefinedMeanings;
+		$Transactions = new Transactions;
+
+		$query = Transactions::getLanguageIdLatestSynonymsAndTranslationsTransactionIdQuery( $languageId );
+
+		$result = $dbr->query( $query );
+
+		$tid = array();
+		foreach ( $result as $row ) {
+			$tid[] = $row->tid;
+		}
+		sort( $tid );
+		$transaction_id = array_pop( $tid );
+
+		if ( $transaction_id ) {
+			return $transaction_id;
+		}
+		return -1;
+	}
+
+	public static function getLanguageIdLatestSynonymsAndTranslationsTransactionIdQuery( $languageId, $options = array(), $dc = null ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+
+		return "(SELECT " .
+		"CASE WHEN synt.add_transaction_id IS NULL THEN -1 ELSE " .
+		"synt.add_transaction_id END AS tid FROM " .
+		"{$dc}_expression AS exp, " .
+		"{$dc}_syntrans AS synt " .
+		"WHERE language_id = $languageId " .
+		"AND synt.expression_id = exp.expression_id " .
+		"AND exp.remove_transaction_id IS NULL " .
+		"AND synt.remove_transaction_id IS NULL " .
+		"ORDER BY syntrans_sid DESC LIMIT 1)";
+	}
+
+}
