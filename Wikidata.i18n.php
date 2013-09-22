@@ -13017,7 +13017,7 @@ Pe piacere condatte l'operatore o l'amministratore d'u server.",
  */
 $messages['ru'] = array(
 	'wikidata-desc' => 'Добавляет вики-подобную базу данных для различных видов контента',
-	'wikidata-handler-namespace-move-error' => 'Страницы в пространстве имён, обрабатываемых расширением Викиданные (Wikidata) не могут быть переименованы.', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Страницы в пространстве имён, обрабатываемых расширением Викиданные, не могут быть переименованы.',
 	'languages' => 'Языковой менеджер',
 	'langman-desc' => 'Добавление и изменение языковых настроек с помощью [[Special:Languages]]',
 	'langman_title' => 'Языковой менеджер',
