@@ -42,7 +42,8 @@ class SpecialOWDownloads extends SpecialPage {
 		$filePrefix = array(
 			'def',
 			'exp',
-			'owd'
+			'owd',
+			'lang'
 		);
 
 		$this->checkMode = false;
@@ -144,6 +145,7 @@ class SpecialOWDownloads extends SpecialPage {
 					}
 				}
 			}
+
 			// update Owd
 			if ( preg_match( '/^owd_/', $fileName ) ) {
 				preg_match( '/_(.+)\.(.+)/', $fileName, $match );
@@ -180,14 +182,6 @@ class SpecialOWDownloads extends SpecialPage {
 			$htmlContents[] = $myLine . '</table>' . "\n";
 		}
 
-		// Process Development
-		if ( $this->development ) {
-			$htmlContents[] = '<h3>Development</h3>';
-			$htmlContents[] = 'These files are still in alpha development.  Column numbers may change.' . $this->update_owd_notice;
-			$myLine = $this->processText( $this->development );
-			$htmlContents[] = $myLine . '</table>' . "\n";
-		}
-
 		// Process Expressions
 		if ( $this->expressions ) {
 			$htmlContents[] = '<h3>List of Expressions</h3>' . $this->update_expression_notice;
@@ -202,11 +196,24 @@ class SpecialOWDownloads extends SpecialPage {
 			$htmlContents[] = $myLine . '</table>' . "\n";
 		}
 
+		// Process Development
+		if ( $this->development ) {
+			$htmlContents[] = '<h3>Development</h3>';
+			$htmlContents[] = 'These files are still in alpha development.  Column numbers may change.' . $this->update_owd_notice;
+			$myLine = $this->processText( $this->development );
+			$htmlContents[] = $myLine . '</table>' . "\n";
+		}
+
 		// output html
 		foreach( $htmlContents as $htmlLine ) {
 			$output->addHTML( $htmlLine );
 		}
 
+		// see also
+		$wikiText = "==Help==\n";
+		$wikiText .= "*[[Help:Downloading_the_data#CSV_Files|About the OmegaWiki Special Downloads Page]]\n";
+		$wikiText .="*[[Help:OmegaWiki's Development CSVs|OmegaWiki's Development CSVs]]\n";
+		$output->addWikiText( $wikiText );
 	}
 
 	protected function processText( $text ) {
@@ -222,14 +229,17 @@ class SpecialOWDownloads extends SpecialPage {
 		$myLine = $presetMyLine;
 
 		foreach( $text as $line ) {
-			if ( preg_match( '/^exp_(.+)\./', $line, $match ) ) {
-				$language = $match[1];
+			if ( preg_match( '/^(exp)_(.+)\./', $line, $match ) ) {
+				$this->type = $match[1];
+				$language = $match[2];
 			}
-			if ( preg_match( '/^def_(.+)\./', $line, $match ) ) {
-				$language = $match[1];
+			if ( preg_match( '/^(def)_(.+)\./', $line, $match ) ) {
+				$this->type = $match[1];
+				$language = $match[2];
 			}
-			if ( preg_match( '/^owd_(.+)_csv\./', $line, $match ) ) {
-				$language = $match[1];
+			if ( preg_match( '/^(owd)_(.+)_csv\./', $line, $match ) ) {
+				$this->type = $match[1];
+				$language = $match[2];
 			}
 			$languageId = getLanguageIdForIso639_3( $language );
 			// TODO: How to internationalize $nameLanguageId?
@@ -260,7 +270,8 @@ class SpecialOWDownloads extends SpecialPage {
 			$wldJobs = new WldJobs();
 			$jobExist = $wldJobs->downloadJobExist( $jobName );
 			if ( !$jobExist ) {
-				$action = '<a href="' . $wgServer . $wgScript . '?title=Special:Ow_downloads&update=' . $line . '">Regenerate</a>' . "\n";
+			//	$action = '<a href="' . $wgServer . $wgScript . '?title=Special:Ow_downloads&update=' . $line . '">Regenerate</a>' . "\n";
+				$action = '<a href="' . "$wgServer$wgScript/Special:Ow_downloads?create-" . $this->type . '=' . $languageId . '">Regenerate</a>' . "\n";
 				$status = $this->getStatus( $languageId, $line );
 			} else {
 				$action = ' ';

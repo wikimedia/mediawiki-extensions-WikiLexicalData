@@ -216,7 +216,7 @@ class AddSyntrans extends ApiBase {
 		' spelling           (string)',
 		' language_id        (int)',
 		' defined_meaning_id (int)',
-		' identical meaning  (boolean 1 or 2, optional)',
+		' identical meaning  (boolean 0 or 1, optional)',
 		'api.php?action=ow_add_syntrans&wikipage=User:MinnanBot/addSyntrans130124.csv&format=xml'
 		);
 	}
