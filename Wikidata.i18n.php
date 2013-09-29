@@ -9310,6 +9310,7 @@ $messages['la'] = array(
 /** Luxembourgish (Lëtzebuergesch)
  * @author Les Meloures
  * @author Robby
+ * @author Soued031
  */
 $messages['lb'] = array(
 	'wikidata-desc' => 'Setzt Datebase déi de Wikië gläichen, fir verschidden Type vun Inhalt derbäi.',
@@ -9431,7 +9432,6 @@ Kuckt w.e.g. [[{{MediaWiki:Ow editing policy url}}|eis Ännerungsrichtlinnen]].'
 	'ow_CollectionMember' => 'Member vun der Collectioun',
 	'ow_CollectionMembership' => 'Member vun der Sammlung',
 	'ow_Definition' => 'Definitioun',
-	'ow_DefinedMeaningAttributes' => 'Notiz',
 	'ow_DefinedMeaning' => 'Definéierte Sënn',
 	'ow_DefinedMeaningReference' => 'Definéierte Sënn',
 	'ow_ExactMeanings' => 'Genee Bedeitungen',
@@ -9443,7 +9443,6 @@ Kuckt w.e.g. [[{{MediaWiki:Ow editing policy url}}|eis Ännerungsrichtlinnen]].'
 	'ow_GotoSource' => "Zréck op d'Quell",
 	'ow_ID' => 'Nummer',
 	'ow_Language' => 'Sprooch',
-	'ow_LevelAnnotation' => 'Notiz',
 	'ow_LinkAttributeHeader' => 'Link-Attribut',
 	'ow_Multiple_meanings' => "Definitioune vu(n) '$1'",
 	'ow_NewExactMeaning' => 'Nei genee Bedeitung',
@@ -9475,7 +9474,7 @@ Kuckt w.e.g. [[{{MediaWiki:Ow editing policy url}}|eis Ännerungsrichtlinnen]].'
 	'ow_TranslatedText' => 'Iwwersatenen Text',
 	'ow_TranslatedTextAttributeValue' => 'Text',
 	'ow_TranslatedTextAttributeValues' => 'Iwwersetzbaren Text',
-	'ow_Label' => 'Etiquette',
+	'ow_Label' => 'Etikett',
 	'ow_Link' => 'Link',
 	'ow_LinkAttribute' => 'Eegeschaft',
 	'ow_LinkAttributeValues' => 'Linken',
@@ -16762,6 +16761,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Alexsh
+ * @author Ch.Andrew
  * @author Liangent
  * @author Mark85296341
  * @author Oapbtommy
@@ -16853,7 +16853,7 @@ $messages['zh-hant'] = array(
 	'ow_transaction_first_dm' => '第一個定義的含義',
 	'ow_transaction_second_dm' => '第二個定義的含義',
 	'ow_transaction_summary' => '摘要',
-	'conceptmapping' => 'Wikidata：概念映射', # Fuzzy
+	'conceptmapping' => '概念構圖',
 	'ow_conceptmapping_title' => '概念映射',
 	'ow_conceptmapping_help' => '<p>可能的action： <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  插入一個映射</li>
@@ -16878,7 +16878,6 @@ $messages['zh-hant'] = array(
 	'ow_ClassAttributeType' => '類型',
 	'ow_ClassMembership' => '類成員',
 	'ow_Definition' => '定義',
-	'ow_DefinedMeaningAttributes' => '註解',
 	'ow_DefinedMeaning' => '已定義的含義',
 	'ow_DefinedMeaningReference' => '已定義的含義',
 	'ow_ExactMeanings' => '精確含義',
@@ -16888,7 +16887,6 @@ $messages['zh-hant'] = array(
 	'ow_IdenticalMeaning' => '相同含義？',
 	'ow_GotoSource' => '轉到源代碼',
 	'ow_Language' => '語言',
-	'ow_LevelAnnotation' => '註解',
 	'ow_LinkAttributeHeader' => '連結屬性',
 	'ow_Multiple_meanings' => '$1 的定義：',
 	'ow_NewExactMeaning' => '新的精確含義',
