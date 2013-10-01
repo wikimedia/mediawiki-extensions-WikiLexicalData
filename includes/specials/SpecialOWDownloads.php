@@ -270,8 +270,8 @@ class SpecialOWDownloads extends SpecialPage {
 			$wldJobs = new WldJobs();
 			$jobExist = $wldJobs->downloadJobExist( $jobName );
 			if ( !$jobExist ) {
-			//	$action = '<a href="' . $wgServer . $wgScript . '?title=Special:Ow_downloads&update=' . $line . '">Regenerate</a>' . "\n";
-				$action = '<a href="' . "$wgServer$wgScript/Special:Ow_downloads?create-" . $this->type . '=' . $languageId . '">Regenerate</a>' . "\n";
+			//	$action = '<a href="' . "$wgServer$wgScript/Special:Ow_downloads?create-" . $this->type . '=' . $languageId . '">Regenerate</a>' . "\n";
+				$action = $this->postAction( $this->type, $languageId );
 				$status = $this->getStatus( $languageId, $line );
 			} else {
 				$action = ' ';
@@ -329,6 +329,41 @@ class SpecialOWDownloads extends SpecialPage {
 		}
 		// temporarily output this:
 		return 'latest';
+	}
+
+//	$action = '<a href="' . "$wgServer$wgScript/Special:Ow_downloads?create-" . $this->type . '=' . $languageId . '">Regenerate</a>' . "\n";
+//	$action = postAction( $this->type, $languageId );
+
+	protected function postAction( $prefix, $languageId ) {
+		global $wgServer, $wgScript;
+
+		$form = '';
+		$formOptions = array(
+			'method' => 'POST',
+			'action' => "$wgServer$wgScript/Special:Ow_downloads"
+		);
+		$form .= Html::openElement( 'form', $formOptions );
+
+		$form .= Html::element(
+			'input',
+			array(
+				'type' => 'hidden',
+				'name' => 'create-' . $prefix,
+				'value' => $languageId
+			)
+		);
+
+		// submit button
+		$form .= Html::element(
+			'input',
+			array(
+				'type' => 'submit',
+				'value' => 'Regenerate'
+			)
+		);
+
+		$form .= Html::closeElement( 'form' );
+		return $form;
 	}
 
 	protected function createNewForm( $prefix ) {
