@@ -395,7 +395,7 @@ Class CreateOwdListJob extends Job {
 			JobQueueGroup::singleton()->push( $job ); // mediawiki >= 1.21
 		} else { // complete job
 			// record transaction_ids
-			$transactionId = Transactions::getLanguageIdLatestTransactionId( $languageId );
+			$transactionId = Transactions::getLanguageIdLatestTransactionId( $languageId, array( 'is_the_job' => true ) );
 			fwrite( $fhini,
 				'transaction_id: ' . $transactionId . "\n"
 			);
