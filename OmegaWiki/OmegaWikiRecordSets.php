@@ -480,6 +480,7 @@ function getExpressionMeaningsRecord( $expressionId, ViewInformation $viewInform
  * The language returned depends on several criteria
  */
 function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $dc = null ) {
+	wfProfileIn( __METHOD__ );
 	global $wgLang;
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -525,6 +526,9 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 		$expressionRecord,
 		getExpressionMeaningsRecord( $expressionId, $viewInformation )
 	) );
+
+	wfProfileOut( __METHOD__ );
+
 	return $result;
 }
 

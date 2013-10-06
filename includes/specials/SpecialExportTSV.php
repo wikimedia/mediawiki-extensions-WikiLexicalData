@@ -1,59 +1,59 @@
 <?php
-	if ( !defined( 'MEDIAWIKI' ) ) die();
-
-require_once( "WikiDataAPI.php" ); // for bootstrapCollection
-require_once( "Utilities.php" );
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class SpecialExportTSV extends SpecialPage {
-	
+
 	function __construct() {
 		parent::__construct( 'ExportTSV' );
 	}
 
 	function execute( $par ) {
 
-		global $wgOut, $wgUser, $wgRequest;
+		global $wgWldOwScriptPath;
 
-		if ( !$wgUser->isAllowed( 'exporttsv' ) ) {
-			$wgOut->addHTML( wfMessage( 'ow_exporttsv_not_allowed' )->text() );
+		require_once( $wgWldOwScriptPath . "WikiDataAPI.php" ); // for bootstrapCollection
+
+		$output = $this->getOutput();
+		$request = $this->getRequest();
+
+		if ( !$this->getUser()->isAllowed( 'exporttsv' ) ) {
+			$output->addHTML( wfMessage( 'ow_exporttsv_not_allowed' )->text() );
 			return false;
 		}
-		
+
 		$dbr = wfGetDB( DB_SLAVE );
 		$dc = wdGetDataSetcontext();
-		
-		if ( $wgRequest->getText( 'collection' ) && $wgRequest->getText( 'languages' ) ) {
+
+		if ( $request->getText( 'collection' ) && $request->getText( 'languages' ) ) {
 			// render the tsv file
 
-			require_once( 'WikiDataAPI.php' );
-			require_once( 'Transaction.php' );
 			// get the collection to export. Cut off the 'cid' part that we added
 			// to make the keys strings rather than numbers in the array sent to the form.
-			$collectionId = substr( $wgRequest->getText( 'collection' ), 3 );
+			$collectionId = substr( $request->getText( 'collection' ), 3 );
 			// get the languages requested, turn into an array, trim for spaces.
-			$isoCodes = explode( ',', $wgRequest->getText( 'languages' ) );
+			$isoCodes = explode( ',', $request->getText( 'languages' ) );
 			for ( $i = 0; $i < count( $isoCodes ); $i++ ) {
 				$isoCodes[$i] = trim( $isoCodes[$i] );
 				if ( !getLanguageIdForIso639_3( $isoCodes[$i] ) ) {
-					$wgOut->setPageTitle( wfMessage( 'ow_exporttsv_export_failed' )->text() );
-					$wgOut->addHTML( wfMessage( 'ow_impexptsv_unknown_lang', $isoCodes[$i] )->text() );
+					$output->setPageTitle( wfMessage( 'ow_exporttsv_export_failed' )->text() );
+					$output->addHTML( wfMessage( 'ow_impexptsv_unknown_lang', $isoCodes[$i] )->text() );
 					return false;
 				}
 			}
-			
-			$wgOut->disable();
-			
+
+			$output->disable();
+
 			$languages = $this->getLanguages( $isoCodes );
 			$isoLookup = $this->createIsoLookup( $languages );
 			$downloadFileName = $this->createFileName( $isoCodes );
-			
+
 			// Force the browser into a download
 			header( 'Content-Type: text/tab-separated-values;charset=utf-8' );
 			header( 'Content-Disposition: attachment; filename="' . $downloadFileName . '"' ); // attachment
 
 			// separator character used.
 			$sc = "\t";
-			
+
 			echo( pack( 'CCC', 0xef, 0xbb, 0xbf ) );
 			// start the first row: column names
 			echo( 'defined meaning id' . $sc . 'defining expression' );
@@ -61,7 +61,7 @@ class SpecialExportTSV extends SpecialPage {
 				echo( $sc . 'definition_' . $isoCode . $sc . 'translations_' . $isoCode );
 			}
 			echo( "\r\n" );
-			
+
 			// get all the defined meanings in the collection
 			$query = "SELECT dm.defined_meaning_id, exp.spelling ";
 			$query .= "FROM {$dc}_collection_contents col, {$dc}_defined_meaning dm, {$dc}_expression exp ";
@@ -72,8 +72,8 @@ class SpecialExportTSV extends SpecialPage {
 			$query .= "AND " . getLatestTransactionRestriction( "dm" );
 			$query .= "AND " . getLatestTransactionRestriction( "exp" );
 			$query .= "ORDER BY exp.spelling";
-			
-			// wfDebug($query."\n");					
+
+			// wfDebug($query."\n");s
 
 			$queryResult = $dbr->query( $query );
 			while ( $row = $dbr->fetchRow( $queryResult ) ) {
@@ -81,14 +81,14 @@ class SpecialExportTSV extends SpecialPage {
 				// echo the defined meaning id and the defining expression
 				echo( $dm_id );
 				echo( "\t" . $row['spelling'] );
-				
+
 				// First we'll fill an associative array with the definitions and
 				// translations. Then we'll use the isoCodes array to put them in the
 				// proper order.
 
 				// the associative array holding the definitions and translations
 				$data = array();
-				
+
 				// ****************************
 				// query to get the definitions
 				// ****************************
@@ -106,7 +106,7 @@ class SpecialExportTSV extends SpecialPage {
 				}
 				$qry .= ') AND ' . getLatestTransactionRestriction( 'trans' );
 				$qry .= 'AND ' . getLatestTransactionRestriction( 'dm' );
-				
+
 				// wfDebug($qry."\n"); // uncomment this if you accept having 1700+ queries in the log
 
 				$definitions = $dbr->query( $qry );
@@ -116,7 +116,7 @@ class SpecialExportTSV extends SpecialPage {
 					$data[$key] = $row['text_text'];
 				}
 				$dbr->freeResult( $definitions );
-				
+
 				// *****************************
 				// query to get the translations
 				// *****************************
@@ -126,12 +126,12 @@ class SpecialExportTSV extends SpecialPage {
 				$qry .= "WHERE trans.defined_meaning_id=$dm_id ";
 				$qry .= "AND " . getLatestTransactionRestriction( "exp" );
 				$qry .= "AND " . getLatestTransactionRestriction( "trans" );
-				
+
 				// wfDebug($qry."\n"); // uncomment this if you accept having 1700+ queries in the log
 
 				$translations = $dbr->query( $qry );
 				while ( $row = $dbr->fetchRow( $translations ) ) {
-					// qry gets all languages, we filter them here. Saves an order 
+					// qry gets all languages, we filter them here. Saves an order
 					// of magnitude execution time.
 					if ( isset( $isoLookup['id' . $row['language_id']] ) ) {
 						// $key becomes something like trans_eng
@@ -143,13 +143,11 @@ class SpecialExportTSV extends SpecialPage {
 					}
 				}
 				$dbr->freeResult( $translations );
-				
-										
-				
+
 				// now that we have everything, output the row.
 				foreach ( $isoCodes as $isoCode ) {
 					// if statements save a bunch of notices in the log about
-					// undefined indices.	
+					// undefined indices.
 					echo( "\t" );
 					if ( isset( $data['def_' . $isoCode] ) )
 						echo( $this->escapeDelimitedValue( $data['def_' . $isoCode] ) );
@@ -159,28 +157,27 @@ class SpecialExportTSV extends SpecialPage {
 				}
 				echo( "\r\n" );
 			}
-			
-			
+
 		}
 		else {
-			
+
 			// Get the collections
 			$colQuery = "SELECT col.collection_id, exp.spelling " .
 						"FROM {$dc}_collection col INNER JOIN {$dc}_defined_meaning dm ON col.collection_mid=dm.defined_meaning_id " .
 						"INNER JOIN {$dc}_expression exp ON dm.expression_id=exp.expression_id " .
 						"WHERE " . getLatestTransactionRestriction( 'col' );
-			
+
 			$collections = array();
 			$colResults = $dbr->query( $colQuery );
 			while ( $row = $dbr->fetchRow( $colResults ) ) {
 				$collections['cid' . $row['collection_id']] = $row['spelling'];
 			}
-								
+
 			// render the page
-			$wgOut->setPageTitle( wfMessage( 'ow_exporttsv_title' )->text() );
-			$wgOut->addHTML( wfMessage( 'ow_exporttsv_header' )->text() );
-			
-			$wgOut->addHTML( getOptionPanel(
+			$output->setPageTitle( wfMessage( 'ow_exporttsv_title' )->text() );
+			$output->addHTML( wfMessage( 'ow_exporttsv_header' )->text() );
+
+			$output->addHTML( getOptionPanel(
 				array(
 					wfMessage( 'ow_Collection_colon' )->text() => getSelect( 'collection', $collections, 'cid376322' ),
 					wfMessage( 'ow_exporttsv_languages' )->text() => getTextBox( 'languages', 'ita, eng, deu, fra, cat' ),
@@ -190,10 +187,10 @@ class SpecialExportTSV extends SpecialPage {
 		}
 
 	}
-	
-	
+
+
 	/* HELPER METHODS START HERE */
-	
+
 	function escapeDelimitedValue( $value ) {
 		$newValue = str_replace( '"', '""', $value );
 		// Unfortunately, excell doesn't handle line brakes correctly, even if they are in quotes.
@@ -206,7 +203,7 @@ class SpecialExportTSV extends SpecialPage {
 		}
 		return $newValue;
 	}
-	
+
 	/**
 	 * Get id and iso639_3 language names for the given comma-separated
 	 * list of iso639_3 language names.
@@ -224,7 +221,7 @@ class SpecialExportTSV extends SpecialPage {
 		}
 		// Order by id so we can order the definitions and translations the same way.
 		$langQuery .= " ORDER BY language_id";
-		
+
 		// wfDebug($langQuery."\n");
 
 		$languages = array();
@@ -233,10 +230,10 @@ class SpecialExportTSV extends SpecialPage {
 		while ( $row = $dbr->fetchRow( $langResults ) ) {
 			$languages[] = $row;
 		}
-		
+
 		return $languages;
 	}
-	
+
 	function createIsoLookup( $languages ) {
 		$lookup = array();
 		foreach ( $languages as $language ) {
@@ -244,9 +241,9 @@ class SpecialExportTSV extends SpecialPage {
 		}
 		return $lookup;
 	}
-	
+
 	/**
-	 * Create the file name based on the languages requested. 
+	 * Create the file name based on the languages requested.
 	 * Change file name prefix and suffix here.
 	 */
 	function createFileName( $isoCodes ) {

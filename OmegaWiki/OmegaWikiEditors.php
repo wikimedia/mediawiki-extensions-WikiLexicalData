@@ -620,6 +620,7 @@ function getExpressionMeaningsEditor( Attribute $attribute, $allowAdd, ViewInfor
  * second, the list of approximate meaning expressions
  */
 function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
+	wfProfileIn( __METHOD__ );
 	$o = OmegaWikiAttributes::getInstance();
 
 	$headerLevel = 3 ;
@@ -654,6 +655,8 @@ function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 	$expressionsEditor->setCollapsible( false );
 	$expressionsEditor->setCaptionEditor( $expressionEditor );
 	$expressionsEditor->setValueEditor( $expressionMeaningsRecordEditor );
+
+	wfProfileOut( __METHOD__ );
 
 	return $expressionsEditor;
 }

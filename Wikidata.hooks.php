@@ -165,6 +165,7 @@ class WikiLexicalDataHooks {
 			return true;
 		}
 
+		wfProfileIn( __METHOD__ );
 		// display an icon for enabling/disabling language filtering
 		// only available in Vector.
 		if ( $skin instanceof SkinVector ) {
@@ -184,6 +185,7 @@ class WikiLexicalDataHooks {
 				);
 			}
 		}
+		wfProfileOut( __METHOD__ );
 
 		return true;
 	}

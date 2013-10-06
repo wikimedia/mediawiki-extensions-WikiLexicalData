@@ -3,7 +3,7 @@
 class WikidataArticle extends Article {
 
 	public function view() {
-  		wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
  
 		global $wdHandlerClasses;
 		$ns = $this->mTitle->getNamespace();

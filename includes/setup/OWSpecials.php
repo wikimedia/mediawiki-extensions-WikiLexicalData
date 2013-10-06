@@ -97,6 +97,9 @@ $wgAutoloadClasses['SpecialNeedsTranslation'] = $dir . 'OmegaWiki/SpecialNeedsTr
 $wgAutoloadClasses['SpecialOWStatistics'] = $wgWldSpecialsScriptPath . 'SpecialOWStatistics.php';
 $wgAutoloadClasses['SpecialOWDownloads'] = $wgWldSpecialsScriptPath . 'SpecialOWDownloads.php';
 
+$wgAutoloadClasses['SpecialExportTSV'] = $wgWldSpecialsScriptPath . 'SpecialExportTSV.php';
+$wgAutoloadClasses['SpecialImportTSV'] = $wgWldSpecialsScriptPath . 'SpecialImportTSV.php';
+
 // $wgAutoloadClasses['SpecialTransaction'] = $dir . 'OmegaWiki/SpecialTransaction.php';
 
 # Tell MediaWiki about the new special page and its class name
@@ -113,6 +116,9 @@ $wgSpecialPages['NeedsTranslation'] = 'SpecialNeedsTranslation';
 
 $wgSpecialPages['ow_statistics'] = 'SpecialOWStatistics';
 $wgSpecialPages['ow_downloads'] = 'SpecialOWDownloads';
+
+$wgSpecialPages['exportTSV'] = 'SpecialExportTSV';
+$wgSpecialPages['importTSV'] = 'SpecialImportTSV';
 
 // $wgSpecialPages['Transaction'] = 'SpecialTransaction';
 

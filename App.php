@@ -83,6 +83,8 @@ $wgAvailableRights[] = 'wikidata-copy';
 $wgAvailableRights[] = 'languagenames';
 $wgAvailableRights[] = 'addcollection';
 $wgAvailableRights[] = 'editClassAttributes';
+$wgAvailableRights[] = 'exporttsv';
+$wgAvailableRights[] = 'importtsv';
 
 $wgGroupPermissions['*']['editClassAttributes'] = false;
 
@@ -94,6 +96,10 @@ $wgGroupPermissions['wikidata-omega']['wikidata-copy'] = true;
 $wgGroupPermissions['bureaucrat']['languagenames'] = true;
 $wgGroupPermissions['bureaucrat']['addcollection'] = true;
 $wgGroupPermissions['bureaucrat']['editClassAttributes'] = true;
+$wgGroupPermissions['bureaucrat']['exporttsv'] = true;
+$wgGroupPermissions['bureaucrat']['importtsv'] = true;
+$wgGroupPermissions['TSV-import-export']['exporttsv'] = true;
+$wgGroupPermissions['TSV-import-export']['importtsv'] = true;
 
 // WikiLexicalData Configuration.
 

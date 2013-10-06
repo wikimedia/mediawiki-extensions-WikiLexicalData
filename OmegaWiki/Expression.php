@@ -34,7 +34,7 @@ class Expression {
 		return expressionIsBoundToDefinedMeaning( $definedMeaningId, $this->id );
 	}
 
-	function bindToDefinedMeaning( $definedMeaningId, $identicalMeaning ) {
+	function bindToDefinedMeaning( $definedMeaningId, $identicalMeaning = "true" ) {
 		createSynonymOrTranslation( $definedMeaningId, $this->id, $identicalMeaning );
 	}
 
