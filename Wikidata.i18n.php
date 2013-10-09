@@ -13074,6 +13074,8 @@ $messages['ru'] = array(
 	'ow_AlternativeDefinition' => 'Альтернативное определение',
 	'ow_AlternativeDefinitions' => 'Альтернативные определения',
 	'ow_Annotation' => 'Аннотация',
+	'ow_AnnotationDefinedMeaning' => 'Семантические аннотации',
+	'ow_AnnotationSyntrans' => 'Лексические аннотации',
 	'ow_ApproximateMeanings' => 'Приблизительные значения',
 	'ow_Class' => 'Класс',
 	'ow_ClassAttributeAttribute' => 'Свойство',
@@ -13109,6 +13111,7 @@ $messages['ru'] = array(
 	'ow_OtherLanguages' => 'Другие языки:',
 	'ow_PopupAnnotation' => 'Аннотация',
 	'ow_RecordLifeSpan' => 'Время жизни записи',
+	'ow_RelatedTo' => 'Связан с',
 	'ow_Relations' => 'Отношения',
 	'ow_RelationType' => 'Тип отношения',
 	'ow_Remove' => 'Удалить',
@@ -13165,7 +13168,9 @@ $messages['ru'] = array(
 	'ow_needs_xlation_source_lang' => 'Исходный язык:',
 	'ow_needs_xlation_dest_lang' => 'Целевой язык:',
 	'ow_needs_xlation_no_dest_lang' => 'Пожалуйста, укажите целевой язык',
+	'ow_data_search' => 'Поиск данных WikiLexicalData',
 	'ow_statistics' => 'Статистика WikiLexicalData',
+	'ow_downloads' => 'Загрузки WikiLexicalData',
 	'ow_show' => 'Показать',
 	'ow_upload' => 'Загрузить',
 	'ow_create' => 'Создать',
@@ -16044,6 +16049,7 @@ $messages['ur'] = array(
 $messages['uz'] = array(
 	'languages' => 'Til menejeri',
 	'datasearch_language' => 'Til:',
+	'prefs-ow-lang' => 'Tillar',
 );
 
 /** Veps (vepsän kel’)
