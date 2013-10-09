@@ -20,6 +20,8 @@ class WldFormatCSV {
 		if ( $column == '""') {
 			return '';
 		}
+		$column = preg_replace( '/\t/', '\\t', $column );
+		$column = preg_replace( '/\r/', '', $column );
 		return preg_replace( '/\n/', '\\n', $column );
 	}
 }
