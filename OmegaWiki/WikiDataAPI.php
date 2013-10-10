@@ -4,7 +4,6 @@ require_once( 'Expression.php' );
 require_once( 'Transaction.php' );
 require_once( 'WikiDataGlobals.php' );
 
-
 function getExpression( $expressionId, $dc = null ) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
@@ -2761,4 +2760,110 @@ function getDefinedMeaningIdFromExpressionIdAndLanguageId( $expressionId, $langu
 	}
 
 	return $dmlist;
+}
+
+class Collections {
+
+	public static function getDefinedMeaningIdCollectionMembershipExpressions( $definedMeaningId, $languageId ) {
+		$dc = wdGetDataSetContext();
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$queryResult = $dbr->select(
+			array(
+				'exp' => "{$dc}_expression",
+				'synt' => "{$dc}_syntrans",
+				'cc' => "{$dc}_collection_contents"
+			),
+			'collection_id',
+			array(
+				'member_mid' => $definedMeaningId,
+				'exp.remove_transaction_id' => null,
+				'synt.remove_transaction_id' => null,
+				'cc.remove_transaction_id' => null,
+				'exp.expression_id = synt.expression_id',
+				'synt.defined_meaning_id = member_mid'
+			), __METHOD__,
+			array(
+				'DISTINCT'
+			)
+		);
+
+		$expressions = array();
+
+		foreach ( $queryResult as $collectionId ) {
+			$definedMeaningId = getCollectionMeaningId( $collectionId->collection_id );
+			$tempExpressions = Expressions::getDefinedMeaningIdAndLanguageIdExpressions( $languageId, $definedMeaningId );
+			if ( $tempExpressions ){
+				$expressions[] = array(
+					'expression' => $tempExpressions[0],
+					'definedMeaningId' => $definedMeaningId
+				);
+			} else {
+				$expressions[] = array(
+					'expression' => '',
+					'definedMeaningId' => $definedMeaningId
+				);
+			}
+		}
+
+		return $expressions;
+
+	}
+}
+
+class WLD_Class {
+
+	/** Get a list of Class Expressions where the Defined Meaning Id is a member of.
+	 *
+	 * @param definedMeaningId
+	 * @param languageId
+	 *
+	 * @return list of array expressions
+	 * @return array() when none
+	 */
+	public static function getDefinedMeaningIdClassMembershipExpressions( $definedMeaningId, $languageId ) {
+		$dc = wdGetDataSetContext();
+		$dbr = wfGetDB( DB_SLAVE );
+		$Expressions = new Expressions;
+
+		$queryResult = $dbr->select(
+			array(
+				'exp' => "{$dc}_expression",
+				'synt' => "{$dc}_syntrans",
+				'cm' => "{$dc}_class_membership"
+			),
+			'class_mid',
+			array(
+				'class_member_mid' => $definedMeaningId,
+				'exp.remove_transaction_id' => null,
+				'synt.remove_transaction_id' => null,
+				'cm.remove_transaction_id' => null,
+				'exp.expression_id = synt.expression_id',
+				'synt.defined_meaning_id = class_mid'
+			), __METHOD__,
+			array(
+				'DISTINCT'
+			)
+		);
+
+		$expressions = array();
+
+		foreach ( $queryResult as $definedMeaningId ) {
+			$tempExpressions = Expressions::getDefinedMeaningIdAndLanguageIdExpressions( $languageId, $definedMeaningId->class_mid );
+			if ( $tempExpressions ){
+				$expressions[] = array(
+					'expression' => $tempExpressions[0],
+					'definedMeaningId' => $definedMeaningId->class_mid
+				);
+			} else {
+				$expressions[] = array(
+					'expression' => '',
+					'definedMeaningId' => $definedMeaningId->class_mid
+				);
+			}
+		}
+
+		return $expressions;
+
+	}
 }
