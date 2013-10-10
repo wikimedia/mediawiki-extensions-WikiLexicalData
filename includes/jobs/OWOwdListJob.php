@@ -27,7 +27,7 @@ Class CreateOwdListJob extends Job {
 	 */
 	public function run() {
 		// Load data from $this->params and $this->title
-		$this->version = '1.0';
+		$this->version = '1.1';
 		if ( isset( $this->params['langcode'] ) ) {
 			$languageId = $this->params['langcode'];
 		}
@@ -120,7 +120,7 @@ Class CreateOwdListJob extends Job {
 			$fhsyn = fopen ( $tempSynFileName, 'a' );
 			$fhatt = fopen ( $tempAttFileName, 'a' );
 			$fhini = fopen ( $tempIniFileName, 'a' );
-			$fhmia = fopen ( $tempMiaFileName, 'w' );
+			$fhmia = fopen ( $tempMiaFileName, 'a' );
 		}
 		// Add data
 		$ctr = 0;
@@ -129,6 +129,8 @@ Class CreateOwdListJob extends Job {
 			$this->Attributes = new Attributes;
 			$this->Expressions = new Expressions;
 			$this->Transactions = new Transactions;
+			$this->ClassAttribute = new WLD_Class;
+			$this->Collections = new Collections;
 			$enId = array(
 				'IPA' => Attributes::getClassAttributeId( 'International Phonetic Alphabet', WLD_ENGLISH_LANG_ID ),
 				'pinyin' => Attributes::getClassAttributeId( 'pinyin', WLD_ENGLISH_LANG_ID ),
@@ -365,13 +367,41 @@ Class CreateOwdListJob extends Job {
 						);
 					}
 				}
-				$subject = $this->removeAllEndSemiColon( $subject );
+				$subject = trim( $this->removeAllEndSemiColon( $subject ) );
+
+				// Get Class Attributes
+				$classes = $this->ClassAttribute->getDefinedMeaningIdClassMembershipExpressions( $definedMeaningId, $languageId );
+				$classAttribute = null;
+				foreach ( $classes as $row ) {
+					if ( $row['expression'] ) {
+						$classAttribute .= $row['expression'] . ';';
+					} else {
+						$classAttribute .= '<' . $row['definedMeaningId'] . '/>;';
+					}
+				}
+				$classes = array();
+				$classAttribute = trim( $this->removeAllEndSemiColon( $classAttribute ) );
+
+				// Get Collection Attributes
+				$collections = $this->Collections->getDefinedMeaningIdCollectionMembershipExpressions( $definedMeaningId, $languageId );
+				$collection = null;
+				foreach ( $collections as $row ) {
+					if ( $row['expression'] ) {
+						$collection .= $row['expression'] . ';';
+					} else {
+						$collection .= '<' . $row['definedMeaningId'] . '/>;';
+					}
+				}
+				$classes = array();
+				$collection = trim( $this->removeAllEndSemiColon( $collection ) );
 
 				fwrite( $fh,
 					$definedMeaningId .
 					',' . $languageId .
 					',' . $text .
-					',' . $subject .
+					',' . $csv->formatCSVcolumn( $subject ) .
+					',' . $csv->formatCSVcolumn( $classAttribute ) .
+					',' . $csv->formatCSVcolumn( $collection ) .
 					"\n"
 				);
 				$ctr ++;
