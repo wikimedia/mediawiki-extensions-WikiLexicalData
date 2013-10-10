@@ -119,6 +119,13 @@ $messages['roa-tara'] = array(
 	'apiow-desc' => "Estenzione WikiLexicalData de OmegaUicchi de l'api.php de MediaUicchi",
 );
 
+/** Russian (русский)
+ * @author Okras
+ */
+$messages['ru'] = array(
+	'apiow-desc' => 'OmegaWiki — это расширение WikiLexicalData для MediaWiki api.php',
+);
+
 /** Ukrainian (українська)
  * @author Ата
  */
