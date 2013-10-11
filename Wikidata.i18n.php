@@ -12087,7 +12087,7 @@ Selecione uma coleção para exportar. Introduza uma lista de códigos de língu
 	'ow_searchnoresult' => "<p>Pode:<br />
 * '''Criar a expressão \"[[Expression:\$1]]\"''' (e adicionar uma definição)<br />
 * '''Criar a página \"[[:\$1]]\"''' (uma página wiki normal)</p>",
-	'ow_save' => 'Salvar',
+	'ow_save' => 'Gravar',
 	'ow_history' => 'História',
 	'ow_datasets' => 'Seleção do conjunto de dados',
 	'ow_noedit_title' => 'Não tem permissões para editar',
