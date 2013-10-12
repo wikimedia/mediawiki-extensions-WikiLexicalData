@@ -15,7 +15,7 @@
 
 .wiki-data-table td .suggest-link,
 .option-panel td .suggest-link {
-	display: block;
+	display: table-cell;
 	zoom: 1;
 	left: 0px;
 	right: 1px;

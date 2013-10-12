@@ -23,13 +23,28 @@ class SpecialExportTSV extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$dc = wdGetDataSetcontext();
+		$filterType = null;
+		$topicAttributeId = 1150889; // ugly but will do for now.
 
-		if ( $request->getText( 'collection' ) && $request->getText( 'languages' ) ) {
+		$collectionId = $request->getText( 'collection' );
+		$classId = $request->getText( 'class' );
+		$topicId = $request->getText( 'topic' );
+
+		// get the collection to export.
+		if ( $request->getText( 'createcol' ) && $collectionId ) {
+			$filterType = 'collection';
+		}
+		elseif ( $request->getText( 'createcla' ) && $classId ) {
+			$filterType = 'class';
+		}
+		elseif ( $request->getText( 'createtopic' ) && $topicId ) {
+			$filterType = 'topic';
+		}
+
+
+		if ( $filterType && $request->getText( 'languages' ) ) {
 			// render the tsv file
 
-			// get the collection to export. Cut off the 'cid' part that we added
-			// to make the keys strings rather than numbers in the array sent to the form.
-			$collectionId = substr( $request->getText( 'collection' ), 3 );
 			// get the languages requested, turn into an array, trim for spaces.
 			$isoCodes = explode( ',', $request->getText( 'languages' ) );
 			for ( $i = 0; $i < count( $isoCodes ); $i++ ) {
@@ -62,25 +77,49 @@ class SpecialExportTSV extends SpecialPage {
 			}
 			echo( "\r\n" );
 
+			$sqltables = array(
+				'dm' => "{$dc}_defined_meaning",
+				'exp' => "{$dc}_expression"
+			);
+			$sqlcond = array(
+				'dm.expression_id = exp.expression_id',
+				'dm.remove_transaction_id' => null,
+				'exp.remove_transaction_id' => null
+			);
+
+			if ( $filterType == 'collection' ) {
+				$sqltables['col'] = "{$dc}_collection_contents";
+				$sqlcond['col.collection_id'] = $collectionId;
+				$sqlcond[] = 'col.member_mid=dm.defined_meaning_id';
+				$sqlcond['col.remove_transaction_id'] = null;
+			}
+			elseif ( $filterType == 'class' ) {
+				$sqltables['cla'] = "{$dc}_class_membership";
+				$sqlcond['cla.class_mid'] = $classId;
+				$sqlcond[] = 'cla.class_member_mid=dm.defined_meaning_id';
+				$sqlcond['cla.remove_transaction_id'] = null;
+			}
+			elseif ( $filterType == 'topic' ) {
+				$sqltables['oav'] = "{$dc}_option_attribute_values";
+				$sqlcond['oav.option_id '] = $topicId;
+				$sqlcond[] = 'oav.object_id=dm.defined_meaning_id';
+				$sqlcond['oav.remove_transaction_id'] = null;
+			}
+
 			// get all the defined meanings in the collection
-			$query = "SELECT dm.defined_meaning_id, exp.spelling ";
-			$query .= "FROM {$dc}_collection_contents col, {$dc}_defined_meaning dm, {$dc}_expression exp ";
-			$query .= "WHERE col.collection_id=" . $collectionId . " ";
-			$query .= "AND col.member_mid=dm.defined_meaning_id ";
-			$query .= "AND dm.expression_id = exp.expression_id ";
-			$query .= "AND " . getLatestTransactionRestriction( "col" );
-			$query .= "AND " . getLatestTransactionRestriction( "dm" );
-			$query .= "AND " . getLatestTransactionRestriction( "exp" );
-			$query .= "ORDER BY exp.spelling";
+			$queryResult = $dbr->select(
+				$sqltables,
+				array( 'dm.defined_meaning_id' , 'exp.spelling' ),
+				$sqlcond,
+				__METHOD__,
+				array( 'ORDER BY' => 'exp.spelling' )
+			);
 
-			// wfDebug($query."\n");s
-
-			$queryResult = $dbr->query( $query );
-			while ( $row = $dbr->fetchRow( $queryResult ) ) {
-				$dm_id = $row['defined_meaning_id'];
+			foreach ( $queryResult as $row ) {
+				$dm_id = $row->defined_meaning_id;
 				// echo the defined meaning id and the defining expression
 				echo( $dm_id );
-				echo( "\t" . $row['spelling'] );
+				echo( "\t" . $row->spelling );
 
 				// First we'll fill an associative array with the definitions and
 				// translations. Then we'll use the isoCodes array to put them in the
@@ -110,10 +149,10 @@ class SpecialExportTSV extends SpecialPage {
 				// wfDebug($qry."\n"); // uncomment this if you accept having 1700+ queries in the log
 
 				$definitions = $dbr->query( $qry );
-				while ( $row = $dbr->fetchRow( $definitions ) ) {
+				foreach ( $definitions as $rowdef ) {
 					// $key becomes something like def_eng
-					$key = 'def_' . $isoLookup['id' . $row['language_id']];
-					$data[$key] = $row['text_text'];
+					$key = 'def_' . $isoLookup['id' . $rowdef->language_id];
+					$data[$key] = $rowdef->text_text;
 				}
 				$dbr->freeResult( $definitions );
 
@@ -130,16 +169,16 @@ class SpecialExportTSV extends SpecialPage {
 				// wfDebug($qry."\n"); // uncomment this if you accept having 1700+ queries in the log
 
 				$translations = $dbr->query( $qry );
-				while ( $row = $dbr->fetchRow( $translations ) ) {
+				foreach ( $translations as $rowtrans ) {
 					// qry gets all languages, we filter them here. Saves an order
 					// of magnitude execution time.
-					if ( isset( $isoLookup['id' . $row['language_id']] ) ) {
+					if ( isset( $isoLookup['id' . $rowtrans->language_id] ) ) {
 						// $key becomes something like trans_eng
-						$key = 'trans_' . $isoLookup['id' . $row['language_id']];
+						$key = 'trans_' . $isoLookup['id' . $rowtrans->language_id];
 						if ( !isset( $data[$key] ) )
-							$data[$key] = $row['spelling'];
+							$data[$key] = $rowtrans->spelling;
 						else
-							$data[$key] = $data[$key] . '|' . $row['spelling'];
+							$data[$key] = $data[$key] . '|' . $rowtrans->spelling;
 					}
 				}
 				$dbr->freeResult( $translations );
@@ -160,29 +199,72 @@ class SpecialExportTSV extends SpecialPage {
 
 		}
 		else {
+			$collections = array();
+			$topics = array();
 
 			// Get the collections
-			$colQuery = "SELECT col.collection_id, exp.spelling " .
-						"FROM {$dc}_collection col INNER JOIN {$dc}_defined_meaning dm ON col.collection_mid=dm.defined_meaning_id " .
-						"INNER JOIN {$dc}_expression exp ON dm.expression_id=exp.expression_id " .
-						"WHERE " . getLatestTransactionRestriction( 'col' );
-
-			$collections = array();
-			$colResults = $dbr->query( $colQuery );
-			while ( $row = $dbr->fetchRow( $colResults ) ) {
-				$collections['cid' . $row['collection_id']] = $row['spelling'];
+			$colResults = $dbr->select(
+				array( 'col' => "{$dc}_collection", 'dm' => "{$dc}_defined_meaning", 'exp' => "{$dc}_expression" ),
+				array( 'col.collection_id', 'exp.spelling' ),
+				array( 'col.remove_transaction_id' => null ),
+				__METHOD__,
+				array(),
+				array(
+					'dm' => array( 'INNER JOIN', array( 'col.collection_mid=dm.defined_meaning_id' )),
+					'exp' => array( 'INNER JOIN', array( 'dm.expression_id=exp.expression_id' ))
+				)
+			);
+			foreach ( $colResults as $rowcol ) {
+				$collections[$rowcol->collection_id] = $rowcol->spelling;
 			}
+
+			$topicResults = $dbr->select(
+				array( 'oao' => "{$dc}_option_attribute_options", 'dm' => "{$dc}_defined_meaning", 'exp' => "{$dc}_expression" ),
+				array( 'oao.option_id', 'exp.spelling' ),
+				array(
+					'oao.attribute_id' => $topicAttributeId,
+					'oao.remove_transaction_id' => null
+				), __METHOD__,
+				array(),
+				array(
+					'dm' => array( 'INNER JOIN', array( 'oao.option_mid=dm.defined_meaning_id' )),
+					'exp' => array( 'INNER JOIN', array( 'dm.expression_id=exp.expression_id' ))
+				)
+			);
+			foreach ( $topicResults as $row ) {
+				$topics[$row->option_id] = $row->spelling;
+			}
+
 
 			// render the page
 			$output->setPageTitle( wfMessage( 'ow_exporttsv_title' )->text() );
 			$output->addHTML( wfMessage( 'ow_exporttsv_header' )->text() );
 
+			// all DM from a collection
 			$output->addHTML( getOptionPanel(
 				array(
-					wfMessage( 'ow_Collection_colon' )->text() => getSelect( 'collection', $collections, 'cid376322' ),
-					wfMessage( 'ow_exporttsv_languages' )->text() => getTextBox( 'languages', 'ita, eng, deu, fra, cat' ),
+					wfMessage( 'ow_Collection' )->text() => getSelect( 'collection', $collections, '376322' ),
+					wfMessage( 'prefs-ow-lang' )->text() => getTextBox( 'languages', 'ita, eng, deu, fra, cat' ),
 				),
-				'', array( 'create' => wfMessage( 'ow_create' )->text() )
+				'', array( 'createcol' => wfMessage( 'ow_create' )->text() )
+			) );
+
+			// all DM from a class
+			$output->addHTML( getOptionPanel(
+				array(
+					wfMessage( 'ow_Class' )->text() => getSuggest( 'class', 'class' ),
+					wfMessage( 'prefs-ow-lang' )->text() => getTextBox( 'languages', 'ita, eng, deu, fra, cat' ),
+				),
+				'', array( 'createcla' => wfMessage( 'ow_create' )->text() )
+			) );
+
+			// all DM from a given subject/topic
+			$output->addHTML( getOptionPanel(
+				array(
+					'topic' => getSelect( 'topic', $topics ),
+					wfMessage( 'prefs-ow-lang' )->text() => getTextBox( 'languages', 'ita, eng, deu, fra, cat' ),
+				),
+				'', array( 'createtopic' => wfMessage( 'ow_create' )->text() )
 			) );
 		}
 
