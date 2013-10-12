@@ -1142,7 +1142,10 @@ function getCollectionId( $collectionMeaningId ) {
 		), __METHOD__
 	);
 
+	if ( $collectionId ) {
 	return $collectionId;
+	}
+	return null;
 }
 
 function addCollection( $definedMeaningId, $collectionType ) {

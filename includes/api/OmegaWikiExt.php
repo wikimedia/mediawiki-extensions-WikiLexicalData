@@ -32,6 +32,7 @@ $wgExtensionCredits['other'][] = array(
 	$wgAutoloadClasses['Express'] = dirname( __FILE__ ) . '/owExpress.php';
 	$wgAutoloadClasses['AddSyntrans'] = dirname( __FILE__ ) . '/owAddSyntrans.php';
 	$wgAutoloadClasses['AddAnnotation'] = dirname( __FILE__ ) . '/owAddAnnotation.php';
+	$wgAutoloadClasses['AddToCollection'] = dirname( __FILE__ ) . '/owAddToCollection.php';
 
 // Map module name to class name
 	$wgAPIModules['ow_syntrans'] = 'SynonymTranslation';
@@ -39,6 +40,7 @@ $wgExtensionCredits['other'][] = array(
 	$wgAPIModules['ow_express'] = 'Express';
 	$wgAPIModules['ow_add_syntrans'] = 'AddSyntrans';
 	$wgAPIModules['ow_add_annotation'] = 'AddAnnotation';
+	$wgAPIModules['ow_add_to_collection'] = 'AddToCollection';
 
 // Load the internationalization file
 	$wgExtensionMessagesFiles['myextension']
