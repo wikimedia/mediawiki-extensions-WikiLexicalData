@@ -14486,7 +14486,7 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'wikidata-desc' => 'Lägger till en databas i wiki-stil för olika typer av innehåll',
-	'wikidata-handler-namespace-move-error' => 'Sidor i namnrymder som kontrolleras av Wikidata-tillägget kan inte flyttas.', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Sidor i namnrymder som kontrolleras av WikiLexicalData-tillägget kan inte flyttas.',
 	'languages' => 'Språkhanterare',
 	'langman-desc' => 'Lägg till och ändra språkinställningar med [[Special:Languages]]',
 	'langman_title' => 'Språkhanterare',
@@ -14690,9 +14690,9 @@ Ingenting har kopierats.',
 	'ow_no_action_specified' => '<h3>Ingen handling angiven</h3>
 Kanske kom du direkt till den här sidan? Vanligtvis ska du inte vara här.',
 	'ow_db_consistency_not_found' => '<h2>Fel</h2>
-Det är något fel med databasintegriteten, wikidata hittar inte giltig data som är knuten till detta ID för en definierad betydelse.
-Datan kan ha gått förlorad.
-Var god kontakta serveroperatören eller systemadministratören.', # Fuzzy
+Det är något fel med databasintegriteten, ingen giltig data kan hittas som är knuten till detta ID för en definierad betydelse.
+Den kan ha gått förlorad.
+Var god kontakta serveroperatören eller systemadministratören.',
 	'ow_history_transaction' => 'Transaktion:',
 	'ow_history_show_life_span' => 'Visa postens historik:',
 	'ow_class_attr_type_dm' => 'Definierad betydelse',
