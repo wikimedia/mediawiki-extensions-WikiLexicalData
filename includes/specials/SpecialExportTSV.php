@@ -16,11 +16,6 @@ class SpecialExportTSV extends SpecialPage {
 		$output = $this->getOutput();
 		$request = $this->getRequest();
 
-		if ( !$this->getUser()->isAllowed( 'exporttsv' ) ) {
-			$output->addHTML( wfMessage( 'ow_exporttsv_not_allowed' )->text() );
-			return false;
-		}
-
 		$dbr = wfGetDB( DB_SLAVE );
 		$dc = wdGetDataSetcontext();
 		$filterType = null;
