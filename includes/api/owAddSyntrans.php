@@ -31,100 +31,21 @@ class AddSyntrans extends ApiBase {
 		// Get the parameters
 		$params = $this->extractRequestParams();
 
+		// set test status
+		$this->test = false;
+
+		if ( isset( $params['test'] ) ) {
+			if ( $params['test'] == '1' OR $params['test'] == null ) {
+				$this->test = true;
+			}
+		}
+
 		// If wikipage, use batch processing
 		if ( $params['wikipage'] ) {
-			$csvWikiPageTitle = Title::newFromText( $params['wikipage'] );
-			$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
-
-			if ( !$wikiText = $csvWikiPage->getContent( Revision::RAW ) )
-				return $this->getResult()->addValue( null, $this->getModuleName(),
-					array ( 'result' => array (
-						'error' => "WikiPage ( $csvWikiPageTitle ) does not exist"
-					) )
-				);
-
-			$text = $wikiText->mText;
-
-			// Check if the page is redirected,
-			// then adjust accordingly.
-			preg_match( "/REDIRECT \[\[(.+)\]\]/", $text, $match2 );
-			if ( isset($match2[1]) ) {
-				$redirectedText = $match2[1];
-				$csvWikiPageTitle = Title::newFromText( $redirectedText );
-				$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
-				$wikiText = $csvWikiPage->getContent( Revision::RAW );
-				$text = $wikiText->mText;
-			}
-
-
-			$this->getResult()->addValue( null, $this->getModuleName(),
-				array ( 'process' => array (
-				'text' =>  'wikipage',
-				'type' => 'batch processing'
-				) )
-			);
-
-			$inputLine = explode("\n", $text);
-			$ctr = 0;
-			while ( $inputData = array_shift( $inputLine ) ) {
-				$ctr = $ctr + 1;
-				$inputData = trim( $inputData );
-				if ( $inputData == "" ) {
-					$result = array ( 'note' => "skipped blank line");
-					$this->getResult()->addValue( null, $this->getModuleName(),
-						array ( 'result' . $ctr => $result )
-					);
-					continue;
-				}
-				$inputMatch = preg_match("/^\"(.+)/", $inputData, $match);
-				if ($inputMatch == 1) {
-					$inputData = $match[1];
-					preg_match("/(.+)\",(.+)/", $inputData, $match2);
-					$spelling = $match2[1];
-					$inputData = $match2[2];
-					$inputData = explode(',',$inputData);
-					$inputDataCount = count( $inputData );
-					$languageId = $inputData[0];
-					$definedMeaningId = $inputData[1];
-					if ( $inputDataCount == 3 )
-						$identicalMeaning = $inputData[2];
-					if ( $inputDataCount == 2 )
-						$identicalMeaning = 1;
-				} else {
-					$inputData = explode(',',$inputData);
-					$inputDataCount = count( $inputData );
-					if ( $inputDataCount == 1 ) {
-						$result = array ( 'note' => "skipped blank line");
-						$this->getResult()->addValue( null, $this->getModuleName(),
-							array ( 'result' . $ctr => $result )
-						);
-						continue;
-					}
-					$spelling = $inputData[0];
-					$languageId = $inputData[1];
-					$definedMeaningId = $inputData[2];
-					if ( $inputDataCount == 4 )
-						$identicalMeaning = $inputData[3];
-					if ( $inputDataCount == 3 )
-						$identicalMeaning = 1 ;
-				}
-
-				if ( !is_numeric($languageId) || !is_numeric($definedMeaningId) ) {
-					if($ctr == 1) {
-						$result = array ( 'note' => "either $languageId or $definedMeaningId is not an int or probably just the CSV header");
-					} else {
-						$result = array ( 'note' => "either $languageId or $definedMeaningId is not an int");
-					}
-				} else {
-					$result = owAddSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning );
-				}
-				$this->getResult()->addValue( null, $this->getModuleName(),
-					array ( 'result' . $ctr => $result )
-				);
-
-			}
+			$text = $this->processBatch( $params['wikipage'] );
 			return true;
 		}
+
 		// if not, add just one syntrans
 
 		// Parameter checks
@@ -152,7 +73,7 @@ class AddSyntrans extends ApiBase {
 			'im' => $identicalMeaning
 			)
 		);
-		$result = owAddSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning );
+		$result = $this->owAddSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning );
 		$this->getResult()->addValue( null, $this->getModuleName(),
 			array ( 'result' => $result )
 		);
@@ -189,7 +110,10 @@ class AddSyntrans extends ApiBase {
 			),
 			'wikipage' => array (
 				ApiBase::PARAM_TYPE => 'string',
-			)
+			),
+			'test' => array (
+				ApiBase::PARAM_TYPE => 'string'
+			),
 		);
 	}
 
@@ -201,7 +125,8 @@ class AddSyntrans extends ApiBase {
 			'lang' => 'The language id of the expression' ,
 			'im' => 'The identical meaning value. (boolean)' ,
 			'file' => 'The file to process. (csv format)' ,
-			'wikipage' => 'The wikipage to process. (csv format, using wiki page)'
+			'wikipage' => 'The wikipage to process. (csv format, using wiki page)',
+			'test' => 'test mode. No changes are made.'
 		);
 	}
 
@@ -217,64 +142,179 @@ class AddSyntrans extends ApiBase {
 		' language_id        (int)',
 		' defined_meaning_id (int)',
 		' identical meaning  (boolean 0 or 1, optional)',
-		'api.php?action=ow_add_syntrans&wikipage=User:MinnanBot/addSyntrans130124.csv&format=xml'
+		'api.php?action=ow_add_syntrans&wikipage=User:MinnanBot/addSyntrans130124.csv&format=xml',
+		'or to test it',
+		'api.php?action=ow_add_syntrans&wikipage=User:MinnanBot/addSyntrans130124.csv&format=xml&test'
 		);
 	}
-}
 
-function owAddSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning ) {
-	global $wgUser;
-	$dc = wdGetDataSetContext();
+	public function processBatch( $wikiPage ) {
+		global $params;
 
-	// check that the language_id exists
-	if ( !verifyLanguageId( $languageId ) )
-		return 'Non existent language id.';
+		$csvWikiPageTitle = Title::newFromText( $wikiPage );
+		$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
 
-	// check that defined_meaning_id exists
-	if ( !verifyDefinedMeaningId( $definedMeaningId ) )
-		return 'Non existent dm id.';
+		if ( !$wikiText = $csvWikiPage->getContent( Revision::RAW ) )
+			return $this->getResult()->addValue( null, $this->getModuleName(),
+				array ( 'result' => array (
+					'error' => "WikiPage ( $csvWikiPageTitle ) does not exist"
+				) )
+			);
 
-	// trim spelling
-	$spelling = trim( $spelling );
+		$text = $wikiText->mText;
 
-	if ( $identicalMeaning == 1 ) {
-		$identicalMeaning = "true";
-	}
-	else {
-		$identicalMeaning = "false";
-	}
+		// Check if the page is redirected,
+		// then adjust accordingly.
+		preg_match( "/REDIRECT \[\[(.+)\]\]/", $text, $match2 );
+		if ( isset($match2[1]) ) {
+			$redirectedText = $match2[1];
+			$csvWikiPageTitle = Title::newFromText( $redirectedText );
+			$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
+			$wikiText = $csvWikiPage->getContent( Revision::RAW );
+			$text = $wikiText->mText;
+		}
 
-	// first check if it exists, then create the transaction and put it in db
-	$expression = findExpression( $spelling, $languageId );
-	if ( $expression ) {
-		// the expression exists, check if it has this syntrans
-		$bound = expressionIsBoundToDefinedMeaning ( $definedMeaningId, $expression->id );
-		if (  $bound == true ) {
-			$synonymId = getSynonymId( $definedMeaningId, $expression->id );
-			return array (
-				'status' => 'exists',
-				'sid' => $synonymId,
-				'e' => $spelling,
-				'langid' => $languageId,
-				'dm' => $definedMeaningId,
-				'im' => $identicalMeaning
+		$this->getResult()->addValue( null, $this->getModuleName(),
+			array ( 'process' => array (
+			'text' =>  'wikipage',
+			'type' => 'batch processing'
+			) )
+		);
+
+		$inputLine = explode("\n", $text);
+		$ctr = 0;
+		while ( $inputData = array_shift( $inputLine ) ) {
+			$ctr = $ctr + 1;
+			$inputData = trim( $inputData );
+			if ( $inputData == "" ) {
+				$result = array ( 'note' => "skipped blank line");
+				$this->getResult()->addValue( null, $this->getModuleName(),
+					array ( 'result' . $ctr => $result )
+				);
+				continue;
+			}
+
+			$inputMatch = preg_match("/^\"(.+)/", $inputData, $match);
+			if ($inputMatch == 1) {
+				$inputData = $match[1];
+				preg_match("/(.+)\",(.+)/", $inputData, $match2);
+				$spelling = $match2[1];
+				$inputData = $match2[2];
+				$inputData = explode(',',$inputData);
+				$inputDataCount = count( $inputData );
+				$languageId = $inputData[0];
+				$definedMeaningId = $inputData[1];
+				if ( $inputDataCount == 3 )
+					$identicalMeaning = $inputData[2];
+				if ( $inputDataCount == 2 )
+					$identicalMeaning = 1;
+			} else {
+				$inputData = explode(',',$inputData);
+				$inputDataCount = count( $inputData );
+				if ( $inputDataCount == 1 ) {
+					$result = array ( 'note' => "skipped blank line");
+					$this->getResult()->addValue( null, $this->getModuleName(),
+						array ( 'result' . $ctr => $result )
+					);
+					continue;
+				}
+				$spelling = $inputData[0];
+				$languageId = $inputData[1];
+				$definedMeaningId = $inputData[2];
+				if ( $inputDataCount == 4 )
+					$identicalMeaning = $inputData[3];
+				if ( $inputDataCount == 3 )
+					$identicalMeaning = 1 ;
+			}
+
+			if ( !is_numeric($languageId) || !is_numeric($definedMeaningId) ) {
+				if($ctr == 1) {
+					$result = array ( 'note' => "either $languageId or $definedMeaningId is not an int or probably just the CSV header");
+				} else {
+					$result = array ( 'note' => "either $languageId or $definedMeaningId is not an int");
+				}
+			} else {
+				$result = $this->owAddSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning );
+			}
+
+			$this->getResult()->addValue( null, $this->getModuleName(),
+				array ( 'result' . $ctr => $result )
 			);
 		}
+		return true;
 	}
-	// adding the expression
-	startNewTransaction( $wgUser->getID(), "0.0.0.0", "", $dc);
 
-	addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning );
+	public function owAddSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning ) {
+		global $wgUser;
+		$dc = wdGetDataSetContext();
 
-	$expressionId = getExpressionId( $spelling, $languageId );
-	$synonymId = getSynonymId( $definedMeaningId, $expressionId );
-	return array (
-		'status' => 'added',
-		'sid' => $synonymId,
-		'e' => $spelling,
-		'langid' => $languageId,
-		'dm' => $definedMeaningId,
-		'im' => $identicalMeaning
-	);
+		// check that the language_id exists
+		if ( !verifyLanguageId( $languageId ) )
+			return array(
+				'WARNING' => 'Non existent language id(' . $languageId . ').'
+			);
 
+		// check that defined_meaning_id exists
+		if ( !verifyDefinedMeaningId( $definedMeaningId ) )
+			return array(
+				'WARNING' => 'Non existent dm id (' . $definedMeaningId . ').'
+			);
+
+		// trim spelling
+		$spelling = trim( $spelling );
+
+		if ( $identicalMeaning == 1 ) {
+			$identicalMeaning = "true";
+		}
+		else {
+			$identicalMeaning = "false";
+		}
+
+		// first check if it exists, then create the transaction and put it in db
+		$expression = findExpression( $spelling, $languageId );
+		$concept = getDefinedMeaningSpellingForLanguage( $definedMeaningId, WLD_ENGLISH_LANG_ID );
+		if ( $expression ) {
+			// the expression exists, check if it has this syntrans
+			$bound = expressionIsBoundToDefinedMeaning ( $definedMeaningId, $expression->id );
+			if (  $bound == true ) {
+				$synonymId = getSynonymId( $definedMeaningId, $expression->id );
+				$note = array (
+					'status' => 'exists',
+					'in' => "$concept DM($definedMeaningId)",
+					'sid' => $synonymId,
+					'e' => $spelling,
+					'langid' => $languageId,
+					'dm' => $definedMeaningId,
+					'im' => $identicalMeaning
+				);
+				if ( $this->test ) {
+					$note['note'] = 'test run only';
+				}
+
+				return $note;
+			}
+		}
+		// adding the expression
+		$expressionId = getExpressionId( $spelling, $languageId );
+		$synonymId = getSynonymId( $definedMeaningId, $expressionId );
+		$note = array (
+			'status' => 'added',
+			'to' => "$concept DM($definedMeaningId)",
+			'sid' => $synonymId,
+			'e' => $spelling,
+			'langid' => $languageId,
+			'dm' => $definedMeaningId,
+			'im' => $identicalMeaning
+		);
+
+		if ( !$this->test ) {
+			startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_syntrans", $dc);
+			addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning );
+		} else {
+			$note['note'] = 'test run only';
+		}
+
+		return $note;
+	}
 }
+
