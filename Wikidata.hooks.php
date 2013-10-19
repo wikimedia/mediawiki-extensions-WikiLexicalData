@@ -7,6 +7,8 @@ class WikiLexicalDataHooks {
 	public static function onBeforePageDisplay( $out, $skin ) {
 		global $wgContLang;
 
+		$request = $out->getRequest();
+
 		$out->addModules( 'ext.Wikidata.css' );
 		$out->addModules( 'ext.Wikidata.ajax' );
 
@@ -15,13 +17,15 @@ class WikiLexicalDataHooks {
 		$out->addModules( 'ext.Wikidata.suggest' );
 
 		// remove Expression: from title. Looks better on Google
-		$namespace = $skin->getTitle()->getNamespace();
-		if ( $namespace == NS_EXPRESSION ) {
-			$namespaceText = $wgContLang->getNsText( $namespace );
-			// cut the namespaceText from the title
-			$out->setPageTitle( mb_substr( $out->getPageTitle(), mb_strlen( $namespaceText ) + 1 ) );
+		$action = $request->getText( "action", "view" );
+		if ( $action=='view') {
+			$namespace = $skin->getTitle()->getNamespace();
+			if ( $namespace == NS_EXPRESSION ) {
+				$namespaceText = $wgContLang->getNsText( $namespace );
+				// cut the namespaceText from the title
+				$out->setPageTitle( mb_substr( $out->getPageTitle(), mb_strlen( $namespaceText ) + 1 ) );
+			}
 		}
-
 		return true;
 	}
 
