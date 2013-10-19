@@ -5,7 +5,7 @@ require_once( "OmegaWiki/WikiDataGlobals.php" );
 class WikiLexicalDataHooks {
 
 	public static function onBeforePageDisplay( $out, $skin ) {
-		global $wgLang, $wgScriptPath, $wgRequest, $wgResourceModules;
+		global $wgContLang;
 
 		$out->addModules( 'ext.Wikidata.css' );
 		$out->addModules( 'ext.Wikidata.ajax' );
@@ -13,6 +13,14 @@ class WikiLexicalDataHooks {
 		// for editing, but also needed in view mode when dynamically editing annotations
 		$out->addModules( 'ext.Wikidata.edit' );
 		$out->addModules( 'ext.Wikidata.suggest' );
+
+		// remove Expression: from title. Looks better on Google
+		$namespace = $skin->getTitle()->getNamespace();
+		if ( $namespace == NS_EXPRESSION ) {
+			$namespaceText = $wgContLang->getNsText( $namespace );
+			// cut the namespaceText from the title
+			$out->setPageTitle( mb_substr( $out->getPageTitle(), mb_strlen( $namespaceText ) + 1 ) );
+		}
 
 		return true;
 	}
@@ -157,6 +165,7 @@ class WikiLexicalDataHooks {
 		}
 		return true;
 	}
+
 
 	public static function onSkinTemplateNavigation ( &$skin, &$links ) {
 
