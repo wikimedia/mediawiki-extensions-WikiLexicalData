@@ -12517,6 +12517,10 @@ Por favor, contate o operador ou administrador do servidor.', # Fuzzy
  * @author AlimanRuna
  */
 $messages['qu'] = array(
+	'languages' => 'Rimaykunata kamachikuq',
+	'langman_title' => 'Rimaykunata kamachikuq',
+	'langman_langname' => 'Rimaypa sutin:',
+	'langman_addlang' => 'Rimayta yapay',
 	'ow_exporttsv_languages' => 'Rimaykuna:',
 );
 
