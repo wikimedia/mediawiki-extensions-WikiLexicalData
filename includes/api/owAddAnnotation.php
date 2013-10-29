@@ -33,6 +33,15 @@ class AddAnnotation extends ApiBase {
 		// Get the parameters
 		$params = $this->extractRequestParams();
 
+		// set test status
+		$this->test = false;
+
+		if ( isset( $params['test'] ) ) {
+			if ( $params['test'] == '1' OR $params['test'] == null ) {
+				$this->test = true;
+			}
+		}
+
 		// The Type of Annotation
 		if ( $params['type'] == 'text') {
 
@@ -309,6 +318,9 @@ class AddAnnotation extends ApiBase {
 			),
 			'dm_relation' => array (
 				ApiBase::PARAM_TYPE => 'integer'
+			),
+			'test' => array (
+				ApiBase::PARAM_TYPE => 'string'
 			)
 		);
 	}
@@ -330,7 +342,8 @@ class AddAnnotation extends ApiBase {
 			'dm_relation' => "Defined meaning id relation to process
 				for defined meaning relations or a defined meaning id
 				for syntrans relations between two syntrans with
-				different defined meaning ids"
+				different defined meaning ids",
+			'test' => 'test mode. No changes are made.'
 		);
 	}
 
@@ -339,18 +352,32 @@ class AddAnnotation extends ApiBase {
 		return array(
 			'Add text type syntrans annotation',
 			'api.php?action=ow_add_annotation&type=text&e=acusar&lang=spa&dm=837820&attribute=hyphenation&attrib_lang=eng&text=a·cu·sar&format=xml',
+			'or to test it',
+			'api.php?action=ow_add_annotation&type=text&e=acusar&lang=spa&dm=837820&attribute=hyphenation&attrib_lang=eng&text=a·cu·sar&format=xml&test',
 			'Add text type defined meaning annotation',
 			'api.php?action=ow_add_annotation&type=text&dm=2024&attribute=chemical%20symbol&attrib_lang=eng&text=Fe&format=xml',
 			'api.php?action=ow_add_annotation&type=text&dm=2024&attribute=atomic%20number&attrib_lang=eng&text=26&format=xml',
+			'or to test it',
+			'api.php?action=ow_add_annotation&type=text&dm=2024&attribute=chemical%20symbol&attrib_lang=eng&text=Fe&format=xml&test',
+			'api.php?action=ow_add_annotation&type=text&dm=2024&attribute=atomic%20number&attrib_lang=eng&text=26&format=xml&test',
 			'Add option type syntrans annotation',
 			'api.php?action=ow_add_annotation&type=option&e=acusar&lang=spa&dm=837820&attribute=part%20of%20speech&attrib_lang=eng&option=verb&option_lang=eng&format=xml',
 			'api.php?action=ow_add_annotation&type=option&e=case&lang=eng&dm=7367&attribute=usage&attrib_lang=eng&option=colloquial&option_lang=eng&format=xml',
+			'or to test it',
+			'api.php?action=ow_add_annotation&type=option&e=acusar&lang=spa&dm=837820&attribute=part%20of%20speech&attrib_lang=eng&option=verb&option_lang=eng&format=xml&test',
+			'api.php?action=ow_add_annotation&type=option&e=case&lang=eng&dm=7367&attribute=usage&attrib_lang=eng&option=colloquial&option_lang=eng&format=xml&test',
 			'Add option type defined meaning annotation',
 			'api.php?action=ow_add_annotation&type=option&dm=3188&attribute=topic&attrib_lang=eng&option=biology&option_lang=eng&format=xml',
+			'or to test it',
+			'api.php?action=ow_add_annotation&type=option&dm=3188&attribute=topic&attrib_lang=eng&option=biology&option_lang=eng&format=xml&test',
 			'Add relation type syntrans annotation',
-			'api.php?action=ow_add_annotation&type=relation&e=jí&lang=nan-poj&dm=5453&attribute=dialectal%20variant&attrib_lang=eng&relation=lí&relation_lang=nan-poj',
+			'api.php?action=ow_add_annotation&type=relation&e=jí&lang=nan-POJ&dm=5453&attribute=dialectal%20variant&attrib_lang=eng&relation=lí&relation_lang=nan-POJ',
+			'or to test it',
+			'api.php?action=ow_add_annotation&type=relation&e=jí&lang=nan-POJ&dm=5453&attribute=dialectal%20variant&attrib_lang=eng&relation=lí&relation_lang=nan-POJ&test',
 			'Add relation type defined meaning annotation',
 			'api.php?action=ow_add_annotation&type=relation&dm=2024&attribute=hypernym&attrib_lang=eng&dm_relation=2324',
+			'or to test it',
+			'api.php?action=ow_add_annotation&type=relation&dm=2024&attribute=hypernym&attrib_lang=eng&dm_relation=2324&test',
 		);
 	}
 
@@ -422,20 +449,31 @@ class AddAnnotation extends ApiBase {
 		// Add values if does not exist
 		$valueId = getTextAttributeValueId( $this->objectId, $this->attributeId, $text );
 		if ( !$valueId ) {
-			startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "", $dc );
-			$valueId = addTextAttributeValue( $this->objectId, $this->attributeId, $text );
-			return array( 'result' => array(
-					'status' => 'added',
-					'value_id' => $valueId
-				)
+			if ( !$this->test ) {
+				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_annotation", $dc);
+				$valueId = addTextAttributeValue( $this->objectId, $this->attributeId, $text );
+			}
+			$note['result'] = array(
+				'status' => 'added'
 			);
+
+			if ( $value_id ) {
+				$note['result']['value_id'] = $valueId;
+			}
+
+			if ( $this->test ) {
+				$note['note'] = 'test run only';
+			}
 		} else {
-			return array( 'result' => array(
-					'status' => 'exists',
-					'value_id' => $valueId
-				)
+			$note['result'] = array(
+				'status' => 'exists',
+				'value_id' => $valueId
 			);
+			if ( $this->test ) {
+				$note['note'] = 'test run only';
+			}
 		}
+		return $note;
 	}
 
 	private function processAddOptionAttributeValues( $spelling, $language, $definedMeaningId, $attribute, $attribLang, $option, $optionLang ) {
@@ -573,20 +611,33 @@ class AddAnnotation extends ApiBase {
 		// Add values if does not exist
 		$valueId = getOptionAttributeValueId( $this->objectId, $this->optionId );
 		if ( !$valueId ) {
-			startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "", $dc );
-			$valueId = addOptionAttributeValue( $this->objectId, $this->optionId );
-			return array( 'result' => array(
-					'status' => 'added',
-					'value_id' => $valueId
-				)
+			if ( !$this->test ) {
+				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "", $dc );
+				addOptionAttributeValue( $this->objectId, $this->optionId );
+				$valueId = getOptionAttributeValueId( $this->objectId, $this->optionId );
+				echo $valueId . '"';
+			}
+			$note['result'] = array(
+				'status' => 'added'
 			);
+
+			if ( $valueId ) {
+				$note['result']['value_id'] = $valueId;
+			}
+
+			if ( $this->test ) {
+				$note['note'] = 'test run only';
+			}
 		} else {
-			return array( 'result' => array(
-					'status' => 'exists',
-					'value_id' => $valueId
-				)
+			$note['result'] = array(
+				'status' => 'exists',
+				'value_id' => $valueId
 			);
+			if ( $this->test ) {
+				$note['note'] = 'test run only';
+			}
 		}
+		return $note;
 	}
 
 	private function processAddRelationAttributeValues( $spelling, $language, $definedMeaningId, $attribute, $attribLang, $relation, $relationLang, $relationDM ) {
@@ -709,20 +760,26 @@ class AddAnnotation extends ApiBase {
 		// Add values if does not exist
 		$relationId = relationExists( $meaning1Mid, $relationtypeMid, $meaning2Mid );
 		if ( !$relationId ) {
-			startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "", $dc );
-			addRelation( $meaning1Mid, $relationtypeMid, $meaning2Mid );
-			return array( 'result' => array(
-					'status' => 'added'
-				)
+			$note['result'] = array(
+				'status' => 'added'
 			);
+			if ( !$this->test ) {
+				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "", $dc );
+				addRelation( $meaning1Mid, $relationtypeMid, $meaning2Mid );
+			} else {
+				$note['note'] = 'test run only';
+			}
 		} else {
-			return array( 'result' => array(
-					'status' => 'exists'
-				)
+			$note['result'] = array(
+				'status' => 'exists'
 			);
+			if ( $this->test ) {
+				$note['note'] = 'test run only';
+			}
 		}
 
-		return array('result' => 'true');
+		return $note;
+	//	return array('result' => 'true');
 	}
 
 }
