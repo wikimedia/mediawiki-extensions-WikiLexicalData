@@ -11648,7 +11648,8 @@ Wybierz kolekcję do wyeksportowania. W polu tekstowym „Języki” wpisz rozdz
 	'ow_copy_successful' => '<h2>Kopiowanie powiodło się</h2>Dane najprawdopodobniej udało się bezpiecznie skopiować. Zalecane jest jednak sprawdzenie poprawności wykonania kopii.',
 	'ow_copy_unsuccessful' => '<h3>Kopiowanie nie powiodło się</h3>Nie przeprowadzono operacji kopiowania.',
 	'ow_no_action_specified' => '<h3>Nie podano działania</h3>Może przeszedłeś do tej strony bezpośrednio? Zazwyczaj użytkownicy nie muszą tu zaglądać.',
-	'ow_db_consistency_not_found' => '<h2>Błąd</h2>Wystąpił błąd spójności bazy danych. Dane wiki nie są w stanie odnaleźć odpowiednich danych skojarzonych z określonym identyfikatorem. Dane mogły zostać utracone. Skontaktuj sie z operatorem serwera, lub jego administratorem.', # Fuzzy
+	'ow_db_consistency_not_found' => '<h2>Błąd</h2>
+Wystąpił błąd spójności bazy danych. Nie można odnaleźć odpowiednich danych skojarzonych z określonym identyfikatorem. Dane mogły zostać utracone. Skontaktuj się z operatorem serwera lub jego administratorem.',
 	'ow_history_transaction' => 'Transakcja:',
 	'ow_history_show_life_span' => 'Pokaż żywotność rekordu',
 	'ow_class_attr_type_dm' => 'Zdefiniowane znaczenie',
