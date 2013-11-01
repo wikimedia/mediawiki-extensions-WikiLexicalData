@@ -209,8 +209,12 @@ class SpecialOWDownloads extends SpecialPage {
 			$output->addHTML( $htmlLine );
 		}
 
+		// DfM Downloads
+		$wikiText = "=== Dictionary For Mids ===\n";
+		$wikiText .= "{{DictionaryForMIDs}}\n";
+
 		// see also
-		$wikiText = "==Help==\n";
+		$wikiText .= "==Help==\n";
 		$wikiText .= "*[[Help:Downloading_the_data#CSV_Files|About the OmegaWiki Special Downloads Page]]\n";
 		$wikiText .="*[[Help:OmegaWiki's Development CSVs|OmegaWiki's Development CSVs]]\n";
 		$output->addWikiText( $wikiText );
