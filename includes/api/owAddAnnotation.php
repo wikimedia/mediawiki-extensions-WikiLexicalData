@@ -12,11 +12,12 @@ class AddAnnotation extends ApiBase {
 	private $objectId, $attributeId, $optionId;
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, null);
+		parent :: __construct( $main, $action, null );
 	}
 
 	public function execute() {
 
+		$this->wikipage = false;
 		$typeExist = 0;
 		$result = '';
 
@@ -43,7 +44,17 @@ class AddAnnotation extends ApiBase {
 		}
 
 		// The Type of Annotation
-		if ( $params['type'] == 'text') {
+		if ( $params['type'] == 'text' ) {
+
+			// If wikipage, use batch processing
+			if ( $params['wikipage'] ) {
+				$this->wikipage = true;
+				$this->type = 'text';
+				$text = $this->processBatch( $params['wikipage'] );
+				return true;
+			}
+
+			// if not, add just one text
 
 			// Parameter checks
 
@@ -78,7 +89,7 @@ class AddAnnotation extends ApiBase {
 			$attribLang = $params['attrib_lang'];
 			$text = $params['text'];
 
-			$result = $this->processAddTextAttributeValues($spelling, $language, $definedMeaningId, $attribute, $attribLang, $text);
+			$result = $this->processAddTextAttributeValues( $spelling, $language, $definedMeaningId, $attribute, $attribLang, $text );
 
 			if ( !isset ( $result['error'] ) ) {
 				$this->getResult()->addValue( null, $this->getModuleName(),
@@ -101,7 +112,18 @@ class AddAnnotation extends ApiBase {
 			$typeExist = 1;
 		}
 
-		if ( $params['type'] == 'option') {
+		if ( $params['type'] == 'option' ) {
+
+			// If wikipage, use batch processing
+			if ( $params['wikipage'] ) {
+				$this->wikipage = true;
+				$this->type = 'option';
+				$text = $this->processBatch( $params['wikipage'] );
+				return true;
+			}
+
+			// if not, add just one option
+
 			// Parameter checks
 
 			// * required parameters
@@ -169,11 +191,23 @@ class AddAnnotation extends ApiBase {
 		}
 
 		// Types to be added later.
-	//	if ( $params['type'] == 'url') {
+	//	if ( $params['type'] == 'url' ) {
 	//		$typeExist = 1;
 	//	}
 
-		if ( $params['type'] == 'relation') {
+		if ( $params['type'] == 'relation' ) {
+
+			// If wikipage, use batch processing
+			if ( $params['wikipage'] ) {
+				$this->wikipage = true;
+				$this->type = 'relation';
+				$text = $this->processBatch( $params['wikipage'] );
+			//	$text = $this->processBatchRelation( $params['wikipage'] );
+				return true;
+			}
+
+			// if not, add just one relation
+
 			// Parameter checks
 
 			// * required parameters
@@ -319,6 +353,9 @@ class AddAnnotation extends ApiBase {
 			'dm_relation' => array (
 				ApiBase::PARAM_TYPE => 'integer'
 			),
+			'wikipage' => array (
+				ApiBase::PARAM_TYPE => 'string',
+			),
 			'test' => array (
 				ApiBase::PARAM_TYPE => 'string'
 			)
@@ -343,6 +380,7 @@ class AddAnnotation extends ApiBase {
 				for defined meaning relations or a defined meaning id
 				for syntrans relations between two syntrans with
 				different defined meaning ids",
+			'wikipage' => 'The wikipage to process. (tsv format, using wiki page)',
 			'test' => 'test mode. No changes are made.'
 		);
 	}
@@ -350,38 +388,243 @@ class AddAnnotation extends ApiBase {
 	// Get examples
 	public function getExamples() {
 		return array(
+			'',
 			'Add text type syntrans annotation',
-			'api.php?action=ow_add_annotation&type=text&e=acusar&lang=spa&dm=837820&attribute=hyphenation&attrib_lang=eng&text=a·cu·sar&format=xml',
-			'or to test it',
-			'api.php?action=ow_add_annotation&type=text&e=acusar&lang=spa&dm=837820&attribute=hyphenation&attrib_lang=eng&text=a·cu·sar&format=xml&test',
+			' api.php?action=ow_add_annotation&type=text&e=acusar&lang=spa&dm=837820&attribute=hyphenation&attrib_lang=eng&text=a·cu·sar&format=xml',
+			' or to test it',
+			' api.php?action=ow_add_annotation&type=text&e=acusar&lang=spa&dm=837820&attribute=hyphenation&attrib_lang=eng&text=a·cu·sar&format=xml&test',
+			'',
 			'Add text type defined meaning annotation',
-			'api.php?action=ow_add_annotation&type=text&dm=2024&attribute=chemical%20symbol&attrib_lang=eng&text=Fe&format=xml',
-			'api.php?action=ow_add_annotation&type=text&dm=2024&attribute=atomic%20number&attrib_lang=eng&text=26&format=xml',
-			'or to test it',
-			'api.php?action=ow_add_annotation&type=text&dm=2024&attribute=chemical%20symbol&attrib_lang=eng&text=Fe&format=xml&test',
-			'api.php?action=ow_add_annotation&type=text&dm=2024&attribute=atomic%20number&attrib_lang=eng&text=26&format=xml&test',
+			' api.php?action=ow_add_annotation&type=text&dm=2024&attribute=chemical%20symbol&attrib_lang=eng&text=Fe&format=xml',
+			' api.php?action=ow_add_annotation&type=text&dm=2024&attribute=atomic%20number&attrib_lang=eng&text=26&format=xml',
+			' or to test it',
+			' api.php?action=ow_add_annotation&type=text&dm=2024&attribute=chemical%20symbol&attrib_lang=eng&text=Fe&format=xml&test',
+			' api.php?action=ow_add_annotation&type=text&dm=2024&attribute=atomic%20number&attrib_lang=eng&text=26&format=xml&test',
+			'',
+			'You can also add synonym/translation text annotations using a TSV file format saved in a Wiki Page.  The file must ',
+			'contain 6 columns:',
+			' defined_meaning_id (int)',
+			' attribute          (string)',
+			' attribute language (string)',
+			' text               (string)',
+			' expression         (string)',
+			' language           (string)',
+			'',
+			'  api.php?action=ow_add_annotation&type=text&wikipage=User:Minnan.import.bot/addTextAnnotation&dm=0&format=xml',
+			'  or to test it',
+			'  api.php?action=ow_add_annotation&type=text&wikipage=User:Minnan.import.bot/addTextAnnotationTest&dm=0&format=xml&test',
+			'','',
 			'Add option type syntrans annotation',
-			'api.php?action=ow_add_annotation&type=option&e=acusar&lang=spa&dm=837820&attribute=part%20of%20speech&attrib_lang=eng&option=verb&option_lang=eng&format=xml',
-			'api.php?action=ow_add_annotation&type=option&e=case&lang=eng&dm=7367&attribute=usage&attrib_lang=eng&option=colloquial&option_lang=eng&format=xml',
-			'or to test it',
-			'api.php?action=ow_add_annotation&type=option&e=acusar&lang=spa&dm=837820&attribute=part%20of%20speech&attrib_lang=eng&option=verb&option_lang=eng&format=xml&test',
-			'api.php?action=ow_add_annotation&type=option&e=case&lang=eng&dm=7367&attribute=usage&attrib_lang=eng&option=colloquial&option_lang=eng&format=xml&test',
+			' api.php?action=ow_add_annotation&type=option&e=acusar&lang=spa&dm=837820&attribute=part%20of%20speech&attrib_lang=eng&option=verb&option_lang=eng&format=xml',
+			' api.php?action=ow_add_annotation&type=option&e=case&lang=eng&dm=7367&attribute=usage&attrib_lang=eng&option=colloquial&option_lang=eng&format=xml',
+			' or to test it',
+			' api.php?action=ow_add_annotation&type=option&e=acusar&lang=spa&dm=837820&attribute=part%20of%20speech&attrib_lang=eng&option=verb&option_lang=eng&format=xml&test',
+			' api.php?action=ow_add_annotation&type=option&e=case&lang=eng&dm=7367&attribute=usage&attrib_lang=eng&option=colloquial&option_lang=eng&format=xml&test',
+			'',
 			'Add option type defined meaning annotation',
-			'api.php?action=ow_add_annotation&type=option&dm=3188&attribute=topic&attrib_lang=eng&option=biology&option_lang=eng&format=xml',
-			'or to test it',
-			'api.php?action=ow_add_annotation&type=option&dm=3188&attribute=topic&attrib_lang=eng&option=biology&option_lang=eng&format=xml&test',
+			' api.php?action=ow_add_annotation&type=option&dm=3188&attribute=topic&attrib_lang=eng&option=biology&option_lang=eng&format=xml',
+			' or to test it',
+			' api.php?action=ow_add_annotation&type=option&dm=3188&attribute=topic&attrib_lang=eng&option=biology&option_lang=eng&format=xml&test',
+			'',
+			'You can also add synonym/translation option annotations using a TSV file format saved in a Wiki Page.  The file must ',
+			'contain 7 columns:',
+			' defined_meaning_id (int)',
+			' attribute          (string)',
+			' attribute language (string)',
+			' option             (string)',
+			' option language    (string)',
+			' expression         (string)',
+			' language           (string)',
+			'',
+			'  api.php?action=ow_add_annotation&type=option&wikipage=User:Minnan.import.bot/addOptionAnnotation&dm=0&format=xml',
+			'  or to test it',
+			'  api.php?action=ow_add_annotation&type=option&wikipage=User:Minnan.import.bot/addOptionAnnotationTest&dm=0&format=xml&test',
+			'','',
 			'Add relation type syntrans annotation',
-			'api.php?action=ow_add_annotation&type=relation&e=jí&lang=nan-POJ&dm=5453&attribute=dialectal%20variant&attrib_lang=eng&relation=lí&relation_lang=nan-POJ',
-			'or to test it',
-			'api.php?action=ow_add_annotation&type=relation&e=jí&lang=nan-POJ&dm=5453&attribute=dialectal%20variant&attrib_lang=eng&relation=lí&relation_lang=nan-POJ&test',
+			' api.php?action=ow_add_annotation&type=relation&e=jí&lang=nan-POJ&dm=5453&attribute=dialectal%20variant&attrib_lang=eng&relation=lí&relation_lang=nan-POJ',
+			' or to test it',
+			' api.php?action=ow_add_annotation&type=relation&e=jí&lang=nan-POJ&dm=5453&attribute=dialectal%20variant&attrib_lang=eng&relation=lí&relation_lang=nan-POJ&test',
+			'',
 			'Add relation type defined meaning annotation',
-			'api.php?action=ow_add_annotation&type=relation&dm=2024&attribute=hypernym&attrib_lang=eng&dm_relation=2324',
-			'or to test it',
-			'api.php?action=ow_add_annotation&type=relation&dm=2024&attribute=hypernym&attrib_lang=eng&dm_relation=2324&test',
+			' api.php?action=ow_add_annotation&type=relation&dm=2024&attribute=hypernym&attrib_lang=eng&dm_relation=2324',
+			' or to test it',
+			' api.php?action=ow_add_annotation&type=relation&dm=2024&attribute=hypernym&attrib_lang=eng&dm_relation=2324&test',
+			'',
+			'You can also add synonym/translation relation annotations using a TSV file format saved in a Wiki Page.  The file must ',
+			'contain 8 columns:',
+			' defined_meaning_id (int)',
+			' attribute          (string)',
+			' attribute language (string)',
+			' relation           (string)',
+			' relation language  (string)',
+			' expression         (string)',
+			' language           (string)',
+			' relation DM        (int)',
+			'',
+			'  api.php?action=ow_add_annotation&type=relation&wikipage=User:Minnan.import.bot/addRelationAnnotation&dm=0&format=xml',
+			'  or to test it',
+			'  api.php?action=ow_add_annotation&type=relation&wikipage=User:Minnan.import.bot/addRelationAnnotationTest&dm=0&format=xml&test',
+			''
 		);
 	}
 
-	private function processAddTextAttributeValues($spelling = null, $language = null, $definedMeaningId, $attribute, $attribLang, $text) {
+	public function processBatch( $wikiPage ) {
+		global $params;
+
+		$csvWikiPageTitle = Title::newFromText( $wikiPage );
+		$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
+
+		if ( !$wikiText = $csvWikiPage->getContent( Revision::RAW ) ) {
+			return $this->getResult()->addValue( null, $this->getModuleName(),
+				array ( 'result' => array (
+					'error' => "WikiPage ( $csvWikiPageTitle ) does not exist"
+				) )
+			);
+		}
+
+		$text = $wikiText->mText;
+
+		// Check if the page is redirected,
+		// then adjust accordingly.
+		preg_match( "/REDIRECT \[\[(.+)\]\]/", $text, $match2 );
+		if ( isset( $match2[1] ) ) {
+			$redirectedText = $match2[1];
+			$csvWikiPageTitle = Title::newFromText( $redirectedText );
+			$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
+			$wikiText = $csvWikiPage->getContent( Revision::RAW );
+			$text = $wikiText->mText;
+		}
+
+		$process = array (
+			'text' =>  'wikipage',
+			'type' => 'batch processing',
+		);
+
+		if ( $this->test ) {
+			$process['note'] = 'test run only';
+		}
+
+		$this->getResult()->addValue( null, $this->getModuleName(),
+			array ( 'process' => $process
+			)
+		);
+
+		$inputLine = explode( "\n", $text );
+		$ctr = 0;
+		foreach ( $inputLine as $inputData ) {
+			$this->continue = true;
+			$ctr++;
+			$inputData = trim( $inputData );
+
+			// Check if TSV
+			$inputMatch = preg_match("/	/", $inputData, $match );
+
+			if ( $inputMatch and $this->continue ) {
+				$inputData = explode( "	", $inputData );
+				$inputDataCount = count( $inputData );
+
+				// set type variables
+				if ( $this->type == 'text' ) {
+					$noOfCol = 6;
+					if ( $inputDataCount == 4 and $this->continue ) {
+						$inputData[] = null;
+						$inputData[] = null;
+						$inputDataCount = count( $inputData );
+					}
+				}
+				if ( $this->type == 'option' ) {
+					$noOfCol = 7;
+					if ( $inputDataCount == 5 and $this->continue ) {
+						$inputData[] = null;
+						$inputData[] = null;
+						$inputDataCount = count( $inputData );
+					}
+				}
+				if ( $this->type == 'relation' ) {
+					$noOfCol = 8;
+					if ( $inputDataCount == 7 and $this->continue ) {
+						$inputData[7] = $inputData[0];
+						$inputDataCount = count( $inputData );
+					}
+				}
+
+				if ( $inputDataCount < $noOfCol OR $inputDataCount > $noOfCol and $this->continue ) {
+					$result = array ( 'note' => "invalid column count. {$inputDataCount} instead of {$noOfCol}" );
+					$this->getResult()->addValue( null, $this->getModuleName(),
+						array ( 'result' . $ctr => $result )
+					);
+					$this->continue = false;
+				}
+
+				if ( $this->continue ) {
+					$definedMeaningId = $inputData[0];
+					$attribute = preg_replace( '/(^"|"$)/', '', $inputData[1] );
+					$attribLang = preg_replace( '/(^"|"$)/', '', $inputData[2] );
+
+					if ( $this->type == 'text' ) {
+						$text = preg_replace( '/(^"|"$)/', '', $inputData[3] );
+						$spelling = preg_replace( '/(^"|"$)/', '', $inputData[4] );
+						$language = preg_replace( '/(^"|"$)/', '', $inputData[5] );
+					}
+					if ( $this->type == 'option' ) {
+						$option = preg_replace( '/(^"|"$)/', '', $inputData[3] );
+						$optionLang = preg_replace( '/(^"|"$)/', '', $inputData[4] );
+						$spelling = preg_replace( '/(^"|"$)/', '', $inputData[5] );
+						$language = preg_replace( '/(^"|"$)/', '', $inputData[6] );
+					}
+					if ( $this->type == 'relation' ) {
+						$relation = preg_replace( '/(^"|"$)/', '', $inputData[3] );
+						$relationLang = preg_replace( '/(^"|"$)/', '', $inputData[4] );
+						$spelling = preg_replace( '/(^"|"$)/', '', $inputData[5] );
+						$language = preg_replace( '/(^"|"$)/', '', $inputData[6] );
+						$relationDM = preg_replace( '/(^"|"$)/', '', $inputData[7] );
+					}
+				}
+			} else {
+				if ( $inputData == null ) {
+					$result = array ( 'note' => "skipped blank line" );
+					$this->getResult()->addValue( null, $this->getModuleName(),
+						array ( 'result' . $ctr => $result )
+					);
+					$this->continue = false;
+				} else {
+					$result = array ( 'note' => "non TSV line `{$inputData}`" );
+					$this->getResult()->addValue( null, $this->getModuleName(),
+						array ( 'result' . $ctr => $result )
+					);
+					$this->continue = false;
+				}
+			}
+
+			if ( $this->continue ) {
+				if ( !is_numeric( $definedMeaningId ) ) {
+					if ( $ctr == 1 ) {
+						$result = array ( 'note' => "$definedMeaningId is not an int or probably just the CSV header" );
+					} else {
+						$result = array ( 'note' => "$definedMeaningId is not an int" );
+					}
+				} else {
+					if ( $this->type == 'text' ) {
+						$result = $this->processAddTextAttributeValues( $spelling, $language, $definedMeaningId, $attribute, $attribLang, $text );
+					}
+					if ( $this->type == 'option' ) {
+						$result = $this->processAddOptionAttributeValues( $spelling, $language, $definedMeaningId, $attribute, $attribLang, $option, $optionLang );
+					}
+					if ( $this->type == 'relation' ) {
+						$result = $this->processAddRelationAttributeValues( $spelling, $language, $definedMeaningId, $attribute, $attribLang, $relation, $relationLang, $relationDM );
+					}
+				}
+
+				$this->getResult()->addValue( null, $this->getModuleName(),
+					array ( 'result' . $ctr => $result )
+				);
+			}
+
+		}
+		return true;
+	}
+
+	private function processAddTextAttributeValues( $spelling = null, $language = null, $definedMeaningId, $attribute, $attribLang, $text ) {
 		$dc = wdGetDataSetContext();
 
 		// if spelling is not null, process object as syntrans
@@ -446,30 +689,49 @@ class AddAnnotation extends ApiBase {
 				)
 			);
 		}
+
+		// get DM expression for clarity
+		$definedMeaningLanguageId = WLD_ENGLISH_LANG_ID;
+		$syntrans = null;
+		if ( $spelling ) {
+			$definedMeaningLanguageId = $languageId;
+			$syntrans = "to expression:`{$spelling}` ";
+		}
+		$expression = getDefinedMeaningSpellingForLanguage( $definedMeaningId, $definedMeaningLanguageId );
+
 		// Add values if does not exist
 		$valueId = getTextAttributeValueId( $this->objectId, $this->attributeId, $text );
 		if ( !$valueId ) {
 			if ( !$this->test ) {
-				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_annotation", $dc);
+				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_annotation", $dc );
 				$valueId = addTextAttributeValue( $this->objectId, $this->attributeId, $text );
 			}
-			$note['result'] = array(
+			$note = array(
 				'status' => 'added'
 			);
 
-			if ( $value_id ) {
-				$note['result']['value_id'] = $valueId;
+			if ( $valueId ) {
+				$note['value_id'] = $valueId;
 			}
 
-			if ( $this->test ) {
+			if ( $this->wikipage ) {
+				$note['note'] = "{$attribute} `{$text}` {$syntrans}for concept {$expression}({$definedMeaningId})";
+			}
+
+			if ( $this->test && !$this->wikipage ) {
 				$note['note'] = 'test run only';
 			}
 		} else {
-			$note['result'] = array(
+			$note = array(
 				'status' => 'exists',
 				'value_id' => $valueId
 			);
-			if ( $this->test ) {
+
+			if ( $this->wikipage ) {
+				$note['note'] = "{$attribute} `{$text}` {$syntrans}for concept {$expression}({$definedMeaningId})";
+			}
+
+			if ( $this->test && !$this->wikipage ) {
 				$note['note'] = 'test run only';
 			}
 		}
@@ -608,6 +870,16 @@ class AddAnnotation extends ApiBase {
 			$this->optionId = getOptionAttributeOptionsOptionId( $this->attributeId, $optionMeaningId, 0 );
 		}
 
+
+		// get DM expression for clarity
+		$definedMeaningLanguageId = WLD_ENGLISH_LANG_ID;
+		$syntrans = null;
+		if ( $spelling ) {
+			$definedMeaningLanguageId = $languageId;
+			$syntrans = "to expression:`{$spelling}` ";
+		}
+		$expression = getDefinedMeaningSpellingForLanguage( $definedMeaningId, $definedMeaningLanguageId );
+
 		// Add values if does not exist
 		$valueId = getOptionAttributeValueId( $this->objectId, $this->optionId );
 		if ( !$valueId ) {
@@ -617,23 +889,32 @@ class AddAnnotation extends ApiBase {
 				$valueId = getOptionAttributeValueId( $this->objectId, $this->optionId );
 				echo $valueId . '"';
 			}
-			$note['result'] = array(
+			$note = array(
 				'status' => 'added'
 			);
 
 			if ( $valueId ) {
-				$note['result']['value_id'] = $valueId;
+				$note['value_id'] = $valueId;
 			}
 
-			if ( $this->test ) {
+			if ( $this->wikipage ) {
+				$note['note'] = "{$attribute} `{$option}` {$syntrans}for concept {$expression}({$definedMeaningId})";
+			}
+
+			if ( $this->test && !$this->wikipage ) {
 				$note['note'] = 'test run only';
 			}
 		} else {
-			$note['result'] = array(
+			$note = array(
 				'status' => 'exists',
 				'value_id' => $valueId
 			);
-			if ( $this->test ) {
+
+			if ( $this->wikipage ) {
+				$note['note'] = "{$attribute} `{$option}` {$syntrans}for concept {$expression}({$definedMeaningId})";
+			}
+
+			if ( $this->test && !$this->wikipage ) {
 				$note['note'] = 'test run only';
 			}
 		}
@@ -757,12 +1038,23 @@ class AddAnnotation extends ApiBase {
 				)
 			);
 		}
+
+		// get DM expression for clarity
+		$definedMeaningLanguageId = WLD_ENGLISH_LANG_ID;
+		$syntrans = null;
+		if ( $spelling ) {
+			$definedMeaningLanguageId = $languageId;
+			$syntrans = "to expression:`{$spelling}` ";
+		} else {
+			$expressionR = getDefinedMeaningSpellingForLanguage( $relationDM, $definedMeaningLanguageId );
+		}
+		$expression = getDefinedMeaningSpellingForLanguage( $definedMeaningId, $definedMeaningLanguageId );
+
 		// Add values if does not exist
 		$relationId = relationExists( $meaning1Mid, $relationtypeMid, $meaning2Mid );
 		if ( !$relationId ) {
-			$note['result'] = array(
-				'status' => 'added'
-			);
+			$note['status'] = 'added';
+
 			if ( !$this->test ) {
 				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "", $dc );
 				addRelation( $meaning1Mid, $relationtypeMid, $meaning2Mid );
@@ -770,16 +1062,22 @@ class AddAnnotation extends ApiBase {
 				$note['note'] = 'test run only';
 			}
 		} else {
-			$note['result'] = array(
-				'status' => 'exists'
-			);
-			if ( $this->test ) {
+			$note['status'] = 'exists';
+
+			if ( $this->wikipage ) {
+				if ( $spelling ) {
+					$note['note'] = "{$attribute} `{$relation}` {$syntrans}for concept {$expression}({$definedMeaningId})";
+				} else {
+					$note['note'] = "{$attribute} concept `{$expressionR}`({$relationDM}) {$syntrans}for concept `{$expression}`({$definedMeaningId})";
+				}
+			}
+
+			if ( $this->test && !$this->wikipage ) {
 				$note['note'] = 'test run only';
 			}
 		}
 
 		return $note;
-	//	return array('result' => 'true');
 	}
 
 }
