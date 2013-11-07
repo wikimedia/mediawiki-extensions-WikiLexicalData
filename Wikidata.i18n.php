@@ -9538,6 +9538,13 @@ $messages['ln'] = array(
 	'ow_history' => 'Mokóló',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'langman_addlang' => 'یه گل زون اضاف کو',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  * @author Matasg
