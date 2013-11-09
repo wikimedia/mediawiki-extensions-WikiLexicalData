@@ -1535,6 +1535,7 @@ $messages['bcl'] = array(
 );
 
 /** Belarusian (беларуская)
+ * @author Дзяніс Тутэйшы
  * @author Тест
  * @author Хомелка
  * @author Чаховіч Уладзіслаў
@@ -1545,7 +1546,7 @@ $messages['be'] = array(
 	'languages' => 'Моўны менеджар',
 	'langman-desc' => 'Даданне і змяненне моўных настаўленняў з дапамогай [[Special:Languages]]',
 	'langman_title' => 'Моўны менеджар',
-	'langman_not_allowed' => 'У вас няма дазволу змяняць моўныя настаўленні.',
+	'langman_not_allowed' => 'У вас няма дазволу змяняць моўныя настройкі.',
 	'langman_header' => 'Увядзіце код мовы і яе англійскую назву ніжэй:',
 	'langman_req_fields' => 'Назва мовы і код ISO 639-3 павінны быць абавязкова пазначаны!',
 	'langman_adding' => 'Даданне мовы $1 з кодам $2.',
@@ -2777,6 +2778,7 @@ $messages['ce'] = array(
 	'ow_meaningsoftitle' => 'МаьӀна «$1»',
 	'ow_class_attr_type_plain' => 'Цхьалхе йоза',
 	'ow_class_attr_type_link' => 'Хьажораг',
+	'ow_suggest_previous' => 'Хьалха хиларг',
 	'ow_suggest_clear' => 'ЦӀанъян',
 	'ow_nstab_edit_copy' => 'нисйé копи',
 );
