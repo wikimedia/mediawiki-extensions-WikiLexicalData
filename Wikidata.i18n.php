@@ -3479,6 +3479,7 @@ Vielleicht kamen Sie direkt zu dieser Seite?',
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -3567,7 +3568,7 @@ $messages['diq'] = array(
 	'ow_class_attr_type_link' => 'Gıre',
 	'ow_show' => 'Bımocne',
 	'ow_upload' => 'Bar ke',
-	'ow_create' => 'Vıraze',
+	'ow_create' => 'İycad ke',
 	'ow_suggest_previous' => 'Verên',
 	'ow_suggest_next' => 'Bahdoyên',
 	'ow_suggest_clear' => 'Bestern',
