@@ -628,6 +628,7 @@ $messages['af'] = array(
 
 /** Gheg Albanian (Gegë)
  * @author Mdupont
+ * @author Shirayuki
  */
 $messages['aln'] = array(
 	'wikidata-desc' => 'Shton database wiki-si për lloje të ndryshme të përmbajtjes',
@@ -16514,6 +16515,7 @@ $messages['zh-cn'] = array(
  * @author Jimmy xu wrk
  * @author Liangent
  * @author Linforest
+ * @author Liuxinyu970226
  * @author PhiLiP
  * @author Qiyue2001
  * @author Stevenliuyi
@@ -16628,6 +16630,10 @@ $messages['zh-hans'] = array(
 	'ow_ClassAttributeLevel' => '等级',
 	'ow_ClassAttributeType' => '类型',
 	'ow_ClassMembership' => '类成员',
+	'ow_Collection' => '收藏',
+	'ow_Collection_colon' => '收藏：',
+	'ow_CollectionMember' => '收藏成员',
+	'ow_CollectionMembership' => '收藏成员组',
 	'ow_Definition' => '定义',
 	'ow_DefinedMeaning' => '已定义的含义',
 	'ow_DefinedMeaningReference' => '已定义的含义',
@@ -16637,6 +16643,7 @@ $messages['zh-hans'] = array(
 	'ow_Expressions' => '表达式',
 	'ow_IdenticalMeaning' => '相同含义？',
 	'ow_GotoSource' => '转到源代码',
+	'ow_ID' => 'ID',
 	'ow_Language' => '语言',
 	'ow_LinkAttributeHeader' => '链接属性',
 	'ow_Multiple_meanings' => '$1 的定义：',
@@ -16647,6 +16654,7 @@ $messages['zh-hans'] = array(
 	'ow_OptionAttributeOptions' => '选项',
 	'ow_OptionAttributeValues' => '选项值',
 	'ow_OtherDefinedMeaning' => '其他已定义的含义',
+	'ow_OtherLanguages' => '其他语言：',
 	'ow_PopupAnnotation' => '注解',
 	'ow_Relations' => '关系',
 	'ow_RelationType' => '关系类型',
@@ -16688,9 +16696,13 @@ $messages['zh-hans'] = array(
 	'ow_class_attr_type_option' => '选项列表',
 	'ow_needs_xlation_source_lang' => '源语言：',
 	'ow_needs_xlation_dest_lang' => '目标语言：',
+	'ow_data_search' => 'WikiLexicalData数据搜索',
+	'ow_statistics' => 'WikiLexicalData统计',
+	'ow_downloads' => 'WikiLexicalData下载',
 	'ow_show' => '显示',
 	'ow_upload' => '上传',
 	'ow_create' => '创建',
+	'ow_collection_added' => '<strong>集合$1已添加。</strong>',
 	'ow_suggest_previous' => '上一个',
 	'ow_suggest_next' => '下一个',
 	'ow_suggest_clear' => '清除',
