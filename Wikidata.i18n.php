@@ -3481,6 +3481,7 @@ Vielleicht kamen Sie direkt zu dieser Seite?',
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Gorizon
+ * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -3516,7 +3517,7 @@ $messages['diq'] = array(
 	'ow_transaction_rollback_header' => 'Zey veri kı',
 	'ow_transaction_no_action' => 'Qırşê mekı',
 	'ow_transaction_restore' => 'Timar bike',
-	'ow_transaction_remove' => 'Wedarne',
+	'ow_transaction_remove' => 'Hewad',
 	'ow_transaction_operation' => 'Operasyon',
 	'ow_transaction_object' => 'Nesne',
 	'ow_transaction_summary' => 'Xulasa',
@@ -3547,16 +3548,16 @@ $messages['diq'] = array(
 	'ow_OptionAttributeOptions' => 'Weçinegi',
 	'ow_PopupAnnotation' => 'Ole şınasiye',
 	'ow_Relations' => 'Eleqey',
-	'ow_Remove' => 'Wedarne',
+	'ow_Remove' => 'Hewad',
 	'ow_Spelling' => 'Nusey',
 	'ow_Synonyms' => 'Hemmeney',
 	'ow_Source' => 'Çıme',
-	'ow_Text' => 'Nuşte',
+	'ow_Text' => 'Metin',
 	'ow_TextAttribute' => 'Xasiyey',
 	'ow_TextAttributeHeader' => 'Ercina metini',
 	'ow_Time' => 'Wext',
 	'ow_TranslatedTextAttribute' => 'Xasiyey',
-	'ow_TranslatedTextAttributeValue' => 'Nuşte',
+	'ow_TranslatedTextAttributeValue' => 'Metin',
 	'ow_Label' => 'Etiket',
 	'ow_Link' => 'Gıre',
 	'ow_LinkAttribute' => 'Xasiyey',
