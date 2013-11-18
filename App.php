@@ -164,3 +164,6 @@ require_once( $wgWldSetupScriptPath . "OWJobs.php" );
 if ( file_exists ( dirname(__FILE__) . "LocalApp.php" )) {
 	require_once( dirname(__FILE__) . "LocalApp.php" );
 }
+
+// Tags
+require_once( $wgWldSetupScriptPath . "OWTags.php" );
