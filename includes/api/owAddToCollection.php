@@ -35,6 +35,7 @@ class AddToCollection extends ApiBase {
 
 		// set test status
 		$this->test = false;
+		$this->transacted = false;
 
 		if ( isset( $params['test'] ) ) {
 			if ( $params['test'] == '1' OR $params['test'] == null ) {
@@ -272,7 +273,10 @@ class AddToCollection extends ApiBase {
 			) );
 
 			if ( !$this->test ) {
-				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_to_collection", $dc );
+				if ( !$this->transacted ) {
+					$this->transacted = true;
+					startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_to_collection", $dc );
+				}
 				addDefinedMeaningToCollection( $this->definedMeaningId, $this->collectionId, $this->internalMemberId );
 			} else {
 				$note['result']['note'] = 'test run only';

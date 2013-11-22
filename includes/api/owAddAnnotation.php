@@ -36,6 +36,7 @@ class AddAnnotation extends ApiBase {
 
 		// set test status
 		$this->test = false;
+		$this->transacted = false;
 
 		if ( isset( $params['test'] ) ) {
 			if ( $params['test'] == '1' OR $params['test'] == null ) {
@@ -703,7 +704,10 @@ class AddAnnotation extends ApiBase {
 		$valueId = getTextAttributeValueId( $this->objectId, $this->attributeId, $text );
 		if ( !$valueId ) {
 			if ( !$this->test ) {
-				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_annotation", $dc );
+				if ( !$this->transacted ) {
+					$this->transacted = true;
+					startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_annotation (text)", $dc );
+				}
 				$valueId = addTextAttributeValue( $this->objectId, $this->attributeId, $text );
 			}
 			$note = array(
@@ -884,7 +888,10 @@ class AddAnnotation extends ApiBase {
 		$valueId = getOptionAttributeValueId( $this->objectId, $this->optionId );
 		if ( !$valueId ) {
 			if ( !$this->test ) {
-				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "", $dc );
+				if ( !$this->transacted ) {
+					$this->transacted = true;
+					startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_annotation (option)", $dc );
+				}
 				addOptionAttributeValue( $this->objectId, $this->optionId );
 				$valueId = getOptionAttributeValueId( $this->objectId, $this->optionId );
 				echo $valueId . '"';
@@ -1056,7 +1063,10 @@ class AddAnnotation extends ApiBase {
 			$note['status'] = 'added';
 
 			if ( !$this->test ) {
-				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "", $dc );
+				if ( !$this->transacted ) {
+					$this->transacted = true;
+					startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_annotation (relation)", $dc );
+				}
 				addRelation( $meaning1Mid, $relationtypeMid, $meaning2Mid );
 			} else {
 				$note['note'] = 'test run only';
