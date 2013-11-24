@@ -33,6 +33,7 @@ class AddSyntrans extends ApiBase {
 
 		// set test status
 		$this->test = false;
+		$this->transacted = false;
 
 		if ( isset( $params['test'] ) ) {
 			if ( $params['test'] == '1' OR $params['test'] == null ) {
@@ -308,7 +309,10 @@ class AddSyntrans extends ApiBase {
 		);
 
 		if ( !$this->test ) {
-			startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_syntrans", $dc);
+			if ( !$this->transacted ) {
+				$this->transacted = true;
+				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_syntrans", $dc);
+			}
 			addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning );
 		} else {
 			$note['note'] = 'test run only';
