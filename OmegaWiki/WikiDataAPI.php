@@ -168,7 +168,8 @@ function reviveExpression( $expressionId ) {
 			'remove_transaction_id' => null
 		), array( /* WHERE */
 			'expression_id' => $expressionId
-		), __METHOD__
+		), __METHOD__,
+		array( 'LIMIT' => 1 )
 	);
 }
 
