@@ -51,6 +51,42 @@ class Expressions {
 	}
 
 	/**
+	 * returns the total number of "Expressions"
+	 *
+	 * else returns null
+	 */
+	public static function getNumberOfExpressions( $dc = null ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$cond[] = null;
+
+		$queryResult = $dbr->select(
+			"{$dc}_expression",
+			array(
+				'total' => 'count(expression_id)',
+			),
+			array(
+				'remove_transaction_id' => null
+			),
+			__METHOD__,
+			$cond
+		);
+
+		$total = null;
+		foreach ( $queryResult as $tot ) {
+			$total = $tot->total;
+		}
+
+		if ( $total ) {
+			return $total;
+		}
+		return null;
+	}
+
+	/**
 	 * returns an array of "Expression" objects
 	 * for a language
 	 *
