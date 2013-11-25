@@ -10279,13 +10279,13 @@ $messages['mwl'] = array(
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
-	'languages' => 'Келень кирдий', # Fuzzy
+	'languages' => 'Келень кирдий',
 	'langman_title' => 'Келень кирдий',
 	'langman_req_fields' => 'Келенть лемезэ ды ISO 639-3 кодозо кавтонест эрявить!',
 	'langman_langname' => 'Келенть лемезэ:',
 	'langman_field_optional' => '(мелень коряс)',
 	'langman_addlang' => 'Поладомс кель',
-	'datasearch' => 'Викидата: Датань вешнема', # Fuzzy
+	'datasearch' => 'Датань вешнема',
 	'datasearch_language' => 'Келесь:',
 	'datasearch_found_word' => 'Муезь вал',
 	'datasearch_meaning' => 'Смустезэ',
@@ -10295,7 +10295,7 @@ $messages['myv'] = array(
 	'ow_exporttsv_languages' => 'Кельтне:',
 	'ow_save' => 'Ванстомс',
 	'ow_history' => 'Путовксонзо-йуронзо',
-	'ow_uiprefs' => 'Викидата', # Fuzzy
+	'ow_uiprefs' => 'ВикиВалксДата',
 	'ow_none_selected' => 'Вейкеяк апакКочка',
 	'ow_transaction_restore' => 'Вельмевтемс',
 	'ow_transaction_remove' => 'Нардамс',
