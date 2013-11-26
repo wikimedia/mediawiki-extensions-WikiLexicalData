@@ -22,71 +22,43 @@ function owStatsTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 function owExpStats( $input ) {
 	$cache = new CacheHelper();
 
-	$number = $cache->setCacheKey( array( 'ow_stats_exp' ) );
+	$cache->setCacheKey( array( 'ow_stats_exp' ) );
 	$number = $cache->getCachedValue( function () {
 		$Expressions = new Expressions;
-		$number = $Expressions->getNumberOfExpressions();
-
-		// This line is for checking. Delete if certified ok!
-		echo "cached value for ow_stats_exp not found.<br/>";
-
-		return $number;
+		return $Expressions->getNumberOfExpressions();
 	} );
-
-	// line set to 35 seconds for testing, please set to 86400.
-	$cache->setExpiry( 35 );
-
+	$cache->setExpiry( 86400 );
 	$cache->saveCache();
 
-	$number = "$number ";
-	$number = preg_replace( '/\D $/', '', $number );
+	$number = preg_replace( '/\D $/', '', "$number " );
 	return htmlspecialchars( $number . $input );
 }
 
 function owDefinedMeaningStats( $input ) {
 	$cache = new CacheHelper();
 
-	$number = $cache->setCacheKey( array( 'ow_stats_dm' ) );
+	$cache->setCacheKey( array( 'ow_stats_dm' ) );
 	$number = $cache->getCachedValue( function () {
-		$number = getNumberOfDefinedMeanings();
-
-		// This line is for checking. Delete if certified ok!
-		echo "cached value for ow_stats_dm not found.<br/>";
-
-		return $number;
+		return getNumberOfDefinedMeanings();
 	} );
-
-	// line set to 35 seconds for testing, please set to 86400.
-	$cache->setExpiry( 35 );
-
+	$cache->setExpiry( 86400 );
 	$cache->saveCache();
 
-	$number = "$number ";
-	$number = preg_replace( '/\D $/', '', $number );
+	$number = preg_replace( '/\D $/', '', "$number " );
 	return htmlspecialchars( $number . $input );
 }
 
 function wldLanguageStats( $input ) {
 	$cache = new CacheHelper();
 
-	$number = $cache->setCacheKey( array( 'wld_stats_lang' ) );
+	$cache->setCacheKey( array( 'wld_stats_lang' ) );
 	$number = $cache->getCachedValue( function () {
-		$number = getNumberOfLanguages();
-
-		// This line is for checking. Delete if certified ok!
-		echo "cached value for wld_stats_lang not found.<br/>";
-
-		return $number;
+		return getNumberOfLanguages();
 	} );
-
-
-	// line set to 35 seconds for testing, please set to 86400.
-	$cache->setExpiry( 35 );
-
+	$cache->setExpiry( 86400 );
 	$cache->saveCache();
 
-	$number = "$number ";
-	$number = preg_replace( '/\D $/', '', $number );
+	$number = preg_replace( '/\D $/', '', "$number " );
 	return htmlspecialchars( $number . $input );
 }
 
