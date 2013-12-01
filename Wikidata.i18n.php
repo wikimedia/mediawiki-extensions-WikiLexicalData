@@ -422,7 +422,8 @@ This is visible when a SynTrans is annotated, or while editing a page.
 See also:
 * {{msg-mw|Ow history show life span}}',
 	'ow_RelatedTo' => 'The header of a column where the user enters the second member of a relation',
-	'ow_Relations' => 'Title of a section containing a list of relations between different words or concepts (e.g. hypernym, antonym)',
+	'ow_Relations' => 'Title of a section containing a list of relations between different words or concepts (e.g. hypernym, antonym).
+{{Identical|Relation}}',
 	'ow_RelationType' => 'The header of a column where the user selects a relation from a list of relations (e.g. hypernym, antonym)',
 	'ow_Remove' => 'Header caption for the selection boxes used to remove a row from a table (such as in Synonyms and Translations)
 {{Identical|Remove}}',
