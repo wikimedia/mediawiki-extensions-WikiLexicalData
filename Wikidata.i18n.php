@@ -2897,7 +2897,7 @@ $messages['ckb'] = array(
 	'right-addlanguage' => 'زمان زیاد بکە و هەڵبژاردەکانی بگۆڕە',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Kuvaly
  * @author Matěj Grabovský
  * @author Mormegil
@@ -3135,7 +3135,7 @@ Nastal problém s konzistencí databáze. Wikidata nemůže najít platné údaj
 	'ow_shown_datasets' => 'Zobrazené množiny dat',
 );
 
-/** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+/** Church Slavic (словѣньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author ОйЛ
  */
 $messages['cu'] = array(
@@ -10857,9 +10857,9 @@ Controleer het webadres.',
 	'copy' => 'Kopiëren',
 	'ow_copy_no_action_specified' => 'Geef een handeling aan',
 	'ow_copy_help' => 'Een hulpfunctie is nog niet beschikbaar.',
-	'ow_please_proved_dmid' => 'Uw invoer mist een "?dmid=<ID>" (dmid=Defined Meaning-ID)<br />Neem contact op met een systeembeheerder.',
-	'ow_please_proved_dc1' => 'Uw invoer mist een "?dc1=<iets>" (dc1=datasetcontext 1, dataset WAARVAN te kopiëren)<br />Neem contact op met een systeembeheerder.',
-	'ow_please_proved_dc2' => 'Uw invoer mist een "?dc2==<iets>" (dc2=datasetcontext 2, dataset WAARNAAR te kopiëren)<br />Neem contact op met een systeembeheerder.',
+	'ow_please_proved_dmid' => 'In ww invoer ontbreekt een "?dmid=<ID>" (dmid=Defined Meaning-ID)<br />Neem contact op met een systeembeheerder.',
+	'ow_please_proved_dc1' => 'In uw invoer ontbreekt een "?dc1=<iets>" (dc1=datasetcontext 1, dataset WAARVAN te kopiëren)<br />Neem contact op met een systeembeheerder.',
+	'ow_please_proved_dc2' => 'In uw invoer ontbreekt een "?dc2==<iets>" (dc2=datasetcontext 2, dataset WAARNAAR te kopiëren)<br />Neem contact op met een systeembeheerder.',
 	'ow_copy_successful' => '<h2>Kopiëren uitgevoerd</h2>Het lijkt erop dat het kopiëren van de gegevens goed gegaan is.
 Vergeet niet om dit te controleren!',
 	'ow_copy_unsuccessful' => '<h3>Kopiëren mislukt</h3> Er is niets gekopieerd.',
