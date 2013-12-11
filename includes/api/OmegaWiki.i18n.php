@@ -140,6 +140,13 @@ $messages['vi'] = array(
 	'apiow-desc' => 'Phần mở rộng WikiLexicalData dành cho OmegaWiki nhằm mở rộng api.php của MediaWiki',
 );
 
+/** Simplified Chinese (中文（简体）‎)
+ * @author Yfdyh000
+ */
+$messages['zh-hans'] = array(
+	'apiow-desc' => 'OmegaWiki的WikiLexicalData扩展（对MediaWiki api.php）',
+);
+
 /** Traditional Chinese (中文（繁體）‎)
  * @author Justincheng12345
  */
