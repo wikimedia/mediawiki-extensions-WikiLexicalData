@@ -4723,13 +4723,14 @@ Mesedez harremanetan ipini zerbitzari operadore edo administratzailearekin.', # 
  * @author Hooshmand.hasannia
  * @author Huji
  * @author Mardetanha
+ * @author Omidh
  * @author Reza1615
  * @author ZxxZxxZ
  */
 $messages['fa'] = array(
 	'wikidata-desc' => 'پایگاه دادهٔ ویکی‌پیوند را برای انواع گوناگون محتواها می‌افزاید',
 	'wikidata-handler-namespace-move-error' => 'صفحه‌های فضاهای نامی که توسط افزونهٔ ویکی‌داده اداره می‌شوند قابل انتقال نیستند.', # Fuzzy
-	'languages' => 'ویکی‌داده: مدیریت زبان', # Fuzzy
+	'languages' => 'مدیریت زبان',
 	'langman-desc' => 'افزودن و تغییر تنظیمات زبان با [[Special:Languages]]',
 	'langman_title' => 'مدیریت زبان',
 	'langman_not_allowed' => 'شما دسترسی تغییر تنظیمات زبان را ندارید.',
@@ -4742,12 +4743,12 @@ $messages['fa'] = array(
 	'langman_wikimedia' => 'کد ویکی‌مدیا:',
 	'langman_field_optional' => '(اختیاری)',
 	'langman_addlang' => 'افزودن زبان',
-	'importlangnames' => 'ویکی‌داده: درون‌ریزی نام زبان‌ها', # Fuzzy
+	'importlangnames' => 'درون‌ریزی نام زبان‌ها',
 	'importlangnames_title' => 'درون‌ریزی نام زبان‌ها',
 	'importlangnames_not_allowed' => 'شما دسترسی درون‌ریزی نام زبان‌ها را ندارید.',
 	'importlangnames_added' => 'نام‌های زبان برای «$1» افزوده شد.',
 	'importlangnames_not_found' => '<strong>هیچ ورودی زبانی برای «$1» یافت نشد!</strong>',
-	'datasearch' => 'ویکی‌داده: جستجوی داده‌ها', # Fuzzy
+	'datasearch' => 'جستجوی داده‌ها',
 	'datasearch_language' => 'زبان:',
 	'datasearch_found_word' => 'واژهٔ پیداشده',
 	'datasearch_meaning' => 'معنی',
@@ -4759,7 +4760,7 @@ $messages['fa'] = array(
 	'datasearch_match_ext_ids' => 'شناسهٔ تطابق بیرونی <em>$1</em>',
 	'datasearch_match_words' => 'واژه‌های مطابق با <em>$1</em> و معنی‌های مرتبط',
 	'datasearch_match_words_lang' => 'واژه‌های موجود در <em>$1</em> مطابق با <em>$2</em> و معنی‌های مرتبط',
-	'importtsv' => 'ویکی‌داده: درون‌ریزی تی‌اس‌وی', # Fuzzy
+	'importtsv' => 'درون‌ریزی تی‌اس‌وی',
 	'ow_importtsv_title1' => 'درون‌ریزی تی‌اس‌وی',
 	'ow_importtsv_title2' => 'درون‌ریزی معانی و ترجمه‌ها',
 	'ow_importtsv_header' => '<p>درون‌ریزی تعاریف و ترجمه‌ها از پرونده‌های متن بازی که ممکن است از اپن‌آفیس، اکسل یا نرم‌افزارهای صفحه‌گسترده‌ٔ دیگر به دست آمده باشد.</p>
@@ -4786,7 +4787,7 @@ $messages['fa'] = array(
 	'ow_importtsv_results' => '$1 {{PLURAL:$1|معنی|معنی}} و $2 {{PLURAL:$2|ترجمه|ترجمه}} افزوده شد.',
 	'ow_impexptsv_unknown_lang' => '<p>زبان ناشناخته یا نادرست: $1.<br />
 زبان باید از کدهای ISO 639-3 باشد.</p>',
-	'exporttsv' => 'ویکی‌داده: برون‌ریزی تی‌اس‌وی', # Fuzzy
+	'exporttsv' => 'برون‌ریزی تی‌اس‌وی',
 	'ow_exporttsv_title' => 'برون‌ریزی یک مجموعه به تی‌اس‌وی',
 	'ow_exporttsv_header' => '<p>برون‌ریزی یک مجموعه به صورت یک متن تب‌های جداشده که شما می‌توانید در برنامه اپن‌آفیس، اکسل یا برنامه‌های دیگر صفحه گسترده درون‌ریزی نمائید.<br />
 یک مجموعه را برای برون‌ریزی انتخاب کنید. در جعبه متن زبان، کد زبان مورد نظر را بر پایه استاندارد ۶۳۹-۳ وارد نمائید.
@@ -4794,7 +4795,7 @@ $messages['fa'] = array(
 	'ow_exporttsv_languages' => 'زبان‌ها:',
 	'ow_exporttsv_not_allowed' => 'شما دسترسی برای برون‌ریزی تی‌اس‌وی ندارید.',
 	'ow_exporttsv_export_failed' => 'برون‌ریزی ناموفق بود',
-	'addcollection' => 'ویکی‌داده: افزودن مجموعه', # Fuzzy
+	'addcollection' => 'افزودن مجموعه',
 	'ow_searchnoresult' => "<p>شما ممکن است:<br />
 * '''ساخت اصطلاح  \"[[Expression:\$1]]\"''' (و افزودن تعریف)<br />
 * '''ایجاد صفحهٔ \"[[:\$1]]\"''' (یک صفحهٔ استاندارد ویکی)</p>",
@@ -4807,7 +4808,7 @@ $messages['fa'] = array(
 	'ow_uipref_datasets' => 'نمای پیش‌فرض:',
 	'ow_uiprefs' => 'ویکی‌داده', # Fuzzy
 	'ow_none_selected' => 'هیچ‌کدام انتخاب نشده‌اند',
-	'transaction' => 'ویکی‌داده: سیاههٔ تبادل', # Fuzzy
+	'transaction' => 'سیاههٔ تبادل',
 	'ow_transaction_from_transaction' => 'از تبادل:',
 	'ow_transaction_count' => 'تعداد دفعات:',
 	'ow_transaction_user' => 'نام کاربری:',
@@ -4825,7 +4826,7 @@ $messages['fa'] = array(
 	'ow_transaction_first_dm' => 'معنی تعریف‌شدهٔ نخست',
 	'ow_transaction_second_dm' => 'معنی تعریف‌شدهٔ دوم',
 	'ow_transaction_summary' => 'خلاصه',
-	'conceptmapping' => 'ویکی‌داده: ترسیم مفاهیم', # Fuzzy
+	'conceptmapping' => 'ترسیم مفاهیم',
 	'ow_conceptmapping_title' => 'ترسیم مفاهیم',
 	'ow_conceptmapping_help' => '<p>کارهای قابل انجام: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&... افزودن یک ترسیم</li>
@@ -4921,7 +4922,7 @@ $messages['fa'] = array(
 	'ow_meaningsoftitle' => 'معنی «$1»',
 	'ow_meaningsofsubtitle' => '<em>پیوند درون‌ویکی:</em> [[$1]]',
 	'ow_Permission_denied' => '<h2>عدم دسترسی</h2>',
-	'copy' => 'ویکی‌داده: رونویسی', # Fuzzy
+	'copy' => 'رونوشت',
 	'ow_copy_no_action_specified' => 'لطفاً عملی را مشخص کنید',
 	'ow_copy_help' => 'کمک هنوز اجرا نشده‌است.',
 	'ow_please_proved_dmid' => 'به نظر می‌رسد در ورودی شما «?dmid=<ID>» (که dmid=Defined Meaning ID، یعنی شناسهٔ معنی تعریف‌شده) وجود ندارد.<br />
@@ -4948,7 +4949,7 @@ $messages['fa'] = array(
 	'ow_class_attr_type_plain' => 'متن ساده',
 	'ow_class_attr_type_link' => 'پیوند',
 	'ow_class_attr_type_option' => 'فهرست اختیاری',
-	'needstranslation' => 'ویکی‌داده: اصطلاحات نیازمند ترجمه', # Fuzzy
+	'needstranslation' => 'اصطلاحات نیازمند ترجمه',
 	'ow_needs_xlation_title' => 'اصطلاحات نیازمند ترجمه',
 	'ow_needs_xlation_source_lang' => 'زبان مبدأ:',
 	'ow_needs_xlation_dest_lang' => 'زبان مقصد:',
