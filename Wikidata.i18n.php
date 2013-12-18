@@ -13860,6 +13860,7 @@ Prosím, pozrite si [[{{MediaWiki:Ow editing policy url}}|našu politiku ohľadn
  * @author Eleassar
  */
 $messages['sl'] = array(
+	'wikidata-desc' => 'Doda wikiju podobno podatkovno zbirko za različne vrste vsebine.',
 	'languages' => 'Upravljalnik jezikov',
 	'langman_title' => 'Upravljavec jezikov',
 	'langman_adding' => 'Dodajanje jezika $1 s ključem $2.',
