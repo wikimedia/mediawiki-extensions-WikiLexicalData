@@ -3585,7 +3585,7 @@ $messages['diq'] = array(
  */
 $messages['dsb'] = array(
 	'wikidata-desc' => 'Pśidawa datowu banku za nałogom wikija za wšake typy wopśimjeśa',
-	'wikidata-handler-namespace-move-error' => 'Boki w mjenjowych rumach, kótarež rozšyrjenje Wikidata wužywa, njedaju se pśesunuś.', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Boki w mjenjowych rumach wužywanych pśez rozšyrjenje WikiLexicalData njedaju se pśesunuś.',
 	'languages' => 'Zastojnik rěcow',
 	'langman-desc' => 'Rěcne nastajenja z [[Special:Languages]] pśidaś a změniś',
 	'langman_title' => 'Zastojnik rěcow',
@@ -3616,7 +3616,7 @@ $messages['dsb'] = array(
 	'datasearch_match_ext_ids' => 'Eksterne identifikatory, kótarež <em>$1</em> wótpowěduju',
 	'datasearch_match_words' => 'Słowa, kótarež <em>$1</em> wótpowěduju a zwězane wóznamy',
 	'datasearch_match_words_lang' => 'Słowa w <em>$1</em>, kótarež <em>$2</em> wótpowěduju a zwězane wóznamy',
-	'importtsv' => 'Wikidaty: TSV importěrowaś', # Fuzzy
+	'importtsv' => 'TSV importěrowaś',
 	'ow_importtsv_title1' => 'TSV importěrowaś',
 	'ow_importtsv_title2' => 'Definicije a pśełožki importěrowaś',
 	'ow_importtsv_header' => "<p>Definicije a pśełožki z tekstoweje dataje ze smužkami wótźělonymi pśez tabulator importěrowaś, kótarež sy eksportěrował z OpenOffice.org, Excel abo drugeje tabeloweje softwary.</p>
@@ -3638,7 +3638,7 @@ Słupy by měli mě 'definition_iso' abo 'translations_iso' měś,
 	'ow_importtsv_results' => 'Jo pśidał $1 {{PLURAL:$1|definiciju|definiciji|definicije|definicijow}} a $2 {{PLURAL:$2|pśełožk|pśełožka|pśełožki|pśełožkow}}.',
 	'ow_impexptsv_unknown_lang' => '<p>Njeznata abo wopacna rěc: $1.<br />
 Rěcy muse kody ISO 639-3 byś.</p>',
-	'exporttsv' => 'Wikidaty: TSV eksportěrowaś', # Fuzzy
+	'exporttsv' => 'TSV eksportěrowaś',
 	'ow_exporttsv_title' => 'Zběrku do TSV eksportěrowaś',
 	'ow_exporttsv_header' => "<p>Zběrku do tekstowego formata, kótaryž tabulatory za wótźělenje smužkow wužywa, eksportěrowaś a kótaryž móžoš do OpenOffice.org, Excel abo drugeje tabeloweje softwary importěrowaś.<br />
 Wubjeŕ zběrku za eksport. W tekstowem kašćiku za rěce, zapódaj lisćinu rěcnych kodow ISO 639-3, źož se koma za wótźělenje smužkow wužywa. Zachop z rěcami, z kótarychž coš pśełožowaś (wubjeŕ tak wjele ako coš) a skóńc z tymi, do kótarychž coš pśełožowaś. Klikni na 'Napóraś', aby napórał dataju.</p>",
@@ -3658,7 +3658,7 @@ Pšosym glědaj [[{{MediaWiki:Ow editing policy url}}|naše wobźěłowańske za
 	'ow_uipref_datasets' => 'Standardny naglěd:',
 	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_none_selected' => 'žedne wubrane',
-	'transaction' => 'Wikidaty: Protokol transakcijow', # Fuzzy
+	'transaction' => 'Protokol transakcijow',
 	'ow_transaction_from_transaction' => 'Z transakcije:',
 	'ow_transaction_count' => 'Licba:',
 	'ow_transaction_user' => 'Wužywarske mě:',
@@ -3676,7 +3676,7 @@ Pšosym glědaj [[{{MediaWiki:Ow editing policy url}}|naše wobźěłowańske za
 	'ow_transaction_first_dm' => 'Prědny definěrowany wóznam',
 	'ow_transaction_second_dm' => 'Drugi definěrowany wóznam',
 	'ow_transaction_summary' => 'Zespominanje',
-	'conceptmapping' => 'Wikidaty: Zwězanje zapśimjeśow', # Fuzzy
+	'conceptmapping' => 'Concept mapping',
 	'ow_conceptmapping_title' => 'Zwězanje zapśimjeśow',
 	'ow_conceptmapping_help' => '<p>móžne akcije: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  zwězanje zasajźiś</li>
@@ -3788,9 +3788,9 @@ Njezabydni to hyšći raz pśekontrolěrowaś!',
 	'ow_no_action_specified' => '<h3>Žedna akcija pódana</h3>
 Snaź sy direktnje pśišeł k toś tomu bokoju? Normalnje njetrjebaš how byś.',
 	'ow_db_consistency_not_found' => '<h2>Zmólka</h2>
-Jo problem z konsistencu datoweje banki, wikidaty njamógu płaśiwe daty k ID definěrowanego wóznama namakaś.
+Dajo problem z konsistencu datoweje banki, njedaju se płaśiwe daty namakaś, kótarež su z toś tym definěrowanym ID wóznama  zwězane.
 Snaź su se zgubili.
-Pšosym staj se z serwerowym operatorom abo administratorom do zwiska.', # Fuzzy
+Pšosym staj se ze serwerowym operatorom abo administratorom do zwiska.',
 	'ow_history_transaction' => 'Transakcija:',
 	'ow_history_show_life_span' => 'Cas žywjenja lisćiny pokazaś',
 	'ow_class_attr_type_dm' => 'Definěrowany wóznam',
@@ -3798,12 +3798,12 @@ Pšosym staj se z serwerowym operatorom abo administratorom do zwiska.', # Fuzzy
 	'ow_class_attr_type_plain' => 'Lutny tekst',
 	'ow_class_attr_type_link' => 'Wótkaz',
 	'ow_class_attr_type_option' => 'Lisćina opcijow',
-	'needstranslation' => 'Wikidaty: Wuraze, kótarež trjebaju pśełožk', # Fuzzy
+	'needstranslation' => 'Wuraze, kótarež trjebaju pśełožk',
 	'ow_needs_xlation_title' => 'Wuraze, kótarež maju se pśełožowaś',
 	'ow_needs_xlation_source_lang' => 'Žrědłowa rěc:',
 	'ow_needs_xlation_dest_lang' => 'Celowa rěc:',
 	'ow_needs_xlation_no_dest_lang' => 'Pšosym pódaj celowu rěc.',
-	'ow_statistics' => 'Wikidaty: Statistika', # Fuzzy
+	'ow_statistics' => 'Statistika WikiLexicalData',
 	'ow_show' => 'Pokazaś',
 	'ow_upload' => 'Nagraś',
 	'ow_create' => 'Napóraś',
@@ -6632,7 +6632,7 @@ $messages['hr'] = array(
  */
 $messages['hsb'] = array(
 	'wikidata-desc' => 'Přidawa wikijowu datowu banku za rozdźělne wobsahowe typy',
-	'wikidata-handler-namespace-move-error' => 'Mjenowe rumy nałožene přez rozšěrjenje Wikidata njedadźa so přesunyć.', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Strony w mjenowych rumach wužiwanych přez rozšěrjenje WikiLexicalData njedadźa so přesunyć.',
 	'languages' => 'Zrjadowak rěčow',
 	'langman-desc' => 'Rěčne nastajenja z [[Special:Languages]] přidać a změnić',
 	'langman_title' => 'Zrjadowak rěčow',
@@ -6663,7 +6663,7 @@ $messages['hsb'] = array(
 	'datasearch_match_ext_ids' => 'Eksterne identifikatory, kotrež <em>$1</em> wotpowěduja',
 	'datasearch_match_words' => 'Słowa, kotrež <em>$1</em> wotpowěduja a zwjazane woznamy',
 	'datasearch_match_words_lang' => 'Słowa <em>$1</em>, kotrež <em>$2</em> wotpowěduja a zwjazane woznamy',
-	'importtsv' => 'Wikidaty: TSV importować', # Fuzzy
+	'importtsv' => 'TSV importować',
 	'ow_importtsv_title1' => 'TSV importować',
 	'ow_importtsv_title2' => 'Definicije a přełožki importować',
 	'ow_importtsv_header' => "<p>Importuj definicije a přełožki z tekstoweje dataje z polami wotdźělenymi přez tabulator, kotruž sy z OpenOffice.org, Excel abo někajkeje druheje tabeloweje softwary eksportował.</p>
@@ -6684,7 +6684,7 @@ hdźež iso je rěčny kod.</p>",
 	'ow_importtsv_results' => 'Je $1 {{PLURAL:$1|definiciju|definiciji|definicije|definicijow}} a $2 {{PLURAL:$2|přełožk|přełožkaj|přełožki|přełožkow}} přidał.',
 	'ow_impexptsv_unknown_lang' => '<p>Njeznata abo wopačna rěč: $1.<br />
 Rěče dyrbja kody ISO 639-3 być.</p>',
-	'exporttsv' => 'Wikidaty: TSV eksportować', # Fuzzy
+	'exporttsv' => 'TSV eksportować',
 	'ow_exporttsv_title' => 'Zběrku do TSV eksportować',
 	'ow_exporttsv_header' => "<p>Eksportuj zběrku do formata z tekstom wotdźělenym přez tabulator, zo by ju do Openoffice.org, Excel abo druheje tabeloweje softwary importował.<br />
 Wubjer zběrku za eksport. Zapodaj do tekstoweho kašćika za rěče lisćinu rěcnych kodow ISO 639-3 wotdźělenych přez komu. Započń z rěčemi, z kotrychž chceš přełožować (wubjer telko, kelkož chceš) a zakónč z tymi, do kotrychž chceš přełožować. Klikń potom na 'Wutworić', zo by dataju wutworił.</p>",
@@ -6701,9 +6701,9 @@ Wubjer zběrku za eksport. Zapodaj do tekstoweho kašćika za rěče lisćinu r�
 	'ow_noedit_title' => 'Žana dowolnosć za wobdźěłowanje',
 	'ow_noedit' => 'Njesměš strony w sadźbje datow "$1" wobdźěłować. Prošu hlej [[{{MediaWiki:Ow editing policy url}}|naše směrnicy za wobdźěłowanje]].',
 	'ow_uipref_datasets' => 'Standardny napohlad:',
-	'ow_uiprefs' => 'Wikidaty', # Fuzzy
+	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_none_selected' => 'Ničo wubrane',
-	'transaction' => 'Wikidaty: Protokol transakcijow', # Fuzzy
+	'transaction' => 'Protokol transakcijow',
 	'ow_transaction_from_transaction' => 'Z transakcije:',
 	'ow_transaction_count' => 'Ličba:',
 	'ow_transaction_user' => 'Wužiwarske mjeno:',
@@ -6721,7 +6721,7 @@ Wubjer zběrku za eksport. Zapodaj do tekstoweho kašćika za rěče lisćinu r�
 	'ow_transaction_first_dm' => 'Prěni definowany woznam',
 	'ow_transaction_second_dm' => 'Druhi definowany woznam',
 	'ow_transaction_summary' => 'Zjeće',
-	'conceptmapping' => 'Wikidaty: Zwjazanje zapřijećow', # Fuzzy
+	'conceptmapping' => 'Concept mapping',
 	'ow_conceptmapping_title' => 'Zwjazanje zapřijećow',
 	'ow_conceptmapping_help' => '<p>Móžne akcije: <ul>
 <li>&action=insert&<data_context_prefix>=<defined_id>&...  Zwjazanje zasunyć</li>
@@ -6748,6 +6748,8 @@ Wubjer zběrku za eksport. Zapodaj do tekstoweho kašćika za rěče lisćinu r�
 	'ow_AlternativeDefinition' => 'Alternatiwna definicija',
 	'ow_AlternativeDefinitions' => 'Alternatiwne definicije',
 	'ow_Annotation' => 'Anotacija',
+	'ow_AnnotationDefinedMeaning' => 'Semantiske anotacije',
+	'ow_AnnotationSyntrans' => 'Leksikaliske anotacije',
 	'ow_ApproximateMeanings' => 'Přibližne woznamy',
 	'ow_Class' => 'Klasa',
 	'ow_ClassAttributeAttribute' => 'Atribut',
@@ -6783,6 +6785,7 @@ Wubjer zběrku za eksport. Zapodaj do tekstoweho kašćika za rěče lisćinu r�
 	'ow_OtherLanguages' => 'Druhe rěče',
 	'ow_PopupAnnotation' => 'Anotacija',
 	'ow_RecordLifeSpan' => 'Žiwjenska doba lisćiny',
+	'ow_RelatedTo' => 'Přiwuzny z',
 	'ow_Relations' => 'Poćahi',
 	'ow_RelationType' => 'Poćahowy typ',
 	'ow_Remove' => 'Wotstronić',
@@ -6823,7 +6826,10 @@ Wubjer zběrku za eksport. Zapodaj do tekstoweho kašćika za rěče lisćinu r�
 	'ow_copy_successful' => '<h2>Kopěrowanje wuspěšne</h2>Zda so, zo twoje daty su so wušpěšnje kopěrowali. Njezabudź hišće raz pruwować, zo by zawěsće był.',
 	'ow_copy_unsuccessful' => '<h3>Kopěrowanje njewuspěšne</h3> Žana kopěrowanska operacija njeje so wotměła.',
 	'ow_no_action_specified' => '<h3>Žana akcija podata</h3> Sy ty snano direktnje k tutej stronje přišoł? W normalny padźe njetrjebaš tu być.',
-	'ow_db_consistency_not_found' => '<h2>Zmylk</h2>Je problem z konsistencu datoweje banki, wikidata njemóže płaćiwe daty namakać, kotrež su z tutym ID definedMeaning zwjazane. Snano su so zhubili. Prošu skontaktuj serweroweho operatora abo administratora.', # Fuzzy
+	'ow_db_consistency_not_found' => '<h2>Zmylk</h2>
+Je problem z konsistencu datoweje banki, njehodźa so płaćiwe daty namakać, kotrež su z tutym definowanym ID woznama  zwjazane.
+Snano su so zhubili.
+Prošu staj so ze serwerowym operatorom abo administratorom do zwiska.',
 	'ow_history_transaction' => 'Transakcija:',
 	'ow_history_show_life_span' => 'Čas žiwjenja lisćiny pokazać',
 	'ow_class_attr_type_dm' => 'Definowany woznam',
@@ -6831,12 +6837,14 @@ Wubjer zběrku za eksport. Zapodaj do tekstoweho kašćika za rěče lisćinu r�
 	'ow_class_attr_type_plain' => 'Luty tekst',
 	'ow_class_attr_type_link' => 'Wotkaz',
 	'ow_class_attr_type_option' => 'Lisćina opcijow',
-	'needstranslation' => 'Wikidaty; Wurazy, kotrež přełožk trjebaja', # Fuzzy
+	'needstranslation' => 'Wurazy, kotrež přełožk trjebaja',
 	'ow_needs_xlation_title' => 'Wurazy, kotrež maja so přełožować',
 	'ow_needs_xlation_source_lang' => 'Žórłowa rěč:',
 	'ow_needs_xlation_dest_lang' => 'Cilowa rěč:',
 	'ow_needs_xlation_no_dest_lang' => 'Prošu podaj cilowu rěč.',
-	'ow_statistics' => 'Wikidaty: Statistika', # Fuzzy
+	'ow_data_search' => 'Datowe pytanje WikiLexicalData',
+	'ow_statistics' => 'Statistika WikiLexicalData',
+	'ow_downloads' => 'Sćehnjenja WikiLexicalData',
 	'ow_show' => 'Pokazać',
 	'ow_upload' => 'Nahrać',
 	'ow_create' => 'Wutworić',
