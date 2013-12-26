@@ -2766,6 +2766,7 @@ $messages['ce'] = array(
 	'ow_transaction_user' => 'Декъашхочун цӀе:',
 	'ow_transaction_rollback_button' => 'Юхаяккха',
 	'ow_transaction_remove' => 'ДӀаяккхар',
+	'ow_transaction_summary' => 'Цунах лаьцна',
 	'ow_ClassAttributeLevel' => 'Локхалла',
 	'ow_ClassAttributeType' => 'Тайп',
 	'ow_Language' => 'Мотт',
