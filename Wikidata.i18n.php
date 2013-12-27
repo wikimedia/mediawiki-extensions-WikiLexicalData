@@ -2780,6 +2780,7 @@ $messages['ce'] = array(
 	'ow_Value' => 'МаьӀна',
 	'ow_removed' => 'ДӀаяьккхина',
 	'ow_meaningsoftitle' => 'МаьӀна «$1»',
+	'ow_copy_help' => 'ГӀодар хӀинца а кечдина дац.',
 	'ow_class_attr_type_plain' => 'Цхьалхе йоза',
 	'ow_class_attr_type_link' => 'Хьажораг',
 	'ow_upload' => 'Чуяккха',
