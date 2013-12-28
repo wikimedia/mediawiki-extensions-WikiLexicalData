@@ -459,7 +459,7 @@ class SpecialDatasearch extends SpecialPage {
 				unset( $prevQuery['offset'] );
 			}
 			$prevLink = Linker::linkKnown(
-				$this->getTitle(),
+				$this->getPageTitle(),
 				$prevText,
 				array(),
 				$prevQuery
@@ -485,7 +485,7 @@ class SpecialDatasearch extends SpecialPage {
 			$nextOffset = $this->offset + $this->limit;
 			$nextQuery['offset'] = $nextOffset;
 			$nextLink = Linker::linkKnown(
-				$this->getTitle(),
+				$this->getPageTitle(),
 				$nextText,
 				array(),
 				$nextQuery
