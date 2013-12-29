@@ -64,7 +64,7 @@ class SpecialLanguages extends SpecialPage {
 	}
 	function showForm() {
 		global $wgOut;
-		$action = $this->getPageTitle()->escapeLocalURL( 'action=submit' );
+		$action = htmlspecialchars( $this->getPageTitle()->getLocalURL( 'action=submit' ) );
 		$wgOut->addHTML(
 <<<END
 <form name="addlanguage" method="post" action="$action">
