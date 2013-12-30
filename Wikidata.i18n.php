@@ -4732,7 +4732,7 @@ Mesedez harremanetan ipini zerbitzari operadore edo administratzailearekin.', # 
  */
 $messages['fa'] = array(
 	'wikidata-desc' => 'پایگاه دادهٔ ویکی‌پیوند را برای انواع گوناگون محتواها می‌افزاید',
-	'wikidata-handler-namespace-move-error' => 'صفحه‌های فضاهای نامی که توسط افزونهٔ ویکی‌داده اداره می‌شوند قابل انتقال نیستند.', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'صفحه‌های فضاهای نامی که توسط افزونهٔ ویکی‌‌داده‌واژه اداره می‌شوند فابل انتقال نیستند.',
 	'languages' => 'مدیریت زبان',
 	'langman-desc' => 'افزودن و تغییر تنظیمات زبان با [[Special:Languages]]',
 	'langman_title' => 'مدیریت زبان',
@@ -4809,7 +4809,7 @@ $messages['fa'] = array(
 	'ow_noedit' => 'شما مجاز به ویرایش صفحه‌ها در مجموعهٔ داده «$1» نیستید.
 لطفاً [[{{MediaWiki:Ow editing policy url}}|سیاست‌های ویرایشی]] را مطالعه کنید.',
 	'ow_uipref_datasets' => 'نمای پیش‌فرض:',
-	'ow_uiprefs' => 'ویکی‌داده', # Fuzzy
+	'ow_uiprefs' => 'ویکی‌داده‌واژگان',
 	'ow_none_selected' => 'هیچ‌کدام انتخاب نشده‌اند',
 	'transaction' => 'سیاههٔ تبادل',
 	'ow_transaction_from_transaction' => 'از تبادل:',
@@ -4942,9 +4942,9 @@ $messages['fa'] = array(
 	'ow_no_action_specified' => '<h3>هیچ عملی مشخص نشده‌است</h3>
 شاید مستقیماً وارد این صفحه شده‌اید؟ معمولاً نیاز نیست به این صفحه بیایید.',
 	'ow_db_consistency_not_found' => '<h2>خطا</h2>
-مشکلی پیرامون ثبات پایگاه داده وجود دارد. ویکی‌داده نمی‌تواند داده‌های معتبر مرتبط با این شناسهٔ معنی تعریف‌شده را بیابد.
+مشکلی پیرامون ثبات پایگاه داده وجود دارد. می تواند داده‌های معتبر مرتبط با این شناسهٔ معنی تعریف‌شده را بیابد.
 ممکن است از دست رفته باشد.
-با مدیر یا اپراتور سرور تماس بگیرید.', # Fuzzy
+با مدیر یا اپراتور سرور تماس بگیرید.',
 	'ow_history_transaction' => 'تبادل:',
 	'ow_history_show_life_span' => 'نمایش ذخیرهٔ دورهٔ عمر:',
 	'ow_class_attr_type_dm' => 'معنی تعریف‌شده',
@@ -4957,7 +4957,7 @@ $messages['fa'] = array(
 	'ow_needs_xlation_source_lang' => 'زبان مبدأ:',
 	'ow_needs_xlation_dest_lang' => 'زبان مقصد:',
 	'ow_needs_xlation_no_dest_lang' => 'لطفاً یک زبان مقصد مشخص کنید.',
-	'ow_statistics' => 'ویکی‌داده: آمار', # Fuzzy
+	'ow_statistics' => 'ویکی‌داده‌واژگان: آمار',
 	'ow_show' => 'نمایش',
 	'ow_upload' => 'بارگذاری',
 	'ow_create' => 'ایجاد',

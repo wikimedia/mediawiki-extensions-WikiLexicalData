@@ -28,6 +28,13 @@ $messages['de'] = array(
 	'apiow-desc' => 'OmegaWikis WikiLexicalData-Erweiterung der MediaWiki-API',
 );
 
+/** Lower Sorbian (dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'apiow-desc' => 'Rozšyrjenje WikiLexicalData na OmegaWiki dataje api.php MediaWiki',
+);
+
 /** French (français)
  * @author Gomoko
  */
@@ -47,6 +54,13 @@ $messages['gl'] = array(
  */
 $messages['he'] = array(
 	'apiow-desc' => 'הרחבת API של מדיה־ויקי בשביל WikiLexicalData של OmegaWiki',
+);
+
+/** Upper Sorbian (hornjoserbsce)
+ * @author Michawiki
+ */
+$messages['hsb'] = array(
+	'apiow-desc' => 'Rozšěrjenje WikiLexicalData na OmegaWiki dataje api.php MediaWiki',
 );
 
 /** Italian (italiano)
