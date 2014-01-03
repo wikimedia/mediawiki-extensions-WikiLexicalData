@@ -13027,7 +13027,7 @@ $messages['ru'] = array(
 	'datasearch_search_text' => 'Поиск текста:',
 	'datasearch_within_words' => 'Среди слов:',
 	'datasearch_within_ext_ids' => 'Среди внешних идентификаторов:',
-	'datasearch_showing_only' => 'Показываются не более $1 {{PLURAL:$1|результата|результатов|результатов}} (из $2).',
+	'datasearch_showing_only' => 'Показываются не более $1 {{PLURAL:$1|результата|результатов|результатов}} (из $2).', # Fuzzy
 	'datasearch_match_ext_ids' => 'Внешние идентификаторы, соответствующие «$1»',
 	'datasearch_match_words' => 'Слова, соответствующие «$1», и связанные значения',
 	'datasearch_match_words_lang' => 'Слова на <em>$1</em>, соответствующие «$2», и связанные значения',
@@ -13051,7 +13051,7 @@ $messages['ru'] = array(
 	'ow_importtsv_test_run_title' => 'Пробный запуск импорта TSV-данных',
 	'ow_importtsv_nothing_added' => 'Ничего не добавлено.',
 	'ow_importtsv_nothing_added_test' => 'Ничего не добавлено (был произведён пробный запуск).',
-	'ow_importtsv_results' => '{{PLURAL:$1|Добавлено $1 определение|Добавлено $1 определения|Добавлено $1 определений}} и $2 {{PLURAL:$2|перевод|перевода|переводов}}.',
+	'ow_importtsv_results' => '{{PLURAL:$1|Добавлено $1 определение|Добавлено $1 определений|Добавлено $1 определения}} и $2 {{PLURAL:$2|перевод|переводов|перевода}}.', # Fuzzy
 	'ow_impexptsv_unknown_lang' => '<p>Неизвестный или ошибочный язык: $1.<br />
 Языки должны быть записаны в виде кодов ISO 639-3.</p>',
 	'exporttsv' => 'Экспорт TSV',
@@ -13991,7 +13991,7 @@ $messages['sr-ec'] = array(
 	'ow_importtsv_file' => 'TSV Фајл:',
 	'ow_importtsv_nothing_added' => 'Ништа није додато.',
 	'ow_importtsv_nothing_added_test' => 'Ништа није додато (урадили сте тест покретање).',
-	'ow_importtsv_results' => '{{PLURAL:$1|Додата једна дефиниција|Додато $1 дефиниција}} и $2 {{PLURAL:$2|превод|превода}}.',
+	'ow_importtsv_results' => '{{PLURAL:$1|1=Додата једна дефиниција|Додато $1 дефиниција}} и $2 {{PLURAL:$2|1=превод|превода}}.', # Fuzzy
 	'exporttsv' => 'Извези TSV',
 	'ow_exporttsv_languages' => 'Језици:',
 	'ow_exporttsv_export_failed' => 'Извоз неуспешан',
@@ -14168,7 +14168,7 @@ $messages['sr-el'] = array(
 	'ow_importtsv_file' => 'TSV Fajl:',
 	'ow_importtsv_nothing_added' => 'Ništa nije dodato.',
 	'ow_importtsv_nothing_added_test' => 'Ništa nije dodato (uradili ste test pokretanje).',
-	'ow_importtsv_results' => '{{PLURAL:$1|Dodata jedna definicija|Dodato $1 definicija}} i $2 {{PLURAL:$2|prevod|prevoda}}.',
+	'ow_importtsv_results' => '{{PLURAL:$1|1=Dodata jedna definicija|Dodato $1 definicija}} i $2 {{PLURAL:$2|1=prevod|prevoda}}.', # Fuzzy
 	'ow_exporttsv_languages' => 'Jezici:',
 	'ow_exporttsv_export_failed' => 'Izvoz neuspešan',
 	'ow_save' => 'Sačuvaj',
@@ -15840,7 +15840,7 @@ $messages['uk'] = array(
 	'datasearch_search_text' => 'Пошук тексту:',
 	'datasearch_within_words' => 'Серед слів:',
 	'datasearch_within_ext_ids' => 'Серед зовнішніх ідентифікаторів:',
-	'datasearch_showing_only' => 'Показано не більше $1 {{PLURAL:$1|результату|результатів}} (з $2).',
+	'datasearch_showing_only' => 'Показано не більше $1 {{PLURAL:$1|1=результату|результатів}} (з $2).',
 	'datasearch_match_ext_ids' => 'Зовнішні ідентифікатори, що відповідають <em>$1</em>',
 	'datasearch_match_words' => 'Слова, що відповідають "$1", і пов\'язані значення',
 	'datasearch_match_words_lang' => "Слова на <em>$1</em>, відповідні «$2», і пов'язані значення",
