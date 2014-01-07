@@ -16201,6 +16201,7 @@ $messages['vep'] = array(
 	'ow_OptionAttributeOptions' => 'Parametrad',
 	'ow_OptionAttributeValues' => 'Parametriden znamoičendad',
 	'ow_OtherDefinedMeaning' => 'Toine märhapandud znamoičend',
+	'ow_OtherLanguages' => 'Toižed keled:',
 	'ow_PopupAnnotation' => 'Annotacii',
 	'ow_RecordLifeSpan' => 'Kirjutesen elon strok',
 	'ow_Relations' => 'Kesksidod',
