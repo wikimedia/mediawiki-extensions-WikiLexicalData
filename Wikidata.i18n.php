@@ -13027,7 +13027,7 @@ $messages['ru'] = array(
 	'datasearch_search_text' => 'Поиск текста:',
 	'datasearch_within_words' => 'Среди слов:',
 	'datasearch_within_ext_ids' => 'Среди внешних идентификаторов:',
-	'datasearch_showing_only' => 'Показываются не более $1 {{PLURAL:$1|результата|результатов|результатов}} (из $2).', # Fuzzy
+	'datasearch_showing_only' => 'Показываются не более $1 {{PLURAL:$1|результата|результатов}} (из $2).',
 	'datasearch_match_ext_ids' => 'Внешние идентификаторы, соответствующие «$1»',
 	'datasearch_match_words' => 'Слова, соответствующие «$1», и связанные значения',
 	'datasearch_match_words_lang' => 'Слова на <em>$1</em>, соответствующие «$2», и связанные значения',
@@ -13051,7 +13051,7 @@ $messages['ru'] = array(
 	'ow_importtsv_test_run_title' => 'Пробный запуск импорта TSV-данных',
 	'ow_importtsv_nothing_added' => 'Ничего не добавлено.',
 	'ow_importtsv_nothing_added_test' => 'Ничего не добавлено (был произведён пробный запуск).',
-	'ow_importtsv_results' => '{{PLURAL:$1|Добавлено $1 определение|Добавлено $1 определений|Добавлено $1 определения}} и $2 {{PLURAL:$2|перевод|переводов|перевода}}.', # Fuzzy
+	'ow_importtsv_results' => '{{PLURAL:$1|Добавлено $1 определение|Добавлено $1 определений|Добавлено $1 определения}} и $2 {{PLURAL:$2|перевод|переводов|перевода}}.',
 	'ow_impexptsv_unknown_lang' => '<p>Неизвестный или ошибочный язык: $1.<br />
 Языки должны быть записаны в виде кодов ISO 639-3.</p>',
 	'exporttsv' => 'Экспорт TSV',
