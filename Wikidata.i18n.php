@@ -315,7 +315,8 @@ See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Specia
 	'importlangnames_not_found' => 'Parameters:
 * $1 - ISO 639-3 code for language. [[w:ISO 639-3]]',
 	'datasearch' => '{{doc-special|Datasearch}}
-See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]',
+See example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]
+{{Identical|Data search}}',
 	'datasearch_language' => '{{Identical|Language}}',
 	'datasearch_meaning' => '{{Identical|Meaning}}',
 	'datasearch_showing_only' => 'Parameters:
