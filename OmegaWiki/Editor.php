@@ -18,7 +18,7 @@ define( 'EOL', "\n" ); # Makes human (and vim :-p) readable output (somewhat...)
 // instances of this class are used instead of the boolean "allowAdd" in the editors
 class AllowAddController {
 	protected $value;
-	
+
 	public function __construct( $value ) {
 		$this->value = $value;
 	}
@@ -29,11 +29,11 @@ class AllowAddController {
 
 class ShowEditFieldChecker {
 	protected $value;
-	
+
 	public function __construct( $value ) {
 		$this->value = $value;
 	}
-	
+
 	public function check( IdStack $idPath ) {
 		return $this->value;
 	}
@@ -42,12 +42,12 @@ class ShowEditFieldChecker {
 class ShowEditFieldForClassesChecker extends ShowEditFieldChecker {
 	protected $objectIdAttributeLevel;
 	protected $objectIdAttribute;
-	
+
 	public function __construct( $objectIdAttributeLevel, Attribute $objectIdAttribute ) {
 		$this->objectIdAttributeLevel = $objectIdAttributeLevel;
 		$this->objectIdAttribute = $objectIdAttribute;
 	}
-	
+
 	public function check( IdStack $idPath ) {
 		$peek = $idPath->getKeyStack()->peek( $this->objectIdAttributeLevel );
 		$objectId = $peek->getAttributeValue( $this->objectIdAttribute );
@@ -76,19 +76,19 @@ interface Editor {
 
 class AttributeEditorMap {
 	protected $attributeEditorMap = array();
-	
+
 	public function addEditor( $editor ) {
 		$attributeId = $editor->getAttribute()->id;
 		$this->attributeEditorMap[$attributeId] = $editor;
 	}
-	
+
 	public function getEditorForAttributeId( $attributeId ) {
 		if ( isset( $this->attributeEditorMap[$attributeId] ) ) {
 			return $this->attributeEditorMap[$attributeId];
 		}
 		return null;
 	}
-	
+
 	public function getEditorForAttribute( Attribute $attribute ) {
 		return $this->getEditorForAttributeId( $attribute->id );
 	}
@@ -125,7 +125,7 @@ abstract class DefaultEditor implements Editor {
 	public function getEditors() {
 		return $this->editors;
 	}
-	
+
 	public function getAttributeEditorMap() {
 		return $this->attributeEditorMap;
 	}
@@ -446,11 +446,11 @@ abstract class RecordSetEditor extends DefaultEditor {
 		}
 		return $result;
 	}
-	
+
 	public function showsData( $value ) {
 		return $value->getRecordCount() > 0;
 	}
-	
+
 	public function showEditField( IdStack $idPath ) {
 		return $this->showEditFieldChecker->check( $idPath );
 	}
@@ -460,15 +460,15 @@ class RecordSetTableEditor extends RecordSetEditor {
 	protected $rowHTMLAttributes = array();
 	protected $repeatInput = false;
 	protected $hideEmptyColumns = true;
-	
+
 	protected function getRowAttributesArray() {
 		return $this->rowHTMLAttributes;
 	}
-	
+
 	public function setRowHTMLAttributes( $rowHTMLAttributes ) {
 		$this->rowHTMLAttributes = $rowHTMLAttributes;
 	}
-	
+
 	/**
 	* Determines if there is at least one non-empty cell in the column
 	* and returns true in that case.
@@ -481,17 +481,17 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 		while ( !$result && $i < $recordCount ) {
 			$recordOrScalar = $value->getRecord( $i );
-			
+
 			foreach ( $attributePath as $attribute ) {
 				$recordOrScalar = $recordOrScalar->getAttributeValue( $attribute );
 			}
 			$result = $columnEditor->showsData( $recordOrScalar );
 			$i++;
 		}
-		
+
 		return $result;
 	}
-	
+
 	public function getTableStructure( Editor $editor ) {
 		$attributes = array();
 
@@ -509,7 +509,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 		return new Structure( $attributes );
 	}
-	
+
 	protected function getTableStructureShowingData( $viewOrEdit, Editor $editor, IdStack $idPath, RecordSet $value, $attributePath = array() ) {
 		$attributes = array();
 
@@ -519,7 +519,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 			if ( $childEditor instanceof RecordTableCellEditor ) {
 				$type = $this->getTableStructureShowingData( $viewOrEdit, $childEditor, $idPath, $value, $attributePath );
-				
+
 				if ( count( $type->getAttributes() ) > 0 ) {
 					$attributes[] = new Attribute( $childAttribute->id, $childAttribute->name, $type );
 				}
@@ -551,7 +551,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 		return $result;
 	}
-	
+
 	public function viewRows( IdStack $idPath, RecordSet $value, Structure $visibleStructure ) {
 		$result = "";
 		$rowAttributes = $this->getRowAttributesArray();
@@ -568,14 +568,14 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 			$idPath->popKey();
 		}
-		
+
 		return $result;
 	}
-	
+
 	public function viewFooter( IdStack $idPath, Structure $visibleStructure ) {
 		return Html::closeElement('table');
 	}
-	
+
 	public function getTableStructureForView( IdStack $idPath, RecordSet $value ) {
 		if ( $this->hideEmptyColumns ) {
 			return $this->getTableStructureShowingData( "view", $this, $idPath, $value );
@@ -583,14 +583,14 @@ class RecordSetTableEditor extends RecordSetEditor {
 			return $this->getTableStructure( $this );
 		}
 	}
-	
+
 	public function getTableStructureForEdit( IdStack $idPath, RecordSet $value ) {
 		return $this->getTableStructureShowingData( "edit", $this, $idPath, $value );
 	}
 
 	public function view( IdStack $idPath, $value ) {
 		$visibleStructure = $this->getTableStructureForView( $idPath, $value );
-		
+
 		$result =
 			$this->viewHeader( $idPath, $visibleStructure ) .
 			$this->viewRows( $idPath, $value, $visibleStructure ) .
@@ -605,7 +605,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 		$key = $value->getKey();
 		$rowAttributes = $this->getRowAttributesArray();
 		$visibleStructure = $this->getTableStructureForEdit( $idPath, $value );
-		
+
 		$columnOffset = $this->allowRemove ? 1 : 0;
 		$headerRows = getStructureAsTableHeaderRows( $visibleStructure, $columnOffset, $idPath );
 
@@ -638,13 +638,13 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 			if ( $this->allowRemove ) {
 				$result .= Html::openElement('td', array( 'class' => 'remove' ) );
-				
+
 				if ( $this->permissionController->allowRemovalOfValue( $idPath, $record ) ) {
 				 	$result .= getRemoveCheckBox( 'remove-' . $idPath->getId() );
 				}
 				$result .= Html::closeElement('td');
 			}
-			
+
 			if ( $this->permissionController->allowUpdateOfValue( $idPath, $record ) ) {
 				$result .= getRecordAsEditTableCells( $idPath, $this, $visibleStructure, $record );
 			} else {
@@ -662,7 +662,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 		// the part in the "tfoot" does not get sorted by jquery.tablesorter
 		$result .= Html::openElement( 'tfoot' );
-		
+
 		if ( $this->allowAddController->check( $idPath ) ) {
 			$result .= $this->getAddRowAsHTML( $idPath, $this->repeatInput, $this->allowRemove );
 		}
@@ -694,12 +694,12 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 	function getStructureAsAddCells( IdStack $idPath, Editor $editor, &$startColumn = 0 ) {
 		$result = '';
-		
+
 		foreach ( $editor->getEditors() as $childEditor ) {
 			$attribute = $childEditor->getAttribute();
 			$type = $attribute->type;
 			$idPath->pushAttribute( $attribute );
-			
+
 			if ( $childEditor instanceof RecordTableCellEditor ) {
 				$result .= $this->getStructureAsAddCells( $idPath, $childEditor, $startColumn );
 			} else {
@@ -711,13 +711,13 @@ class RecordSetTableEditor extends RecordSetEditor {
 				}
 				$startColumn++;
 			}
-			
+
 			$idPath->popAttribute();
 		}
-		
+
 		return $result;
 	}
-	
+
 	function getAddRowAsHTML( IdStack $idPath, $repeatInput, $allowRemove ) {
 		global $wgScriptPath;
 
@@ -727,7 +727,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 			$attr['class'] = 'repeat';
 		}
 		$result = Html::openElement( 'tr', $attr );
-		
+
 		# + is add new Fo o(but grep this file for Add.png for more)
 		if ( $allowRemove ) {
 			$imgsrc = $wgScriptPath . '/extensions/WikiLexicalData/Images/Add.png';
@@ -842,21 +842,21 @@ abstract class RecordEditor extends DefaultEditor {
 			$idPath->popAttribute();
 		}
 	}
-	
+
 	public function showsData( $value ) {
 		$result = true;
 		$i = 0;
 		$childEditors = $this->getEditors();
-		
+
 		while ( $result && $i < count( $childEditors ) ) {
 			$editor = $childEditors[$i];
 			$result = $editor->showsData( $value->getAttributeValue( $editor->getAttribute() ) );
 			$i++;
 		}
-		
+
 		return $result;
 	}
-	
+
 	public function showEditField( IdStack $idPath ) {
 		return true;
 	}
@@ -948,11 +948,11 @@ abstract class ScalarEditor extends DefaultEditor {
 		}
 		return $this->getViewHTML( $idPath, $value );
 	}
-	
+
 	public function showsData( $value ) {
 		return ( $value != null ) && ( trim( $value ) != "" );
 	}
-	
+
 	public function showEditField( IdStack $idPath ) {
 		return true;
 	}
@@ -971,7 +971,7 @@ class LanguageEditor extends ScalarEditor {
 	public function getEditHTML( IdStack $idPath, $value ) {
 		return getSuggest( $this->updateId( $idPath->getId() ), "language" );
 	}
-	
+
 	public function add( IdStack $idPath ) {
 		return getSuggest( $this->addId( $idPath->getId() ), "language" );
 	}
@@ -981,7 +981,7 @@ class LanguageEditor extends ScalarEditor {
 
 		return $wgRequest->getInt( $id );
 	}
-	
+
 	public function showsData( $value ) {
 		return ( $value != null ) && ( $value != 0 );
 	}
@@ -1062,7 +1062,7 @@ class TabLanguageEditor extends ScalarEditor {
 		// is this used?
 		return getSuggest( $this->updateId( $idPath->getId() ), "language" );
 	}
-	
+
 	public function add( IdStack $idPath ) {
 		$output = Html::openElement('div', array('class' => 'wd-languageadd') ) ;
 		$output .= wfMessage( 'ow_Language' )->text() . ': ' ;
@@ -1077,7 +1077,7 @@ class TabLanguageEditor extends ScalarEditor {
 
 		return $wgRequest->getInt( $id );
 	}
-	
+
 	public function showsData( $value ) {
 		return ( $value != null ) && ( $value != 0 );
 	}
@@ -1279,7 +1279,7 @@ class TextEditor extends ScalarEditor {
 			return getTextArea( $this->updateId( $idPath->getId() ), $value, 3, 80 , true );
 		} else {
 			return getTextArea( $this->updateId( $idPath->getId() ), $value, 3 );
-		}	
+		}
 	}
 
 	public function add( IdStack $idPath ) {
@@ -1299,7 +1299,7 @@ class TextEditor extends ScalarEditor {
 	public function setAddText( $addText ) {
 		$this->addText = $addText;
 	}
-	
+
 	public function save( IdStack $idPath, $value ) {
 		if ( $this->controller != null ) {
 			$inputValue = $this->getInputValue( $this->updateId( $idPath->getId() ) );
@@ -1316,7 +1316,7 @@ class ShortTextEditor extends ScalarEditor {
 
 	public function __construct( Attribute $attribute = null, PermissionController $permissionController, $isAddField, $onChangeHandler = "" ) {
 		parent::__construct( $attribute, $permissionController, $isAddField );
-		
+
 		$this->onChangeHandler = $onChangeHandler;
 	}
 
@@ -1334,7 +1334,7 @@ class ShortTextEditor extends ScalarEditor {
 			return getTextBox( $this->updateId( $idPath->getId() ), $value, $this->onChangeHandler );
 		}
 	}
- 
+
 	public function add( IdStack $idPath ) {
 		if ( $this->isAddField ) {
 			return getTextBox( $this->addId( $idPath->getId() ), "", $this->onChangeHandler );
@@ -1407,7 +1407,7 @@ class BooleanEditor extends ScalarEditor {
 }
 
 /*
-* IdenticalMeaningEditor 
+* IdenticalMeaningEditor
 * in view mode, shows either = or ≈
 * in edit mode, shows a combobox to choose.
 * for html we use strings "true" and "false" instead of "0" and "1"
@@ -1498,7 +1498,7 @@ class DefinedMeaningReferenceEditor extends SuggestEditor {
 		$definedMeaningId = $value->definedMeaningId;
 		$definedMeaningLabel = $value->definedMeaningLabel;
 		$definedMeaningDefiningExpression = $value->definedMeaningDefiningExpression;
-		
+
 		return definedMeaningReferenceAsLink( $definedMeaningId, $definedMeaningDefiningExpression, $definedMeaningLabel );
 	}
 }
@@ -1526,7 +1526,7 @@ class ClassAttributesLevelDefinedMeaningEditor extends SuggestEditor {
 		$definedMeaningId = $value->definedMeaningId;
 		$definedMeaningLabel = $value->definedMeaningLabel;
 		$definedMeaningDefiningExpression = $value->definedMeaningDefiningExpression;
-		
+
 		return definedMeaningReferenceAsLink( $definedMeaningId, $definedMeaningDefiningExpression, $definedMeaningLabel );
 	}
 }
@@ -1590,7 +1590,7 @@ class OptionSelectEditor extends SelectEditor {
 		$definedMeaningId = $value->definedMeaningId;
 		$definedMeaningLabel = $value->definedMeaningLabel;
 		$definedMeaningDefiningExpression = $value->definedMeaningDefiningExpression;
-		
+
 		return definedMeaningReferenceAsLink( $definedMeaningId, $definedMeaningDefiningExpression, $definedMeaningLabel );
 	}
 }
@@ -1648,12 +1648,12 @@ class AttributeEditor extends DefinedMeaningReferenceEditor {
 		}
 		return "";
 	}
-	
+
 	public function getEditHTML( IdStack $idPath, $value ) {
 		$parameters = array( "level" => $this->attributesLevelName );
 		return getSuggest( $this->updateId( $idPath->getId() ), $this->suggestType(), $parameters );
 	}
-	
+
 	public function showEditField( IdStack $idPath ) {
 		return !$this->attributeIDFilter->leavesOnlyOneOption();
 	}
@@ -1728,11 +1728,11 @@ class RecordListEditor extends RecordEditor {
 
 	public function __construct( Attribute $attribute = null, $headerLevel, $htmlTag ) {
 		parent::__construct( $attribute );
-		
+
 		$this->htmlTag = $htmlTag;
 		$this->headerLevel = $headerLevel;
 	}
-	
+
 	/**
 	 * hierarchical showsData, returns true
 	 * if at least on of its childEditors (and their childEditors...)
@@ -1745,7 +1745,7 @@ class RecordListEditor extends RecordEditor {
 		$i = 0;
 		$result = false;
 		$childEditors = $this->getEditors();
-		
+
 		while ( !$result && $i < count( $childEditors ) ) {
 			$editor = $childEditors[$i];
 			$attribute = $editor->getAttribute();
@@ -1753,29 +1753,29 @@ class RecordListEditor extends RecordEditor {
 			$result = $editor->showsData( $attributeValue );
 			$i++;
 		}
-		
+
 		return $result;
 	}
-	
+
 	protected function shouldCompressOnView( $idPath, $value, $editors ) {
 		$visibleEditorCount = 0;
-		
+
 		foreach ( $editors as $editor ) {
 			$attribute = $editor->getAttribute();
 			$idPath->pushAttribute( $attribute );
-			
+
 			if ( $editor->showsData( $value->getAttributeValue( $attribute ) ) ) {
 				$visibleEditorCount++;
 			}
 			$idPath->popAttribute();
 		}
-		
+
 		return $visibleEditorCount <= 1;
 	}
 
 	protected function viewEditors( IdStack $idPath, $value, $editors, $htmlTag, $compress ) {
 		$result = '';
-		
+
 		foreach ( $editors as $editor ) {
 			$attribute = $editor->getAttribute();
 			$idPath->pushAttribute( $attribute );
@@ -1797,7 +1797,7 @@ class RecordListEditor extends RecordEditor {
 					$result .= Html::closeElement( $htmlTag );
 				}
 			}
-			           
+
 			$idPath->popAttribute();
 		} // foreach editors
 
@@ -1815,27 +1815,27 @@ class RecordListEditor extends RecordEditor {
 
 	protected function shouldCompressOnEdit( $idPath, $value, $editors ) {
 		$visibleEditorCount = 0;
-		
+
 		foreach ( $editors as $editor ) {
 			$attribute = $editor->getAttribute();
 			$idPath->pushAttribute( $attribute );
-			
+
 			if ( $editor->showEditField( $idPath ) ) {
 				$visibleEditorCount++;
 			}
 			$idPath->popAttribute();
 		}
-		
+
 		return $visibleEditorCount <= 1;
 	}
 
 	protected function editEditors( IdStack $idPath, $value, $editors, $htmlTag, $compress ) {
 		$result = '';
-		
+
 		foreach ( $editors as $editor ) {
 			$attribute = $editor->getAttribute();
 			$idPath->pushAttribute( $attribute );
-			
+
 			if ( $editor->showEditField( $idPath ) ) {
 				$class = $idPath->getClass();
 				$attributeId = $idPath->getId();
@@ -1865,10 +1865,10 @@ class RecordListEditor extends RecordEditor {
 		$editors = $this->getEditors();
 		return $this->editEditors( $idPath, $value, $editors, $this->htmlTag, $this->shouldCompressOnEdit( $idPath, $value, $editors ) );
 	}
-	
+
 	protected function addEditors( IdStack $idPath, $editors, $htmlTag ) {
 		$result = '';
-		
+
 		foreach ( $editors as $editor ) {
 			if ( $attribute = $editor->getAddAttribute() ) {
 				$idPath->pushAttribute( $attribute );
@@ -1889,7 +1889,7 @@ class RecordListEditor extends RecordEditor {
 
 		return $result;
 	}
-	
+
 	public function add( IdStack $idPath ) {
 		return $this->addEditors( $idPath, $this->getEditors(), $this->htmlTag );
 	}
@@ -1912,7 +1912,7 @@ class RecordListEditor extends RecordEditor {
 
 		return $childHeaderHtml;
 	}
-	
+
 	protected function viewChild( Editor $editor, IdStack $idPath, $value, Attribute $attribute, $class, $attributeId ) {
 		$divid = 'collapsable-' . $attributeId;
 		$divclass = 'expand-' . $class;
@@ -1945,21 +1945,21 @@ class RecordUnorderedListEditor extends RecordListEditor {
 	public function __construct( Attribute $attribute = null, $headerLevel ) {
 		parent::__construct( $attribute, $headerLevel, "li" );
 	}
-	
+
 	protected function wrapInList( $listItems ) {
 		if ( $listItems != "" ) {
 			return Html::rawElement( 'ul', array( 'class' => 'collapsable-items' ), $listItems );
 		}
 		return "";
 	}
-	
+
 	public function view( IdStack $idPath, $value ) {
 		$editors = $this->getEditors();
 //
 //		$compress = $this->shouldCompressOnView( $idPath, $value, $editors );
 		$compress = false ;
 		$result = $this->viewEditors( $idPath, $value, $editors, $this->htmlTag, $compress );
-		
+
 		if ( !$compress ) {
 			return $this->wrapInList( $result );
 		} else {
@@ -1971,7 +1971,7 @@ class RecordUnorderedListEditor extends RecordListEditor {
 		$editors = $this->getEditors();
 		$compress = $this->shouldCompressOnEdit( $idPath, $value, $editors );
 		$result = $this->editEditors( $idPath, $value, $editors, $this->htmlTag, $compress );
-		
+
 		if ( !$compress ) {
 			return $this->wrapInList( $result );
 		} else {
@@ -1992,7 +1992,7 @@ class RecordDivListEditor extends RecordListEditor {
 	protected function wrapInDiv( $listItems ) {
 		return Html::rawElement( 'div', array(), $listItems );
 	}
-	
+
 	public function view( IdStack $idPath, $value ) {
 		return $this->wrapInDiv( parent::view( $idPath, $value ) );
 	}
@@ -2004,7 +2004,7 @@ class RecordDivListEditor extends RecordListEditor {
 	public function add( IdStack $idPath ) {
 		return $this->wrapInDiv( parent::add( $idPath ) );
 	}
-	
+
 	protected function childHeader( Editor $editor, Attribute $attribute, $class, $attributeId ) {
 		return "";
 	}
@@ -2110,22 +2110,22 @@ class RecordSetListEditor extends RecordSetEditor {
 
 	public function edit( IdStack $idPath, $arrayRecordSet ) {
 		$recordCount = $arrayRecordSet->getRecordCount();
-		
+
 		if ( $recordCount > 0 || $this->allowAddController->check( $idPath ) ) {
 			$result = Html::openElement ('ul', array( 'class' => "collapsable-items" )) ;
 			$key = $arrayRecordSet->getKey();
 			$captionAttribute = $this->captionEditor->getAttribute();
 			$valueAttribute = $this->valueEditor->getAttribute();
-	
+
 			for ( $i = 0; $i < $recordCount; $i++ ) {
 				$record = $arrayRecordSet->getRecord( $i );
 				$idPath->pushKey( project( $record, $key ) );
-	
+
 				$recordId = $idPath->getId();
 				$captionClass = $idPath->getClass();
 				$captionExpansionPrefix = $this->getExpansionPrefix( $captionClass, $recordId );
 				$valueClass = $idPath->getClass();
-	
+
 				$idPath->pushAttribute( $captionAttribute );
 
 				$result .= Html::openElement ('li');
@@ -2159,15 +2159,15 @@ class RecordSetListEditor extends RecordSetEditor {
 
 				$result .= Html::closeElement ('li');
 				$idPath->popAttribute();
-	
+
 				$idPath->popKey();
 			}
-	
+
 			if ( $this->allowAddController->check( $idPath ) ) {
 				$recordId = 'add-' . $idPath->getId();
 				$idPath->pushAttribute( $captionAttribute );
 				$class = $idPath->getClass();
-	
+
 				$result .= Html::openElement ('li');
 				$divclass = 'level' . $this->headerLevel ;
 				$result .= Html::openElement ('div', array( 'class' => $divclass ));
@@ -2182,7 +2182,7 @@ class RecordSetListEditor extends RecordSetEditor {
 				$result .= Html::rawElement ('span', $spanattribs, $spantext ) ;
 				$result .= Html::closeElement ('div');
 
-				$idPath->popAttribute();	
+				$idPath->popAttribute();
 				$idPath->pushAttribute( $valueAttribute );#
 
 				$divid = 'collapsable-' . $recordId ;
@@ -2255,11 +2255,11 @@ class AttributeLabelViewer extends Viewer {
 	public function add( IdStack $idPath ) {
 		return "New " . strtolower( $this->attribute->name );
 	}
-	
+
 	public function showsData( $value ) {
 		return true;
 	}
-	
+
 	public function showEditField( IdStack $idPath ) {
 		return true;
 	}
@@ -2285,7 +2285,7 @@ class RecordSpanEditor extends RecordEditor {
 			$attribute = $editor->getAttribute();
 			$idPath->pushAttribute( $attribute );
 			$attributeValue = $editor->view( $idPath, $value->getAttributeValue( $attribute ) );
-			
+
 			if ( $this->showAttributeNames ) {
 				$field = $attribute->name . $this->valueSeparator . $attributeValue;
 			} else {
@@ -2341,21 +2341,19 @@ class RecordSpanEditor extends RecordEditor {
 
 class UserEditor extends ScalarEditor {
 	public function getViewHTML( IdStack $idPath, $value ) {
-		global $wgUser;
-			
 		if ( $value != "" ) {
-			return $wgUser->getSkin()->makeLinkObj( Title::newFromText( "User:" . $value ), $value );
+			return Linker::makeLinkObj( Title::newFromText( "User:" . $value ), $value );
 		}
 		return "";
 	}
-	
+
 	public function getEditHTML( IdStack $idPath, $value ) {
 		return $this->getViewHTML( $idPath, $value );
 	}
 
 	public function getInputValue( $id ) {
 	}
-	
+
 	public function add( IdStack $idPath ) {
 	}
 }
@@ -2367,14 +2365,14 @@ class TimestampEditor extends ScalarEditor {
 		}
 		return "";
 	}
-	
+
 	public function getEditHTML( IdStack $idPath, $value ) {
 		return $this->getViewHTML( $idPath, $value );
 	}
 
 	public function getInputValue( $id ) {
 	}
-	
+
 	public function add( IdStack $idPath ) {
 	}
 }
@@ -2383,7 +2381,7 @@ class TimestampEditor extends ScalarEditor {
 // so it can be rolled back. However, when requesting the input value it returns the value of the roll back check box.
 // This can possibly be solved better later on when we choose to let editors fetch the value(s) of the attribute(s) they're
 // viewing within their parent. The roll back editor could then inspect the value of the $isLatestAttribute to decide whether
-// to show the roll back check box. 
+// to show the roll back check box.
 
 // class RollbackEditor extends BooleanEditor {
 //	public function __construct($attribute)  {
@@ -2405,20 +2403,20 @@ class TimestampEditor extends ScalarEditor {
 class RollBackEditor extends ScalarEditor {
 	protected $hasValueFields;
 	protected $suggestionsEditor;
-	
+
 	public function __construct( Attribute $attribute = null, $hasValueFields )  {
 		parent::__construct( $attribute, new SimplePermissionController( false ), false, false );
-		
+
 		$this->hasValueFields = $hasValueFields;
 	}
-	
+
 	public function getViewHTML( IdStack $idPath, $value ) {
 		$isLatest = $value->isLatest;
 		$operation = $value->operation;
-		
+
 		if ( $isLatest ) {
 			$options = array( 'do-nothing' => wfMessage( 'ow_transaction_no_action' )->text() );
-			
+
 			if ( $this->hasValueFields ) {
 				$previousVersionLabel = wfMessage( 'ow_transaction_previous_version' )->text();
 				$rollBackChangeHandler = 'rollBackOptionChanged(this);';
@@ -2427,7 +2425,7 @@ class RollBackEditor extends ScalarEditor {
 				$previousVersionLabel = wfMessage( 'ow_transaction_restore' )->text();
 				$rollBackChangeHandler = '';
 			}
-				
+
 			if ( $this->hasValueFields || $operation != 'Added' ) {
 				$options['previous-version'] = $previousVersionLabel;
 			}
@@ -2435,7 +2433,7 @@ class RollBackEditor extends ScalarEditor {
 				$options['remove'] = wfMessage( 'ow_transaction_remove' )->text();
 			}
 			$result = getSelect( $idPath->getId(), $options, 'do-nothing', $rollBackChangeHandler );
-		
+
 			if ( $this->suggestionsEditor != null ) {
 				$divid = $idPath->getId() . '-version-selector';
 				$divstyle = 'display: none; padding-top: 4px;';
@@ -2456,7 +2454,7 @@ class RollBackEditor extends ScalarEditor {
 		$idPath->pushAttribute( $attribute );
 		$result = $this->suggestionsEditor->view( $idPath, $value->getAttributeValue( $attribute ) );
 		$idPath->popAttribute();
-		
+
 		return $result;
 	}
 
@@ -2466,7 +2464,7 @@ class RollBackEditor extends ScalarEditor {
 
 	public function add( IdStack $idPath ) {
 	}
-	
+
 	public function setSuggestionsEditor( Editor $suggestionsEditor ) {
 		$this->suggestionsEditor = $suggestionsEditor;
 	}
@@ -2474,7 +2472,7 @@ class RollBackEditor extends ScalarEditor {
 
 class RecordSubRecordEditor extends RecordEditor {
 	protected $subRecordEditor;
-	
+
 	public function view( IdStack $idPath, $value ) {
 		$attribute = $this->subRecordEditor->getAttribute();
 		$idPath->pushAttribute( $attribute );
@@ -2492,16 +2490,16 @@ class RecordSubRecordEditor extends RecordEditor {
 
 		return $result;
 	}
-	
+
 	public function add( IdStack $idPath ) {
 		$attribute = $this->subRecordEditor->getAttribute();
 		$idPath->pushAttribute( $attribute );
 		$result = $this->subRecordEditor->add( $idPath );
 		$idPath->popAttribute();
-		
+
 		return $result;
 	}
-	
+
 	public function setSubRecordEditor( Editor $subRecordEditor ) {
 		$this->subRecordEditor = $subRecordEditor;
 		$this->editors[0] = $subRecordEditor;
@@ -2510,14 +2508,14 @@ class RecordSubRecordEditor extends RecordEditor {
 
 class RecordSetFirstRecordEditor extends RecordSetEditor {
 	protected $recordEditor;
-		
+
 	public function view( IdStack $idPath, $value ) {
 		if ( $value->getRecordCount() > 0 ) {
 			$record = $value->getRecord( 0 );
 			$idPath->pushKey( project( $record, $value->getKey() ) );
 			$result = $this->recordEditor->view( $idPath, $record );
 			$idPath->popKey();
-			
+
 			return $result;
 		}
 		return "";
@@ -2534,11 +2532,11 @@ class RecordSetFirstRecordEditor extends RecordSetEditor {
 		}
 		return $result;
 	}
-	
+
 	public function add( IdStack $idPath ) {
 		return "";
 	}
-	
+
 	public function save( IdStack $idPath, $value ) {
 		if ( $value->getRecordCount() > 0 ) {
 			$record = $value->getRecord( 0 );
@@ -2565,13 +2563,13 @@ class ObjectPathEditor extends Viewer {
 	public function view( IdStack $idPath, $value ) {
 		return $this->resolveObject( $value );
 	}
-	
+
 	protected function resolveObject( $objectId ) {
 		$dc = wdGetDataSetContext();
 		wfDebug( "dc is <$dc>\n" );
 
 		$tableName = getTableNameWithObjectId( $objectId );
-		
+
 		if ( $tableName != "" ) {
 			switch ( $tableName ) {
 				case "{$dc}_meaning_relations":
@@ -2601,7 +2599,7 @@ class ObjectPathEditor extends Viewer {
 		}
 		return $result;
 	}
-	
+
 	protected function resolveRelation( $objectId ) {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
@@ -2620,7 +2618,7 @@ class ObjectPathEditor extends Viewer {
 			return "Relation " . $objectId;
 		}
 	}
-	
+
 	protected function resolveAttribute( $objectId, $tableName ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$queryResult = $dbr->query(
@@ -2673,7 +2671,7 @@ class ObjectPathEditor extends Viewer {
 			return "Syntrans " . $objectId;
 		}
 	}
-	
+
 	protected function resolveDefinedMeaning( $definedMeaningId ) {
 		return definedMeaningAsLink( $definedMeaningId );
 	}

@@ -84,14 +84,13 @@ class DefaultWikidataApplication {
 		$html = "<div class=\"dataset-panel\">"; ;
 		$html .= "<table border=\"0\"><tr><th class=\"dataset-panel-heading\">$ow_datasets</th></tr>";
 		$dataSets = wdGetDataSets();
-		$sk = $wgUser->getSkin();
 		foreach ( $dataSets as $dataset ) {
 			$active = ( $dataset->getPrefix() == $dc->getPrefix() );
 			$name = $dataset->fetchName();
 			$prefix = $dataset->getPrefix();
 
 			$class = $active ? 'dataset-panel-active' : 'dataset-panel-inactive';
-			$slot = $active ? "$name" : $sk->makeLinkObj( $this->title, $name, "dataset=$prefix" );
+			$slot = $active ? "$name" : Linker::makeLinkObj( $this->title, $name, "dataset=$prefix" );
 			$html .= "<tr><td class=\"$class\">$slot</td></tr>";
 		}
 		$html .= "</table>";

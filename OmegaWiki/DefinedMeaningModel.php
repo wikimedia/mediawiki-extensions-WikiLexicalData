@@ -6,7 +6,7 @@ require_once( 'OmegaWikiAttributes.php' );
 require_once( "Transaction.php" );
 require_once( "WikiDataAPI.php" );
 
-/** 
+/**
  * A front end for the database information/ArrayRecord and any other information
  * to do with defined meanings (as per MVC)
  * Will collect code for instantiating and loading and saving DMs here for now.
@@ -60,11 +60,11 @@ class DefinedMeaningModel {
 
 	/**
 	 * Checks for existence of a DM.
-	 * If $this->definingExpression is set, it will also check if the spelling 
-	 * of the defining expression matches 
-	 * 
+	 * If $this->definingExpression is set, it will also check if the spelling
+	 * of the defining expression matches
+	 *
 	 * @param Boolean If true, checks beyond the dataset context and will
-	 *                return the first match. Always searches current 
+	 *                return the first match. Always searches current
 	 *                context first.
 	 * @param Boolean Switch dataset context if match outside default is found.
 	 *
@@ -72,7 +72,7 @@ class DefinedMeaningModel {
 	 *
 	 */
 	public function checkExistence( $searchAllDataSets = false, $switchContext = false ) {
-		
+
 		global $wdCurrentContext;
 		$match = $this->checkExistenceInDataSet( $this->dataset );
 		if ( !is_null( $match ) ) {
@@ -146,7 +146,7 @@ class DefinedMeaningModel {
 		}
 		return $dc;
 	}
-	/** 
+	/**
 	 * Load the associated record object.
 	 *
 	 * @return Boolean indicating success.
@@ -200,7 +200,7 @@ class DefinedMeaningModel {
 		return true;
 	}
 
-	/**  
+	/**
 	 * FIXME - work in progress
 	 *
 	 */
@@ -209,7 +209,7 @@ class DefinedMeaningModel {
 		initializeObjectAttributeEditors( $this->viewInformation );
 
 		# Nice try sherlock, but we really need to get our DMID from elsewhere
-		# $definedMeaningId = $this->getId(); 
+		# $definedMeaningId = $this->getId();
 
 		# Need 3 steps: copy defining expression, create new dm, then update
 
@@ -218,12 +218,12 @@ class DefinedMeaningModel {
 		# to make the expression really work, we may need to call
 		# more here?
 		$expression->createNewInDatabase();
-		
+
 
 		# shouldn't this stuff be protected?
 		$expressionId = $expression->id;
 		$languageId = $expression->languageId;
-		
+
 		$this->hackDC(); // XXX
 		$text = $this->getDefiningExpression();
 		$this->unhackDC(); // XXX
@@ -233,7 +233,7 @@ class DefinedMeaningModel {
 		# in the long run.
 		echo "id: $expressionId lang: $languageId";
 		$newDefinedMeaningId = createNewDefinedMeaning( $expressionId, $languageId, $text );
-		
+
 
 		getDefinedMeaningEditor( $this->viewInformation )->save(
 			$this->getIdStack( $newDefinedMeaningId ),
@@ -252,10 +252,10 @@ class DefinedMeaningModel {
 		$definedMeaningIdStructure = new Structure( $o->definedMeaningId );
 		$definedMeaningIdRecord = new ArrayRecord( $definedMeaningIdStructure, $definedMeaningIdStructure );
 		$definedMeaningIdRecord->definedMeaningId = $definedMeaningId;
-		
+
 		$idStack = new IdStack( WLD_DEFINED_MEANING );
 		$idStack->pushKey( $definedMeaningIdRecord );
-		
+
 		return $idStack;
 	}
 
@@ -276,7 +276,7 @@ class DefinedMeaningModel {
 		}
 		# $summary = $wgRequest->getText('summary');
 
-		
+
 		// Insert transaction information into the DB
 		# startNewTransaction($wgUser->getID(), wfGetIP(), $summary);
 		startNewTransaction( 0, "0.0.0.0", "copy operation" );
@@ -299,10 +299,10 @@ class DefinedMeaningModel {
 	 */
 	public function getRecord() {
 		if ( !$this->recordIsLoaded ) {
-			
+
 			$this->hackDC(); // XXX don't do this at home
 			$this->loadRecord();
-			$this->unhackDC(); // XXX 
+			$this->unhackDC(); // XXX
 		}
 		if ( !$this->recordIsLoaded ) {
 			return null;
@@ -317,9 +317,9 @@ class DefinedMeaningModel {
 	public function getViewInformation() {
 		return $this->viewInformation;
 	}
-	
+
 	/** Attempts to save defining expression if it does not exist "here"
-	 * (This works right now because we override the datasetcontext in 
+	 * (This works right now because we override the datasetcontext in
 	 * SaveDM.php . dc should be handled more solidly) */
 	protected function dupDefiningExpression() {
 
@@ -329,10 +329,10 @@ class DefinedMeaningModel {
 		$language = $expression->language;
 		return findOrCreateExpression( $spelling, $language );
 	}
-	
-	/** Copy this defined meaning to specified dataset-context 
+
+	/** Copy this defined meaning to specified dataset-context
 	 * Warning: This is somewhat new  code, which still needs
-	 * shoring up. 
+	 * shoring up.
 	 * @param $dataset	dataset to copy to.
 	 * @returns 	defined meaning id in the new dataset
 	 */
@@ -363,11 +363,11 @@ class DefinedMeaningModel {
 		createConceptMapping( $concept_map );
 	}
 
-	/* XXX 
+	/* XXX
 	 * 2 very dirty functions, as a placeholder to make things work
-	 * this very instant. 
-	 * Take the already evil global context, and twist it to our 
-	 * own nefarious ends, then we put it back ASAP and hope nobody 
+	 * this very instant.
+	 * Take the already evil global context, and twist it to our
+	 * own nefarious ends, then we put it back ASAP and hope nobody
 	 * notices.
 	 * Of course, one day they will.
 	 * Before then, this should be refactored out.
@@ -396,17 +396,17 @@ class DefinedMeaningModel {
 		return $wdCurrentContext;
 	}
 
-	/** 
+	/**
 	 * Return one of the syntrans entries of this defined meaning,
 	 * specified by language code. Caches the syntrans records
 	 * in an array.
-	 * 
+	 *
 	 * @param String Language code of the synonym/translation to look for
 	 * @param String Fallback to use if not found
 	 * @return Spelling or null if not found at all
 	 *
 	 * TODO make fallback optional
-	 * 
+	 *
 	 */
 	public function getSyntransByLanguageCode( $languageCode, $fallbackCode = "en" ) {
 
@@ -420,15 +420,15 @@ class DefinedMeaningModel {
 		return $syntrans;
 	}
 
-	/** 
-	 * @return the page title object associated with this defined meaning 
-	 * First time from DB lookup. Subsequently from cache 
+	/**
+	 * @return the page title object associated with this defined meaning
+	 * First time from DB lookup. Subsequently from cache
 	 */
 	public function getTitleObject() {
 		if ( $this->titleObject == null ) {
 			$definingExpression = $this->getDefiningExpression();
 			$id = $this->getId();
-			
+
 			if ( is_null( $definingExpression ) or is_null( $id ) ) {
 				return null;
 			}
@@ -440,17 +440,15 @@ class DefinedMeaningModel {
 		}
 		return $this->titleObject;
 	}
-	
 
-	/** 
+
+	/**
 	 * @return HTML link including the wrapping tag
 	 * @param String Language code of synonym/translation to show
 	 * @param String Fallback code
 	 * @throws Exception If title object is missing
 	 */
 	public function getHTMLLink( $languageCode, $fallbackCode = "en" ) {
-		global $wgUser;
-		$skin = $wgUser->getSkin();
 		$titleObject = $this->getTitleObject();
 		if ( $titleObject == null )
 			throw new Exception( "Need title object to create link" );
@@ -458,11 +456,11 @@ class DefinedMeaningModel {
 		$dataset = $this->getDataset();
 		$prefix = $dataset->getPrefix();
 		$name = $this->getSyntransByLanguageCode( $languageCode, $fallbackCode );
-		return $skin->makeLinkObj( $title, $name , "dataset=$prefix" );
+		return Linker::makeLinkObj( $titleObject, $name , "dataset=$prefix" );
 	}
 
-/** 
-	 * 
+/**
+	 *
 	 * Splits title of the form "Abc (123)" into text and number
 	 * components.
 	 *
@@ -488,7 +486,7 @@ class DefinedMeaningModel {
 		return $rv;
 	}
 
-	/** 
+	/**
 	 * @return full text representation of title
 	 */
 	public function getTitleText() {
@@ -499,12 +497,12 @@ class DefinedMeaningModel {
 	public function setId( $id ) {
 		$this->id = $id;
 	}
-	
+
 	public function getId() {
 		return $this->id;
 	}
 
-	/** 
+	/**
 	 * Fetch from DB if necessary
 	 *
 	 */
