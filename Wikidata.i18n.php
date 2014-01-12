@@ -3585,6 +3585,7 @@ $messages['diq'] = array(
 );
 
 /** Lower Sorbian (dolnoserbski)
+ * @author Derbeth
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -3623,8 +3624,11 @@ $messages['dsb'] = array(
 	'importtsv' => 'TSV importěrowaś',
 	'ow_importtsv_title1' => 'TSV importěrowaś',
 	'ow_importtsv_title2' => 'Definicije a pśełožki importěrowaś',
-	'ow_importtsv_header' => "<p>Definicije a pśełožki z tekstoweje dataje ze smužkami wótźělonymi pśez tabulator importěrowaś, kótarež sy eksportěrował z OpenOffice.org, Excel abo drugeje tabeloweje softwary.</p>
-<p>Format dataje musy samki byś ako ten datajow, kótarež su se eskportěrowali na boku ExporTSV. Jolic sy změnił mjenja słupa, import se njeraźijo. Jolic sy změnił ID abo definiciski wuraz definěrowanego wóznama, buźo se ta smužka ignorowaś. Jolic sy pśidał słupy, muse w formje 'definitions_iso' abo 'translations_iso' byś, źož iso je rěcny kod ISO 639-3.</p>
+	'ow_importtsv_header' => "<p>Definicije a pśełožki z tekstoweje dataje ze smužkami wótźělonymi pśez tabulator importěrowaś, kótarež sy eksportěrował z OpenOffice.org, Excel abo drugeje tabeloweje software.</p>
+<p>Format dataje musy samki byś ako ten datajow, kótarež su se eksportěrowali na boku [[Special:ExportTSV|ExportTSV]].
+Jolic sy změnił mjenja słupa, import se njeraźijo.
+Jolic sy změnił ID abo definiciski wuraz definěrowanego wóznama, buźo se ta smužka ignorowaś.
+Jolic sy pśidał słupy, muse w formje 'definitions_iso' abo 'translations_iso' byś, źož iso jo rěcny kod ISO 639-3.</p>
 <p>Jolic kašćik 'testowy běg' jo markěrowany, budu se akcije, kótarež by se wuwjadli, rozpšawjaś, ale změny se njepśewjedu. Pśiraźijo se testowy běg pśewjasć, pjerwjej až pśewjeźoš import .</p>",
 	'ow_importtsv_not_allowed' => 'Njamaš pšawo TSV importěrowaś.',
 	'ow_importtsv_importing' => 'TSV-daty se importěruju',
@@ -3635,7 +3639,7 @@ $messages['dsb'] = array(
 	'ow_importtsv_not_tsv' => '<p>Zda se, až to njejo płaśiwa TSV-dataja.</p>',
 	'ow_importtsv_bad_columns' => "<p>Njepšawe słupowe mě '$1'.<br />
 Słupy by měli mě 'definition_iso' abo 'translations_iso' měś,
-źož iso je rěcny kod.</p>",
+źož iso jo rěcny koda.</p>",
 	'ow_importtsv_test_run_title' => 'Testowy běg za importěrowanje TSV-datow',
 	'ow_importtsv_nothing_added' => 'Nic pśidane.',
 	'ow_importtsv_nothing_added_test' => 'Nic pśidane (sy pśewjadł testowy běg).',
