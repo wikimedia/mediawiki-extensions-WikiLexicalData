@@ -13997,7 +13997,7 @@ $messages['sr-ec'] = array(
 	'ow_importtsv_file' => 'TSV Фајл:',
 	'ow_importtsv_nothing_added' => 'Ништа није додато.',
 	'ow_importtsv_nothing_added_test' => 'Ништа није додато (урадили сте тест покретање).',
-	'ow_importtsv_results' => '{{PLURAL:$1|1=Додата једна дефиниција|Додато $1 дефиниција}} и $2 {{PLURAL:$2|1=превод|превода}}.', # Fuzzy
+	'ow_importtsv_results' => '{{PLURAL:$1|Додата једна дефиниција|Додато $1 дефиниција}} и $2 {{PLURAL:$2|превод|превода}}.',
 	'exporttsv' => 'Извези TSV',
 	'ow_exporttsv_languages' => 'Језици:',
 	'ow_exporttsv_export_failed' => 'Извоз неуспешан',
@@ -14137,6 +14137,7 @@ $messages['sr-ec'] = array(
 
 /** Serbian (Latin script) (srpski (latinica)‎)
  * @author Michaello
+ * @author Milicevic01
  * @author Rancher
  * @author Жељко Тодоровић
  */
@@ -14174,7 +14175,7 @@ $messages['sr-el'] = array(
 	'ow_importtsv_file' => 'TSV Fajl:',
 	'ow_importtsv_nothing_added' => 'Ništa nije dodato.',
 	'ow_importtsv_nothing_added_test' => 'Ništa nije dodato (uradili ste test pokretanje).',
-	'ow_importtsv_results' => '{{PLURAL:$1|1=Dodata jedna definicija|Dodato $1 definicija}} i $2 {{PLURAL:$2|1=prevod|prevoda}}.', # Fuzzy
+	'ow_importtsv_results' => '{{PLURAL:$1|Dodata jedna definicija|Dodato $1 definicija}} i $2 {{PLURAL:$2|prevod|prevoda}}.',
 	'ow_exporttsv_languages' => 'Jezici:',
 	'ow_exporttsv_export_failed' => 'Izvoz neuspešan',
 	'ow_save' => 'Sačuvaj',
