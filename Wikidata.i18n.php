@@ -3513,7 +3513,7 @@ $messages['diq'] = array(
 	'ow_importtsv_file' => 'TSV Dosya:',
 	'ow_importtsv_nothing_added' => 'Nê debiya de',
 	'ow_exporttsv_languages' => 'Zıwani:',
-	'ow_save' => 'Star ke',
+	'ow_save' => 'Qeyd ke',
 	'ow_history' => 'Ravêrden',
 	'ow_uipref_datasets' => 'Asayışo hesbiyaye:',
 	'ow_uiprefs' => 'Wikimelumat', # Fuzzy
@@ -3580,7 +3580,7 @@ $messages['diq'] = array(
 	'ow_create' => 'Vıraze',
 	'ow_suggest_previous' => 'Verên',
 	'ow_suggest_next' => 'Bahdoyên',
-	'ow_suggest_clear' => 'Bestern',
+	'ow_suggest_clear' => 'Bestere',
 	'prefs-ow-lang' => 'Zıwani',
 );
 
@@ -15353,6 +15353,7 @@ $messages['tk'] = array(
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
+ * @author Jewel457
  */
 $messages['tl'] = array(
 	'wikidata-desc' => 'Nagdaragdag ng talaan ng datong kamukha ng sa wiki para sa sari-saring mga uri ng nilalaman',
@@ -15421,7 +15422,7 @@ Pumili ng isang kalipunang iluluwas. Sa loob ng kahon ng tektso ng mga wika, mag
 	'ow_searchnoresult' => "<p>Maaari kang:<br />
 * '''Lumikha ng pangungusap na \"[[Expression:\$1]]\"''' (at magdagdag ng isang kahulugan)<br />
 * '''Lumikha ng pahinang \"[[:\$1]]\"''' (isang karaniwang pahinang pangwiki)</p>",
-	'ow_save' => 'Sagipin',
+	'ow_save' => 'Itala',
 	'ow_history' => 'Kasaysayan',
 	'ow_datasets' => 'Pampili ng pangkat ng dato',
 	'ow_noedit_title' => 'Wala kang pahintulot upang makagawa ng pagbabago',
