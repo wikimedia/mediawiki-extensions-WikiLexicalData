@@ -4724,6 +4724,7 @@ Mesedez harremanetan ipini zerbitzari operadore edo administratzailearekin.', # 
 );
 
 /** Persian (فارسی)
+ * @author Armin1392
  * @author Calak
  * @author Dalba
  * @author Ebrahimi-amir
@@ -4863,6 +4864,8 @@ $messages['fa'] = array(
 	'ow_AlternativeDefinition' => 'تعریف دیگر',
 	'ow_AlternativeDefinitions' => 'تعاریف دیگر',
 	'ow_Annotation' => 'یادداشت',
+	'ow_AnnotationDefinedMeaning' => 'ملاحظات معنایی',
+	'ow_AnnotationSyntrans' => 'ملاحظات واژگانی',
 	'ow_ApproximateMeanings' => 'معانی حدودی',
 	'ow_Class' => 'کلاس',
 	'ow_ClassAttributeAttribute' => 'ویژگی',
@@ -4898,6 +4901,7 @@ $messages['fa'] = array(
 	'ow_OtherLanguages' => 'زبان‌های دیگر:',
 	'ow_PopupAnnotation' => 'یادداشت',
 	'ow_RecordLifeSpan' => 'ذخیرهٔ محدودهٔ عمر',
+	'ow_RelatedTo' => 'مرتبط با',
 	'ow_Relations' => 'روابط',
 	'ow_RelationType' => 'نوع رابطه',
 	'ow_Remove' => 'حذف',
@@ -4962,7 +4966,9 @@ $messages['fa'] = array(
 	'ow_needs_xlation_source_lang' => 'زبان مبدأ:',
 	'ow_needs_xlation_dest_lang' => 'زبان مقصد:',
 	'ow_needs_xlation_no_dest_lang' => 'لطفاً یک زبان مقصد مشخص کنید.',
+	'ow_data_search' => 'جستجوی اطلاعات، اطلاعات واژگانی ویکی',
 	'ow_statistics' => 'ویکی‌داده‌واژگان: آمار',
+	'ow_downloads' => 'دانلودهای اطلاعات واژگانی ویکی',
 	'ow_show' => 'نمایش',
 	'ow_upload' => 'بارگذاری',
 	'ow_create' => 'ایجاد',
