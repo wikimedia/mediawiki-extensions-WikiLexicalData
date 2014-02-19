@@ -16549,6 +16549,7 @@ $messages['zh-cn'] = array(
  * @author Byfserag
  * @author Chenzw
  * @author Gaoxuewei
+ * @author Jienus
  * @author Jimmy xu wrk
  * @author Liangent
  * @author Linforest
@@ -16618,6 +16619,7 @@ $messages['zh-hans'] = array(
 	'ow_exporttsv_languages' => '语言：',
 	'ow_exporttsv_not_allowed' => '你没有导出TSV的权限。',
 	'ow_exporttsv_export_failed' => '导出失败',
+	'addcollection' => '添加收藏',
 	'ow_save' => '保存',
 	'ow_history' => '历史',
 	'ow_datasets' => '选择数据集',
