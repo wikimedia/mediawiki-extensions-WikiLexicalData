@@ -13353,10 +13353,11 @@ $messages['scn'] = array(
 );
 
 /** Scots (Scots)
+ * @author John Reid
  * @author Omnipaedista
  */
 $messages['sco'] = array(
-	'langman_title' => 'Leid dispensatour', # Fuzzy
+	'langman_title' => 'Leid manager',
 	'langman_langname' => 'Leid naim:',
 	'langman_iso639-3' => 'ISO 639-2 cod:',
 	'langman_iso639-2' => 'ISO 639-2 cod:',
