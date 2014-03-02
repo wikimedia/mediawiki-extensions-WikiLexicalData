@@ -8915,9 +8915,10 @@ $messages['koi'] = array(
 
 /** Krio (Krio)
  * @author Jose77
+ * @author Protostar
  */
 $messages['kri'] = array(
-	'ow_history' => 'Istri',
+	'ow_history' => 'Historia',
 );
 
 /** Kinaray-a (Kinaray-a)
