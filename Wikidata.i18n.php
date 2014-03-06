@@ -2788,7 +2788,7 @@ $messages['ce'] = array(
 	'ow_upload' => 'Чуяккха',
 	'ow_suggest_previous' => 'Хьалха хиларг',
 	'ow_suggest_clear' => 'ЦӀанъян',
-	'ow_nstab_edit_copy' => 'нисйé копи',
+	'ow_nstab_edit_copy' => 'нисъе копи',
 	'prefs-ow-lang' => 'Меттанаш',
 );
 
