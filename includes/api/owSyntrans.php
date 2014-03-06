@@ -7,8 +7,13 @@
  *	@param	opt'l	int	lang	'the defined meaning's language id'
  *	@param	opt'l	int	e	'the defined meaning's expression'
  *	@param	opt'l	str	part	'synonym or translation'
+ *	@param	opt'l	str	ver		'the module version'
  *
  * HISTORY
+ * - 2014-03-05: version 1.1 display added. substitute '{$ctr}.' with 'sid$sid'.
+ *		added ow_syntrans[dmid] and ow_syntrans[lang] when available.
+ *		also added langid and im to each sid.
+ *		And should I say it? We are now using Cache!
  * - 2013-06-13: Minimized data output, corrections. Error were
  *		generated last time.
  * - 2013-06-11:
@@ -25,12 +30,12 @@
  * TODO
  * - Integrate with Define Class
  * - Transfer getSynonymAndTranslation function to WikiDataAPI when ready
- * - Add parameter
- *		see below.
- * - Add parameters to include sid, langid and im to output.
  *
  * QUESTION
- * - none
+ * - Is caching the parameters better than non at all?
+ * - how long should the cache stay?
+ * - a developer parameter to skip the cache. Useful for contributors who wants
+ *		to see if their contribution was included.
  */
 
 require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
@@ -40,7 +45,7 @@ class SynonymTranslation extends ApiBase {
 	public $languageId, $text, $spelling, $spellingLanguageId;
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, null);
+		parent :: __construct( $main, $action, null );
 	}
 
 	public function execute() {
@@ -63,43 +68,55 @@ class SynonymTranslation extends ApiBase {
 
 		// Optional parameter
 		$options = array();
-		$part = 'all';
 
-		if ( isset( $params['part'] ) ) {
-			$part = $params['part'];
+		if ( isset( $params['ver'] ) ) {
+			$options['ver'] = $params['ver'];
+		}
+
+		if ( !isset( $params['part'] ) ) {
+			$params['part'] = 'all';
+		}
+		if ( $params['part'] == 'all' ) {
+			$partIsValid = true;
 		}
 
 		// error if $params['part'] is empty
-		if ( $part == '' ) {
+		if ( $params['part'] == '' ) {
 			$this->dieUsage( 'parameter part for adding syntrans is empty', 'param part is empty' );
 		}
 
 		// get syntrans
 		// When returning synonyms or translation only
-		if ( $part == 'syn' or $part == 'trans') {
+		if ( $params['part'] == 'syn' or $params['part'] == 'trans' ) {
 			if ( !isset( $params['lang'] ) ) {
 				$this->dieUsage( 'parameter lang for adding syntrans is missing', 'param lang is missing' );
 			}
 			$options['part'] = $part;
+			$partIsValid = true;
+		}
+
+		// error message if part is invalid
+		if ( !$partIsValid ) {
+			$this->dieUsage( 'parameter part for adding syntrans is neither syn, trans nor all', 'invalid param part value' );
 		}
 
 		if ( $params['lang'] ) {
-			$trueOrFalse = LanguageIdExist( $params['lang']);
+			$trueOrFalse = LanguageIdExist( $params['lang'] );
 			if ( $trueOrFalse == true ) {
 				$options['lang'] = $params['lang'];
 			} else {
-				if ( $part == 'syn' or $part == 'trans') {
+				if ( $params['part'] == 'syn' or $params['part'] == 'trans' ) {
 					$this->dieUsage( 'parameter lang for adding syntrans does not exist', 'param lang does not exist' );
 				}
 			}
 		} else {
-			if ( $part == 'syn' or $part == 'trans') {
+			if ( $params['part'] == 'syn' or $params['part'] == 'trans' ) {
 				$this->dieUsage( 'parameter lang for adding syntrans is empty', 'param lang empty' );
 			}
 		}
 
 		if ( $params['e'] ) {
-			$trueOrFalse = getExpressionId( $params['e'], $params['lang']);
+			$trueOrFalse = getExpressionId( $params['e'], $params['lang'] );
 			if ( $trueOrFalse == true ) {
 				$options['e'] = $params['e'];
 			}
@@ -109,7 +126,13 @@ class SynonymTranslation extends ApiBase {
 		if ( $params['e'] && !isset( $options['e'] ) ) {
 			$this->dieUsage( 'parameter e for adding syntrans does not exist', 'param e does not exist' );
 		}
-		$syntrans = $this->synTrans( $params['dm'], $options );
+
+	//	NOTE: I am thinking about adding a developer parameter to skip the
+	//	cache system. To check if their latest contribution is seem.
+	//	also, I am not sure how long should the cache stay, and if there is
+	//	really any benefit to cache it in the first place. ~ he
+	//	$syntrans = $this->synTrans( $params['dm'], $options );
+		$syntrans = $this->cacheSynTrans( $params['dm'], $options );
 
 		$this->getResult()->addValue( null, $this->getModuleName(), $syntrans );
 		return true;
@@ -122,7 +145,7 @@ class SynonymTranslation extends ApiBase {
 
 	// Description
 	public function getDescription() {
-		return 'Get a list of synonyms and translations from of a defined meaning.' ;
+		return 'Returns information about the synonyms and translations of a given concept (DefinedMeaningId)' ;
 	}
 
 	// Parameters.
@@ -141,40 +164,68 @@ class SynonymTranslation extends ApiBase {
 			'part' => array (
 				ApiBase::PARAM_TYPE => 'string',
 			),
+			'ver' => array (
+				ApiBase::PARAM_TYPE => 'string',
+			),
 		);
 	}
 
 	// Describe the parameter
 	public function getParamDescription() {
 		return array(
-			'dm' => 'The defined meaning id to be used to get synonyms and translations',
-			'lang' => "The defined meaning's language id to be used to get synonyms or translations",
-			'e' => "The defined meaning's expression to be used to get synonyms or translations",
-			'part' => 'set whether output are synonyms or translations. requires param langid',
+			'dm' => 'defined_meaning_id corresponding to the concept to define.',
+			'lang' => "the language of the synonyms, or the language to translate in translations.",
+			'e' => "an expression of which one want the synonyms of.",
+			'part' => 'syn for synonyms and trans for translations. Requires lang',
+			'ver' => 'module version',
 		);
 	}
 
 	// Get examples
 	public function getExamples() {
 		return array(
-			' Get the synonyms and translations of a defined meaning id',
-			' api.php?action=ow_syntrans&dm=8218',
-			' Get the synonyms of a defined meaning id',
-			' api.php?action=ow_syntrans&dm=8218&part=syn&lang=120',
-			' Get the translations of a defined meaning id',
-			' api.php?action=ow_syntrans&dm=8218&part=trans&lang=120',
+			' Returns all syntrans of the concept 8218 (alphabet)',
+			' api.php?action=ow_syntrans&dm=8218&ver=1.1&format=json',
+			' Returns the words (synonyms) that express the concept 8218 (alphabet) in Spanish (lang=87)',
+			' api.php?action=ow_syntrans&dm=8218&ver=1.1&part=syn&lang=87',
+			' Returns the translations of that Spanish concept ',
+			' api.php?action=ow_syntrans&dm=8218&ver=1.1&part=trans&lang=87',
 			'',
 			'In case the expression is also given with the language id,',
 			'the expression is excluded from the list of syntrans.',
 			'',
 			' Get the synonyms and translations of a defined meaning id with lang',
-			' api.php?action=ow_syntrans&dm=8218&e=字母&lang=107',
+			' api.php?action=ow_syntrans&dm=8218&ver=1.1&e=字母&lang=107',
 			' Get the synonyms of a defined meaning id',
-			' api.php?action=ow_syntrans&dm=8218&part=syn&e=aksara&lang=231',
+			' api.php?action=ow_syntrans&dm=8218&ver=1.1&part=syn&e=aksara&lang=231',
 		);
 	}
 
 	// Additional Functions
+
+	/** Cache!
+	 *
+	 */
+	protected function cacheSynTrans( $dmid, $options = null ) {
+		$synTransCacheKey = 'API:ow_syntrans:dm=' . $dmid;
+		if ( isset( $options['lang'] ) ) $synTransCacheKey .= ":lang={$options['lang']}";
+		if ( isset( $options['e'] ) ) $synTransCacheKey .= ":e={$options['e']}";
+		if ( isset( $options['part'] ) ) $synTransCacheKey .= ":part={$options['part']}";
+		if ( isset( $options['ver'] ) ) $synTransCacheKey .= ":ver={$options['ver']}";
+
+		$cache = new CacheHelper();
+
+		$cache->setCacheKey( array( $synTransCacheKey ) );
+		$syntrans = $cache->getCachedValue(
+			function ( $dmid, $options = null ) {
+				return $this->synTrans( $dmid, $options );
+			}, array( $dmid, $options )
+		);
+		$cache->setExpiry( 3600 );
+		$cache->saveCache();
+
+		return $syntrans;
+	}
 
 	/**
 	 * Returns an array of syntrans via defined meaning id
@@ -185,27 +236,26 @@ class SynonymTranslation extends ApiBase {
 		$stList = getSynonymAndTranslation( $definedMeaningId );
 
 		$ctr = 1;
+		$dot = '.';
+		$syntrans['dmid'] = $definedMeaningId;
+		if ( isset( $options['lang'] ) ) {
+			$syntrans['lang'] = $options['lang'];
+		}
 		foreach ( $stList as $row ) {
 			$language = getLanguageIdLanguageNameFromIds( $row[1], WLD_ENGLISH_LANG_ID );
 
+			if ( isset( $options['ver'] ) ) {
+				if ( $options['ver'] == '1.1' ) {
+					$ctr = 'sid_' . $row[3]; $dot = '';
+				}
+			}
+
 			$syntransRow = array (
-				'sid' => $row[3],
 				'langid' => $row[1],
 				'lang' => $language,
 				'e' => $row[0],
 				'im' => $row[2]
 			);
-
-			// Minimal output
-			if ( !isset( $options['iLangId'] ) ) {
-				unset( $syntransRow['langid'] );
-			}
-			if ( !isset( $options['iSId'] ) ) {
-				unset( $syntransRow['sid'] );
-			}
-			if ( !isset( $options['iIm'] ) ) {
-				unset( $syntransRow['im'] );
-			}
 
 			if ( isset( $options['part'] ) ) {
 				if ( $options['part'] == 'syn' and $options['lang'] == $row[1] ) {
@@ -213,29 +263,29 @@ class SynonymTranslation extends ApiBase {
 						// skip the expression for the language id
 						if ( $options['lang'] == $row[1] && $options['e'] == $row[0] ) {
 						} else {
-							$syntrans["$ctr."] = $syntransRow;
+							$syntrans["{$ctr}{$dot}"] = $syntransRow;
 							$ctr ++;
 						}
 					} else {
-						$syntrans["$ctr."] = $syntransRow;
+						$syntrans["{$ctr}{$dot}"] = $syntransRow;
 						$ctr ++;
 					}
 				}
 
 				if ( $options['part'] == 'trans' and $options['lang'] != $row[1] ) {
-					$syntrans["$ctr."] = $syntransRow;
+					$syntrans["{$ctr}{$dot}"] = $syntransRow;
 					$ctr ++;
 				}
 			} else {
-				if ( isset( $options['lang']) && isset( $options['e'] ) ) {
+				if ( isset( $options['lang'] ) && isset( $options['e'] ) ) {
 					// skip the expression for the language id
 					if ( $options['lang'] == $row[1] && $options['e'] == $row[0] ) {
 					} else {
-						$syntrans["$ctr."] = $syntransRow;
+						$syntrans["{$ctr}{$dot}"] = $syntransRow;
 						$ctr ++;
 					}
 				} else {
-					$syntrans["$ctr."] = $syntransRow;
+					$syntrans["{$ctr}{$dot}"] = $syntransRow;
 					$ctr ++;
 				}
 			}
