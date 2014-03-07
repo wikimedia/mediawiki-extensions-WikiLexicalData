@@ -3,6 +3,7 @@
 /** O m e g a W i k i   A P I ' s   D e f i n e   c l a s s
  *
  * HISTORY
+ * - 2014-03-07: Cache output
  * - 2013-06-12: Add optional translation list option. &syntrans= (syn, trans or all)
  * 		added ability to add syntrans.
  * - 2013-06-05: Readjusted defining and definingByAnyLanguage functions into
@@ -42,69 +43,114 @@ class Define extends SynonymTranslation {
 
 		// Get the parameters
 		$params = $this->extractRequestParams();
+		$defined = $this->cacheDefine( $params );
 
-		// Required parameter
-		// Check if dm is valid
-		if ( !isset( $params['dm'] ) ) {
-			$this->dieUsage( 'parameter dm for adding syntrans is missing', 'param dm is missing' );
-		} else {
-			// check that defined_meaning_id exists
-			if ( !verifyDefinedMeaningId( $params['dm'] ) ) {
-				$this->dieUsage( 'Non existent dm id (' . $params['dm'] . ').', "dm not found." );
-			}
-		}
-
-		// Optional parameter
-		$options = array();
-		$part = 'off';
-
-		if ( isset( $params['syntrans'] ) ) {
-			$part = $params['syntrans'];
-		}
-
-		// error if $params['part'] is empty
-		if ( $part == '' ) {
-			$this->dieUsage( 'parameter part for adding syntrans is empty', 'param part is empty' );
-		}
-
-		// get syntrans
-		// When returning synonyms or translation only
-		if ( $part == 'syn' or $part == 'trans' or $part == 'all' ) {
-			if ( !isset( $params['lang'] ) ) {
-				$this->dieUsage( 'parameter lang for adding syntrans is missing', 'param lang is missing' );
-			}
-			$options['part'] = $part;
-		}
-
-		if ( $params['e'] ) {
-			$trueOrFalse = getExpressionId( $params['e'], $params['lang']);
-			if ( $trueOrFalse == true ) {
-				$options['e'] = $params['e'];
-			}
-		}
-
-		if ( $params['e'] && !isset( $options['e'] ) ) {
-			$this->dieUsage( 'parameter e for adding syntrans does not exist', 'param e does not exist' );
-		}
-
-		if ( $params['lang'] ) {
-			$trueOrFalse = LanguageIdExist( $params['lang']);
-			if ( $trueOrFalse == true ) {
-				$options['lang'] = $params['lang'];
-				$defined = $this->defining( $params['dm'], $params['lang'], $options, $this->getModuleName() );
-			} else {
-				$this->dieUsage( 'parameter lang for adding syntrans does not exist', 'param lang does not exist' );
-			}
-		} else {
-			if ( $part == 'syn' or $part == 'trans' or $part == 'all' ) {
-				$this->dieUsage( 'parameter lang for adding syntrans is empty', 'param lang empty' );
-			}
-			$defined = $this->definingForAnyLanguage( $params['dm'], $options, $this->getModuleName() );
-		}
-
-		$defined = $defined[ $this->getModuleName() ];
 		$this->getResult()->addValue( null, $this->getModuleName(), $defined );
 		return true;
+	}
+
+	/** Cache the function
+	 *  Note: dieUsage must be used outside the cache lest the cache will return empty the
+	 *		next time it is accessed.
+	 */
+	protected function cacheDefine( $params ) {
+		$defineCacheKey = 'API:ow_define:dm=' . $params['dm'];
+		if ( isset( $params['lang'] ) ) $defineCacheKey .= ":ver={$params['lang']}";
+		if ( isset( $params['syntrans'] ) ) $defineCacheKey .= ":ver={$params['syntrans']}";
+		if ( isset( $params['e'] ) ) $defineCacheKey .= ":ver={$params['e']}";
+		if ( isset( $params['ver'] ) ) $defineCacheKey .= ":ver={$params['ver']}";
+
+		$cache = new CacheHelper();
+
+		$cache->setCacheKey( array( $defineCacheKey ) );
+		$define = $cache->getCachedValue(
+			function ( $params ) {
+				// Required parameter
+				// Check if dm is valid
+				if ( isset( $params['dm'] ) ) {
+					// check that defined_meaning_id exists
+					if ( !verifyDefinedMeaningId( $params['dm'] ) ) {
+						return array( 'error' => 'dm not found' );
+					}
+				}
+
+				// Optional parameter
+				$options = array();
+				$partIsValid = false;
+
+				if ( isset( $params['syntrans'] ) ) {
+					$options['part'] = $params['syntrans'];
+				} else {
+					$options['part'] = 'off';
+					$partIsValid = true;
+				}
+
+				// error if $params['part'] is empty
+				if ( $options['part'] == '' ) {
+					return array( 'error' => 'nullsyntrans' );
+				}
+
+				// get syntrans
+				// When returning synonyms or translation only
+				if ( $options['part'] == 'syn' or $options['part'] == 'trans' or $options['part'] == 'all' ) {
+					$partIsValid = true;
+					if ( !isset( $params['lang'] ) ) {
+						return array( 'error' => 'nolang' );
+					}
+				}
+
+				if ( !$partIsValid ) {
+					return array( 'error' => 'invalidsyntrans' );
+				}
+
+				if ( $params['e'] ) {
+					$trueOrFalse = getExpressionId( $params['e'], $params['lang']);
+					if ( $trueOrFalse == true ) {
+						$options['e'] = $params['e'];
+					}
+				}
+
+				if ( $params['e'] && !isset( $options['e'] ) ) {
+					return array( 'error' => 'e not found' );
+				}
+
+				if ( $params['lang'] ) {
+					$trueOrFalse = LanguageIdExist( $params['lang']);
+					if ( $trueOrFalse == true ) {
+						$options['lang'] = $params['lang'];
+						$defined = $this->defining( $params['dm'], $params['lang'], $options, $this->getModuleName() );
+					} else {
+						return array( 'error' => 'lang not found' );
+					}
+				} else {
+					if ( $options['part'] == 'syn' or $options['part'] == 'trans' or $options['part'] == 'all' ) {
+						return array( 'error' => 'nulllang' );
+					}
+					$defined = $this->definingForAnyLanguage( $params['dm'], $options, $this->getModuleName() );
+				}
+
+				return $defined[ $this->getModuleName() ];
+			}, array( $params )
+		);
+		$cache->setExpiry( 10800 ); // 3 hours
+		$cache->saveCache();
+
+		// catch errors here
+		if ( isset ( $define['error'] ) ) {
+			$defineErrCode = array(
+				'nolang' => 'The lang parameter must be set',
+				'dm not found' => 'Non existent dm id (' . $params['dm'] . ')',
+				'e not found' => 'Non existent e id (' . $params['e'] . ')',
+				'lang not found' => 'Non existent lang id (' . $params['lang'] . ')',
+				'nullsyntrans' => 'parameter syntrans for adding syntrans is empty',
+				'nulllang' => 'parameter lang for adding syntrans is empty',
+				'invalidsyntrans' => 'parameter syntrans is neither syn, trans nor all',
+			);
+			$this->dieUsage( $defineErrCode["{$define['error']}"], $define['error'] );
+		}
+
+		// if no error was found, return the result
+		return $define;
 	}
 
 	// Version
