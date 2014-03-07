@@ -35,6 +35,13 @@ $messages['dsb'] = array(
 	'apiow-desc' => 'Rozšyrjenje WikiLexicalData na OmegaWiki dataje api.php MediaWiki',
 );
 
+/** Persian (فارسی)
+ * @author Armin1392
+ */
+$messages['fa'] = array(
+	'apiow-desc' => "OmegaWiki's WikiLexicalData گستره MediaWiki api.php",
+);
+
 /** French (français)
  * @author Gomoko
  */
