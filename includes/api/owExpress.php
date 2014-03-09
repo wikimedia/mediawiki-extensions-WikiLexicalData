@@ -9,6 +9,9 @@
  * to access OmegaWiki's data that can be easily parsed.
  *
  * HISTORY
+ * - 2014-03-07 cache enabled. displays dm_{$definedMeaningId} instead. dm understood as
+ *		dmid.
+ * - 2014-03-03 ver 1.1 displays dmid{$definedMeaningId} instead of ow_define_{$ctr}
  * - 2013-05-21 Creation Date ~ he
  *
  * TODO
@@ -45,21 +48,16 @@ class Express extends Define {
 
 		$spelling = $params['search'];
 
+		$options = array();
+		if ( isset( $params['ver'] ) ) {
+			$options['ver'] = $params['ver'];
+		} else {
+			$options['ver'] = null;
+		}
+
 		// Check if spelling exist
 		if ( existSpelling( $spelling ) ) {
-			$dmlist = getExpressionMeaningIds( $spelling );
-			$options['e'] = $spelling;
-			// There are duplicates using getExpressionMeaningIds !!!
-			$dmlist = array_unique ( $dmlist );
-			$express['expression'] = $spelling;
-			$dmlistCtr = 1;
-			foreach ( $dmlist as $dmrow ) {
-				$defining = $this->definingForAnyLanguage( $dmrow, $options );
-				foreach ( $defining as $definingRow) {
-					$express['ow_define_' . $dmlistCtr] = $definingRow;
-				}
-				$dmlistCtr += 1;
-			}
+			$express = $this->cacheExpress( $spelling, $options );
 			$this->getResult()->addValue( null, $this->getModuleName(), $express );
 
 		} else {
@@ -69,6 +67,46 @@ class Express extends Define {
 		return true;
 	}
 
+	/** Cache!
+	 *
+	 */
+	protected function cacheExpress( $spelling, $options = array() ) {
+		$expressCacheKey = 'API:ow_express:dm=' . $spelling;
+		if ( isset( $options['ver'] ) ) $expressCacheKey .= ":ver={$options['ver']}";
+
+		$cache = new CacheHelper();
+
+		$cache->setCacheKey( array( $expressCacheKey ) );
+		$express = $cache->getCachedValue(
+			function ( $spelling, $options = array() ) {
+				$dmlist = getExpressionMeaningIds( $spelling );
+				$options['e'] = $spelling;
+				// There are duplicates using getExpressionMeaningIds !!!
+				$dmlist = array_unique ( $dmlist );
+				$express['expression'] = $spelling;
+				$dmlistCtr = 1;
+				foreach ( $dmlist as $dmrow ) {
+					$defining = $this->definingForAnyLanguage( $dmrow, $options );
+					foreach ( $defining as $definingRow ) {
+						if ( !$options['ver'] ) {
+							$express['ow_define_' . $dmlistCtr] = $definingRow;
+						}
+						if ( $options['ver'] == '1.1' ) {
+							$express[ 'dm_' . $definingRow['dmid']] = $definingRow;
+							unset( $express[ 'dmid' . $definingRow['dmid']]['dmid'] );
+						}
+					}
+					$dmlistCtr += 1;
+				}
+				return $express;
+			}, array( $spelling, $options )
+		);
+		$cache->setExpiry( 10800 ); // 3 hours
+		$cache->saveCache();
+
+		return $express;
+	}
+
 	// Version
 	public function getVersion() {
 		return __CLASS__ . ': $Id$';
@@ -76,7 +114,7 @@ class Express extends Define {
 
 	// Description
 	public function getDescription() {
-		return 'View Omegawiki Expression.' ;
+		return 'Returns information about the concepts ( DefinedMeaning ) and definitions of a given expression.' ;
 	}
 
 	// Parameters.
@@ -85,24 +123,31 @@ class Express extends Define {
 			'search' => array (
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true
-			)
+			),
+			'ver' => array (
+				ApiBase::PARAM_TYPE => 'string',
+			),
 		);
 	}
 
 	// Describe the parameter
 	public function getParamDescription() {
 		return array(
-			'search' => 'The expression to view'
+			'search' => 'The expression being searched',
+			'ver' => 'module version'
 		);
 	}
 
 	// Get examples
 	public function getExamples() {
 		return array(
-			'View Expression',
+			'The following examples return information about the concept and definition of the given expression.',
 			'api.php?action=ow_express&search=acusar&format=xml',
 			'api.php?action=ow_express&search=pig&format=xml',
-			'api.php?action=ow_express&search=咱&format=xml'
+			'api.php?action=ow_express&search=咱&format=xml',
+			'',
+			'Version 1.1 returns information that is better for a javascript client. To use this, just add ver=1.1',
+			'api.php?action=ow_express&search=acusar&format=xml&ver=1.1',
 		);
 	}
 
