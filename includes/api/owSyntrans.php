@@ -91,7 +91,7 @@ class SynonymTranslation extends ApiBase {
 			if ( !isset( $params['lang'] ) ) {
 				$this->dieUsage( 'parameter lang for adding syntrans is missing', 'param lang is missing' );
 			}
-			$options['part'] = $part;
+			$options['part'] = $params['part'];
 			$partIsValid = true;
 		}
 
