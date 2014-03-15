@@ -2763,7 +2763,7 @@ $messages['ce'] = array(
 	'ow_exporttsv_languages' => 'Меттанаш:',
 	'ow_history' => 'Истори',
 	'ow_uipref_datasets' => 'Гар Iад йитарца:',
-	'ow_uiprefs' => 'Викихаамаш', # Fuzzy
+	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_transaction_from_transaction' => 'Транзакцин чура:',
 	'ow_transaction_user' => 'Декъашхочун цӀе:',
 	'ow_transaction_rollback_button' => 'Юхаяккха',
@@ -13372,7 +13372,7 @@ $messages['sco'] = array(
 	'ow_exporttsv_languages' => 'Leids:',
 	'addcollection' => 'Add collectioun',
 	'ow_save' => 'Hain',
-	'ow_history' => 'History',
+	'ow_history' => 'Histerie',
 	'ow_uiprefs' => 'WikiLexicalData',
 	'ow_transaction_user' => 'Uisername:',
 	'ow_transaction_restore' => 'Restore',
@@ -15796,6 +15796,13 @@ $messages['tru'] = array(
 	'datasearch_language' => 'Leşono:',
 	'ow_exporttsv_languages' => 'Leşone:',
 	'ow_Language' => 'Leşono',
+);
+
+/** Tatar (Cyrillic script) (татарча)
+ * @author Умар
+ */
+$messages['tt-cyrl'] = array(
+	'ow_uiprefs' => 'WikiLexicalData',
 );
 
 /** Uyghur (Arabic script) (ئۇيغۇرچە)
