@@ -2646,6 +2646,13 @@ Molimo kontaktirajte operatora servera ili administratora.', # Fuzzy
 	'ow_shown_datasets' => 'Pokaži setove podataka',
 );
 
+/** буряад (буряад)
+ * @author Elvonudinium
+ */
+$messages['bxr'] = array(
+	'ow_exporttsv_languages' => 'Хэлэнүүд:',
+);
+
 /** Catalan (català)
  * @author BroOk
  * @author Jordi Roqué
