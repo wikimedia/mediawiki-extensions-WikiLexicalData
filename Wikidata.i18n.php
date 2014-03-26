@@ -13370,14 +13370,14 @@ $messages['sco'] = array(
 	'langman_iso639-3' => 'ISO 639-2 cod:',
 	'langman_iso639-2' => 'ISO 639-2 cod:',
 	'langman_wikimedia' => 'Wikimedia cod:',
-	'langman_addlang' => 'Add leid',
+	'langman_addlang' => 'Eik leid',
 	'datasearch_language' => 'Leid:',
 	'datasearch_found_word' => 'Fownd wourd',
 	'datasearch_meaning' => 'Mening',
 	'datasearch_search_text' => 'Rake tex:',
 	'ow_importtsv_file' => 'TSV File:',
 	'ow_exporttsv_languages' => 'Leids:',
-	'addcollection' => 'Add collectioun',
+	'addcollection' => 'Eik collection',
 	'ow_save' => 'Hain',
 	'ow_history' => 'Histerie',
 	'ow_uiprefs' => 'WikiLexicalData',
@@ -13409,13 +13409,13 @@ $messages['sco'] = array(
 	'ow_TextAttribute' => 'Property',
 	'ow_Time' => 'Tyme',
 	'ow_TranslatedTextAttribute' => 'Property',
-	'ow_Link' => 'Link',
+	'ow_Link' => 'Airtin',
 	'ow_LinkAttribute' => 'Property',
-	'ow_LinkAttributeValues' => 'Links',
+	'ow_LinkAttributeValues' => 'Airtins',
 	'ow_User' => 'Uiser',
 	'ow_Property' => 'Property',
 	'ow_removed' => 'Lowsed',
-	'ow_class_attr_type_link' => 'Link',
+	'ow_class_attr_type_link' => 'Airtin',
 	'ow_show' => 'Shaw',
 	'ow_upload' => 'Uplaid',
 	'ow_create' => 'Mak',
@@ -16576,6 +16576,7 @@ $messages['zh-cn'] = array(
  * @author Stevenliuyi
  * @author Wilsonmess
  * @author Wmr89502270
+ * @author Xiaomingyan
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
@@ -16652,7 +16653,7 @@ $messages['zh-hans'] = array(
 	'ow_transaction_rollback_button' => '回滚',
 	'ow_transaction_rollback_header' => '回滚',
 	'ow_transaction_no_action' => '什么也不做',
-	'ow_transaction_previous_version' => '上一个版本',
+	'ow_transaction_previous_version' => '上一版本',
 	'ow_transaction_restore' => '恢复',
 	'ow_transaction_remove' => '移除',
 	'ow_transaction_operation' => '操作',
