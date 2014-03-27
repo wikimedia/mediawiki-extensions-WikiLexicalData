@@ -13433,6 +13433,7 @@ $messages['sh'] = array(
 
 /** Sinhala (සිංහල)
  * @author Calcey
+ * @author Singhalawap
  * @author පසිඳු කාවින්ද
  * @author රොමානිස් සැමුවෙල්
  */
@@ -13651,7 +13652,7 @@ $messages['si'] = array(
 	'ow_needs_xlation_no_dest_lang' => 'කරුණාකර ගමනාන්ත භාෂාවක් සඳහන් කරන්න.',
 	'ow_statistics' => 'විකිදත්ත: සංඛ්‍යාන', # Fuzzy
 	'ow_show' => 'පෙන්වන්න',
-	'ow_upload' => 'උඩුගත කරන්න',
+	'ow_upload' => 'උඩුගතකරන්න',
 	'ow_create' => 'නිර්මාණය කරන්න',
 	'ow_collection_added' => '<strong> $1 එකතුවක් එකතු කරන ලදී.</strong>',
 	'ow_suggest_previous' => 'කලින්',
