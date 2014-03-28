@@ -3522,7 +3522,7 @@ $messages['diq'] = array(
 	'ow_importtsv_nothing_added' => 'Nê debiya de',
 	'ow_exporttsv_languages' => 'Zıwani:',
 	'ow_save' => 'Qeyd ke',
-	'ow_history' => 'Ravêrden',
+	'ow_history' => 'Tarix',
 	'ow_uipref_datasets' => 'Asayışo hesbiyaye:',
 	'ow_uiprefs' => 'Wikimelumat', # Fuzzy
 	'ow_none_selected' => 'Theba nêweçineya',
@@ -12336,7 +12336,7 @@ Por favor, contacte o operador ou administrador do servidor.',
  */
 $messages['pt-br'] = array(
 	'wikidata-desc' => 'Adicionar banco de dados tipo wiki para vários tipos de conteúdo',
-	'wikidata-handler-namespace-move-error' => 'Páginas em domínios manipulados pela extensão Wikidata não podem ser movidas', # Fuzzy
+	'wikidata-handler-namespace-move-error' => 'Páginas em domínios manipulados pela extensão WikiLexicalData não podem ser movidas',
 	'languages' => 'Gerenciador de línguas',
 	'langman-desc' => 'Adicione e mude configurações de língua com [[Special:Languages]]',
 	'langman_title' => 'Gerenciador de línguas',
