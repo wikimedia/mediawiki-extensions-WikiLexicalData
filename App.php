@@ -1,4 +1,12 @@
 <?php
+/** \file App.php
+ * \brief This is where the WikiLexicalData extension extends OmegaWiki to MediaWiki.
+ *
+ * This sets the initial settings needed to use OmegaWiki. Included are settings
+ * for API, Special Pages, Tags, resource paths, auto load classes, OmegaWiki
+ * rights classes and group permissions, some more WikiLexicalData configurations,
+ * hooks and jobs
+ */
 
 if ( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 
@@ -12,7 +20,7 @@ require_once( $dir . 'OmegaWiki/Wikidata.php' );
 require_once( $wgWldScriptPath . 'SpecialLanguages.php' );
 
 // API
-require_once( $wgWldAPIScriptPath . 'OmegaWikiExt.php');
+require_once( $wgWldAPIScriptPath . 'OmegaWikiExt.php' );
 
 $wgExtensionCredits['other'][] = array(
 	'path'            => __FILE__,
@@ -124,7 +132,7 @@ $wdDefaultViewDataSet = 'uw';
 $wdShowCopyPanel = false;
 $wdShowEditCopy = true;
 
-# FIXME: These should be modified to make Wikidata more reusable.
+# FIXME: These should be modified to make WikiLexicalData more reusable.
 $wdGroupDefaultView = array();
 $wdGroupDefaultView['wikidata-omega'] = 'uw';
 # $wdGroupDefaultView['wikidata-umls']='umls';
