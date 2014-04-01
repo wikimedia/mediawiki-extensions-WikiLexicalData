@@ -1,0 +1,37 @@
+{
+    "@metadata": {
+        "authors": [
+            "Manop",
+            "Mopza",
+            "Octahedron80",
+            "Passawuth"
+        ]
+    },
+    "langman_langname": "ชื่อภาษา:",
+    "langman_iso639-3": "รหัส ISO 639-3:",
+    "langman_iso639-2": "รหัส ISO 639-2:",
+    "langman_addlang": "เพิ่มภาษา",
+    "ow_importtsv_import_failed": "การนำเข้าไม่สำเร็จ",
+    "ow_exporttsv_export_failed": "การส่งออกไม่สำเร็จ",
+    "ow_save": "บันทึก",
+    "ow_history": "ประวัติ",
+    "ow_transaction_user": "ชื่อผู้ใช้:",
+    "ow_dm_OK": "ตกลง",
+    "ow_ClassAttributeLevel": "ระดับ",
+    "ow_ClassAttributeType": "ชนิด",
+    "ow_OptionAttribute": "คุณสมบัติ",
+    "ow_OptionAttributeOption": "ตัวเลือก",
+    "ow_OptionAttributeOptions": "ตัวเลือก",
+    "ow_Relations": "ความสัมพันธ์",
+    "ow_Spelling": "การสะกด",
+    "ow_Source": "แหล่งที่มา",
+    "ow_Text": "ข้อความ",
+    "ow_TextAttributeValues": "ข้อความเรียบ",
+    "ow_TranslatedTextAttributeValue": "ข้อความ",
+    "ow_LinkAttribute": "คุณสมบัติ",
+    "ow_LinkAttributeValues": "ลิงก์",
+    "ow_User": "ผู้ใช้",
+    "ow_Value": "ค่า",
+    "ow_meaningsoftitle": "ความหมายของ \"$1\"",
+    "ow_show": "แสดง"
+}

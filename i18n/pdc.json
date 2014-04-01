@@ -1,0 +1,37 @@
+{
+    "@metadata": {
+        "authors": [
+            "Xqt"
+        ]
+    },
+    "langman_langname": "Schproochnaame:",
+    "langman_iso639-3": "ISO 639-3 Code:",
+    "langman_iso639-2": "ISO 639-2 Code:",
+    "langman_wikimedia": "Wikimedia-Code:",
+    "langman_addlang": "Schprooch dezu duh",
+    "importlangnames_not_found": "<strong>Ken Schprooch fer „$1“ gfunne!</strong>",
+    "datasearch_language": "Schprooch:",
+    "datasearch_found_word": "Watt gfunne",
+    "datasearch_meaning": "Meening",
+    "datasearch_within_words": "In Wadde drin:",
+    "ow_importtsv_nothing_added": "Nix dezu geduh.",
+    "ow_exporttsv_languages": "Schprooche:",
+    "ow_save": "Beilege",
+    "ow_history": "Gschicht",
+    "ow_transaction_user": "Yuuser-Naame:",
+    "ow_dm_OK": "OK",
+    "ow_Annotation": "Annotation",
+    "ow_Language": "Schprooch",
+    "ow_PopupAnnotation": "Annotation",
+    "ow_Link": "Gleecher",
+    "ow_LinkAttributeValues": "Gleecher",
+    "ow_User": "Yuuser",
+    "ow_added": "Dezu geduh",
+    "ow_meaningsofsubtitle": "<em>Wiki Gleecher:</em> [[$1]]",
+    "ow_class_attr_type_link": "Gleecher",
+    "ow_show": "Zeige",
+    "ow_upload": "Ufflaade",
+    "ow_create": "Schtaerte",
+    "ow_suggest_previous": "Letscht",
+    "ow_suggest_next": "Neegschte"
+}

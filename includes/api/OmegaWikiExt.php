@@ -2,7 +2,6 @@
 
 // Take credit for your work.
 $wgExtensionCredits['other'][] = array(
-
 	// The full path and filename of the file. This allows MediaWiki
 	// to display the Subversion revision number on Special:Version.
 	'path' => __FILE__,
@@ -15,7 +14,7 @@ $wgExtensionCredits['other'][] = array(
 
 	// The version of the extension, which will appear on Special:Version.
 	// This can be a number or a string.
-	'version' => '1.0',
+	'version' => '1.1',
 
 	// Your name, which will appear on Special:Version.
 	'author' => array( 'Hiong3-eng5', 'Kip' ),
@@ -23,28 +22,27 @@ $wgExtensionCredits['other'][] = array(
 	// The URL to a wiki page/web page with information about the extension,
 	// which will appear on Special:Version.
 	'url' => 'https://www.omegawiki.org/Help:OmegaWiki_API',
-
 );
 
 // Map class name to filename for autoloading
-	$wgAutoloadClasses['SynonymTranslation'] = dirname( __FILE__ ) . '/owSyntrans.php';
-	$wgAutoloadClasses['Define'] = dirname( __FILE__ ) . '/owDefine.php';
-	$wgAutoloadClasses['Express'] = dirname( __FILE__ ) . '/owExpress.php';
-	$wgAutoloadClasses['AddSyntrans'] = dirname( __FILE__ ) . '/owAddSyntrans.php';
-	$wgAutoloadClasses['AddAnnotation'] = dirname( __FILE__ ) . '/owAddAnnotation.php';
-	$wgAutoloadClasses['AddToCollection'] = dirname( __FILE__ ) . '/owAddToCollection.php';
+$wgAutoloadClasses['SynonymTranslation'] = dirname( __FILE__ ) . '/owSyntrans.php';
+$wgAutoloadClasses['Define'] = dirname( __FILE__ ) . '/owDefine.php';
+$wgAutoloadClasses['Express'] = dirname( __FILE__ ) . '/owExpress.php';
+$wgAutoloadClasses['AddSyntrans'] = dirname( __FILE__ ) . '/owAddSyntrans.php';
+$wgAutoloadClasses['AddAnnotation'] = dirname( __FILE__ ) . '/owAddAnnotation.php';
+$wgAutoloadClasses['AddToCollection'] = dirname( __FILE__ ) . '/owAddToCollection.php';
 
 // Map module name to class name
-	$wgAPIModules['ow_syntrans'] = 'SynonymTranslation';
-	$wgAPIModules['ow_define'] = 'Define';
-	$wgAPIModules['ow_express'] = 'Express';
-	$wgAPIModules['ow_add_syntrans'] = 'AddSyntrans';
-	$wgAPIModules['ow_add_annotation'] = 'AddAnnotation';
-	$wgAPIModules['ow_add_to_collection'] = 'AddToCollection';
+$wgAPIModules['ow_syntrans'] = 'SynonymTranslation';
+$wgAPIModules['ow_define'] = 'Define';
+$wgAPIModules['ow_express'] = 'Express';
+$wgAPIModules['ow_add_syntrans'] = 'AddSyntrans';
+$wgAPIModules['ow_add_annotation'] = 'AddAnnotation';
+$wgAPIModules['ow_add_to_collection'] = 'AddToCollection';
 
 // Load the internationalization file
-	$wgExtensionMessagesFiles['myextension']
-	= dirname( __FILE__ ) . '/OmegaWiki.i18n.php';
+$wgMessagesDirs['WikiLexicalData'] = dirname( __FILE__ ) . '/i18n';
+$wgExtensionMessagesFiles['WikiLexicalData'] = dirname( __FILE__ ) . '/OmegaWiki.i18n.php';
 
 // Return true so that MediaWiki continues to load extensions.
-	return true;
+return true;

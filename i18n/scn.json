@@ -1,0 +1,39 @@
+{
+    "@metadata": {
+        "authors": [
+            "Melos"
+        ]
+    },
+    "ow_importtsv_nothing_added": "Nenti junciutu.",
+    "ow_exporttsv_title": "Esporta na collezioni a TSV",
+    "ow_exporttsv_languages": "Lingue:",
+    "ow_exporttsv_export_failed": "Esportazioni fallita",
+    "addcollection": "junci collezioni",
+    "ow_save": "Sarva",
+    "ow_history": "Storia",
+    "ow_datasets": "Silizzioni Data-set",
+    "ow_noedit_title": "Nuddu pirmessu pi editari",
+    "ow_uipref_datasets": "Vista pridifinita:",
+    "ow_uiprefs": "WikiLexicalData",
+    "ow_transaction_remove": "Lèva",
+    "ow_transaction_operation": "Operazioni",
+    "ow_transaction_object": "Uggettu",
+    "ow_transaction_summary": "Summariu:",
+    "ow_dm_OK": "OK",
+    "ow_dm_not_found": "nun truvatu ni lu database o nun funziunanti",
+    "ow_AddHint": "Nserisci li novi colonni da junciri",
+    "ow_AlternativeDefinition": "Difinizioni alternativa",
+    "ow_AlternativeDefinitions": "Difinizioni alternativi",
+    "ow_Annotation": "Annotazioni",
+    "ow_ApproximateMeanings": "Significatu approssimativu",
+    "ow_Class": "Classi",
+    "ow_ClassAttributeAttribute": "Attributu",
+    "ow_ClassAttributeLevel": "Liveddu",
+    "ow_ClassAttributeType": "Tipu",
+    "ow_Collection": "Collezioni",
+    "ow_Collection_colon": "Collezioni:",
+    "ow_CollectionMember": "Membru da collezioni",
+    "ow_CollectionMembership": "Appartinenza â collezioni",
+    "ow_Definition": "Difinizioni",
+    "ow_Expression": "Espressioni"
+}

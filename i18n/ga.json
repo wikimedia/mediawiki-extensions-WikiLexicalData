@@ -1,0 +1,43 @@
+{
+    "@metadata": {
+        "authors": [
+            "Alison",
+            "පසිඳු කාවින්ද"
+        ]
+    },
+    "languages": "Bainisteoir teangacha",
+    "langman_title": "Bainisteoir teangacha",
+    "datasearch": "Vicísonraí: Cuardaigh sonraí",
+    "datasearch_language": "Teanga:",
+    "ow_save": "Sábháil",
+    "ow_history": "Stair",
+    "ow_noedit_title": "Ní chead chun chur in eagar",
+    "ow_uiprefs": "Vicísonraí",
+    "ow_transaction_user": "Ainm úsáideora:",
+    "ow_transaction_summary": "Achoimriú",
+    "ow_Annotation": "Anótáil",
+    "ow_ClassAttributeAttribute": "Tréith",
+    "ow_ClassAttributeLevel": "Leibhéal",
+    "ow_ClassAttributeType": "Cineál",
+    "ow_Language": "Teanga",
+    "ow_OptionAttribute": "Airí",
+    "ow_OptionAttributeOption": "Rogha",
+    "ow_OptionAttributeOptions": "Roghanna",
+    "ow_Spelling": "Litriú",
+    "ow_Synonyms": "Comhchiallaigh",
+    "ow_SynonymsAndTranslations": "Comhchiallaigh agus aistriúcháin",
+    "ow_Source": "Foinse",
+    "ow_Text": "Téacs",
+    "ow_TextAttribute": "Airí",
+    "ow_TextAttributeValues": "Gnáth-théacs",
+    "ow_TranslatedTextAttribute": "Airí",
+    "ow_TranslatedTextAttributeValue": "Téacs",
+    "ow_LinkAttribute": "Airí",
+    "ow_LinkAttributeValues": "Naisc",
+    "ow_User": "Úsáideoir",
+    "ow_Property": "Airí",
+    "ow_show": "Taispeáin",
+    "ow_create": "Cruthaigh",
+    "ow_suggest_previous": "Siar",
+    "ow_suggest_next": "Ar aghaidh"
+}

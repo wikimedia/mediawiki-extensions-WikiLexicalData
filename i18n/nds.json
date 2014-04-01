@@ -1,0 +1,34 @@
+{
+    "@metadata": {
+        "authors": [
+            "Slomox"
+        ]
+    },
+    "ow_save": "Spiekern",
+    "ow_history": "Historie",
+    "ow_uiprefs": "WikiLexicalData",
+    "ow_dm_OK": "OK",
+    "ow_dm_not_present": "nich ingeven",
+    "ow_dm_not_found": "nich funnen in de Datenbank oder fehlerhaft",
+    "ow_ClassAttributeType": "Typ",
+    "ow_DefinedMeaning": "Defineert Bedüden",
+    "ow_DefinedMeaningReference": "Defineert Bedüden",
+    "ow_ExactMeanings": "Exakt Bedüden",
+    "ow_Expression": "Utdruck",
+    "ow_ExpressionMeanings": "Utdrucksbedüden",
+    "ow_Expressions": "Utdrück",
+    "ow_GotoSource": "Na’n Born gahn",
+    "ow_Language": "Spraak",
+    "ow_OptionAttribute": "Egenschop",
+    "ow_Synonyms": "Synonymen",
+    "ow_Source": "Born",
+    "ow_Text": "Text",
+    "ow_TextAttribute": "Egenschop",
+    "ow_TranslatedTextAttribute": "Egenschop",
+    "ow_TranslatedText": "Översett Text",
+    "ow_TranslatedTextAttributeValue": "Text",
+    "ow_TranslatedTextAttributeValues": "Översettbor Text",
+    "ow_LinkAttribute": "Egenschop",
+    "ow_Property": "Egenschop",
+    "ow_meaningsoftitle": "Bedüden vun „$1“"
+}

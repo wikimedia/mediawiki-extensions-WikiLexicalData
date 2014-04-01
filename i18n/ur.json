@@ -1,0 +1,42 @@
+{
+    "@metadata": {
+        "authors": [
+            "පසිඳු කාවින්ද"
+        ]
+    },
+    "langman_title": "زبان کے مینیجر",
+    "langman_langname": "زبان کے نام:",
+    "langman_field_optional": "(اختیاری)",
+    "langman_addlang": "زبان کا اضافہ کریں",
+    "importlangnames_title": "زبان کے نام کی درآمد",
+    "datasearch_language": "زبان:",
+    "datasearch_found_word": "لفظ پایا",
+    "datasearch_meaning": "فرمان",
+    "datasearch_search_text": "تلاش کا متن:",
+    "ow_importtsv_import_failed": "درآمد میں ناکام رہے",
+    "ow_exporttsv_languages": "زبانیں:",
+    "ow_save": "محفوظ کریں",
+    "ow_history": "تاریخ",
+    "ow_transaction_count": "شمار:",
+    "ow_transaction_user": "صارف کا نام:",
+    "ow_transaction_no_action": "کچھ نہیں کر",
+    "ow_transaction_previous_version": "پچھلے ورژن",
+    "ow_transaction_restore": "بحال",
+    "ow_transaction_remove": "حذف کریں",
+    "ow_transaction_operation": "آپریشن",
+    "ow_transaction_class_member": "کلاس ممبر",
+    "ow_transaction_object": "اعتراض",
+    "ow_transaction_summary": "خلاصہ",
+    "ow_dm_OK": "ٹھیک ہے",
+    "ow_Class": "کلاس",
+    "ow_ClassAttributeAttribute": "وصف",
+    "ow_ClassAttributes": "کلاس کی خصوصیات",
+    "ow_ClassAttributeLevel": "کی سطح",
+    "ow_ClassAttributeType": "قسم",
+    "ow_ClassMembership": "کلاس کی رکنیت",
+    "ow_Collection": "مجموعہ",
+    "ow_Collection_colon": "مجموعہ:",
+    "ow_Definition": "تعریف",
+    "ow_Expression": "اظہار",
+    "ow_Expressions": "اظہار"
+}

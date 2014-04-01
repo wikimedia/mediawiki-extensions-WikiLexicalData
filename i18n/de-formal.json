@@ -1,0 +1,32 @@
+{
+    "@metadata": {
+        "authors": [
+            "ChrisiPK",
+            "Imre",
+            "Kghbln",
+            "The Evil IP address",
+            "Umherirrender"
+        ]
+    },
+    "langman_not_allowed": "Sie haben nicht die Berechtigung die Spracheneinstellungen zu ändern.",
+    "langman_header": "Geben Sie den Sprachencode ein und darunter seinen englischsprachigen Namen:",
+    "importlangnames_not_allowed": "Sie haben nich die Berechtigung, Sprachennamen zu importieren.",
+    "ow_importtsv_header": "<p>Definitionen und Übersetzungen aus einer Textdatei, die Tabulatoren als Trenner verwendet, importieren. Diese Datei kann aus OpenOffice.org, Excel oder einem anderen Tabellenkalkulationsprogramm exportiert sein.</p>\n<p>Das Format der Datei muss mit dem Format der Dateien übereinstimmen, die auf der [[Special:ExportTSV|ExportTSV]]-Seite exportiert werden können. Wenn Sie die Spaltennamen geändert haben, wird der Import fehlschlagen. Wenn Sie die ID oder den bestimmenden Ausdruck einer festgelegten Bedeutung geändert haben, wird diese Zeile ignoriert werden. Wenn Sie Spalten hinzugefügt haben, müssen diese „definitions_iso“ oder „translations_iso“ heißen, wobei „iso“ ein ISO 693-3-Sprachcode ist.</p>\n<p>Wenn das „Testlauf“-Häkchen gesetzt ist, werden alle Änderungen, die vorgenommen werden würden, gemeldet, aber keine Änderungen wirklich durchgeführt. Es wird empfohlen, vor dem eigentlichen Import einen Testlauf durchzuführen.</p>",
+    "ow_importtsv_not_allowed": "Sie haben nicht die Berechtigung, einen TSV-Import durchzuführen.",
+    "ow_importtsv_not_utf8": "<p>Dies scheint keine UTF-8-kodierte Datei zu sein. Die Datei <em>muss</em> UTF-8-kodiert sein.\nStellen Sie sicher, dass die Anwendung die Datei richtig gespeichert oder exportiert hat.</p>",
+    "ow_exporttsv_header": "<p>Eine Sammlung in eine Textdatei exportieren, die Tabulatoren als Trenner verwendet. Diese kann in OpenOffice.org, Excel oder andere Tabellenkalkulationsprogramme importiert werden.<br />\nWählen Sie eine Sammlung aus, die Sie exportieren wollen. Geben Sie im Sprachen-Textfeld eine durch Kommata getrennte Liste von ISO 639-3-Sprachcodes an. Geben Sie zuerst die Sprachen an, aus denen Sie übersetzen werden (geben Sie so viele an, wie Sie wollen) und dann diejenigen, in die Sie übersetzen werden. Klicken Sie danach auf „Erstellen“, um die Datei zu erstellen.</p>",
+    "ow_exporttsv_not_allowed": "Sie haben nicht die Berechtigung, einen TSV-Export durchzuführen.",
+    "ow_searchnoresult": "<p>Sie können...:<br />\n* '''...einen Ausdruck erstellen „[[Expression:$1]]“''' (und eine Definition hinzufügen) oder<br />\n* '''...eine Seite erstellen „[[:$1]]“''' (eine reguläre Seite)</p>",
+    "ow_noedit": "Sie haben nicht die Erlaubnis, Seiten im Dataset „$1“ zu bearbeiten.\nSiehe [[{{MediaWiki:Ow editing policy url}}|unsere Richtlinien]].",
+    "ow_dm_badtitle": "Diese Seite weist nicht zu einer DefinedMeaning (Konzept).\nBitte überprüfen Sie die Webadresse.",
+    "ow_dm_missing": "Diese Seite weist zu einer nicht existierenden DefinedMeaning (Konzept).\nBitte überprüfen Sie die Webadresse.",
+    "ow_SuggestHint": "Klicken Sie um die Auswahl zu ändern",
+    "ow_copy_no_action_specified": "Bitte legen Sie eine Aktion fest.",
+    "ow_copy_help": "Eines Tages können wir Ihnen helfen.",
+    "ow_please_proved_dmid": "Ihrer Eingabe fehlt „?dmid=<something>“ (dmid=Defined Meaning ID)<br />\nBitte kontaktieren Sie den Serveradminstrator.",
+    "ow_please_proved_dc1": "Ihrer Eingabe fehlt „?dc1=<something>“ (dc1=dataset context 1, dataset to copy FROM)<br />\nBitte kontaktieren Sie den Serveradminstrator.",
+    "ow_please_proved_dc2": "Ihrer Eingabe fehlt „?dc2=<something>“ (dc2=dataset context 2, dataset to copy TO) <br />\nBitte kontaktieren Sie den Serveradminstrator.",
+    "ow_copy_successful": "<h2>Kopieren erfolgreich</h2>\nIhre Daten scheinen erfolgreich kopiert worden zu sein.\nBitte vergessen Sie nicht nochmals zu prüfen um sicherzugehen!",
+    "ow_no_action_specified": "<h3>Es wurde keine Aktion angegeben</h3>\nVielleicht kamen Sie direkt zu dieser Seite?",
+    "ow_db_consistency_not_found": "<h2>Fehler</h2>Die Datenbank ist nicht mehr konsistent. Wikidata kann keine gültigen Daten zu der ID finden. Bitte kontaktieren Sie den Server-Administrator."
+}

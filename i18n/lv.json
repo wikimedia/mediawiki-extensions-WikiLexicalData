@@ -1,0 +1,42 @@
+{
+    "@metadata": {
+        "authors": [
+            "GreenZeb",
+            "Papuass"
+        ]
+    },
+    "langman_langname": "Valodas nosaukums:",
+    "langman_iso639-3": "ISO 639-3 kods:",
+    "langman_iso639-2": "ISO 639-2 kods:",
+    "langman_wikimedia": "Wikimedia kods:",
+    "langman_addlang": "Pievienot valodu",
+    "datasearch_language": "Valoda:",
+    "datasearch_meaning": "Nozīme",
+    "ow_importtsv_import_failed": "Imports neizdevās",
+    "ow_importtsv_file": "TSV fails:",
+    "ow_exporttsv_languages": "Valodas:",
+    "ow_save": "Saglabāt",
+    "ow_history": "Vēsture",
+    "ow_none_selected": "Neviena licence nav izvēlēta",
+    "ow_transaction_count": "Skaits:",
+    "ow_dm_OK": "Labi",
+    "ow_ClassAttributeLevel": "Līmenis",
+    "ow_ID": "ID",
+    "ow_Language": "Valoda",
+    "ow_Synonyms": "Sinonīmi",
+    "ow_SynonymsAndTranslations": "Sinonīmi un tulkojumi",
+    "ow_Source": "Avots",
+    "ow_Text": "Teksts",
+    "ow_Time": "Laiks",
+    "ow_TranslatedTextAttributeValue": "Teksts",
+    "ow_Link": "Saite",
+    "ow_LinkAttribute": "Īpašība",
+    "ow_LinkAttributeValues": "Saites",
+    "ow_User": "Lietotājs",
+    "ow_Property": "Īpašība",
+    "ow_Value": "Vērtība",
+    "ow_added": "Pievienota",
+    "ow_removed": "Noņemta",
+    "ow_meaningsoftitle": "\"$1\" nozīmes",
+    "prefs-ow-lang": "Valodas"
+}

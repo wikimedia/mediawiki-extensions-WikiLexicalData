@@ -1,0 +1,21 @@
+{
+    "@metadata": {
+        "authors": [
+            "Juanpabl"
+        ]
+    },
+    "langman_langname": "Nombre d'a luenga:",
+    "langman_addlang": "Adhibir idioma",
+    "datasearch": "Mirar datos",
+    "datasearch_language": "Idioma:",
+    "ow_exporttsv_languages": "Idiomas:",
+    "ow_save": "Alzar",
+    "ow_history": "Historial",
+    "ow_transaction_rollback_button": "Revertir",
+    "ow_transaction_rollback_header": "Revertir",
+    "ow_dm_OK": "D'alcuerdo",
+    "ow_Language": "Idioma",
+    "ow_LinkAttributeValues": "Vinclos",
+    "ow_upload": "Cargar",
+    "ow_create": "Creyar"
+}

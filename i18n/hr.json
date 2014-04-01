@@ -1,0 +1,30 @@
+{
+    "@metadata": {
+        "authors": [
+            "CERminator",
+            "Dalibor Bosits",
+            "Ex13",
+            "Tivek"
+        ]
+    },
+    "langman_langname": "Naziv jezika:",
+    "langman_iso639-3": "ISO 639-3 kôd:",
+    "langman_iso639-2": "ISO 639-2 kôd:",
+    "langman_wikimedia": "Kôd Wikimedije:",
+    "langman_field_optional": "(opcionalno)",
+    "langman_addlang": "Dodaj jezik",
+    "importlangnames": "Uvoz jezičnih naziva",
+    "datasearch": "Pretraživanje podataka",
+    "datasearch_language": "Jezik:",
+    "datasearch_found_word": "Pronađena riječ",
+    "datasearch_meaning": "Značenje",
+    "datasearch_ext_identifier": "Vanjski identifikator",
+    "datasearch_search_text": "Pretraži tekst:",
+    "datasearch_within_words": "Unutar riječi:",
+    "datasearch_within_ext_ids": "Unutar vanjskih identifikatora:",
+    "datasearch_showing_only": "Prikazan je samo maksimum od $1 {{PLURAL:$1|pronalaska|pronalazaka}}.",
+    "datasearch_match_ext_ids": "Vanjski identifikatori koji se podudaraju s <em>$1</em>",
+    "datasearch_match_words": "Riječi koje se podudaraju s <em>$1</em> i pridruženim značenjima",
+    "ow_save": "Spremi",
+    "ow_class_attr_type_link": "Poveznica"
+}
