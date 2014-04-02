@@ -17,7 +17,7 @@ $wgExtensionCredits['other'][] = array(
 	'version' => '1.1',
 
 	// Your name, which will appear on Special:Version.
-	'author' => array( 'Hiong3-eng5', 'Kip' ),
+	'author' => array( 'Hiong3-eng5', 'Kip' , '[http://www.omegawiki.org/User:Purodha Purodha]'),
 
 	// The URL to a wiki page/web page with information about the extension,
 	// which will appear on Special:Version.
@@ -28,6 +28,7 @@ $wgExtensionCredits['other'][] = array(
 $wgAutoloadClasses['SynonymTranslation'] = dirname( __FILE__ ) . '/owSyntrans.php';
 $wgAutoloadClasses['Define'] = dirname( __FILE__ ) . '/owDefine.php';
 $wgAutoloadClasses['Express'] = dirname( __FILE__ ) . '/owExpress.php';
+$wgAutoloadClasses['AddDefinition'] = dirname( __FILE__ ) . '/owAddDefinition.php';
 $wgAutoloadClasses['AddSyntrans'] = dirname( __FILE__ ) . '/owAddSyntrans.php';
 $wgAutoloadClasses['AddAnnotation'] = dirname( __FILE__ ) . '/owAddAnnotation.php';
 $wgAutoloadClasses['AddToCollection'] = dirname( __FILE__ ) . '/owAddToCollection.php';
@@ -36,6 +37,7 @@ $wgAutoloadClasses['AddToCollection'] = dirname( __FILE__ ) . '/owAddToCollectio
 $wgAPIModules['ow_syntrans'] = 'SynonymTranslation';
 $wgAPIModules['ow_define'] = 'Define';
 $wgAPIModules['ow_express'] = 'Express';
+$wgAPIModules['ow_add_definition'] = 'AddDefinition';
 $wgAPIModules['ow_add_syntrans'] = 'AddSyntrans';
 $wgAPIModules['ow_add_annotation'] = 'AddAnnotation';
 $wgAPIModules['ow_add_to_collection'] = 'AddToCollection';
