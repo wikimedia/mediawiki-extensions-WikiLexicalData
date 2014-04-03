@@ -32,7 +32,7 @@
     "datasearch_search_text": "Pytanski tekst:",
     "datasearch_within_words": "Znutřka słowow:",
     "datasearch_within_ext_ids": "Znutřka eksternych identifikatorow:",
-    "datasearch_showing_only": "Pokazuje so jenož maksimalna ličba $1 {{PLURAL:$1|wotpowědnika|wotpowědnikow|wotpowědnikow|wotpowědnikow}} (z $2).",
+    "datasearch_showing_only": "Pokazuje so jenož maksimalna ličba $1 {{PLURAL:$1|wotpowědnika|wotpowědnikow}} (z $2).",
     "datasearch_match_ext_ids": "Eksterne identifikatory, kotrež <em>$1</em> wotpowěduja",
     "datasearch_match_words": "Słowa, kotrež <em>$1</em> wotpowěduja a zwjazane woznamy",
     "datasearch_match_words_lang": "Słowa <em>$1</em>, kotrež <em>$2</em> wotpowěduja a zwjazane woznamy",
