@@ -17,7 +17,7 @@ require_once( $wgWldAPIScriptPath . 'OmegaWikiExt.php');
 $wgExtensionCredits['other'][] = array(
 	'path'            => __FILE__,
 	'name'            => 'WikiLexicalData',
-	'version'         => '0.1.0',
+	'version'         => '0.2.0',
 	'author'          => array(
 		'Erik Möller',
 		'Kim Bruning',
@@ -29,7 +29,8 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg'  => 'wikidata-desc',
 );
 
-$wgExtensionMessagesFiles['Wikidata'] = $dir . 'Wikidata.i18n.php';
+$wgMessagesDirs['LexicalData'] = __DIR__ . '/i18n/lexicaldata';
+$wgExtensionMessagesFiles['LexicalData'] = $dir . 'Wikidata.i18n.php';
 
 // Resource modules
 

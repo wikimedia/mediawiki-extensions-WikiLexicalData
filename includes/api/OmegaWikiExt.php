@@ -43,8 +43,8 @@ $wgAPIModules['ow_add_annotation'] = 'AddAnnotation';
 $wgAPIModules['ow_add_to_collection'] = 'AddToCollection';
 
 // Load the internationalization file
-$wgMessagesDirs['WikiLexicalData'] = dirname( __FILE__ ) . '/i18n';
-$wgExtensionMessagesFiles['WikiLexicalData'] = dirname( __FILE__ ) . '/OmegaWiki.i18n.php';
+$wgMessagesDirs['OmegaWiki'] = dirname( __FILE__ ) . '/i18n';
+$wgExtensionMessagesFiles['OmegaWiki'] = dirname( __FILE__ ) . '/OmegaWiki.i18n.php';
 
 // Return true so that MediaWiki continues to load extensions.
 return true;
