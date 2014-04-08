@@ -39,7 +39,7 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 	public function __construct( $main ) {
 		parent :: __construct( $main, 'xml' );
 	}
-	
+
 	public function initPrinter( $isError ) {
 		$this->isError = $isError;
 		parent :: initPrinter( $isError );
@@ -61,11 +61,11 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 	public function getNeedsRawData() {
 		return false;
 	}
-	
+
 	public function setRootElement( $rootElemName ) {
 		$this->mRootElemName = $rootElemName;
 	}
-	
+
 	public function setFormat( $format ) {
 		$this->format = $format;
 	}
@@ -73,24 +73,24 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 	public function execute() {
 		if ( !$this->isError && count( $this->errorMessages ) == 0 && !$this->suppress_output ) {
 			$doc =& $this->createDocument();
-			
+
 			/* transform and output the xml document */
 			$proc = $this->getXsltProcessor();
 			echo $proc->transformToXML( $doc );
 		} elseif ( $this->suppress_output ) {
 			/* do nothing */
 		} else {
-			echo "An error occured.\r\n";
+			echo "An error occurred.\r\n";
 			foreach ( $this->errorMessages as $message ) {
 				echo $message . "\r\n";
 			}
 		}
 	}
-	
+
 	private function & getXsltProcessor() {
 		// this is an attempt to work with precompiled stylesheets
 		static $plainProc, $tbxProc;
-		
+
 		if ( $this->format == 'tbx' ) {
 			if ( $tbxProc == null ) {
 				$xsl = new DOMDocument();
@@ -111,37 +111,37 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 			return $plainProc;
 		}
 	}
-	
+
 	private function & createDocument() {
 		$doc = new DOMDocument( '1.0', 'utf-8' );
-		
+
 		$root = $doc->createElement( $this->mRootElemName );
 		$doc->appendChild( $root );
-		
+
 		$body = $doc->createElement( 'body' );
 		$root->appendChild( $body );
-		
+
 		foreach ( $this->dmRecords as $dmRecord ) {
 			$this->appendRecord( $dmRecord, 'defined-meaning', $body );
 		}
-		
+
 		$xPath = new DOMXPath( $doc );
 		$languageElements = $xPath->query( '//*[@language-id]' );
 		foreach ( $languageElements as $languageElement ) {
 			$languageElement->removeAttribute( 'language-id' );
 		}
-		
+
 		return $doc;
 	}
-	
+
 	private function appendRecord( & $record, $elmName, & $parentElm ) {
-		
+
 		$aExcluded = & $this->excluded;
 		if ( isset( $aExcluded[$elmName] ) ) return;
-		
+
 		$element = new DOMElement( $elmName );
 		$parentElm->appendChild( $element );
-		
+
 		$attributes = $record->getStructure()->getAttributes();
 		foreach ( $attributes as $attribute ) {
 			if ( is_string( $attribute->type ) ) {
@@ -180,7 +180,7 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 				}
 			}
 		}
-		
+
 		// remove object-attributes elements that do not have children.
 		if ( $elmName == 'object-attributes' && !$element->hasChildNodes() ) {
 			$parentElm->removeChild( $element );
@@ -201,9 +201,9 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	public function getDescription() {
 		return 'Output WikiData defined meaning in XML format' . parent :: getDescription();
 	}
@@ -211,6 +211,6 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 	public function getVersion() {
 		return __CLASS__ . ': $Id: $';
 	}
-	
+
 }
 ?>
