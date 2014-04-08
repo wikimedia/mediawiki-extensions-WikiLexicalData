@@ -17,6 +17,14 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$titleText = $wgTitle->getText();
 		$dmInfo = DefinedMeaningModel::splitTitleText( $titleText );
 
+		// WikiData compatibility. Using title with dmid only
+		if ( is_null( $dmInfo ) && is_numeric( $titleText ) ) {
+			$dmInfo = array(
+				"expression" => null,
+				"id" => $titleText
+			);
+		}
+
 		$dmNumber = $dmInfo["id"];
 
 		// Title doesn't have an ID in it (or ID 0)
