@@ -13,8 +13,7 @@ class SpecialImportTSV extends SpecialPage {
 
 	function execute( $par ) {
 
-		global $wgWldOwScriptPath;
-
+		global $wgWldOwScriptPath, $wgDBprefix, $wgVersion;
 		require_once( $wgWldOwScriptPath . "WikiDataAPI.php" );
 
 		$output = $this->getOutput();
@@ -107,7 +106,7 @@ class SpecialImportTSV extends SpecialPage {
 
 				// find the defined meaning record
 				$qry = "SELECT dm.meaning_text_tcid, exp.spelling ";
-				$qry .= "FROM {$dc}_defined_meaning dm INNER JOIN {$dc}_expression exp ON dm.expression_id=exp.expression_id ";
+				$qry .= "FROM {$wgDBprefix}{$dc}_defined_meaning dm INNER JOIN {$wgDBprefix}{$dc}_expression exp ON dm.expression_id=exp.expression_id ";
 				$qry .= "WHERE dm.defined_meaning_id=$dmid ";
 				$qry .= "AND " . getLatestTransactionRestriction( 'dm' );
 				$qry .= "AND " . getLatestTransactionRestriction( 'exp' );
@@ -171,7 +170,13 @@ class SpecialImportTSV extends SpecialPage {
 									$expression->bindToDefinedMeaning( $dmid, 'true' );
 
 									// not nescesary to check page exists, createPage does that.
-									$title = getPageTitle( $spelling );
+
+									// compatibility for mw 1.22 or below
+									if ( version_compare( $wgVersion, '1.23', '<' ) ) {
+										$title = getTitle( $spelling );
+									} else {
+										$title = getPageTitle( $spelling );
+									}
 									createPage( 16, $title );
 
 									$output->addHTML( "Added translation for $exp ($dmid) in $langCode: $spelling. Also added new page.<br />" );

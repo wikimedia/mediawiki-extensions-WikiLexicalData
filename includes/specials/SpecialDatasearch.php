@@ -443,6 +443,7 @@ class SpecialDatasearch extends SpecialPage {
 	 * that must be compared to "limit" to see if there are more results
 	 */
 	function getPrevNextLinkHtml() {
+		global $wgVersion;
 		$linksHtml = Html::openElement('p');
 		// currentQuery, an array of the parameters passed in the url
 		$currentQuery = $this->getRequest()->getValues();
@@ -458,8 +459,14 @@ class SpecialDatasearch extends SpecialPage {
 			} else {
 				unset( $prevQuery['offset'] );
 			}
+			// compatibility routine
+			if ( version_compare( $wgVersion, '1.23', '<' ) ) {
+				$prevLinkTitle = $this->getTitle();
+			} else {
+				$prevLinkTitle = $this->getPageTitle();
+			}
 			$prevLink = Linker::linkKnown(
-				$this->getPageTitle(),
+				$prevLinkTitle,
 				$prevText,
 				array(),
 				$prevQuery
@@ -484,8 +491,14 @@ class SpecialDatasearch extends SpecialPage {
 			$nextQuery = $currentQuery;
 			$nextOffset = $this->offset + $this->limit;
 			$nextQuery['offset'] = $nextOffset;
+			// compatibility routine
+			if ( version_compare( $wgVersion, '1.23', '<' ) ) {
+				$nextLinkTitle = $this->getTitle();
+			} else {
+				$nextLinkTitle = $this->getPageTitle();
+			}
 			$nextLink = Linker::linkKnown(
-				$this->getPageTitle(),
+				$nextLinkTitle,
 				$nextText,
 				array(),
 				$nextQuery
