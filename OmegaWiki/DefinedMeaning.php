@@ -83,7 +83,13 @@ class DefinedMeaning extends DefaultWikidataApplication {
 // concept panel is annoying and useless
 //		$wgOut->addHTML( $this->getConceptPanel() );
 		$expressionTranslated = definedMeaningExpression( $this->definedMeaningModel->getId() ) ;
-		$wgOut->setPageTitle( $wgTitle->getFullText() . " - $expressionTranslated" ) ;
+
+		// @note Since the defined meaning expression can be misleading and
+		// the software is now able to redirect using the dm id only, it seems logical
+		// to replace the full dm title and replace it with the id. ~he
+		// @todo Maybe in the future, $expressionTranslated will default to the user
+		// language or preferred language. ~he
+		$wgOut->setPageTitle( "DefinedMeaning:{$dmInfo['id']} - $expressionTranslated" ) ;
 
 		$editor = getDefinedMeaningEditor( $this->viewInformation );
 		$idStack = $this->getIdStack( $this->definedMeaningModel->getId() );
