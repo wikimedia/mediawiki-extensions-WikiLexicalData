@@ -72,6 +72,7 @@
     "ow_exporttsv_not_allowed": "你没有导出TSV的权限。",
     "ow_exporttsv_export_failed": "导出失败",
     "addcollection": "添加收藏",
+    "ow_searchnoresult": "<p>您可以：<br />\n* '''创建拓展“[[Expression:$1]]”'''（以及加入定义）<br />\n* '''创建页面“[[:$1]]”'''（标准wiki页面）</p>",
     "ow_save": "保存",
     "ow_history": "历史",
     "ow_datasets": "选择数据集",
