@@ -1,9 +1,9 @@
 {
-    "@metadata": {
-        "authors": [
-            "Yfdyh000",
-            "Hudafu"
-        ]
-    },
-    "apiow-desc": "MediaWiki api.php的OmegaWiki WikiLexicalData扩展程序"
+	"@metadata": {
+		"authors": [
+			"Yfdyh000",
+			"Hudafu"
+		]
+	},
+	"apiow-desc": "MediaWiki api.php的OmegaWiki WikiLexicalData扩展程序"
 }
