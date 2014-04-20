@@ -84,20 +84,20 @@ $wdDefinedMeaningAttributesOrder = array(
 $wgWldUseExpressionPageTitlePrefix = true;	# malafaya: Use the expression prefix "Multiple meanings:" from message ow_Multiple_meanings
 $wgWldShowClassicPageTitles = false;
 $wgWldExpressionPageTitlePrefix = 'Multiple meanings';
-// NOTE: both wgWldUseExpressionPageTitlePrefix and wgWldExpressionPageTitles
-//	seems to be unused based on ...
-//		git grep -e wgWldUseExpressionPageTitlePrefix
-//		and
-//		git grep -e wgWldExpressionPageTitlePrefix
-//
-//	If not going to be used. Should ow_Multiple_meanings @ Wikidata.i18n.php be removed also? ~he
+/** @note both wgWldUseExpressionPageTitlePrefix and wgWldExpressionPageTitles
+ *	seems to be unused based on ...
+ *		git grep -e wgWldUseExpressionPageTitlePrefix
+ *		and
+ *		git grep -e wgWldExpressionPageTitlePrefix
+ *	If not going to be used. Should ow_Multiple_meanings @ Wikidata.i18n.php be removed also? ~he
+ */
 
 // Search page
 $wgWldSearchExternalIDDefault = false;
 $wgWldSearchWordsDefault = true;
 
 // KIP: disabled for now, it's only confusing
-// todo: replace with a radiobox
+/** @todo replace with a radiobox */
 $wgWldSearchExternalIDOption = false;
 $wgWldSearchWordsOption = false;
 
@@ -165,11 +165,14 @@ function wdGetDataSetContext( $dc = null ) {
 
 
 /**
-* Load dataset definitions from the database if necessary.
-*
-* @return an array of all available datasets
-**/
+ * Load dataset definitions from the database if necessary.
+ *
+ * @return an array of all available datasets
+ *
+ * @note 2014-03-19 Added $wgDBprefix for wld~mw prefix compatibility ~he
+ */
 function &wdGetDataSets() {
+	global $wgDBprefix;
 
 	static $datasets, $wgGroupPermissions;
 	if ( empty( $datasets ) ) {
@@ -181,6 +184,7 @@ function &wdGetDataSets() {
 
 			$dc = new DataSet();
 			$dc->setPrefix( $row->set_prefix );
+			$dc->setDBprefix( $wgDBprefix );
 			if ( $dc->isValidPrefix() ) {
 				$datasets[$row->set_prefix] = $dc;
 				wfDebug( "Imported data set: " . $dc->fetchName() . "\n" );

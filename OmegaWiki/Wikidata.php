@@ -1,5 +1,6 @@
 <?php
-
+/** @file
+ */
 require_once( "forms.php" );
 require_once( "Transaction.php" );
 require_once( "OmegaWikiAttributes.php" );
@@ -256,9 +257,13 @@ class DefaultWikidataApplication {
 	}
 }
 
-
+/**
+ * @note 2014-03-19 added $mwPrefix and function setDBprefix
+ * for mw prefix compatibility. Also used db select instead of query ~he
+ */
 class DataSet {
 
+	private $mwPrefix;
 	private $dataSetPrefix;
 	private $isValidPrefix = false;
 	private $fallbackName = '';
@@ -289,16 +294,33 @@ class DataSet {
 
 		$dbs = wfGetDB( DB_SLAVE );
 		$this->dataSetPrefix = $cp;
-		$sql = "select * from wikidata_sets where set_prefix=" . $dbs->addQuotes( $cp );
-		$res = $dbs->query( $sql );
-		$row = $dbs->fetchObject( $res );
-		if ( $row->set_prefix ) {
+		$res = $dbs->select(
+			"wikidata_sets",
+			array(
+				'set_prefix',
+				'set_fallback_name',
+				'set_dmid'
+			),
+			array(
+				'set_prefix' => $cp
+			), __METHOD__
+		);
+
+		// invalid unless proven valid :) ~he
+		$this->setValidPrefix( false );
+		foreach ( $res as $row ) {
 			$this->setValidPrefix();
 			$this->setDefinedMeaningId( $row->set_dmid );
 			$this->setFallbackName( $row->set_fallback_name );
-		} else {
-			$this->setValidPrefix( false );
 		}
+
+	}
+
+	public function setDBprefix( $cp ) {
+		global $wgDBprefix;
+		$fname = "DataSet::setDBprefix";
+		$this->mwPrefix = $cp;
+
 	}
 
 	// Fetch!

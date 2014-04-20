@@ -1,9 +1,18 @@
 <?php
-
+/** @file
+ *  @brief This a part of the the WiKiLexicalData's PHP API
+ */
 require_once( 'Expression.php' );
 require_once( 'Transaction.php' );
 require_once( 'WikiDataGlobals.php' );
 
+/** @brief returns an expression ( spelling/word )
+ *
+ * @param expressionId req'd int The expression id.
+ * @param dc           opt'l str The database being accessed.
+ *
+ * @return null if not exists
+ */
 function getExpression( $expressionId, $dc = null ) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
@@ -24,14 +33,23 @@ function getExpression( $expressionId, $dc = null ) {
 	}
 }
 
-function newObjectId( $table ) {
-	$dc = wdGetDataSetContext();
+
+/** @brief Creates a new object id for the Object table
+ *
+ * @param table req'd str The name of the new object's table.
+ * @param dc    opt'l str The database being accessed.
+ */
+function newObjectId( $table, $dc = null ) {
+	global $wgDBprefix;
+	if ( is_null( $dc ) ) {
+		$dc = wdGetDataSetContext();
+	}
 
 	$dbw = wfGetDB( DB_MASTER );
 	$uuid = UIDGenerator::newUUIDv4();
 	$dbw->insert(
 		"{$dc}_objects",
-		array(  '`table`' => $table, '`UUID`' => $uuid ),
+		array(  '`table`' => "{$wgDBprefix}{$table}", '`UUID`' => $uuid ),
 		__METHOD__
 	);
 
@@ -57,7 +75,7 @@ function getTableNameWithObjectId( $objectId ) {
 
 /**
  * Returns the expressionId corresponding to $spelling and $languageId
- * returns null if not exist
+ * @return null if not exist
  */
 function getExpressionId( $spelling, $languageId ) {
 	$dc = wdGetDataSetContext();
@@ -200,9 +218,9 @@ function setPageLatestRevision( $pageId, $latestRevision ) {
 		), __METHOD__
 	);
 }
+
 function createInitialRevisionForPage( $wikipage, $comment ) {
 	global $wgUser;
-
 	$dbw = wfGetDB( DB_MASTER );
 	$userId = $wgUser->getID();
 	$userName = $wgUser->getName();
@@ -322,7 +340,6 @@ function getSynonymId( $definedMeaningId, $expressionId ) {
 }
 
 function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identicalMeaning = "true" ) {
-
 	$dc = wdGetDataSetContext();
 	$synonymId = getSynonymId( $definedMeaningId, $expressionId );
 
@@ -1253,15 +1270,15 @@ function getTextValueAttribute( $textValueAttributeId ) {
 }
 
 /** get Text Attribute values id.
- * returns value_id if exist
- * returns false if not exist
+ * @return value_id
+ * @return if not exists, false
  */
 function getTextAttributeValueId( $objectId, $textAttributeId, $text ) {
 	$dbr = wfGetDB( DB_SLAVE );
 	$dc = wdGetDataSetContext();
 
 	$valueId = $dbr->selectField(
-		$dc . '_text_attribute_values',
+		"{$dc}_text_attribute_values",
 		'value_id',
 		array(
 			'object_id' => $objectId,
@@ -1532,7 +1549,8 @@ function removeOptionAttributeOption( $optionId ) {
 	$dbw = wfGetDB( DB_MASTER );
 
 	// first check if the option attribute option is still in use
-	$valueId = $dbw->selectField( "{$dc}_option_attribute_values",
+	$valueId = $dbw->selectField(
+		"{$dc}_option_attribute_values",
 		'value_id',
 		array(
 			'option_id' => $optionId,
@@ -1543,7 +1561,8 @@ function removeOptionAttributeOption( $optionId ) {
 	if ( $valueId == false ){
 		// option not used, can proceed to delete
 		$transactionId = getUpdateTransactionId() ;
-		$dbw->update( "{$dc}_option_attribute_options",
+		$dbw->update(
+			"{$dc}_option_attribute_options",
 			array( /* SET */
 				'remove_transaction_id' => $transactionId
 			), array( /* WHERE */
@@ -1586,44 +1605,45 @@ function getOptionAttributeOptionsAttributeIdFromExpressionId ( $expressionId, $
 }
 
 function getOptionAttributeOptionsAttributeIdFromDM( $definedMeaningId, $classMid, $levelMeaningId ) {
-		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+	$dc = wdGetDataSetContext();
+	$dbr = wfGetDB( DB_SLAVE );
 
-		// Quick Fix: Better if we find a way of providing
-		// the class_mid than to set a negative number
-		// if there is a possibility of a two dm attribute.
-		if ( $classMid == -1 ) {
-			$arrayIs = array(
-				'attribute_mid' => $definedMeaningId,
-				'object_id = attribute_id',
-				'attribute_type' => "OPTN",
-				'level_mid' => $levelMeaningId,
-				'ca.remove_transaction_id' => null
-			);
-		} else {
-			$arrayIs = array(
-				'attribute_mid' => $definedMeaningId,
-				'object_id = attribute_id',
-				'class_mid' => $classMid,
-				'attribute_type' => "OPTN",
-				'level_mid' => $levelMeaningId,
-				'ca.remove_transaction_id' => null
-			);
-		}
-		$objectId = $dbr->selectField(
-			array(
-				'ca' => $dc . '_class_attributes',
-				'ovo' => $dc . '_option_attribute_options'
-			),
-			'object_id',
-			$arrayIs
-			, __METHOD__
+	/** @todo Quick Fix: Better if we find a way of providing
+	 * the class_mid than to set a negative number
+	 * if there is a possibility of a two dm attribute.
+	 */
+	if ( $classMid == -1 ) {
+		$arrayIs = array(
+			'attribute_mid' => $definedMeaningId,
+			'object_id = attribute_id',
+			'attribute_type' => "OPTN",
+			'level_mid' => $levelMeaningId,
+			'ca.remove_transaction_id' => null
 		);
+	} else {
+		$arrayIs = array(
+			'attribute_mid' => $definedMeaningId,
+			'object_id = attribute_id',
+			'class_mid' => $classMid,
+			'attribute_type' => "OPTN",
+			'level_mid' => $levelMeaningId,
+			'ca.remove_transaction_id' => null
+		);
+	}
+	$objectId = $dbr->selectField(
+		array(
+			'ca' => "{$dc}_class_attributes",
+			'ovo' => "{$dc}_option_attribute_options"
+		),
+		'object_id',
+		$arrayIs
+		, __METHOD__
+	);
 
-		if ( $objectId ) {
-			return $objectId;
-		}
-		return null;
+	if ( $objectId ) {
+		return $objectId;
+	}
+	return null;
 }
 
 /** retrieve the options Attribute option's option_mid
@@ -1652,7 +1672,7 @@ function getOptionAttributeValueId( $objectId, $optionId ) {
 	$dbr = wfGetDB( DB_SLAVE );
 	$dc = wdGetDataSetContext();
 	$valueId = $dbr->selectField(
-		$dc . '_option_attribute_values',
+		"{$dc}_option_attribute_values",
 		'value_id',
 		array(
 			'object_id' => $objectId,
@@ -1676,7 +1696,10 @@ function getDefinedMeaningSpellingForLanguage( $definedMeaning, $language) {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$spelling = $dbr->selectField(
-		array( "{$dc}_expression" , "{$dc}_syntrans" ),
+		array(
+			"{$dc}_expression" ,
+			"{$dc}_syntrans"
+		),
 		'spelling',
 		array(
 			"{$dc}_syntrans.defined_meaning_id" => $definedMeaning,
@@ -1701,7 +1724,10 @@ function getDefinedMeaningSpellingForAnyLanguage( $definedMeaning ) {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$spelling = $dbr->selectField(
-		array( "{$dc}_expression" , "{$dc}_syntrans" ),
+		array(
+			"{$dc}_expression" ,
+			"{$dc}_syntrans"
+		),
 		'spelling',
 		array(
 			"{$dc}_syntrans.defined_meaning_id" => $definedMeaning,
@@ -1719,14 +1745,17 @@ function getDefinedMeaningSpellingForAnyLanguage( $definedMeaning ) {
 /**
  * Returns the language id of a definedMeaning in any language
  * according to which definition comes up first in the SQL query
- * @param $definedMeaning
+ * @param definedMeaning str the defined meaning id
  */
 function getDefinedMeaningSpellingLanguageId( $definedMeaning ) {
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$languageId = $dbr->selectField(
-		array( "{$dc}_expression" , "{$dc}_syntrans" ),
+		array(
+			"{$dc}_expression" ,
+			"{$dc}_syntrans"
+		),
 		'language_id',
 		array(
 			"{$dc}_syntrans.defined_meaning_id" => $definedMeaning,
@@ -1749,14 +1778,14 @@ function getLanguageIdForDefinedMeaningAndExpression( $definedMeaningId, $spelli
 	$dbr = wfGetDB( DB_SLAVE );
 	$languageId = $dbr->selectField(
 		array(
-			'e' => "{$dc}_expression",
+			'exp' => "{$dc}_expression",
 			'st' => "{$dc}_syntrans"
 		),
 		'language_id',
 		array(
 			'defined_meaning_id' => $definedMeaningId,
 			'spelling' => $spelling,
-			'st.expression_id = e.expression_id',
+			'st.expression_id = exp.expression_id',
 			'st.remove_transaction_id' => null
 		), __METHOD__
 	);
@@ -1947,13 +1976,16 @@ function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallback
 
 	if ( $userLanguageId ) {
 		$spelling = $dbr->selectField(
-			array( "{$dc}_syntrans" , "{$dc}_expression" ),
+			array(
+				'synt' => "{$dc}_syntrans",
+				'exp' => "{$dc}_expression"
+			),
 			'spelling',
 			array(
-				"{$dc}_syntrans.defined_meaning_id" => $definedMeaningId,
-				"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
+				"synt.defined_meaning_id" => $definedMeaningId,
+				"exp.expression_id = synt.expression_id",
 				'language_id' => $userLanguageId,
-				"{$dc}_expression.remove_transaction_id" => null
+				"exp.remove_transaction_id" => null
 			), __METHOD__
 		);
 
@@ -1964,13 +1996,16 @@ function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallback
 
 	// fallback language
 	$spelling = $dbr->selectField(
-		array( "{$dc}_syntrans" , "{$dc}_expression" ),
+		array(
+			'synt' => "{$dc}_syntrans",
+			'exp' => "{$dc}_expression"
+		),
 		'spelling',
 		array(
-			"{$dc}_syntrans.defined_meaning_id" => $definedMeaningId,
-			"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
+			"synt.defined_meaning_id" => $definedMeaningId,
+			"exp.expression_id = synt.expression_id",
 			'language_id' => $fallbackLanguageId,
-			"{$dc}_expression.remove_transaction_id" => null
+			"exp.remove_transaction_id" => null
 		), __METHOD__
 	);
 
@@ -1980,12 +2015,15 @@ function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallback
 
 	// final fallback
 	$spelling = $dbr->selectField(
-		array( "{$dc}_syntrans" , "{$dc}_expression" ),
+		array(
+			'synt' => "{$dc}_syntrans",
+			'exp' => "{$dc}_expression"
+		),
 		'spelling',
 		array(
-			"{$dc}_syntrans.defined_meaning_id" => $definedMeaningId,
-			"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
-			"{$dc}_expression.remove_transaction_id" => null
+			"synt.defined_meaning_id" => $definedMeaningId,
+			"exp.expression_id = synt.expression_id",
+			"exp.remove_transaction_id" => null
 		), __METHOD__
 	);
 
@@ -2001,7 +2039,6 @@ function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallback
  */
 function isClass( $objectId ) {
 	global $wgDefaultClassMids;
-
 	if ( in_array( $objectId, $wgDefaultClassMids ) ) {
 		// easy, it is a default class
 		return true;
@@ -2012,7 +2049,10 @@ function isClass( $objectId ) {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$collectionId = $dbr->selectField(
-		array( 'cont' => "{$dc}_collection_contents", 'col' => "{$dc}_collection" ),
+		array(
+			'cont' => "{$dc}_collection_contents",
+			'col' => "{$dc}_collection"
+		),
 		'col.collection_id',
 		array(
 			'cont.member_mid' => $objectId,
@@ -2128,7 +2168,10 @@ function getExpressionMeaningIds( $spelling, $dc = null ) {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$queryResult = $dbr->select(
-		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		array(
+			'exp' => "{$dc}_expression",
+			'synt' => "{$dc}_syntrans"
+		),
 		'defined_meaning_id',
 		array(
 			'spelling' => $spelling,
@@ -2154,7 +2197,10 @@ function getExpressionMeaningIdsForLanguages( $spelling, $languageIds, $dc = nul
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$queryResult = $dbr->select(
-		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		array(
+			'exp' => "{$dc}_expression",
+			'synt' => "{$dc}_syntrans"
+		),
 		array( 'defined_meaning_id', 'language_id' ),
 		array(
 			'spelling' => $spelling,
@@ -2184,7 +2230,10 @@ function getExpressionIdMeaningIds($expressionId, $dc = null) {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$queryResult = $dbr->select(
-		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		array(
+			'exp' => "{$dc}_expression",
+			'synt' => "{$dc}_syntrans"
+		),
 		'defined_meaning_id',
 		array(
 			'exp.expression_id' => $expressionId,
@@ -2240,8 +2289,8 @@ function getMapping( $dc, $collid, $dm_id ) {
 	return - 1;
 }
 
-/** ask db to provide a universally unique id */
-
+/** ask db to provide a universally unique id
+ */
 function getUUID( $concepts ) {
 	$dbr = wfGetDB( DB_SLAVE );
 
@@ -2303,7 +2352,8 @@ function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction
 		$add_transaction_id = getUpdateTransactionId();
 	}
 
-	$dbw->insert( "{$dc}_collection_contents",
+	$dbw->insert(
+		"{$dc}_collection_contents",
 		array(
 			'collection_id' => $collid,
 			'internal_member_id' => $uuid,
@@ -2321,9 +2371,9 @@ function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction
  * note that we are using collection_contents.internal_member_id
  * as our ConceptMap ID.
  *
- * Later Note: This is somewhat redundant with the objects table.
+ * @note Later Note: This is somewhat redundant with the objects table.
  *
- * see also: createConceptMapping($concepts)
+ * @see createConceptMapping($concepts)
  */
 function &readConceptMapping( $concept_id ) {
 	$dbr = wfGetDB( DB_SLAVE );
@@ -2388,6 +2438,7 @@ function &getDataSetsAssociatedByConcept( $dm, $dc ) {
 	}
 	return $newSets;
 }
+
 function &getDefinedMeaningDataAssociatedByConcept( $dm, $dc ) {
 	$meanings = array();
 	$map = getDataSetsAssociatedByConcept( $dm, $dc );
@@ -2406,7 +2457,10 @@ function definingExpressionRow( $definedMeaningId, $dc = null ) {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$expression = $dbr->selectRow(
-		array( 'dm' => "{$dc}_defined_meaning", 'exp' => "{$dc}_expression" ),
+		array(
+			'dm' => "{$dc}_defined_meaning",
+			'exp' => "{$dc}_expression"
+		),
 		array( 'exp.expression_id', 'spelling', 'language_id' ),
 		array(
 			'dm.defined_meaning_id' => $definedMeaningId,
@@ -2431,7 +2485,10 @@ function definingExpression( $definedMeaningId, $dc = null ) {
 	// no exp.remove_transaction_id because definingExpression could have been deleted
 	// but is still needed to form the DM page title.
 	$spelling = $dbr->selectField(
-		array( 'dm' => "{$dc}_defined_meaning", 'exp' => "{$dc}_expression" ),
+		array(
+			'dm' => "{$dc}_defined_meaning",
+			'exp' => "{$dc}_expression"
+		),
 		'spelling',
 		array(
 			'dm.defined_meaning_id' => $definedMeaningId,
@@ -2456,7 +2513,10 @@ function definedMeaningExpressionForLanguage( $definedMeaningId, $languageId ) {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$spelling = $dbr->selectField(
-		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		array(
+			'exp' => "{$dc}_expression",
+			'synt' => "{$dc}_syntrans"
+		),
 		'spelling',
 		array(
 			'defined_meaning_id' => $definedMeaningId,
@@ -2483,7 +2543,10 @@ function definedMeaningExpressionForAnyLanguage( $definedMeaningId ) {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$spelling = $dbr->selectField(
-		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		array(
+			'exp' => "{$dc}_expression",
+			'synt' => "{$dc}_syntrans"
+		),
 		'spelling',
 		array(
 			'defined_meaning_id' => $definedMeaningId,
@@ -2578,7 +2641,10 @@ function getExpressions( $spelling, $dc = null ) {
 	}
 
 	$queryResult = $dbr->select(
-		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		array(
+			'exp' => "{$dc}_expression",
+			'synt' => "{$dc}_syntrans"
+		),
 		array( 'exp.expression_id', 'spelling', 'language_id' ),
 		$cond,
 		__METHOD__
@@ -2591,21 +2657,33 @@ function getExpressions( $spelling, $dc = null ) {
 	return $rv;
 }
 
+/** Class Attribute
+ *	This class initialize the three basic variables of the Class attribute table.
+ */
 class ClassAttribute {
+	/** A link to a defined_meaning_id in the Defined Meaning table that identifies the class (and further gives link to its name */
 	public $attributeId;
+	/** A link to a defined_meaning_id in the Defined Meaning table that identifies the level on which the attribute applies (e.g. 401995 for Syntrans) */
 	public $levelName;
+	/** The type of the attribute */
 	public $type;
 }
 
+/** Class Attributes
+ *	This class is a collection of functions to retrieve information from
+ *	the class attribute table.
+ */
 class ClassAttributes {
+	/** class attribute variable */
 	protected $classAttributes;
 
+	/** returns ClassAttributes Object
+	 */
 	public function __construct( $definedMeaningId ) {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 
 		global $wgDefaultClassMids, $wgWikidataDataSet;
-
 		$queryResult = $dbr->select(
 			array( 'ca' => "{$dc}_class_attributes", 'bdm' => "{$dc}_bootstrapped_defined_meanings" ),
 			array( 'DISTINCT ca.attribute_mid', 'ca.attribute_type', 'bdm.name' ),
@@ -2627,6 +2705,8 @@ class ClassAttributes {
 		}
 	}
 
+	/** returns the Class Attribute Object that has the given levelName and type
+	 */
 	public function filterClassAttributesOnLevelAndType( $levelName, $type ) {
 		$result = array();
 
@@ -2639,6 +2719,8 @@ class ClassAttributes {
 		return $result;
 	}
 
+	/** returns the Class Attribute Object that has the given levelName
+	 */
 	public function filterClassAttributesOnLevel( $levelName ) {
 		$result = array();
 
@@ -2655,10 +2737,10 @@ class ClassAttributes {
 /**
  * returns the value of column if exist
  * null if not found
- * @param $table  table name
- * @param $column column nane
- * @param $value  column value
- * @param $isDc   if has DataSet Context(boolean)
+ * @param table  table name
+ * @param column column nane
+ * @param value  column value
+ * @param isDc   if has DataSet Context(boolean)
  */
 function verifyColumn( $table, $column, $value, $isDc ) {
 	if ( $isDc == 1 ) {
@@ -2669,7 +2751,7 @@ function verifyColumn( $table, $column, $value, $isDc ) {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$existId = $dbr->selectField(
-		$dc . $table,
+		"{$dc}{$table}",
 		$column,
 		array(
 			$column => $value,
@@ -2746,7 +2828,10 @@ function getDefinedMeaningIdFromExpressionIdAndLanguageId( $expressionId, $langu
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$queryResult = $dbr->select(
-		array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
+		array(
+			'exp' => "{$dc}_expression",
+			'synt' => "{$dc}_syntrans"
+		),
 		'defined_meaning_id',
 		array(
 			'synt.expression_id' => $expressionId,
@@ -2766,8 +2851,15 @@ function getDefinedMeaningIdFromExpressionIdAndLanguageId( $expressionId, $langu
 	return $dmlist;
 }
 
+/** Collection
+ *	This class is a collection of functions to retrieve information from
+ *	the collection table.
+ */
+
 class Collections {
 
+	/** returns the concept's (Defined Meaning ) Expression of a Collection in a language
+	 */
 	public static function getDefinedMeaningIdCollectionMembershipExpressions( $definedMeaningId, $languageId ) {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
@@ -2815,12 +2907,16 @@ class Collections {
 	}
 }
 
+/** WikiLexicalData Class
+ *	This class is a collection of functions to retrieve information from
+ *	the class table.
+ */
 class WLD_Class {
 
 	/** Get a list of Class Expressions where the Defined Meaning Id is a member of.
 	 *
-	 * @param definedMeaningId
-	 * @param languageId
+	 * @param $definedMeaningId
+	 * @param $languageId
 	 *
 	 * @return list of array expressions
 	 * @return array() when none

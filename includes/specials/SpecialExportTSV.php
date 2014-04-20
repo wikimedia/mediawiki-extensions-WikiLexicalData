@@ -9,8 +9,7 @@ class SpecialExportTSV extends SpecialPage {
 
 	function execute( $par ) {
 
-		global $wgWldOwScriptPath;
-
+		global $wgWldOwScriptPath, $wgDBprefix;
 		require_once( $wgWldOwScriptPath . "WikiDataAPI.php" ); // for bootstrapCollection
 
 		$output = $this->getOutput();
@@ -127,7 +126,7 @@ class SpecialExportTSV extends SpecialPage {
 				// query to get the definitions
 				// ****************************
 				$qry = 'SELECT txt.text_text, trans.language_id ';
-				$qry .= "FROM {$dc}_text txt, {$dc}_translated_content trans, {$dc}_defined_meaning dm ";
+				$qry .= "FROM {$wgDBprefix}{$dc}_text txt, {$wgDBprefix}{$dc}_translated_content trans, {$wgDBprefix}{$dc}_defined_meaning dm ";
 				$qry .= 'WHERE txt.text_id = trans.text_id ';
 				$qry .= 'AND trans.translated_content_id = dm.meaning_text_tcid ';
 				$qry .= "AND dm.defined_meaning_id = $dm_id ";
@@ -143,6 +142,47 @@ class SpecialExportTSV extends SpecialPage {
 
 				// wfDebug($qry."\n"); // uncomment this if you accept having 1700+ queries in the log
 
+				// I want to use this routine instead of the above, but an
+				// error I can not solve prohibits me.
+				/*
+
+				$includeLanguages = null;
+				for ( $i = 0; $i < count( $languages ); $i++ ) {
+					$language = $languages[$i];
+					if ( $i > 0 )
+						$includeLanguages .= ",";
+					$includeLanguages .= $language['language_id'];
+				}
+				$sqltables = array(
+					'txt' => "{$dc}_text",
+					'trans' => "{$dc}_translated_content",
+					'dm' => "{$dc}_defined_meaning"
+				);
+				$sqlfields = array(
+					'txt.text_text',
+					'trans.language_id'
+				);
+				$sqlcond = array(
+					'txt.text_id = trans.text_id',
+					'txt.translated_content_id = dm.meaning_text_tcid',
+					'dm.defined_meaning_id' => $dm_id,
+					"trans.language_id IN ({$includeLanguages})",
+					'trans.remove_transaction_id' => null,
+					'dm.remove_transaction_id' => null
+				);
+				$qry2 = array(
+					$sqltables,
+					$sqlfields,
+					$sqlcond, __METHOD__
+				);
+
+				$queryResult = $dbr->select(
+					$sqltables,
+					$sqlfields,
+					$sqlcond, __METHOD__
+				);
+				*/
+
 				$definitions = $dbr->query( $qry );
 				foreach ( $definitions as $rowdef ) {
 					// $key becomes something like def_eng
@@ -155,8 +195,8 @@ class SpecialExportTSV extends SpecialPage {
 				// query to get the translations
 				// *****************************
 				$qry = "SELECT exp.spelling, exp.language_id ";
-				$qry .= "FROM {$dc}_expression exp ";
-				$qry .= "INNER JOIN {$dc}_syntrans trans ON exp.expression_id=trans.expression_id ";
+				$qry .= "FROM {$wgDBprefix}{$dc}_expression exp ";
+				$qry .= "INNER JOIN {$wgDBprefix}{$dc}_syntrans trans ON exp.expression_id=trans.expression_id ";
 				$qry .= "WHERE trans.defined_meaning_id=$dm_id ";
 				$qry .= "AND " . getLatestTransactionRestriction( "exp" );
 				$qry .= "AND " . getLatestTransactionRestriction( "trans" );
@@ -286,8 +326,9 @@ class SpecialExportTSV extends SpecialPage {
 	 * list of iso639_3 language names.
 	 */
 	function getLanguages( $isoCodes ) {
+		global $wgDBprefix;
 		// create query to look up the language codes.
-		$langQuery = "SELECT language_id, iso639_3 FROM language WHERE ";
+		$langQuery = "SELECT language_id, iso639_3 FROM {$wgDBprefix}language WHERE ";
 		foreach ( $isoCodes as $isoCode ) {
 			$isoCode = trim( $isoCode );
 			// if query does not end in WHERE , prepend OR.

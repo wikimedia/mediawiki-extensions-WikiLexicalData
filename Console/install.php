@@ -1,18 +1,25 @@
 <?php
-
-/**
-* Maintenance script to create a WikiLexicalData extension for mediawiki
-* it generates the tables in a database (passed as parameter) with a defined prefix (passed as parameter)
-*/
+/** @file
+ *  @brief WikiLexicalData install script
+ *
+ * Maintenance script to create a WikiLexicalData extension for mediawiki
+ * it generates the tables in a database (passed as parameter) with a defined prefix (passed as parameter)
+ */
 
 $baseDir = dirname( __FILE__ ) . '/../../..' ;
 require_once( $baseDir . '/maintenance/Maintenance.php' );
 require_once( $baseDir . '/extensions/WikiLexicalData/OmegaWiki/WikiDataGlobals.php' );
+require_once( $baseDir . '/extensions/WikiLexicalData/OmegaWiki/Transaction.php' );
 
 echo "start\n";
 
+/** @class InstallWikiLexicalData
+ * @brief WikiLexicalData install class
+ */
 class InstallWikiLexicalData extends Maintenance {
 
+	/** @brief public function constructor
+	 */
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Installation by creating the tables and filling them with the minimal necessary data\n"
@@ -24,9 +31,11 @@ class InstallWikiLexicalData extends Maintenance {
 		$this->addOption( 'datasetname', 'A name for your dataset. e.g. --datasetname="OmegaWiki community"' );
 	}
 
+	/** @brief public function execute
+	 */
 	public function execute() {
 
-		global $wdCurrentContext;
+		global $wdCurrentContext, $wgDBprefix;
 
 		// checking that the needed parameters are given
 		if ( !$this->hasOption( 'prefix' ) ) {
@@ -41,36 +50,93 @@ class InstallWikiLexicalData extends Maintenance {
 		$prefix = $this->getOption( 'prefix' );
 		$template = $this->getOption( 'template' );
 		$datasetname = $this->getOption( 'datasetname' );
-		$wdCurrentContext = $prefix ;
+		if ( preg_match( '/\_$/', $prefix ) ) {
+			$wdCurrentContext = preg_replace( '/\_$/', '', $prefix );
+		} else {
+			$wdCurrentContext = $prefix;
+		}
+		if ( !preg_match( '/\_$/', $prefix ) ) {
+			$prefix .= '_';
+		}
 
 		if ( $this->hasOption( 'freshInstall' ) ) {
 			$this->output( "Dropping all tables\n");
-			$this->dropTables( $prefix );
+			$this->dropTables( $wdCurrentContext );
 		}
 
 		$this->output( "Creating relational tables...\n" );
 
-		$this->ReadTemplateSQLFile( "/*\$wgWDprefix*/", $prefix . "_", dirname( __FILE__ ) . DIRECTORY_SEPARATOR . $template );
+		$patterns = array(
+			'wld' => "/*wgWDprefix*/",
+			'mw' => "/*wgDBprefix*/"
+		);
+
+		$prefixes = array(
+			'wld' => $prefix,
+			'mw' => $wgDBprefix
+		);
+
+		$this->ReadTemplateSQLFile( $patterns, $prefixes, dirname( __FILE__ ) . DIRECTORY_SEPARATOR . $template );
 
 		// entering dataset in table wikidata_sets
+		/** @todo currently sets every new instances as set_dmid = 0.
+		 * Unless dmid is essential in working multiple instances of OmegaWiki,
+		 * it should be fine. If not, this must be worked upon later, since
+		 * I am not familiar with the table usage. ~ he
+		 */
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->query( "DELETE FROM wikidata_sets WHERE set_prefix = '$prefix'" );
-		$dbw->query( "INSERT INTO wikidata_sets (set_prefix,set_fallback_name,set_dmid) VALUES ('$prefix','$datasetname',0)" );
 
-		$this->output( "Adding language English...\n" );
-		$this->createLanguageEnglish( $prefix );
+		$this->output( "Delete and recreate empty set {$wdCurrentContext}...\n" );
+		$dbw->delete(
+			'wikidata_sets',
+			array(
+				'set_prefix' => $wdCurrentContext
+			),
+			__METHOD__
+		);
 
-		$this->output( "Filling table {$prefix}_bootstrapped_defined_meanings...\n" );
-		$this->bootStrappedDefinedMeanings( $prefix );
+		$dbw->insert(
+			'wikidata_sets',
+			array(
+			 'set_prefix' => $wdCurrentContext,
+			 'set_fallback_name' => $datasetname,
+			 'set_dmid' => 0
+			),
+			__METHOD__
+		);
+
+		// Add language English if not already present
+		$this->createLanguageEnglish();
+
+		$this->output( "Filling table {$wdCurrentContext}_bootstrapped_defined_meanings...\n" );
+		$this->bootStrappedDefinedMeanings( $wdCurrentContext );
 
 		$this->output( "Adding some more data to enable annotations...\n" );
-		$this->enableAnnotations( $prefix );
+		$this->enableAnnotations( $wdCurrentContext );
 	}
 
-
-	protected function createLanguageEnglish( $dc ) {
+	/** @brief Adds the English language to enable editing
+	 */
+	protected function createLanguageEnglish() {
 		$dbw = wfGetDB( DB_MASTER );
 		global $wgDBtype;
+
+		// check if already exists
+		$alreadyExists = $dbw->selectField(
+			'language',
+			'language_id',
+			array( 'language_id' => WLD_ENGLISH_LANG_ID ),
+			__METHOD__
+		);
+
+		if ( $alreadyExists ) {
+			$this->output( "English language already exist...\n" );
+			return;
+		}
+
+		// not already exist: create
+		$this->output( "Adding language English...\n" );
+
 		$options = array();
 		if ( $wgDBtype == 'sqlite' ) {
 			$options = array( 'IGNORE' => true );
@@ -104,16 +170,24 @@ class InstallWikiLexicalData extends Maintenance {
 		);
 	}
 
+	/** @brief Fills table bootstrapped_defined_meanings with relevant data
+	 *
+	 * @param dc str The database being accessed.
+	 */
 	protected function bootStrappedDefinedMeanings( $dc ) {
 		// Admin user
 		$userId = 1 ;
 		$dbw = wfGetDB( DB_MASTER );
+		global $wgDBprefix;
 
 		// check that it is really a fresh install
-		$query = "SELECT * FROM  {$dc}_collection" ;
-		$queryResult = $dbw->query( $query );
-		if ( $dbw->numRows( $queryResult ) > 0 ) {
-			echo "Table {$dc}_collection not empty.\n" ;
+		$hasCollection = $dbw->selectField(
+			"{$dc}_collection",
+			'collection_id',
+			'', __METHOD__
+		);
+		if ( $hasCollection ) {
+			echo "Table {$wgDBprefix}{$dc}_collection not empty.\n" ;
 			echo "\nERROR: It appears that Wikidata is at least already partially installed on your system\n" ;
 			echo "\nIf you would like to do a fresh install, drop the following tables, and run the install script again:\n" ;
 			$this->printDropTablesCommand( $dc );
@@ -139,12 +213,21 @@ class InstallWikiLexicalData extends Maintenance {
 		foreach ( $meanings as $internalName => $meaningId ) {
 			addDefinedMeaningToCollection( $meaningId, $collectionId, $internalName );
 
-			$dbw->query( "INSERT INTO `{$dc}_bootstrapped_defined_meanings` (name, defined_meaning_id) " .
-					"VALUES (" . $dbw->addQuotes( $internalName ) . ", " . $meaningId . ")" );
+			$dbw->insert(
+				"{$dc}_bootstrapped_defined_meanings",
+				array( 'name' => $internalName,
+					'defined_meaning_id' => $meaningId
+				), __METHOD__
+			);
+
 		}
 
 	}
 
+	/** @brief Add some more data to enable annotations
+	 *
+	 * @param dc str The database being accessed.
+	 */
 	protected function enableAnnotations( $dc ) {
 		// Admin user
 		$userId = 1 ;
@@ -183,8 +266,12 @@ class InstallWikiLexicalData extends Maintenance {
 		return $definedMeaningId;
 	}
 
-
+	/** @brief Drop Tables
+	 *
+	 * @param dc str The database being accessed.
+	 */
 	protected function dropTables( $dc ) {
+		global $wgDBprefix;
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete(
 			'page',
@@ -196,34 +283,49 @@ class InstallWikiLexicalData extends Maintenance {
 			array( 'page_namespace' => NS_DEFINEDMEANING ),
 			__METHOD__
 		);
+
 		$owTableNames = $this->getWLDtableNamesAddtl();
 		foreach ( $owTableNames as $drop ) {
-			$dbw->dropTable( $drop, __METHOD__ );
+			$dbw->dropTable( "{$drop}", __METHOD__ );
 		}
+
 		$owTableNames = $this->getWLDtableNames();
 		foreach ( $owTableNames as $drop ) {
-			$dbw->dropTable( $dc . $drop, __METHOD__ );
+			$dbw->dropTable( "{$dc}{$drop}", __METHOD__ );
 		}
+		$this->printDropTablesCommand( $dc );
 	}
 
+	/** @brief Displays drop tables commands.
+	 *
+	 * @param dc str The database being accessed.
+	 */
 	protected function printDropTablesCommand( $dc ) {
+		global $wgDBprefix;
 		$dropCommand = "drop table ";
 
 		$owTableNames = $this->getWLDtableNamesAddtl();
 		foreach ( $owTableNames as $drop ) {
-			$dropCommand .= "$drop, ";
+			$dropCommand .= "{$wgDBprefix}{$drop}, ";
 		}
 
 		$owTableNames = $this->getWLDtableNames();
 		foreach ( $owTableNames as $drop ) {
-			$dropCommand .= $dc . "$drop, ";
+			$dropCommand .= $wgDBprefix . $dc . "$drop, ";
 		}
 		$dropCommand = preg_replace( '/, $/', '', $dropCommand );
 		echo "\n\n$dropCommand\n\n";
 	}
 
+	/** @brief Read, interpret and execute the database template
+	 *
+	 * @param pattern  arr An array of pattern to find.
+	 * @param prefix   arr An array of prefix to replace \a find with.
+	 * @param filename str the database template name.
+	 */
 	protected function ReadTemplateSQLFile( $pattern, $prefix, $filename ) {
 		$dbw = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_MASTER );
 		global $wgDBtype;
 
 		$fp = fopen( $filename, 'r' );
@@ -234,6 +336,7 @@ class InstallWikiLexicalData extends Maintenance {
 		$cmd = "";
 		$done = false;
 
+		// Check if language index exist
 		while ( ! feof( $fp ) ) {
 			$line = trim( fgets( $fp, 1024 ) );
 			$sl = strlen( $line ) - 1;
@@ -249,13 +352,68 @@ class InstallWikiLexicalData extends Maintenance {
 			if ( '' != $cmd ) { $cmd .= ' '; }
 			$cmd .= "$line\n";
 
+			if ( preg_match( '/CREATE INDEX/', $cmd ) ) {
+				// Check if the current instance of OmegaWiki has been installed.
+				if (
+					preg_match( '/versioned_end_meaning/', $cmd ) &&
+					preg_match( '/alt_meaningtexts/', $cmd )
+				) {
+					$indexResult = $dbr->indexInfo(
+						"{$prefix['wld']}alt_meaningtexts",
+						"{$prefix['mw']}{$prefix['wld']}versioned_end_meaning",
+						__METHOD__
+					);
+
+					$indexExist = false;
+					if ( $indexResult ) { foreach( $indexResult as $yay ) {
+						if ( $yay ) $indexExist = true;
+					} }
+
+					if ( $indexExist ) {
+						echo "\nERROR: It appears that WikiDataLexical is at least already partially installed on your system. "
+						. "If you would like to do a fresh install, use the fresh install parameter.\n\n"
+						. 'Example usage: php install.php --prefix=uw '
+						. '--template=databaseTemplate.sql --datasetname="OmegaWiki community"  --freshInstall' . "\n\n";
+						die;
+					};
+
+				}
+
+				if ( preg_match( '/language_names/', $cmd ) ) {
+					/** @todo This check is for MySQL. Needs an alternative way of checking if SQLite,
+					 * or check if it is not needed by SQLite. Not a priority since I am the only one
+					 * using this for now ~he
+					 */
+					$indexResult = $dbr->indexInfo(
+						'language_names',
+						"{$prefix['mw']}ilanguage_id",
+						__METHOD__
+					);
+
+					$indexExist = false;
+					if ( $indexResult ) {
+						foreach( $indexResult as $yay ) {
+							if ( $yay ) $indexExist = true;
+						}
+					}
+
+					if ( $indexExist ) {
+						$dbr->query(
+							"DROP INDEX {$prefix['mw']}ilanguage_id
+							ON {$prefix['mw']}language_names"
+						);
+					}
+				}
+			}
+
 			if ( $wgDBtype == 'sqlite' ) {
 				$cmd = $this->sqliteLineReplace( $cmd );
 			}
 
 			if ( $done ) {
 				$cmd = str_replace( ';;', ";", $cmd );
-				$cmd = trim( str_replace( $pattern, $prefix, $cmd ) );
+				$cmd = trim( str_replace( "{$pattern["wld"]}", "{$prefix["wld"]}", $cmd ) );
+				$cmd = trim( str_replace( "{$pattern["mw"]}", "{$prefix["mw"]}", $cmd ) );
 
 				$res = $dbw->query( $cmd );
 
@@ -271,6 +429,10 @@ class InstallWikiLexicalData extends Maintenance {
 		return true;
 	}
 
+	/** @brief SQLite compatibility
+	 *
+	 * @param string str The string to parse.
+	 */
 	protected function sqliteLineReplace( $string ) {
 		$string = preg_replace( '/ int(eger|) /i', ' INTEGER ', $string );
 		$string = preg_replace( '/ int(eger|)\(/i', " INTEGER(", $string );
@@ -291,6 +453,8 @@ class InstallWikiLexicalData extends Maintenance {
 		return ( $string );
 	}
 
+	/** @brief Returns an array of WikiLexicalData table Names;
+	 */
 	protected function getWLDtableNames() {
 		return array(
 			"_alt_meaningtexts",
@@ -317,8 +481,10 @@ class InstallWikiLexicalData extends Maintenance {
 		);
 	}
 
+	/** @brief Returns Additional WikiLexicalData table names
+	 */
 	protected function getWLDtableNamesAddtl() {
-		return array( "language", "language_names" );
+		return array( "language", "language_names", "wikidata_sets" );
 	}
 }
 

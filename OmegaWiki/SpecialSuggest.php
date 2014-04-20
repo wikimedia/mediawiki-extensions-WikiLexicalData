@@ -9,8 +9,7 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgLang;
-
+		global $wgOut, $wgLang, $wgDBprefix;
 		require_once( "Attribute.php" );
 		require_once( "WikiDataBootstrappedMeanings.php" );
 		require_once( "RecordSet.php" );
@@ -92,7 +91,7 @@ class SpecialSuggest extends SpecialPage {
 					"SELECT transaction_id, user_id, user_ip, " .
 					" CONCAT(SUBSTRING(timestamp, 1, 4), '-', SUBSTRING(timestamp, 5, 2), '-', SUBSTRING(timestamp, 7, 2), ' '," .
 					" SUBSTRING(timestamp, 9, 2), ':', SUBSTRING(timestamp, 11, 2), ':', SUBSTRING(timestamp, 13, 2)) AS time, comment" .
-					" FROM {$dc}_transactions WHERE 1";
+					" FROM {$wgDBprefix}{$dc}_transactions WHERE 1";
 
 				$rowText = "CONCAT(SUBSTRING(timestamp, 1, 4), '-', SUBSTRING(timestamp, 5, 2), '-', SUBSTRING(timestamp, 7, 2), ' '," .
 						" SUBSTRING(timestamp, 9, 2), ':', SUBSTRING(timestamp, 11, 2), ':', SUBSTRING(timestamp, 13, 2))";
@@ -126,15 +125,15 @@ class SpecialSuggest extends SpecialPage {
 		} else {
 			$searchCondition = "";
 		}
-	
+
 		if ( $query == 'transaction' ) {
 			$orderBy = 'transaction_id DESC';
 		} else {
 			$orderBy = $rowText;
 		}
-	
+
 		$sql .= $searchCondition . " ORDER BY $orderBy LIMIT ";
-	
+
 		if ( $offset > 0 ) {
 			$sql .= " $offset, ";
 		}
@@ -145,7 +144,7 @@ class SpecialSuggest extends SpecialPage {
 		# == Actual query here
 		// wfdebug("]]]".$sql."\n");
 		$queryResult = $dbr->query( $sql );
-	
+
 		# == Process query
 		switch( $query ) {
 			case 'relation-type':
@@ -204,7 +203,7 @@ class SpecialSuggest extends SpecialPage {
 	private function constructSQLWithFallback( $actual_query, $fallback_query, $fields ) {
 
 		# if ($actual_query==$fallback_query)
-		#	return $actual_query; 
+		#	return $actual_query;
 
 		$sql = "SELECT * FROM (SELECT ";
 
@@ -220,7 +219,7 @@ class SpecialSuggest extends SpecialPage {
 		$sql .=	" ( $fallback_query ) AS fallback";
 		$sql .=	" LEFT JOIN ";
 		$sql .=	" ( $actual_query ) AS actual";
-	
+
 		$field0 = $fields[0]; # slightly presumptuous
 		$sql .=  " ON actual.$field0 = fallback.$field0";
 		$sql .= ") as coalesced";
@@ -234,11 +233,11 @@ class SpecialSuggest extends SpecialPage {
 	 * @param $language the 2 letter wikimedia code
 	 */
 	private function getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, $attributesType ) {
-		global $wgDefaultClassMids, $wgLang, $wgIso639_3CollectionId;
+		global $wgDefaultClassMids, $wgLang, $wgIso639_3CollectionId, $wgDBprefix;
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$sql = ' ( SELECT language_id FROM language WHERE wikimedia_key = ' . $dbr->addQuotes( $wgLang->getCode() ) . ' LIMIT 1 ) ';
+		$sql = " ( SELECT language_id FROM {$wgDBprefix}language WHERE wikimedia_key = " . $dbr->addQuotes( $wgLang->getCode() ) . ' LIMIT 1 ) ';
 		$lang_res = $dbr->query( $sql );
 		if ( $row = $dbr->fetchObject($lang_res) ) {
 			$userlang = $row->language_id ;
@@ -252,17 +251,17 @@ class SpecialSuggest extends SpecialPage {
 			// find the language of the syntrans and add attributes of that language by adding the language DM to the list of default classes
 			// this first query returns the language_id
 			$sql = 'SELECT language_id' .
-				" FROM {$dc}_expression" .
-				" WHERE {$dc}_expression.expression_id = (SELECT expression_id FROM {$dc}_syntrans WHERE {$dc}_syntrans.syntrans_sid = {$syntransId} LIMIT 1) " .
+				" FROM {$wgDBprefix}{$dc}_expression" .
+				" WHERE {$wgDBprefix}{$dc}_expression.expression_id = (SELECT expression_id FROM {$wgDBprefix}{$dc}_syntrans WHERE {$wgDBprefix}{$dc}_syntrans.syntrans_sid = {$syntransId} LIMIT 1) " .
 				" LIMIT 1 " ;
 			$lang_res = $dbr->query( $sql );
 			$language_id = $dbr->fetchObject( $lang_res )->language_id;
 
 			// this second query finds the DM number for a given language_id
-			$sql = "SELECT member_mid FROM {$dc}_collection_contents, language" .
+			$sql = "SELECT member_mid FROM {$wgDBprefix}{$dc}_collection_contents, language" .
 				" WHERE language.language_id = $language_id" .
-				" AND {$dc}_collection_contents.collection_id = $wgIso639_3CollectionId" .
-				" AND language.iso639_3 = {$dc}_collection_contents.internal_member_id" .
+				" AND {$wgDBprefix}{$dc}_collection_contents.collection_id = $wgIso639_3CollectionId" .
+				" AND language.iso639_3 = {$wgDBprefix}{$dc}_collection_contents.internal_member_id" .
 				' AND ' . getLatestTransactionRestriction( "{$dc}_collection_contents" ) .
 				' LIMIT 1 ' ;
 			$lang_res = $dbr->query( $sql );
@@ -279,7 +278,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$classRestriction = "";
 		if ( count( $classMids ) > 0 ) {
-			$classRestriction = " OR {$dc}_class_attributes.class_mid IN (" . join( $classMids, ", " ) . ")";
+			$classRestriction = " OR {$wgDBprefix}{$dc}_class_attributes.class_mid IN (" . join( $classMids, ", " ) . ")";
 		}
 
 		$filteredAttributesRestriction = $this->getFilteredAttributesRestriction( $annotationAttributeId );
@@ -291,21 +290,21 @@ class SpecialSuggest extends SpecialPage {
 		} else {
 			$sql = "SELECT object_id, attribute_mid, COALESCE( exp_en.spelling, attribute_mid ) AS spelling" ;
 		}
-		$sql .= " FROM {$dc}_bootstrapped_defined_meanings, {$dc}_class_attributes" ;
+		$sql .= " FROM {$wgDBprefix}{$dc}_bootstrapped_defined_meanings, {$wgDBprefix}{$dc}_class_attributes" ;
 		if ( $userlang != 85 ) {
-			$sql .= " LEFT JOIN ( {$dc}_syntrans synt_lng, {$dc}_expression exp_lng )" .
-				" ON ( {$dc}_class_attributes.attribute_mid = synt_lng.defined_meaning_id" .
+			$sql .= " LEFT JOIN ( {$wgDBprefix}{$dc}_syntrans synt_lng, {$wgDBprefix}{$dc}_expression exp_lng )" .
+				" ON ( {$wgDBprefix}{$dc}_class_attributes.attribute_mid = synt_lng.defined_meaning_id" .
 				" AND exp_lng.expression_id = synt_lng.expression_id" .
 				" AND exp_lng.language_id = {$userlang} )" ;
 		}
-		$sql .= " LEFT JOIN ( {$dc}_syntrans synt_en, {$dc}_expression exp_en )" .
-			" ON ( {$dc}_class_attributes.attribute_mid = synt_en.defined_meaning_id" .
+		$sql .= " LEFT JOIN ( {$wgDBprefix}{$dc}_syntrans synt_en, {$wgDBprefix}{$dc}_expression exp_en )" .
+			" ON ( {$wgDBprefix}{$dc}_class_attributes.attribute_mid = synt_en.defined_meaning_id" .
 			" AND exp_en.expression_id = synt_en.expression_id" .
 			" AND exp_en.language_id = 85 )" ; // English
 
-		$sql .= " WHERE {$dc}_bootstrapped_defined_meanings.name = " . $dbr->addQuotes( $attributesLevel ) .
-			" AND {$dc}_bootstrapped_defined_meanings.defined_meaning_id = {$dc}_class_attributes.level_mid" .
-			" AND {$dc}_class_attributes.attribute_type = " . $dbr->addQuotes( $attributesType ) .
+		$sql .= " WHERE {$wgDBprefix}{$dc}_bootstrapped_defined_meanings.name = " . $dbr->addQuotes( $attributesLevel ) .
+			" AND {$wgDBprefix}{$dc}_bootstrapped_defined_meanings.defined_meaning_id = {$wgDBprefix}{$dc}_class_attributes.level_mid" .
+			" AND {$wgDBprefix}{$dc}_class_attributes.attribute_type = " . $dbr->addQuotes( $attributesType ) .
 			$filteredAttributesRestriction . " ";
 
 		if ( $userlang != 85 ) {
@@ -314,12 +313,12 @@ class SpecialSuggest extends SpecialPage {
 		$sql .= " AND synt_en.remove_transaction_id IS NULL" ;
 
 		$sql .=
-			' AND ' . getLatestTransactionRestriction( "{$dc}_class_attributes" ) .
-			" AND ({$dc}_class_attributes.class_mid IN (" .
+			' AND ' . getLatestTransactionRestriction( "{$wgDBprefix}{$dc}_class_attributes" ) .
+			" AND ({$wgDBprefix}{$dc}_class_attributes.class_mid IN (" .
 			' SELECT class_mid ' .
-			" FROM   {$dc}_class_membership" .
-			" WHERE  {$dc}_class_membership.class_member_mid = " . $definedMeaningId .
-			' AND ' . getLatestTransactionRestriction( "{$dc}_class_membership" ) .
+			" FROM  {$wgDBprefix}{$dc}_class_membership" .
+			" WHERE {$wgDBprefix}{$dc}_class_membership.class_member_mid = " . $definedMeaningId .
+			' AND ' . getLatestTransactionRestriction( "{$wgDBprefix}{$dc}_class_membership" ) .
 			' )' .
 			$classRestriction .
 			')';
@@ -335,7 +334,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$i = 0;
 		$result = null;
-	
+
 		while ( $result == null && $i < count( $wgPropertyToColumnFilters ) ) {
 			if ( $wgPropertyToColumnFilters[$i]->getAttribute()->id == $annotationAttributeId ) {
 				$result = $wgPropertyToColumnFilters[$i];
@@ -348,7 +347,7 @@ class SpecialSuggest extends SpecialPage {
 
 	private function getFilteredAttributes( $annotationAttributeId ) {
 		$propertyToColumnFilter = $this->getPropertyToColumnFilterForAttribute( $annotationAttributeId );
-	
+
 		if ( $propertyToColumnFilter != null ) {
 			return $propertyToColumnFilter->attributeIDs;
 		} else {
@@ -364,20 +363,21 @@ class SpecialSuggest extends SpecialPage {
 		foreach ( $wgPropertyToColumnFilters as $propertyToColumnFilter ) {
 			$result = array_merge( $result, $propertyToColumnFilter->attributeIDs );
 		}
-	
+
 		return $result;
 	}
 
 	private function getFilteredAttributesRestriction( $annotationAttributeId ) {
+		global $wgDBprefix;
 		$dc = wdGetDataSetContext();
 
 		$propertyToColumnFilter = $this->getPropertyToColumnFilterForAttribute( $annotationAttributeId );
-	
+
 		if ( $propertyToColumnFilter != null ) {
 			$filteredAttributes = $propertyToColumnFilter->attributeIDs;
 
 			if ( count( $filteredAttributes ) > 0 ) {
-				$result = " AND {$dc}_class_attributes.attribute_mid IN (" . join( $filteredAttributes, ", " ) . ")";
+				$result = " AND {$wgDBprefix}{$dc}_class_attributes.attribute_mid IN (" . join( $filteredAttributes, ", " ) . ")";
 			} else {
 				$result = " AND 0 ";
 			}
@@ -386,7 +386,7 @@ class SpecialSuggest extends SpecialPage {
 			$allFilteredAttributes = $this->getAllFilteredAttributes();
 
 			if ( count( $allFilteredAttributes ) > 0 ) {
-				$result = " AND {$dc}_class_attributes.attribute_mid NOT IN (" . join( $allFilteredAttributes, ", " ) . ")";
+				$result = " AND {$wgDBprefix}{$dc}_class_attributes.attribute_mid NOT IN (" . join( $allFilteredAttributes, ", " ) . ")";
 			} else {
 				$result = "";
 			}
@@ -458,15 +458,16 @@ class SpecialSuggest extends SpecialPage {
 	 * @param $language the 2 letter wikimedia code
 	 */
 	private function getSQLForClasses( $language ) {
+		global $wgDBprefix;
 		$dc = wdGetDataSetContext();
 
 		$dbr = wfGetDB( DB_SLAVE );
-		$userlang = ' ( SELECT language_id FROM language WHERE wikimedia_key = ' . $dbr->addQuotes( $language ) . ' LIMIT 1 ) ';
+		$userlang = " ( SELECT language_id FROM {$wgDBprefix}language WHERE wikimedia_key = " . $dbr->addQuotes( $language ) . ' LIMIT 1 ) ';
 
 		// exp.spelling, txt.text_text
 		$sql = "SELECT member_mid, spelling " .
-			" FROM {$dc}_collection_contents col_contents, {$dc}_collection col, {$dc}_syntrans synt," .
-			" {$dc}_expression exp, {$dc}_defined_meaning dm" .
+			" FROM {$wgDBprefix}{$dc}_collection_contents col_contents, {$wgDBprefix}{$dc}_collection col, {$wgDBprefix}{$dc}_syntrans synt," .
+			" {$wgDBprefix}{$dc}_expression exp, {$wgDBprefix}{$dc}_defined_meaning dm" .
 			" WHERE col.collection_type='CLAS' " .
 			" AND col_contents.collection_id = col.collection_id " .
 			" AND synt.defined_meaning_id = col_contents.member_mid " .
@@ -479,7 +480,7 @@ class SpecialSuggest extends SpecialPage {
 		if ( $userlang != 85 ) {
 			$sql .= ' OR ( ' .
 				' language_id=85 ' .
-				" AND NOT EXISTS ( SELECT * FROM {$dc}_syntrans synt2, {$dc}_expression exp2 WHERE synt2.defined_meaning_id = synt.defined_meaning_id AND exp2.expression_id = synt2.expression_id AND exp2.language_id=$userlang AND synt2.remove_transaction_id IS NULL LIMIT 1 ) ) " ;
+				" AND NOT EXISTS ( SELECT * FROM {$wgDBprefix}{$dc}_syntrans synt2, {$wgDBprefix}{$dc}_expression exp2 WHERE synt2.defined_meaning_id = synt.defined_meaning_id AND exp2.expression_id = synt2.expression_id AND exp2.language_id={$userlang} AND synt2.remove_transaction_id IS NULL LIMIT 1 ) ) " ;
 		}
 		$sql .= ' ) ' ;
 
@@ -493,18 +494,19 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	private function getSQLForCollectionOfType( $collectionType, $language = "<ANY>" ) {
+		global $wgDBprefix;
 		$dc = wdGetDataSetContext();
 		$sql = "SELECT member_mid, spelling, collection_mid " .
-			" FROM {$dc}_collection_contents, {$dc}_collection, {$dc}_syntrans, {$dc}_expression " .
-			" WHERE {$dc}_collection_contents.collection_id={$dc}_collection.collection_id " .
-			" AND {$dc}_collection.collection_type='$collectionType' " .
-			" AND {$dc}_syntrans.defined_meaning_id={$dc}_collection_contents.member_mid " .
-			" AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
-			" AND {$dc}_syntrans.identical_meaning=1 " .
-			" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-			" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) .
-			" AND " . getLatestTransactionRestriction( "{$dc}_collection" ) .
-			" AND " . getLatestTransactionRestriction( "{$dc}_collection_contents" );
+			" FROM {$wgDBprefix}{$dc}_collection_contents, {$wgDBprefix}{$dc}_collection, {$wgDBprefix}{$dc}_syntrans, {$wgDBprefix}{$dc}_expression " .
+			" WHERE {$wgDBprefix}{$dc}_collection_contents.collection_id={$wgDBprefix}{$dc}_collection.collection_id " .
+			" AND {$wgDBprefix}{$dc}_collection.collection_type='$collectionType' " .
+			" AND {$wgDBprefix}{$dc}_syntrans.defined_meaning_id={$wgDBprefix}{$dc}_collection_contents.member_mid " .
+			" AND {$wgDBprefix}{$dc}_expression.expression_id={$wgDBprefix}{$dc}_syntrans.expression_id " .
+			" AND {$wgDBprefix}{$dc}_syntrans.identical_meaning=1 " .
+			" AND " . getLatestTransactionRestriction( "{$wgDBprefix}{$dc}_syntrans" ) .
+			" AND " . getLatestTransactionRestriction( "{$wgDBprefix}{$dc}_expression" ) .
+			" AND " . getLatestTransactionRestriction( "{$wgDBprefix}{$dc}_collection" ) .
+			" AND " . getLatestTransactionRestriction( "{$wgDBprefix}{$dc}_collection_contents" );
 		if ( $language != "<ANY>" ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$sql .=
@@ -518,12 +520,13 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	private function getSQLForCollection( $language ) {
+		global $wgDBprefix;
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
-		$userlang = ' ( SELECT language_id FROM language WHERE wikimedia_key = ' . $dbr->addQuotes( $language ) . ' LIMIT 1 ) ';
+		$userlang = " ( SELECT language_id FROM {$wgDBprefix}language WHERE wikimedia_key = " . $dbr->addQuotes( $language ) . ' LIMIT 1 ) ';
 
 		$sql = "SELECT collection_id, spelling " .
-			" FROM {$dc}_expression exp, {$dc}_collection col, {$dc}_syntrans synt, {$dc}_defined_meaning dm " .
+			" FROM {$wgDBprefix}{$dc}_expression exp, {$wgDBprefix}{$dc}_collection col, {$wgDBprefix}{$dc}_syntrans synt, {$wgDBprefix}{$dc}_defined_meaning dm " .
 			" WHERE exp.expression_id=synt.expression_id " .
 			" AND synt.defined_meaning_id=col.collection_mid " .
 			" AND dm.defined_meaning_id = synt.defined_meaning_id " ;
@@ -534,7 +537,7 @@ class SpecialSuggest extends SpecialPage {
 		if ( $userlang != 85 ) {
 			$sql .= ' OR ( ' .
 				' language_id=85 ' .
-				" AND NOT EXISTS ( SELECT * FROM {$dc}_syntrans synt2, {$dc}_expression exp2 WHERE synt2.defined_meaning_id = synt.defined_meaning_id AND exp2.expression_id = synt2.expression_id AND exp2.language_id=$userlang AND synt2.remove_transaction_id IS NULL LIMIT 1 ) ) " ;
+				" AND NOT EXISTS ( SELECT * FROM {$wgDBprefix}{$dc}_syntrans synt2, {$wgDBprefix}{$dc}_expression exp2 WHERE synt2.defined_meaning_id = synt.defined_meaning_id AND exp2.expression_id = synt2.expression_id AND exp2.language_id={$userlang} AND synt2.remove_transaction_id IS NULL LIMIT 1 ) ) " ;
 		}
 		$sql .= ' ) ' ;
 
@@ -568,7 +571,7 @@ class SpecialSuggest extends SpecialPage {
 		$o = OmegaWikiAttributes::getInstance();
 
 		$dbr = wfGetDB( DB_SLAVE );
-	
+
 		$relationTypeAttribute = new Attribute( "relation-type", wfMessage( 'ow_RelationType' )->text(), "short-text" );
 		$collectionAttribute = new Attribute( "collection", wfMessage( 'ow_Collection' )->text(), "short-text" );
 
@@ -619,7 +622,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$definedMeaningAttributeAttribute = new Attribute( WLD_DM_ATTRIBUTES, wfMessage( 'ow_Relations' )->plain(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $o->id, $definedMeaningAttributeAttribute ), new Structure( $o->id ) );
-	
+
 		foreach ( $queryResult as $row ) {
 			$recordSet->addRecord( array( $row->attribute_mid, $row->spelling ) );
 		}
