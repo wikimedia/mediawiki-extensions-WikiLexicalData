@@ -1,14 +1,20 @@
 <?php
+/** @file
+ *
+ * @brief Contains attribute related classes
+ */
 
+/** @brief Default Attribute Class
+ */
 class Attribute {
 	public $id = null;
 	public $name = "";
 	public $type = "";
 
 	/**
-	 * @param $id   (String) or null if
-	 * @param $name (String)
-	 * @param $type (String or Structure)
+	 * @param id   (String) or null if type is Structure
+	 * @param name (String)
+	 * @param type (String or Structure)
 	 *  If String, can be "language", "spelling", "boolean",
 	 *  "defined-meaning", "defining-expression", "relation-type", "attribute",
 	 *  "collection", "short-text", "text"
@@ -155,19 +161,21 @@ class Structure {
 	}
 }
 
+/** @brief PHP API class for Attributes
+ */
 class Attributes {
 
-	public function __construct() {
-	}
-
 	/**
-	 * returns:
-	 * array(
+	 * @param objectId req'd int the object id
+	 * @param option   opt'l arr optional array
+	 * @param dc       opt'l str the dataset to use
+	 *
+	 * @return array(
 	 *	'text' => $string,
 	 *	'attribute_name' => $string,
 	 *	'attribute_id' => $integer
 	 * )
-	 * else returns array()
+	 * @return if not exists, array()
 	 *
 	 * Note: $options can be used to introduce new variables
 	 */
@@ -229,15 +237,18 @@ class Attributes {
 	}
 
 	/**
-	 * returns:
-	 * array(
+	 * @param objectId req'd int the object id
+	 * @param option   opt'l arr optional array
+	 * @param dc       opt'l str the dataset to use
+	 *
+	 * @return array(
 	 *	'attribute_name' => $string,
 	 *	'attribute_option_name' => $string,
 	 *	'attribute_id' => $integer
 	 * )
-	 * else returns array()
+	 * @return if not exists array()
 	 *
-	 * @param $objectId can be either syntransId or definedMeaningId
+	 * @note $objectId can be either syntransId or definedMeaningId
 	 *
 	 * Note: $options can be used to introduce new variables
 	 */
@@ -304,10 +315,12 @@ class Attributes {
 	}
 
 	/**
-	 * returns the Attribute Name
+	 * @param attributeId req'd int the attribute id
+	 * @param languageId  opt'l int optional array
+	 * @param dc          opt'l str the dataset to use
 	 *
-	 * else returns null
-	 *
+	 * @return str The Attribute Name
+	 * @return if not exist, null
 	 */
 	public static function getAttributeName( $attributeId, $languageId = null, $dc = null ) {
 		if ( is_null( $dc ) ) {
@@ -343,10 +356,14 @@ class Attributes {
 	}
 
 	/**
-	 * returns the Option Attribute Id
+	 * @brief Returns the Attribute Id of an Expression and/or a language id
 	 *
-	 * else returns null
+	 * @param attributeExpression req'd int The expression
+	 * @param languageId          opt'l int The language id
+	 * @param dc                  opt'l str The dataset to use
 	 *
+	 * @return int the Option Attribute Id
+	 * @return if not exist, null
 	 */
 	public static function getClassAttributeId( $attributeExpression, $languageId = null, $dc = null ) {
 		if ( is_null( $dc ) ) {
@@ -387,4 +404,53 @@ class Attributes {
 		}
 		return null;
 	}
+
+	/**
+	 * @brief Returns the meaning_relations table's details via relation_id
+	 *
+	 * @param objectId req'd int The object id
+	 * @param options  opt'l arr An optional parameters
+	 * * "option['test'] = true" used to test the function
+	 * @param dc       opt'l str The WikiLexicalData dataset
+	 *
+	 * @return if exist, array( meaning1_id, relationtype_mid, meaning2_mid)
+	 * @return if not, array()
+	 *
+	 * @note options parameter can be used to extend this function.
+	 * Though you can access this function, it is highly recommended that you
+	 * use the static function OwDatabaseAPI::getRelationIdRelationAttribute instead.
+	 * Also note that this function currently includes all data, even removed ones.
+	 *
+	 */
+	public static function getRelationIdRelation( $objectId, $options, $dc = null ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$test = false;
+		if ( isset( $options['test'] ) ) {
+			$test = true;
+		}
+
+		$relation = $dbr->selectRow(
+			"{$dc}_meaning_relations",
+			array(
+				'meaning1_mid',
+				'relationtype_mid',
+				'meaning2_mid'
+			),
+			array(
+				'relation_id' => $objectId
+			), __METHOD__
+		);
+
+		if ( $relation ) {
+			if ( $test ) { var_dump( $relation); die; }
+			return $relation;
+		}
+		if ( $test ) { echo 'array()'; die; }
+		return array();
+	}
+
 }

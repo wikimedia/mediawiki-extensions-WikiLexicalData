@@ -1,11 +1,15 @@
 <?php
-
+/** @file
+ */
 require_once( 'IdStack.php' );
 require_once( 'Wikidata.php' );
 require_once( 'OmegaWikiRecordSets.php' );
 require_once( 'OmegaWikiEditors.php' );
 require_once( 'DefinedMeaningModel.php' );
 
+/**
+ * @brief The Defined Meaning Namespace class
+ */
 class DefinedMeaning extends DefaultWikidataApplication {
 	protected $definedMeaningModel;
 
@@ -314,16 +318,62 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 }
 
+/** @brief PHP API class for Defined Meaning
+ */
 class DefinedMeanings {
 
-	public function __construct() {
+	/**
+	 * @brief Returns the defined_meaning table's DefinedMeaning id via translatedContentId
+	 *
+	 * @param translatedContentId req'd int The object id
+	 * @param $options            opt'l arr An optional parameters
+	 * * "option['test'] = true" used to test the function
+	 * @param $dc                 opt'l str The WikiLexicalData dataset
+	 *
+	 * @return array( meaning1_id, relationtype_mid, meaning2_mid)
+	 * @return if not exists, array()
+	 *
+	 * @note options parameter can be used to extend this function.
+	 * Though you can access this function, it is highly recommended that you
+	 * use the static function OwDatabaseAPI::getTranslatedContentIdDefinedMeaningId instead.
+	 * Also note that this function currently includes all data, even removed ones.
+	 *
+	 */
+	public static function getTranslatedContentIdDefinedMeaningId( $translatedContentId, $options, $dc = null ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$test = false;
+		if ( isset( $options['test'] ) ) {
+			$test = true;
+		}
+
+		$definedMeaningId = $dbr->selectRow(
+			"{$dc}_defined_meaning",
+			'defined_meaning_id',
+			array(
+				'meaning_text_tcid' => $translatedContentId
+			), __METHOD__
+		);
+
+		if ( $definedMeaningId ) {
+			if ( $test ) { var_dump( $definedMeaningId ); die; }
+			return $definedMeaningId;
+		}
+		if ( $test ) { echo 'array()'; die; }
+		return array();
 	}
 
 	/**
-	 * returns an array of "Defined Meaning Id" objects
-	 * for a language
+	 * @param languageId req'd int The language id
+	 * @param options    opt'l arr An optional parameters
+	 * * "option['test'] = true" used to test the function
+	 * @param dc         opt'l str The WikiLexicalData dataset
 	 *
-	 * else returns null
+	 * @return an array of "Defined Meaning Id" objects for a language
+	 * @returns if not exists, null
 	 */
 	public static function getLanguageIdDefinedMeaningId( $languageId, $options = array(), $dc = null ) {
 		if ( is_null( $dc ) ) {
@@ -362,7 +412,6 @@ class DefinedMeanings {
 			$cond
 		);
 
-
 		$definedMeaningId = array();
 		foreach ( $queryResult as $dm ) {
 			$definedMeaningId[] = $dm->defined_meaning_id;
@@ -374,4 +423,5 @@ class DefinedMeanings {
 		}
 		return null;
 	}
+
 }

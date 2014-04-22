@@ -1,5 +1,7 @@
 <?php
-
+/** @file
+ *
+ */
 require_once( "WikiDataGlobals.php" );
 require_once( 'IdStack.php' );
 require_once( "HTMLtable.php" );
@@ -7,6 +9,7 @@ require_once( "Controller.php" );
 require_once( "type.php" );
 require_once( "Wikidata.php" );
 require_once( "ContextFetcher.php" );
+require_once( "OmegaWikiDatabaseAPI.php" );
 
 
 # End of line string for readable HTML, set to "\n" for testing
@@ -2601,15 +2604,10 @@ class ObjectPathEditor extends Viewer {
 	}
 
 	protected function resolveRelation( $objectId ) {
-		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
-		$queryResult = $dbr->query(
-			"SELECT meaning1_mid, relationtype_mid, meaning2_mid" .
-			" FROM {$dc}_meaning_relations" .
-			" WHERE relation_id=$objectId"
-		);
 
-		if ( $relation = $dbr->fetchObject( $queryResult ) ) {
+		$relation = OwDatabaseAPI::getRelationIdRelationAttribute( $objectId );
+
+		if ( $relation ) {
 			return
 				definedMeaningAsLink( $relation->meaning1_mid ) . " - " .
 				definedMeaningAsLink( $relation->relationtype_mid ) . " - " .
@@ -2621,13 +2619,20 @@ class ObjectPathEditor extends Viewer {
 
 	protected function resolveAttribute( $objectId, $tableName ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$queryResult = $dbr->query(
-			"SELECT object_id, attribute_mid" .
-			" FROM " . $tableName .
-			" WHERE value_id=$objectId"
+
+		// @todo This query probably needs to be placed in the db API, but where? ~he
+		$attribute = $dbr->selectRow(
+			$tableName,
+			array(
+				'object_id',
+				'attribute_mid'
+			),
+			array(
+				'value_id' => $objectId
+			), __METHOD__
 		);
 
-		if ( $attribute = $dbr->fetchObject( $queryResult ) ) {
+		if ( $attribute ) {
 			return
 				$this->resolveObject( $attribute->object_id ) . " > " .
 				definedMeaningAsLink( $attribute->attribute_mid );
@@ -2638,15 +2643,10 @@ class ObjectPathEditor extends Viewer {
 	}
 
 	protected function resolveTranslatedContent( $objectId ) {
-		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
-		$queryResult = $dbr->query(
-			"SELECT defined_meaning_id" .
-			" FROM {$dc}_defined_meaning" .
-			" WHERE meaning_text_tcid=$objectId"
-		);
 
-		if ( $definedMeaning = $dbr->fetchObject( $queryResult ) ) {
+		$definedMeaning = OwDatabaseAPI::getTranslatedContentIdDefinedMeaningId( $objectId );
+
+		if ( $definedMeaning ) {
 			return
 				definedMeaningAsLink( $definedMeaning->defined_meaning_id ) . " > Definition ";
 		} else {
@@ -2655,18 +2655,12 @@ class ObjectPathEditor extends Viewer {
 	}
 
 	protected function resolveSyntrans( $objectId ) {
-		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
-		$queryResult = $dbr->query(
-			"SELECT spelling, defined_meaning_id" .
-			" FROM {$dc}_syntrans, {$dc}_expression" .
-			" WHERE syntrans_sid=$objectId" .
-			" AND {$dc}_syntrans.expression_id={$dc}_expression.expression_id"
-		);
 
-		if ( $syntrans = $dbr->fetchObject( $queryResult ) ) {
+		$syntrans = OwDatabaseAPI::getSyntransSpellingWithDM( $objectId );
+
+		if ( $syntrans ) {
 			return
-				 definedMeaningAsLink( $syntrans->defined_meaning_id ) . " > " . spellingAsLink( $syntrans->spelling );
+				definedMeaningAsLink( $syntrans->defined_meaning_id ) . " > " . spellingAsLink( $syntrans->spelling );
 		} else {
 			return "Syntrans " . $objectId;
 		}
