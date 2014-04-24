@@ -53,7 +53,9 @@ if ( !isset( $IP ) ) {
 }
 
 $wgWldOwScriptPath     = $wgWldScriptPath . "OmegaWiki/";
-$wgWldDownloadScriptPath = $IP . "downloads/";
+$wgWldDownloadScriptPath = $IP . "/downloads/";
+$wgWldDownloadScriptPath = str_replace( '//', '/', $wgWldDownloadScriptPath );
+$wgWldDownloadScriptPath = str_replace( '\/', '/', $wgWldDownloadScriptPath );
 $wgWldIncludesScriptPath = $wgWldScriptPath . "includes/";
 $wgWldSpecialsScriptPath = $wgWldIncludesScriptPath . "specials/";
 $wgWldAPIScriptPath      = $wgWldIncludesScriptPath . "api/";
