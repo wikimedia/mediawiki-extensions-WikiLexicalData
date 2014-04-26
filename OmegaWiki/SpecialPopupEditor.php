@@ -10,7 +10,7 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 class SpecialPopUpEditor extends SpecialPage {
 
 	function __construct() {
-		parent::__construct( 'PopupEditor' );
+		parent::__construct( 'PopupEditor', 'UnlistedSpecialPage' );
 	}
 
 	function execute( $par ) {

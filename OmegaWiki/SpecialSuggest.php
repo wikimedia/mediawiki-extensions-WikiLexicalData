@@ -270,7 +270,7 @@ class SpecialSuggest extends SpecialPage {
 			);
 
 			// this second query finds the DM number for a given language_id
-			$language_dm_id = selectField(
+			$language_dm_id = $this->dbr->selectField(
 				array( 'colcont' => $this->dc . '_collection_contents', 'lng' => 'language' ),
 				'member_mid',
 				array(
