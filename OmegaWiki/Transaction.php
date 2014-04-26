@@ -314,6 +314,7 @@ function expandTransactionIdsInRecordSet( RecordSet $recordSet ) {
 }
 
 function getTransactionRecord( $transactionId ) {
+	global $wgDBprefix;
 
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -323,7 +324,7 @@ function getTransactionRecord( $transactionId ) {
 
 	if ( $transactionId > 0 ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$queryResult = $dbr->query( "SELECT user_id, user_ip, timestamp, comment FROM {$dc}_transactions WHERE transaction_id=$transactionId" );
+		$queryResult = $dbr->query( "SELECT user_id, user_ip, timestamp, comment FROM {$wgDBprefix}{$dc}_transactions WHERE transaction_id={$transactionId}" );
 
 		if ( $transaction = $dbr->fetchObject( $queryResult ) ) {
 			$result->user = getUserLabel( $transaction->user_id, $transaction->user_ip );
@@ -451,6 +452,7 @@ class Transactions {
 	}
 
 	public static function getLanguageIdLatestSynonymsAndTranslationsTransactionIdQuery( $languageId, $options = array(), $dc = null ) {
+		global $wgDBprefix;
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
@@ -458,8 +460,8 @@ class Transactions {
 		return "(SELECT " .
 		"CASE WHEN synt.add_transaction_id IS NULL THEN -1 ELSE " .
 		"synt.add_transaction_id END AS tid FROM " .
-		"{$dc}_expression AS exp, " .
-		"{$dc}_syntrans AS synt " .
+		"{$wgDBprefix}{$dc}_expression AS exp, " .
+		"{$wgDBprefix}{$dc}_syntrans AS synt " .
 		"WHERE language_id = $languageId " .
 		"AND synt.expression_id = exp.expression_id " .
 		"AND exp.remove_transaction_id IS NULL " .

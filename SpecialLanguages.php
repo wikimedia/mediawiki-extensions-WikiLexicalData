@@ -27,7 +27,8 @@ class SpecialLanguages extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgRequest, $wgUser;
+		// added $wgDBprefix for wld and mw prefix compatibility
+		global $wgOut, $wgRequest, $wgUser, $wgDBprefix;
 		$wgOut->setPageTitle( wfMessage( 'langman_title' )->text() );
 		if ( !$wgUser->isAllowed( 'addlanguage' ) ) {
 			$wgOut->addHTML( wfMessage( 'langman_not_allowed' )->text() );
@@ -46,17 +47,16 @@ class SpecialLanguages extends SpecialPage {
 				$wgOut->addHTML( "<strong>" . wfMessage( 'langman_req_fields' )->text() . "</strong>" );
 			} else {
 				$wgOut->addHTML( "<strong>" . wfMessage( 'langman_adding', $langname, $langiso6393 )->text() . "</strong>" );
-				$sql = 'INSERT INTO language(iso639_2,iso639_3,wikimedia_key) values(' . $dbr->addQuotes( $langiso6392 ) . ',' . $dbr->addQuotes( $langiso6393 ) . ',' . $dbr->addQuotes( $langwmf ) . ')';
+				$sql = 'INSERT INTO ' . $wgDBprefix . 'language(iso639_2,iso639_3,wikimedia_key) values(' . $dbr->addQuotes( $langiso6392 ) . ',' . $dbr->addQuotes( $langiso6393 ) . ',' . $dbr->addQuotes( $langwmf ) . ')';
 
 				$dbr->query( $sql );
 				$id = $dbr->insertId();
-				$sql = 'INSERT INTO language_names(language_id,name_language_id,language_name) values (' . $id . ',85,' . $dbr->addQuotes( $langname ) . ')';
+				$sql = 'INSERT INTO ' . $wgDBprefix . 'language_names(language_id,name_language_id,language_name) values (' . $id . ',85,' . $dbr->addQuotes( $langname ) . ')';
 				$dbr->query( $sql );
 
 			}
 
 		}
-
 		$this->showForm();
 
 		# $wgRequest->getText( 'page' );
@@ -100,7 +100,7 @@ END
 <<<END
 </td>
 <td>
-<input type="text" size="8" name="langiso6392"> 
+<input type="text" size="8" name="langiso6392">
 END
 . wfMessage( 'langman_field_optional' )->text() .
 <<<END
@@ -113,7 +113,7 @@ END
 <<<END
 </td>
 <td>
-<input type="text" size="4" name="langwmf"> 
+<input type="text" size="4" name="langwmf">
 END
 . wfMessage( 'langman_field_optional' )->text() .
 <<<END

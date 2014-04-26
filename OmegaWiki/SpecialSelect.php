@@ -46,51 +46,51 @@ class SpecialSelect extends SpecialPage {
 			if ( ! $objectLanguage ) $objectLanguage = 0 ;
 		}
 
-		$sql = "SELECT {$dc}_option_attribute_options.option_id,{$dc}_option_attribute_options.option_mid" .
-				" FROM {$dc}_option_attribute_options" .
-				" WHERE {$dc}_option_attribute_options.attribute_id = " . $optionAttribute .
-				" AND ({$dc}_option_attribute_options.language_id = " . $objectLanguage .
-				" OR {$dc}_option_attribute_options.language_id = 0)" .
-				' AND ' . getLatestTransactionRestriction( "{$dc}_option_attribute_options" ) ;
-		$options_res = $dbr->query( $sql );
+		$options_res = $dbr->select(
+			"{$dc}_option_attribute_options",
+			array( 'option_id', 'option_mid' ),
+			array(
+				'attribute_id' => $optionAttribute,
+				'language_id' => array( $objectLanguage, 0 ),
+				'remove_transaction_id' => null
+			), __METHOD__
+		);
 
 		$optionsString = '';
 		$optionsArray = array() ;
-		while ( $options_row = $dbr->fetchObject( $options_res ) ) {
-			/* Use a simpler query if the user's language is English. */
-			if ( $lang_code == 'en' || !( $lang_id = getLanguageIdForCode( $lang_code ) ) ) {
-				$sql = "SELECT {$dc}_expression.spelling" .
-						" FROM {$dc}_syntrans" .
-						" JOIN {$dc}_expression ON {$dc}_expression.expression_id = {$dc}_syntrans.expression_id" .
-						" WHERE {$dc}_syntrans.defined_meaning_id = " . $options_row->option_mid .
-						" AND {$dc}_expression.language_id = " . getLanguageIdForCode( 'en' ) .
-						' AND ' . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-						' AND ' . getLatestTransactionRestriction( "{$dc}_expression" );
-			}
-			/* Fall back on English in cases where an option name is not present in the
-				user's preferred language. */
-			else {
-				/* XXX: This setup is really hacked together. It NEEDS to be improved. */
-				$sql = "SELECT {$dc}_expression.spelling" .
-						" FROM {$dc}_syntrans" .
-						" JOIN {$dc}_expression ON {$dc}_expression.expression_id = {$dc}_syntrans.expression_id" .
-						" WHERE {$dc}_syntrans.defined_meaning_id = " . $options_row->option_mid .
-						" AND {$dc}_expression.language_id = " . $lang_id .
-						' AND ' . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-						' AND ' . getLatestTransactionRestriction( "{$dc}_expression" );
-				$res = $dbr->query( $sql );
-				if ( !$dbr->fetchObject( $res ) )
-					$sql = "SELECT {$dc}_expression.spelling" .
-							" FROM {$dc}_syntrans" .
-							" JOIN {$dc}_expression ON {$dc}_expression.expression_id = {$dc}_syntrans.expression_id" .
-							" WHERE {$dc}_syntrans.defined_meaning_id = " . $options_row->option_mid .
-							" AND {$dc}_expression.language_id = " . getLanguageIdForCode( 'en' ) .
-							' AND ' . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-							' AND ' . getLatestTransactionRestriction( "{$dc}_expression" );
+		foreach ( $options_res as $options_row ) {
+			$spelling_row = null;
+			$lang_id = getLanguageIdForCode( $lang_code );
+
+			// try to find something with lang_id
+			if ( $lang_id ) {
+				$spelling_row = $dbr->selectRow(
+					array( 'synt' => "{$dc}_syntrans", 'exp' => "{$dc}_expression" ),
+					'exp.spelling',
+					array(
+						'synt.defined_meaning_id' => $options_row->option_mid,
+						'exp.language_id' => $lang_id,
+						'exp.expression_id = synt.expression_id',
+						'exp.remove_transaction_id' => null,
+						'synt.remove_transaction_id' => null
+					), __METHOD__
+				);
 			}
 
-			$spelling_res = $dbr->query( $sql );
-			$spelling_row = $dbr->fetchObject( $spelling_res );
+			if ( !$spelling_row ) {
+				// nothing found, try in English
+				$spelling_row = $dbr->selectRow(
+					array( 'synt' => "{$dc}_syntrans", 'exp' => "{$dc}_expression" ),
+					'exp.spelling',
+					array(
+						'synt.defined_meaning_id' => $options_row->option_mid,
+						'exp.language_id' => getLanguageIdForCode( 'en' ),
+						'exp.expression_id = synt.expression_id',
+						'exp.remove_transaction_id' => null,
+						'synt.remove_transaction_id' => null
+					), __METHOD__
+				);
+			}
 
 			$optionsArray[$options_row->option_id] = $spelling_row->spelling ;
 		}

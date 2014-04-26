@@ -1,10 +1,12 @@
 <?php
-/*
+/* @file
 * Code is outdated and unused
 */
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
+/** @brief Imports OmegaWiki data formatted as TSV (Tab Separated Values) files
+ */
 class SpecialImportTSV extends SpecialPage {
 
 	function SpecialImportTSV() {
@@ -105,15 +107,25 @@ class SpecialImportTSV extends SpecialPage {
 				$exp = $row[1];
 
 				// find the defined meaning record
-				$qry = "SELECT dm.meaning_text_tcid, exp.spelling ";
-				$qry .= "FROM {$wgDBprefix}{$dc}_defined_meaning dm INNER JOIN {$wgDBprefix}{$dc}_expression exp ON dm.expression_id=exp.expression_id ";
-				$qry .= "WHERE dm.defined_meaning_id=$dmid ";
-				$qry .= "AND " . getLatestTransactionRestriction( 'dm' );
-				$qry .= "AND " . getLatestTransactionRestriction( 'exp' );
+				$dmResult = $dbr->select(
+					array(
+					'dm' =>"{$dc}_defined_meaning",
+					'exp' => "{$dc}_expression"
+					),
+					array( 'dm.meaning_text_tcid', 'exp.spelling' ),
+					array(
+						'dm.defined_meaning_id' => $dmid,
+						'dm.remove_transaction_id' => null,
+						'exp.remove_transaction_id' => null
+					),
+					__METHOD__, null,
+					array( 'exp' =>
+						array( 'INNER JOIN', 'dm.expression_id = exp.expression_id' )
+					)
+				);
 
-				$dmResult = $dbr->query( $qry );
 				$dmRecord = null;
-				// perfomr some tests
+				// perform some tests
 				if ( $dmRecord = $dbr->fetchRow( $dmResult ) ) {
 					if ( $dmRecord['spelling'] != $exp ) {
 						$output->addHTML( "Skipped line $line: defined meaning id $dmid does not match defining expression. Should be '{$dmRecord['spelling']}', found '$exp'.<br />" );

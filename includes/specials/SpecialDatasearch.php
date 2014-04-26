@@ -1,5 +1,6 @@
 <?php
-
+/** @file
+ */
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
 global $wgWldOwScriptPath;
@@ -348,25 +349,31 @@ class SpecialDatasearch extends SpecialPage {
 	}
 
 	function searchExternalIdentifiers() {
+		global $wgDBprefix;
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$sql =
-			"SELECT " . $this->getPositionSelectColumn( $this->searchText, "{$dc}_collection_contents.internal_member_id" ) . " {$dc}_collection_contents.member_mid AS member_mid, {$dc}_collection_contents.internal_member_id AS external_identifier, {$dc}_collection.collection_mid AS collection_mid " .
-			"FROM {$dc}_collection_contents, {$dc}_collection ";
+			"SELECT " .
+			$this->getPositionSelectColumn(
+				$this->searchText,
+				"{$wgDBprefix}{$dc}_collection_contents.internal_member_id"
+			) .
+			" {$wgDBprefix}{$dc}_collection_contents.member_mid AS member_mid, {$wgDBprefix}{$dc}_collection_contents.internal_member_id AS external_identifier, {$wgDBprefix}{$dc}_collection.collection_mid AS collection_mid " .
+			"FROM {$wgDBprefix}{$dc}_collection_contents, {$wgDBprefix}{$dc}_collection ";
 
 			$sql .=
-			"WHERE {$dc}_collection.collection_id={$dc}_collection_contents.collection_id " .
-			" AND " . getLatestTransactionRestriction( "{$dc}_collection" ) .
-			" AND " . getLatestTransactionRestriction( "{$dc}_collection_contents" ) .
-			$this->getSpellingRestriction( $this->searchText, "{$dc}_collection_contents.internal_member_id" );
+			"WHERE {$wgDBprefix}{$dc}_collection.collection_id={$dc}_collection_contents.collection_id " .
+			" AND " . getLatestTransactionRestriction( "{$wgDBprefix}{$dc}_collection" ) .
+			" AND " . getLatestTransactionRestriction( "{$wgDBprefix}{$dc}_collection_contents" ) .
+			$this->getSpellingRestriction( $this->searchText, "{$wgDBprefix}{$dc}_collection_contents.internal_member_id" );
 
 		if ( $this->collectionId > 0 )
 			$sql .=
-				" AND {$dc}_collection.collection_id={$this->collectionId} ";
+				" AND {$wgDBprefix}{$dc}_collection.collection_id={$this->collectionId} ";
 
 		$sql .=
-			" ORDER BY " . $this->getSpellingOrderBy( $this->searchText ) . "{$dc}_collection_contents.internal_member_id ASC limit {$this->limit}";
+			" ORDER BY " . $this->getSpellingOrderBy( $this->searchText ) . "{$wgDBprefix}{$dc}_collection_contents.internal_member_id ASC limit {$this->limit}";
 
 		$queryResult = $dbr->query( $sql );
 		$recordSet = $this->getExternalIdentifiersSearchResultAsRecordSet( $queryResult );

@@ -1,5 +1,6 @@
 <?php
-
+/** @file
+ */
 require_once( 'OmegaWikiAttributes.php' );
 require_once( 'OmegaWikiRecordSets.php' );
 require_once( 'OmegaWikiAttributes.php' );
@@ -126,8 +127,18 @@ class DefinedMeaningModel {
 		$definingExpression = $this->definingExpression;
 		$id = $this->getId();
 		$dbr = wfGetDB( DB_SLAVE );
-		$queryResult = $dbr->query( "SELECT defined_meaning_id, expression_id from {$dc}_defined_meaning where defined_meaning_id=" . $this->id . " AND " . getLatestTransactionRestriction( "{$dc}_defined_meaning" ) );
-		$dmRow = $dbr->fetchObject( $queryResult );
+		$dmRow = $dbr->selectRow(
+			array( 'dm' => "{$dc}_defined_meaning" ),
+			array(
+				'defined_meaning_id',
+				'expression_id'
+			),
+			array(
+				'defined_meaning_id' => $this->id,
+				'dm.remove_transaction_id' => null
+			), __METHOD__
+		);
+
 		if ( !$dmRow || !$dmRow->defined_meaning_id ) {
 			return null;
 		}
@@ -163,7 +174,7 @@ class DefinedMeaningModel {
 
 		$id = $this->getId();
 		$view = $this->getViewInformation();
-		/** FIXME: Records should be loaded using helpers rather than
+		/** @todo FIXME: Records should be loaded using helpers rather than
 		  global functions! */
 		$o = OmegaWikiAttributes::getInstance();
 
@@ -201,7 +212,7 @@ class DefinedMeaningModel {
 	}
 
 	/**
-	 * FIXME - work in progress
+	 * @todo FIXME - work in progress
 	 *
 	 */
 	public function save() {
@@ -244,7 +255,7 @@ class DefinedMeaningModel {
 	}
 
 	/**
-	 * FIXME - work in progress
+	 * @todo FIXME - work in progress
 	 */
 	protected function getIdStack( $definedMeaningId ) {
 		$o = OmegaWikiAttributes::getInstance();
@@ -260,7 +271,7 @@ class DefinedMeaningModel {
 	}
 
 	/**
-	 * FIXME - work in progress
+	 * @todo FIXME - work in progress
 	 */
 	public function saveWithinTransaction() {
 #		global
@@ -401,14 +412,14 @@ class DefinedMeaningModel {
 	 * specified by language code. Caches the syntrans records
 	 * in an array.
 	 *
-	 * @param String Language code of the synonym/translation to look for
-	 * @param String Fallback to use if not found
+	 * @param languageCode str Language code of the synonym/translation to look for
+	 * @param fallbackCode str Fallback to use if not found
 	 * @return Spelling or null if not found at all
 	 *
-	 * TODO make fallback optional
+	 * @todo make fallback optional
 	 *
 	 */
-	public function getSyntransByLanguageCode( $languageCode, $fallbackCode = "en" ) {
+	public function getSyntransByLanguageCode( $languageCode, $fallbackCode = WLD_ENGLISH_LANG_WMKEY ) {
 
 		if ( array_key_exists( $languageCode, $this->syntrans ) )
 		  return $this->syntrans[$languageCode];
@@ -448,7 +459,7 @@ class DefinedMeaningModel {
 	 * @param String Fallback code
 	 * @throws Exception If title object is missing
 	 */
-	public function getHTMLLink( $languageCode, $fallbackCode = "en" ) {
+	public function getHTMLLink( $languageCode, $fallbackCode = WLD_ENGLISH_LANG_WMKEY ) {
 		$titleObject = $this->getTitleObject();
 		if ( $titleObject == null )
 			throw new Exception( "Need title object to create link" );
@@ -459,12 +470,12 @@ class DefinedMeaningModel {
 		return Linker::makeLinkObj( $titleObject, $name , "dataset=$prefix" );
 	}
 
-/**
+	/**
 	 *
 	 * Splits title of the form "Abc (123)" into text and number
 	 * components.
 	 *
-	 * @param String the title to analyze
+	 * @param titleText str the title to analyze
 	 * @return Array of the two components or null.
 	 *
 	 */
