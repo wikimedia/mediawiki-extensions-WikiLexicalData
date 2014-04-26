@@ -1,5 +1,6 @@
 <?php
-
+/** @file
+ */
 require_once( 'OmegaWikiAttributes.php' );
 require_once( 'Record.php' );
 require_once( 'RecordSet.php' );
@@ -8,58 +9,90 @@ require_once( 'ViewInformation.php' );
 require_once( 'Wikidata.php' );
 require_once( 'WikiDataGlobals.php' );
 
+class OmegaWikiRecordSets {
 
-function getSynonymSQLForLanguage( $languageId, array &$definedMeaningIds ) {
-	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	static function getSynonymForLanguage( $languageId, array &$definedMeaningIds ) {
+		$dc = wdGetDataSetContext();
 
-	$sqlQuery = $dbr->selectSQLText(
-		array(
+		$sql['table'] = array(
 			'synt' => "{$dc}_syntrans",
 			'exp' => "{$dc}_expression"
-		), array( /* fields to select */
+		);
+		$sql['vars'] = array(
 			'defined_meaning_id' => 'synt.defined_meaning_id',
 			'label' => 'exp.spelling'
-		), array( /* where */
+		);
+		$sql['conds'] = array(
 			'synt.defined_meaning_id' => $definedMeaningIds,
 			'exp.language_id' => $languageId,
 			'synt.identical_meaning' => 1,
 			'synt.remove_transaction_id' => null,
 			'exp.remove_transaction_id' => null,
 			'exp.expression_id = synt.expression_id',
-		), __METHOD__
-	);
+		);
 
-	return $sqlQuery;
-}
+		return $sql;
 
-function getSynonymSQLForAnyLanguage( array &$definedMeaningIds ) {
-	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	}
 
-	$sqlQuery = $dbr->selectSQLText(
-		array(
+	static function getSynonymForAnyLanguage( array &$definedMeaningIds ) {
+		$dc = wdGetDataSetContext();
+
+		$sql['table'] = array(
 			'synt' => "{$dc}_syntrans",
 			'exp' => "{$dc}_expression"
-		), array( /* fields to select */
+		);
+		$sql['vars'] = array(
 			'defined_meaning_id' => 'synt.defined_meaning_id',
 			'label' => 'exp.spelling'
-		), array( /* where */
+		);
+		$sql['conds'] = array(
 			'synt.defined_meaning_id' => $definedMeaningIds,
 			'synt.identical_meaning' => 1,
 			'synt.remove_transaction_id' => null,
 			'exp.remove_transaction_id' => null,
 			'exp.expression_id = synt.expression_id',
-		), __METHOD__
-	);
+		);
 
-	return $sqlQuery;
+		return $sql;
+
+	}
+
+	static function fetchDefinedMeaningReferenceRecords( $sql, array &$definedMeaningIds, array &$definedMeaningReferenceRecords, $usedAs = '' ) {
+		if ( $usedAs == '' ) $usedAs = WLD_DEFINED_MEANING ;
+		$dc = wdGetDataSetContext();
+		$o = OmegaWikiAttributes::getInstance();
+
+		$foundDefinedMeaningIds = array();
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$queryResult = $dbr->select(
+			$sql['table'], $sql['vars'], $sql['conds'], __METHOD__
+		);
+
+		foreach ( $queryResult as $row ) {
+			$definedMeaningId = $row->defined_meaning_id;
+
+			$specificStructure = clone $o->definedMeaningReferenceStructure;
+			$specificStructure->setStructureType( $usedAs );
+			$record = new ArrayRecord( $specificStructure );
+			$record->definedMeaningId = $definedMeaningId;
+			$record->definedMeaningLabel = $row->label;
+
+			$definedMeaningReferenceRecords[$definedMeaningId] = $record;
+			$foundDefinedMeaningIds[] = $definedMeaningId;
+		}
+
+		$definedMeaningIds = array_diff( $definedMeaningIds, $foundDefinedMeaningIds );
+	}
+
 }
 
 /**
  * returns the id and spelling of the "Defining expression"s,
  * corresponding to the dm_id in $definedMeaningIds
  * the defining expression is {$dc}_defined_meaning.expression_id
+ * @note Unused.
  */
 function getDefiningSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 	$dc = wdGetDataSetContext();
@@ -85,34 +118,6 @@ function getDefiningSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 
 	return $sqlQuery;
 }
-
-
-function fetchDefinedMeaningReferenceRecords( $sql, array &$definedMeaningIds, array &$definedMeaningReferenceRecords, $usedAs = '' ) {
-	if ( $usedAs == '' ) $usedAs = WLD_DEFINED_MEANING ;
-	$dc = wdGetDataSetContext();
-	$o = OmegaWikiAttributes::getInstance();
-
-	$foundDefinedMeaningIds = array();
-
-	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( $sql );
-
-	foreach ( $queryResult as $row ) {
-		$definedMeaningId = $row->defined_meaning_id;
-
-		$specificStructure = clone $o->definedMeaningReferenceStructure;
-		$specificStructure->setStructureType( $usedAs );
-		$record = new ArrayRecord( $specificStructure );
-		$record->definedMeaningId = $definedMeaningId;
-		$record->definedMeaningLabel = $row->label;
-
-		$definedMeaningReferenceRecords[$definedMeaningId] = $record;
-		$foundDefinedMeaningIds[] = $definedMeaningId;
-	}
-	
-	$definedMeaningIds = array_diff( $definedMeaningIds, $foundDefinedMeaningIds );
-}
-
 
 function fetchDefinedMeaningDefiningExpressions( array &$definedMeaningIds, array &$definedMeaningReferenceRecords ) {
 	$o = OmegaWikiAttributes::getInstance();
@@ -146,7 +151,7 @@ function fetchDefinedMeaningDefiningExpressions( array &$definedMeaningIds, arra
 			$definedMeaningReferenceRecord->definedMeaningLabel = $row->spelling;
 			$definedMeaningReferenceRecords[$row->defined_meaning_id] = $definedMeaningReferenceRecord;
 		}
-		
+
 		$definedMeaningReferenceRecord->definedMeaningDefiningExpression = $row->spelling;
 	}
 }
@@ -154,12 +159,12 @@ function fetchDefinedMeaningDefiningExpressions( array &$definedMeaningIds, arra
 function getNullDefinedMeaningReferenceRecord() {
 
 	$o = OmegaWikiAttributes::getInstance();
-	
+
 	$record = new ArrayRecord( $o->definedMeaningReferenceStructure );
 	$record->definedMeaningId = 0;
 	$record->definedMeaningLabel = "";
 	$record->definedMeaningDefiningExpression = "";
-	
+
 	return $record;
 }
 
@@ -174,8 +179,8 @@ function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) 
 
 	if ( count( $definedMeaningIds ) > 0 ) {
 		if ( $userLanguageId > 0 ) {
-			fetchDefinedMeaningReferenceRecords(
-				getSynonymSQLForLanguage( $userLanguageId, $definedMeaningIds ),
+			OmegaWikiRecordSets::fetchDefinedMeaningReferenceRecords(
+				OmegaWikiRecordSets::getSynonymForLanguage( $userLanguageId, $definedMeaningIds ),
 				$definedMeaningIds,
 				$result,
 				$usedAs
@@ -183,23 +188,23 @@ function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) 
 		}
 
 		if ( count( $definedMeaningIds ) > 0 ) {
-			fetchDefinedMeaningReferenceRecords(
-				getSynonymSQLForLanguage( WLD_ENGLISH_LANG_ID, $definedMeaningIds ),
+			OmegaWikiRecordSets::fetchDefinedMeaningReferenceRecords(
+				OmegaWikiRecordSets::getSynonymForLanguage( WLD_ENGLISH_LANG_ID, $definedMeaningIds ),
 				$definedMeaningIds,
 				$result,
 				$usedAs
 			);
-	
+
 			if ( count( $definedMeaningIds ) > 0 ) {
-				fetchDefinedMeaningReferenceRecords(
-					getSynonymSQLForAnyLanguage( $definedMeaningIds ),
+				OmegaWikiRecordSets::fetchDefinedMeaningReferenceRecords(
+					OmegaWikiRecordSets::getSynonymForAnyLanguage( $definedMeaningIds ),
 					$definedMeaningIds,
 					$result,
 					$usedAs
 				);
 			}
 		}
-		
+
 		fetchDefinedMeaningDefiningExpressions( $definedMeaningIdsForExpressions, $result );
 		$result[0] = getNullDefinedMeaningReferenceRecord();
 
@@ -304,7 +309,7 @@ function getExpressionSpellings( array $expressionIds ) {
 
 	if ( count( $expressionIds ) > 0 ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		
+
 		$queryResult = $dbr->select(
 			"{$dc}_expression",
 			array( 'expression_id', 'spelling' ),
@@ -328,7 +333,7 @@ function expandExpressionSpellingsInRecordSet( RecordSet $recordSet, array $expr
 
 	for ( $i = 0; $i < $recordSet->getRecordCount(); $i++ ) {
 		$record = $recordSet->getRecord( $i );
-		
+
 		foreach ( $expressionAttributes as $expressionAttribute ) {
 			$record->setAttributeValue(
 				$expressionAttribute,
@@ -368,7 +373,7 @@ function expandTextReferencesInRecordSet( RecordSet $recordSet, array $textAttri
 
 		foreach ( $textAttributes as $textAttribute ) {
 			$textId = $record->getAttributeValue( $textAttribute );
-			
+
 			if ( isset( $textReferences[$textId] ) ) {
 				$textValue = $textReferences[$textId];
 			} else {
@@ -464,13 +469,13 @@ function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInfor
 */
 function getExpressionMeaningsRecord( $expressionId, ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
-		
+
 	$record = new ArrayRecord( $o->expressionMeaningsStructure );
 	$exactMeaning = true;
 	$record->expressionExactMeanings = getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, $viewInformation );
 	$exactMeaning = false;
 	$record->expressionApproximateMeanings = getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, $viewInformation );
-	
+
 	return $record;
 }
 
@@ -550,7 +555,7 @@ function getClassAttributesRecordSet( $definedMeaningId, ViewInformation $viewIn
 		$wgWikidataDataSet->classAttributes,
 		array( "class_mid=$definedMeaningId" )
 	);
-	
+
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->classAttributeLevel , $o->classAttributeAttribute ) );
 	expandOptionAttributeOptionsInRecordSet( $recordSet, $o->classAttributeId, $viewInformation );
 
@@ -586,7 +591,7 @@ function getAlternativeDefinitionsRecordSet( $definedMeaningId, ViewInformation 
 	);
 
 	$recordSet->getStructure()->addAttribute( $o->alternativeDefinition );
-	
+
 	expandTranslatedContentsInRecordSet( $recordSet, $o->definitionId, $o->alternativeDefinition, $viewInformation );
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->source ) );
 
@@ -595,15 +600,15 @@ function getAlternativeDefinitionsRecordSet( $definedMeaningId, ViewInformation 
 
 function getDefinedMeaningDefinitionRecord( $definedMeaningId, ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
-		
+
 	$definitionId = getDefinedMeaningDefinitionId( $definedMeaningId );
 	$record = new ArrayRecord( $o->definition->type );
 	$record->translatedText = getTranslatedContentRecordSet( $definitionId, $viewInformation );
-	
+
 	// (Kip) What is this? There is no attributes to a definition => commented
 	// $objectAttributesRecord = getObjectAttributesRecord( $definitionId, $viewInformation, $o->objectAttributes->id );
 	// $record->objectAttributes = $objectAttributesRecord;
-	
+
 	// applyPropertyToColumnFiltersToRecord( $record, $objectAttributesRecord, $viewInformation );
 
 	return $record;
@@ -622,7 +627,7 @@ function applyPropertyToColumnFiltersToRecordSet( RecordSet $recordSet, Attribut
 	for ( $i = 0; $i < $recordSet->getRecordCount(); $i++ ) {
 		$record = $recordSet->getRecord( $i );
 		$attributeValuesRecord = $recordSet->getAttributeValue( $sourceAttribute );
-		
+
 		applyPropertyToColumnFiltersToRecord( $record, $attributeValuesRecord, $viewInformation );
 	}
 }
@@ -649,10 +654,10 @@ function getObjectAttributesRecord( $objectId, ViewInformation $viewInformation,
 function filterAttributeValues( RecordSet $sourceRecordSet, Attribute $attributeAttribute, array &$attributeIds ) {
 	$result = new ArrayRecordSet( $sourceRecordSet->getStructure(), $sourceRecordSet->getKey() );
 	$i = 0;
-	
+
 	while ( $i < $sourceRecordSet->getRecordCount() ) {
 		$record = $sourceRecordSet->getRecord( $i );
-		
+
 		if ( in_array( $record->getAttributeValue( $attributeAttribute )->definedMeaningId, $attributeIds ) ) {
 			$result->add( $record );
 			$sourceRecordSet->remove( $i );
@@ -660,46 +665,46 @@ function filterAttributeValues( RecordSet $sourceRecordSet, Attribute $attribute
 			$i++;
 		}
 	}
-	
+
 	return $result;
 }
 
 function filterObjectAttributesRecord( Record $sourceRecord, array &$attributeIds ) {
 	$o = OmegaWikiAttributes::getInstance();
-	
+
 	$result = new ArrayRecord( $sourceRecord->getStructure() );
 	$result->objectId = $sourceRecord->objectId;
-	
+
 	$result->setAttributeValue( $o->relations, filterAttributeValues(
 		$sourceRecord->relations,
 		$o->relationType,
 		$attributeIds
 	) );
-	
+
 	$result->setAttributeValue( $o->textAttributeValues, filterAttributeValues(
 		$sourceRecord->textAttributeValues,
 		$o->textAttribute,
 		$attributeIds
 	) );
-	
+
 	$result->setAttributeValue( $o->translatedTextAttributeValues, filterAttributeValues(
 		$sourceRecord->translatedTextAttributeValues,
 		$o->translatedTextAttribute,
 		$attributeIds
 	) );
-	
+
 	$result->setAttributeValue( $o->linkAttributeValues, filterAttributeValues(
 		$sourceRecord->linkAttributeValues,
 		$o->linkAttribute,
 		$attributeIds
 	) );
-	
+
 	$result->setAttributeValue( $o->optionAttributeValues, filterAttributeValues(
 		$sourceRecord->optionAttributeValues,
 		$o->optionAttribute,
 		$attributeIds
 	) );
-	
+
 	return $result;
 }
 
@@ -772,7 +777,7 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 	}
 
 	expandTextReferencesInRecordSet( $recordSet, array( $o->text ) );
-	
+
 	return $recordSet;
 }
 
@@ -864,7 +869,7 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 		$record->syntransId = $syntransId;
 		$record->identicalMeaning = $row->identical_meaning;
 
-		// adds the expression structure 
+		// adds the expression structure
 		$expressionRecord = new ArrayRecord( $o->expressionStructure );
 		$expressionRecord->language = $row->language_id;
 		$expressionRecord->spelling = $row->spelling;
@@ -887,12 +892,12 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 
 function getDefinedMeaningReferenceRecord( $definedMeaningId ) {
 	$o = OmegaWikiAttributes::getInstance();
-	
+
 	$record = new ArrayRecord( $o->definedMeaningReferenceStructure );
 	$record->definedMeaningId = $definedMeaningId;
 	$record->definedMeaningLabel = definedMeaningExpression( $definedMeaningId );
 	$record->definedMeaningDefiningExpression = definingExpression( $definedMeaningId );
-	
+
 	return $record;
 }
 
@@ -943,19 +948,19 @@ function getDefinedMeaningReciprocalRelationsRecordSet( $definedMeaningId, ViewI
 		array( "meaning2_mid=$definedMeaningId" ),
 		array( 'relationtype_mid' )
 	);
-	
+
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->relationType, $o->otherObject ) );
-	
+
 	return $recordSet;
 }
 
 function getGotoSourceRecord( $record ) {
 	$o = OmegaWikiAttributes::getInstance();
-		
+
 	$result = new ArrayRecord( $o->gotoSourceStructure );
 	$result->collectionId = $record->collectionId;
 	$result->sourceIdentifier = $record->sourceIdentifier;
-	
+
 	return $result;
 }
 
@@ -986,9 +991,9 @@ function getDefinedMeaningCollectionMembershipRecordSet( $definedMeaningId, View
 		$record->collectionMeaning = getCollectionMeaningId( $record->collectionId );
 		$record->gotoSource = getGotoSourceRecord( $record );
 	}
-	
+
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->collectionMeaning ) );
-	
+
 	return $recordSet;
 }
 
@@ -1011,9 +1016,9 @@ function getTextAttributesValuesRecordSet( array $objectIds, ViewInformation $vi
 		$wgWikidataDataSet->textAttributeValues,
 		array( "object_id IN (" . implode( ", ", $objectIds ) . ")" )
 	);
-	
+
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->textAttribute ) );
-	
+
 	return $recordSet;
 }
 
@@ -1035,9 +1040,9 @@ function getLinkAttributeValuesRecordSet( array $objectIds, ViewInformation $vie
 		$wgWikidataDataSet->linkAttributeValues,
 		array( "object_id IN (" . implode( ", ", $objectIds ) . ")" )
 	);
-	
+
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->linkAttribute ) );
-	
+
 	return $recordSet;
 }
 
@@ -1060,9 +1065,9 @@ function getTranslatedTextAttributeValuesRecordSet( array $objectIds, ViewInform
 		$wgWikidataDataSet->translatedContentAttributeValues,
 		array( "object_id IN (" . implode( ", ", $objectIds ) . ")" )
 	);
-	
+
 	$recordSet->getStructure()->addAttribute( $o->translatedTextValue );
-	
+
 	expandTranslatedContentsInRecordSet( $recordSet, $o->translatedTextValueId, $o->translatedTextValue, $viewInformation );
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->translatedTextAttribute ) );
 
@@ -1153,7 +1158,7 @@ function expandOptionsInRecordSet( RecordSet $recordSet, ViewInformation $viewIn
 			$wgWikidataDataSet->classAttributes,
 			array( 'object_id = ' . $optionRecord->optionAttributeId )
 		);
-	
+
 		$optionRecord = $optionRecordSet->getRecord( 0 );
 		$record->optionAttribute = $optionRecord->optionAttribute;
 	}
@@ -1176,9 +1181,9 @@ function getDefinedMeaningClassMembershipRecordSet( $definedMeaningId, ViewInfor
 		$wgWikidataDataSet->classMemberships,
 		array( "class_member_mid=$definedMeaningId" )
 	);
-	
+
 	expandDefinedMeaningReferencesInRecordSet( $recordSet, array( $o->class ) );
-	
+
 	return $recordSet;
 }
 
