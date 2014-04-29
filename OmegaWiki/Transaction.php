@@ -6,7 +6,7 @@ require_once( 'RecordSet.php' );
 require_once( 'Wikidata.php' );
 
 /**
- * Transaction.php
+ * @file Transaction.php
  *
  * Manage internal transactions (NOT mysql transactions... confuzzeled yet?)
  *
@@ -323,10 +323,9 @@ function getTransactionRecord( $transactionId ) {
 	$result->transactionId = $transactionId;
 
 	if ( $transactionId > 0 ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$queryResult = $dbr->query( "SELECT user_id, user_ip, timestamp, comment FROM {$wgDBprefix}{$dc}_transactions WHERE transaction_id={$transactionId}" );
+		$transaction = OwDatabaseAPI::getTransactionIdDetails( $transactionId, array(), $dc );
 
-		if ( $transaction = $dbr->fetchObject( $queryResult ) ) {
+		if ( $transaction ) {
 			$result->user = getUserLabel( $transaction->user_id, $transaction->user_ip );
 			if ( $result->user == null ) $result->user = "userId " . $transaction->user_id . " not found" ;
 			$result->timestamp = $transaction->timestamp;
@@ -384,7 +383,7 @@ class Transactions {
 	/**
 	 * Checks the latest transaction id from syntrans (added transactions).
 	 *
-	 * Other transaction ids were excluded because of the slow speed to generate them.
+	 * @note Other transaction ids were excluded because of the slow speed to generate them.
 	 * (any search for transaction ids which are not present will search for all
 	 * the rows in a column which causes the long query time).
 	 * Syntrans seems to cover most of the changes. This function will change
@@ -392,12 +391,19 @@ class Transactions {
 	 * faster (since the latest ids are already set) and accurate ( since it would
 	 * not be limited to added syntrans only ).
 	 *
-	 * @param $languageId integer
-	 * @param $dc string
+	 * @param languageId int language Id
+	 * @param options    arr optional parameters
+	 * @param dc         str WikiLexical dataset
 	 *
 	 * @return $transaction_id integer The latest transaction_id.
-	 * else @return -1 If the language_id is non numeric or no transaction_id was found
-	 * else @return -2 if a there are any current jobs pending, this function is skipped
+	 * @return -1 If the language_id is non numeric or no transaction_id was found
+	 * @return -2 if a there are any current jobs pending, this function is skipped
+	 *
+	 * @note options parameter can be used to extend this function.
+	 * Though you can access this function, it is highly recommended that you
+	 * use the static function OwDatabaseAPI::getLanguageIdLatestTransactionId instead.
+	 * Also note that this function currently includes all data, even removed ones.
+
 	 */
 	public static function getLanguageIdLatestTransactionId( $languageId, $options = array(), $dc = null ) {
 
@@ -431,42 +437,75 @@ class Transactions {
 			$dc = wdGetDataSetContext();
 		}
 
-		$DefinedMeanings = new DefinedMeanings;
-		$Transactions = new Transactions;
-
-		$query = Transactions::getLanguageIdLatestSynonymsAndTranslationsTransactionIdQuery( $languageId );
-
-		$result = $dbr->query( $query );
-
-		$tid = array();
-		foreach ( $result as $row ) {
-			$tid[] = $row->tid;
-		}
-		sort( $tid );
-		$transaction_id = array_pop( $tid );
+		$Transaction = new Transactions;
+		$transaction_id = $Transaction->getLanguageIdLatestSynonymsAndTranslationsTransactionId( $languageId );
 
 		if ( $transaction_id ) {
 			return $transaction_id;
 		}
 		return -1;
+
 	}
 
-	public static function getLanguageIdLatestSynonymsAndTranslationsTransactionIdQuery( $languageId, $options = array(), $dc = null ) {
-		global $wgDBprefix;
+/** @see static function Transactions::getLanguageIdLatestTransactionId
+ */
+	protected function getLanguageIdLatestSynonymsAndTranslationsTransactionId( $languageId, $options = array(), $dc = null ) {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
+		$dbr = wfGetDB( DB_SLAVE );
 
-		return "(SELECT " .
-		"CASE WHEN synt.add_transaction_id IS NULL THEN -1 ELSE " .
-		"synt.add_transaction_id END AS tid FROM " .
-		"{$wgDBprefix}{$dc}_expression AS exp, " .
-		"{$wgDBprefix}{$dc}_syntrans AS synt " .
-		"WHERE language_id = $languageId " .
-		"AND synt.expression_id = exp.expression_id " .
-		"AND exp.remove_transaction_id IS NULL " .
-		"AND synt.remove_transaction_id IS NULL " .
-		"ORDER BY syntrans_sid DESC LIMIT 1)";
+		$result = $dbr->selectField(
+			array(
+				'exp' => "{$dc}_expression",
+				'synt' => "{$dc}_syntrans"
+			),
+			'synt.add_transaction_id AS tid',
+			array(
+				'language_id' => $languageId,
+				'synt.expression_id = exp.expression_id',
+				'synt.remove_transaction_id' => null,
+				'exp.remove_transaction_id' => null
+			), __METHOD__,
+			array(
+				'ORDER BY' => 'syntrans_sid DESC'
+			)
+		);
+
+		if ( $result ) {
+			return $result;
+		}
+		return -1;
+	}
+
+	/**
+	 * @param transactionId req'd int The transaction id
+	 * @param options       opt'l arr Optional parameters
+	 * @param dc            opt'l str The WikiLexicalData dataset
+	 *
+	 * @return array( int user_id, str user_ip, str timestamp, str comment )
+	 * @return if not exists, array()
+	 *
+	 * @note options parameter can be used to extend this function.
+	 * Though you can access this function, it is highly recommended that you
+	 * use the static function OwDatabaseAPI::getTransactionIdDetails instead.
+	 * Also note that this function currently includes all data, even removed ones.
+	 */
+	public static function getIdDetails( $transactionId, $options, $dc ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+		$transaction = $dbr->selectRow(
+			"{$dc}_transactions",
+			array( 'user_id', 'user_ip', 'timestamp', 'comment' ),
+			array( 'transaction_id' => $transactionId ), __METHOD__
+		);
+
+		if ( $transaction ) {
+			return $transaction;
+		}
+		return array();
 	}
 
 }

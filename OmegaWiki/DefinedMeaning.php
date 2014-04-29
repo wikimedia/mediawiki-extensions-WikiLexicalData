@@ -330,7 +330,7 @@ class DefinedMeanings {
 	 * * "option['test'] = true" used to test the function
 	 * @param $dc                 opt'l str The WikiLexicalData dataset
 	 *
-	 * @return array( meaning1_id, relationtype_mid, meaning2_mid)
+	 * @return array( int defined_meaning_id )
 	 * @return if not exists, array()
 	 *
 	 * @note options parameter can be used to extend this function.

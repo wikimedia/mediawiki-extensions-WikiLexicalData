@@ -5,6 +5,13 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 require_once( "Wikidata.php" );
 require_once( "Utilities.php" );
 
+/** @file
+ *
+ * This Special Page is currently unused.
+ *
+ * @note In case this Special Page is used, kindly convert
+ * the database query functions to select functions. Thanks ~he
+ */
 class SpecialTransaction extends SpecialPage {
 	function SpecialTransaction() {
 		parent::__construct( 'Transaction' );

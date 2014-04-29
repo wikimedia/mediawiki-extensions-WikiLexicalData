@@ -109,6 +109,8 @@ OmegaWiki's software structure.
 			* SpecialExportTSV
 			* SpecialImportTSV
 			* SpecialLanguages
+	* Unused
+		* Classes
 			* SpecialTransaction
 * Web API
 	* Obtaining Data
