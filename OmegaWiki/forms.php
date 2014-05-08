@@ -76,7 +76,7 @@ function getSelect( $name, $options, $selectedValue = "", $onChangeHandler = "" 
 	} else {
 		$onChangeAttribute = '';
 	}
-	
+
 	$result = '<select id="' . $name . '" name="' . $name . '"' . $onChangeAttribute . '>';
  
 	asort( $options );
@@ -86,7 +86,7 @@ function getSelect( $name, $options, $selectedValue = "", $onChangeHandler = "" 
 			$selected = ' selected="selected"';
 		else
 			$selected = '';
-			
+
 		$result .= '<option value="' . $value . '"' . $selected . '>' . htmlspecialchars( $text ) . '</option>';
 	}
 
@@ -117,7 +117,7 @@ function getFileField( $name, $onChangeHandler = "" ) {
 */
 function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = '', $displayLabelColumns = array( 0 ), DataSet $dc = null ) {
 	global
-		$wgScriptPath, $wgLang;
+		$wgScriptPath;
 
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
@@ -201,23 +201,32 @@ function getStaticSuggest( $name, $suggestions, $idColumns = 1, $value = 0, $lab
 }
 
 function getLanguageOptions( $languageIdsToExclude = array() ) {
-	global $wgLang ;
-		
-	$userLanguage = $wgLang->getCode();
+	global $wgUser;
+
+	$userLanguage = $wgUser->mOptionOverrides['language'];
+	if ( !$userLanguageId = getLanguageIdForCode( $userLanguage ) ) {
+		global $wgLang;
+		$userLanguage = $wgLang->getCode();
+	}
+
 	$idNameIndex = getLangNames( $userLanguage );
-	
+
 	$result = array();
-	
+
 	foreach ( $idNameIndex as $id => $name )
 		if ( !in_array( $id, $languageIdsToExclude ) )
 			$result[$id] = $name;
-	
+
 	return $result;
 }
-	
+
+// @note unused	function
 function getLanguageSelect( $name, $languageIdsToExclude = array() ) {
-	global $wgLang ;
-	$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
+	global $wgUser;
+	if ( !$userLanguageId = getLanguageIdForCode( $wgUser->mOptionOverrides['language'] ) ) {
+		global $wgLang;
+		$userLanguageId = getLanguageIdForCode( $wgLang->getCode() );
+	}
 
 	return getSelect( $name, getLanguageOptions( $languageIdsToExclude ), $userLanguageId );
 }
@@ -243,7 +252,7 @@ function getOptionPanel( $fields, $action = '', $buttons = array( "show" => null
 		$result .= '<tr><th>' . $caption . '</th><td class="option-field">' . $field . '</td></tr>';
 
 	$buttonHTML = "";
-	
+
 	foreach ( $buttons as $name => $caption )
 	{
 		if ( $caption == null ) {
@@ -252,13 +261,13 @@ function getOptionPanel( $fields, $action = '', $buttons = array( "show" => null
 		}
 		$buttonHTML .= getSubmitButton( $name, $caption );
 	}
-	
+
 	$result .=
 					'<tr><th/><td>' . $buttonHTML . '</td></tr>' .
 				'</table>' .
 			'</form>' .
 		'</div>';
-		
+
 	return $result;
 }
 
@@ -279,7 +288,7 @@ function getOptionPanelForFileUpload( $fields, $action = '', $buttons = array( "
 		$result .= '<tr><th>' . $caption . '</th><td class="option-field">' . $field . '</td></tr>';
 
 	$buttonHTML = "";
-	
+
 	foreach ( $buttons as $name => $caption )
 	{
 		if ( $caption == null ) {
@@ -288,13 +297,13 @@ function getOptionPanelForFileUpload( $fields, $action = '', $buttons = array( "
 		}
 		$buttonHTML .= getSubmitButton( $name, $caption );
 	}
-	
+
 	$result .=
 					'<tr><th/><td>' . $buttonHTML . '</td></tr>' .
 				'</table>' .
 			'</form>' .
 		'</div>';
-		
+
 	return $result;
 }
 
