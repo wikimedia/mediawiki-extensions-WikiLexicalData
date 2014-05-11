@@ -1,10 +1,19 @@
 {
-    "@metadata": {
-        "authors": [
-            "Hiong3-eng5"
-        ]
-    },
-    "ow_save": "Pó-chûn",
-    "ow_history": "Le̍k-sú",
-    "ow_User": "Iōng-chiá"
+	"@metadata": {
+		"authors": [
+			"Hiong3-eng5"
+		]
+	},
+	"langman_langname": "Gú-giân bêng-chheng：",
+	"langman_addlang": "Cheng-ka gú-giân",
+	"datasearch_language": "Gú-giân:",
+	"datasearch_search_text": "Chhiâu-chhōe bûn-jī:",
+	"ow_save": "Pó-chûn",
+	"ow_history": "Le̍k-sú",
+	"ow_Annotation": "chù-kái",
+	"ow_Definition": "Tēng-gī",
+	"ow_Language": "Gú-giân",
+	"ow_Multiple_meanings": "\"$1\" ê tēng-gī",
+	"ow_Text": "Bûn-jī",
+	"ow_User": "Iōng-chiá"
 }
