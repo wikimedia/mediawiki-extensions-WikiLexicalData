@@ -54,7 +54,7 @@ class OwDatabaseAPI {
 	 * @param options  opt'l arr An optional parameters
 	 * @param dc       opt'l str The WikiLexicalData dataset
 	 *
-	 * @return array( meaning1_id, relationtype_mid, meaning2_mid)
+	 * @return array( int defined_meaning_id )
 	 * @return if not exists, array()
 	 *
 	 * @see Attributes::getRelationIdRelation, for a list of options.
@@ -89,6 +89,44 @@ class OwDatabaseAPI {
 
 	/*! @} group OwDbAPIsyntFn ends here.*/
 
+	/** @addtogroup OwDbAPItransactFn OwDatabaseAPI's Transactions functions
+	 *	@{
+	 */
+
+	/**
+	 * @param transactionId req'd int The transaction id
+	 * @param options       opt'l arr Optional parameters
+	 * @param dc            opt'l str The WikiLexicalData dataset
+	 *
+	 * @return array( int user_id, str user_ip, str timestamp, str comment )
+	 * @return if not exists, array()
+	 *
+	 * @see Transactions::getIdDetails, for a list of options.
+	 */
+	public static function getTransactionIdDetails( $transactionId, $options = array(), $dc = null ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'transaction', $dc );
+		return $api->Transaction->getIdDetails( $transactionId, $options, $api->dc );
+	}
+
+	/**
+	 * @param languageId req'd int The language id
+	 * @param options    opt'l arr Optional parameters
+	 * @param dc         opt'l str The WikiLexicalData dataset
+	 *
+	 * @return array( int user_id, str user_ip, str timestamp, str comment )
+	 * @return if not exists, array()
+	 *
+	 * @see Transactions::getLanguageIdLatestTransactionId, for a list of options.
+	 */
+	public static function getLanguageIdLatestTransactionId( $languageId, $options = array(), $dc = null ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'transaction', $dc );
+		return $api->Transaction->getLanguageIdLatestTransactionId( $languageId, $options, $api->dc );
+	}
+
+	/*! @} group OwDbAPItransactFn ends here.*/
+
 	/**
 	 * @brief sets the initial settings for static functions
 	 *
@@ -101,6 +139,7 @@ class OwDatabaseAPI {
 		if ( $class == 'attributes' ) { $this->Attributes = new Attributes; }
 		if ( $class == 'syntrans' ) { $this->Syntrans = new Syntrans; }
 		if ( $class == 'definedMeaning' ) { $this->DefinedMeaning = new DefinedMeanings; }
+		if ( $class == 'transaction' ) { $this->Transaction = new Transactions; }
 	}
 
 	/**
