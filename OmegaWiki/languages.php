@@ -1,5 +1,7 @@
 <?php
-
+/** @file
+ * @todo create a language class for owDatabaseAPI class
+ */
 require_once( 'WikiDataGlobals.php' );
 
 /**
@@ -22,7 +24,7 @@ function getLangNames( $code ) {
 	$dbr = wfGetDB( DB_SLAVE );
 	$names = array();
 	$sql = getSQLForLanguageNames( $code );
-	$lang_res = $dbr->query( $sql );
+	$lang_res = $dbr->query( $sql ); // function getSQLForLanguageNames creates SQL with MySQL prefix
 	while ( $lang_row = $dbr->fetchObject( $lang_res ) )
 		$names[$lang_row->row_id] = $lang_row->language_name;
 	return $names;
