@@ -327,8 +327,9 @@ class DataSet {
 	function fetchName() {
 		global $wgLang, $wdTermDBDataSet;
 		if ( $wdTermDBDataSet ) {
-			$userLanguage = $wgLang->getCode() ;
-			$spelling = getSpellingForLanguage( $this->dmId, $userLanguage, 'en', $wdTermDBDataSet );
+			$userLanguage = $wgLang->getCode();
+			// @note any user/lang global problem here is solved by the getSpellingForUserLanguage() function.
+			$spelling = getSpellingForUserLanguage( $this->dmId, $userLanguage, 'en', $wdTermDBDataSet );
 			if ( $spelling ) return $spelling;
 		}
 		return $this->getFallbackName();

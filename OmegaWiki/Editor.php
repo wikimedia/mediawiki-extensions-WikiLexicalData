@@ -1150,7 +1150,7 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 	}
 
 	public function getViewHTML( IdStack $idPath, $definedMeaningId ) {
-		global $wgOut, $wgLang, $wgUser;
+		global $wgOut, $wgUser;
 
 		/**
 		 * the first definition will be used as a meta descriptor for search engines
@@ -1160,7 +1160,10 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 
 		$output = "";
 
-		$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
+		if ( !$userLanguageId = getLanguageIdForCode( $wgUser->mOptionOverrides['language'] ) ) {
+			global $wgLang;
+			$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
+		}
 		$definition = getDefinedMeaningDefinition( $definedMeaningId );
 		$definingExpression = definingExpression( $definedMeaningId );
 

@@ -1868,21 +1868,28 @@ function getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId ) {
  * @param $definedMeaningId
  */
 function getDefinedMeaningDefinition( $definedMeaningId ) {
-	global $wgLang;
-	$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
+	global $wgLang, $wgUser;
+	$userLanguageId[] = getLanguageIdForCode( $wgUser->mOptionOverrides['language'] );
+	$userLanguageId[] = getLanguageIdForCode( $wgLang->getCode() ) ;
 
-	if ( $userLanguageId > 0 ) {
-		$result = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $userLanguageId );
-	} else {
-		$result = "";
+	$result = '';
+	foreach( $userLanguageId as $uLid ) {
+		if ( $uLid > 0 ) {
+			$result = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $uLid );
+		}
+		if ( $result ) {
+			$userLanguageId = array();
+		}
 	}
+
 	if ( $result == "" ) {
-		$result = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, 85 );
+		$result = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, WLD_ENGLISH_LANG_ID );
 
 		if ( $result == "" ) {
 			$result = getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId );
 		}
 	}
+
 	return $result;
 }
 
@@ -1953,10 +1960,27 @@ function getDefinedMeaningDefinitionLanguageIdForDefinition( $definedMeaningId, 
 function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = WLD_ENGLISH_LANG_WMKEY, $dc = null ) {
 
 	$userLanguageId = getLanguageIdForCode( $languageCode );
+
 	$fallbackLanguageId = getLanguageIdForCode( $fallbackLanguageCode );
 
 	return getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallbackLanguageId, $dc );
 
+}
+
+function getSpellingForUserLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = WLD_ENGLISH_LANG_WMKEY, $dc = null ) {
+
+	// @note There are functions that need this check due to user and lang globals issue. ~he
+	if ( !$userLanguageId = getLanguageIdForCode( $languageCode ) ) {
+		global $wgLang;
+		if ( $languageCode == $wgLang->getCode() ) {
+			global $wgUser;
+			$userLanguageId = getLanguageIdForCode( $wgUser->mOptionOverrides['language'] );
+		} else {
+			$userLanguageId = getLanguageIdForCode( $wgLang->getCode() );
+		}
+	}
+
+	return getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode, $dc );
 }
 
 /**
@@ -2571,20 +2595,25 @@ function definedMeaningExpressionForAnyLanguage( $definedMeaningId ) {
  * @param $definedMeaningId
  */
 function definedMeaningExpression( $definedMeaningId ) {
-	global $wgLang;
+	global $wgLang, $wgUser;
+	$userLanguageId[] = getLanguageIdForCode( $wgUser->mOptionOverrides['language'] );
+	$userLanguageId[] = getLanguageIdForCode( $wgLang->getCode() ) ;
 
-	$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
+	$result = '';
+	foreach( $userLanguageId as $uLid ) {
+		if ( $uLid > 0 ) {
+			$result = definedMeaningExpressionForLanguage( $definedMeaningId, $uLid );
+		}
+		if ( $result ) {
+			$userLanguageId = array();
+		}
+	}
 
 	list( $definingExpressionId, $definingExpression, $definingExpressionLanguage ) = definingExpressionRow( $definedMeaningId );
 
-	if ( $userLanguageId > 0 ) {
-		$result = definedMeaningExpressionForLanguage( $definedMeaningId, $userLanguageId );
-	} else {
-		$result = "";
-	}
 	if ( $result == "" ) {
 		// if no expression exists for the specified language : look for an expression in English
-		$result = definedMeaningExpressionForLanguage( $definedMeaningId, 85 );
+		$result = definedMeaningExpressionForLanguage( $definedMeaningId, WLD_ENGLISH_LANG_ID );
 
 		if ( $result == "" ) {
 			$result = definedMeaningExpressionForAnyLanguage( $definedMeaningId );

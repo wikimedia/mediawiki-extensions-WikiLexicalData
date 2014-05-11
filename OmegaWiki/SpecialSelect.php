@@ -13,14 +13,19 @@ class SpecialSelect extends SpecialPage {
 	function execute( $par ) {
 		require_once( 'languages.php' );
 		require_once( 'Transaction.php' );
-		global $wgOut, $wgLang, $wgRequest;
+		global $wgOut, $wgUser, $wgRequest;
 
 		$wgOut->disable();
 
 		$dc = wdGetDataSetContext();
 		$optionAttribute = $wgRequest->getVal( WLD_OPTION_ATTRIBUTE );
 		$attributeObject = $wgRequest->getVal( 'attribute-object', 0 );
-		$lang_code = $wgLang->getCode();
+		$lang_code = $wgUser->mOptionOverrides['language'];
+		if ( !$lang_id = getLanguageIdForCode( $lang_code ) ) {
+			global $wgLang;
+			$lang_code == $wgLang->getCode();
+			$lang_id = getLanguageIdForCode( $lang_code );
+		}
 
 		$dbr = wfGetDB( DB_SLAVE );
 
@@ -84,7 +89,7 @@ class SpecialSelect extends SpecialPage {
 					'exp.spelling',
 					array(
 						'synt.defined_meaning_id' => $options_row->option_mid,
-						'exp.language_id' => getLanguageIdForCode( 'en' ),
+						'exp.language_id' => WLD_ENGLISH_LANG_ID,
 						'exp.expression_id = synt.expression_id',
 						'exp.remove_transaction_id' => null,
 						'synt.remove_transaction_id' => null

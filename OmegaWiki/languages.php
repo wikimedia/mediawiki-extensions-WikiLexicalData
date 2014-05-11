@@ -9,10 +9,13 @@ require_once( 'WikiDataGlobals.php' );
  * @return array of language names for the user's language preference
  **/
 function getOwLanguageNames( $purge = false ) {
-	global $wgLang ;
+	global $wgUser;
 	static $owLanguageNames = null;
 	if ( is_null( $owLanguageNames ) && !$purge ) {
-		$owLanguageNames = getLangNames( $wgLang->getCode() );
+		if ( !$owLanguageNames = getLangNames( $wgUser->mOptionOverrides['language'] ) ) {
+			global $wgLang;
+			$owLanguageNames = getLangNames( $wgLang->getCode() );
+		}
 	}
 	return $owLanguageNames;
 }

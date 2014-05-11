@@ -15,11 +15,12 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgLang, $wgDBprefix;
+		global $wgOut, $wgUser, $wgDBprefix;
 		require_once( "Attribute.php" );
 		require_once( "WikiDataBootstrappedMeanings.php" );
 		require_once( "RecordSet.php" );
-		require_once( "Editor.php" );
+		// This made my local copy useless, I do not know why. ~he
+	//	require_once( "Editor.php" );
 		require_once( "HTMLtable.php" );
 		require_once( "Transaction.php" );
 		require_once( "OmegaWikiEditors.php" );
@@ -42,16 +43,17 @@ class SpecialSuggest extends SpecialPage {
 		$attributesLevel = $request->getVal( 'attributesLevel' );
 		$annotationAttributeId = $request->getVal( 'annotationAttributeId' );
 		$syntransId = $request->getVal( 'syntransId' );
-		$langCode = $wgLang->getCode();
 
+		// retrieve languageCode from user global else from lang global
+		$langCode = $wgUser->mOptionOverrides['language'];
+		$this->userLangId = getLanguageIdForCode( $langCode );
+		if ( !$this->userLangId ) {
+			global $wgLang;
+			$langCode = $wgLang->getCode();
+			$this->userLangId = getLanguageIdForCode( $langCode );
+		}
 		$sql = '';
 
-		$this->userLangId = $this->dbr->selectField(
-			'language',
-			'language_id',
-			array( 'wikimedia_key' => $langCode ),
-			__METHOD__
-		);
 		if ( !$this->userLangId ) {
 			// English default
 			$this->userLangId = WLD_ENGLISH_LANG_ID ;
