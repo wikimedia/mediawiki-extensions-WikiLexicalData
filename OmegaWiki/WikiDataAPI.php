@@ -1868,18 +1868,10 @@ function getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId ) {
  * @param $definedMeaningId
  */
 function getDefinedMeaningDefinition( $definedMeaningId ) {
-	global $wgLang, $wgUser;
-	$userLanguageId[] = getLanguageIdForCode( $wgUser->mOptionOverrides['language'] );
-	$userLanguageId[] = getLanguageIdForCode( $wgLang->getCode() ) ;
-
+	$userLanguageId = OwDatabaseAPI::getUserLanguageId();
 	$result = '';
-	foreach( $userLanguageId as $uLid ) {
-		if ( $uLid > 0 ) {
-			$result = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $uLid );
-		}
-		if ( $result ) {
-			$userLanguageId = array();
-		}
+	if ( $userLanguageId > 0 ) {
+		$result = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $userLanguageId );
 	}
 
 	if ( $result == "" ) {
@@ -1957,30 +1949,38 @@ function getDefinedMeaningDefinitionLanguageIdForDefinition( $definedMeaningId, 
 * or in English otherwise.
 * null if not found
 */
-function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = WLD_ENGLISH_LANG_WMKEY, $dc = null ) {
+function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = WLD_ENGLISH_LANG_WMKEY, $dc = null, $options = array() ) {
 
 	$userLanguageId = getLanguageIdForCode( $languageCode );
-
 	$fallbackLanguageId = getLanguageIdForCode( $fallbackLanguageCode );
 
-	return getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallbackLanguageId, $dc );
+	return getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallbackLanguageId, $dc, $options );
 
 }
 
 function getSpellingForUserLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = WLD_ENGLISH_LANG_WMKEY, $dc = null ) {
 
 	// @note There are functions that need this check due to user and lang globals issue. ~he
+	$languageCode = checkLanguageCode( $languageCode );
+	$options = array( 'identical' => true );
+	return getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode, $dc, $options );
+}
+
+/** @brief Check if the code is valid.
+ * @ return valid language code.
+ */
+function checkLanguageCode( $languageCode ) {
 	if ( !$userLanguageId = getLanguageIdForCode( $languageCode ) ) {
 		global $wgLang;
 		if ( $languageCode == $wgLang->getCode() ) {
-			global $wgUser;
-			$userLanguageId = getLanguageIdForCode( $wgUser->mOptionOverrides['language'] );
+			require_once( 'OmegaWikiDatabaseAPI.php' );
+			$languageCode = OwDatabaseAPI::getLanguageCodeForIso639_3( $languageCode );
 		} else {
-			$userLanguageId = getLanguageIdForCode( $wgLang->getCode() );
+			$languageCode = $wgLang->getCode();
 		}
 	}
 
-	return getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode, $dc );
+	return $languageCode;
 }
 
 /**
@@ -1990,7 +1990,7 @@ function getSpellingForUserLanguage( $definedMeaningId, $languageCode, $fallback
 * or in English otherwise.
 * null if not found
 */
-function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallbackLanguageId = WLD_ENGLISH_LANG_ID, $dc = null ) {
+function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallbackLanguageId = WLD_ENGLISH_LANG_ID, $dc = null, $options = array() ) {
 	if ( is_null ( $dc ) ) {
 		$dc = wdGetDataSetContext( $dc );
 	}
@@ -1998,19 +1998,31 @@ function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallback
 
 	# wfDebug("User language: $userLanguageId\n");
 
+	$table = array(
+		'synt' => "{$dc}_syntrans",
+		'exp' => "{$dc}_expression"
+	);
+	$whereTemplate = array(
+		"synt.defined_meaning_id" => $definedMeaningId,
+		"exp.expression_id = synt.expression_id",
+		"exp.remove_transaction_id" => null,
+		"synt.remove_transaction_id" => null
+	);
+
+	if ( isset( $options['identical'] ) ) {
+		if ( $options['identical'] ) {
+			$whereTemplate['identical_meaning'] = 1;
+		}
+	}
+
+	$where = $whereTemplate;
+
+	$where['language_id'] = $userLanguageId;
 	if ( $userLanguageId ) {
 		$spelling = $dbr->selectField(
-			array(
-				'synt' => "{$dc}_syntrans",
-				'exp' => "{$dc}_expression"
-			),
+			$table,
 			'spelling',
-			array(
-				"synt.defined_meaning_id" => $definedMeaningId,
-				"exp.expression_id = synt.expression_id",
-				'language_id' => $userLanguageId,
-				"exp.remove_transaction_id" => null
-			), __METHOD__
+			$where, __METHOD__
 		);
 
 		if ( $spelling ) {
@@ -2019,18 +2031,11 @@ function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallback
 	}
 
 	// fallback language
+	$where['language_id'] = $fallbackLanguageId;
 	$spelling = $dbr->selectField(
-		array(
-			'synt' => "{$dc}_syntrans",
-			'exp' => "{$dc}_expression"
-		),
+		$table,
 		'spelling',
-		array(
-			"synt.defined_meaning_id" => $definedMeaningId,
-			"exp.expression_id = synt.expression_id",
-			'language_id' => $fallbackLanguageId,
-			"exp.remove_transaction_id" => null
-		), __METHOD__
+		$where, __METHOD__
 	);
 
 	if ( $spelling ) {
@@ -2039,16 +2044,9 @@ function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallback
 
 	// final fallback
 	$spelling = $dbr->selectField(
-		array(
-			'synt' => "{$dc}_syntrans",
-			'exp' => "{$dc}_expression"
-		),
+		$table,
 		'spelling',
-		array(
-			"synt.defined_meaning_id" => $definedMeaningId,
-			"exp.expression_id = synt.expression_id",
-			"exp.remove_transaction_id" => null
-		), __METHOD__
+		$whereTemplate, __METHOD__
 	);
 
 	if ( $spelling ) {
@@ -2595,18 +2593,13 @@ function definedMeaningExpressionForAnyLanguage( $definedMeaningId ) {
  * @param $definedMeaningId
  */
 function definedMeaningExpression( $definedMeaningId ) {
-	global $wgLang, $wgUser;
-	$userLanguageId[] = getLanguageIdForCode( $wgUser->mOptionOverrides['language'] );
-	$userLanguageId[] = getLanguageIdForCode( $wgLang->getCode() ) ;
+	$code = OwDatabaseAPI::getUserLanguage();
+	$userLanguageId = getLanguageIdForCode( $code);
 
 	$result = '';
-	foreach( $userLanguageId as $uLid ) {
-		if ( $uLid > 0 ) {
-			$result = definedMeaningExpressionForLanguage( $definedMeaningId, $uLid );
-		}
-		if ( $result ) {
-			$userLanguageId = array();
-		}
+
+	if ( $userLanguageId > 0 ) {
+		$result = definedMeaningExpressionForLanguage( $definedMeaningId, $userLanguageId );
 	}
 
 	list( $definingExpressionId, $definingExpression, $definingExpressionLanguage ) = definingExpressionRow( $definedMeaningId );

@@ -20,12 +20,8 @@ class SpecialSelect extends SpecialPage {
 		$dc = wdGetDataSetContext();
 		$optionAttribute = $wgRequest->getVal( WLD_OPTION_ATTRIBUTE );
 		$attributeObject = $wgRequest->getVal( 'attribute-object', 0 );
-		$lang_code = $wgUser->mOptionOverrides['language'];
-		if ( !$lang_id = getLanguageIdForCode( $lang_code ) ) {
-			global $wgLang;
-			$lang_code == $wgLang->getCode();
-			$lang_id = getLanguageIdForCode( $lang_code );
-		}
+		$lang_code = owDatabaseAPI::getUserLanguage();
+		$lang_id = getLanguageIdForCode( $lang_code );
 
 		$dbr = wfGetDB( DB_SLAVE );
 

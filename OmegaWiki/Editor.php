@@ -1160,10 +1160,7 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 
 		$output = "";
 
-		if ( !$userLanguageId = getLanguageIdForCode( $wgUser->mOptionOverrides['language'] ) ) {
-			global $wgLang;
-			$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
-		}
+		$userLanguageId = owDatabaseAPI::getUserLanguageId();
 		$definition = getDefinedMeaningDefinition( $definedMeaningId );
 		$definingExpression = definingExpression( $definedMeaningId );
 

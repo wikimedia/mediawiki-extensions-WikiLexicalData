@@ -45,13 +45,8 @@ class SpecialSuggest extends SpecialPage {
 		$syntransId = $request->getVal( 'syntransId' );
 
 		// retrieve languageCode from user global else from lang global
-		$langCode = $wgUser->mOptionOverrides['language'];
+		$langCode = owDatabaseAPI::getUserLanguage();
 		$this->userLangId = getLanguageIdForCode( $langCode );
-		if ( !$this->userLangId ) {
-			global $wgLang;
-			$langCode = $wgLang->getCode();
-			$this->userLangId = getLanguageIdForCode( $langCode );
-		}
 		$sql = '';
 
 		if ( !$this->userLangId ) {
