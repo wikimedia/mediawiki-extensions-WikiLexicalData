@@ -15,7 +15,7 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgUser, $wgDBprefix;
+		global $wgOut;
 		require_once( "Attribute.php" );
 		require_once( "WikiDataBootstrappedMeanings.php" );
 		require_once( "RecordSet.php" );
@@ -54,34 +54,43 @@ class SpecialSuggest extends SpecialPage {
 			$this->userLangId = WLD_ENGLISH_LANG_ID ;
 		}
 
+		$this->table = null;
+		$this->vars = null;
+		$this->conds = null;
+		$this->options = null;
+		$this->join_cond = null;
+
+		$sql = '';
 		$rowText = 'spelling';
 		switch ( $query ) {
 			case 'relation-type':
 				$sqlActual = $this->getSQLForCollectionOfType( 'RELT' );
 				$sqlFallback = $this->getSQLForCollectionOfType( 'RELT', WLD_ENGLISH_LANG_ID );
 				$sql = $this->constructSQLWithFallback( $sqlActual, $sqlFallback, array( "member_mid", "spelling", "collection_mid" ) );
+				$this->table = array( 'coalesced' => "({$this->sql})" );
+				$this->vars = '*';
 				break;
 			case 'class':
-				$sql = $this->getSQLForClasses( );
+				$this->getParametersForClasses();
 				break;
 			case WLD_RELATIONS: // 'rel'
 				if ( $attributesLevel == "DefinedMeaning" ) {
-					$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'DM' );
+					$this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'DM' );
 				} elseif ( $attributesLevel == "SynTrans" ) {
-					$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'SYNT' );
+					$this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'SYNT' );
 				}
 				break;
 			case 'text-attribute':
-				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'TEXT' );
+				$this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'TEXT' );
 				break;
 			case 'translated-text-attribute':
-				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'TRNS' );
+				$this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'TRNS' );
 				break;
 			case WLD_LINK_ATTRIBUTE:
-				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'URL' );
+				$this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'URL' );
 				break;
 			case WLD_OPTION_ATTRIBUTE:
-				$sql = $this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'OPTN' );
+				$this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'OPTN' );
 				break;
 			case 'language':
 				require_once( 'languages.php' );
@@ -89,35 +98,39 @@ class SpecialSuggest extends SpecialPage {
 				$rowText = 'language_name';
 				break;
 			case WLD_DEFINED_MEANING:
-				$sql = $this->getSQLForDMs();
+				$this->getParametersForDMs();
 				break;
 			case WLD_SYNONYMS_TRANSLATIONS:
-				$sql = $this->getSQLForSyntranses();
+				$this->getParametersForSyntranses();
 				break;
 			case 'class-attributes-level':
-				$sql = $this->getSQLForLevels();
+				$this->getParametersForLevels();
 				break;
 			case 'collection':
-				$sql = $this->getSQLForCollection();
+				$this->getParametersForCollection();
 				break;
 			case 'transaction':
-				$sql =
-					"SELECT transaction_id, user_id, user_ip, " .
-					" CONCAT(SUBSTRING(timestamp, 1, 4), '-', SUBSTRING(timestamp, 5, 2), '-', SUBSTRING(timestamp, 7, 2), ' '," .
-					" SUBSTRING(timestamp, 9, 2), ':', SUBSTRING(timestamp, 11, 2), ':', SUBSTRING(timestamp, 13, 2)) AS time, comment" .
-					" FROM {$wgDBprefix}{$this->dc}_transactions WHERE 1";
+				$this->table = array( "{$this->dc}_transactions" );
+				// @todo check vars compatibility with SQLite
+				$this->vars = array(
+					'transaction_id', 'user_id', 'user_ip',
+					'time' => " CONCAT(SUBSTRING(timestamp, 1, 4), '-', SUBSTRING(timestamp, 5, 2), '-', SUBSTRING(timestamp, 7, 2), ' '," .
+					" SUBSTRING(timestamp, 9, 2), ':', SUBSTRING(timestamp, 11, 2), ':', SUBSTRING(timestamp, 13, 2))", 'comment'
+				);
+				$this->conds = array( '1' );
 
 				$rowText = "CONCAT(SUBSTRING(timestamp, 1, 4), '-', SUBSTRING(timestamp, 5, 2), '-', SUBSTRING(timestamp, 7, 2), ' '," .
 						" SUBSTRING(timestamp, 9, 2), ':', SUBSTRING(timestamp, 11, 2), ':', SUBSTRING(timestamp, 13, 2))";
 				break;
 		}
 
+		$searchCondition = ''; // remove when not needed
 		if ( $search != '' ) {
 			if ( $query == 'transaction' ) {
-				$searchCondition = " AND $rowText LIKE " . $this->dbr->addQuotes( "%$search%" );
+				$this->conds[] = $rowText . $this->dbr->buildLike( $this->dbr->anyString(), $search, $this->dbr->anyString() );
 			}
 			elseif ( $query == 'class' ) {
-				$searchCondition = " AND $rowText LIKE " . $this->dbr->addQuotes( "$search%" );
+				$this->conds[] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
 			}
 			elseif ( $query == WLD_RELATIONS or
 				$query == WLD_LINK_ATTRIBUTE or
@@ -125,19 +138,20 @@ class SpecialSuggest extends SpecialPage {
 				$query == 'translated-text-attribute' or
 				$query == 'text-attribute' )
 			{
-				$searchCondition = " HAVING $rowText LIKE " . $this->dbr->addQuotes( "$search%" );
+				$this->options['HAVING'] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
 			}
 			elseif ( $query == 'language' ) {
 				$searchCondition = " HAVING $rowText LIKE " . $this->dbr->addQuotes( "%$search%" );
+				$this->options['HAVING'] = $rowText . $this->dbr->buildLike( $this->dbr->anyString(), $search, $this->dbr->anyString() );
 			}
 			elseif ( $query == 'relation-type' ) { // not sure in which case 'relation-type' happens...
-				$searchCondition = " WHERE $rowText LIKE " . $this->dbr->addQuotes( "$search%" );
+				$this->conds[] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
 			}
 			else {
-				$searchCondition = " AND $rowText LIKE " . $this->dbr->addQuotes( "$search%" );
+				$this->conds[] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
 			}
 		} else {
-			$searchCondition = "";
+			$searchCondition = ''; // remove when not needed
 		}
 
 		if ( $query == 'transaction' ) {
@@ -146,18 +160,33 @@ class SpecialSuggest extends SpecialPage {
 			$orderBy = $rowText;
 		}
 
-		$sql .= $searchCondition . " ORDER BY $orderBy LIMIT ";
+		$sql .= $searchCondition . " ORDER BY $orderBy LIMIT "; // remove when all $query refactored
+		$this->options['ORDER BY'] = $orderBy;
 
 		if ( $offset > 0 ) {
-			$sql .= " $offset, ";
+			$sql .= " $offset, "; // remove when all $query refactored
+			$this->options['OFFSET'] = $offset;
 		}
 
 		// print only 10 results
-		$sql .= "10";
+		$sql .= "10"; // remove when all $query refactored
+		$this->options['LIMIT'] = 10;
+
+		// remove duplicates
+		if ( $query == 'relation-type' ) {
+			$this->options[] = 'DISTINCT';
+		}
 
 		# == Actual query here
 		// wfdebug("]]]".$sql."\n");
-		$queryResult = $this->dbr->query( $sql );
+		if ( $query == 'language' ) { // only language left!
+			$queryResult = $this->dbr->query( $sql );
+		} else {
+			$queryResult = $this->dbr->select(
+				$this->table, $this->vars, $this->conds, __METHOD__,
+				$this->options, $this->join_cond
+			);
+		}
 
 		# == Process query
 		switch( $query ) {
@@ -219,25 +248,31 @@ class SpecialSuggest extends SpecialPage {
 		# if ($actual_query==$fallback_query)
 		#	return $actual_query;
 
-		$sql = "SELECT * FROM (SELECT ";
-
-		$sql_with_comma = $sql;
 		foreach ( $fields as $field ) {
-			$sql = $sql_with_comma;
-			$sql .= "COALESCE(actual.$field, fallback.$field) as $field";
-			$sql_with_comma = $sql;
-			$sql_with_comma .= ", ";
+			$vars[] =  "COALESCE(actual.{$field}, fallback.{$field}) as {$field}";
 		}
 
-		$sql .= " FROM ";
-		$sql .=	" ( $fallback_query ) AS fallback";
-		$sql .=	" LEFT JOIN ";
-		$sql .=	" ( $actual_query ) AS actual";
+		$table['fallback'] = "({$fallback_query})";
+		$table['actual'] = "({$actual_query})";
 
 		$field0 = $fields[0]; # slightly presumptuous
-		$sql .=  " ON actual.$field0 = fallback.$field0";
-		$sql .= ") as coalesced";
-		return $sql;
+		$join_conds = array( 'fallback' => array(
+			'LEFT JOIN', "actual.{$field0} = fallback.{$field0}"
+		) );
+
+		$this->sql = $this->dbr->selectSQLText(
+			$table,
+			$vars,
+			null, __METHOD__,
+			null, $join_conds
+		);
+
+		// The sql produced above has errors, this is a quick fix ~he
+		$this->sql = str_replace( "`.`", '.', $this->sql );
+		$this->sql = str_replace( "``", '`', $this->sql );
+		$this->sql = str_replace( "`(", '(', $this->sql );
+		$this->sql = str_replace( ")`", ')', $this->sql );
+
 	}
 
 	/**
@@ -245,7 +280,7 @@ class SpecialSuggest extends SpecialPage {
 	 * in the user language or in English
 	 */
 	private function getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, $attributesType ) {
-		global $wgDefaultClassMids, $wgLang, $wgIso639_3CollectionId, $wgDBprefix;
+		global $wgDefaultClassMids, $wgIso639_3CollectionId, $wgDBprefix;
 
 		$classMids = $wgDefaultClassMids ;
 
@@ -286,54 +321,117 @@ class SpecialSuggest extends SpecialPage {
 			}
 		}
 
-		$filteredAttributesRestriction = $this->getFilteredAttributesRestriction( $annotationAttributeId );
+		$this->getFilteredAttributesRestriction( $annotationAttributeId );
 
 		// fallback is English, and second fallback is the DM id
+			$this->vars = array(
+				'object_id',
+				'attribute_mid'
+			);
 		if ( $this->userLangId != WLD_ENGLISH_LANG_ID ) {
-			$sql = "SELECT object_id, attribute_mid, COALESCE( exp_lng.spelling, exp_en.spelling, attribute_mid ) AS spelling" ;
+			$this->vars['spelling'] = 'COALESCE( exp_lng.spelling, exp_en.spelling, attribute_mid )';
 		} else {
-			$sql = "SELECT object_id, attribute_mid, COALESCE( exp_en.spelling, attribute_mid ) AS spelling" ;
+			$this->vars['spelling'] = 'COALESCE( exp_en.spelling, attribute_mid )';
 		}
-		$sql .= " FROM {$wgDBprefix}{$this->dc}_bootstrapped_defined_meanings bdm, {$wgDBprefix}{$this->dc}_class_attributes clatt" ;
+		$table = array(
+			'bdm' => "{$this->dc}_bootstrapped_defined_meanings",
+			'clatt' => "{$this->dc}_class_attributes"
+		);
+		$tables = $this->getTableSQL( $table );
 		if ( $this->userLangId != WLD_ENGLISH_LANG_ID ) {
-			$sql .= " LEFT JOIN ( {$wgDBprefix}{$this->dc}_syntrans synt_lng, {$wgDBprefix}{$this->dc}_expression exp_lng )" .
-				" ON ( clatt.attribute_mid = synt_lng.defined_meaning_id" .
-				" AND exp_lng.expression_id = synt_lng.expression_id" .
-				" AND exp_lng.language_id = " . $this->userLangId . " )" ;
+			$table = null; $join_cond = null;
+			$table['synt_lng'] = "{$this->dc}_syntrans";
+			$table['exp_lng'] = "{$this->dc}_expression";
+			$join_cond['synt_lng'] = array(
+				'LEFT JOIN', array(
+					'clatt.attribute_mid = synt_lng.defined_meaning_id',
+					'exp_lng.expression_id = synt_lng.expression_id',
+					"exp_lng.language_id = {$this->userLangId}"
+				)
+			);
+			$addJoinTable = $this->getComplexTableJoin( $table, $join_cond );
+			$tables .= " $addJoinTable";
 		}
-		$sql .= " LEFT JOIN ( {$wgDBprefix}{$this->dc}_syntrans synt_en, {$wgDBprefix}{$this->dc}_expression exp_en )" .
-			" ON ( clatt.attribute_mid = synt_en.defined_meaning_id" .
-			" AND exp_en.expression_id = synt_en.expression_id" .
-			" AND exp_en.language_id = " . WLD_ENGLISH_LANG_ID . " )" ; // English
+		$table = null; $join_cond = null;
+		$table['synt_en'] = "{$this->dc}_syntrans";
+		$table['exp_en'] = "{$this->dc}_expression";
+		$join_cond['synt_en'] = array(
+			'LEFT JOIN', array(
+				'clatt.attribute_mid = synt_en.defined_meaning_id',
+				'exp_en.expression_id = synt_en.expression_id',
+				'exp_en.language_id = ' . WLD_ENGLISH_LANG_ID
+			)
+		);
+		$addJoinTable = $this->getComplexTableJoin( $table, $join_cond );
+		$tables .= " $addJoinTable";
+		$this->table = $tables;
 
-		$sql .= " WHERE bdm.name = " . $this->dbr->addQuotes( $attributesLevel ) .
-			" AND bdm.defined_meaning_id = clatt.level_mid" .
-			" AND clatt.attribute_type = " . $this->dbr->addQuotes( $attributesType ) .
-			$filteredAttributesRestriction . " ";
+		$this->conds = array(
+			'bdm.name' => $attributesLevel,
+			'bdm.defined_meaning_id = clatt.level_mid',
+			'clatt.attribute_type' => $attributesType // lacks $filteredAttributesRestriction
+		);
 
 		if ( $this->userLangId != WLD_ENGLISH_LANG_ID ) {
-			$sql .= " AND synt_lng.remove_transaction_id IS NULL" ;
+			$this->conds['synt_lng.remove_transaction_id'] = null;
 		}
-		$sql .= " AND synt_en.remove_transaction_id IS NULL" ;
+		$this->conds['synt_en.remove_transaction_id'] = null;
+		$this->conds['clatt.remove_transaction_id'] = null;
 
-		$sql .=
-			' AND clatt.remove_transaction_id IS NULL ' .
-			" AND (clatt.class_mid IN (" .
-			' SELECT class_mid ' .
-			" FROM  {$wgDBprefix}{$this->dc}_class_membership clmem" .
-			" WHERE clmem.class_member_mid = " . $definedMeaningId .
-			' AND clmem.remove_transaction_id IS NULL ' .
-			' )' ;
+		$iniConds = 'clatt.class_mid IN ( ';
+		$insertSQL = $this->dbr->selectSQLText(
+			array(
+				'clmem' => "{$this->dc}_class_membership"
+			), 'class_mid',
+			array(
+				"clmem.class_member_mid = {$definedMeaningId}",
+				'clmem.remove_transaction_id' => null
+			), __METHOD__
+		);
+		$insertSQL = preg_replace( '/,$/', '', $insertSQL );
 
 		if ( count( $classMids ) > 0 ) {
-			$sql .= " OR clatt.class_mid IN (" . join( $classMids, ", " ) . ")";
+			$finalConds = "OR clatt.class_mid IN (" . join( $classMids, ", " ) . ")";
 		}
-		$sql .= ')';
+		$this->conds[] = "{$iniConds}{$insertSQL} ) {$finalConds}";
 
 		// group by to obtain unicity
-		$sql .= ' GROUP BY object_id';
+		$this->options['GROUP BY'] = 'object_id';
+	}
 
-		return $sql;
+	private function getTableSQL( $table ) {
+		$queryResult = $this->dbr->selectSQLText(
+			$table, 'temp', null, __METHOD__
+		);
+		$queryResult = str_replace( '`', '', $queryResult );
+		$queryResult = preg_replace( '/' . "SELECT .+ FROM " . '/', '', $queryResult );
+		return $queryResult;
+	}
+
+	private function getComplexTableJoin( $table, $join_cond ) {
+		// get join key
+		foreach( $join_cond as $key => $value ) {
+			$joinTableKey = $key;
+			$joinTypeKey = $value[0];
+		}
+		foreach( $table as $key => $value ) {
+			$tempTable['key'] = "`$value` `$key`";
+			preg_match( '/' . $joinTableKey . '/', $tempTable['key'] , $match );
+			if ( $match ) {
+				$replaceThis = $tempTable['key'];
+			} else {
+				$remove_this = $tempTable['key'];
+			}
+		}
+		$queryResult = $this->dbr->selectSQLText(
+			$table, 'temp', null, __METHOD__, null, $join_cond
+		);
+		$queryResult = preg_replace( '/' . $remove_this . ',/', '', $queryResult );
+		$queryResult = preg_replace( '/' . "$remove_this $joinTypeKey" . '/', $joinTypeKey, $queryResult );
+		$queryResult = preg_replace( '/' . "$replaceThis" . '/', "( $replaceThis, $remove_this )", $queryResult );
+		$queryResult = preg_replace( '/' . "SELECT .+ FROM " . '/', '', $queryResult );
+		$queryResult = str_replace( '`', '', $queryResult );
+		return $queryResult;
 	}
 
 	private function getPropertyToColumnFilterForAttribute( $annotationAttributeId ) {
@@ -382,116 +480,122 @@ class SpecialSuggest extends SpecialPage {
 			$filteredAttributes = $propertyToColumnFilter->attributeIDs;
 
 			if ( count( $filteredAttributes ) > 0 ) {
-				$result = " AND clatt.attribute_mid IN (" . join( $filteredAttributes, ", " ) . ")";
+				$this->conds[] = "clatt.attribute_mid IN (" . join( $filteredAttributes, ", " ) . ")";
 			} else {
-				$result = " AND 0 ";
+				$this->conds[] = '0';
 			}
 		}
 		else {
 			$allFilteredAttributes = $this->getAllFilteredAttributes();
 
 			if ( count( $allFilteredAttributes ) > 0 ) {
-				$result = " AND clatt.attribute_mid NOT IN (" . join( $allFilteredAttributes, ", " ) . ")";
-			} else {
-				$result = "";
+				$this->conds[] = "clatt.attribute_mid NOT IN (" . join( $allFilteredAttributes, ", " ) . ")";
 			}
 		}
-
-		return $result;
 	}
 
 	/**
-	 * sql query used to select a DM in a DM-DM relation
+	 * @return sql parameters for query needed to select a DM in a DM-DM relation
 	 */
-	private function getSQLForDMs() {
-		$sql = $this->dbr->selectSQLText(
-			array( // tables
-				'exp' => "{$this->dc}_expression",
-				'synt' => "{$this->dc}_syntrans"
-			),
-			array( // fields
-				'defined_meaning_id' => 'synt.defined_meaning_id',
-				'spelling' => 'exp.spelling',
-				'language_id' => 'exp.language_id'
-			),
-			array( // where
-				'exp.remove_transaction_id' => null
-			), __METHOD__,
-			array( 'STRAIGHT_JOIN' ), // options
-			array( 'synt' => array( 'JOIN', array(
-				'exp.expression_id = synt.expression_id',
-				'synt.identical_meaning' => 1,
-				'synt.remove_transaction_id' => null
-			)))
+	private function getParametersForDMs() {
+		$this->table = array( // tables
+			'exp' => "{$this->dc}_expression",
+			'synt' => "{$this->dc}_syntrans"
 		);
-		return $sql;
-	}
-
-	/**
-	 * sql query used to select a syntrans in a syntrans-syntrans relation
-	 */
-	private function getSQLForSyntranses() {
-		$sql = $this->dbr->selectSQLText(
-			array( // tables
-				'exp' => "{$this->dc}_expression",
-				'synt' => "{$this->dc}_syntrans"
-			),
-			array( // fields
-				'syntrans_sid' => 'synt.syntrans_sid',
-				'defined_meaning_id' => 'synt.defined_meaning_id',
-				'spelling' => 'exp.spelling',
-				'language_id' => 'exp.language_id'
-			),
-			array( // where
-				'exp.remove_transaction_id' => null
-			), __METHOD__,
-			array( 'STRAIGHT_JOIN' ), // options
-			array( 'synt' => array( 'JOIN', array(
-				'exp.expression_id = synt.expression_id',
-				'synt.identical_meaning' => 1,
-				'synt.remove_transaction_id' => null
-			)))
+		$this->vars = array( // fields
+			'defined_meaning_id' => 'synt.defined_meaning_id',
+			'spelling' => 'exp.spelling',
+			'language_id' => 'exp.language_id'
 		);
-		return $sql;
+		$this->conds = array( // where
+			'exp.remove_transaction_id' => null
+		);
+		$this->options = array( 'STRAIGHT_JOIN' ); // options
+		$this->join_cond = array( 'synt' => array( 'JOIN', array(
+			'exp.expression_id = synt.expression_id',
+			'synt.identical_meaning' => 1,
+			'synt.remove_transaction_id' => null
+		)));
 	}
 
 	/**
-	 * Returns the name of all classes and their spelling in the user language or in English
+	 * @return sql parameters for query used to select a syntrans in a syntrans-syntrans relation
 	 */
-	private function getSQLForClasses() {
-		global $wgDBprefix;
+	private function getParametersForSyntranses() {
+		$this->table = array( // tables
+			'exp' => "{$this->dc}_expression",
+			'synt' => "{$this->dc}_syntrans"
+		);
+		$this->vars = array( // fields
+			'syntrans_sid' => 'synt.syntrans_sid',
+			'defined_meaning_id' => 'synt.defined_meaning_id',
+			'spelling' => 'exp.spelling',
+			'language_id' => 'exp.language_id'
+		);
+		$this->conds = array( // where
+			'exp.remove_transaction_id' => null
+		);
+		$this->options = array( 'STRAIGHT_JOIN' ); // options
+		$this->join_cond = array( 'synt' => array( 'JOIN', array(
+			'exp.expression_id = synt.expression_id',
+			'synt.identical_meaning' => 1,
+			'synt.remove_transaction_id' => null
+		)));
+	}
 
-		// exp.spelling, txt.text_text
-		$sql = "SELECT member_mid, spelling " .
-			" FROM {$wgDBprefix}{$this->dc}_collection_contents col_contents, {$wgDBprefix}{$this->dc}_collection col, {$wgDBprefix}{$this->dc}_syntrans synt," .
-			" {$wgDBprefix}{$this->dc}_expression exp, {$wgDBprefix}{$this->dc}_defined_meaning dm" .
-			" WHERE col.collection_type='CLAS' " .
-			" AND col_contents.collection_id = col.collection_id " .
-			" AND synt.defined_meaning_id = col_contents.member_mid " .
-//			" AND synt.identical_meaning=1 " .
-			" AND exp.expression_id = synt.expression_id " .
-			" AND dm.defined_meaning_id = synt.defined_meaning_id " ;
+	/**
+	 * @return parameters needed to produce the name of all classes and their spelling
+	 *	in the user language or in English
+	 */
+	private function getParametersForClasses() {
+		$this->table = array(
+			'col_contents' => "{$this->dc}_collection_contents",
+			'col' => "{$this->dc}_collection",
+			'synt' => "{$this->dc}_syntrans",
+			'exp' => "{$this->dc}_expression",
+			'dm' => "{$this->dc}_defined_meaning"
+		);
+		$this->vars = array( 'member_mid', 'spelling' );
+		$this->conds = array(
+			"col.collection_type='CLAS'",
+			"col_contents.collection_id = col.collection_id",
+			"synt.defined_meaning_id = col_contents.member_mid",
+//			"synt.identical_meaning" => 1,
+			"exp.expression_id = synt.expression_id",
+			"dm.defined_meaning_id = synt.defined_meaning_id"
+		);
 
 		// fallback is English
-		$sql .= " AND ( exp.language_id= " . $this->userLangId ;
+		$iniCond = "exp.language_id = {$this->userLangId} ";
 		if ( $this->userLangId != WLD_ENGLISH_LANG_ID ) {
-			$sql .= ' OR ( ' .
-				' language_id= ' . WLD_ENGLISH_LANG_ID .
-				" AND NOT EXISTS ( SELECT * FROM {$wgDBprefix}{$this->dc}_syntrans synt2, {$wgDBprefix}{$this->dc}_expression exp2 WHERE synt2.defined_meaning_id = synt.defined_meaning_id AND exp2.expression_id = synt2.expression_id AND exp2.language_id={$userlang} AND synt2.remove_transaction_id IS NULL LIMIT 1 ) ) " ;
+			$notExistsQuery = $this->dbr->selectSQLText(
+				array(
+					'synt2' => "{$this->dc}_syntrans",
+					'exp2' => "{$this->dc}_expression"
+				),
+				'*',
+				array(
+					'synt2.defined_meaning_id = synt.defined_meaning_id',
+					'exp2.expression_id = synt2.expression_id',
+					'exp2.language_id' => $this->userLangId,
+					'synt2.remove_transaction_id' => null
+				), __METHOD__,
+				array( 'LIMIT' => 1 )
+			);
+			$iniCond .= " OR ( language_id = " . WLD_ENGLISH_LANG_ID .
+				" AND NOT EXISTS ( {$notExistsQuery} ) ) " ;
 		}
-		$sql .= ' ) ' ;
+		$this->conds[] = $iniCond;
 
-		$sql .= " AND " . getLatestTransactionRestriction( "col" ) .
-			" AND " . getLatestTransactionRestriction( "col_contents" ) .
-			" AND " . getLatestTransactionRestriction( "synt" ) .
-			" AND " . getLatestTransactionRestriction( "exp" ) .
-			" AND " . getLatestTransactionRestriction( "dm" ) ;
+		$this->conds['col.remove_transaction_id'] = null;
+		$this->conds['col_contents.remove_transaction_id'] = null;
+		$this->conds['synt.remove_transaction_id'] = null;
+		$this->conds['exp.remove_transaction_id'] = null;
+		$this->conds['dm.remove_transaction_id'] = null;
 
-		return $sql;
 	}
 
 	private function getSQLForCollectionOfType( $collectionType, $language = "<ANY>" ) {
-		global $wgDBprefix;
 		$cond = array(
 			'colcont.collection_id = col.collection_id',
 			'col.collection_type' => $collectionType,
@@ -522,18 +626,24 @@ class SpecialSuggest extends SpecialPage {
 
 		return $sql;
 	}
-	private function getSQLForCollection() {
-		global $wgDBprefix;
 
-		$sql = "SELECT collection_id, spelling " .
-			" FROM {$wgDBprefix}{$this->dc}_expression exp, {$wgDBprefix}{$this->dc}_collection col, {$wgDBprefix}{$this->dc}_syntrans synt, {$wgDBprefix}{$this->dc}_defined_meaning dm " .
-			" WHERE exp.expression_id=synt.expression_id " .
-			" AND synt.defined_meaning_id=col.collection_mid " .
-			" AND dm.defined_meaning_id = synt.defined_meaning_id " ;
-//			" AND synt.identical_meaning=1" .
+	private function getParametersForCollection() {
+		$this->table = array(
+			'exp' => "{$this->dc}_expression",
+			'col' => "{$this->dc}_collection",
+			'synt' => "{$this->dc}_syntrans",
+			'dm' => "{$this->dc}_defined_meaning"
+		);
+		$this->vars = array( 'collection_id', 'spelling' );
+		$this->conds = array(
+			'exp.expression_id=synt.expression_id',
+			'synt.defined_meaning_id=col.collection_mid',
+			'dm.defined_meaning_id = synt.defined_meaning_id',
+			'synt.identical_meaning=1'
+		);
 
 		// fallback is English
-		$sql .= " AND ( exp.language_id= " . $this->userLangId ;
+		$iniCond = "exp.language_id = {$this->userLangId} ";
 		if ( $this->userLangId != WLD_ENGLISH_LANG_ID ) {
 			$notExistsQuery = $this->dbr->selectSQLText(
 				array(
@@ -548,36 +658,35 @@ class SpecialSuggest extends SpecialPage {
 				), __METHOD__,
 				array( 'LIMIT' => 1 )
 			);
-
-			$sql .= ' OR ( ' .
-				' language_id= ' . WLD_ENGLISH_LANG_ID .
-				' AND NOT EXISTS ( ' . $notExistsQuery . ' )' ;
-			$sql .= ' ) ' ; // or
+			$iniCond .= " OR ( language_id = " . WLD_ENGLISH_LANG_ID .
+				" AND NOT EXISTS ( {$notExistsQuery} ) ) " ;
 		}
-		$sql .= ' ) ' ; // and
+		$this->conds[] = $iniCond;
 
-		$sql .= ' AND synt.remove_transaction_id IS NULL ' .
-			' AND exp.remove_transaction_id IS NULL ' .
-			' AND col.remove_transaction_id IS NULL ' .
-			' AND dm.remove_transaction_id IS NULL ';
-
-		return $sql;
+		$this->conds['col.remove_transaction_id'] = null;
+		$this->conds['synt.remove_transaction_id'] = null;
+		$this->conds['exp.remove_transaction_id'] = null;
+		$this->conds['dm.remove_transaction_id'] = null;
 	}
 
-	private function getSQLForLevels( ) {
-		global $wgWldClassAttributeLevels, $wgWikidataDataSet;
+	private function getParametersForLevels( ) {
+		global $wgWldClassAttributeLevels;
 
 		// TO DO: Add support for multiple languages here
-		return
-			selectLatest(
-				array( $wgWikidataDataSet->bootstrappedDefinedMeanings->definedMeaningId, $wgWikidataDataSet->expression->spelling ),
-				array( $wgWikidataDataSet->definedMeaning, $wgWikidataDataSet->expression, $wgWikidataDataSet->bootstrappedDefinedMeanings ),
-				array(
-					'name IN (' . implodeFixed( $wgWldClassAttributeLevels ) . ')',
-					equals( $wgWikidataDataSet->definedMeaning->definedMeaningId, $wgWikidataDataSet->bootstrappedDefinedMeanings->definedMeaningId ),
-					equals( $wgWikidataDataSet->definedMeaning->expressionId, $wgWikidataDataSet->expression->expressionId )
-				)
-			);
+		$this->table = array(
+			'dm' => "{$this->dc}_defined_meaning",
+			'exp' => "{$this->dc}_expression",
+			'bsdm' =>"{$this->dc}_bootstrapped_defined_meanings"
+		);
+		$this->vars = array(
+			'bsdm.defined_meaning_id',
+			'exp.spelling'
+		);
+		$this->conds = array(
+			'name IN (' . implodeFixed( $wgWldClassAttributeLevels ) . ')',
+			'dm.defined_meaning_id = bsdm.defined_meaning_id',
+			'dm.expression_id = exp.expression_id'
+		);
 	}
 
 	private function getRelationTypeAsRecordSet( $queryResult ) {
