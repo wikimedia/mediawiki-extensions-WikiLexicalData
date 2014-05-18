@@ -71,8 +71,11 @@ class WikiLexicalDataHooks {
 		);
 
 		$owLanguageNames = getOwLanguageNames();
-		$col = new Collator('en_US.utf8');
-		$col->asort( $owLanguageNames );
+		// There are PHP that does not have the Collator class. ~he
+		if ( class_exists( 'Collator', false ) ) {
+			$col = new Collator('en_US.utf8');
+			$col->asort( $owLanguageNames );
+		}
 		foreach ( $owLanguageNames as $language_id => $language_name ) {
 			$preferences['ow_language_filter_list']['options'][$language_name] = $language_id ;
 		}
