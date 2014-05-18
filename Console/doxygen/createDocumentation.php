@@ -44,6 +44,8 @@ class CreateDocumentation extends Maintenance {
 		$this->readTemplateConfigFile( $config, $configFinal );
 
 		// create a command to execute.
+		$this->output( "updating...\ndoxygen -u $configFinal\n\n" );
+		exec( "doxygen -u $configFinal" );
 		$this->output( "executing...\ndoxygen $configFinal\n\n" );
 		exec( "doxygen $configFinal" );
 
@@ -60,12 +62,13 @@ class CreateDocumentation extends Maintenance {
 
 		if ( file_exists( 'Console/doxygen/' . $filename ) ) {
 			$this->output( "Preparing file..\n\n" );
+			$this->output( "copy Console/doxygen/" . $filename . " $configFinal\n\n" );
 			copy( 'Console/doxygen/' . $filename, $configFinal );
 		} else {
 			die( "template file not found..\n\n" );
 		}
 
-		$this->output( "Parsing config file $configFinal...\n\n" );
+		$this->output( "\nParsing config file $configFinal...\n\n" );
 
 		$str = file_get_contents( $configFinal );
 		$wldBase = dirname( __FILE__ ) . '/../';
