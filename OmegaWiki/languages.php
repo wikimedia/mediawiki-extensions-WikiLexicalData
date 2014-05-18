@@ -4,33 +4,62 @@
  */
 require_once( 'WikiDataGlobals.php' );
 
+/** @brief PHP API class for WikiLexicalData Extension's Language
+ */
+class WLDLanguage {
+
+	/* @return Return an array containing all language names translated into the language
+	 *	indicated by $code, with fallbacks in English where the language names
+	 *	aren't present in that language.
+	 * @see use OwDatabaseAPI::getOwLanguageNames instead
+	 */
+	function getNames( $code ) {
+		$dbr = wfGetDB( DB_SLAVE );
+		$names = array();
+		$sql = getSQLForLanguageNames( $code );
+		$lang_res = $dbr->query( $sql ); // function getSQLForLanguageNames creates SQL with MySQL prefix
+		while ( $lang_row = $dbr->fetchObject( $lang_res ) )
+			$names[$lang_row->row_id] = $lang_row->language_name;
+		return $names;
+	}
+
+	function getCodeForIso639_3( $iso639_3 ) {
+		$dbr = wfGetDB( DB_SLAVE );
+		$wikimediaKey = $dbr->selectField(
+			'language',
+			'wikimedia_key',
+			array(
+				"iso639_3 LIKE '$iso639_3%'",
+				'wikimedia_key <> ' . "''"
+			), __METHOD__
+		);
+
+		if ( $wikimediaKey ) {
+			return $wikimediaKey;
+		}
+		return null;
+	}
+
+}
+
 /**
  * @param $purge purge cache
  * @return array of language names for the user's language preference
+ * @todo for deprecation, use OwDatabaseAPI::getOwLanguageNames instead
  **/
 function getOwLanguageNames( $purge = false ) {
-	global $wgUser;
-	static $owLanguageNames = null;
-	if ( is_null( $owLanguageNames ) && !$purge ) {
-		if ( !$owLanguageNames = getLangNames( $wgUser->mOptionOverrides['language'] ) ) {
-			global $wgLang;
-			$owLanguageNames = getLangNames( $wgLang->getCode() );
-		}
-	}
-	return $owLanguageNames;
+		require_once( 'OmegaWikiDatabaseAPI.php' );
+		return OwDatabaseAPI::getOwLanguageNames( $purge );
 }
 
-/* Return an array containing all language names translated into the language
-	indicated by $code, with fallbacks in English where the language names
-	aren't present in that language. */
+/* @return Return an array containing all language names translated into the language
+ *	indicated by $code, with fallbacks in English where the language names
+ *	aren't present in that language.
+ * @todo for deprecation, use OwDatabaseAPI::getOwLanguageNames instead
+ */
 function getLangNames( $code ) {
-	$dbr = wfGetDB( DB_SLAVE );
-	$names = array();
-	$sql = getSQLForLanguageNames( $code );
-	$lang_res = $dbr->query( $sql ); // function getSQLForLanguageNames creates SQL with MySQL prefix
-	while ( $lang_row = $dbr->fetchObject( $lang_res ) )
-		$names[$lang_row->row_id] = $lang_row->language_name;
-	return $names;
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	return OwDatabaseAPI::getLangNames( $code );
 }
 
 function getLanguageIdForCode( $code ) {

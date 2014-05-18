@@ -43,6 +43,78 @@ class OwDatabaseAPI {
 
 	/*! @} group OwDbAPIdmFn ends here.*/
 
+	/** @addtogroup OwDbAPIlangFn OwDatabaseAPI's language functions
+	 *	@{
+	 */
+
+	/**
+	 * @brief returns the User Language Id
+	 *
+	 * @return language id
+	 * @return if not exist, null
+	 *
+	 * @todo transfer function to language api class.
+	 */
+	public static function getUserLanguageId() {
+		global $wgLang;
+		if ( !$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ) {
+			$code = OwDatabaseAPI::getLanguageCodeForIso639_3( $wgLang->getCode() );
+			$userLanguageId = getLanguageIdForCode( $code );
+		}
+		return $userLanguageId;
+	}
+
+	/**
+	 * @brief returns the User Language Id
+	 *
+	 * @return language id
+	 * @return if not exist, null
+	 *
+	 * @todo transfer function to language api class.
+	 */
+	public static function getUserLanguage() {
+		global $wgLang;
+		if ( !$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ) {
+			$userLanguage = OwDatabaseAPI::getLanguageCodeForIso639_3( $wgLang->getCode() );
+		} else {
+			$userLanguage = $wgLang->getCode();
+		}
+
+		return $userLanguage;
+	}
+
+	/**
+	 * @param $purge purge cache
+	 * @return array of language names for the user's language preference
+	 */
+	static function getOwLanguageNames( $purge = false ) {
+		static $owLanguageNames = null;
+		if ( is_null( $owLanguageNames ) && !$purge ) {
+			$userLanguage = owDatabaseAPI::getUserLanguage();
+			$owLanguageNames = getLangNames( $userLanguage );
+		}
+		return $owLanguageNames;
+	}
+
+	/* @return Return an array containing all language names translated into the language
+	 *	indicated by $code, with fallbacks in English where the language names
+	 *	aren't present in that language.
+	 * @see WLDLanguage::getNames
+	 */
+	static function getLangNames( $code ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'language' );
+		return $api->Language->getNames( $code );
+	}
+
+	static function getLanguageCodeForIso639_3( $iso639_3 ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'language' );
+		return $api->Language->getCodeForIso639_3( $iso639_3 );
+	}
+
+	/*! @} group OwDbAPIlangFn ends here.*/
+
 	/** @addtogroup OwDbAPIrelAttFn OwDatabaseAPI's relations Attribute functions
 	 *	@{
 	 */
@@ -140,6 +212,7 @@ class OwDatabaseAPI {
 		if ( $class == 'syntrans' ) { $this->Syntrans = new Syntrans; }
 		if ( $class == 'definedMeaning' ) { $this->DefinedMeaning = new DefinedMeanings; }
 		if ( $class == 'transaction' ) { $this->Transaction = new Transactions; }
+		if ( $class == 'language' ) { $this->Language = new WLDLanguage; }
 	}
 
 	/**

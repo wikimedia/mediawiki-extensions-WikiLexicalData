@@ -52,7 +52,7 @@ class OmegaWikiAttributes {
 
 	protected $attributes = array();
 	protected $setup_completed = False;
-	protected $in_setup = False; # for use by functions doing the setup itself (currently hardValues) 
+	protected $in_setup = False; # for use by functions doing the setup itself (currently hardValues)
 	protected $viewInformation = null;
 
 	function __construct( ViewInformation $viewInformation ) {
@@ -78,8 +78,8 @@ class OmegaWikiAttributes {
 		return False;
 	}
 
-	/** Hardcoded schema for now. Later refactor to load from file or DB 
-	 * 
+	/** Hardcoded schema for now. Later refactor to load from file or DB
+	 *
 	 * Naming: keys are previous name minus -"Attribute"
 	 * 	(-"Structure" is retained, -"Attributes" is retained)
 	*/
@@ -185,10 +185,10 @@ class OmegaWikiAttributes {
 		$this->alternativeDefinition = new Attribute( WLD_ALTERNATIVE_DEF, wfMessage( "ow_AlternativeDefinition" )->plain(), $this->translatedTextStructure );
 
 		$this->source = new Attribute( "source-id", wfMessage( "ow_Source" )->plain(), $this->definedMeaningReferenceStructure );
-		
+
 		$this->alternativeDefinitionsStructure =  new Structure( WLD_ALTERNATIVE_DEFINITIONS, $this->definitionId, $this->alternativeDefinition, $this->source );
 		$this->alternativeDefinitions = new Attribute( null, wfMessage( "ow_AlternativeDefinitions" )->plain(), $this->alternativeDefinitionsStructure );
-		
+
 		$this->synonymsTranslationsStructure = new Structure( WLD_SYNONYMS_TRANSLATIONS, $this->identicalMeaning, $this->syntransId, $this->expression );
 		$this->synonymsAndTranslations = new Attribute( null, wfMessage( 'ow_SynonymsAndTranslations' )->plain(), $this->synonymsTranslationsStructure );
 
@@ -198,28 +198,28 @@ class OmegaWikiAttributes {
 		$this->translatedTextAttribute = new Attribute( "translated-text-attribute", wfMessage( "ow_TranslatedTextAttribute" )->plain(), $this->definedMeaningReferenceStructure );
 
 		$this->translatedTextValue = new Attribute( "translated-text-value", wfMessage( "ow_TranslatedTextAttributeValue" )->plain(), $this->translatedTextStructure );
-		
+
 		$this->translatedTextAttributeValuesStructure = new Structure( "translated-text-attribute-values", $this->translatedTextAttributeId, $this->attributeObjectId, $this->translatedTextAttribute, $this->translatedTextValueId, $this->translatedTextValue );
 		$this->translatedTextAttributeValues = new Attribute( null, wfMessage( "ow_TranslatedTextAttributeValues" )->plain(), $this->translatedTextAttributeValuesStructure );
 
 		$this->textAttribute = new Attribute( "text-attribute", wfMessage( "ow_TextAttribute" )->plain(), $this->definedMeaningReferenceStructure );
 		$this->textAttributeValuesStructure = new Structure( WLD_TEXT_ATTRIBUTES_VALUES, $this->textAttributeId, $this->textAttributeObject, $this->textAttribute, $this->text );
 		$this->textAttributeValues = new Attribute( null, wfMessage( "ow_TextAttributeValues" )->plain(), $this->textAttributeValuesStructure );
-		
+
 		$this->linkStructure = new Structure( $this->linkLabel, $this->linkURL );
 		$this->link = new Attribute( "link", wfMessage( 'ow_Link' )->plain(), $this->linkStructure );
 
 		$this->linkAttribute = new Attribute( WLD_LINK_ATTRIBUTE, wfMessage( "ow_LinkAttribute" )->plain(), $this->definedMeaningReferenceStructure );
 		$this->linkAttributeValuesStructure = new Structure( WLD_LINK_ATTRIBUTE_VALUES, $this->linkAttributeId, $this->linkAttributeObject, $this->linkAttribute, $this->link );
 		$this->linkAttributeValues = new Attribute( null, wfMessage( "ow_LinkAttributeValues" )->plain(), $this->linkAttributeValuesStructure );
-		
+
 		$this->optionAttribute = new Attribute( WLD_OPTION_ATTRIBUTE, wfMessage( "ow_OptionAttribute" )->plain(), $this->definedMeaningReferenceStructure );
 		$this->optionAttributeOption = new Attribute( WLD_OPTION_ATTRIBUTE_OPTION, wfMessage( "ow_OptionAttributeOption" )->plain(), $this->definedMeaningReferenceStructure );
 		$this->optionAttributeValuesStructure = new Structure( WLD_OPTION_ATTRIBUTE_VALUES, $this->optionAttributeId, $this->optionAttribute, $this->optionAttributeObject, $this->optionAttributeOption );
 		$this->optionAttributeValues = new Attribute( null, wfMessage( "ow_OptionAttributeValues" )->plain(), $this->optionAttributeValuesStructure );
 		$this->optionAttributeOptionsStructure = new Structure( "option-attribute-options", $this->optionAttributeOptionId, $this->optionAttribute, $this->optionAttributeOption, $this->language );
 		$this->optionAttributeOptions = new Attribute( null, wfMessage( "ow_OptionAttributeOptions" )->plain(), $this->optionAttributeOptionsStructure );
-		
+
 		$this->translatedText = new Attribute( WLD_TRANSLATED_TEXT, wfMessage( "ow_TranslatedText" )->plain(), $this->translatedTextStructure );
 
 		$this->definitionStructure = new Structure( WLD_DEFINITION, $this->translatedText );
@@ -238,7 +238,7 @@ class OmegaWikiAttributes {
 			$this->linkAttributeValues,
 			$this->optionAttributeValues
 		);
-		
+
 		$this->objectAttributes->setAttributeType( $this->objectAttributesStructure );
 		$this->definedMeaningAttributes->setAttributeType( $this->objectAttributesStructure );
 
@@ -270,7 +270,7 @@ class OmegaWikiAttributes {
 		$this->expressionMeanings = new Attribute( null, wfMessage( "ow_ExpressionMeanings" )->plain(), $this->expressionMeaningsStructure );
 		$this->expressionsStructure = new Structure( "expressions", $this->expressionId, $this->expression, $this->expressionMeanings );
 		$this->expressions = new Attribute( null, wfMessage( "ow_Expressions" )->plain(), $this->expressionsStructure );
-		
+
 		$annotatedAttributes = array(
 			$this->definedMeaning,
 			$this->definition,
@@ -282,19 +282,19 @@ class OmegaWikiAttributes {
 			$this->translatedTextAttributeValues,
 			$this->optionAttributeValues
 		);
-		
+
 		foreach ( $annotatedAttributes as $annotatedAttribute ) {
 			$annotatedAttribute->type->addAttribute( $this->objectAttributes );
 		}
 		foreach ( $viewInformation->getPropertyToColumnFilters() as $propertyToColumnFilter ) {
 			$attribute = $propertyToColumnFilter->getAttribute();
 			$attribute->setAttributeType( $this->objectAttributesStructure );
-			
+
 			foreach ( $annotatedAttributes as $annotatedAttribute ) {
 				$annotatedAttribute->type->addAttribute( $attribute );
 			}
 		}
-		
+
 		// Attributes and Structure about transactions
 		$this->transactionId = new Attribute( 'transaction-id', 'Transaction ID', 'integer' );
 		$this->user = new Attribute( 'user', wfMessage( 'ow_User' )->plain(), 'user' );
@@ -324,7 +324,7 @@ class OmegaWikiAttributes {
 		$attributes =& $this->attributes;
 		$attributes[$key] = $value;
 	}
-	
+
 	public function __get( $key ) {
 		if ( !$this->setup() )
 			throw new MwException( "OmegaWikiAttributes accessed, but was not properly initialized" );

@@ -169,11 +169,7 @@ function getNullDefinedMeaningReferenceRecord() {
 }
 
 function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) {
-	global $wgUser;
-	if ( !$userLanguageId = getLanguageIdForCode( $wgUser->mOptionOverrides['language'] ) ) {
-		global $wgLang;
-		$userLanguageId = getLanguageIdForCode( $wgLang->getCode() );
-	}
+	$userLanguageId = owDatabaseAPI::getUserLanguageId();
 
 //	$startTime = microtime(true);
 
@@ -489,7 +485,6 @@ function getExpressionMeaningsRecord( $expressionId, ViewInformation $viewInform
  */
 function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $dc = null ) {
 	wfProfileIn( __METHOD__ );
-	global $wgUser;
 	$o = OmegaWikiAttributes::getInstance();
 
 	$queryResult = null;
@@ -504,11 +499,7 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 
 	} else {
 		// default: is there an expression in the user language?
-		if ( !$userLanguageId = getLanguageIdForCode( $wgUser->mOptionOverrides['language'] ) ) {
-			global $wgLang;
-			$userLanguageId = getLanguageIdForCode( $wgLang->getCode() );
-		}
-		if ( $userLanguageId ) {
+		if ( $userLanguageId = owDatabaseAPI::getUserLanguageId() ) {
 			$expressionLang = $userLanguageId;
 		}
 		// else expressionLang is WLD_ENGLISH_LANG_ID , as defined above
