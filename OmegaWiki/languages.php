@@ -1,6 +1,6 @@
 <?php
 /** @file
- * @todo create a language class for owDatabaseAPI class
+ * @todo create a language class for OwDatabaseAPI class
  */
 require_once( 'WikiDataGlobals.php' );
 

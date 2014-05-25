@@ -201,7 +201,7 @@ function getStaticSuggest( $name, $suggestions, $idColumns = 1, $value = 0, $lab
 }
 
 function getLanguageOptions( $languageIdsToExclude = array() ) {
-	$userLanguage = owDatabaseAPI::getUserLanguage();
+	$userLanguage = OwDatabaseAPI::getUserLanguage();
 	$idNameIndex = getLangNames( $userLanguage );
 
 	$result = array();
@@ -215,7 +215,7 @@ function getLanguageOptions( $languageIdsToExclude = array() ) {
 
 // @note unused	function
 function getLanguageSelect( $name, $languageIdsToExclude = array() ) {
-	$userLanguageId = owDatabaseAPI::getUserLanguageId();
+	$userLanguageId = OwDatabaseAPI::getUserLanguageId();
 
 	return getSelect( $name, getLanguageOptions( $languageIdsToExclude ), $userLanguageId );
 }

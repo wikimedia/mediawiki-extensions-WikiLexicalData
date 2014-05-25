@@ -10,6 +10,12 @@ class SpecialSuggest extends SpecialPage {
 	private $o;
 	private $userLangId;
 
+	private $table;
+	private $vars;
+	private $conds;
+	private $options;
+	private $join_cond;
+
 	function __construct() {
 		parent::__construct( 'Suggest', 'UnlistedSpecialPage' );
 	}
@@ -45,7 +51,7 @@ class SpecialSuggest extends SpecialPage {
 		$syntransId = $request->getVal( 'syntransId' );
 
 		// retrieve languageCode from user global else from lang global
-		$langCode = owDatabaseAPI::getUserLanguage();
+		$langCode = OwDatabaseAPI::getUserLanguage();
 		$this->userLangId = getLanguageIdForCode( $langCode );
 		$sql = '';
 

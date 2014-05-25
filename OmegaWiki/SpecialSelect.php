@@ -4,6 +4,7 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 
 require_once( "Wikidata.php" );
 require_once( "WikiDataGlobals.php" );
+require_once( "OmegaWikiDatabaseAPI.php" );
 
 class SpecialSelect extends SpecialPage {
 	function SpecialSelect() {
@@ -20,8 +21,7 @@ class SpecialSelect extends SpecialPage {
 		$dc = wdGetDataSetContext();
 		$optionAttribute = $wgRequest->getVal( WLD_OPTION_ATTRIBUTE );
 		$attributeObject = $wgRequest->getVal( 'attribute-object', 0 );
-		$lang_code = owDatabaseAPI::getUserLanguage();
-		$lang_id = getLanguageIdForCode( $lang_code );
+		$lang_id = OwDatabaseAPI::getUserLanguageId();
 
 		$dbr = wfGetDB( DB_SLAVE );
 
@@ -61,7 +61,6 @@ class SpecialSelect extends SpecialPage {
 		$optionsArray = array() ;
 		foreach ( $options_res as $options_row ) {
 			$spelling_row = null;
-			$lang_id = getLanguageIdForCode( $lang_code );
 
 			// try to find something with lang_id
 			if ( $lang_id ) {

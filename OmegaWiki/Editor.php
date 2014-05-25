@@ -1160,7 +1160,7 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 
 		$output = "";
 
-		$userLanguageId = owDatabaseAPI::getUserLanguageId();
+		$userLanguageId = OwDatabaseAPI::getUserLanguageId();
 		$definition = getDefinedMeaningDefinition( $definedMeaningId );
 		$definingExpression = definingExpression( $definedMeaningId );
 

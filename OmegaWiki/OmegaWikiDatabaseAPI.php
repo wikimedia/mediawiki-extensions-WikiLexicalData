@@ -117,7 +117,7 @@ class OwDatabaseAPI {
 		if ( is_null( $owLanguageNames ) && !$purge ) {
 			// if code is not given, get user Language.
 			if ( !$code ) {
-				$code = owDatabaseAPI::getUserLanguage();
+				$code = OwDatabaseAPI::getUserLanguage();
 			}
 			$api = new OwDatabaseAPI;
 			$api->settings( 'language' );

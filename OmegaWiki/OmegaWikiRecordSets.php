@@ -169,7 +169,7 @@ function getNullDefinedMeaningReferenceRecord() {
 }
 
 function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) {
-	$userLanguageId = owDatabaseAPI::getUserLanguageId();
+	$userLanguageId = OwDatabaseAPI::getUserLanguageId();
 
 //	$startTime = microtime(true);
 
@@ -499,7 +499,7 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 
 	} else {
 		// default: is there an expression in the user language?
-		if ( $userLanguageId = owDatabaseAPI::getUserLanguageId() ) {
+		if ( $userLanguageId = OwDatabaseAPI::getUserLanguageId() ) {
 			$expressionLang = $userLanguageId;
 		}
 		// else expressionLang is WLD_ENGLISH_LANG_ID , as defined above
