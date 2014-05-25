@@ -16,6 +16,8 @@ require_once( 'DefinedMeaning.php' );
  *
  * @brief This is the unified PHP API class to access the
  * WikiLexical OmegaWiki database.
+ *
+ * @see OwDBAPILanguage.php for Language functions
  */
 class OwDatabaseAPI {
 
@@ -48,16 +50,29 @@ class OwDatabaseAPI {
 	 */
 
 	/**
+	 * Returns a SQL query string for fetching language names in a given language.
+	 * @param $lang_code the language in which to retrieve the language names
+	 * @param $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
+	 * this array can be generated with ViewInformation->getFilterLanguageList() according to user preferences
+	 *
+	 * @see WLDLanguage::getSQLForNames
+	 */
+	function getSQLForLanguageNames( $lang_code, $lang_subset = array() ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'language' );
+		return $api->Language->getSQLForNames( $lang_code, $lang_subset = array() );
+	}
+
+	/**
 	 * @brief returns the User Language Id
 	 *
 	 * @return language id
 	 * @return if not exist, null
-	 *
-	 * @todo transfer function to language api class.
 	 */
 	public static function getUserLanguageId() {
 		global $wgLang;
-		if ( !$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ) {
+		$userLanguageId = getLanguageIdForCode( $wgLang->getCode() );
+		if ( !$userLanguageId ) {
 			$code = OwDatabaseAPI::getLanguageCodeForIso639_3( $wgLang->getCode() );
 			$userLanguageId = getLanguageIdForCode( $code );
 		}
@@ -65,48 +80,57 @@ class OwDatabaseAPI {
 	}
 
 	/**
-	 * @brief returns the User Language Id
+	 * @brief returns the User Language Code
 	 *
-	 * @return language id
+	 * @return language (wikimedia) code
 	 * @return if not exist, null
 	 *
-	 * @todo transfer function to language api class.
+	 * @todo refactor this in the future with getUserLanguageCode, as suggested
+	 *	by Kip. ~he
 	 */
 	public static function getUserLanguage() {
 		global $wgLang;
-		if ( !$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ) {
+		if ( !getLanguageIdForCode( $wgLang->getCode() ) ) {
 			$userLanguage = OwDatabaseAPI::getLanguageCodeForIso639_3( $wgLang->getCode() );
 		} else {
 			$userLanguage = $wgLang->getCode();
 		}
-
 		return $userLanguage;
 	}
 
 	/**
 	 * @param $purge purge cache
-	 * @return array of language names for the user's language preference
+	 * @param $code the language code
+	 *
+	 * @return an array containing all language names translated into the language
+	 *	indicated by $code ( if it exists ), with a fallback in English where the language
+	 *	names aren't present in that language.
+	 * @return In case $code is not given, an array of language names for the
+	 *	user's language preference is given, with a fallback in English where the language
+	 *	names aren't present in that language.
+	 *
+	 * @see WLDLanguage::getNames
+	 * @todo Should we change the name to getLanguageNames instead? ~he
 	 */
-	static function getOwLanguageNames( $purge = false ) {
+	static function getOwLanguageNames( $purge = false, $code = null ) {
 		static $owLanguageNames = null;
 		if ( is_null( $owLanguageNames ) && !$purge ) {
-			$userLanguage = owDatabaseAPI::getUserLanguage();
-			$owLanguageNames = getLangNames( $userLanguage );
+			// if code is not given, get user Language.
+			if ( !$code ) {
+				$code = owDatabaseAPI::getUserLanguage();
+			}
+			$api = new OwDatabaseAPI;
+			$api->settings( 'language' );
+			return $api->Language->getNames( $code );
 		}
 		return $owLanguageNames;
 	}
 
-	/* @return Return an array containing all language names translated into the language
-	 *	indicated by $code, with fallbacks in English where the language names
-	 *	aren't present in that language.
-	 * @see WLDLanguage::getNames
+	/**
+	 * @param iso639_3 int OmegaWiki's improvised iso
+	 * @return the wikimedia code corresponding to the iso639_3 $code
+	 * @see OwDatabaseAPI::getCodeForIso639_3
 	 */
-	static function getLangNames( $code ) {
-		$api = new OwDatabaseAPI;
-		$api->settings( 'language' );
-		return $api->Language->getNames( $code );
-	}
-
 	static function getLanguageCodeForIso639_3( $iso639_3 ) {
 		$api = new OwDatabaseAPI;
 		$api->settings( 'language' );
@@ -206,13 +230,16 @@ class OwDatabaseAPI {
 	 * @param dc    opt'l str The WikiLexicalData dataset
 	 */
 	protected function settings( $class, $dc = null ) {
-		$this->getDc();
+		$this->getDc( $dc );
 
-		if ( $class == 'attributes' ) { $this->Attributes = new Attributes; }
-		if ( $class == 'syntrans' ) { $this->Syntrans = new Syntrans; }
-		if ( $class == 'definedMeaning' ) { $this->DefinedMeaning = new DefinedMeanings; }
-		if ( $class == 'transaction' ) { $this->Transaction = new Transactions; }
-		if ( $class == 'language' ) { $this->Language = new WLDLanguage; }
+		switch( $class ) {
+			case 'attributes': $this->Attributes = new Attributes; break;
+			case 'definedMeaning': $this->DefinedMeaning = new DefinedMeanings; break;
+			case 'language': $this->Language = new WLDLanguage; break;
+			case 'syntrans': $this->Syntrans = new Syntrans; break;
+			case 'transaction': $this->Transaction = new Transactions; break;
+		}
+
 	}
 
 	/**

@@ -2593,8 +2593,7 @@ function definedMeaningExpressionForAnyLanguage( $definedMeaningId ) {
  * @param $definedMeaningId
  */
 function definedMeaningExpression( $definedMeaningId ) {
-	$code = OwDatabaseAPI::getUserLanguage();
-	$userLanguageId = getLanguageIdForCode( $code);
+	$userLanguageId = OwDatabaseAPI::getUserLanguageId();
 
 	$result = '';
 
