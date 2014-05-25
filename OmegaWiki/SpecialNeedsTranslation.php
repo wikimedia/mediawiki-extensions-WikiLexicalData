@@ -3,6 +3,11 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 
 require_once( "Wikidata.php" );
 
+/** @file
+ * @brief A special page that returns expressions that are available in the source
+ * language but has no equivalent in the destination language. The output can be
+ * limited according to the available collections.  The output is randomly generated.
+ */
 class SpecialNeedsTranslation extends SpecialPage {
 	function __construct() {
 		parent::__construct( 'NeedsTranslation' );
@@ -22,7 +27,7 @@ class SpecialNeedsTranslation extends SpecialPage {
 		$destinationLanguageId = array_key_exists( 'to-lang', $_GET ) ? $_GET['to-lang']:'';
 		$collectionId = array_key_exists( 'collection', $_GET ) ? $_GET['collection'] : '';
 		$sourceLanguageId = array_key_exists( 'from-lang', $_GET ) ? $_GET['from-lang'] : '';
-                                                                
+
 		$wgOut->addHTML( getOptionPanel(
 			array(
 				wfMessage( 'ow_needs_xlation_source_lang' )->text() => getSuggest( 'from-lang', 'language', array(), $sourceLanguageId, languageIdAsText( $sourceLanguageId ) ),
@@ -51,69 +56,112 @@ class SpecialNeedsTranslation extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$sqlcount = 'SELECT COUNT(*)' .
-			" FROM ({$dc}_syntrans source_syntrans, {$dc}_expression source_expression)";
+		// get total Expressions needing translation
+		$table = array(
+			'source_syntrans' => "{$dc}_syntrans",
+			'source_expression' => "{$dc}_expression"
+		);
+		$vars[] = "COUNT(*)";
 
-		if ( $collectionId != '' )
-			$sqlcount .= " JOIN {$dc}_collection_contents ON source_syntrans.defined_meaning_id = member_mid";
-
-		$sqlcount .= ' WHERE source_syntrans.expression_id = source_expression.expression_id';
-
-		if ( $sourceLanguageId != '' )
-			$sqlcount .= ' AND source_expression.language_id = ' . $sourceLanguageId;
-		if ( $collectionId != '' )
-			$sqlcount .= " AND {$dc}_collection_contents.collection_id = " . $collectionId .
-				' AND ' . getLatestTransactionRestriction( "{$dc}_collection_contents" );
-
-		$sqlcount .= ' AND NOT EXISTS (' .
-			" SELECT * FROM {$dc}_syntrans destination_syntrans, {$dc}_expression destination_expression" .
-			' WHERE destination_syntrans.expression_id = destination_expression.expression_id AND destination_expression.language_id = ' . $destinationLanguageId .
-			' AND source_syntrans.defined_meaning_id = destination_syntrans.defined_meaning_id' .
-			' AND ' . getLatestTransactionRestriction( 'destination_syntrans' ) .
-			' AND ' . getLatestTransactionRestriction( 'destination_expression' ) .
-			')' .
-			' AND ' . getLatestTransactionRestriction( 'source_syntrans' ) .
-			' AND ' . getLatestTransactionRestriction( 'source_expression' ) ;
-
-		$queryResultCount_r = mysql_query( $sqlcount );
-		$queryResultCount_a = mysql_fetch_row( $queryResultCount_r );
-		$queryResultCount = $queryResultCount_a[0];
-		$nbshown = min ( 100, $queryResultCount ) ;
-
-
-		$sql = 'SELECT source_expression.expression_id AS source_expression_id, source_expression.language_id AS source_language_id, source_expression.spelling AS source_spelling, source_syntrans.defined_meaning_id AS source_defined_meaning_id' .
-			" FROM ({$dc}_syntrans source_syntrans, {$dc}_expression source_expression)";
-
-		if ( $collectionId != '' )
-			$sql .= " JOIN {$dc}_collection_contents ON source_syntrans.defined_meaning_id = member_mid";
-
-		$sql .= ' WHERE source_syntrans.expression_id = source_expression.expression_id';
-
-		if ( $sourceLanguageId != '' )
-			$sql .= ' AND source_expression.language_id = ' . $sourceLanguageId;
-		if ( $collectionId != '' )
-			$sql .= " AND {$dc}_collection_contents.collection_id = " . $collectionId .
-				' AND ' . getLatestTransactionRestriction( "{$dc}_collection_contents" );
-
-		$sql .= ' AND NOT EXISTS (' .
-			" SELECT * FROM {$dc}_syntrans destination_syntrans, {$dc}_expression destination_expression" .
-			' WHERE destination_syntrans.expression_id = destination_expression.expression_id AND destination_expression.language_id = ' . $destinationLanguageId .
-			' AND source_syntrans.defined_meaning_id = destination_syntrans.defined_meaning_id' .
-			' AND ' . getLatestTransactionRestriction( 'destination_syntrans' ) .
-			' AND ' . getLatestTransactionRestriction( 'destination_expression' ) .
-			')' .
-			' AND ' . getLatestTransactionRestriction( 'source_syntrans' ) .
-			' AND ' . getLatestTransactionRestriction( 'source_expression' ) ;
-
-		if ( $queryResultCount > 100 ) {
-			$startnumber = rand ( 0 , $queryResultCount - 100 ) ;
-			$sql .= " LIMIT $startnumber,100";
-		} else {
-			$sql .= ' LIMIT 100';
+		if ( $collectionId != '' ) {
+			$table['colcont'] = "{$dc}_collection_contents";
+			$conds[] = 'source_syntrans.defined_meaning_id = colcont.member_mid';
 		}
 
-		$queryResult = $dbr->query( $sql );
+		$conds[] = 'source_syntrans.expression_id = source_expression.expression_id';
 
+		if ( $sourceLanguageId != '' ) {
+			$conds['source_expression.language_id'] = $sourceLanguageId;
+		}
+		if ( $collectionId != '' ) {
+			$conds['colcont.collection_id'] = $collectionId;
+			$conds['colcont.remove_transaction_id'] = null;
+		}
+
+		$destinationSQL = $dbr->selectSQLText(
+			array(
+				'destination_syntrans' => "{$dc}_syntrans",
+				'destination_expression' => "{$dc}_expression"
+			),
+			'destination_syntrans.defined_meaning_id',
+			array(
+				'destination_syntrans.expression_id = destination_expression.expression_id',
+				'destination_expression.language_id' => $destinationLanguageId,
+				'destination_syntrans.remove_transaction_id' => null,
+				'destination_expression.remove_transaction_id' => null,
+			)
+		);
+		$conds[] = 'source_syntrans.defined_meaning_id NOT IN ( ' . $destinationSQL . ' )';
+
+		$conds['source_syntrans.remove_transaction_id'] = null;
+		$conds['source_expression.remove_transaction_id'] = null;
+
+		$queryResultCount = $dbr->selectField(
+			$table, $vars, $conds, __METHOD__
+		);
+		$nbshown = min ( 100, $queryResultCount ) ;
+
+		// get the actual results
+		$table = null;
+		$vars = null;
+		$conds = null;
+		$options = null;
+
+		$table = array(
+			'src_synt' => 'uw_syntrans',
+			'src_exp' => 'uw_expression',
+		);
+		$vars = array(
+			'source_expression_id' => 'src_exp.expression_id',
+			'source_language_id' => 'src_exp.language_id',
+			'source_spelling' => ' src_exp.spelling',
+			'source_defined_meaning_id' => 'src_synt.defined_meaning_id'
+		);
+
+		if ( $collectionId != '' ) {
+			$table['colcont'] = 'uw_collection_contents';
+			$conds[] = 'src_synt.defined_meaning_id = member_mid';
+		}
+
+		$conds[] = 'src_synt.expression_id = src_exp.expression_id ';
+
+		if ( $sourceLanguageId != '' ) {
+			$conds['src_exp.language_id'] = $sourceLanguageId;
+		}
+
+		if ( $collectionId != '' ) {
+			$conds['colcont.collection_id'] = $collectionId;
+			$conds['colcont.remove_transaction_id'] = null;
+		}
+
+		$destinationSQL = $dbr->selectSQLText(
+			array(
+				'dest_synt' => "{$dc}_syntrans",
+				'dest_exp' => "{$dc}_expression"
+			),
+			'dest_synt.defined_meaning_id',
+			array(
+				'dest_synt.expression_id = dest_exp.expression_id',
+				'dest_exp.language_id' => $destinationLanguageId,
+				'dest_synt.remove_transaction_id' => null,
+				'dest_exp.remove_transaction_id' => null,
+			)
+		);
+		$conds[] = 'src_synt.defined_meaning_id NOT IN ( ' . $destinationSQL . ' )';
+
+		$conds['src_synt.remove_transaction_id'] = null;
+		$conds['src_exp.remove_transaction_id'] = null;
+
+		// limit output and randomize
+		$options['LIMIT'] = 100;
+		if ( $queryResultCount > 100 ) {
+			$startnumber = rand ( 0 , $queryResultCount - 100 ) ;
+			$options['OFFSET'] = $startnumber;
+		}
+
+		$queryResult = $dbr->select(
+			$table, $vars, $conds, __METHOD__, $options
+		);
 
 		$definitionAttribute = new Attribute( "definition", wfMessage( "ow_Definition" )->text(), "definition" );
 
