@@ -1,4 +1,6 @@
 <?php
+/** @note this file is unused.
+ */
 
 require_once( "WikiDataAPI.php" );
 

@@ -2094,11 +2094,14 @@ function isClass( $objectId ) {
 	return false;
 }
 
+/** @note function not used by the main OmegaWiki program.
+ */
 function getCollectionContents( $collectionId ) {
 	global $wgWikidataDataSet;
 
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_SLAVE );
+
 	$queryResult = $dbr->query(
 		selectLatest(
 			array( $wgWikidataDataSet->collectionMemberships->memberMid, $wgWikidataDataSet->collectionMemberships->internalMemberId ),
