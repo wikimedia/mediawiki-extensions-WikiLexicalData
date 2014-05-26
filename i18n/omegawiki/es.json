@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fitoschido"
+		]
+	},
+	"apiow-desc": "Extensión de WikiLexicalData de OmegaWiki para el archivo api.php de MediaWiki"
+}
