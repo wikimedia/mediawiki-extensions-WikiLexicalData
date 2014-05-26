@@ -55,12 +55,12 @@ class OwDatabaseAPI {
 	 * @param $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
 	 * this array can be generated with ViewInformation->getFilterLanguageList() according to user preferences
 	 *
-	 * @see WLDLanguage::getSQLForNames
+	 * @see WLDLanguage::getParametersForNames
 	 */
-	function getSQLForLanguageNames( $lang_code, $lang_subset = array() ) {
+	public static function getParametersForLanguageNames( $lang_code, $lang_subset = array() ) {
 		$api = new OwDatabaseAPI;
 		$api->settings( 'language' );
-		return $api->Language->getSQLForNames( $lang_code, $lang_subset = array() );
+		return $api->Language->getParametersForNames( $lang_code, $lang_subset = array() );
 	}
 
 	/**

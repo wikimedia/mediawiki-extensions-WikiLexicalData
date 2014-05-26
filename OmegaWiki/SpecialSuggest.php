@@ -14,7 +14,7 @@ class SpecialSuggest extends SpecialPage {
 	private $vars;
 	private $conds;
 	private $options;
-	private $join_cond;
+	private $join_conds;
 
 	function __construct() {
 		parent::__construct( 'Suggest', 'UnlistedSpecialPage' );
@@ -53,7 +53,6 @@ class SpecialSuggest extends SpecialPage {
 		// retrieve languageCode from user global else from lang global
 		$langCode = OwDatabaseAPI::getUserLanguage();
 		$this->userLangId = getLanguageIdForCode( $langCode );
-		$sql = '';
 
 		if ( !$this->userLangId ) {
 			// English default
@@ -64,9 +63,8 @@ class SpecialSuggest extends SpecialPage {
 		$this->vars = null;
 		$this->conds = null;
 		$this->options = null;
-		$this->join_cond = null;
+		$this->join_conds = null;
 
-		$sql = '';
 		$rowText = 'spelling';
 		switch ( $query ) {
 			case 'relation-type':
@@ -99,8 +97,13 @@ class SpecialSuggest extends SpecialPage {
 				$this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'OPTN' );
 				break;
 			case 'language':
-				require_once( 'languages.php' );
-				$sql = getSQLForLanguageNames( $langCode, $this->o->getViewInformation()->getFilterLanguageList() );
+				require_once( 'OmegaWikiDatabaseAPI.php' );
+				list (
+					$this->table,
+					$this->vars,
+					$this->conds,
+					$this->join_conds
+				) = OwDatabaseAPI::getParametersForLanguageNames( $langCode, $this->o->getViewInformation()->getFilterLanguageList() );
 				$rowText = 'language_name';
 				break;
 			case WLD_DEFINED_MEANING:
@@ -130,7 +133,6 @@ class SpecialSuggest extends SpecialPage {
 				break;
 		}
 
-		$searchCondition = ''; // remove when not needed
 		if ( $search != '' ) {
 			if ( $query == 'transaction' ) {
 				$this->conds[] = $rowText . $this->dbr->buildLike( $this->dbr->anyString(), $search, $this->dbr->anyString() );
@@ -147,7 +149,6 @@ class SpecialSuggest extends SpecialPage {
 				$this->options['HAVING'] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
 			}
 			elseif ( $query == 'language' ) {
-				$searchCondition = " HAVING $rowText LIKE " . $this->dbr->addQuotes( "%$search%" );
 				$this->options['HAVING'] = $rowText . $this->dbr->buildLike( $this->dbr->anyString(), $search, $this->dbr->anyString() );
 			}
 			elseif ( $query == 'relation-type' ) { // not sure in which case 'relation-type' happens...
@@ -156,8 +157,6 @@ class SpecialSuggest extends SpecialPage {
 			else {
 				$this->conds[] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
 			}
-		} else {
-			$searchCondition = ''; // remove when not needed
 		}
 
 		if ( $query == 'transaction' ) {
@@ -166,16 +165,13 @@ class SpecialSuggest extends SpecialPage {
 			$orderBy = $rowText;
 		}
 
-		$sql .= $searchCondition . " ORDER BY $orderBy LIMIT "; // remove when all $query refactored
 		$this->options['ORDER BY'] = $orderBy;
 
 		if ( $offset > 0 ) {
-			$sql .= " $offset, "; // remove when all $query refactored
 			$this->options['OFFSET'] = $offset;
 		}
 
 		// print only 10 results
-		$sql .= "10"; // remove when all $query refactored
 		$this->options['LIMIT'] = 10;
 
 		// remove duplicates
@@ -185,14 +181,10 @@ class SpecialSuggest extends SpecialPage {
 
 		# == Actual query here
 		// wfdebug("]]]".$sql."\n");
-		if ( $query == 'language' ) { // only language left!
-			$queryResult = $this->dbr->query( $sql );
-		} else {
-			$queryResult = $this->dbr->select(
-				$this->table, $this->vars, $this->conds, __METHOD__,
-				$this->options, $this->join_cond
-			);
-		}
+		$queryResult = $this->dbr->select(
+			$this->table, $this->vars, $this->conds, __METHOD__,
+			$this->options, $this->join_conds
+		);
 
 		# == Process query
 		switch( $query ) {
@@ -345,30 +337,30 @@ class SpecialSuggest extends SpecialPage {
 		);
 		$tables = $this->getTableSQL( $table );
 		if ( $this->userLangId != WLD_ENGLISH_LANG_ID ) {
-			$table = null; $join_cond = null;
+			$table = null; $join_conds = null;
 			$table['synt_lng'] = "{$this->dc}_syntrans";
 			$table['exp_lng'] = "{$this->dc}_expression";
-			$join_cond['synt_lng'] = array(
+			$join_conds['synt_lng'] = array(
 				'LEFT JOIN', array(
 					'clatt.attribute_mid = synt_lng.defined_meaning_id',
 					'exp_lng.expression_id = synt_lng.expression_id',
 					"exp_lng.language_id = {$this->userLangId}"
 				)
 			);
-			$addJoinTable = $this->getComplexTableJoin( $table, $join_cond );
+			$addJoinTable = $this->getComplexTableJoin( $table, $join_conds );
 			$tables .= " $addJoinTable";
 		}
-		$table = null; $join_cond = null;
+		$table = null; $join_conds = null;
 		$table['synt_en'] = "{$this->dc}_syntrans";
 		$table['exp_en'] = "{$this->dc}_expression";
-		$join_cond['synt_en'] = array(
+		$join_conds['synt_en'] = array(
 			'LEFT JOIN', array(
 				'clatt.attribute_mid = synt_en.defined_meaning_id',
 				'exp_en.expression_id = synt_en.expression_id',
 				'exp_en.language_id = ' . WLD_ENGLISH_LANG_ID
 			)
 		);
-		$addJoinTable = $this->getComplexTableJoin( $table, $join_cond );
+		$addJoinTable = $this->getComplexTableJoin( $table, $join_conds );
 		$tables .= " $addJoinTable";
 		$this->table = $tables;
 
@@ -414,9 +406,9 @@ class SpecialSuggest extends SpecialPage {
 		return $queryResult;
 	}
 
-	private function getComplexTableJoin( $table, $join_cond ) {
+	private function getComplexTableJoin( $table, $join_conds ) {
 		// get join key
-		foreach( $join_cond as $key => $value ) {
+		foreach( $join_conds as $key => $value ) {
 			$joinTableKey = $key;
 			$joinTypeKey = $value[0];
 		}
@@ -430,7 +422,7 @@ class SpecialSuggest extends SpecialPage {
 			}
 		}
 		$queryResult = $this->dbr->selectSQLText(
-			$table, 'temp', null, __METHOD__, null, $join_cond
+			$table, 'temp', null, __METHOD__, null, $join_conds
 		);
 		$queryResult = preg_replace( '/' . $remove_this . ',/', '', $queryResult );
 		$queryResult = preg_replace( '/' . "$remove_this $joinTypeKey" . '/', $joinTypeKey, $queryResult );
@@ -517,7 +509,7 @@ class SpecialSuggest extends SpecialPage {
 			'exp.remove_transaction_id' => null
 		);
 		$this->options = array( 'STRAIGHT_JOIN' ); // options
-		$this->join_cond = array( 'synt' => array( 'JOIN', array(
+		$this->join_conds = array( 'synt' => array( 'JOIN', array(
 			'exp.expression_id = synt.expression_id',
 			'synt.identical_meaning' => 1,
 			'synt.remove_transaction_id' => null
@@ -542,7 +534,7 @@ class SpecialSuggest extends SpecialPage {
 			'exp.remove_transaction_id' => null
 		);
 		$this->options = array( 'STRAIGHT_JOIN' ); // options
-		$this->join_cond = array( 'synt' => array( 'JOIN', array(
+		$this->join_conds = array( 'synt' => array( 'JOIN', array(
 			'exp.expression_id = synt.expression_id',
 			'synt.identical_meaning' => 1,
 			'synt.remove_transaction_id' => null
