@@ -16,7 +16,8 @@
 			"Wmr89502270",
 			"Xiaomingyan",
 			"Yfdyh000",
-			"乌拉跨氪"
+			"乌拉跨氪",
+			"Mywood"
 		]
 	},
 	"wikidata-desc": "为各种类型的内容添加类wiki数据库",
@@ -136,7 +137,7 @@
 	"ow_Expressions": "表达式",
 	"ow_IdenticalMeaning": "相同含义？",
 	"ow_IncomingRelations": "并入关系",
-	"ow_GotoSource": "转到源代码",
+	"ow_GotoSource": "前往源代码",
 	"ow_ID": "ID",
 	"ow_Language": "语言",
 	"ow_LinkAttributeHeader": "链接属性",
