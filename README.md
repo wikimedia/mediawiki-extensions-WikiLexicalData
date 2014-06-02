@@ -21,24 +21,30 @@ Subdirectories
 
 Schema
 ------
-@see [Schema](SCHEMA.md)
+[Schema]: md__s_c_h_e_m_a.html
+@see [Schema][Schema]
 
 Policy
 ------
-@see [Policy](POLICY.md)
+[POLICY]: md__p_o_l_i_c_y.html
+@see [Policy][POLICY]
 
 Testing
 -------
-@see [Testing](TESTING.md)
+[TESTING]: md__t_e_s_t_i_n_g.html
+@see [Testing][TESTING]
 
 TODO
 ----
-@see [TODO](TODO.md)
+[TODO]: md__t_o_d_o.html
+@see [TODO][TODO]
 
 WikiLexicalData
 ---------------
-@see [WikiLexicalData](WikiLexicalData.md)
+[WikiLexicalData]: md__wiki_lexical_data.html
+@see [WikiLexicalData][WikiLexicalData]
 
 OmegaWiki
 ---------
-@see [OmegaWiki] (OmegaWiki.md)
+[OmegaWiki]: md__omega_wiki.html
+@see [OmegaWiki][OmegaWiki]
