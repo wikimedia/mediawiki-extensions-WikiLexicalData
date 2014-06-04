@@ -2,7 +2,6 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-
 class SpecialSuggest extends SpecialPage {
 
 	private $dbr;
@@ -34,6 +33,7 @@ class SpecialSuggest extends SpecialPage {
 		require_once( "Wikidata.php" );
 		require_once( "WikiDataTables.php" );
 		require_once( "WikiDataGlobals.php" );
+		require_once( 'OmegaWikiDatabaseAPI.php' );
 
 		$this->o = OmegaWikiAttributes::getInstance();
 		$this->dc = wdGetDataSetContext();
@@ -698,7 +698,7 @@ class SpecialSuggest extends SpecialPage {
 		);
 
 		foreach ( $queryResult as $row ) {
-			$recordSet->addRecord( array( $row->member_mid, $row->spelling, definedMeaningExpression( $row->collection_mid ) ) );
+			$recordSet->addRecord( array( $row->member_mid, $row->spelling, OwDatabaseAPI::getDefinedMeaningExpression( $row->collection_mid ) ) );
 		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $relationTypeAttribute ) );

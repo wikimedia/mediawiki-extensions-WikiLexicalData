@@ -1201,7 +1201,7 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 			if ( ( $userLanguageId != $expression->languageId ) && ( $userLanguageId > 0 )) {
 				// find a translation in the user language if exists
 				// returns "" if not found
-				$translation = definedMeaningExpressionForLanguage( $definedMeaningId, $userLanguageId );
+				$translation = OwDatabaseAPI::getDefinedMeaningExpressionForLanguage( $definedMeaningId, $userLanguageId );
 			}
 			$output = $editLink ;
 			$output .= $definedMeaningAsLink;

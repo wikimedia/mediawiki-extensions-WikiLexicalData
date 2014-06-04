@@ -8,6 +8,7 @@ require_once( 'RecordSetQueries.php' );
 require_once( 'ViewInformation.php' );
 require_once( 'Wikidata.php' );
 require_once( 'WikiDataGlobals.php' );
+require_once( 'OmegaWikiDatabaseAPI.php' );
 
 class OmegaWikiRecordSets {
 
@@ -892,7 +893,7 @@ function getDefinedMeaningReferenceRecord( $definedMeaningId ) {
 
 	$record = new ArrayRecord( $o->definedMeaningReferenceStructure );
 	$record->definedMeaningId = $definedMeaningId;
-	$record->definedMeaningLabel = definedMeaningExpression( $definedMeaningId );
+	$record->definedMeaningLabel = OwDatabaseAPI::getDefinedMeaningExpression( $definedMeaningId );
 	$record->definedMeaningDefiningExpression = definingExpression( $definedMeaningId );
 
 	return $record;

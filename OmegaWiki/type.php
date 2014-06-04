@@ -108,10 +108,12 @@ function languageIdAsText( $languageId ) {
 }
 
 function collectionIdAsText( $collectionId ) {
-	if ( $collectionId > 0 )
-		return definedMeaningExpression( getCollectionMeaningId( $collectionId ) );
-	else
+	if ( $collectionId > 0 ) {
+		require_once( 'OmegaWikiDatabaseAPI.php' );
+		return OwDatabaseAPI::getDefinedMeaningExpression( getCollectionMeaningId( $collectionId ) );
+	} else {
 		return "";
+	}
 }
 
 function timestampAsText( $timestamp ) {
@@ -125,10 +127,12 @@ function definingExpressionAsLink( $definedMeaningId ) {
 }
 
 function definedMeaningAsLink( $definedMeaningId ) {
-	if ( $definedMeaningId > 0 )
-		return createLink( definedMeaningIdAsURL( $definedMeaningId ), definedMeaningExpression( $definedMeaningId ) );
-	else
+	if ( $definedMeaningId > 0 ) {
+		require_once( 'OmegaWikiDatabaseAPI.php' );
+		return createLink( definedMeaningIdAsURL( $definedMeaningId ), OwDatabaseAPI::getDefinedMeaningExpression( $definedMeaningId ) );
+	} else {
 		return "";
+	}
 }
 
 function collectionAsLink( $collectionId ) {
