@@ -50,6 +50,44 @@ class Expressions {
 	public function __construct() {
 	}
 
+	/** @brief creates a new Expression entry.
+	 *
+	 * @param spelling   req'd str
+	 * @param languageId req'd int
+	 * @param option     opt'l arr
+	 *
+	 *	options:
+	 *		updateId int Inserts a transaction id instead of the updated one.
+	 *		dc       str The data set
+	 *
+	 * @note Though you can access this function, it is highly recommended that you
+	 * use the static function OwDatabaseAPI::createExpressionId instead.
+	 */
+	public static function createId( $spelling, $languageId, $options = array() ) {
+		if ( isset( $options['dc'] ) ) {
+			$dc = $options['dc'];
+		} else {
+			$dc = wdGetDataSetContext();
+		}
+		$dbw = wfGetDB( DB_MASTER );
+
+		$expressionId = newObjectId( "{$dc}_expression" );
+		if ( isset( $options['updateId'] ) ) {
+			$updateId = $options['updateId'];
+		} else  {
+			$updateId = getUpdateTransactionId();
+		}
+		$dbw->insert(
+			"{$dc}_expression",
+			array( 'expression_id' => $expressionId,
+				'spelling' => $spelling,
+				'language_id' => $languageId,
+				'add_transaction_id' => $updateId
+			), __METHOD__
+		);
+		return $expressionId;
+	}
+
 	/**
 	 * returns the total number of "Expressions"
 	 *

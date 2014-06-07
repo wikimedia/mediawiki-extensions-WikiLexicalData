@@ -21,6 +21,34 @@ require_once( 'DefinedMeaning.php' );
  */
 class OwDatabaseAPI {
 
+	/** @addtogroup OwDbAPIeFn OwDatabaseAPI's Expression functions
+	 *	@{
+	 */
+
+	/** @brief creates a new Expression entry.
+	 *
+	 * @param spelling   req'd str
+	 * @param languageId req'd int
+	 * @param option     opt'l arr
+	 *
+	 *	options:
+	 *		updateId int Inserts a transaction id instead of the updated one.
+	 *		dc       str The data set
+	 *
+	 * @see Expressions::createId.
+	 */
+	public static function createExpressionId( $spelling, $languageId, $options = array() ) {
+		$api = new OwDatabaseAPI;
+		$dc = null;
+		if ( isset( $options['dc'] ) ) {
+			$dc = $options['dc'];
+		}
+		$api->settings( 'expression', $dc );
+		return $api->Expression->createId( $spelling, $languageId, $options );
+	}
+
+	/*! @} group OwDbAPIeFn ends here.*/
+
 	/** @addtogroup OwDbAPIdmFn OwDatabaseAPI's Defined Meaning functions
 	 *	@{
 	 */
@@ -213,6 +241,26 @@ class OwDatabaseAPI {
 	 *	@{
 	 */
 
+	/** @brief adds Syntrans
+	 * @param spelling         req'd str The expression
+	 * @param languageId       req'd int The language Id
+	 * @param definedMeaningId req'd int The defined Meaning Id of the concept
+	 * @param identicalMeaning req'd str If the word has an identical meaning or not
+	 *	to the concept. 'true' or 'false' only.
+	 * @param options          opt'l arr
+	 * @see Expressions::createId for options.
+	 *
+	 * @see Syntrans::add
+	 */
+	public static function addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning, $options = array() ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'syntrans' );
+		return $api->Syntrans->add( $spelling, $languageId, $definedMeaningId, $identicalMeaning, $options );
+
+		$expression = findOrCreateExpression( $spelling, $languageId, $options );
+		$expression->assureIsBoundToDefinedMeaning( $definedMeaningId, $identicalMeaning );
+	}
+
 	/**
 	 * @param syntransId req'd int The syntrans id
 	 * @param options    opt'l arr An optional parameters
@@ -281,6 +329,7 @@ class OwDatabaseAPI {
 		switch( $class ) {
 			case 'attributes': $this->Attributes = new Attributes; break;
 			case 'definedMeaning': $this->DefinedMeaning = new DefinedMeanings; break;
+			case 'expression': $this->Expression = new Expressions; break;
 			case 'language': $this->Language = new WLDLanguage; break;
 			case 'syntrans': $this->Syntrans = new Syntrans; break;
 			case 'transaction': $this->Transaction = new Transactions; break;
@@ -306,6 +355,27 @@ class OwDatabaseAPI {
  * @brief PHP API class for Syntrans
  */
 class Syntrans {
+
+	public function __construct() {
+		require_once( 'OmegaWikiDatabaseAPI.php' );
+	}
+
+	/** @brief adds Syntrans
+	 * @param spelling         req'd str The expression
+	 * @param languageId       req'd int The language Id
+	 * @param definedMeaningId req'd int The defined Meaning Id of the concept
+	 * @param identicalMeaning req'd str If the word has an identical meaning or not
+	 *	to the concept. 'true' or 'false' only.
+	 * @param options          opt'l arr
+	 * @see Expressions::createId for options.
+	 *
+	 * @note Though you can access this function, it is highly recommended that you
+	 * use the static function OwDatabaseAPI::addSynonymOrTranslation instead.
+	 */
+	public static function add( $spelling, $languageId, $definedMeaningId, $identicalMeaning, $options = array() ) {
+		$expression = findOrCreateExpression( $spelling, $languageId, $options );
+		$expression->assureIsBoundToDefinedMeaning( $definedMeaningId, $identicalMeaning );
+	}
 
 	/**
 	 * @param syntransId req'd int The syntrans id
