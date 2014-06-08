@@ -9,6 +9,18 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 */
 class SpecialPopUpEditor extends SpecialPage {
 
+	// o = OmegaWikiAttributes::getInstance()
+	private $o;
+
+	// html that is output
+	private $output;
+
+	// request variable from MediaWiki
+	private $request;
+
+	// action is view or edit or history
+	private $action;
+
 	function __construct() {
 		parent::__construct( 'PopupEditor', 'UnlistedSpecialPage' );
 	}
@@ -23,28 +35,42 @@ class SpecialPopUpEditor extends SpecialPage {
 		require_once( 'Transaction.php' );
 		require_once( 'WikiDataTables.php' );
 
-		$o = OmegaWikiAttributes::getInstance();
+		$this->o = OmegaWikiAttributes::getInstance();
 
 		// disable standard output
 		$this->getOutput()->disable();
-		$output = '';
+		$this->output = '';
 
 		// get the variables from request
-		$request = $this->getRequest();
+		$this->request = $this->getRequest();
 
 		// view or edit or history, default: view
-		$action = $request->getVal( 'action', 'view' );
+		$this->action = $this->request->getVal( 'action', 'view' );
 
+		// get type of popup
+		$popupType = $this->request->getVal( 'type', '' );
+		if ( $popupType === '' ) {
+			echo "type undefined\n";
+			die();
+		}
+
+		if ( $popupType == 'annotation') {
+			$this->annotation();
+		}
+
+	}
+
+	protected function annotation() {
 		// exists if we edit Syntrans attributes
 		// for the moment we do Syntrans attributes, so we test its existence
-		$syntransId = $request->getVal( 'syntransid', '' );
+		$syntransId = $this->request->getVal( 'syntransid', '' );
 		if ( $syntransId === '' ) {
 			echo "syntransId undefined\n";
 			die();
 		}
 
 		// always exists
-		$definedMeaningId = $request->getVal( 'dmid', '' );
+		$definedMeaningId = $this->request->getVal( 'dmid', '' );
 		if ( $definedMeaningId === '' ) {
 			echo "definedMeaningId undefined\n";
 			die();
@@ -53,7 +79,7 @@ class SpecialPopUpEditor extends SpecialPage {
 		// do we need $idPathFlat or can we put a dummy string?
 		// $idPathLocal = new IdStack( '' );
 		// for the moment we need it because we use the "old" functions to save
-		$idPathFlat = $request->getVal( 'idpathflat', '' );
+		$idPathFlat = $this->request->getVal( 'idpathflat', '' );
 		if ( $idPathFlat === '' ) {
 			echo "idPathFlat undefined\n";
 			die();
@@ -64,18 +90,18 @@ class SpecialPopUpEditor extends SpecialPage {
 
 		// start building the output
 		$id = 'popup-' . $idPathFlat . '-toggleable' ;
-		$output .= Html::openElement ('div', array( 'class' => "popupToggleable", 'id' => $id ));
-		if ( $action !== 'history' ) {
+		$this->output .= Html::openElement ('div', array( 'class' => "popupToggleable", 'id' => $id ));
+		if ( $this->action !== 'history' ) {
 			// show edit, save, cancel buttons in view and edit mode
 			// but not in history mode
-			$output .= $this->getHtmlButtons();
+			$this->output .= $this->getHtmlButtons();
 		}
 
 
 		// ViewInformation and attributes
 		$viewInformation = new ViewInformation();
 
-		switch ( $action ) {
+		switch ( $this->action ) {
 			case 'view':
 				// $viewInformation->viewOrEdit = 'view';
 				$viewInformation->queryTransactionInformation = new QueryLatestTransactionInformation();
@@ -97,19 +123,19 @@ class SpecialPopUpEditor extends SpecialPage {
 
 
 		// Creating the editor
-		$syntransAttributesEditor = $this->getSyntransAttributesEditor( $viewInformation, $o );
+		$syntransAttributesEditor = $this->getSyntransAttributesEditor( $viewInformation );
 
 		// the values (ArrayRecord) to fill the editor
 		$recordArray = getObjectAttributesRecord( $syntransId, $viewInformation, null, "SYNT" );
 
-		if ( $action === 'edit' ) {
+		if ( $this->action === 'edit' ) {
 			// EDIT
-			$output .= $syntransAttributesEditor->edit( $idPathLocal, $recordArray );
+			$this->output .= $syntransAttributesEditor->edit( $idPathLocal, $recordArray );
 
 			// in edit mode, add buttons at the bottom as well
-			$output .= $this->getHtmlButtons();
+			$this->output .= $this->getHtmlButtons();
 
-		} elseif ( $action === 'save' ) {
+		} elseif ( $this->action === 'save' ) {
 			// SAVE
 			// we don't call startNewTransaction here, it is called directly
 			// inside the function when something to save is found.
@@ -120,51 +146,49 @@ class SpecialPopUpEditor extends SpecialPage {
 
 			// switch to view mode and refresh the values, according to what was saved
 			$viewInformation->viewOrEdit = 'view';
-			$syntransAttributesEditor = $this->getSyntransAttributesEditor( $viewInformation, $o );
+			$syntransAttributesEditor = $this->getSyntransAttributesEditor( $viewInformation );
 			$recordArray = getObjectAttributesRecord( $syntransId, $viewInformation, null, "SYNT" );
 
 			// and view the result
-			$output .= $syntransAttributesEditor->view( $idPathLocal, $recordArray );
+			$this->output .= $syntransAttributesEditor->view( $idPathLocal, $recordArray );
 
 		} else {
 			// VIEW (default)
-			$output .= $syntransAttributesEditor->view( $idPathLocal, $recordArray );
+			$this->output .= $syntransAttributesEditor->view( $idPathLocal, $recordArray );
 		}
 
-		$output .= Html::closeElement ('div');
+		$this->output .= Html::closeElement ('div');
 
-		echo $output;
+		echo $this->output;
 	}
 
 	/**
 	 * create back the idStack
 	 */
 	protected function getDmSyntIdStack( $definedMeaningId, $syntransId ) {
-		$o = OmegaWikiAttributes::getInstance();
-
 		// the result should look like dm-1487027-syntrans-1487033-objAtt
 
 		// level1: DM
-		$definedMeaningIdStructure = new Structure( $o->definedMeaningId );
+		$definedMeaningIdStructure = new Structure( $this->o->definedMeaningId );
 		$definedMeaningIdRecord = new ArrayRecord( $definedMeaningIdStructure );
 		$definedMeaningIdRecord->definedMeaningId = $definedMeaningId;
-		
+
 		$idStack = new IdStack( WLD_DEFINED_MEANING );
 		$idStack->pushKey( $definedMeaningIdRecord );
-		
+
 		$idStack->pushDefinedMeaningId( $definedMeaningId );
 		$idStack->pushClassAttributes( new ClassAttributes( $definedMeaningId ) );
 
 		// level2: Syntrans
-		$syntransIdStructure = new Structure( $o->syntransId );
+		$syntransIdStructure = new Structure( $this->o->syntransId );
 		$syntransIdRecord = new ArrayRecord( $syntransIdStructure );
 		$syntransIdRecord->syntransId = $syntransId;
-//		$idStack->pushAttribute( $o->syntransId );
-		$idStack->pushAttribute( $o->synonymsAndTranslations );
+//		$idStack->pushAttribute( $this->o->syntransId );
+		$idStack->pushAttribute( $this->o->synonymsAndTranslations );
 
-//		$idStack->pushKey( project( $syntransIdRecord, $o->synonymsTranslationsStructure ) );
+//		$idStack->pushKey( project( $syntransIdRecord, $this->o->synonymsTranslationsStructure ) );
 		$idStack->pushKey( $syntransIdRecord );
-		$idStack->pushAttribute( $o->objectAttributes );
+		$idStack->pushAttribute( $this->o->objectAttributes );
 
 		return $idStack;
 	}
@@ -173,15 +197,15 @@ class SpecialPopUpEditor extends SpecialPage {
 	 * creates the hierarchical structure editor
 	 * for view or edit mode according to viewInformation
 	 */
-	protected function getSyntransAttributesEditor( $viewInformation, $o ) {
+	protected function getSyntransAttributesEditor( $viewInformation ) {
 		// the editor is of the class ObjectAttributeValuesEditor defined in WrappingEditor.php
 		// it wraps a RecordUnorderedListEditor defined in Editor.php
 		$syntransAttributesEditor = createObjectAttributesEditor(
 			$viewInformation,
-			$o->objectAttributes,
+			$this->o->objectAttributes,
 			wfMessage( "ow_Property" )->text(),
 			wfMessage( "ow_Value" )->text(),
-			$o->syntransId,
+			$this->o->syntransId,
 			WLD_SYNTRANS_MEANING_NAME,
 			$viewInformation->getLeftOverAttributeFilter()
 		);
@@ -213,7 +237,7 @@ class SpecialPopUpEditor extends SpecialPage {
 		global $wgUser;
 		$now = wfTimestampNow();
 		$summary = 'Edited annotations via popup';
-		
+
 		$expressionId = getExpressionIdFromSyntrans( $syntransId );
 		$expression = getExpression( $expressionId );
 		$spelling = $expression->spelling;

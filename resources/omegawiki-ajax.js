@@ -4,7 +4,7 @@ jQuery(document).ready(function( $ ) {
 	 */
 
 	// add and manage arrows to navigate the tabs
-	if ( $(".wd-tablist").length ) {
+	if ( $('.wd-tablist').length ) {
 		initializeTabs();
 
 		$(window).resize(function() {
@@ -13,12 +13,12 @@ jQuery(document).ready(function( $ ) {
 	}
 
 	// sticky explang
-	var explangUrl = document.URL.match( /explang=\d+/gi ) ;
+	var explangUrl = document.URL.match( /explang=\d+/gi );
 	if ( explangUrl!=null ) {
-		var explangNb = explangUrl[0].replace("explang=","") ;
-		$("#ca-edit, #ca-history, #ca-view").find("a").attr( "href", function(i, val) {
+		var explangNb = explangUrl[0].replace('explang=','');
+		$('#ca-edit, #ca-history, #ca-view').find('a').attr( 'href', function(i, val) {
 			var bigoudi = '&' ;
-			if ( val.match( /\?/gi ) == null ) bigoudi = '?' ;
+			if ( val.match( /\?/gi ) == null ) {bigoudi = '?';}
 			return val + bigoudi + 'explang=' + explangNb ;
 		});
 	}
@@ -30,47 +30,49 @@ jQuery(document).ready(function( $ ) {
 
 	// toggle the togglable elements
 	// delegated event
-	$("body").on('click', ".toggle", function(event) {
-		$(this).children(".prefix").toggle();
+	$('body').on('click', '.toggle', function(event) {
+		$(this).children('.prefix').toggle();
 		$(this).parent().next().fadeToggle('fast');
 	});
 
-	$("a").click(function(event) {
+	$('a').click(function(event) {
 		// avoid the toggling if a link is clicked
 		event.stopPropagation();
 	} );
 
 	// toggle the annotation popups
-	$(".togglePopup").click(function() {
-		$(this).children("span").toggle();
+	$('.togglePopup').click(function() {
+		$(this).children('span').toggle();
 
 		// if no corresponding popupToggleable (in edit mode): create it
 		// and get the values
-		if ( $(this).next(".popupToggleable").length == 0 ) {
+		if ( $(this).next('.popupToggleable').length == 0 ) {
 
 			var popupOpenHideLink = this;
 			var myAction = $(this).attr('action');
 
-			var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' )
+			var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' );
 			URL = URL + '/Special:PopupEditor';
 
 			var postdata = {
+				type: 'annotation',
 				syntransid: $(popupOpenHideLink).attr('syntransid'),
 				dmid: $(popupOpenHideLink).attr('dmid'),
 				idpathflat: $(popupOpenHideLink).attr('idpathflat')
 			};
+
 			if ( myAction === 'history' ) {
 				postdata['action'] = 'history';
 			}
 			$.post( URL, postdata, function(data) {
 				// insert the data and show it
 				$(popupOpenHideLink).after( data );
-				$(popupOpenHideLink).next(".popupToggleable").show(100);
+				$(popupOpenHideLink).next('.popupToggleable').show(100);
 			});
 
 		} else {
 			// there is already data, toggle it
-			$(this).next(".popupToggleable").toggle(100);
+			$(this).next('.popupToggleable').toggle(100);
 		}
 	});
 
@@ -82,10 +84,11 @@ jQuery(document).ready(function( $ ) {
 		var popupContent = $(this).parents('.popupToggleable');
 		var popupOpenHideLink = $(popupContent).prev('.togglePopup');
 
-		var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' )
+		var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' );
 		URL = URL + '/Special:PopupEditor';
 
 		var postdata = {
+			type: 'annotation',
 			syntransid: $(popupOpenHideLink).attr('syntransid'),
 			dmid: $(popupOpenHideLink).attr('dmid'),
 			idpathflat: $(popupOpenHideLink).attr('idpathflat'),
@@ -95,7 +98,7 @@ jQuery(document).ready(function( $ ) {
 			// insert the data and show it
 			$(popupContent).replaceWith( data );
 			// it has been replaced, we need to get the new element
-			popupContent = $(popupOpenHideLink).next(".popupToggleable");
+			popupContent = $(popupOpenHideLink).next('.popupToggleable');
 			$(popupContent).find('.owPopupEdit').hide();
 			$(popupContent).find('.owPopupSave').show();
 			$(popupContent).find('.owPopupCancel').show();
@@ -115,10 +118,11 @@ jQuery(document).ready(function( $ ) {
 		var popupContent = $(this).parents('.popupToggleable');
 		var popupOpenHideLink = $(popupContent).prev('.togglePopup');
 
-		var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' )
+		var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' );
 		URL = URL + '/Special:PopupEditor';
 
 		var postdata = {
+			type: 'annotation',
 			syntransid: $(popupOpenHideLink).attr('syntransid'),
 			dmid: $(popupOpenHideLink).attr('dmid'),
 			idpathflat: $(popupOpenHideLink).attr('idpathflat')
@@ -126,7 +130,7 @@ jQuery(document).ready(function( $ ) {
 		$.post( URL, postdata, function(data) {
 			// insert the data and show it
 			$(popupContent).replaceWith( data );
-			popupContent = $(popupOpenHideLink).next(".popupToggleable");
+			popupContent = $(popupOpenHideLink).next('.popupToggleable');
 			$(popupContent).find('.owPopupEdit').show();
 			$(popupContent).find('.owPopupSave').hide();
 			$(popupContent).find('.owPopupCancel').hide();
@@ -141,10 +145,11 @@ jQuery(document).ready(function( $ ) {
 		var popupContent = $(this).parents('.popupToggleable');
 		var popupOpenHideLink = $(popupContent).prev('.togglePopup');
 
-		var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' )
+		var URL = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' );
 		URL = URL + '/Special:PopupEditor';
 
 		var postdata = {
+			type: 'annotation',
 			syntransid: $(popupOpenHideLink).attr('syntransid'),
 			dmid: $(popupOpenHideLink).attr('dmid'),
 			idpathflat: $(popupOpenHideLink).attr('idpathflat'),
@@ -176,7 +181,7 @@ jQuery(document).ready(function( $ ) {
 		$.post( URL, postdata, function(data) {
 			// insert the data and show it
 			$(popupContent).replaceWith( data );
-			popupContent = $(popupOpenHideLink).next(".popupToggleable");
+			popupContent = $(popupOpenHideLink).next('.popupToggleable');
 			$(popupContent).find('.owPopupEdit').show();
 			$(popupContent).find('.owPopupSave').hide();
 			$(popupContent).find('.owPopupCancel').hide();
@@ -190,160 +195,160 @@ jQuery(document).ready(function( $ ) {
 	 * when an expression exists in several languages
 	 */
 	function initializeTabs() {
-		var previousArrow = '<span class="wd-previousArrow">' + "❮" + '</span>' ;
-		var nextArrow = '<span class="wd-nextArrow">' + "❯" + '</span>' ;
+		var previousArrow = '<span class="wd-previousArrow">' + '❮' + '</span>' ;
+		var nextArrow = '<span class="wd-nextArrow">' + '❯' + '</span>' ;
 		// add visible class to every item by default
-		$(".wd-tablist").children().addClass("visibleTab");
+		$('.wd-tablist').children().addClass('visibleTab');
 		// remove right padding for the last element
-		$(".wd-tablist .wd-tabitem:last").css("padding-right", "0px");
+		$('.wd-tablist .wd-tabitem:last').css('padding-right', '0px');
 
 		// remove the tabs that are out of the window
 		// theoretically, overflow:hidden should work, but
 		// setting overflow and span and float seems a bit tricky
-		var tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+		var tablistright = $('.wd-tablist').outerWidth(true) + $('.wd-tablist').offset().left ;
 		while( tablistright + 30 > $(window).width() ) {
 			// remove tabs on the right until it fits in the window
-			$(".wd-tablist .visibleTab:last")
-			.addClass("hiddenTab").removeClass("visibleTab" )
+			$('.wd-tablist .visibleTab:last')
+			.addClass('hiddenTab').removeClass('visibleTab' )
 			.hide();
-			tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+			tablistright = $('.wd-tablist').outerWidth(true) + $('.wd-tablist').offset().left ;
 		}
 
 		// add arrows
-		$(".wd-tablist .wd-tabitem:first").before( previousArrow ) ;
-		$(".wd-previousArrow").hide();
-		$(".wd-tablist ").after( nextArrow );
+		$('.wd-tablist .wd-tabitem:first').before( previousArrow ) ;
+		$('.wd-previousArrow').hide();
+		$('.wd-tablist ').after( nextArrow );
 
 		// if the last element is visible, we don't need the nextArrow
-		if ( $(".wd-tablist .wd-tabitem:last").hasClass("visibleTab") ) {
-			$(".wd-nextArrow").hide();
+		if ( $('.wd-tablist .wd-tabitem:last').hasClass('visibleTab') ) {
+			$('.wd-nextArrow').hide();
 		}
 
 		// next arrow click
-		$(".wd-nextArrow").click(function() {
+		$('.wd-nextArrow').click(function() {
 			// show next tab = first hidden tab after the next visible tab
-			$(".wd-tablist .visibleTab:last").next()
-			.addClass("visibleTab").removeClass("hiddenTab" )
+			$('.wd-tablist .visibleTab:last').next()
+			.addClass('visibleTab').removeClass('hiddenTab')
 			.show();
-			
+	
 			// show previous arrow
-			$(".wd-previousArrow").show();
+			$('.wd-previousArrow').show();
 
 			// remove visible tabs on the left until it fits the window
-			var tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+			var tablistright = $('.wd-tablist').outerWidth(true) + $('.wd-tablist').offset().left ;
 			while( tablistright + 30 > $(window).width() ) {
 				// remove visible tabs on the left until it fits in the window
-				$(".wd-tablist .visibleTab:first")
-				.addClass("hiddenTab").removeClass("visibleTab" )
+				$('.wd-tablist .visibleTab:first')
+				.addClass('hiddenTab').removeClass('visibleTab')
 				.hide();
-				tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+				tablistright = $('.wd-tablist').outerWidth(true) + $('.wd-tablist').offset().left ;
 			}
 
 			// check if maybe we can display more elements on the right
-			while( ( tablistright + 30 < $(window).width() ) && $(".wd-tabitem:last").hasClass("hiddenTab") ) {
-				$(".wd-tablist .visibleTab:last").next()
-				.addClass("visibleTab").removeClass("hiddenTab" )
+			while( ( tablistright + 30 < $(window).width() ) && $('.wd-tabitem:last').hasClass('hiddenTab') ) {
+				$('.wd-tablist .visibleTab:last').next()
+				.addClass('visibleTab').removeClass('hiddenTab')
 				.show();
-				tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+				tablistright = $('.wd-tablist').outerWidth(true) + $('.wd-tablist').offset().left ;
 			}
 			// remove last tab if we have been to far
 			if ( tablistright + 30 > $(window).width() ) {
-				$(".wd-tablist .visibleTab:last")
-				.addClass("hiddenTab").removeClass("visibleTab" )
+				$('.wd-tablist .visibleTab:last')
+				.addClass('hiddenTab').removeClass('visibleTab')
 				.hide();
 			}
-			
+	
 			// remove next arrow if last tab is visible
-			if ( $(".wd-tablist .wd-tabitem:last").hasClass("visibleTab") ) {
-				$(".wd-nextArrow").hide();
+			if ( $('.wd-tablist .wd-tabitem:last').hasClass('visibleTab') ) {
+				$('.wd-nextArrow').hide();
 			}
-			
-			
+	
+	
 		}); // nextArrow click
 
 		// previous arrow click
-		$(".wd-previousArrow").click(function() {
+		$('.wd-previousArrow').click(function() {
 			// show previous tab = the one before the first visible tab
-			$(".wd-tablist .visibleTab:first").prev()
-			.addClass("visibleTab").removeClass("hiddenTab" )
+			$('.wd-tablist .visibleTab:first').prev()
+			.addClass('visibleTab').removeClass('hiddenTab')
 			.show();
 
 			// show next arrow
-			$(".wd-nextArrow").show();
-			
+			$('.wd-nextArrow').show();
+	
 			// remove previous arrow if first tab is visible
-			if ( $(".wd-tablist .wd-tabitem:first").hasClass("visibleTab") ) {
-				$(".wd-previousArrow").hide();
+			if ( $('.wd-tablist .wd-tabitem:first').hasClass('visibleTab') ) {
+				$('.wd-previousArrow').hide();
 			} // if
-			
+
 			// remove visible tabs on the right until it fits the window
-			var tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+			var tablistright = $('.wd-tablist').outerWidth(true) + $('.wd-tablist').offset().left ;
 			while( tablistright + 30 > $(window).width() ) {
 				// remove tabs on the right until it fits in the window
-				$(".wd-tablist .visibleTab:last")
-				.addClass("hiddenTab").removeClass("visibleTab" )
+				$('.wd-tablist .visibleTab:last')
+				.addClass('hiddenTab').removeClass('visibleTab')
 				.hide();
-				tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+				tablistright = $('.wd-tablist').outerWidth(true) + $('.wd-tablist').offset().left ;
 			}
 		}); // click
 	} // initializeTabs
-	
-	
+
+
 	function updateTabs() {
 		// check the situation
-		var tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
-		
+		var tablistright = $('.wd-tablist').outerWidth(true) + $('.wd-tablist').offset().left ;
+
 		if ( tablistright + 30 > $(window).width() ) {
 			// the window is now too small, we need to remove some tabs (on the right)
 			while( tablistright + 30 > $(window).width() ) {
 				// remove tabs on the right until it fits in the window
-				$(".wd-tablist .visibleTab:last")
-				.addClass("hiddenTab").removeClass("visibleTab" )
+				$('.wd-tablist .visibleTab:last')
+				.addClass('hiddenTab').removeClass('visibleTab')
 				.hide();
-				tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+				tablistright = $('.wd-tablist').outerWidth(true) + $('.wd-tablist').offset().left ;
 			}
-			$(".wd-nextArrow").show();
+			$('.wd-nextArrow').show();
 		} else {
 			// the window has been enlarged, there might be extra space available
-			while( ( tablistright + 30 < $(window).width() ) && $(".wd-tabitem:last").hasClass("hiddenTab") ) {
-				$(".wd-tablist .visibleTab:last").next()
-				.addClass("visibleTab").removeClass("hiddenTab" )
+			while( ( tablistright + 30 < $(window).width() ) && $('.wd-tabitem:last').hasClass('hiddenTab') ) {
+				$('.wd-tablist .visibleTab:last').next()
+				.addClass('visibleTab').removeClass('hiddenTab')
 				.show();
-				tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+				tablistright = $('.wd-tablist').outerWidth(true) + $('.wd-tablist').offset().left ;
 			}
 
 			// remove last tab if we have been to far
 			if ( tablistright + 30 > $(window).width() ) {
-				$(".wd-tablist .visibleTab:last")
-				.addClass("hiddenTab").removeClass("visibleTab" )
+				$('.wd-tablist .visibleTab:last')
+				.addClass('hiddenTab').removeClass('visibleTab')
 				.hide();
 			} else {
 				// all tabs on the right are now visible
-				$(".wd-nextArrow").hide();
+				$('.wd-nextArrow').hide();
 
 				// maybe we can still add more tabs on the left?
-				while( ( tablistright + 30 < $(window).width() ) && $(".wd-tabitem:first").hasClass("hiddenTab") ) {
-					$(".wd-tablist .visibleTab:first").prev()
-					.addClass("visibleTab").removeClass("hiddenTab" )
+				while( ( tablistright + 30 < $(window).width() ) && $('.wd-tabitem:first').hasClass('hiddenTab') ) {
+					$('.wd-tablist .visibleTab:first').prev()
+					.addClass('visibleTab').removeClass('hiddenTab')
 					.show();
-					tablistright = $(".wd-tablist").outerWidth(true) + $(".wd-tablist").offset().left ;
+					tablistright = $('.wd-tablist').outerWidth(true) + $('.wd-tablist').offset().left;
 				}
 				// remove first tab if we have been to far
 				if ( tablistright + 30 > $(window).width() ) {
-					$(".wd-tablist .visibleTab:first")
-					.addClass("hiddenTab").removeClass("visibleTab" )
+					$('.wd-tablist .visibleTab:first')
+					.addClass('hiddenTab').removeClass('visibleTab')
 					.hide();
 				} else {
-					$(".wd-previousArrow").hide();
+					$('.wd-previousArrow').hide();
 				}
 			}
 		}
 	} // updateTabs
-	
+
 });
 
 
-//TODO: convert the functions below to jQuery...
+//@todo convert the functions below to jQuery...
 
 window.MD5 = function (string) {
 
@@ -421,18 +426,18 @@ window.MD5 = function (string) {
 	};
 
 	function WordToHex(lValue) {
-		var WordToHexValue="",WordToHexValue_temp="",lByte,lCount;
+		var WordToHexValue='',WordToHexValue_temp='',lByte,lCount;
 		for (lCount = 0;lCount<=3;lCount++) {
 			lByte = (lValue>>>(lCount*8)) & 255;
-			WordToHexValue_temp = "0" + lByte.toString(16);
+			WordToHexValue_temp = '0' + lByte.toString(16);
 			WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length-2,2);
 		}
 		return WordToHexValue;
 	};
 
 	function Utf8Encode(string) {
-		string = string.replace(/\r\n/g,"\n");
-		var utftext = "";
+		string = string.replace(/\r\n/g,'\n');
+		var utftext = '';
 
 		for (var n = 0; n < string.length; n++) {
 
