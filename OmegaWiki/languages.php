@@ -16,8 +16,10 @@ class WLDLanguage {
 	static function getNames( $code ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$names = array();
-		$sql = WLDLanguage::getSQLForNames( $code );
-		$lang_res = $dbr->query( $sql ); // function getSQLForNames creates SQL with MySQL prefix
+		list ( $table, $vars, $conds, $join_conds ) = WLDLanguage::getParametersForNames( $code );
+		$lang_res = $dbr->select(
+			$table, $vars, $conds, __METHOD__, null, $join_conds
+		);
 		while ( $lang_row = $dbr->fetchObject( $lang_res ) )
 			$names[$lang_row->row_id] = $lang_row->language_name;
 		return $names;
@@ -46,29 +48,25 @@ class WLDLanguage {
 	}
 
 	/**
-	 * Returns a SQL query string for fetching language names in a given language.
-	 * @param $lang_code the language in which to retrieve the language names
+	 * Returns the SQL parameters needed for fetching language names in a given language.
+	 * @param $langCode the language in which to retrieve the language names
 	 * @param $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
 	 * this array can be generated with ViewInformation->getFilterLanguageList() according to user preferences
 	 **/
-	static function getSQLForNames( $lang_code, $lang_subset = array() ) {
+	static function getParametersForNames( $langCode, $lang_subset = array() ) {
 		/* Use a simpler query if the user's language is English. */
 		/* getLanguageIdForCode( 'en' ) = 85 */
 		$dbr = wfGetDB( DB_SLAVE );
-		$lang_id = getLanguageIdForCode( $lang_code );
+		$langId = getLanguageIdForCode( $langCode );
 
-		if ( $lang_code == 'en' || is_null( $lang_id ) ) {
+		if ( $langCode == WLD_ENGLISH_LANG_WMKEY || is_null( $langId ) ) {
 			$cond = array( 'name_language_id' => WLD_ENGLISH_LANG_ID );
 			if ( ! empty( $lang_subset ) ) {
 				$cond['language_id'] = $lang_subset;
 			}
-			$sqlQuery = $dbr->selectSQLText(
-				'language_names',
-				array( 'row_id' => 'language_id', 'language_name' ),
-				$cond,
-				__METHOD__
-			);
-
+			$table = 'language_names';
+			$vars = array( 'row_id' => 'language_id', 'language_name' );
+			$join_conds = null;
 		} else {
 			/* Fall back on English in cases where a language name is not present in the
 			user's preferred language. */
@@ -78,25 +76,20 @@ class WLDLanguage {
 				$cond['eng.language_id'] = $lang_subset;
 			}
 
-			$sqlQuery = $dbr->selectSQLText(
-				array( 'eng' => 'language_names', 'ln2' => 'language_names' ),
-				array( /* fields to select */
-					'row_id' => 'eng.language_id',
-					'language_name' => 'COALESCE(ln2.language_name,eng.language_name)' ),
-				$cond,
-				__METHOD__,
-				array(),
-				array( /* JOIN */
-					'ln2' => array( 'LEFT JOIN', array(
-						'eng.language_id = ln2.language_id',
-						'ln2.name_language_id' => $lang_id
-						)
-					)
-				)
+			$table = array( 'eng' => 'language_names', 'ln2' => 'language_names' );
+			$vars = array(
+				'row_id' => 'eng.language_id',
+				'language_name' => 'COALESCE(ln2.language_name,eng.language_name)'
 			);
+			$join_conds = array( 'ln2' => array(
+				'LEFT JOIN', array(
+					'eng.language_id = ln2.language_id',
+					'ln2.name_language_id' => $langId
+				)
+			) );
 		}
 
-		return $sqlQuery;
+		return array( $table, $vars, $cond, $join_conds );
 	}
 
 }
