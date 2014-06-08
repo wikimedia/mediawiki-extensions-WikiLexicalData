@@ -39,15 +39,20 @@ class CreateDocumentation extends Maintenance {
 		}
 
 		$configFinal = $wgWldDownloadScriptPath . 'doc.cfg';
+		$dhtml = $wgWldDownloadScriptPath . 'docH.html ';
+		$dhtml .= $wgWldDownloadScriptPath . 'docF.html ';
+		$dhtml .= $wgWldDownloadScriptPath . 'doc.css';
 		chdir( '../..' );
 		echo  getcwd() . "\n";
 		$this->readTemplateConfigFile( $config, $configFinal );
 
 		// create a command to execute.
 		$this->output( "updating...\ndoxygen -u $configFinal\n\n" );
-		exec( "doxygen -u $configFinal" );
+		exec( 'doxygen -s -u ' . $configFinal );
+		$this->output( "updating...\ndoxygen -w html $dhtml\n\n" );
+		exec( 'doxygen -w html ' . $dhtml );
 		$this->output( "executing...\ndoxygen $configFinal\n\n" );
-		exec( "doxygen $configFinal" );
+		exec( 'doxygen ' . $configFinal );
 
 		$this->output( "fin.\n" );
 	}
