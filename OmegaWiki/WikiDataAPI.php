@@ -161,21 +161,11 @@ function getExpressionIdFromSyntrans( $syntransId, $dc = null ) {
 	return null;
 }
 
-function createExpressionId( $spelling, $languageId ) {
-	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
-
-	$expressionId = newObjectId( "{$dc}_expression" );
-	$updateId = getUpdateTransactionId();
-	$dbw->insert(
-		"{$dc}_expression",
-		array( 'expression_id' => $expressionId,
-			'spelling' => $spelling,
-			'language_id' => $languageId,
-			'add_transaction_id' => $updateId
-		), __METHOD__
-	);
-	return $expressionId;
+/** @deprecated use OwDatabaseAPI::createExpressionId instead.
+ */
+function createExpressionId( $spelling, $languageId, $options = array() ) {
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	return OwDatabaseAPI::createExpressionId( $spelling, $languageId, $options );
 }
 
 function reviveExpression( $expressionId ) {
@@ -297,8 +287,9 @@ function findRemovedExpression( $spelling, $languageId ) {
 	return null;
 }
 
-function createExpression( $spelling, $languageId ) {
-	$expression = new Expression( createExpressionId( $spelling, $languageId ), $spelling, $languageId );
+function createExpression( $spelling, $languageId, $options = array() ) {
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	$expression = new Expression( OwDatabaseAPI::createExpressionId( $spelling, $languageId, $options ), $spelling, $languageId );
 	$expressionTitle = Title::makeTitle( NS_EXPRESSION , $spelling );
 	if( !$expressionTitle->exists() ) {
 		$expression->createNewInDatabase();
@@ -306,7 +297,7 @@ function createExpression( $spelling, $languageId ) {
 	return $expression;
 }
 
-function findOrCreateExpression( $spelling, $languageId ) {
+function findOrCreateExpression( $spelling, $languageId, $options = array() ) {
 	$expression = findExpression( $spelling, $languageId );
 	if ( ! is_null( $expression ) ) {
 		return $expression;
@@ -317,7 +308,7 @@ function findOrCreateExpression( $spelling, $languageId ) {
 		return $expression;
 	}
 	// else
-	return createExpression( $spelling, $languageId );
+	return createExpression( $spelling, $languageId, $options );
 }
 
 function getSynonymId( $definedMeaningId, $expressionId ) {
@@ -389,8 +380,8 @@ function expressionIsBoundToDefinedMeaning( $definedMeaningId, $expressionId ) {
 	return false;
 }
 
-function addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning ) {
-	$expression = findOrCreateExpression( $spelling, $languageId );
+function addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning, $options = array() ) {
+	$expression = findOrCreateExpression( $spelling, $languageId, $options );
 	$expression->assureIsBoundToDefinedMeaning( $definedMeaningId, $identicalMeaning );
 }
 
