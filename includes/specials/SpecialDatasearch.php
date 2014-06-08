@@ -11,6 +11,7 @@ require_once( $wgWldOwScriptPath . "ViewInformation.php" );
 require_once( $wgWldOwScriptPath . "OmegaWikiAttributes.php" );
 require_once( $wgWldOwScriptPath . "OmegaWikiRecordSets.php" );
 require_once( $wgWldOwScriptPath . "OmegaWikiEditors.php" );
+require_once( $wgWldOwScriptPath . "OmegaWikiDatabaseAPI.php" );
 
 class SpecialDatasearch extends SpecialPage {
 	protected $externalIdentifierAttribute;
@@ -85,12 +86,12 @@ class SpecialDatasearch extends SpecialPage {
 			$this->collectionMemberAttribute
 		);
 
-
 		$this->displayForm();
 
 		if ( $this->show ) {
 			$this->search();
 		}
+
 	}
 
 	/**

@@ -1868,6 +1868,7 @@ function getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId ) {
  * @param $definedMeaningId
  */
 function getDefinedMeaningDefinition( $definedMeaningId ) {
+	require_once( 'OmegaWikiDatabaseAPI.php' );
 	$userLanguageId = OwDatabaseAPI::getUserLanguageId();
 	$result = '';
 	if ( $userLanguageId > 0 ) {
@@ -2529,97 +2530,27 @@ function definingExpression( $definedMeaningId, $dc = null ) {
 }
 
 /**
- * Returns one spelling of an expression corresponding to a given DM in a given language
- * @param $definedMeaningId
- * @param $languageId
+ * @deprecated use OwDatabaseAPI::getDefinedMeaningExpressionForLanguage instead
  */
 function definedMeaningExpressionForLanguage( $definedMeaningId, $languageId ) {
-	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
-
-	$spelling = $dbr->selectField(
-		array(
-			'exp' => "{$dc}_expression",
-			'synt' => "{$dc}_syntrans"
-		),
-		'spelling',
-		array(
-			'defined_meaning_id' => $definedMeaningId,
-			'exp.expression_id = synt.expression_id',
-			'exp.language_id' => $languageId,
-			'synt.identical_meaning' => 1,
-			'synt.remove_transaction_id' => null,
-			'exp.remove_transaction_id' => null
-		), __METHOD__
-	);
-
-	if ( $spelling ) {
-		return $spelling;
-	}
-	return "";
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	return OwDatabaseAPI::getDefinedMeaningExpressionForLanguage( $definedMeaningId, $languageId );
 }
 
 /**
- * Returns one spelling of an expression corresponding to a given DM in any language
- * @param $definedMeaningId
+ * @deprecated use OwDatabaseAPI::getDefinedMeaningExpressionForAnyLanguage instead
  */
 function definedMeaningExpressionForAnyLanguage( $definedMeaningId ) {
-	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
-
-	$spelling = $dbr->selectField(
-		array(
-			'exp' => "{$dc}_expression",
-			'synt' => "{$dc}_syntrans"
-		),
-		'spelling',
-		array(
-			'defined_meaning_id' => $definedMeaningId,
-			'exp.expression_id = synt.expression_id',
-			'synt.identical_meaning' => 1,
-			'synt.remove_transaction_id' => null,
-			'exp.remove_transaction_id' => null
-		), __METHOD__
-	);
-
-	if ( $spelling ) {
-		return $spelling;
-	}
-	return "";
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	return OwDatabaseAPI::getDefinedMeaningExpressionForAnyLanguage( $definedMeaningId );
 }
 
 /**
- * Returns one spelling of an expression corresponding to a given DM
- * - in a given language if it exists
- * - or else in English
- * - or else in any language
- * @param $definedMeaningId
+ * @deprecated use OwDatabaseAPI::getDefinedMeaningExpression instead.
  */
 function definedMeaningExpression( $definedMeaningId ) {
-	$userLanguageId = OwDatabaseAPI::getUserLanguageId();
-
-	$result = '';
-
-	if ( $userLanguageId > 0 ) {
-		$result = definedMeaningExpressionForLanguage( $definedMeaningId, $userLanguageId );
-	}
-
-	list( $definingExpressionId, $definingExpression, $definingExpressionLanguage ) = definingExpressionRow( $definedMeaningId );
-
-	if ( $result == "" ) {
-		// if no expression exists for the specified language : look for an expression in English
-		$result = definedMeaningExpressionForLanguage( $definedMeaningId, WLD_ENGLISH_LANG_ID );
-
-		if ( $result == "" ) {
-			$result = definedMeaningExpressionForAnyLanguage( $definedMeaningId );
-
-			if ( $result == "" ) {
-				$result = $definingExpression;
-			}
-		}
-	}
-
-	return $result;
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	return OwDatabaseAPI::getDefinedMeaningExpression( $definedMeaningId );
 }
 
 function getTextValue( $textId ) {

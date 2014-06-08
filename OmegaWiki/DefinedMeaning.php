@@ -17,6 +17,8 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		global
 			$wgOut, $wgTitle, $wgRequest;
 
+		$this->requireDBAPI();
+
 		// Split title into defining expression and ID
 		$titleText = $wgTitle->getText();
 		$dmInfo = DefinedMeaningModel::splitTitleText( $titleText );
@@ -86,7 +88,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$this->outputViewHeader();
 // concept panel is annoying and useless
 //		$wgOut->addHTML( $this->getConceptPanel() );
-		$expressionTranslated = definedMeaningExpression( $this->definedMeaningModel->getId() ) ;
+		$expressionTranslated = OwDatabaseAPI::getDefinedMeaningExpression( $this->definedMeaningModel->getId() ) ;
 
 		// @note Since the defined meaning expression can be misleading and
 		// the software is now able to redirect using the dm id only, it seems logical
@@ -314,11 +316,20 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		return $html;
 	}
 
+	/** safety net to ensure that the OmegaWiki Database API is called.
+	 */
+	protected function requireDBAPI() {
+		require_once( 'OmegaWikiDatabaseAPI.php' );
+	}
 }
 
 /** @brief PHP API class for Defined Meaning
  */
 class DefinedMeanings {
+
+	public function __construct() {
+		require_once( 'OmegaWikiDatabaseAPI.php' );
+	}
 
 	/**
 	 * @brief Returns the defined_meaning table's DefinedMeaning id via translatedContentId
@@ -420,6 +431,114 @@ class DefinedMeanings {
 			return $definedMeaningId;
 		}
 		return null;
+	}
+
+	/** @brief Returns one spelling of an expression corresponding to a given DM
+	 *	- in a given language if it exists
+	 *	- or else in English
+	 *	- or else in any language
+	 *
+	 * @param definedMeaningId int
+	 * @return spelling str
+	 *
+	 * @note Though you can access this function, it is highly recommended that you
+	 * use the static function OwDatabaseAPI::getDefinedMeaningExpression instead.
+	 */
+	public static function getExpression( $definedMeaningId, $dc = null ) {
+		$userLanguageId = OwDatabaseAPI::getUserLanguageId();
+
+		$spelling = '';
+
+		if ( $userLanguageId > 0 ) {
+			$spelling = DefinedMeanings::getExpressionForLanguage( $definedMeaningId, $userLanguageId );
+		}
+
+		list( $definingExpressionId, $definingExpression, $definingExpressionLanguage ) = definingExpressionRow( $definedMeaningId );
+
+		if ( $spelling == "" ) {
+			// if no spelling exists for the specified language : look for an spelling in English
+			$spelling = DefinedMeanings::getExpressionForLanguage( $definedMeaningId, WLD_ENGLISH_LANG_ID );
+
+			if ( $spelling == "" ) {
+				$spelling = DefinedMeanings::getExpressionForAnyLanguage( $definedMeaningId );
+
+				if ( $spelling == "" ) {
+					$spelling = $definingExpression;
+				}
+			}
+		}
+
+		return $spelling;
+	}
+
+	/** @brief Returns one spelling of an expression corresponding to a given DM in a given language
+	 *
+	 * @param definedMeaningId int
+	 * @param languageId       int
+	 * @return spelling str
+	 * @return if not exists, ""
+	 *
+	 * @note Though you can access this function, it is highly recommended that you
+	 * use the static function OwDatabaseAPI::getDefinedMeaningExpressionForLanguage instead.
+	 */
+	public static function getExpressionForLanguage( $definedMeaningId, $languageId ) {
+		$dc = wdGetDataSetContext();
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$spelling = $dbr->selectField(
+			array(
+				'exp' => "{$dc}_expression",
+				'synt' => "{$dc}_syntrans"
+			),
+			'spelling',
+			array(
+				'defined_meaning_id' => $definedMeaningId,
+				'exp.expression_id = synt.expression_id',
+				'exp.language_id' => $languageId,
+				'synt.identical_meaning' => 1,
+				'synt.remove_transaction_id' => null,
+				'exp.remove_transaction_id' => null
+			), __METHOD__
+		);
+
+		if ( $spelling ) {
+			return $spelling;
+		}
+		return "";
+	}
+
+	/** @brief Returns one spelling of an expression corresponding to a given DM in any language
+	 *
+	 * @param $definedMeaningId
+	 * @return spelling str
+	 * @return if not exists, ""
+	 *
+	 * @note Though you can access this function, it is highly recommended that you
+	 * use the static function OwDatabaseAPI::getDefinedMeaningExpressionForAnyLanguage instead.
+	 */
+	public static function getExpressionForAnyLanguage( $definedMeaningId ) {
+		$dc = wdGetDataSetContext();
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$spelling = $dbr->selectField(
+			array(
+				'exp' => "{$dc}_expression",
+				'synt' => "{$dc}_syntrans"
+			),
+			'spelling',
+			array(
+				'defined_meaning_id' => $definedMeaningId,
+				'exp.expression_id = synt.expression_id',
+				'synt.identical_meaning' => 1,
+				'synt.remove_transaction_id' => null,
+				'exp.remove_transaction_id' => null
+			), __METHOD__
+		);
+
+		if ( $spelling ) {
+			return $spelling;
+		}
+		return "";
 	}
 
 }

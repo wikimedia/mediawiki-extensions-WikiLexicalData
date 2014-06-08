@@ -26,6 +26,52 @@ class OwDatabaseAPI {
 	 */
 
 	/**
+	 * @brief Returns one spelling of an expression corresponding to a given DM
+	 *	- in a given language if it exists
+	 *	- or else in English
+	 *	- or else in any language
+	 *
+	 * @param definedMeaningId int
+	 * @return expression str
+	 *
+	 * @see DefinedMeanings::getExpression
+	 */
+	public static function getDefinedMeaningExpression( $definedMeaningId, $dc = null ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'definedMeaning', $dc );
+		return $api->DefinedMeaning->getExpression( $definedMeaningId, $api->dc );
+	}
+
+	/** @brief Returns one spelling of an expression corresponding to a given DM in a given language
+	 *
+	 * @param definedMeaningId int
+	 * @param languageId       int
+	 * @return spelling str
+	 * @return if not exists, ""
+	 *
+	 * @see DefinedMeanings::getExpressionForLanguage
+	 */
+	public static function getDefinedMeaningExpressionForLanguage( $definedMeaningId, $languageId, $dc = null ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'definedMeaning', $dc );
+		return $api->DefinedMeaning->getExpressionForLanguage( $definedMeaningId, $languageId, $api->dc );
+	}
+
+	/** @brief Returns one spelling of an expression corresponding to a given DM in any language
+	 *
+	 * @param $definedMeaningId
+	 * @return spelling str
+	 * @return if not exists, ""
+	 *
+	 * @see DefinedMeanings::getExpressionForAnyLanguage instead.
+	 */
+	public static function getDefinedMeaningExpressionForAnyLanguage( $definedMeaningId, $dc = null ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'definedMeaning', $dc );
+		return $api->DefinedMeaning->getExpressionForLanguage( $definedMeaningId, $api->dc );
+	}
+
+	/**
 	 * @brief Returns the defined_meaning table's DefinedMeaning id via translatedContentId
 	 *
 	 * @param translatedContentId req'd int The object id
