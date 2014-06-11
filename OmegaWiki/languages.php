@@ -8,6 +8,51 @@ require_once( 'WikiDataGlobals.php' );
  */
 class WLDLanguage {
 
+	function __construct() {
+		require_once( 'WikiDataGlobals.php' );
+	}
+
+	/** @brief returns the languageId
+	 * @param options req'd arr
+	 *	- options:
+	 *		- sid   str return the language Id using the syntrans id
+	 *		- wmkey str return the language Id for the wikimedia key
+	 *		- dc    str the dataset prefix
+	 * @see use OwDatabaseAPI::getLanguageId instead
+	 */
+	static function getId( $options ) {
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$vars = 'language_id';
+
+		if ( isset( $options['wmkey'] ) ) {
+			$tables = 'language';
+			$conds = array( 'wikimedia_key' => $options['wmkey'] );
+		}
+
+		if ( isset( $options['sid'] ) ) {
+			$tables = array(
+				'synt' => $options['dc'] . '_syntrans',
+				'exp' => $options['dc'] . '_expression'
+			);
+			$conds = array(
+				'synt.syntrans_sid' => $options['sid'],
+				'synt.remove_transaction_id' => null,
+				'exp.expression_id = synt.expression_id',
+				'exp.remove_transaction_id' => null
+			);
+		}
+
+		$query = array( $tables, $vars, $conds, __METHOD__ );
+
+		$languageId = $dbr->selectField( $tables, $vars, $conds, __METHOD__ );
+
+		if ( $languageId ) {
+			return $languageId;
+		}
+		return null;
+	}
+
 	/* @return Return an array containing all language names translated into the language
 	 *	indicated by $code, with fallbacks in English where the language names
 	 *	aren't present in that language.

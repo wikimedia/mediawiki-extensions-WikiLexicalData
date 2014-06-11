@@ -165,6 +165,10 @@ class Structure {
  */
 class Attributes {
 
+	public function __construct() {
+		require_once( 'OmegaWikiDatabaseAPI.php' );
+	}
+
 	/**
 	 * @param objectId req'd int the object id
 	 * @param option   opt'l arr optional array
@@ -312,6 +316,68 @@ class Attributes {
 			return $optionAttributes;
 		}
 		return array();
+	}
+
+	/** @brief getOptionsAttributeOption Template
+	 * @param attributeId     req'd int
+	 * @param optionMeaningId opt'l int/nul
+	 * @param languageId      req'd str/arr
+	 * @param option          opt'l str
+	 *	- multiple multiple lines
+	 *	- exists   returns boolean, depending whether the queried values exists or not.
+	 * @see use OwDatabaseAPI::getOptionAttributeOptions instead.
+	*/
+	public static function getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option = null ) {
+		$dc = wdGetDataSetContext();
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$conds = array(
+			'attribute_id' => $attributeId,
+			'language_id' => $languageId,
+			'remove_transaction_id' => null
+		);
+
+		$vars = 'option_id';
+		if ( $optionMeaningId ) {
+			$conds['option_mid'] = $optionMeaningId;
+		} else {
+			$vars = array( $vars, 'option_mid' );
+		}
+
+		if ( is_array( $vars ) ) {
+			if ( $option == 'multiple' ) {
+				$optionId = $dbr->select(
+					"{$dc}_option_attribute_options",
+					$vars,
+					$conds, __METHOD__
+				);
+			} else {
+				$optionId = $dbr->selectRow(
+					"{$dc}_option_attribute_options",
+					$vars,
+					$conds, __METHOD__
+				);
+			}
+		} else {
+			$optionId = $dbr->selectField(
+				"{$dc}_option_attribute_options",
+				$vars,
+				$conds, __METHOD__
+			);
+		}
+
+		if ( $option == 'exists' ) {
+			$returnTrue = true;
+			$returnFalse = false;
+		} else {
+			$returnTrue = $optionId;
+			$returnFalse = null;
+		}
+
+		if ( $optionId ) {
+			return $returnTrue;
+		}
+		return $returnFalse;
 	}
 
 	/**

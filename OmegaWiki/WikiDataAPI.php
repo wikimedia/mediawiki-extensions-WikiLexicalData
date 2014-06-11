@@ -380,9 +380,13 @@ function expressionIsBoundToDefinedMeaning( $definedMeaningId, $expressionId ) {
 	return false;
 }
 
+
+/** @todo for deprecation. use OwDatabaseAPI::addSynonymOrTranslation instead.
+ *	Currently used only by SwissProtImport.php on the php-tools folder.
+ */
 function addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning, $options = array() ) {
-	$expression = findOrCreateExpression( $spelling, $languageId, $options );
-	$expression->assureIsBoundToDefinedMeaning( $definedMeaningId, $identicalMeaning );
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	return OwDatabaseAPI::addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning, $options );
 }
 
 function getRelationId( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) {
@@ -1475,41 +1479,24 @@ function removeOptionAttributeValue( $valueId ) {
 	);
 }
 
+/** @todo for deprecation. Use OwDatabaseAPI::getOptionAttributeOptionsOptionId instead.
+ */
 function getOptionAttributeOptionsOptionId( $attributeId, $optionMeaningId, $languageId ) {
-	return optionAttributeOptionExistsOptions( $attributeId, $optionMeaningId, $languageId, 1 );
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	return OwDatabaseAPI::getOptionAttributeOptions( $attributeId, $optionMeaningId, $languageId );
 }
 
+/** @todo for deprecation. Use OwDatabaseAPI::optionAttributeOptionExists instead.
+ */
 function optionAttributeOptionExists( $attributeId, $optionMeaningId, $languageId ) {
-	return optionAttributeOptionExistsOptions( $attributeId, $optionMeaningId, $languageId, 0 );
+	return OwDatabaseAPI::getOptionAttributeOptions( $attributeId, $optionMeaningId, $languageId, 'exists' );
 }
 
-function optionAttributeOptionExistsOptions( $attributeId, $optionMeaningId, $languageId, $returnOption ) {
-	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
-
-	$optionId = $dbr->selectField(
-		"{$dc}_option_attribute_options",
-		'option_id',
-		array(
-			'attribute_id' => $attributeId,
-			'option_mid' => $optionMeaningId,
-			'language_id' => $languageId,
-			'remove_transaction_id' => null
-		), __METHOD__
-	);
-
-	if ( $returnOption == 1 ) {
-		$returnTrue = $optionId;
-		$returnFalse = null;
-	} else {
-		$returnTrue = true;
-		$returnFalse = false;
-	}
-
-	if ( $optionId ) {
-		return $returnTrue;
-	}
-	return $returnFalse;
+/** @todo for deprecation. Use OwDatabaseAPI::getOptionAttributeOptions instead.
+ */
+function getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option = null ) {
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	return OwDatabaseAPI::getOptionAttributeOptions( $attributeId, null, $languageId, $options );
 }
 
 function addOptionAttributeOption( $attributeId, $optionMeaningId, $languageId ) {
@@ -1678,59 +1665,24 @@ function getOptionAttributeValueId( $objectId, $optionId ) {
 	return false;
 }
 
-/**
- * returns a spelling that is one of the possible translations of a given DM
- * in a given language
+/** @todo for deprecation. use OwDatabaseAPI::getDefinedMeaningSpelling instead.
  */
-function getDefinedMeaningSpellingForLanguage( $definedMeaning, $language) {
-	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
-
-	$spelling = $dbr->selectField(
-		array(
-			"{$dc}_expression" ,
-			"{$dc}_syntrans"
-		),
-		'spelling',
-		array(
-			"{$dc}_syntrans.defined_meaning_id" => $definedMeaning,
-			"{$dc}_expression.language_id" => $language,
-			"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
-			"{$dc}_syntrans.remove_transaction_id" => null
-		), __METHOD__
-	);
-
-	if ( $spelling ) {
-		return $spelling;
-	}
-	return "";
+function getDefinedMeaningSpelling( $definedMeaningId, $languageId = null, $dc = null ) {
+	return OwDatabaseAPI::getDefinedMeaningSpelling( $definedMeaningId, $languageId , $dc );
 }
 
-/**
- * returns a spelling that is one of the possible translations of a given DM
+/** @brief a spelling that is one of the possible translations of a given DM
+ * in a given language
+ */
+function getDefinedMeaningSpellingForLanguage( $definedMeaning, $language ) {
+	return getDefinedMeaningSpelling( $definedMeaning, $language );
+}
+
+/** @brief returns a spelling that is one of the possible translations of a given DM
  * in any language
  */
 function getDefinedMeaningSpellingForAnyLanguage( $definedMeaning ) {
-	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
-
-	$spelling = $dbr->selectField(
-		array(
-			"{$dc}_expression" ,
-			"{$dc}_syntrans"
-		),
-		'spelling',
-		array(
-			"{$dc}_syntrans.defined_meaning_id" => $definedMeaning,
-			"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
-			"{$dc}_syntrans.remove_transaction_id" => null
-		), __METHOD__
-	);
-
-	if ( $spelling ) {
-		return $spelling;
-	}
-	return "";
+	return getDefinedMeaningSpelling( $definedMeaning );
 }
 
 /**

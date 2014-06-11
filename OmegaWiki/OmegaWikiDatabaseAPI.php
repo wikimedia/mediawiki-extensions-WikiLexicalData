@@ -8,9 +8,6 @@
  * @todo In the future, WikidataAPI.php functions must be slowly
  * transferred to their respective classes and then accessed here.
  */
-require_once( 'WikiDataAPI.php' );
-require_once( 'Attribute.php' );
-require_once( 'DefinedMeaning.php' );
 
 /** @class OwDatabaseAPI
  *
@@ -20,6 +17,9 @@ require_once( 'DefinedMeaning.php' );
  * @see OwDBAPILanguage.php for Language functions
  */
 class OwDatabaseAPI {
+
+	public function __construct() {
+	}
 
 	/** @addtogroup OwDbAPIeFn OwDatabaseAPI's Expression functions
 	 *	@{
@@ -99,6 +99,39 @@ class OwDatabaseAPI {
 		return $api->DefinedMeaning->getExpressionForLanguage( $definedMeaningId, $api->dc );
 	}
 
+	/** @brief spelling via the defined meaning and/or language id
+	 * @return spelling. empty string if not exists
+	 * @see uses DefinedMeanings::getSpelling
+	 */
+	public static function getDefinedMeaningSpelling( $definedMeaningId, $languageId = null, $dc = null ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'definedMeaning', $dc );
+		return $api->DefinedMeaning->getSpelling( $definedMeaningId, $languageId, $api->dc );
+	}
+
+	/** @brief returns a spelling that is one of the possible translations of a given DM
+	 * in any language
+	 */
+	public static function getDefinedMeaningSpellingForAnyLanguage( $definedMeaningId, $dc = null ) {
+		return OwDatabaseAPI::getDefinedMeaningSpelling( $definedMeaningId, $dc = null );
+	}
+
+	/** @brief a spelling that is one of the possible translations of a given DM
+	 * in a given language
+	 */
+	public static function getDefinedMeaningSpellingForLanguage( $definedMeaningId, $language, $dc = null ) {
+		return OwDatabaseAPI::getDefinedMeaningSpelling( $definedMeaningId, $language );
+	}
+
+	/** @brief a spelling that is one of the possible translations of a given DM
+	 * in a given language
+	 */
+	public static function getDefinedMeaningSpellingForUserLanguage( $definedMeaningId, $dc = null ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'definedMeaning', $dc );
+		return $api->DefinedMeaning->getSpellingForUserLanguage( $definedMeaningId, $api->dc );
+	}
+
 	/**
 	 * @brief Returns the defined_meaning table's DefinedMeaning id via translatedContentId
 	 *
@@ -135,6 +168,32 @@ class OwDatabaseAPI {
 		$api = new OwDatabaseAPI;
 		$api->settings( 'language' );
 		return $api->Language->getParametersForNames( $lang_code, $lang_subset = array() );
+	}
+
+	/** @brief returns the languageId
+	 * @param options req'd arr
+	 *	- options:
+	 *		- sid   str return the language Id using the syntrans id
+	 *		- wmkey str return the language Id for the wikimedia key
+	 *		- dc    str the dataset prefix
+	 * @see WLDLanguage::getId instead
+	 */
+	static function getLanguageId( $options ) {
+		$api = new OwDatabaseAPI;
+		$dc = null;
+		if ( isset( $options['dc'] ) ) {
+			$dc = $options['dc'];
+		}
+		$api->settings( 'language', $dc );
+		$options['dc'] = $api->dc;
+		return $api->Language->getId( $options );
+	}
+
+	/** @brief returns the language Id from syntrans Id
+	 * @note uses OwDatabaseAPI::getLanguageId
+	 */
+	static function getLanguageIdForSid( $syntransId, $dc = null ) {
+		return OwDatabaseAPI::getLanguageId( array( 'sid' => $syntransId, 'dc' => $dc ) );
 	}
 
 	/**
@@ -237,6 +296,45 @@ class OwDatabaseAPI {
 
 	/*! @} group OwDbAPIrelAttFn ends here.*/
 
+	/** @addtogroup OwDbAPIoptAttFn OwDatabaseAPI's options Attribute functions
+	 *	@{
+	 */
+
+	/** @brief getOptionsAttributeOption Template
+	 * @param attributeId     req'd int
+	 * @param optionMeaningId opt'l int/nul
+	 * @param languageId      req'd str/arr
+	 * @param option          opt'l str
+	 *	- multiple multiple lines
+	 *	- exists   returns boolean, depending whether the queried values exists or not.
+	 * @see uses Attributes::getOptionAttributeOptions.
+	*/
+	public static function getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option = null ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'attributes' );
+		return $api->Attributes->getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option );
+	}
+
+	/** @return option id. If not exists, returns null.
+	 */
+	public static function getOptionAttributeOptionsOptionId( $attributeId, $optionMeaningId, $languageId ) {
+		return OwDatabaseAPI::getOptionAttributeOptions( $attributeId, $optionMeaningId, $languageId );
+	}
+
+	/** @return an array of option_id and option_mid via the attribute id. If not exists, returns null.
+	 */
+	public static function getOptionAttributeOptionsOptionIdForAttributeId( $attributeId, $languageId, $options ) {
+		return OwDatabaseAPI::getOptionAttributeOptions( $attributeId, null, $languageId, $options );
+	}
+
+	/** @return boolean.
+	 */
+	public static function optionAttributeOptionExists( $attributeId, $optionMeaningId, $languageId ) {
+		return OwDatabaseAPI::getOptionAttributeOptions( $attributeId, $optionMeaningId, $languageId, 'exists' );
+	}
+
+	/*! @} group OwDbAPIoptAttFn ends here.*/
+
 	/** @addtogroup OwDbAPIsyntFn OwDatabaseAPI's Syntrans functions
 	 *	@{
 	 */
@@ -327,12 +425,18 @@ class OwDatabaseAPI {
 		$this->getDc( $dc );
 
 		switch( $class ) {
-			case 'attributes': $this->Attributes = new Attributes; break;
-			case 'definedMeaning': $this->DefinedMeaning = new DefinedMeanings; break;
-			case 'expression': $this->Expression = new Expressions; break;
-			case 'language': $this->Language = new WLDLanguage; break;
-			case 'syntrans': $this->Syntrans = new Syntrans; break;
-			case 'transaction': $this->Transaction = new Transactions; break;
+			case 'attributes': require_once( 'Attribute.php' );
+				$this->Attributes = new Attributes; break;
+			case 'definedMeaning': require_once( 'DefinedMeaning.php' );
+				$this->DefinedMeaning = new DefinedMeanings; break;
+			case 'expression': require_once( 'Expression.php' );
+				$this->Expression = new Expressions; break;
+			case 'language': require_once( 'languages.php' );
+				$this->Language = new WLDLanguage; break;
+			case 'syntrans': require_once( 'WikiDataAPI.php' );
+				$this->Syntrans = new Syntrans; break;
+			case 'transaction': require_once( 'Transaction.php' );
+				$this->Transaction = new Transactions; break;
 		}
 
 	}

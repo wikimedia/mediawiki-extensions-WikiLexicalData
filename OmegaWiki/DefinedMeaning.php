@@ -331,6 +331,58 @@ class DefinedMeanings {
 		require_once( 'OmegaWikiDatabaseAPI.php' );
 	}
 
+	/** @brief spelling via the defined meaning and/or language id
+	 * @return spelling. empty string if not exists
+	 * @see use OwDatabaseAPI::getDefinedMeaningSpelling instead
+	 */
+	public static function getSpelling( $definedMeaning, $languageId = null, $dc = null ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$tables = array(
+				'exp' =>"{$dc}_expression",
+				'synt' => "{$dc}_syntrans"
+		);
+		$vars = 'spelling';
+		$conds = array(
+				"synt.defined_meaning_id" => $definedMeaning,
+				"exp.expression_id = synt.expression_id",
+				'exp.remove_transaction_id' => null,
+				"synt.remove_transaction_id" => null
+		);
+		if ( $languageId ) {
+			$conds['exp.language_id'] = $languageId;
+		}
+
+		$spelling = $dbr->selectField( $tables, $vars, $conds, __METHOD__ );
+
+		if ( $spelling ) {
+			return $spelling;
+		}
+		return "";
+	}
+
+	public static function getSpellingForUserLanguage( $definedMeaningId, $dc = null ) {
+		$languageId = OwDatabaseAPI::getUserLanguageId();
+
+		// try to find something with lang_id
+		if ( $languageId ) {
+			$spelling = OwDatabaseAPI::getDefinedMeaningSpellingForLanguage( $definedMeaningId, $languageId );
+		}
+
+		if ( !$spelling ) {
+			// nothing found, try in English
+			$spelling = OwDatabaseAPI::getDefinedMeaningSpellingForLanguage( $definedMeaningId, WLD_ENGLISH_LANG_ID );
+		}
+
+		if ( $spelling ) {
+			return $spelling;
+		}
+		return null;
+	}
+
 	/**
 	 * @brief Returns the defined_meaning table's DefinedMeaning id via translatedContentId
 	 *
