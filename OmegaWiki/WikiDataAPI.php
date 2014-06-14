@@ -2530,9 +2530,7 @@ function getExpressions( $spelling, $dc = null ) {
 	// we can get rid of using the syntrans table
 	$cond = array(
 		'spelling' => $spelling,
-		'exp.expression_id = synt.expression_id',
-		'exp.remove_transaction_id' => null,
-		'synt.remove_transaction_id' => null
+		'exp.remove_transaction_id' => null
 	);
 	if ( ! empty( $langsubset ) ) {
 		$cond['language_id'] = $langsubset;
@@ -2540,8 +2538,7 @@ function getExpressions( $spelling, $dc = null ) {
 
 	$queryResult = $dbr->select(
 		array(
-			'exp' => "{$dc}_expression",
-			'synt' => "{$dc}_syntrans"
+			'exp' => "{$dc}_expression"
 		),
 		array( 'exp.expression_id', 'spelling', 'language_id' ),
 		$cond,

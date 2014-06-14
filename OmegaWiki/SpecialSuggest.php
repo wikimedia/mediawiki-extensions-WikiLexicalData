@@ -283,21 +283,10 @@ class SpecialSuggest extends SpecialPage {
 		$classMids = $wgDefaultClassMids ;
 
 		if ( ( !is_null($syntransId) ) && ( !is_null($wgIso639_3CollectionId)) ) {
-			// find the language of the syntrans and add attributes of that language by adding the language DM to the list of default classes
+			// find the language of the syntrans and add attributes of that language 
+			// by adding the language DM to the list of default classes
 			// this first query returns the language_id
-			$expressionId = $this->dbr->selectField(
-				$this->dc . '_syntrans',
-				'expression_id',
-				array( 'syntrans_sid' => $syntransId ),
-				__METHOD__
-			);
-
-			$language_id = $this->dbr->selectField(
-				$this->dc . '_expression',
-				'language_id',
-				array( 'expression_id' => $expressionId ),
-				__METHOD__
-			);
+			$language_id = OwDatabaseAPI::getLanguageId( array( 'sid' => $syntransId ) );
 
 			// this second query finds the DM number for a given language_id
 			$language_dm_id = $this->dbr->selectField(
