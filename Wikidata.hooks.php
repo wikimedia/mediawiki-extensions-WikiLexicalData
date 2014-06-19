@@ -208,4 +208,16 @@ class WikiLexicalDataHooks {
 
 		return true;
 	}
+
+	/** @brief load update schema
+	 * @note The base installation of WikiLexicalData's schema is performed
+	 *	by update.php's UpdateWikiLexicalData class on WikiLexical's maintenance folder.
+	 *	this will be used in the future for new tables/index etal.
+	 *
+	 *	@see Preferably, use MediaWiki's https://www.mediawiki.org/wiki/Manual:Hooks/LoadExtensionSchemaUpdates
+	 */
+	public static function loadSchema() {
+		return true;
+	}
+
 }

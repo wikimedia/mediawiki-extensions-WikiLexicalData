@@ -10,6 +10,8 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 
+if ( !isset( $wgDBprefix ) ) { global $wgDBprefix; $wgDBprefix = null; }
+
 $dir = dirname( __FILE__ ) . '/';
 
 $dir = str_replace( '\\', '/', $dir );
@@ -164,6 +166,7 @@ $wgHooks['SpecialSearchNogomatch'][] = 'WikiLexicalDataHooks::onNoGoMatchHook';
 $wgHooks['SearchGetNearMatchBefore'][] = 'WikiLexicalDataHooks::onGoClicked';
 $wgHooks['PageContentLanguage'][] = 'WikiLexicalDataHooks::onPageContentLanguage';
 $wgHooks['SkinTemplateNavigation'][] = 'WikiLexicalDataHooks::onSkinTemplateNavigation';
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'WikiLexicalDataHooks::loadSchema';
 
 // Jobs
 require_once( $wgWldSetupScriptPath . "OWJobs.php" );

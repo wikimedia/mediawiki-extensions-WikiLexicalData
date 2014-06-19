@@ -61,6 +61,7 @@ $wgWldSpecialsScriptPath = $wgWldIncludesScriptPath . "specials/";
 $wgWldAPIScriptPath      = $wgWldIncludesScriptPath . "api/";
 $wgWldSetupScriptPath    = $wgWldIncludesScriptPath . "setup/";
 $wgWldJobsScriptPath     = $wgWldIncludesScriptPath . "jobs/";
+$wgWldDbScripts          = $wgWldIncludesScriptPath . 'updateScripts/';
 
 /**
  * the DM of an annotation to use for sorting expression
@@ -132,10 +133,12 @@ function wdGetDataSetContext( $dc = null ) {
 		$wdCurrentContext;
 
 	# overrides
-	if ( !is_null( $dc ) )
+	if ( !is_null( $dc ) ) {
 		return $dc; # local override
-	if ( !is_null( $wdCurrentContext ) )
+	}
+	if ( !is_null( $wdCurrentContext ) ) {
 		return $wdCurrentContext; # global override
+	}
 
 	$datasets = wdGetDataSets();
 	$groups = $wgUser->getGroups();
