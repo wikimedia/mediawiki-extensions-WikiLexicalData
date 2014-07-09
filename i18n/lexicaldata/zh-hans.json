@@ -17,7 +17,9 @@
 			"Xiaomingyan",
 			"Yfdyh000",
 			"乌拉跨氪",
-			"Mywood"
+			"Mywood",
+			"Impersonator 1",
+			"NigelSoft"
 		]
 	},
 	"wikidata-desc": "为各种类型的内容添加类wiki数据库",
@@ -200,6 +202,7 @@
 	"ow_needs_xlation_title": "需要翻译的表达式",
 	"ow_needs_xlation_source_lang": "源语言：",
 	"ow_needs_xlation_dest_lang": "目标语言：",
+	"ow_needs_xlation_no_dest_lang": "请指定一个目标语言。",
 	"ow_data_search": "WikiLexicalData数据搜索",
 	"ow_statistics": "WikiLexicalData统计",
 	"ow_downloads": "WikiLexicalData下载",
