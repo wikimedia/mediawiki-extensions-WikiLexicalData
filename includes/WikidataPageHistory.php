@@ -1,8 +1,8 @@
 <?php
 
-class WikidataPageHistory extends HistoryPage {
+class WikidataPageHistory extends HistoryAction {
 
-	public function history() {
+	public function onView() {
   		wfProfileIn( __METHOD__ );
  
 		global $wdHandlerClasses;
