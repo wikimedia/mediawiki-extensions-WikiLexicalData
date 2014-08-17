@@ -11,7 +11,7 @@ class DBTools {
 	/** retrieve a single row from the database as an associative array
 	 * @param $table	the name of the table (minus dataset prefix)
 	 * @peram $where		the actual WHERE clause we need to uniquely find our row
-	 * @returns an associative array, representing our row. \
+	 * @return an associative array, representing our row. \
 	 *	keys=column headers, values = row contents
 	 */
 	public static function getRows( $table, $where ) {
@@ -41,7 +41,7 @@ class DBTools {
 	/** Performs an arbitrary SQL query and returns an associative array
 	 * Assumes that only 1 row can be returned!
 	 * @param $query	a valid SQL query
-	 * @returns an associative array, representing our row. \
+	 * @return an associative array, representing our row. \
 	 *	keys=column headers, values = row contents
 	 *
 	 */
@@ -66,7 +66,7 @@ class DBTools {
 	/** Perform an arbitrary SQL query
 	 * 
 	 * @param $query	a valid SQL query
-	 * @returns an array of associative arrays, representing our rows.  \
+	 * @return an array of associative arrays, representing our rows.  \
 	 *	each associative array is structured with:		\
 	 *	keys=column headers, values = row contents
 	 */

@@ -345,7 +345,7 @@ class DefinedMeaningModel {
 	 * Warning: This is somewhat new  code, which still needs
 	 * shoring up.
 	 * @param $dataset	dataset to copy to.
-	 * @returns 	defined meaning id in the new dataset
+	 * @return 	defined meaning id in the new dataset
 	 */
 	public function copyTo( $dataset ) {
 		# $definedMeaningID=$this->getId();

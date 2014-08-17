@@ -145,7 +145,7 @@ class ObjectCopier {
 
 	/* tries to retrieve the identical UUID from the destination
 	 * (dc2) dataset, if it exists.
-	 * @returns the associative array representing this object,
+	 * @return the associative array representing this object,
 	 *  if successful. Else returns an empty array.
 	 */
 	protected function identical() {
@@ -869,7 +869,7 @@ class CopyTools {
 	 * @param $dc		the dataset prefix we need
 	 * @param $table	the name of the table (minus dataset prefix)
 	 * @peram $where		the actual WHERE clause we need to uniquely find our row
-	 * @returns an associative array, representing our row. \
+	 * @return an associative array, representing our row. \
 	 *	keys=column headers, values = row contents
 	 */
 	public static function getRow( $dc, $table, $where, $checkremove = false ) {
@@ -893,7 +893,7 @@ class CopyTools {
 	 * @param $dc		the dataset prefix we need
 	 * @param $table	the name of the table (minus dataset prefix)
 	 * @peram $where		the actual WHERE clause we need to uniquely find our row
-	 * @returns an array of associative arrays, representing our rows.  \
+	 * @return an array of associative arrays, representing our rows.  \
 	 *	each associative array is structured with:		\
 	 *	keys=column headers, values = row contents
 	 */
@@ -941,7 +941,7 @@ class CopyTools {
 	/** Performs an arbitrary SQL query and returns an associative array
 	 * Assumes that only 1 row can be returned!
 	 * @param $query	a valid SQL query
-	 * @returns an associative array, representing our row. \
+	 * @return an associative array, representing our row. \
 	 *	keys=column headers, values = row contents
 	 *
 	 */
@@ -966,7 +966,7 @@ class CopyTools {
 	/** Perform an arbitrary SQL query
 	 * 
 	 * @param $query	a valid SQL query
-	 * @returns an array of associative arrays, representing our rows.  \
+	 * @return an array of associative arrays, representing our rows.  \
 	 *	each associative array is structured with:		\
 	 *	keys=column headers, values = row contents
 	 */
@@ -1345,7 +1345,7 @@ abstract class Copier {
 	 */
 	// public abstract function write();
 
-	/** @returns true if the copied item was already present in the other dataset, false if it wasn't (and we just copied it over) , or null if don't know/error/other.
+	/** @return true if the copied item was already present in the other dataset, false if it wasn't (and we just copied it over) , or null if don't know/error/other.
 	 */
 	public function already_there() {
 		return $this->already_there;
@@ -1400,7 +1400,7 @@ abstract class Copier {
 	 * 
 	 * @param &$row : row to operate on, passed by reference
 	 * @param $object_column: a column in said row, containing the object reference to operate on
-	 * @returns 	true if examination of the objects table reveals that this particular row should already
+	 * @return 	true if examination of the objects table reveals that this particular row should already
 	 *			exist in the destination dataset
 	 *		false if this particular row does not yet exist in the table in the destination dataset. 
 	 *			The objects table, and object reference

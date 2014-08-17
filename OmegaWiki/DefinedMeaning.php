@@ -264,7 +264,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		return $html;
 	}
 
-	/** @returns user interface html for copying Defined Meanings
+	/** @return user interface html for copying Defined Meanings
 	 * between datasets. returns an empty string if the user
 	 * actually doesn't have permission to edit.
 	 */
@@ -382,7 +382,7 @@ class DefinedMeanings {
 	 * @param dc         opt'l str The WikiLexicalData dataset
 	 *
 	 * @return an array of "Defined Meaning Id" objects for a language
-	 * @returns if not exists, null
+	 * @return if not exists, null
 	 */
 	public static function getLanguageIdDefinedMeaningId( $languageId, $options = array(), $dc = null ) {
 		if ( is_null( $dc ) ) {
