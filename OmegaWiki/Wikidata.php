@@ -117,7 +117,7 @@ class DefaultWikidataApplication {
 		$summary = $wgRequest->getText( 'summary' );
 
 		// Insert transaction information into the DB
-		startNewTransaction( $wgUser->getID(), wfGetIP(), $summary );
+		startNewTransaction( $wgUser->getID(), $wgRequest->getIP(), $summary );
 
 		// Perform regular save
 		$this->save( new QueryAtTransactionInformation( $wgRequest->getInt( 'transaction' ), false ) );

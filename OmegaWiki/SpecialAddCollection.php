@@ -28,7 +28,7 @@ class SpecialAddCollection extends SpecialPage {
 
 			$dc = $wgRequest->getText( 'dataset' );
 			$collectionName = $wgRequest->getText( 'collection' );
-			startNewTransaction( $wgUser->getID(), wfGetIP(), 'Add collection ' . $collectionName );
+			startNewTransaction( $wgUser->getID(), $wgRequest->getIP(), 'Add collection ' . $collectionName );
 			bootstrapCollection( $collectionName, $wgRequest->getText( 'language' ), $wgRequest->getText( 'type' ), $dc );
 			$wgOut->addHTML( wfMessage( 'ow_collection_added', $collectionName )->text() . "<br />" );
 		}

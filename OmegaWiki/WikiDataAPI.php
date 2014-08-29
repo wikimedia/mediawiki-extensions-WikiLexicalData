@@ -2230,7 +2230,7 @@ function getCollectionIdForDC( $dc ) {
 /** Write the dm to the correct collection for a particular dc */
 
 function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction = null ) {
-	global $wgUser;
+	global $wgUser, $wgRequest;
 	// if(is_null($dc)) {
 	//	$dc=wdGetDataSetContext();
 	// }
@@ -2238,7 +2238,7 @@ function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction
 
 	$add_transaction_id = $override_transaction;
 	if ( is_null( $add_transaction_id ) ) {
-		startNewTransaction( $wgUser->getId(), wfGetIP(), "inserting collection $collid", $dc );
+		startNewTransaction( $wgUser->getId(), $wgRequest->getIP(), "inserting collection $collid", $dc );
 		$add_transaction_id = getUpdateTransactionId();
 	}
 

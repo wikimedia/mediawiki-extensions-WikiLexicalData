@@ -15,7 +15,7 @@ class SpecialImportTSV extends SpecialPage {
 
 	function execute( $par ) {
 
-		global $wgWldOwScriptPath, $wgDBprefix, $wgVersion;
+		global $wgWldOwScriptPath, $wgRequest, $wgVersion;
 		require_once( $wgWldOwScriptPath . "WikiDataAPI.php" );
 
 		$output = $this->getOutput();
@@ -93,7 +93,7 @@ class SpecialImportTSV extends SpecialPage {
 				$output->setPageTitle( wfMessage( 'ow_importtsv_importing' )->text() );
 			}
 
-			startNewTransaction( $this->getUser()->getID(), wfGetIP(), "Bulk import via Special:ImportTSV", $dc );	# this string shouldn't be localized because it will be stored in the db
+			startNewTransaction( $this->getUser()->getID(), $wgRequest->getIP(), "Bulk import via Special:ImportTSV", $dc );	# this string shouldn't be localized because it will be stored in the db
 
 			$row = "";
 			$line = 1; // actually 2, 1 was the header, but increased at the start of while

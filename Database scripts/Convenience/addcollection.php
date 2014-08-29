@@ -3,7 +3,7 @@
 require_once( "extensions/Wikidata/OmegaWiki/WikiDataAPI.php" ); // for bootstrapCollection
 require_once( "extensions/Wikidata/OmegaWiki/Transaction.php" );
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
-global $wgUser;
+global $wgUser, $wgRequest;
 
 function getDatasets() {
 	$datasets = array();
@@ -57,7 +57,7 @@ foreach ( $datasets as $dataset ) {
 		if ( $dataset != $otherdataset ) {
 			echo "mapping between $otherdataset and $dataset\n";
 			setDefaultDC( $otherdataset );
-			startNewTransaction( $userId, wfGetIP(), 'Add collection ', $dataset );
+			startNewTransaction( $userId, $wgRequest->getIP(), 'Add collection ', $dataset );
 			bootstrapCollection( $dataset, '85', 'MAPP' );
 		}
 	}
