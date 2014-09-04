@@ -147,5 +147,8 @@
 	"prefs-omegawiki": "{{optional}}",
 	"prefs-ow-lang": "A header in the user preferences where the user can configure languages.\n{{Identical|Language}}",
 	"ow_pref_lang_switch": "A checkbox in the user preferences. If checked, it allows the user to select which languages should be displayed. If unchecked, all languages are displayed.",
-	"ow_pref_lang_select": "Next to this text is shown a list of languages, each with a checkbox, to select the languages to display or hide in OmegaWiki"
+	"ow_pref_lang_select": "Next to this text is shown a list of languages, each with a checkbox, to select the languages to display or hide in OmegaWiki",
+	"ow_addFromExtAPI": "Special page name for adding OmegaWiki data from External APIs",
+	"ow_addFromExtAPI_title" : "The page title for Special page name for adding OmegaWiki data from External APIs",
+	"ow_api_source" : "External API source label"
 }

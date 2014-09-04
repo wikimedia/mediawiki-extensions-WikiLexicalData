@@ -13,9 +13,9 @@ function getTextBox( $name, $value = "", $onChangeHandler = "", $disabled = fals
 		'" value="' . htmlspecialchars( $value ) . '"' . $onChangeAttribute .
 		' style="width: 100%; padding: 0px; margin: 0px;"/>' ;
 
-	return $inputHTML ;
+	return $inputHTML;
 }
- 
+
 function getTextArea( $name, $text = "", $rows = 5, $columns = 80, $disabled = false ) {
 	if ( $disabled ) {
 		// READONLY alone is not enough: apparently, some browsers ignore it
@@ -31,7 +31,7 @@ function checkBoxCheckAttribute( $isChecked ) {
 	}
 	return '';
 }
- 
+
 function getCheckBox( $name, $isChecked, $disabled = false ) {
 	// a disabled checkbox returns no value, as if unchecked
 	// therefore the value of a disabled, but checked, checkbox must be sent with a hidden input
@@ -69,28 +69,11 @@ function getRemoveCheckBox( $name ) {
 	}
 }
 
-# $options is an array of [value => text] pairs
+/** @todo for deprecration use Class OmegaWikiForms's getSelect function instead.
+ */
 function getSelect( $name, $options, $selectedValue = "", $onChangeHandler = "" ) {
-	if ( $onChangeHandler != "" ) {
-		$onChangeAttribute = ' onchange="' . $onChangeHandler . '"';
-	} else {
-		$onChangeAttribute = '';
-	}
-
-	$result = '<select id="' . $name . '" name="' . $name . '"' . $onChangeAttribute . '>';
- 
-	asort( $options );
-
-	foreach ( $options as $value => $text ) {
-		if ( $value == $selectedValue )
-			$selected = ' selected="selected"';
-		else
-			$selected = '';
-
-		$result .= '<option value="' . $value . '"' . $selected . '>' . htmlspecialchars( $text ) . '</option>';
-	}
-
-	return $result . '</select>';
+	$form = new OmegaWikiForms;
+	return $form->getSelect( $name, $options, $selectedValue, $onChangeHandler );
 }
 
 function getFileField( $name, $onChangeHandler = "" ) {
@@ -101,7 +84,6 @@ function getFileField( $name, $onChangeHandler = "" ) {
 
 	return '<input type="file" id="' . $name . '" name="' . $name . '"' . $onChangeAttribute . ' style="width: 100%; padding: 0px; margin: 0px;"/>';
 }
- 
 
 /**
  *
@@ -296,3 +278,137 @@ function getOptionPanelForFileUpload( $fields, $action = '', $buttons = array( "
 	return $result;
 }
 
+/** @brief Generic Forms
+ */
+class GenericForms {
+
+	public function __construct() {
+		$this->labelTemplate = '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;';
+	}
+
+
+	/**
+	 * @return HTML string for HTML tag select
+	 *
+	 * @param name            str req'd unique identifier for this form field
+	 * @param options         arr req'd list of options, [value => text] pairs
+	 * @param selectedValue   str opt'l in case a value is present
+	 * @param onChangeHandler str js
+	 */
+	function getSelect( $name, $options, $selectedValue = "", $onChangeHandler = "" ) {
+		if ( $onChangeHandler != "" ) {
+			$onChangeAttribute = ' onchange="' . $onChangeHandler . '"';
+		} else {
+			$onChangeAttribute = '';
+		}
+
+		$result = '<select id="' . $name . '" name="' . $name . '"' . $onChangeAttribute . '>';
+
+		asort( $options );
+
+		foreach ( $options as $value => $text ) {
+			if ( $value == $selectedValue ) {
+				$selected = ' selected="selected"';
+			} else {
+				$selected = '';
+			}
+
+			$result .= '<option value="' . $value . '"' . $selected . '>' . htmlspecialchars( $text ) . '</option>';
+		}
+
+		return $result . '</select>';
+	}
+
+	/**
+	 * @return HTML string for HTML input type text
+	 * @param name            str     req'd unique identifier for this form field
+	 * @param value           str     opt'l input value
+	 * @param onChangeHandler str     opt'l js
+	 * @param disabled        boolean opt'l to disable editing of the field
+	 */
+	public function getTextBox( $name, $value = "", $onChangeHandler = "", $disabled = false ) {
+		if ( $onChangeHandler != "" ) {
+			$onChangeAttribute = ' onchange="' . $onChangeHandler . '"';
+		} else {
+			$onChangeAttribute = '';
+		}
+
+		$disableText = $disabled ? 'disabled="disabled" ' : '';
+		$inputHTML = '<input ' . $disableText . 'type="text" id="' . $name . '" name="' . $name .
+			'" value="' . htmlspecialchars( $value ) . '"' . $onChangeAttribute .
+			' style="width: 100%; padding: 0px; margin: 0px;"/>';
+
+		return $inputHTML;
+	}
+
+}
+
+/** @brief OmegaWiki extension to the generic forms
+ */
+class OmegaWikiForms extends GenericForms {
+
+	public function __construct() {
+		parent::__construct();
+	}
+
+	/**
+	 *
+	 * @return HTML for an autocompleted form field.
+	 *
+	 * @param name                str unique identifier for this form field
+	 * @param query               str type of query to run
+	 * @param parameters          arr span options (parameters and values )
+	 * @param value               int Default value
+	 * @param label               str How default value will be shown
+	 * @param displayLabelColumns arr Override column titles
+	 * @param DataSet             str Override standard dataset
+	 *
+	*/
+	function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = '', $displayLabelColumns = array( 0 ), DataSet $dc = null ) {
+		global $wgScriptPath;
+
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		if ( $label == "" ) {
+			$label = $this->labelTemplate;
+		}
+
+		$result = Html::openElement('span', array( 'class' => 'suggest' ) );
+
+		// the input that will contain the value selected with suggest.js
+		$inputOptions = array(
+			'id' => $name,
+			'name' => $name,
+			'value' => $value,
+			'type' => 'hidden'
+		);
+		$result .= Html::element('input', $inputOptions);
+
+		$spanOptions = array(
+			'id' => $name . '-suggest-link',
+			'name' => $name . '-suggest-link',
+			'class' => 'suggest-link',
+			'title' => wfMessage( "ow_SuggestHint" )->text(),
+			'query' => $query,
+			'offset' => 0,
+			'label-columns' => implode( ', ', $displayLabelColumns ),
+			'dataset' => $dc
+		);
+
+		foreach( $parameters as $parameter => $parameterValue ) {
+			// parameters like level, definedMeaningId, annotationAttributeId, syntransId
+			$spanOptions[$parameter] = $parameterValue;
+		}
+
+		$result .= Html::rawElement( 'span', $spanOptions, $label );
+
+		$result .= Html::closeElement( 'span' );
+
+		// The table that then allows to select from a dropdown list
+		// is generated with javascript (cf. suggest.js)
+
+		return $result;
+	}
+
+}

@@ -26,6 +26,14 @@ class WikiLexicalDataHooks {
 				$out->setPageTitle( mb_substr( $out->getPageTitle(), mb_strlen( $namespaceText ) + 1 ) );
 			}
 		}
+
+		// SpecialPage Add from External API
+		if (
+			$skin->getTitle()->mNamespace === -1 and
+			$skin->getTitle()->mTextform === 'Ow addFromExtAPI'
+		) {
+			$out->addModules( 'ext.OwAddFromExtAPI.js' );
+		}
 		return true;
 	}
 

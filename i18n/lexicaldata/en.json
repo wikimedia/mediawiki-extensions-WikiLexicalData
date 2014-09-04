@@ -216,5 +216,8 @@
     "prefs-omegawiki": "OmegaWiki",
     "prefs-ow-lang": "Languages",
     "ow_pref_lang_switch": "Show only the selected languages",
-    "ow_pref_lang_select": "Languages to display:"
+    "ow_pref_lang_select": "Languages to display:",
+	"ow_addFromExtAPI": "Add data from external APIs",
+	"ow_addFromExtAPI_title" : "Add data from API",
+	"ow_api_source" : "External API source:"
 }

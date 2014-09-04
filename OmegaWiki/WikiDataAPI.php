@@ -73,53 +73,16 @@ function getTableNameWithObjectId( $objectId ) {
 	return "";
 }
 
-/**
- * Returns the expressionId corresponding to $spelling and $languageId
- * @return null if not exist
+/** @todo for deprecation. Use OwDatabaseAPI::getExpressionId
  */
 function getExpressionId( $spelling, $languageId ) {
-	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
-
-	$expressionId = $dbr->selectField(
-		"{$dc}_expression",
-		'expression_id',
-		array(
-			'spelling' => $spelling,
-			'language_id' => $languageId,
-			'remove_transaction_id' => null
-		), __METHOD__
-	);
-
-	if ( $expressionId ) {
-		return $expressionId;
-	}
-	return null;
+	return OwDatabaseAPI::getExpressionId( $spelling, $languageId );
 }
 
-/**
- * Returns the expression->expression_id corresponding to a $spelling and
- * also returns the corresponding expression->languageId (the first found in the DB)
- * returns null if not exist
+/** @todo for deprecation. Use OwDatabaseAPI::getExpressionIdAnyLanguage
  */
 function getExpressionIdAnyLanguage( $spelling ) {
-	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
-
-	// selectRow returns only one. false if not exists.
-	$expression = $dbr->selectRow(
-		"{$dc}_expression",
-		array( 'expression_id', 'language_id' ),
-		array(
-			'spelling' => $spelling,
-			'remove_transaction_id' => null
-		), __METHOD__
-	);
-
-	if ( $expression ) {
-		return $expression;
-	}
-	return null;
+	return OwDatabaseAPI::getExpressionIdAnyLanguage( $spelling );
 }
 
 function getRemovedExpressionId( $spelling, $languageId ) {
@@ -236,17 +199,23 @@ function createInitialRevisionForPage( $wikipage, $comment ) {
 }
 
 /**
- * returns true if a spelling exists in the
- * expression table of the database
+ * @return boolean if a spelling exists in the expression table of the database
  */
-function existSpelling( $spelling ) {
+function existSpelling( $spelling, $languageId = 0 ) {
 	$dc = wdGetDataSetContext();
 
 	$dbr = wfGetDB( DB_SLAVE );
+
+	$cond = array( 'spelling' => $spelling, 'remove_transaction_id' => null );
+
+	if ( $languageId > 0 ) {
+		$cond['language_id'] = $languageId;
+	}
+
 	$expressionId = $dbr->selectField(
 		"{$dc}_expression",
 		'expression_id',
-		array( 'spelling' => $spelling, 'remove_transaction_id' => null ),
+		$cond,
 		__METHOD__
 	);
 
@@ -2130,64 +2099,16 @@ function getAnyDefinedMeaningWithSourceIdentifier( $sourceIdentifier ) {
 	return 0;
 }
 
+/** @todo for deprecation. use OwDatabaseAPI::getExpressionMeaningIds instead.
+ */
 function getExpressionMeaningIds( $spelling, $dc = null ) {
-	if ( is_null( $dc ) ) {
-		$dc = wdGetDataSetContext();
-	}
-	$dbr = wfGetDB( DB_SLAVE );
-
-	$queryResult = $dbr->select(
-		array(
-			'exp' => "{$dc}_expression",
-			'synt' => "{$dc}_syntrans"
-		),
-		'defined_meaning_id',
-		array(
-			'spelling' => $spelling,
-			'exp.remove_transaction_id' => null,
-			'synt.remove_transaction_id' => null,
-			'exp.expression_id = synt.expression_id'
-		), __METHOD__
-	);
-
-	$dmlist = array();
-
-	foreach ( $queryResult as $synonymRecord ) {
-		$dmlist[] = $synonymRecord->defined_meaning_id;
-	}
-
-	return $dmlist;
+	return OwDatabaseAPI::getExpressionMeaningIds( $spelling, array( 'dc' => $dc ) );
 }
 
+/** @todo for deprecation. use OwDatabaseAPI::getExpressionMeaningIdsForLanguages instead.
+ */
 function getExpressionMeaningIdsForLanguages( $spelling, $languageIds, $dc = null ) {
-	if ( is_null( $dc ) ) {
-		$dc = wdGetDataSetContext();
-	}
-	$dbr = wfGetDB( DB_SLAVE );
-
-	$queryResult = $dbr->select(
-		array(
-			'exp' => "{$dc}_expression",
-			'synt' => "{$dc}_syntrans"
-		),
-		array( 'defined_meaning_id', 'language_id' ),
-		array(
-			'spelling' => $spelling,
-			'exp.expression_id = synt.expression_id',
-			'synt.remove_transaction_id' => null,
-			'exp.remove_transaction_id' => null
-		), __METHOD__,
-		'DISTINCT'
-	);
-
-	$dmlist = array();
-
-	foreach( $queryResult as $synonymRecord ) {
-		if ( in_array( $synonymRecord->language_id, $languageIds ) ) {
-			$dmlist[] = $synonymRecord->defined_meaning_id;
-		}
-	}
-	return $dmlist;
+	return OwDatabaseAPI::getExpressionMeaningIdsForLanguages( $spelling, $languageIds, array( 'dc' => $dc ) );
 }
 
 /** Get Defined Meaning Ids from Expression Id

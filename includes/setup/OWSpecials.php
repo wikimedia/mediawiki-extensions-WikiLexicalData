@@ -82,6 +82,11 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Hiong3-eng5',
 );
 
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'SpecialAddFromExternalAPI',
+	'author' => 'Hiong3-eng5',
+);
+
 # Location of the SpecialMyExtension class (Tell MediaWiki to load this file)
 $wgAutoloadClasses['SpecialCopy'] = $dir . 'OmegaWiki/SpecialCopy.php';
 $wgAutoloadClasses['SpecialSelect'] = $dir . 'OmegaWiki/SpecialSelect.php';
@@ -99,6 +104,8 @@ $wgAutoloadClasses['SpecialOWDownloads'] = $wgWldSpecialsScriptPath . 'SpecialOW
 
 $wgAutoloadClasses['SpecialExportTSV'] = $wgWldSpecialsScriptPath . 'SpecialExportTSV.php';
 $wgAutoloadClasses['SpecialImportTSV'] = $wgWldSpecialsScriptPath . 'SpecialImportTSV.php';
+
+$wgAutoloadClasses['SpecialOWAddFromExternalAPI'] = $wgWldSpecialsScriptPath . 'SpecialOWAddFromExternalAPI.php';
 
 // $wgAutoloadClasses['SpecialTransaction'] = $dir . 'OmegaWiki/SpecialTransaction.php';
 
@@ -119,6 +126,8 @@ $wgSpecialPages['ow_downloads'] = 'SpecialOWDownloads';
 
 $wgSpecialPages['exportTSV'] = 'SpecialExportTSV';
 $wgSpecialPages['importTSV'] = 'SpecialImportTSV';
+
+$wgSpecialPages['ow_addFromExtAPI'] = 'SpecialOWAddFromExternalAPI';
 
 // $wgSpecialPages['Transaction'] = 'SpecialTransaction';
 
@@ -142,6 +151,33 @@ $wgSpecialPageGroups[ 'NeedsTranslation' ] = 'maintenance';
 
 $wgSpecialPageGroups[ 'ow_statistics' ] = 'wiki';
 $wgSpecialPageGroups[ 'ow_downloads' ] = 'wiki';
+
+// special page with conditional groups
+
+// ow_addFromExtAPI
+
+global $wgWldProcessExternalAPIClasses, $wgWldExtenalResourceLanguages, $wgWldScriptPath;
+$wgWldProcessExternalAPIClasses = array();
+$wgWldExtenalResourceLanguages = array();
+
+if ( file_exists( $wgWldScriptPath . '/external/wordnik/wordnik/Swagger.php' ) ) {
+	$wgAutoloadClasses['WordnikExtension' ] = $wgWldSpecialsScriptPath . 'ExternalWordnik.php';
+	$wgAutoloadClasses['WordnikWiktionaryExtension' ] = $wgWldSpecialsScriptPath . 'ExternalWordnik.php';
+	$wgAutoloadClasses['WordnikWordnetExtension' ] = $wgWldSpecialsScriptPath . 'ExternalWordnik.php';
+	$wgWldProcessExternalAPIClasses['WordnikExtension'] = 'Wordnik';
+	$wgWldProcessExternalAPIClasses['WordnikWiktionaryExtension'] = 'Wordnik Wiktionary';
+	$wgWldProcessExternalAPIClasses['WordnikWordnetExtension'] = 'Wordnik Wordnet';
+	$wgWldExtenalResourceLanguages[WLD_ENGLISH_LANG_ID] = 'English';
+	require_once( $wgWldScriptPath . '/external/wordnikConfig.php' );
+}
+
+if ( $wgWldProcessExternalAPIClasses ) {
+	$wgSpecialPageGroups[ 'ow_addFromExtAPI' ] = 'maintenance';
+
+	$wgResourceModules['ext.OwAddFromExtAPI.js'] = $resourcePathArray + array(
+		'scripts' => 'omegawiki-addExtAPI.js'
+	);
+}
 
 # Location of an aliases file (Tell MediaWiki to load this file)
 //$wgExtensionMessagesFiles[ 'OWSpecialsAlias' ] = #dir . '../i18n/OWSpecials.alias.php';

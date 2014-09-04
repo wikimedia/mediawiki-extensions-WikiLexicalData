@@ -47,6 +47,94 @@ class OwDatabaseAPI {
 		return $api->Expression->createId( $spelling, $languageId, $options );
 	}
 
+	/** @brief Returns the expressionId corresponding to $spelling and $languageId
+	 *
+	 * @return str  The expressionId
+	 * @return null if not exist
+	 * @see OwDatabaseAPI::getTheExpressionId
+	 */
+	public static function getExpressionId( $spelling, $languageId, $options = array() ) {
+		return OwDatabaseAPI::getTheExpressionId( $spelling, $languageId, $options );
+	}
+
+	/** @brief Returns the expression->expression_id corresponding to a $spelling and
+	 *  also returns the corresponding expression->languageId (the first found in the DB)
+	 *
+	 * @return array array( expessionId, languageId )
+	 * @return null  if not exist
+	 * @see OwDatabaseAPI::getTheExpressionId
+	 */
+	public static function getExpressionIdAnyLanguage( $spelling, $options = array() ) {
+		return OwDatabaseAPI::getTheExpressionId( $spelling, null, $options );
+	}
+
+	/** @brief returns a list of DefinedMeaning ids
+	 *
+	 * @return arr list of defined meaning ids.
+	 * @return arr if empty, an empty array.
+	 * @see OwDatabaseAPI::getExpressionMeaningIds
+	 */
+	public static function getExpressionMeaningIds( $spelling, $options = array() ) {
+		return OwDatabaseAPI::getTheExpressionMeaningIds( $spelling, null, $options );
+	}
+
+	/** @brief returns a list of DefinedMeaning ids for languages contained in the array languageIds
+	 *
+	 * @return arr list of defined meaning ids.
+	 * @return arr if empty, an empty array.
+	 * @see OwDatabaseAPI::getExpressionMeaningIds
+	 */
+	public static function getExpressionMeaningIdsForLanguages( $spelling, $languageIds, $options = array() ) {
+		return OwDatabaseAPI::getTheExpressionMeaningIds( $spelling, $languageIds, $options );
+	}
+
+
+	/** @brief the core getExpression function
+	 *
+	 * @param spelling   req'd str
+	 * @param languageId opt'l int
+	 * @param option     opt'l arr
+	 *
+	 * @return str expression id for the languageId indicated.
+	 * @return arr The first expressionId/languageId [array( expessionId, languageId )] when languageId is skipped.
+	 *	options:
+	 *		dc           str The data set
+	 *
+	 * @see Expressions::getId.
+	 */
+	public static function getTheExpressionId( $spelling, $languageId = null, $options = array() ) {
+		$api = new OwDatabaseAPI;
+		$dc = null;
+		if ( isset( $options['dc'] ) ) {
+			$dc = $options['dc'];
+		}
+		$api->settings( 'expression', $dc );
+		return $api->Expression->getId( $spelling, $languageId, $options );
+	}
+
+	/** @brief the core getMeaningIds function
+	 *
+	 * @param spelling   req'd str
+	 * @param languageId opt'l arr
+	 * @param option     opt'l arr
+	 *
+	 * @return arr list of defined meaning ids.
+	 * @return arr if not exists, an empty array.
+	 *	options:
+	 *		dc           str The data set
+	 *
+	 * @see Expressions::getMeaningIds.
+	 */
+	public static function getTheExpressionMeaningIds( $spelling, $languageIds, $options ) {
+		$api = new OwDatabaseAPI;
+		$dc = null;
+		if ( isset( $options['dc'] ) ) {
+			$dc = $options['dc'];
+		}
+		$api->settings( 'expression', $dc );
+		return $api->Expression->getMeaningIds( $spelling, $languageIds, $options );
+	}
+
 	/*! @} group OwDbAPIeFn ends here.*/
 
 	/** @addtogroup OwDbAPIdmFn OwDatabaseAPI's Defined Meaning functions
@@ -375,6 +463,27 @@ class OwDatabaseAPI {
 		return $api->Syntrans->getSpellingWithDM( $syntransId, $options, $api->dc );
 	}
 
+	/**
+	 * @param definedMeaningId req'd int The defined meaning id
+	 * @param languageId       req'd int language id
+	 * @param spelling         req'd str The Expression
+	 *
+	 * @return array( str spelling, int language_id, int identical_meaning )
+	 * @return if not exists, null
+	 *
+	 * @see Syntrans::getAllSynonymAndTranslation
+	 */
+	public static function getSynonyms( $definedMeaningId, $languageId, $spelling ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'syntrans' );
+		$options = array(
+			'language_id' => $languageId,
+			'scope' => 'syn',
+			'spelling' => $spelling
+		);
+		return $api->Syntrans->getAllSynonymAndTranslation( $definedMeaningId, $options );
+	}
+
 	/*! @} group OwDbAPIsyntFn ends here.*/
 
 	/** @addtogroup OwDbAPItransactFn OwDatabaseAPI's Transactions functions
@@ -481,6 +590,124 @@ class Syntrans {
 		$expression->assureIsBoundToDefinedMeaning( $definedMeaningId, $identicalMeaning );
 	}
 
+	/** @brief added checks before adding Syntrans. Useful for APIs.
+	 *
+	 * @return an array of result or warning.
+	 * @todo Future implemetation. Use this function in connection with
+	 *	MediaWiki/WikiLexicalData API's owAddSyntrans.php
+	 */
+	public static function addWithNotes( $spelling, $languageId, $definedMeaningId, $identicalMeaning, $options = array() ) {
+		global $wgUser;
+		$dc = wdGetDataSetContext();
+
+		// set test status
+		if ( !isset( $options['test'] ) ) {
+			$options['test'] = false;
+		}
+		// check that the language_id exists
+		if ( !verifyLanguageId( $languageId ) ) {
+			return array(
+				'WARNING' => 'Non existent language id (' . $languageId . ').'
+			);
+		}
+
+		// check that defined_meaning_id exists
+		if ( !verifyDefinedMeaningId( $definedMeaningId ) ) {
+			return array(
+				'WARNING' => 'Non existent dm id (' . $definedMeaningId . ').'
+			);
+		}
+
+		if ( $identicalMeaning === true ) { $identicalMeaning = 1; }
+		if ( $identicalMeaning === false ) { $identicalMeaning = 0; }
+		if ( $identicalMeaning === 1 ) {
+			$identicalMeaningStr = "true";
+			if ( $options['ver'] == '1' ) { $identicalMeaning = "true"; }
+		}
+		else {
+			$identicalMeaningStr = "false";
+			$identicalMeaning = 0;
+			if ( $options['ver'] == '1' ) { $identicalMeaning = "false"; }
+		}
+
+		if ( !isset( $options['addedBy'] ) ) { // assumed used by API
+			$addedBy = 'API function add_syntrans';
+		} else {
+			$addedBy = $options['addedBy'];
+		}
+
+		// first check if it exists, then create the transaction and put it in db
+		$expression = findExpression( $spelling, $languageId, $options );
+		$concept = getDefinedMeaningSpellingForLanguage( $definedMeaningId, WLD_ENGLISH_LANG_ID );
+		if ( $expression ) {
+			// the expression exists, check if it has this syntrans
+			$bound = expressionIsBoundToDefinedMeaning ( $definedMeaningId, $expression->id );
+			if (  $bound == true ) {
+				$synonymId = getSynonymId( $definedMeaningId, $expression->id );
+				$note = array (
+					'status' => 'exists',
+					'in' => $concept . ' DM(' . $definedMeaningId . ')',
+					'sid' => $synonymId,
+					'e' => $spelling,
+					'langid' => $languageId,
+					'dm' => $definedMeaningId,
+					'im' => $identicalMeaning
+				);
+				if ( $options['test'] ) {
+					$note['note'] = 'test run only';
+				}
+
+				return $note;
+			}
+		}
+
+		// adding the expression
+		$expressionId = getExpressionId( $spelling, $languageId );
+		$synonymId = getSynonymId( $definedMeaningId, $expressionId );
+		$note = array (
+			'status' => 'added',
+			'to' => $concept . ' DM(' . $definedMeaningId . ')',
+			'sid' => $synonymId,
+			'e' => $spelling,
+			'langid' => $languageId,
+			'dm' => $definedMeaningId,
+			'im' => $identicalMeaning
+		);
+
+		// safety net.
+		if ( !isset( $options['transacted'] ) ) { $options['transacted'] = false; };
+		if ( !isset( $options['updateId'] ) ) { $options['updateId'] = -1; };
+		if ( !isset( $options['tid'] ) ) { $options['tid'] = -1; };
+		if ( !isset( $options['test'] ) ) { $options['test'] = false; };
+
+		// add note['tid'] from $options['tid'] (transaction id), if null, get value
+		// from $this->options['updateId'].
+		if ( $options['ver'] == '1.1' ) {
+			if ( $options['tid'] ) {
+				$note['tid'] = $options['tid'];
+			} else {
+				$note['tid'] = $options['updateId'];
+			}
+		}
+
+		if ( !$options['test'] ) {
+			if ( !$options['transacted'] ) {
+				$note['transacted'] = true; // @todo when used in owAddSyntrans.php, kindly use this to switch $this->transacted to true.
+				$tid = startNewTransaction( $wgUser->getID(), "0.0.0.0", 'Added using ' . $addedBy, $dc );
+				if ( $options['ver'] == '1.1' ) {
+					$note['tid'] = $tid;
+				}
+			}
+			OwDatabaseAPI::addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaningStr, $options );
+			$synonymId = getSynonymId( $definedMeaningId, $expressionId );
+			$note['sidd'] = $synonymId;
+		} else {
+			$note['note'] = 'test run only';
+		}
+
+		return $note;
+	}
+
 	/**
 	 * @param syntransId req'd int The syntrans id
 	 * @param options    opt'l arr  An optional parameters
@@ -528,6 +755,82 @@ class Syntrans {
 		}
 		if ( $test ) { echo 'array()'; die; }
 		return array();
+	}
+
+	/** @brief core get syntrans function
+	 *
+	 * @param definedMeaningId	int	req'd
+	 * @param options			int opt'l
+	 *
+	 * @return array( str spelling, int language_id, int identical_meaning )
+	 * @return if not exists, null
+	 */
+	public static function getAllSynonymAndTranslation( $definedMeaningId, $options ) {
+		if ( isset( $options['dc'] ) ) {
+			$dc = $options['dc'];
+		} else {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$opt = array(
+			'defined_meaning_id' => $definedMeaningId,
+			'st.expression_id = e.expression_id',
+			'st.remove_transaction_id' => null
+		);
+
+		if( isset( $options['language_id'] ) ) {
+			$languageId = $options['language_id'];
+		}
+
+		if( isset( $options['spelling'] ) ) {
+			$spelling = $options['spelling'];
+		}
+
+		if( isset( $options['scope'] ) ) {
+			switch( $options['scope'] ) {
+				case 'syn':
+				$opt['language_id'] = $languageId;
+				$opt[] = 'spelling not in (' . "'" . $spelling . "'" . ')';
+				break;
+			}
+		}
+
+		$result = $dbr->select(
+			array(
+				'e' => "{$dc}_expression",
+				'st' => "{$dc}_syntrans"
+			),
+			array(
+				'spelling',
+				'language_id',
+				'identical_meaning',
+				'syntrans_sid'
+			),
+			$opt, __METHOD__,
+			array(
+				'ORDER BY' => array (
+					'identical_meaning DESC',
+					'language_id',
+					'spelling'
+				)
+			)
+		);
+
+		$syntrans = array();
+		foreach ( $result as $row ) {
+			$syntrans[] = array(
+				0 => $row->spelling,
+				1 => $row->language_id,
+				2 => $row->identical_meaning,
+				3 => $row->syntrans_sid
+			);
+		}
+
+		if ( $syntrans ) {
+			return $syntrans;
+		}
+		return null;
 	}
 
 }
