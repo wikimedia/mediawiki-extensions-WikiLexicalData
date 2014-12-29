@@ -8,20 +8,24 @@ jQuery(document).ready(function( $ ) {
 
 	// some delegated handlers for elements added dynamically
 	$("body").on('click', ".suggest-next", function(event) {
-		var suggestPrefix = getSuggestPrefix( this, 'next');
-		var suggestLink = '#' + suggestPrefix + 'link';
-		var suggestOffset = $(suggestLink).attr('offset');
+		var suggestPrefix, suggestLink, suggestOffset;
+
+		suggestPrefix = getSuggestPrefix( this, 'next');
+		suggestLink = '#' + suggestPrefix + 'link';
+		suggestOffset = $(suggestLink).attr('offset');
 		$(suggestLink).attr('offset', parseInt(suggestOffset) + 10);
 
 		updateSuggestions(suggestPrefix);
 	});
 
 	$("body").on('click', ".suggest-previous", function(event) {
-		var suggestPrefix = getSuggestPrefix( this, 'previous');
+		var suggestPrefix, suggestLink, suggestOffset, newOffset;
 
-		var suggestLink = '#' + suggestPrefix + 'link';
-		var suggestOffset = $(suggestLink).attr('offset');
-		var newOffset = Math.max( parseInt(suggestOffset) - 10, 0 );
+		suggestPrefix = getSuggestPrefix( this, 'previous');
+
+		suggestLink = '#' + suggestPrefix + 'link';
+		suggestOffset = $(suggestLink).attr('offset');
+		newOffset = Math.max( parseInt(suggestOffset) - 10, 0 );
 		$(suggestLink).attr('offset', newOffset);
 
 		updateSuggestions(suggestPrefix);
@@ -34,22 +38,23 @@ jQuery(document).ready(function( $ ) {
 
 	$("body").on('click', ".suggest-clear", function(event) {
 		var suggestPrefix = getSuggestPrefix( this, 'clear');
-		updateSuggestValue(suggestPrefix, ""
-			, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		updateSuggestValue(suggestPrefix, "",
+			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 	});
 
 	$("body").on('click', ".suggest-link", function(event) {
-		var suggestLinkId = this.id;
+		var suggestLinkId, suggestPrefix, suggestField;
+		suggestLinkId = this.id;
 		// removing the "link" at the end of the Id
-		var suggestPrefix = getSuggestPrefix( this, 'link');
+		suggestPrefix = getSuggestPrefix( this, 'link');
 
-		if ( $("#" + suggestPrefix + "div").length == 0 ) {
+		if ( $("#" + suggestPrefix + "div").length === 0 ) {
 			createSuggestStructure(this, suggestPrefix);
 		}
 		$("#" + suggestPrefix + "div").show();
 
-		var suggestField = document.getElementById(suggestPrefix + "text");
-		if (suggestField != null) {
+		suggestField = document.getElementById(suggestPrefix + "text");
+		if (suggestField !== null) {
 			suggestField.focus();
 			updateSuggestions(suggestPrefix);
 		}
@@ -66,12 +71,12 @@ jQuery(document).ready(function( $ ) {
 	}
 
 	function scheduleUpdateSuggestions( suggestPrefix ) {
-		if ( suggestionTimeOut != null ) {
+		if ( suggestionTimeOut !== null ) {
 			clearTimeout( suggestionTimeOut );
 		}
 		$("#" + suggestPrefix + "link").attr( 'offset', 0 );
 		suggestionTimeOut = setTimeout(function() {
-			updateSuggestions( suggestPrefix )
+			updateSuggestions( suggestPrefix );
 		}, 600);
 	}
 
@@ -84,8 +89,8 @@ jQuery(document).ready(function( $ ) {
 	 * and buttons next, previous and clear
 	 */
 	function createSuggestStructure( element, suggestPrefix ) {
-		var imgPath =  mw.config.get( 'wgExtensionAssetsPath' ) + '/WikiLexicalData/Images/' ;
-		var suggestStructure =
+		var imgPath =  mw.config.get( 'wgExtensionAssetsPath' ) + '/WikiLexicalData/Images/',
+			suggestStructure =
 			'<div class="suggest-drop-down"><div id="' + suggestPrefix + 'div" class="suggest-div">' +
 				'<table><tr>' +
 					'<td><input type="text" id="' + suggestPrefix + 'text" autocomplete="off" class="suggest-text"/></td>' +
@@ -104,10 +109,11 @@ jQuery(document).ready(function( $ ) {
 	}
 
 	function updateSuggestValue( suggestPrefix, value, displayValue ) {
-		var suggestLinkId = suggestPrefix + "link";
-		var suggestLink = document.getElementById(suggestLinkId);
-		var suggestDiv = document.getElementById(suggestPrefix + "div");
-		var suggestField = document.getElementById(stripSuffix(suggestPrefix, "-suggest-"));
+		var suggestLinkId, suggestLink, suggestDiv, suggestField, inputId, objAtt;
+		suggestLinkId = suggestPrefix + "link";
+		suggestLink = document.getElementById(suggestLinkId);
+		suggestDiv = document.getElementById(suggestPrefix + "div");
+		suggestField = document.getElementById(stripSuffix(suggestPrefix, "-suggest-"));
 
 		suggestField.value = value;
 
@@ -116,9 +122,9 @@ jQuery(document).ready(function( $ ) {
 		suggestLink.focus();
 
 		// if an option is changed, change also the content of the option value comobobox selector
-		if ( $('#' + suggestLinkId).attr('query') == 'optnAtt' ) {
-			var inputId = stripSuffix( suggestPrefix, '-suggest-');
-			var objAtt = $('#' + suggestLinkId).attr('syntransid');
+		if ( $('#' + suggestLinkId).attr('query') === 'optnAtt' ) {
+			inputId = stripSuffix( suggestPrefix, '-suggest-');
+			objAtt = $('#' + suggestLinkId).attr('syntransid');
 			if ( ! objAtt ) {
 				objAtt = $('#' + suggestLinkId).attr('definedmeaningid');
 			}
@@ -133,70 +139,75 @@ jQuery(document).ready(function( $ ) {
 	*/
 	function updateSuggestions( suggestPrefix ) {
 		// table is created by the createSuggestStructure function
-		var table = $('#' + suggestPrefix + 'table');
-		if ( table == null ) {
+		var table, suggestlink, suggestQuery, suggestOffset, dataSet, suggestAttributesLevel,
+			suggestDefinedMeaningId, suggestSyntransId, suggestAnnotationAttributeId,
+			suggestTextVal, getParams;
+
+		table = $('#' + suggestPrefix + 'table');
+		if ( table === null ) {
 			// just in case
 			return;
 		}
 
 		// the following parameters are created in forms.php
-		var suggestlink = '#' + suggestPrefix + 'link';
-		var suggestQuery = $(suggestlink).attr('query');
-		var suggestOffset = $(suggestlink).attr('offset');
-		var dataSet = $(suggestlink).attr('dataset');
+		suggestlink = '#' + suggestPrefix + 'link';
+		suggestQuery = $(suggestlink).attr('query');
+		suggestOffset = $(suggestlink).attr('offset');
+		dataSet = $(suggestlink).attr('dataset');
 
-		var suggestAttributesLevel = $(suggestlink).attr('level');
-		var suggestDefinedMeaningId = $(suggestlink).attr('definedMeaningId');
-		var suggestSyntransId = $(suggestlink).attr('syntransId');
-		var suggestAnnotationAttributeId = $(suggestlink).attr('annotationAttributeId');
+		suggestAttributesLevel = $(suggestlink).attr('level');
+		suggestDefinedMeaningId = $(suggestlink).attr('definedMeaningId');
+		suggestSyntransId = $(suggestlink).attr('syntransId');
+		suggestAnnotationAttributeId = $(suggestlink).attr('annotationAttributeId');
 
 		suggestText = $("#" + suggestPrefix + "text");
 		suggestText.addClass("suggest-loading");
-		var suggestTextVal = suggestText.val() ; // we copy the value to compare it later to the current value
+		suggestTextVal = suggestText.val() ; // we copy the value to compare it later to the current value
 
 		URL = wgScript + '?title=Special:Suggest' ;
 
-		var getParams = {
+		getParams = {
 			'search-text': suggestTextVal,
 			prefix: suggestPrefix,
 			query: suggestQuery,
 			offset: suggestOffset,
 			dataset: dataSet
 		};
-		if (suggestAttributesLevel != null) {
-			getParams['attributesLevel'] = suggestAttributesLevel;
+		if (suggestAttributesLevel !== null) {
+			getParams.attributesLevel = suggestAttributesLevel;
 		}
-		if (suggestDefinedMeaningId != null) {
-			getParams['definedMeaningId'] = suggestDefinedMeaningId;
+		if (suggestDefinedMeaningId !== null) {
+			getParams.definedMeaningId = suggestDefinedMeaningId;
 		}
-		if (suggestSyntransId != null) {
-			getParams['syntransId'] = suggestSyntransId;
+		if (suggestSyntransId !== null) {
+			getParams.syntransId = suggestSyntransId;
 		}
-		if (suggestAnnotationAttributeId != null) {
-			getParams['annotationAttributeId'] = suggestAnnotationAttributeId;
+		if (suggestAnnotationAttributeId !== null) {
+			getParams.annotationAttributeId = suggestAnnotationAttributeId;
 		}
 
 		$.get( URL, getParams, function(data) {
-			var newTable = document.createElement('div');
-			if (data != '') {
+			var newTable, langnames, searchTxt, i, searchInTxt, position;
+			newTable = document.createElement('div');
+			if (data !== '') {
 				newTable.innerHTML = leftTrim( data );
-				
+
 				// put the searched text in bold within the returned string
-				if ( suggestTextVal != "" ) {
-					var langnames = newTable.getElementsByTagName('td') ;
-					var searchTxt = new String ( suggestTextVal ) ;
+				if ( suggestTextVal !== "" ) {
+					langnames = newTable.getElementsByTagName('td') ;
+					searchTxt = suggestTextVal;
 					// normalizeText removes diacritics (cf. omegawiki-ajax.js)
 					searchTxt = normalizeText ( searchTxt.toLowerCase() ) ;
 
 					for ( i=0 ; i < langnames.length ; i++ ) {
-						var searchInTxt = normalizeText ( langnames[i].innerHTML.toLowerCase() ) ;
-						var position = searchInTxt.indexOf( searchTxt );
+						searchInTxt = normalizeText ( langnames[i].innerHTML.toLowerCase() ) ;
+						position = searchInTxt.indexOf( searchTxt );
 						if ( position >= 0 ) {
-							langnames[i].innerHTML = langnames[i].innerHTML.substr(0,position)
-							+ "<b>"
-							+ langnames[i].innerHTML.substr( position, searchTxt.length)
-							+ "</b>"
-							+ langnames[i].innerHTML.substr( position + searchTxt.length ) ;
+							langnames[i].innerHTML = langnames[i].innerHTML.substr(0,position) +
+							"<b>" +
+							langnames[i].innerHTML.substr( position, searchTxt.length) +
+							"</b>" +
+							langnames[i].innerHTML.substr( position + searchTxt.length ) ;
 						}
 					}
 				}
@@ -205,16 +216,16 @@ jQuery(document).ready(function( $ ) {
 			suggestText.removeClass("suggest-loading");
 
 			// comparing the stored value send in the URL, and the actual value
-			if ( suggestTextVal != suggestText.val() ) {
+			if ( suggestTextVal !== suggestText.val() ) {
 				suggestionTimeOut = setTimeout( function() {
-					updateSuggestions( suggestPrefix )
+					updateSuggestions( suggestPrefix );
 				}, 100);
 			}
 		});
 	}
 
 	function leftTrim( sString ) {
-		while (sString.substring(0,1) == ' ' || sString.substring(0,1) == "\n") {
+		while (sString.substring(0,1) === ' ' || sString.substring(0,1) === "\n") {
 				sString = sString.substring(1, sString.length);
 			}
 		return sString;
@@ -236,8 +247,8 @@ jQuery(document).ready(function( $ ) {
 	}
 
 	function updateSelectOptions(id, objectId, value) {
-		var URL = 'index.php';
-		var location = "" + document.location;
+		var URL = 'index.php',
+			location = "" + document.location;
 
 		if (location.indexOf('index.php/') > 0) {
 			URL = '../' + URL;
@@ -245,11 +256,12 @@ jQuery(document).ready(function( $ ) {
 		URL = URL + '/Special:Select?optnAtt=' + encodeURI(value) + '&attribute-object=' + encodeURI(objectId);
 
 		$.get( URL, function(data) {
-			var select = document.getElementById(id);
+			var select, options, idx, option;
+			select = document.getElementById(id);
 			select.options.length = 0;
-			var options = data.split("\n");
+			options = data.split("\n");
 
-			for (idx in options) {
+			for ( idx in options) {
 				option = options[idx].split(";");
 				select.add(new Option(option[1],option[0]),null);
 			}
@@ -272,37 +284,38 @@ jQuery(document).ready(function( $ ) {
 		});
 
 		$(".suggestion-row").click(function() {
-			var suggestPrefix = stripSuffix( $(this).closest('.suggest-div').attr('id'), 'div');
-			var suggestlink = '#' + suggestPrefix + 'link';
+			var suggestPrefix = stripSuffix( $(this).closest('.suggest-div').attr('id'), 'div' ),
+				suggestlink = '#' + suggestPrefix + 'link',
+				idColumnsField = $(suggestlink).attr('id-columns' ),
+				displayLabelField = $(suggestlink).attr('label-columns' ),
+				displayLabelColumnIndices = displayLabelField.split(", " ),
+				labels = [],
+				i, columnValue, idColumns, values, ids;
 
-			var idColumnsField = $(suggestlink).attr('id-columns');
-			var displayLabelField = $(suggestlink).attr('label-columns');
-			var displayLabelColumnIndices = displayLabelField.split(", ");
-			var labels = new Array();
+			for ( i = 0; i < displayLabelColumnIndices.length; i++) {
+				columnValue = this.getElementsByTagName('td')[displayLabelColumnIndices[i]].innerHTML;
 
-			for (var i = 0; i < displayLabelColumnIndices.length; i++) {
-				var columnValue = this.getElementsByTagName('td')[displayLabelColumnIndices[i]].innerHTML;
-
-				if (columnValue != "") {
+				if (columnValue !== "") {
 					// remove the bold that we added for highlight
 					columnValue = columnValue.replace ("<b>","");
 					columnValue = columnValue.replace ("</b>","");
 					labels.push(columnValue);
 				}
 			}
-			var idColumns = 1;
 
-			if (idColumnsField != null) {
+			idColumns = 1;
+
+			if (idColumnsField !== null) {
 				idColumns = idColumnsField;
 			}
-			var values = this.id.split('-');
-			var ids = new Array();
 
-			for (var i = idColumns - 1; i >= 0; i--) {
+			values = this.id.split('-' );
+			ids = [];
+
+			for ( i = idColumns - 1; i >= 0; i--) {
 				ids.push(values[values.length - i - 1]);
 			}
 			updateSuggestValue(suggestPrefix, ids.join('-'), labels.join(', '));
 		});
 	});
-
 });

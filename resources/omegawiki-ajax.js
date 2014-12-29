@@ -14,11 +14,11 @@ jQuery(document).ready(function( $ ) {
 
 	// sticky explang
 	var explangUrl = document.URL.match( /explang=\d+/gi );
-	if ( explangUrl!=null ) {
+	if ( explangUrl !== null ) {
 		var explangNb = explangUrl[0].replace('explang=','');
 		$('#ca-edit, #ca-history, #ca-view').find('a').attr( 'href', function(i, val) {
 			var bigoudi = '&' ;
-			if ( val.match( /\?/gi ) == null ) {bigoudi = '?';}
+			if ( val.match( /\?/gi ) === null ) {bigoudi = '?';}
 			return val + bigoudi + 'explang=' + explangNb ;
 		});
 	}
@@ -46,7 +46,7 @@ jQuery(document).ready(function( $ ) {
 
 		// if no corresponding popupToggleable (in edit mode): create it
 		// and get the values
-		if ( $(this).next('.popupToggleable').length == 0 ) {
+		if ( $(this).next('.popupToggleable').length === 0 ) {
 
 			var popupOpenHideLink = this;
 			var myAction = $(this).attr('action');
@@ -62,7 +62,7 @@ jQuery(document).ready(function( $ ) {
 			};
 
 			if ( myAction === 'history' ) {
-				postdata['action'] = 'history';
+				postdata.action = 'history';
 			}
 			$.post( URL, postdata, function(data) {
 				// insert the data and show it
@@ -230,7 +230,7 @@ jQuery(document).ready(function( $ ) {
 			$('.wd-tablist .visibleTab:last').next()
 			.addClass('visibleTab').removeClass('hiddenTab')
 			.show();
-	
+
 			// show previous arrow
 			$('.wd-previousArrow').show();
 
@@ -257,13 +257,13 @@ jQuery(document).ready(function( $ ) {
 				.addClass('hiddenTab').removeClass('visibleTab')
 				.hide();
 			}
-	
+
 			// remove next arrow if last tab is visible
 			if ( $('.wd-tablist .wd-tabitem:last').hasClass('visibleTab') ) {
 				$('.wd-nextArrow').hide();
 			}
-	
-	
+
+
 		}); // nextArrow click
 
 		// previous arrow click
@@ -275,7 +275,7 @@ jQuery(document).ready(function( $ ) {
 
 			// show next arrow
 			$('.wd-nextArrow').show();
-	
+
 			// remove previous arrow if first tab is visible
 			if ( $('.wd-tablist .wd-tabitem:first').hasClass('visibleTab') ) {
 				$('.wd-previousArrow').hide();
@@ -385,22 +385,22 @@ window.MD5 = function (string) {
 	function FF(a,b,c,d,x,s,ac) {
 		a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));
 		return AddUnsigned(RotateLeft(a, s), b);
-	};
+	}
 
 	function GG(a,b,c,d,x,s,ac) {
 		a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac));
 		return AddUnsigned(RotateLeft(a, s), b);
-	};
+	}
 
 	function HH(a,b,c,d,x,s,ac) {
 		a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac));
 		return AddUnsigned(RotateLeft(a, s), b);
-	};
+	}
 
 	function II(a,b,c,d,x,s,ac) {
 		a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac));
 		return AddUnsigned(RotateLeft(a, s), b);
-	};
+	}
 
 	function ConvertToWordArray(string) {
 		var lWordCount;
@@ -423,7 +423,7 @@ window.MD5 = function (string) {
 		lWordArray[lNumberOfWords-2] = lMessageLength<<3;
 		lWordArray[lNumberOfWords-1] = lMessageLength>>>29;
 		return lWordArray;
-	};
+	}
 
 	function WordToHex(lValue) {
 		var WordToHexValue='',WordToHexValue_temp='',lByte,lCount;
@@ -433,7 +433,7 @@ window.MD5 = function (string) {
 			WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length-2,2);
 		}
 		return WordToHexValue;
-	};
+	}
 
 	function Utf8Encode(string) {
 		string = string.replace(/\r\n/g,'\n');
@@ -459,7 +459,7 @@ window.MD5 = function (string) {
 		}
 
 		return utftext;
-	};
+	}
 
 	var x=Array();
 	var k,AA,BB,CC,DD,a,b,c,d;
@@ -549,5 +549,4 @@ window.MD5 = function (string) {
 	var temp = WordToHex(a)+WordToHex(b)+WordToHex(c)+WordToHex(d);
 
 	return temp.toLowerCase();
-}
-
+};
