@@ -208,9 +208,5 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 		return 'Output WikiData defined meaning in XML format' . parent :: getDescription();
 	}
 
-	public function getVersion() {
-		return __CLASS__ . ': $Id: $';
-	}
-
 }
 ?>

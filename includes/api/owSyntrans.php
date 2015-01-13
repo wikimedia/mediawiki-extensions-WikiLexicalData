@@ -138,11 +138,6 @@ class SynonymTranslation extends ApiBase {
 		return true;
 	}
 
-	// Version
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
-	}
-
 	// Description
 	public function getDescription() {
 		return 'Returns information about the synonyms and translations of a given concept (DefinedMeaningId)' ;

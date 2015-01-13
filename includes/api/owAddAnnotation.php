@@ -303,11 +303,6 @@ class AddAnnotation extends ApiBase {
 		return true;
 	}
 
-	// Version
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
-	}
-
 	// Description
 	public function getDescription() {
 		return 'Add annotations to Omegawiki.' ;

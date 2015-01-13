@@ -107,11 +107,6 @@ class Express extends Define {
 		return $express;
 	}
 
-	// Version
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
-	}
-
 	// Description
 	public function getDescription() {
 		return 'Returns information about the concepts ( DefinedMeaning ) and definitions of a given expression.' ;

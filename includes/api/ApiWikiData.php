@@ -435,10 +435,6 @@ class ApiWikiData extends ApiBase {
 		);
 	}
 
-	public function getVersion() {
-		return __CLASS__ . ': $Id: $';
-	}
-
 	public function collection( $collection_id, $languages ) {
 		$id_safe = mysql_real_escape_string( $collection_id );
 

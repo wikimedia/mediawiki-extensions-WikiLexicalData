@@ -153,11 +153,6 @@ class Define extends SynonymTranslation {
 		return $define;
 	}
 
-	// Version
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
-	}
-
 	// Description
 	public function getDescription() {
 		return 'Get the definition of a defined meaning.' ;

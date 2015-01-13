@@ -107,11 +107,6 @@ class AddSyntrans extends ApiBase {
 		return true;
 	}
 
-	// Version
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
-	}
-
 	// Description
 	public function getDescription() {
 		return 'Add expressions, synonyms/translations to Omegawiki.' ;
