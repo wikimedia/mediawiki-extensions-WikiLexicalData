@@ -62,5 +62,9 @@ class SpecialAddCollection extends SpecialPage {
 			'', array( 'create' => wfMessage( 'ow_create' )->text() )
 		) );
 	}
+
+	protected function getGroupName() {
+		return 'other';
+	}
 }
 

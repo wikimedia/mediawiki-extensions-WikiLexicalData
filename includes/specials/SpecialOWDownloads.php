@@ -523,4 +523,7 @@ class SpecialOWDownloads extends SpecialPage {
 		$contents = null;
 	}
 
+	protected function getGroupName() {
+		return 'wiki';
+	}
 }

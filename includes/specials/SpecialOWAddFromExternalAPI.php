@@ -143,6 +143,9 @@ class SpecialOWAddFromExternalAPI extends SpecialPage {
 		require_once( 'ExternalWordnik.php' );
 	}
 
+	protected function getGroupName() {
+		return 'maintenance';
+	}
 }
 
 /** @brief This class handles External Resources.

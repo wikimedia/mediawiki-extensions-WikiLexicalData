@@ -131,31 +131,6 @@ $wgSpecialPages['ow_addFromExtAPI'] = 'SpecialOWAddFromExternalAPI';
 
 // $wgSpecialPages['Transaction'] = 'SpecialTransaction';
 
-# Tell MediaWiki about which group the new special page belongs to
-# maintenance = Maintenance reports
-# wiki = Data and tools
-# others = Other Special pages
-/**
- * == UnlistedSpecialPage ==
- *	SpecialCopy
- *	SpecialSelect
- *	SpecialSuggest
- *	SpecialPopupEditor
- */
-
-$wgSpecialPageGroups[ 'AddCollection' ] = 'other';
-$wgSpecialPageGroups[ 'ConceptMapping' ] = 'other';
-$wgSpecialPageGroups[ 'ow_data_search' ] = 'wiki';
-$wgSpecialPageGroups[ 'ImportLangNames' ] = 'other';
-$wgSpecialPageGroups[ 'NeedsTranslation' ] = 'maintenance';
-
-$wgSpecialPageGroups[ 'ow_statistics' ] = 'wiki';
-$wgSpecialPageGroups[ 'ow_downloads' ] = 'wiki';
-
-// special page with conditional groups
-
-// ow_addFromExtAPI
-
 global $wgWldProcessExternalAPIClasses, $wgWldExtenalResourceLanguages, $wgWldScriptPath;
 $wgWldProcessExternalAPIClasses = array();
 $wgWldExtenalResourceLanguages = array();
@@ -172,8 +147,6 @@ if ( file_exists( $wgWldScriptPath . '/external/wordnik/wordnik/Swagger.php' ) )
 }
 
 if ( $wgWldProcessExternalAPIClasses ) {
-	$wgSpecialPageGroups[ 'ow_addFromExtAPI' ] = 'maintenance';
-
 	$wgResourceModules['ext.OwAddFromExtAPI.js'] = $resourcePathArray + array(
 		'scripts' => 'omegawiki-addExtAPI.js'
 	);

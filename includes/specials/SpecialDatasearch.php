@@ -518,4 +518,8 @@ class SpecialDatasearch extends SpecialPage {
 
 		return $linksHtml;
 	}
+
+	protected function getGroupName() {
+		return 'wiki';
+	}
 }

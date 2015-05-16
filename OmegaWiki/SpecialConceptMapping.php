@@ -189,5 +189,8 @@ class SpecialConceptMapping extends SpecialPage {
 		}
 	}
 
+	protected function getGroupName() {
+		return 'other';
+	}
 }
 

@@ -379,4 +379,8 @@ class SpecialOWStatistics extends SpecialPage {
 
 		return $row;
 	}
+
+	protected function getGroupName() {
+		return 'wiki';
+	}
 }

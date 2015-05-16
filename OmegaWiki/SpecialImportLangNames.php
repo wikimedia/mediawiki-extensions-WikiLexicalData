@@ -111,4 +111,8 @@ class SpecialImportLangNames extends SpecialPage {
 		$wikipage = new WikiPage( $titleObj );
 		$wikipage->doEdit( $content, 'updated via Special:ImportLangNames' );
 	}
+
+	protected function getGroupName() {
+		return 'other';
+	}
 }

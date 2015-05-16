@@ -194,6 +194,10 @@ class SpecialNeedsTranslation extends SpecialPage {
 		$wgOut->addHTML( "Showing $nbshown out of $queryResultCount" ) ;
 		$wgOut->addHTML( $editor->view( new IdStack( "expression" ), $recordSet ) );
 	}
+
+	protected function getGroupName() {
+		return 'maintenance';
+	}
 }
 
 
