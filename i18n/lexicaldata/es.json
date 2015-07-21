@@ -17,7 +17,7 @@
 		]
 	},
 	"wikidata-desc": "Agrega base de datos tipo wiki para varios tipos de contenido",
-	"wikidata-handler-namespace-move-error": "Las páginas en el espacio de nombres manejado por la extensión Wikidata no pueden trasladarse",
+	"wikidata-handler-namespace-move-error": "Las páginas en el espacio de nombres manejado por la extensión WikiLexicalData no pueden trasladarse.",
 	"languages": "Gestor de idiomas",
 	"langman-desc": "Agregue y cambie configuraciones de idioma con [[Special:Languages]]",
 	"langman_title": "Gestor de idiomas",
