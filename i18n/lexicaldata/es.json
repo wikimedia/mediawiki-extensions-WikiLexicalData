@@ -114,7 +114,7 @@
 	"ow_available_contexts": "Conceptos disponibles",
 	"ow_add_concept_link": "Enlazar otros conceptos",
 	"ow_concept_panel": "Tablero de conceptos",
-	"ow_dm_badtitle": "Esta pagina no enlaza ningún SentidoDefinido (concepto). Verifica el RUL.",
+	"ow_dm_badtitle": "Esta página no enlaza ningún SentidoDefinido (concepto).\nVerifica la dirección web.",
 	"ow_dm_missing": "Esta página se dirige hacia un SentidoDefinido (concepto) inexistente. Verifica el URL.",
 	"ow_AddHint": "Añadir nuevas filas",
 	"ow_AlternativeDefinition": "Definición alterna",
