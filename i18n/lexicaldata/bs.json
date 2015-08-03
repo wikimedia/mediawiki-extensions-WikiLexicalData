@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"CERminator",
-			"KWiki"
+			"KWiki",
+			"Srdjan m"
 		]
 	},
 	"wikidata-desc": "Dodaje bazu podataka sličnu wikiju za razne vrste sadržaja",
@@ -196,7 +197,7 @@
 	"ow_needs_xlation_dest_lang": "Odredišni jezik:",
 	"ow_needs_xlation_no_dest_lang": "Molimo navedite odredišni jezik.",
 	"ow_statistics": "Wikidata: Statistike",
-	"ow_show": "Pokaži",
+	"ow_show": "Prikaži",
 	"ow_upload": "Postavi",
 	"ow_create": "Napravi",
 	"ow_collection_added": "<strong>Kolekcija $1 dodana.</strong>",
