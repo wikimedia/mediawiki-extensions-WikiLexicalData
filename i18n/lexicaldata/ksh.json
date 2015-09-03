@@ -55,7 +55,7 @@
 	"ow_impexptsv_unknown_lang": "<p>Heh di Schprohch es nit bikannt, odder se es verkeht: $1.<br />Schprohche möße övver dänne ier ISO 639-3 Köözelle annjejovve wähde.</p>",
 	"exporttsv": "En Dattei uß Reihje met Wääte met Tabbulatohre dozwesche äxpottehre",
 	"ow_exporttsv_title": "En Sammlong als en Datei uß Reije met Wääte met Tabulatore dozwesche expoteere",
-	"ow_exporttsv_header": "<p>Donn en Sammlong Äxpotehre als en Täx-Dattei uß Reije met Wääte met Tabulatore dozwesche (em TSV Fommaht). Di Dattei kanns De en OpenOffice.org, Excel, un ander Projramme en dä Aat empottehre.<br />Sök Der en Sammlong för et Expotehre us. En dämm Kaßte för de Schprohche jiß De en Leß met ISO 639-3 Kohds för Schprohche en, met Kommas dozwesche. Fang aan met dä Schprohche, woh De fun övversäze wells, esu vill wi de bruche kanns, un am Äng maach di hen, en di De övversäze deijß. Dann dröck dä Knopp „{{int:ow_create}}“ öm de Dattei ußzejävve.</p>",
+	"ow_exporttsv_header": "<p>Donn en Sammlong Äxpotehre als en Täx-Dattei uß Reije met Wääte met Tabbolatohre dozwesche (em TSV Fommaht). Di Dattei kanns De en OpenOffice.org, Excel, un ander Projramme en dä Aat empottehre.<br />Söhk Der en Sammlong för et Äxpotehre us. En dämm Kaßte för de Schprohche jiß De en Leß met ISO 639-3 Kohds för Schprohche en, met Kommas dozwesche. Fang aan met dä Schprohche, woh De fun övversäze wells, esu vill wi de bruche kanns, un am Äng maach di hen, en di De övversäze deihjß. Dann dröck dä Knopp „{{int:ow_create}}“ öm de Dattei ußzejävve.</p>",
 	"ow_exporttsv_languages": "Schprohche:",
 	"ow_exporttsv_not_allowed": "Do häs nit dat Rääsch, en en Datei uß Reije met Wääte met Tabulatore dozwesche ze expoteere.",
 	"ow_exporttsv_export_failed": "Dä Expoot es donävve jejange",
