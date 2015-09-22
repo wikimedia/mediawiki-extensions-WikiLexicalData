@@ -63,7 +63,7 @@
 	"ow_importtsv_test_run_title": "Corre examen para la importación de datos TSV",
 	"ow_importtsv_nothing_added": "Nada se ha añadido.",
 	"ow_importtsv_nothing_added_test": "Nada se ha añadido (hiciste una ejecución de prueba).",
-	"ow_importtsv_results": "Se ha añadido $1 {{PLURAL:$1|definicion|definiciones}} y {{PLURAL:$2|traducción|traducciones}}.",
+	"ow_importtsv_results": "Se añadieron $1 {{PLURAL:$1|definición|definiciones}} y $2 {{PLURAL:$2|traducción|traducciones}}.",
 	"ow_impexptsv_unknown_lang": "<p>Idioma incorrecto o desconocido: $1.<br />\nEl idioma debe tener un código ISO 639-3.</p>",
 	"exporttsv": "Exportar TSV",
 	"ow_exporttsv_title": "Exportar una colección a TSV",
