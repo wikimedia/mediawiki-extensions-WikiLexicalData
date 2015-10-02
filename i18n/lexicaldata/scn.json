@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Melos",
-			"Gmelfi"
+			"Gmelfi",
+			"Sarvaturi"
 		]
 	},
 	"ow_importtsv_nothing_added": "Nenti junciutu.",
@@ -36,5 +37,6 @@
 	"ow_CollectionMember": "Membru da collezioni",
 	"ow_CollectionMembership": "Appartinenza â collezioni",
 	"ow_Definition": "Difinizioni",
-	"ow_Expression": "Espressioni"
+	"ow_Expression": "Espressioni",
+	"ow_OtherLanguages": "Àutri lingui"
 }
