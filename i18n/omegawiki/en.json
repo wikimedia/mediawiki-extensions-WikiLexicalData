@@ -1,6 +1,6 @@
 {
-    "@metadata": {
-        "authors": []
-    },
-    "apiow-desc": "OmegaWiki's WikiLexicalData extension of the MediaWiki api.php"
+	"@metadata": {
+		"authors": []
+	},
+	"apiow-desc": "OmegaWiki's WikiLexicalData extension of the MediaWiki api.php"
 }
