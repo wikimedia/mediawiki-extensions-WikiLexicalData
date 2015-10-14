@@ -17,12 +17,13 @@
 			"Liuxinyu970226"
 		]
 	},
-	"wikidata-desc": "{{desc|name=Wiki Lexical Data|url=http://www.mediawiki.org/wiki/Extension:WikiLexicalData}}",
+	"wikidata-desc": "{{desc|name=Wiki Lexical Data|url=https://www.mediawiki.org/wiki/Extension:WikiLexicalData}}",
 	"languages": "{{doc-special|Languages}}\nSee example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]",
 	"langman-desc": "Shot description of [[Special:Languages]] (Language manager)",
 	"langman_title": "{{doc-special|Languages}}\nSee example: [http://www.omegawiki.org/Special:Languages http://www.omegawiki.org/Special:Languages]\n{{Identical|Language manager}}",
 	"langman_header": "Translate the word \"English\"; do not change it to your own language!",
 	"langman_adding": "Used to indicate the system is adding the language. Parameters:\n* $1 - the language name\n* $2 - the language's ISO 639-3 code",
+	"langman_langname": "{{Identical|Language name}}",
 	"langman_field_optional": "Here, '''optional''' refers to the fields labeled with text from {{msg-mw|Langman iso639-2}} and {{msg-mw|Langman wikimedia}}.\n{{Identical|Optional}}",
 	"langman_addlang": "Button text when adding a new language in the Language Manager.",
 	"importlangnames": "{{doc-special|ImportLangNames}}\nSee example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]",
@@ -79,7 +80,7 @@
 	"ow_Collection": "{{Identical|Collection}}",
 	"ow_Collection_colon": "{{Identical|Collection}}",
 	"ow_Definition": "{{Identical|Definition}}",
-	"ow_DefinedMeaning": "{{Identical|Defined meaning}}",
+	"ow_DefinedMeaning": "A selection (action link) on the page Special:Ow_statistics\n\n{{Identical|Defined meaning}}",
 	"ow_DefinedMeaningReference": "{{Identical|Defined meaning}}",
 	"ow_Expression": "{{Identical|Expression}}",
 	"ow_Expressions": "{{Identical|Expression}}",
@@ -127,7 +128,7 @@
 	"ow_class_attr_type_link": "{{Identical|Link}}",
 	"needstranslation": "{{doc-special|NeedsTranslation}}",
 	"ow_needs_xlation_title": "{{doc-special|NeedsTranslation}}\nVisible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].",
-	"ow_needs_xlation_source_lang": "Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].",
+	"ow_needs_xlation_source_lang": "Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].\n{{Identical|Source language}}",
 	"ow_needs_xlation_dest_lang": "Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].",
 	"ow_needs_xlation_no_dest_lang": "Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].",
 	"ow_data_search": "{{doc-special|Ow data search}}",
@@ -149,6 +150,6 @@
 	"ow_pref_lang_switch": "A checkbox in the user preferences. If checked, it allows the user to select which languages should be displayed. If unchecked, all languages are displayed.",
 	"ow_pref_lang_select": "Next to this text is shown a list of languages, each with a checkbox, to select the languages to display or hide in OmegaWiki",
 	"ow_addFromExtAPI": "Special page name for adding OmegaWiki data from External APIs",
-	"ow_addFromExtAPI_title" : "The page title for Special page name for adding OmegaWiki data from External APIs",
-	"ow_api_source" : "External API source label"
+	"ow_addFromExtAPI_title": "The page title for Special page name for adding OmegaWiki data from External APIs",
+	"ow_api_source": "External API source label"
 }
