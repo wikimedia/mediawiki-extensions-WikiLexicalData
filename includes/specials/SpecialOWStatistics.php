@@ -100,7 +100,7 @@ class SpecialOWStatistics extends SpecialPage {
 		$max = max ( $nbDMArray ) ;
 
 		foreach ($nbDMArray as $lang => $dm) {
-			$tableLang .= $this->addTableRowWithBar( $lang, $dm, $max );
+			$tableLang .= $this->addTableRowWithBar( $lang, $dm, $max, $nbdm );
 		}
 		$tableLang .= Html::closeElement( 'table' );
 
@@ -154,7 +154,7 @@ class SpecialOWStatistics extends SpecialPage {
 		arsort ( $nbDefArray ) ;
 		$max = max ( $nbDefArray ) ;
 		foreach ($nbDefArray as $lang => $def) {
-			$tableLang .= $this->addTableRowWithBar( $lang, $def, $max );
+			$tableLang .= $this->addTableRowWithBar( $lang, $def, $max, $nbDefTot );
 		}
 
 		$tableLang .= Html::closeElement( 'table' );
@@ -206,7 +206,7 @@ class SpecialOWStatistics extends SpecialPage {
 		arsort ( $nbexpArray ) ;
 		$max = max ( $nbexpArray ) ;
 		foreach ($nbexpArray as $lang => $exp) {
-			$tableLang .= $this->addTableRowWithBar( $lang, $exp, $max );
+			$tableLang .= $this->addTableRowWithBar( $lang, $exp, $max, $nbexptot );
 		}
 
 		$tableLang .= Html::closeElement( 'table' );
@@ -259,7 +259,7 @@ class SpecialOWStatistics extends SpecialPage {
 		arsort ( $nbSyntransArray ) ;
 		$max = max ( $nbSyntransArray ) ;
 		foreach ($nbSyntransArray as $lang => $syntrans) {
-			$tableLang .= $this->addTableRowWithBar( $lang, $syntrans, $max );
+			$tableLang .= $this->addTableRowWithBar( $lang, $syntrans, $max, $nbSyntransTot );
 		}
 		$tableLang .= Html::closeElement( 'table' );
 
@@ -362,10 +362,11 @@ class SpecialOWStatistics extends SpecialPage {
 	 * the first column is e.g. the language name
 	 * the second column is a value
 	 * the third column shows a bar according to value/max
+	 * followed by a percent figure based on value/totel
 	 */
-	function addTableRowWithBar ( $firstcol, $value, $max ) {
+	function addTableRowWithBar ( $firstcol, $value, $max, $total ) {
 		$wi = ceil( ( ( $value / $max ) * 500 ) );
-		$per = ceil( ( ( $value / $max ) * 100 ) );
+		$per = ceil( ( ( $value / $total ) * 100 ) );
 
 		$row = Html::openElement( 'tr' );
 		$row .= Html::element( 'td', array(), $firstcol );

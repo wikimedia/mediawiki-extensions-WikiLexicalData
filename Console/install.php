@@ -10,6 +10,7 @@ $baseDir = dirname( __FILE__ ) . '/../../..' ;
 require_once( $baseDir . '/maintenance/Maintenance.php' );
 require_once( $baseDir . '/extensions/WikiLexicalData/OmegaWiki/WikiDataGlobals.php' );
 require_once( $baseDir . '/extensions/WikiLexicalData/OmegaWiki/Transaction.php' );
+require_once( $baseDir . '/extensions/WikiLexicalData/OmegaWiki/OmegaWikiDatabaseAPI.php' );
 
 echo "start\n";
 
