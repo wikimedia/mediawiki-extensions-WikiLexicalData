@@ -1,15 +1,15 @@
 {
-    "@metadata": {
-        "authors": [
-            "Amikeco"
-        ]
-    },
-    "datasearch_language": "Æвзаг:",
-    "ow_save": "Афтæ уæд",
-    "ow_history": "Истори",
-    "ow_dm_OK": "Афтæ уæд!",
-    "ow_ClassAttributeType": "Тип",
-    "ow_Language": "Æвзаг",
-    "ow_Text": "Текст",
-    "ow_LinkAttributeValues": "Æрвитæнтæ"
+	"@metadata": {
+		"authors": [
+			"Amikeco"
+		]
+	},
+	"datasearch_language": "Æвзаг:",
+	"ow_save": "Афтæ уæд",
+	"ow_history": "Истори",
+	"ow_dm_OK": "Афтæ уæд!",
+	"ow_ClassAttributeType": "Тип",
+	"ow_Language": "Æвзаг",
+	"ow_Text": "Текст",
+	"ow_LinkAttributeValues": "Æрвитæнтæ"
 }

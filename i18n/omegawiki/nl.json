@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Siebrand"
-        ]
-    },
-    "apiow-desc": "De uitbreiding WikiLexicalData van Omegawiki"
+	"@metadata": {
+		"authors": [
+			"Siebrand"
+		]
+	},
+	"apiow-desc": "De uitbreiding WikiLexicalData van Omegawiki"
 }

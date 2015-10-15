@@ -1,14 +1,14 @@
 {
-    "@metadata": {
-        "authors": [
-            "Codex Sinaiticus"
-        ]
-    },
-    "ow_history": "ታሪክ",
-    "ow_dm_OK": "እሺ",
-    "ow_ClassAttributeLevel": "ደረጃ",
-    "ow_Language": "ቋንቋ",
-    "ow_OptionAttributeOptions": "ምርጫዎች",
-    "ow_Text": "ጽሕፈት",
-    "ow_TranslatedTextAttributeValue": "ጽሕፈት"
+	"@metadata": {
+		"authors": [
+			"Codex Sinaiticus"
+		]
+	},
+	"ow_history": "ታሪክ",
+	"ow_dm_OK": "እሺ",
+	"ow_ClassAttributeLevel": "ደረጃ",
+	"ow_Language": "ቋንቋ",
+	"ow_OptionAttributeOptions": "ምርጫዎች",
+	"ow_Text": "ጽሕፈት",
+	"ow_TranslatedTextAttributeValue": "ጽሕፈት"
 }

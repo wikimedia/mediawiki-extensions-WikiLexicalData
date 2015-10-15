@@ -1,8 +1,6 @@
 {
-    "@metadata": {
-        "authors": []
-    },
-    "languages": "語言管理員",
-    "langman_title": "語言管理員",
-    "datasearch": "資料搜尋"
+	"@metadata": [],
+	"languages": "語言管理員",
+	"langman_title": "語言管理員",
+	"datasearch": "資料搜尋"
 }

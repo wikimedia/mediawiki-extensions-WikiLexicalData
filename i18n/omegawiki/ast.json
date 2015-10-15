@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Xuacu"
-        ]
-    },
-    "apiow-desc": "Estensión de api.php de MediaWiki WikiLexicalData d'OmegaWiki"
+	"@metadata": {
+		"authors": [
+			"Xuacu"
+		]
+	},
+	"apiow-desc": "Estensión de api.php de MediaWiki WikiLexicalData d'OmegaWiki"
 }

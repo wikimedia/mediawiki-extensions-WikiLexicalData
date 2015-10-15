@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Metalhead64"
-        ]
-    },
-    "apiow-desc": "OmegaWikis WikiLexicalData-Erweiterung der MediaWiki-API"
+	"@metadata": {
+		"authors": [
+			"Metalhead64"
+		]
+	},
+	"apiow-desc": "OmegaWikis WikiLexicalData-Erweiterung der MediaWiki-API"
 }

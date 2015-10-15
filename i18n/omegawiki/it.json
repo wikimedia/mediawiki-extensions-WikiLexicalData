@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Beta16"
-        ]
-    },
-    "apiow-desc": "Estensione OmegaWiki WikiLexicalData per api.php di MediaWiki"
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"apiow-desc": "Estensione OmegaWiki WikiLexicalData per api.php di MediaWiki"
 }

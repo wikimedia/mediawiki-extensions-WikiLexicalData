@@ -117,6 +117,8 @@
 	"ow_AlternativeDefinition": "Alternativ definition",
 	"ow_AlternativeDefinitions": "Alternativa definitioner",
 	"ow_Annotation": "Anmärkning",
+	"ow_AnnotationDefinedMeaning": "Semantiska annoteringar",
+	"ow_AnnotationSyntrans": "Lexikaliska annoteringar",
 	"ow_ApproximateMeanings": "Ungefärliga betydelser",
 	"ow_Class": "Klass",
 	"ow_ClassAttributeAttribute": "Attribut",

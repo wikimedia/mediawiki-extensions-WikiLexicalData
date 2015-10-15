@@ -1,34 +1,34 @@
 {
-    "@metadata": {
-        "authors": [
-            "Froztbyte",
-            "Jon Harald Søby",
-            "Sarrus"
-        ]
-    },
-    "langman_title": "Sprogbehandler",
-    "langman_langname": "Sprognavn:",
-    "langman_iso639-2": "ISO 639-2-kode:",
-    "langman_wikimedia": "Wikimedia-kode:",
-    "datasearch_language": "Sprog:",
-    "datasearch_found_word": "Fundne ord",
-    "datasearch_meaning": "Betydning",
-    "datasearch_ext_identifier": "Ekstern identifikator",
-    "datasearch_search_text": "Søgetekst:",
-    "ow_importtsv_title1": "Importer TSV",
-    "ow_importtsv_nothing_added": "Intet tilføjet.",
-    "ow_importtsv_nothing_added_test": "Intet tilføjet (du foretog en testkørsel).",
-    "ow_history": "Historik",
-    "ow_none_selected": "Der er ikke valgt noget",
-    "ow_transaction_summary": "Beskrivelse",
-    "ow_dm_OK": "OK",
-    "ow_GotoSource": "Gå til kilde",
-    "ow_Language": "Sprog",
-    "ow_Source": "Kilde",
-    "ow_Text": "Tekst",
-    "ow_Time": "Tidspunkt",
-    "ow_TranslatedTextAttributeValue": "Tekst",
-    "ow_User": "Bruger",
-    "ow_show": "Vis",
-    "ow_create": "Opret"
+	"@metadata": {
+		"authors": [
+			"Froztbyte",
+			"Jon Harald Søby",
+			"Sarrus"
+		]
+	},
+	"langman_title": "Sprogbehandler",
+	"langman_langname": "Sprognavn:",
+	"langman_iso639-2": "ISO 639-2-kode:",
+	"langman_wikimedia": "Wikimedia-kode:",
+	"datasearch_language": "Sprog:",
+	"datasearch_found_word": "Fundne ord",
+	"datasearch_meaning": "Betydning",
+	"datasearch_ext_identifier": "Ekstern identifikator",
+	"datasearch_search_text": "Søgetekst:",
+	"ow_importtsv_title1": "Importer TSV",
+	"ow_importtsv_nothing_added": "Intet tilføjet.",
+	"ow_importtsv_nothing_added_test": "Intet tilføjet (du foretog en testkørsel).",
+	"ow_history": "Historik",
+	"ow_none_selected": "Der er ikke valgt noget",
+	"ow_transaction_summary": "Beskrivelse",
+	"ow_dm_OK": "OK",
+	"ow_GotoSource": "Gå til kilde",
+	"ow_Language": "Sprog",
+	"ow_Source": "Kilde",
+	"ow_Text": "Tekst",
+	"ow_Time": "Tidspunkt",
+	"ow_TranslatedTextAttributeValue": "Tekst",
+	"ow_User": "Bruger",
+	"ow_show": "Vis",
+	"ow_create": "Opret"
 }

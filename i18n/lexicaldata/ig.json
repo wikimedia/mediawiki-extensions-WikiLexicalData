@@ -1,24 +1,24 @@
 {
-    "@metadata": {
-        "authors": [
-            "Ukabia"
-        ]
-    },
-    "langman_title": "Ihe na dose asụsụ",
-    "langman_langname": "Áhạ asụsụ:",
-    "langman_iso639-3": "ISO 639-3 édé:",
-    "langman_iso639-2": "ISO 639-2 édé:",
-    "langman_field_optional": "(ichóró)",
-    "langman_addlang": "Tinyé asụsụ",
-    "importlangnames_title": "Tinyé shi ébéozor áhạ asụsụ",
-    "ow_importtsv_file": "Usòrò TSV:",
-    "ow_importtsv_nothing_added": "Ọ díghì ihe tìrì.",
-    "ow_save": "Domá",
-    "ow_dm_OK": "Ngwanu",
-    "ow_Time": "Ógẹ",
-    "ow_TranslatedTextAttributeValue": "Mkpurụ edemede",
-    "ow_Link": "Jikodo",
-    "ow_LinkAttributeValues": "Jikodo",
-    "ow_show": "Zi",
-    "ow_create": "Ké"
+	"@metadata": {
+		"authors": [
+			"Ukabia"
+		]
+	},
+	"langman_title": "Ihe na dose asụsụ",
+	"langman_langname": "Áhạ asụsụ:",
+	"langman_iso639-3": "ISO 639-3 édé:",
+	"langman_iso639-2": "ISO 639-2 édé:",
+	"langman_field_optional": "(ichóró)",
+	"langman_addlang": "Tinyé asụsụ",
+	"importlangnames_title": "Tinyé shi ébéozor áhạ asụsụ",
+	"ow_importtsv_file": "Usòrò TSV:",
+	"ow_importtsv_nothing_added": "Ọ díghì ihe tìrì.",
+	"ow_save": "Domá",
+	"ow_dm_OK": "Ngwanu",
+	"ow_Time": "Ógẹ",
+	"ow_TranslatedTextAttributeValue": "Mkpurụ edemede",
+	"ow_Link": "Jikodo",
+	"ow_LinkAttributeValues": "Jikodo",
+	"ow_show": "Zi",
+	"ow_create": "Ké"
 }

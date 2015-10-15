@@ -1,18 +1,18 @@
 {
-    "@metadata": {
-        "authors": [
-            "Manuae",
-            "Xqt"
-        ]
-    },
-    "datasearch_language": "Schbrooch:",
-    "ow_save": "Schbaischere",
-    "ow_history": "Gschischd",
-    "ow_transaction_no_action": "Nix mache",
-    "ow_transaction_restore": "Widderherschdelle",
-    "ow_transaction_remove": "Lesche",
-    "ow_Text": "Tegschd",
-    "ow_LinkAttribute": "Aischeschafd",
-    "ow_suggest_previous": "Voriche",
-    "ow_suggest_next": "Negschte"
+	"@metadata": {
+		"authors": [
+			"Manuae",
+			"Xqt"
+		]
+	},
+	"datasearch_language": "Schbrooch:",
+	"ow_save": "Schbaischere",
+	"ow_history": "Gschischd",
+	"ow_transaction_no_action": "Nix mache",
+	"ow_transaction_restore": "Widderherschdelle",
+	"ow_transaction_remove": "Lesche",
+	"ow_Text": "Tegschd",
+	"ow_LinkAttribute": "Aischeschafd",
+	"ow_suggest_previous": "Voriche",
+	"ow_suggest_next": "Negschte"
 }

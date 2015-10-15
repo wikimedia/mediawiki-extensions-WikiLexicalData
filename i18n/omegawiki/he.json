@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Amire80"
-        ]
-    },
-    "apiow-desc": "הרחבת API של מדיה־ויקי בשביל WikiLexicalData של OmegaWiki"
+	"@metadata": {
+		"authors": [
+			"Amire80"
+		]
+	},
+	"apiow-desc": "הרחבת API של מדיה־ויקי בשביל WikiLexicalData של OmegaWiki"
 }

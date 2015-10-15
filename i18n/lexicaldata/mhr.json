@@ -1,10 +1,10 @@
 {
-    "@metadata": {
-        "authors": [
-            "Сай"
-        ]
-    },
-    "ow_save": "Аралаш",
-    "ow_history": "Историй",
-    "ow_LinkAttributeValues": "Ссылке-влак"
+	"@metadata": {
+		"authors": [
+			"Сай"
+		]
+	},
+	"ow_save": "Аралаш",
+	"ow_history": "Историй",
+	"ow_LinkAttributeValues": "Ссылке-влак"
 }

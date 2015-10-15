@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Ата"
-        ]
-    },
-    "apiow-desc": "OmegaWiki — розширення WikiLexicalData до MediaWiki api.php"
+	"@metadata": {
+		"authors": [
+			"Ата"
+		]
+	},
+	"apiow-desc": "OmegaWiki — розширення WikiLexicalData до MediaWiki api.php"
 }

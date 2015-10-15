@@ -1,15 +1,15 @@
 {
-    "@metadata": {
-        "authors": [
-            "Erdemaslancan",
-            "Гусейн"
-        ]
-    },
-    "langman_addlang": "Зывон зијод кардеј",
-    "datasearch_language": "Зывон:",
-    "ow_exporttsv_languages": "Зывонон:",
-    "ow_save": "Огәтеј",
-    "ow_history": "Тарых",
-    "ow_OptionAttributeOptions": "Кукон",
-    "ow_Source": "Сәвон"
+	"@metadata": {
+		"authors": [
+			"Erdemaslancan",
+			"Гусейн"
+		]
+	},
+	"langman_addlang": "Зывон зијод кардеј",
+	"datasearch_language": "Зывон:",
+	"ow_exporttsv_languages": "Зывонон:",
+	"ow_save": "Огәтеј",
+	"ow_history": "Тарых",
+	"ow_OptionAttributeOptions": "Кукон",
+	"ow_Source": "Сәвон"
 }

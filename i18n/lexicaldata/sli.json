@@ -1,17 +1,17 @@
 {
-    "@metadata": {
-        "authors": [
-            "Schläsinger"
-        ]
-    },
-    "langman_title": "Sproacha-Manager",
-    "langman_iso639-3": "ISO-639-3-Code:",
-    "langman_iso639-2": "ISO-639-2-Code:",
-    "langman_wikimedia": "Wikimedia-Code:",
-    "langman_field_optional": "(optional)",
-    "langman_addlang": "Sproache hinzufiega",
-    "importlangnames": "Sproachanoama importiera",
-    "importlangnames_title": "Sproachanoama importiera",
-    "datasearch_language": "Sproache:",
-    "datasearch_search_text": "Sichtext:"
+	"@metadata": {
+		"authors": [
+			"Schläsinger"
+		]
+	},
+	"langman_title": "Sproacha-Manager",
+	"langman_iso639-3": "ISO-639-3-Code:",
+	"langman_iso639-2": "ISO-639-2-Code:",
+	"langman_wikimedia": "Wikimedia-Code:",
+	"langman_field_optional": "(optional)",
+	"langman_addlang": "Sproache hinzufiega",
+	"importlangnames": "Sproachanoama importiera",
+	"importlangnames_title": "Sproachanoama importiera",
+	"datasearch_language": "Sproache:",
+	"datasearch_search_text": "Sichtext:"
 }

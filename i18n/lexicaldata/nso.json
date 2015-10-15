@@ -1,20 +1,20 @@
 {
-    "@metadata": {
-        "authors": [
-            "Mohau"
-        ]
-    },
-    "ow_GotoSource": "Eya go mothopo",
-    "ow_Language": "Polelo",
-    "ow_Spelling": "Mopeleto",
-    "ow_Synonyms": "Mahlalošêtšagotee",
-    "ow_Source": "Mothopo",
-    "ow_Text": "Dihlaka",
-    "ow_TranslatedTextAttributeValue": "Dihlaka",
-    "ow_LinkAttributeValues": "Hlomaganyo",
-    "ow_meaningsoftitle": "Hlaloso tša \"$1\"",
-    "ow_meaningsofsubtitle": "<em>Hlomaganyo ya Wiki:</em> [[$1]]",
-    "ow_Permission_denied": "<h2>TUMELLO E LATOTŠWE</h2>",
-    "ow_copy_no_action_specified": "Ka kgopela kgetha seo o nyakago gose phetha",
-    "ow_copy_help": "Thušo ga e gona ka se sebaka."
+	"@metadata": {
+		"authors": [
+			"Mohau"
+		]
+	},
+	"ow_GotoSource": "Eya go mothopo",
+	"ow_Language": "Polelo",
+	"ow_Spelling": "Mopeleto",
+	"ow_Synonyms": "Mahlalošêtšagotee",
+	"ow_Source": "Mothopo",
+	"ow_Text": "Dihlaka",
+	"ow_TranslatedTextAttributeValue": "Dihlaka",
+	"ow_LinkAttributeValues": "Hlomaganyo",
+	"ow_meaningsoftitle": "Hlaloso tša \"$1\"",
+	"ow_meaningsofsubtitle": "<em>Hlomaganyo ya Wiki:</em> [[$1]]",
+	"ow_Permission_denied": "<h2>TUMELLO E LATOTŠWE</h2>",
+	"ow_copy_no_action_specified": "Ka kgopela kgetha seo o nyakago gose phetha",
+	"ow_copy_help": "Thušo ga e gona ka se sebaka."
 }

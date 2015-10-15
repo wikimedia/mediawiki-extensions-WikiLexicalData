@@ -1,9 +1,9 @@
 {
-    "@metadata": {
-        "authors": [
-            "OC Ripper"
-        ]
-    },
-    "ow_show": "Prikaži",
-    "ow_suggest_previous": "Prethodna"
+	"@metadata": {
+		"authors": [
+			"OC Ripper"
+		]
+	},
+	"ow_show": "Prikaži",
+	"ow_suggest_previous": "Prethodna"
 }

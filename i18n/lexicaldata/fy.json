@@ -1,9 +1,32 @@
 {
-    "@metadata": {
-        "authors": [
-            "Snakesteuben"
-        ]
-    },
-    "ow_save": "Fêstlizze",
-    "ow_Source": "Boarne"
+	"@metadata": {
+		"authors": [
+			"Snakesteuben",
+			"Robin0van0der0vliet"
+		]
+	},
+	"langman_field_optional": "(opsjoneel)",
+	"datasearch_language": "Taal:",
+	"ow_exporttsv_languages": "Talen:",
+	"ow_save": "Bewarje",
+	"ow_history": "Skiednis",
+	"ow_transaction_user": "Brûkersnamme:",
+	"ow_dm_OK": "OK",
+	"ow_Language": "Taal",
+	"ow_OptionAttribute": "Eigenskip",
+	"ow_OptionAttributeOption": "Opsje",
+	"ow_OptionAttributeOptions": "Opsjes",
+	"ow_Source": "Boarne",
+	"ow_TextAttribute": "Eigenskip",
+	"ow_Time": "Tiid",
+	"ow_TranslatedTextAttribute": "Eigenskip",
+	"ow_LinkAttribute": "Eigenskip",
+	"ow_URL": "URL",
+	"ow_User": "Brûker",
+	"ow_Property": "Eigenskip",
+	"ow_Value": "Wearde",
+	"ow_create": "Oanmeitsje",
+	"ow_suggest_previous": "Foarige",
+	"ow_suggest_next": "Folgjende",
+	"prefs-ow-lang": "Talen"
 }

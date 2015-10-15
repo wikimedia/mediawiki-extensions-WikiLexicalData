@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Minh Nguyen"
-        ]
-    },
-    "apiow-desc": "Phần mở rộng WikiLexicalData dành cho OmegaWiki nhằm mở rộng api.php của MediaWiki"
+	"@metadata": {
+		"authors": [
+			"Minh Nguyen"
+		]
+	},
+	"apiow-desc": "Phần mở rộng WikiLexicalData dành cho OmegaWiki nhằm mở rộng api.php của MediaWiki"
 }

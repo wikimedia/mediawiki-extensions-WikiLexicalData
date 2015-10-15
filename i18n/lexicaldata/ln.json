@@ -1,11 +1,11 @@
 {
-    "@metadata": {
-        "authors": [
-            "Eruedin"
-        ]
-    },
-    "datasearch_language": "Lokótá:",
-    "ow_exporttsv_languages": "Nkótá:",
-    "ow_save": "Kobómbisa",
-    "ow_history": "Mokóló"
+	"@metadata": {
+		"authors": [
+			"Eruedin"
+		]
+	},
+	"datasearch_language": "Lokótá:",
+	"ow_exporttsv_languages": "Nkótá:",
+	"ow_save": "Kobómbisa",
+	"ow_history": "Mokóló"
 }

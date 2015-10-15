@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Cainamarques"
-        ]
-    },
-    "apiow-desc": "Implementação pela OmegaWiki da extensão WikiLexicalData da api.php do MediaWiki"
+	"@metadata": {
+		"authors": [
+			"Cainamarques"
+		]
+	},
+	"apiow-desc": "Implementação pela OmegaWiki da extensão WikiLexicalData da api.php do MediaWiki"
 }

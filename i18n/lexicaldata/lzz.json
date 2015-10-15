@@ -1,16 +1,16 @@
 {
-    "@metadata": {
-        "authors": [
-            "Bombola"
-        ]
-    },
-    "langman_langname": "Nenaşi Coxo:",
-    "langman_iso639-3": "ISO 639-3 K'odi:",
-    "langman_iso639-2": "ISO 639-2 K'odi:",
-    "langman_wikimedia": "Vik'imedyaş K'odi:",
-    "datasearch_language": "Nena:",
-    "ow_exporttsv_languages": "Nenape:",
-    "ow_dm_OK": "HO",
-    "ow_Language": "Nena",
-    "ow_Time": "Ora"
+	"@metadata": {
+		"authors": [
+			"Bombola"
+		]
+	},
+	"langman_langname": "Nenaşi Coxo:",
+	"langman_iso639-3": "ISO 639-3 K'odi:",
+	"langman_iso639-2": "ISO 639-2 K'odi:",
+	"langman_wikimedia": "Vik'imedyaş K'odi:",
+	"datasearch_language": "Nena:",
+	"ow_exporttsv_languages": "Nenape:",
+	"ow_dm_OK": "HO",
+	"ow_Language": "Nena",
+	"ow_Time": "Ora"
 }
