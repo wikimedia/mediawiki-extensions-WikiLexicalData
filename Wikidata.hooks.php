@@ -237,4 +237,14 @@ class WikiLexicalDataHooks {
 		return true;
 	}
 
+	/** @brief basic lexical statistic data for Special:Statistics
+	 *
+	 */
+	public static function onSpecialStatsAddExtra( &$extraStats ) {
+		$extra = new SpecialOWStatistics;
+		$extraStats = $extra->getOverview( True );
+		return true;
+	}
+
 }
+

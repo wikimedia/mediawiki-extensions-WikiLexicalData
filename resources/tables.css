@@ -452,6 +452,11 @@ div.owstatbar {
 	background-image: -moz-linear-gradient(blue, cyan, blue);
 	float:left;
 	height: 15px;
+	padding-right:5px;
+	margin-right:5px;
+}
+
+div.owstatpercent {
 }
 
 table.owstatmaintable {

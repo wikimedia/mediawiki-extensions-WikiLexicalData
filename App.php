@@ -167,6 +167,7 @@ $wgHooks['SearchGetNearMatchBefore'][] = 'WikiLexicalDataHooks::onGoClicked';
 $wgHooks['PageContentLanguage'][] = 'WikiLexicalDataHooks::onPageContentLanguage';
 $wgHooks['SkinTemplateNavigation'][] = 'WikiLexicalDataHooks::onSkinTemplateNavigation';
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'WikiLexicalDataHooks::loadSchema';
+$wgHooks['SpecialStatsAddExtra'][] = 'WikiLexicalDataHooks::onSpecialStatsAddExtra';
 
 // Jobs
 require_once( $wgWldSetupScriptPath . "OWJobs.php" );

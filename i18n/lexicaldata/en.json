@@ -1,6 +1,8 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Purodha Blissenbach"
+		]
 	},
 	"wikidata-desc": "Adds wiki-like database for various types of content",
 	"wikidata-handler-namespace-move-error": "Pages in namespaces handled by the WikiLexicalData extension cannot be moved.",
@@ -200,7 +202,6 @@
 	"ow_needs_xlation_dest_lang": "Destination language:",
 	"ow_needs_xlation_no_dest_lang": "Please specify a destination language.",
 	"ow_data_search": "WikiLexicalData data search",
-	"ow_statistics": "WikiLexicalData statistics",
 	"ow_downloads": "WikiLexicalData downloads",
 	"ow_show": "Show",
 	"ow_upload": "Upload",
@@ -219,5 +220,34 @@
 	"ow_pref_lang_select": "Languages to display:",
 	"ow_addFromExtAPI": "Add data from external APIs",
 	"ow_addFromExtAPI_title": "Add data from API",
-	"ow_api_source": "External API source:"
+	"ow_api_source": "External API source:",
+	"ow-special-stat-head": "[[Special:OW_Statistics|Lexical data statistics]]",
+	"ow-special-stat-languages-avail": "Available {{PLURAL:$1|language|languages}}",
+	"ow-special-stat-languages-used": "{{PLURAL:$1|Language|Languages}} with expressions",
+	"ow-special-stat-syntranses": "{{PLURAL:$1|Synonyme or translation|Synonymes+translations}} [[Special:OW_Statistics/syntrans|(per language)]]",
+	"ow-special-stat-expressions": "{{PLURAL:$1|Expression|Expressions}} [[Special:OW_Statistics/exp|(per language)]]",
+	"ow-special-stat-meanings": "{{PLURAL:$1|Meaning|Meanings}} [[Special:OW_Statistics/def|(per language)]]",
+	"ow-special-stat-definedmeanings": "{{PLURAL:$1|Definedmeaning|Definedmeanings}} [[Special:OW_Statistics/dm|(per language)]]",
+	"ow-special-stat-collections": "{{PLURAL:$1|Collection|Collections}}",
+	"ow-special-stat-classes": "{{PLURAL:$1|Class|Classes}}",
+	"ow-stat-header": "Statistics of lexical data",
+	"ow-stat-overview-link": "Overview",
+	"ow-stat-annotations-link": "Annotations",
+	"ow-stat-syntranses-link": "Syntrans",
+	"ow-stat-syntranses": "{{PLURAL:$1|Syntrans|Syntrans'}}",
+	"ow-stat-expressions-link": "Expressions",
+	"ow-stat-expressions": "{{PLURAL:$1|Expression|Expressions}}",
+	"ow-stat-meanings-link": "Meanings",
+	"ow-stat-meanings": "{{PLURAL:$1|Meaning|Meanings}}",
+	"ow-stat-definedmeanings-link": "Definedmeanings",
+	"ow-stat-definedmeanings": "{{PLURAL:$1|Definedmeaning|Definedmeanings}}",
+	"ow-stat-languages": "{{PLURAL:$1|Language|Languages}}",
+	"ow-stat-collections": "{{PLURAL:$1|Collection|Collections}}",
+	"ow-stat-classes": "{{PLURAL:$1|Class|Classes}}",
+	"ow-stat-class-annotations": "{{PLURAL:$1|Class annotation|Class annotations}}",
+	"ow-stat-url-annotations": "{{PLURAL:$1|URL annotation|URL annotations}}",
+	"ow-stat-text-annotations": "{{PLURAL:$1|Text annotation|Text annotations}}",
+	"ow-stat-option-annotations": "{{PLURAL:$1|Option annotation|Option annotations}}",
+	"ow-stat-all-is": "all = $1",
+	"ow-stat-percent": "$1&nbsp;%"
 }
