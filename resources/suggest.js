@@ -291,6 +291,8 @@ jQuery(document).ready(function( $ ) {
 			// suggestPrefix is something like add-dm-1370660-def-transl-language-suggest-
 			suggestPrefix = stripSuffix( $(this).closest('.suggest-div').attr('id'), 'div' );
 			suggestlink = '#' + suggestPrefix + 'link';
+
+			// idColumnsField will be 'undefined' if not specified. Normally exists only when >= 2. Otherwise assumed to be 1.
 			idColumnsField = $(suggestlink).attr('id-columns' );
 			displayLabelField = $(suggestlink).attr('label-columns' );
 			displayLabelColumnIndices = displayLabelField.split(", " );
@@ -309,7 +311,7 @@ jQuery(document).ready(function( $ ) {
 
 			idColumns = 1;
 
-			if (idColumnsField !== null) {
+			if (idColumnsField) {
 				idColumns = idColumnsField;
 			}
 
