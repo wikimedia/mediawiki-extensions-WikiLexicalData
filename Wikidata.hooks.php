@@ -42,9 +42,8 @@ class WikiLexicalDataHooks {
 		return array_key_exists( $title->getNamespace(), $wdHandlerClasses );
 	}
 
-	/**
-	 * FIXME: This does not seem to do anything, need to check whether the
-	 *        preferences are still being detected.
+	/**  @brief OmegaWiki-specific preferences
+	 *
 	 */
 	public static function onGetPreferences( $user, &$preferences ) {
 /*
@@ -111,7 +110,7 @@ class WikiLexicalDataHooks {
 		$action = $request->getVal( 'action' );
 		if ( $action === 'history' && self::isWikidataNs( $title ) ) {
 			$history = new WikidataPageHistory( $article );
-			$history->history();
+			$history->onView();
 			return false;
 		}
 		return true;
