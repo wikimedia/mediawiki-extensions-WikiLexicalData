@@ -211,7 +211,7 @@ jQuery(document).ready( function( $ ) {
 							if ( ctr + '.' === ctrChoice ) {
 								if( rw.relationshipType === 'synonym' ) {
 								//	console.log( rw['words'] );
-									addExtHtml += getExtSynonym( rw['words'], dmId, langId, definition.src );
+									addExtHtml += getExtSynonym( rw.words, dmId, langId, definition.src );
 								}
 							}
 						});
@@ -224,7 +224,7 @@ jQuery(document).ready( function( $ ) {
 				$('#ext_def').slideUp();
 				$('#inputSelectButton').attr( 'value', 'submit' );
 				$('#inputSkipSelectButton').attr( 'value', 'skip' );
-				var addExtHtml = '<table><tr>' + addExtHtml + '</tr></table>';
+				addExtHtml = '<table><tr>' + addExtHtml + '</tr></table>';
 				$('#ext_def').html( addExtHtml );
 				$('#ext_def').slideDown();
 			} else {

@@ -89,8 +89,9 @@ jQuery(document).ready(function( $ ) {
 	 * and buttons next, previous and clear
 	 */
 	function createSuggestStructure( element, suggestPrefix ) {
-		var imgPath =  mw.config.get( 'wgExtensionAssetsPath' ) + '/WikiLexicalData/Images/',
-			suggestStructure =
+		var imgPath, suggestStructure;
+		imgPath =  mw.config.get( 'wgExtensionAssetsPath' ) + '/WikiLexicalData/Images/';
+		suggestStructure =
 			'<div class="suggest-drop-down"><div id="' + suggestPrefix + 'div" class="suggest-div">' +
 				'<table><tr>' +
 					'<td><input type="text" id="' + suggestPrefix + 'text" autocomplete="off" class="suggest-text"/></td>' +
@@ -247,8 +248,9 @@ jQuery(document).ready(function( $ ) {
 	}
 
 	function updateSelectOptions(id, objectId, value) {
-		var URL = 'index.php',
-			location = "" + document.location;
+		var URL, location;
+		URL = 'index.php';
+		location = "" + document.location;
 
 		if (location.indexOf('index.php/') > 0) {
 			URL = '../' + URL;
@@ -284,13 +286,15 @@ jQuery(document).ready(function( $ ) {
 		});
 
 		$(".suggestion-row").click(function() {
-			var suggestPrefix = stripSuffix( $(this).closest('.suggest-div').attr('id'), 'div' ),
-				suggestlink = '#' + suggestPrefix + 'link',
-				idColumnsField = $(suggestlink).attr('id-columns' ),
-				displayLabelField = $(suggestlink).attr('label-columns' ),
-				displayLabelColumnIndices = displayLabelField.split(", " ),
-				labels = [],
-				i, columnValue, idColumns, values, ids;
+			var suggestPrefix, suggestlink, idColumnsField, displayLabelField, displayLabelColumnIndices, labels, i, columnValue, idColumns, values, ids;
+
+			// suggestPrefix is something like add-dm-1370660-def-transl-language-suggest-
+			suggestPrefix = stripSuffix( $(this).closest('.suggest-div').attr('id'), 'div' );
+			suggestlink = '#' + suggestPrefix + 'link';
+			idColumnsField = $(suggestlink).attr('id-columns' );
+			displayLabelField = $(suggestlink).attr('label-columns' );
+			displayLabelColumnIndices = displayLabelField.split(", " );
+			labels = [];
 
 			for ( i = 0; i < displayLabelColumnIndices.length; i++) {
 				columnValue = this.getElementsByTagName('td')[displayLabelColumnIndices[i]].innerHTML;
