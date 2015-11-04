@@ -116,6 +116,11 @@ class WikiLexicalDataHooks {
 		return true;
 	}
 
+	/** @brief the i18n message. Why the move was unsuccessful
+	 *
+	 *	In case anyone use the Special page to move the OmegaWiki namespaces,
+	 *	This hook, along with the onNamespaceIsMovable hook abort the move.
+	 */
 	public static function onAbortMove( $oldtitle, $newtitle, $user, &$error, $reason ) {
 		if ( self::isWikidataNs( $oldtitle ) ) {
 			$error = wfMessage( 'wikidata-handler-namespace-move-error' )->text();
@@ -124,11 +129,12 @@ class WikiLexicalDataHooks {
 		return true;
 	}
 
-	/**
-	* disable the "move" button for the Expression and DefinedMeaning namespaces
-	* and prevent these pages to be moved like standard wiki pages
-	* since they work differently
-	*/
+	/** @brief disables the "move" button for OmegaWiki namespaces
+	 *
+	 * 	disable the "move" button for the Expression and DefinedMeaning namespaces
+	 * 	and prevent these pages to be moved like standard wiki pages
+	 * 	since they work differently
+	 */
 	public static function onNamespaceIsMovable( $index, $result ) {
 		if ( ( $index == NS_EXPRESSION ) || ( $index == NS_DEFINEDMEANING ) ) {
 			$result = false;
@@ -211,6 +217,10 @@ class WikiLexicalDataHooks {
 				);
 			}
 		}
+
+		// removes the 'move' button for OmegaWiki namespaces
+		unset( $links['actions']['move'] );
+
 		wfProfileOut( __METHOD__ );
 
 		return true;
