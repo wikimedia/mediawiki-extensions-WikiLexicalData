@@ -20,6 +20,8 @@
 		]
 	},
 	"wikidata-desc": "{{desc|name=Wiki Lexical Data|url=https://www.mediawiki.org/wiki/Extension:WikiLexicalData}}",
+	"wikidata-handler-namespace-move-error": "WikiLexical pages are immovable message ( move from WikiLexicalData )",
+	"wikidata-handler-namespace-move-to-error": "WikiLexical pages are immovable message ( move to WikiLexicalData )",
 	"languages": "{{doc-special|Languages}}\nSee example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]",
 	"langman-desc": "Shot description of [[Special:Languages]] (Language manager)",
 	"langman_title": "{{doc-special|Languages}}\nSee example: [http://www.omegawiki.org/Special:Languages http://www.omegawiki.org/Special:Languages]\n{{Identical|Language manager}}",
