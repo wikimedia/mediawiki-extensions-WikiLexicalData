@@ -14,8 +14,7 @@
 			"Siebrand",
 			"Umherirrender",
 			"Тест",
-			"Liuxinyu970226",
-			"Purodha"
+			"Liuxinyu970226"
 		]
 	},
 	"wikidata-desc": "{{desc|name=Wiki Lexical Data|url=https://www.mediawiki.org/wiki/Extension:WikiLexicalData}}",
@@ -133,7 +132,6 @@
 	"ow_needs_xlation_dest_lang": "Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].",
 	"ow_needs_xlation_no_dest_lang": "Visible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].",
 	"ow_data_search": "{{doc-special|Ow data search}}",
-	"ow_statistics": "{{doc-special|Ow statistics}}",
 	"ow_downloads": "{{doc-special|Ow downloads}}",
 	"ow_show": "Button text to show results.\nVisible on this [http://www.omegawiki.org/Special:NeedsTranslation OmegaWiki page].\n{{Identical|Show}}",
 	"ow_upload": "Text in the upload button after selecting a TSV file for import.\n{{Identical|Upload}}",
