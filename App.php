@@ -33,7 +33,9 @@ $wgExtensionCredits['other'][] = array(
 		'Kim Bruning',
 		'Maarten van Hoof',
 		'André Malafaya Baptista',
-		'Kipcool'
+		'Kipcool',
+		'庄向荣',
+		'Purodha Blissenbach'
 	),
 	'url'             => 'http://www.mediawiki.org/wiki/Extension:WikiLexicalData',
 	'descriptionmsg'  => 'wikidata-desc',
@@ -70,6 +72,8 @@ $wgResourceModules['ext.Wikidata.suggest'] = $resourcePathArray + array(
 );
 
 $wgAutoloadClasses['WikiLexicalDataHooks'] = $dir . 'Wikidata.hooks.php';
+$wgAutoloadClasses['OwDatabaseAPI'] = $dir . 'OmegaWiki/OmegaWikiDatabaseAPI.php';
+$wgAutoloadClasses['OmegaWikiHooks'] = $dir . 'OmegaWiki.hooks.php';
 
 $wgAutoloadClasses['WikidataArticle'      ] = $dir . 'includes/WikidataArticle.php';
 $wgAutoloadClasses['WikidataEditPage'     ] = $dir . 'includes/WikidataEditPage.php';
@@ -168,6 +172,12 @@ $wgHooks['PageContentLanguage'][] = 'WikiLexicalDataHooks::onPageContentLanguage
 $wgHooks['SkinTemplateNavigation'][] = 'WikiLexicalDataHooks::onSkinTemplateNavigation';
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'WikiLexicalDataHooks::loadSchema';
 $wgHooks['SpecialStatsAddExtra'][] = 'WikiLexicalDataHooks::onSpecialStatsAddExtra';
+
+# OmegaWikiHooks
+# $wgHooks['InternalParseBeforeLinks'][] = 'OmegaWikiHooks::onInternalParseBeforeLinks';
+# $wgHooks['ParserBeforeStrip'][] = 'OmegaWikiHooks::onInternalParseBeforeLinks';
+# $wgHooks['ParserBeforeInternalParse'][] = 'OmegaWikiHooks::onInternalParseBeforeLinks';
+$wgHooks['InternalParseBeforeSanitize'][] = 'OmegaWikiHooks::onInternalParseBeforeLinks';
 
 // Jobs
 require_once( $wgWldSetupScriptPath . "OWJobs.php" );

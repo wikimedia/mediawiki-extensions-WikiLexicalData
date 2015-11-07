@@ -21,6 +21,30 @@ class OwDatabaseAPI {
 	public function __construct() {
 	}
 
+	/** @addtogroup OwDbAPIcomFn OwDatabaseAPI's Common database functions
+	 *	@{
+	 */
+
+/**
+ * returns the value of column if exist
+ * null if not found
+ * @param table  table name
+ * @param column column nane
+ * @param value  column value
+ * @param isDc   if has DataSet Context(boolean)
+ */
+	public static function verifyColumn( $table, $column, $value, $isDc ) {
+		$api = new OwDatabaseAPI;
+		$dc = null;
+		if ( isset( $options['dc'] ) ) {
+			$dc = $options['dc'];
+		}
+		$api->settings( 'omegawiki', $dc );
+		return $api->OmegaWiki->verifyColumn( $table, $column, $value, $isDc );
+	}
+
+	/*! @} group OwDbAPIcomFn ends here.*/
+
 	/** @addtogroup OwDbAPIeFn OwDatabaseAPI's Expression functions
 	 *	@{
 	 */
@@ -236,6 +260,10 @@ class OwDatabaseAPI {
 		$api = new OwDatabaseAPI;
 		$api->settings( 'definedMeaning', $dc );
 		return $api->DefinedMeaning->getTranslatedContentIdDefinedMeaningId( $translatedContentId, $options, $api->dc );
+	}
+
+	public static function verifyDefinedMeaningId( $definedMeaningId ) {
+		return self::verifyColumn( 'defined_meaning', 'defined_meaning_id', $definedMeaningId, 1 );
 	}
 
 	/*! @} group OwDbAPIdmFn ends here.*/
@@ -546,6 +574,8 @@ class OwDatabaseAPI {
 				$this->Syntrans = new Syntrans; break;
 			case 'transaction': require_once( 'Transaction.php' );
 				$this->Transaction = new Transactions; break;
+			case 'omegawiki':
+				$this->OmegaWiki = new OmegaWikiDataBase; break;
 		}
 
 	}

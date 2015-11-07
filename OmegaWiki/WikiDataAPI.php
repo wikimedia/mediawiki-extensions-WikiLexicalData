@@ -6,6 +6,43 @@ require_once( 'Expression.php' );
 require_once( 'Transaction.php' );
 require_once( 'WikiDataGlobals.php' );
 
+/** @brief non specific entity class that access the database directly
+ *
+ */
+class OmegaWikiDataBase {
+
+/**
+ * returns the value of column if exist
+ * null if not found
+ * @param table  table name
+ * @param column column nane
+ * @param value  column value
+ * @param isDc   if has DataSet Context(boolean)
+ */
+	public static function verifyColumn( $table, $column, $value, $isDc ) {
+		if ( $isDc == 1 ) {
+			$dc = wdGetDataSetContext() . '_';
+		} else {
+			$dc = '';
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$existId = $dbr->selectField(
+			"{$dc}{$table}",
+			$column,
+			array(
+				$column => $value,
+				"remove_transaction_id" => null
+			), __METHOD__
+		);
+
+		if ( $existId ) {
+			return $existId;
+		}
+		return null;
+	}
+}
+
 /** @brief returns an expression ( spelling/word )
  *
  * @param expressionId req'd int The expression id.
@@ -2551,34 +2588,13 @@ class ClassAttributes {
 }
 
 /**
- * returns the value of column if exist
- * null if not found
- * @param table  table name
- * @param column column nane
- * @param value  column value
- * @param isDc   if has DataSet Context(boolean)
+ * @deprecated use OwDatabaseAPI::verifyColumn instead
+ *
+ * @todo refactor all functions that uses this function to the latest method. ~he
  */
 function verifyColumn( $table, $column, $value, $isDc ) {
-	if ( $isDc == 1 ) {
-		$dc = wdGetDataSetContext() . '_';
-	} else {
-		$dc = '';
-	}
-	$dbr = wfGetDB( DB_SLAVE );
-
-	$existId = $dbr->selectField(
-		"{$dc}{$table}",
-		$column,
-		array(
-			$column => $value,
-			"remove_transaction_id" => null
-		), __METHOD__
-	);
-
-	if ( $existId ) {
-		return $existId;
-	}
-	return null;
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	return OwDatabaseAPI::verifyColumn( $table, $column, $value, $isDc );
 }
 
 /**
@@ -2603,11 +2619,13 @@ function verifyLanguageId( $languageId ) {
 }
 
 /**
- * returns back the definedMeaningId if it exist
- * null if not found
+ * @deprecated use OwDatabaseAPI::verifyDefinedMeaningId instead
+ *
+ * @todo refactor all functions that uses this function to the latest method. ~he
  */
 function verifyDefinedMeaningId( $definedMeaningId ) {
-	return verifyColumn('defined_meaning', 'defined_meaning_id', $definedMeaningId, 1 );
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	return OwDatabaseAPI::verifyDefinedMeaningId( $definedMeaningId );
 }
 
 /**
