@@ -8,7 +8,8 @@
 			"Shirayuki",
 			"Whym",
 			"青子守歌",
-			"Rxy"
+			"Rxy",
+			"Sujiniku"
 		]
 	},
 	"wikidata-desc": "さまざまな種類のコンテンツ用のウィキ風データベースを追加する",
@@ -206,7 +207,6 @@
 	"ow_needs_xlation_dest_lang": "翻訳先言語:",
 	"ow_needs_xlation_no_dest_lang": "翻訳先言語を指定してください。",
 	"ow_data_search": "WikiLexicalDataデータ検索",
-	"ow_statistics": "WikiLexicalDataの統計",
 	"ow_downloads": "WikiLexicalDataダウンロード",
 	"ow_show": "表示",
 	"ow_upload": "アップロード",
@@ -222,5 +222,6 @@
 	"prefs-omegawiki": "OmegaWiki",
 	"prefs-ow-lang": "言語",
 	"ow_pref_lang_switch": "選択した言語のみを表示する",
-	"ow_pref_lang_select": "表示する言語:"
+	"ow_pref_lang_select": "表示する言語:",
+	"ow-stat-overview-link": "概要"
 }

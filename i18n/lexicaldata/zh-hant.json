@@ -174,7 +174,6 @@
 	"ow_class_attr_type_option": "選項列表",
 	"ow_needs_xlation_source_lang": "來源語言：",
 	"ow_needs_xlation_dest_lang": "目標語言：",
-	"ow_statistics": "WikiLexicalData 統計",
 	"ow_show": "顯示",
 	"ow_upload": "上傳",
 	"ow_create": "建立",
@@ -187,5 +186,7 @@
 	"ow_shown_datasets": "所顯示的數據集",
 	"prefs-ow-lang": "語言",
 	"ow_pref_lang_switch": "僅顯示所選語言",
-	"ow_pref_lang_select": "要顯示的語言："
+	"ow_pref_lang_select": "要顯示的語言：",
+	"ow-stat-collections": "{{PLURAL:$1|典藏}}",
+	"ow-stat-classes": "{{PLURAL:$1|類別}}"
 }

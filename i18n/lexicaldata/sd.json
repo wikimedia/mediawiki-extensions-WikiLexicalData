@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mehtab ahmed"
+		]
+	},
+	"ow-special-stat-languages-avail": "موجود {{PLURAL:$1|ٻولي|ٻوليون}}",
+	"ow-special-stat-languages-used": "{{PLURAL:$1|ٻولي|ٻوليون}} اظهارن سان",
+	"ow-stat-overview-link": "مٿاڇري نظر",
+	"ow-stat-expressions-link": "اظهار",
+	"ow-stat-expressions": "{{PLURAL:$1|اظهار}}",
+	"ow-stat-meanings-link": "معنائون",
+	"ow-stat-meanings": "{{PLURAL:$1|معنيٰ|معنائون}}",
+	"ow-stat-languages": "{{PLURAL:$1|ٻولي|ٻوليون}}",
+	"ow-stat-all-is": "سڀ = $1"
+}
