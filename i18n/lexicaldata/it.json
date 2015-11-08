@@ -12,7 +12,8 @@
 			"Melos",
 			"Nemo bis",
 			"Rippitippi",
-			"Sannita"
+			"Sannita",
+			"Ronald"
 		]
 	},
 	"wikidata-desc": "Aggiunge database basati su software wiki per diverse tipologie di contenuti.",
@@ -199,7 +200,6 @@
 	"ow_needs_xlation_source_lang": "Lingua di partenza:",
 	"ow_needs_xlation_dest_lang": "Lingua di destinazione:",
 	"ow_needs_xlation_no_dest_lang": "Specifica una lingua di destinazione.",
-	"ow_statistics": "Statistiche WikiLexicalData",
 	"ow_show": "Mostra",
 	"ow_upload": "Carica",
 	"ow_create": "Crea",
@@ -212,5 +212,16 @@
 	"right-addlanguage": "Aggiunge e modifica le impostazioni della lingua",
 	"prefs-ow-lang": "Lingue",
 	"ow_pref_lang_switch": "Mostra solo le lingue selezionate",
-	"ow_pref_lang_select": "Lingue da visualizzare:"
+	"ow_pref_lang_select": "Lingue da visualizzare:",
+	"ow-special-stat-head": "[[Speciale:Statistiche_OW/Statistiche di dati lessicali]]",
+	"ow-special-stat-languages-avail": "Disponibile {{PLURALE:$1/lingua/lingue}}",
+	"ow-special-stat-languages-used": "{{PLURALE:$1/Lingua/Lingue}} con le espressioni",
+	"ow-stat-header": "Statistiche di dati lessicali",
+	"ow-stat-overview-link": "panoramica",
+	"ow-stat-annotations-link": "Annotazioni",
+	"ow-stat-meanings-link": "Significati",
+	"ow-stat-meanings": "{{PLURALE:$1/Significato/Significati}}",
+	"ow-stat-languages": "{{PLURALE:$1/Lingua/Lingue}}",
+	"ow-stat-url-annotations": "{{PLURALE:$1/URL annotazione/URL annotazioni}}",
+	"ow-stat-option-annotations": "{{PLURALE:$1:opzione annotazione/opzione annotazioni}}"
 }
