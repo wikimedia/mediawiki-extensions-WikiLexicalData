@@ -222,6 +222,8 @@
 	"ow-stat-overview-link": "Przegląd",
 	"ow-stat-annotations-link": "Adnotacje",
 	"ow-stat-expressions-link": "Wyrażenia",
+	"ow-stat-meanings-link": "Znaczenia",
+	"ow-stat-meanings": "{{PLURAL:$1|Znaczenie|Znaczenia}}",
 	"ow-stat-languages": "{{PLURAL:$1|Język|Języki}}",
 	"ow-stat-classes": "{{PLURAL:$1|Klasa|Klasy}}"
 }

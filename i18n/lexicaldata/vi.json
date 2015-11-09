@@ -4,7 +4,8 @@
 			"Minh Nguyen",
 			"Trần Nguyễn Minh Huy",
 			"Vinhtantran",
-			"පසිඳු කාවින්ද"
+			"පසිඳු කාවින්ද",
+			"Nguyên Lê"
 		]
 	},
 	"languages": "Quản lý ngôn ngữ",
@@ -93,11 +94,13 @@
 	"ow_class_attr_type_option": "Danh sách tùy chọn",
 	"ow_needs_xlation_source_lang": "Ngôn ngữ gốc:",
 	"ow_needs_xlation_dest_lang": "Ngôn ngữ đích:",
-	"ow_statistics": "Thống kê WikiLexicalData",
 	"ow_show": "Hiển thị",
 	"ow_upload": "Tải lên",
 	"ow_create": "Tạo",
 	"ow_suggest_previous": "Trước",
 	"ow_suggest_next": "Tiếp theo",
-	"prefs-ow-lang": "Ngôn ngữ"
+	"prefs-ow-lang": "Ngôn ngữ",
+	"ow-special-stat-languages-avail": "{{PLURAL:$1|Ngôn ngữ|Các ngôn ngữ}} sẵn dùng",
+	"ow-stat-overview-link": "Tổng quan",
+	"ow-stat-languages": "{{PLURAL:$1|Ngôn ngữ|Các ngôn ngữ}}"
 }

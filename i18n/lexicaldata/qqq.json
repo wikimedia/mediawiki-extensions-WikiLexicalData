@@ -15,7 +15,8 @@
 			"Umherirrender",
 			"Тест",
 			"Liuxinyu970226",
-			"Macofe"
+			"Macofe",
+			"Robby"
 		]
 	},
 	"wikidata-desc": "{{desc|name=Wiki Lexical Data|url=https://www.mediawiki.org/wiki/Extension:WikiLexicalData}}",
@@ -162,7 +163,7 @@
 	"ow-special-stat-collections": "Used in Special:Statistics as a label for the number of collecions existing in the  lexical data.\n* $1 - The number of collecions for PLURAL use. Use only if needed in the tabular context. (optional)",
 	"ow-special-stat-classes": "Used in Special:Statistics as a label for the number of classes in the lexical data.\n* $1 - The number of classes for PLURAL use. Use only if needed in the tabular context. (optional)",
 	"ow-stat-header": "Header of the Statistics page of Lexical Data",
-	"ow-stat-overview-link": "Action link anchor in the Statistics page of Lexical Data",
+	"ow-stat-overview-link": "Action link anchor in the Statistics page of Lexical Data\n{{Identical|Overview}}",
 	"ow-stat-annotations-link": "Action link anchor in the Statistics page of Lexical Data",
 	"ow-stat-syntranses-link": "Action link anchor in the Statistics page of Lexical Data",
 	"ow-stat-syntranses": "Table head and label used in the Statistics page of Lexical Data.\n* $1 - The number of syntrans' for PLURAL use. Not to be dispayed here, since the figure is shown elsewhere.",
@@ -173,8 +174,8 @@
 	"ow-stat-definedmeanings-link": "Action link anchor in the Statistics page of Lexical Data",
 	"ow-stat-definedmeanings": "Table head and label used in the Statistics page of Lexical Data.\n* $1 - The number of defined meanings for PLURAL use. Not to be dispayed here, since the figure is shown elsewhere.",
 	"ow-stat-languages": "Table head and label used in the Statistics page of Lexical Data.\n* $1 - The number of languages in use for PLURAL use. Not to be dispayed here, since the figure is shown elsewhere.",
-	"ow-stat-collections": "Table head and label used in the Statistics page of Lexical Data.\n* $1 - The number of collectons for PLURAL use. Not to be dispayed here, since the figure is shown elsewhere.\n{{Identical|Collection}}",
-	"ow-stat-classes": "Table head and label used in the Statistics page of Lexical Data.\n* $1 - The number of class for PLURAL use. Not to be dispayed here, since the figure is shown elsewhere.\n{{Identical|Class}}",
+	"ow-stat-collections": "Table head and label used in the Statistics page of Lexical Data.\n* $1 - The number of collections for PLURAL use. Not to be dispayed here, since the figure is shown elsewhere.\n\n{{Identical|Collection}}",
+	"ow-stat-classes": "Table head and label used in the Statistics page of Lexical Data.\n* $1 - The number of classes for PLURAL use. Not to be displayed here, since the figure is shown elsewhere.\n\n{{Identical|Class}}",
 	"ow-stat-class-annotations": "\n* $1 - The number of class annotations for PLURAL use. Not to be dispayed here, since the figure is shown elsewhere.",
 	"ow-stat-url-annotations": "\n* $1 - The number of URL annotations for PLURAL use. Not to be dispayed here, since the figure is shown elsewhere.",
 	"ow-stat-text-annotations": "\n* $1 - The number of text annotations for PLURAL use. Not to be dispayed here, since the figure is shown elsewhere.",

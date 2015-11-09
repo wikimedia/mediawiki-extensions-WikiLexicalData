@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Mdupont",
-			"Shirayuki"
+			"Shirayuki",
+			"Macofe"
 		]
 	},
 	"wikidata-desc": "Shton database wiki-si për lloje të ndryshme të përmbajtjes",
@@ -176,7 +177,7 @@
 	"copy": "Copy",
 	"ow_copy_no_action_specified": "Ju lutem specifikoni një veprim",
 	"ow_copy_help": "Ndihmë nuk është zbatuar ende.",
-	"ow_please_proved_dmid": "Duket kontributin tuaj i mungon një \"? Dmid = <ID> \"(Dmid = Përcaktuar Kuptimi ID) <br /> Ju lutemi kontaktoni administratori i server.",
+	"ow_please_proved_dmid": "Duket kontributin tuaj i mungon një \"?dmid=<ID>\"(Dmid = Përcaktuar Kuptimi ID) <br /> Ju lutemi kontaktoni administratori i server.",
 	"ow_please_proved_dc1": "Duket kontributin tuaj i mungon një \"? Dc1 = <something> \"(Dc1 = kontekst dataset 1, dataset të kopje NGA) <br /> Ju lutemi kontaktoni administratori i server.",
 	"ow_please_proved_dc2": "Duket kontributin tuaj i mungon një \"? Dc2 = <something> \"(Dc2 = kontekst dataset 2, dataset të kopje TE) <br /> Ju lutemi kontaktoni administratori i server.",
 	"ow_copy_successful": "<h2> Copy suksesshëm </h2> Të dhënat tuaja duket se janë kopjuar me sukses. Mos harroni të doublecheck për të siguruar!",
@@ -195,7 +196,6 @@
 	"ow_needs_xlation_source_lang": "gjuha Burimi:",
 	"ow_needs_xlation_dest_lang": "Gjuha Destinacioni:",
 	"ow_needs_xlation_no_dest_lang": "Ju lutem specifikoni një gjuhë destinacion.",
-	"ow_statistics": "Wikidata: Statistika",
 	"ow_show": "Tregoj",
 	"ow_upload": "Ngarko",
 	"ow_create": "Krijo",
