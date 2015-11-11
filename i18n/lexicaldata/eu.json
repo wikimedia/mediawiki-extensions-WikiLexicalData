@@ -149,5 +149,6 @@
 	"right-addlanguage": "Gehitu eta aldatu hizkuntzaren ezarpenak",
 	"prefs-ow-lang": "Hizkuntzak",
 	"ow_addFromExtAPI": "Gehitu datuak kanpoko APIetatik",
-	"ow_addFromExtAPI_title": "Gehitu datuak APItik"
+	"ow_addFromExtAPI_title": "Gehitu datuak APItik",
+	"ow-stat-meanings-link": "Esanahiak"
 }

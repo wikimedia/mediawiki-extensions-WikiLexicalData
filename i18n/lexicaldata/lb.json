@@ -209,6 +209,7 @@
 	"ow_api_source": "Extern API-Quell:",
 	"ow-special-stat-languages-avail": "Disponibel {{PLURAL:$1|Sprooch|Sproochen}}",
 	"ow-stat-overview-link": "Iwwersiicht",
+	"ow-stat-annotations-link": "Notizen",
 	"ow-stat-expressions-link": "Ausdréck",
 	"ow-stat-expressions": "{{PLURAL:$1|Ausdrock|Ausdréck}}",
 	"ow-stat-meanings-link": "Bedeitungen",
