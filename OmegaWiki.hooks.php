@@ -34,7 +34,7 @@ class OmegaWikiHooks extends WikiLexicalDataHooks {
 				}
 				foreach( $dmIds as $dmId => $links ) {
 					if ( OwDatabaseAPI::verifyDefinedMeaningId( $dmId ) ) {
-						$title = definingExpression( $dmId ) . '_(' . $dmId . ')' ;
+						$title = OwDatabaseAPI::definingExpression( $dmId ) . '_(' . $dmId . ')' ;
 					} else {
 						$title = '_(0)' ;
 					}

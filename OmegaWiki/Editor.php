@@ -1162,7 +1162,7 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 
 		$userLanguageId = OwDatabaseAPI::getUserLanguageId();
 		$definition = getDefinedMeaningDefinition( $definedMeaningId );
-		$definingExpression = definingExpression( $definedMeaningId );
+		$definingExpression = OwDatabaseAPI::definingExpression( $definedMeaningId );
 
 		// word being currently viewed (typically title of page "Expression:word")
 		// the "peek(1)" part is a bit of a mystery

@@ -76,7 +76,9 @@ function definedMeaningReferenceAsURL( $definedMeaningId, $definingExpression ) 
 }
 
 function definedMeaningIdAsURL( $definedMeaningId ) {
-	return definedMeaningReferenceAsURL( $definedMeaningId, definingExpression( $definedMeaningId ) );
+	global $wgWldOwScriptPath;
+	require_once( $wgWldOwScriptPath . 'OmegaWikiDatabaseAPI.php' );
+	return definedMeaningReferenceAsURL( $definedMeaningId, OwDatabaseAPI::definingExpression( $definedMeaningId ) );
 }
 
 function createLink( $url, $text ) {
@@ -123,7 +125,9 @@ function timestampAsText( $timestamp ) {
 }
 
 function definingExpressionAsLink( $definedMeaningId ) {
-	return spellingAsLink( definingExpression( $definedMeaningId ) );
+	global $wgWldOwScriptPath;
+	require_once( $wgWldOwScriptPath . 'OmegaWikiDatabaseAPI.php' );
+	return spellingAsLink( OwDatabaseAPI::definingExpression( $definedMeaningId ) );
 }
 
 function definedMeaningAsLink( $definedMeaningId ) {

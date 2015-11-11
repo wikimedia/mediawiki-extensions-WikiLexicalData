@@ -2403,31 +2403,13 @@ function definingExpressionRow( $definedMeaningId, $dc = null ) {
 	return null;
 }
 
+/**
+ * @deprecated use OwDatabaseAPI::definingExpression instead
+ */
 function definingExpression( $definedMeaningId, $dc = null ) {
-	if ( is_null( $dc ) ) {
-		$dc = wdGetDataSetContext();
-	}
-	$dbr = wfGetDB( DB_SLAVE );
-
-	// no exp.remove_transaction_id because definingExpression could have been deleted
-	// but is still needed to form the DM page title.
-	$spelling = $dbr->selectField(
-		array(
-			'dm' => "{$dc}_defined_meaning",
-			'exp' => "{$dc}_expression"
-		),
-		'spelling',
-		array(
-			'dm.defined_meaning_id' => $definedMeaningId,
-			'exp.expression_id = dm.expression_id',
-			'dm.remove_transaction_id' => null
-		), __METHOD__
-	);
-
-	if ( $spelling ) {
-		return $spelling;
-	}
-	return null;
+	echo __METHOD__ . ' is deprecated';
+	require_once( 'OmegaWikiDatabaseAPI.php' );
+	return OwDatabaseAPI::definingExpression( $definedMeaningId, $dc );
 }
 
 /**

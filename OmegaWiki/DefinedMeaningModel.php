@@ -519,7 +519,7 @@ class DefinedMeaningModel {
 	 */
 	public function getDefiningExpression() {
 		if ( is_null( $this->definingExpression ) ) {
-			return definingExpression( $this->getId(), $this->getDataset() );
+			return OwDatabaseAPI::definingExpression( $this->getId(), $this->getDataset() );
 		}
 		return $this->definingExpression;
 	}

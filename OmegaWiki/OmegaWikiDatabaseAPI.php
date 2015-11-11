@@ -165,6 +165,23 @@ class OwDatabaseAPI {
 	 *	@{
 	 */
 
+	/** @brief Returns the spelling of an expression used as
+	 * the definedMeaning namespace of a given DM
+	 *
+	 * @param definedMeaningId int
+	 * @param dc               str
+	 *
+	 * @return expression str
+	 * @return if not exists, null
+	 *
+	 * @see DefinedMeanings::definingExpression
+	 */
+	public static function definingExpression( $definedMeaningId, $dc = null ) {
+		$api = new OwDatabaseAPI;
+		$api->settings( 'definedMeaning', $dc );
+		return $api->DefinedMeaning->definingExpression( $definedMeaningId, $api->dc );
+	}
+
 	/**
 	 * @brief Returns one spelling of an expression corresponding to a given DM
 	 *	- in a given language if it exists

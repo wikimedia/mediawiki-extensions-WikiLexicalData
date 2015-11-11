@@ -331,6 +331,44 @@ class DefinedMeanings {
 		require_once( 'OmegaWikiDatabaseAPI.php' );
 	}
 
+	/** @brief Returns the spelling of an expression used as
+	 * the definedMeaning namespace of a given DM
+	 *
+	 * @param definedMeaningId int
+	 * @param dc               str
+	 *
+	 * @return expression str
+	 * @return if not exists, null
+	 *
+	 * @see use OwDatabaseAPI::definingExpression instead
+	 */
+	public static function definingExpression( $definedMeaningId, $dc = null ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+
+		// no exp.remove_transaction_id because definingExpression could have been deleted
+		// but is still needed to form the DM page title.
+		$spelling = $dbr->selectField(
+			array(
+				'dm' => "{$dc}_defined_meaning",
+				'exp' => "{$dc}_expression"
+			),
+			'spelling',
+			array(
+				'dm.defined_meaning_id' => $definedMeaningId,
+				'exp.expression_id = dm.expression_id',
+				'dm.remove_transaction_id' => null
+			), __METHOD__
+		);
+
+		if ( $spelling ) {
+			return $spelling;
+		}
+		return null;
+	}
+
 	/** @brief spelling via the defined meaning and/or language id
 	 * @return spelling. empty string if not exists
 	 * @see use OwDatabaseAPI::getDefinedMeaningSpelling instead

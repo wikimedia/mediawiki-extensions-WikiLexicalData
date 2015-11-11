@@ -894,7 +894,7 @@ function getDefinedMeaningReferenceRecord( $definedMeaningId ) {
 	$record = new ArrayRecord( $o->definedMeaningReferenceStructure );
 	$record->definedMeaningId = $definedMeaningId;
 	$record->definedMeaningLabel = OwDatabaseAPI::getDefinedMeaningExpression( $definedMeaningId );
-	$record->definedMeaningDefiningExpression = definingExpression( $definedMeaningId );
+	$record->definedMeaningDefiningExpression = OwDatabaseAPI::definingExpression( $definedMeaningId );
 
 	return $record;
 }
