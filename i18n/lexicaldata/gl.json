@@ -203,7 +203,6 @@
 	"ow_needs_xlation_dest_lang": "Lingua de destino:",
 	"ow_needs_xlation_no_dest_lang": "Por favor, especifique unha lingua de destino.",
 	"ow_data_search": "Procura de datos do WikiLexicalData",
-	"ow_statistics": "Estatísticas do WikiLexicalData",
 	"ow_downloads": "Descargas do WikiLexicalData",
 	"ow_show": "Mostrar",
 	"ow_upload": "Cargar",
@@ -221,5 +220,6 @@
 	"ow_pref_lang_select": "Linguas que mostrar:",
 	"ow_addFromExtAPI": "Engadir datos dende APIs externas",
 	"ow_addFromExtAPI_title": "Engadir data dende API",
-	"ow_api_source": "Fonte API externa:"
+	"ow_api_source": "Fonte API externa:",
+	"ow-stat-all-is": "todos = $1"
 }
