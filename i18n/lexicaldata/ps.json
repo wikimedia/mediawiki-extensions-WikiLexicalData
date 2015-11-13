@@ -78,5 +78,8 @@
 	"ow_create": "جوړول",
 	"ow_suggest_previous": "پخوانی",
 	"ow_suggest_next": "راتلونکي",
-	"ow_suggest_clear": "سپينول"
+	"ow_suggest_clear": "سپينول",
+	"ow-stat-meanings-link": "ماناوې",
+	"ow-stat-classes": "{{PLURAL:$1|ټولگی|ټولگي}}",
+	"ow-stat-all-is": "ټول = $1"
 }
