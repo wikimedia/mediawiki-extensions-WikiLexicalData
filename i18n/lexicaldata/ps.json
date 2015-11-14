@@ -79,7 +79,12 @@
 	"ow_suggest_previous": "پخوانی",
 	"ow_suggest_next": "راتلونکي",
 	"ow_suggest_clear": "سپينول",
+	"ow-special-stat-languages-used": "{{PLURAL:$1|ژبه|ژبې}} د اصطلاحگانو سره",
+	"ow-special-stat-classes": "{{PLURAL:$1|ټولگی|ټولگي}}",
+	"ow-stat-expressions-link": "اصطلاحگانې",
 	"ow-stat-meanings-link": "ماناوې",
+	"ow-stat-meanings": "{{PLURAL:$1|مانا|ماناوې}}",
+	"ow-stat-languages": "{{PLURAL:$1|ژبه|ژبې}}",
 	"ow-stat-classes": "{{PLURAL:$1|ټولگی|ټولگي}}",
 	"ow-stat-all-is": "ټول = $1"
 }
