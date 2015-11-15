@@ -208,11 +208,14 @@
 	"ow_addFromExtAPI_title": "Donnéeë vun der API dobäisetzen",
 	"ow_api_source": "Extern API-Quell:",
 	"ow-special-stat-languages-avail": "Disponibel {{PLURAL:$1|Sprooch|Sproochen}}",
+	"ow-special-stat-collections": "{{PLURAL:$1|Sammlung|Sammlungen}}",
 	"ow-stat-overview-link": "Iwwersiicht",
 	"ow-stat-annotations-link": "Notizen",
 	"ow-stat-expressions-link": "Ausdréck",
 	"ow-stat-expressions": "{{PLURAL:$1|Ausdrock|Ausdréck}}",
 	"ow-stat-meanings-link": "Bedeitungen",
 	"ow-stat-meanings": "{{PLURAL:$1|Bedeitung|Bedeitungen}}",
-	"ow-stat-languages": "{{PLURAL:$1|Sprooch|Sproochen}}"
+	"ow-stat-languages": "{{PLURAL:$1|Sprooch|Sproochen}}",
+	"ow-stat-classes": "{{PLURAL:$1|Klass|Klassen}}",
+	"ow-stat-all-is": "all = $1"
 }

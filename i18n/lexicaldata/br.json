@@ -197,7 +197,6 @@
 	"ow_needs_xlation_source_lang": "Yezh kein :",
 	"ow_needs_xlation_dest_lang": "Yezh tal :",
 	"ow_needs_xlation_no_dest_lang": "Merkit ur yezh tal.",
-	"ow_statistics": "Wikidata : Stadegoù",
 	"ow_show": "Diskouez",
 	"ow_upload": "Enporzhiañ",
 	"ow_create": "Krouiñ",
@@ -209,5 +208,7 @@
 	"ow_nstab_edit_copy": "Kemmañ an eiladenn",
 	"right-addlanguage": "Ouzhpennañ ha kemmañ an arventennoù yezh",
 	"ow_shown_datasets": "Diskwel ar strolladoù roadennoù",
-	"prefs-ow-lang": "Yezhoù"
+	"prefs-ow-lang": "Yezhoù",
+	"ow-special-stat-collections": "{{PLURAL:$1|Dastumad}}",
+	"ow-stat-languages": "{{PLURAL:$1|Yezh}}"
 }

@@ -4,7 +4,8 @@
 			"Kuvaly",
 			"Matěj Grabovský",
 			"Mormegil",
-			"Reaperman"
+			"Reaperman",
+			"Cvanca"
 		]
 	},
 	"wikidata-desc": "Přidává databázi na principu wiki pro různé druhy obsahu",
@@ -197,7 +198,6 @@
 	"ow_needs_xlation_source_lang": "Zdrojový jazyk:",
 	"ow_needs_xlation_dest_lang": "Cílový jazyk:",
 	"ow_needs_xlation_no_dest_lang": "Zadejte prosím cílový jazyk.",
-	"ow_statistics": "Wikidata: Statistika",
 	"ow_show": "Zobrazit",
 	"ow_upload": "Nahrát",
 	"ow_create": "Vytvořit",
@@ -208,5 +208,15 @@
 	"ow_nstab_definedmeaning": "definovaný význam",
 	"ow_nstab_edit_copy": "upravit kopii",
 	"right-addlanguage": "Přidávání a změna jazykových nastavení",
-	"ow_shown_datasets": "Zobrazené množiny dat"
+	"ow_shown_datasets": "Zobrazené množiny dat",
+	"ow-special-stat-languages-avail": "{{PLURAL:$1|Dostupný jazyk|Dostupné jazyky|Dostupných jazyků}}",
+	"ow-special-stat-languages-used": "{{PLURAL:$1|Jazyk|Jazyky|Jazyků}} s výrazy",
+	"ow-special-stat-collections": "{{PLURAL:$1|Sbírka|Sbírky|Sbírek}}",
+	"ow-stat-header": "Statistiky lexikálních dat",
+	"ow-stat-overview-link": "Přehled",
+	"ow-stat-expressions-link": "Výrazy",
+	"ow-stat-meanings-link": "Významy",
+	"ow-stat-meanings": "{{PLURAL:$1|Význam|Významy|Významů}}",
+	"ow-stat-languages": "{{PLURAL:$1|Jazyk|Jazyky|Jazyků}}",
+	"ow-stat-collections": "{{PLURAL:$1|Sbírka|Sbírky|Sbírek}}"
 }
