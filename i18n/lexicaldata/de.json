@@ -16,6 +16,7 @@
 	},
 	"wikidata-desc": "Ergänzt eine Wiki-ähnliche Datenbank für verschiedene Typen von Daten",
 	"wikidata-handler-namespace-move-error": "Seiten im reservierten Namensraum der WikiLexicalData-Erweiterung können nicht verschoben werden.",
+	"wikidata-handler-namespace-move-to-error": "Es können keine Seiten in Namensräume verschoben werden, die von der Erweiterung „WikiLexicalData“ verwaltet werden.",
 	"languages": "Sprachen-Manager",
 	"langman-desc": "Spracheinstellungen mit [[Special:Languages]] hinzufügen und ändern",
 	"langman_title": "Sprachen-Manager",

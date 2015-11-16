@@ -9,11 +9,11 @@
 		]
 	},
 	"wikidata-desc": "Přidává databázi na principu wiki pro různé druhy obsahu",
-	"wikidata-handler-namespace-move-error": "Nelze přesouvat stránky ve jmenných prostorech, o které se stará rozšíření Wikidata.",
+	"wikidata-handler-namespace-move-error": "Nelze přesouvat stránky ve jmenných prostorech, o které se stará rozšíření WikiLexicalData.",
 	"languages": "Správce jazyků",
 	"langman-desc": "Přidat a změnit jazyková nastavení pomocí [[Special:Languages]]",
 	"langman_title": "Správce jazyků",
-	"langman_not_allowed": "Nemáte oprávnění měnit jazykové nastavení.",
+	"langman_not_allowed": "Nemáte oprávnění měnit jazyková nastavení.",
 	"langman_header": "Níže napište kód a anglický název jazyka:",
 	"langman_req_fields": "Musí být vyplněn název jazyka i jeho kód podle ISO 693-3.",
 	"langman_adding": "Přidává se jazyk $1 s kódem $2.",
