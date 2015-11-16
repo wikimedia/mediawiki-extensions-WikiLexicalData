@@ -124,8 +124,8 @@ $wgSpecialPages['NeedsTranslation'] = 'SpecialNeedsTranslation';
 $wgSpecialPages['ow_statistics'] = 'SpecialOWStatistics';
 $wgSpecialPages['ow_downloads'] = 'SpecialOWDownloads';
 
-$wgSpecialPages['exportTSV'] = 'SpecialExportTSV';
-$wgSpecialPages['importTSV'] = 'SpecialImportTSV';
+$wgSpecialPages['ExportTSV'] = 'SpecialExportTSV';
+$wgSpecialPages['ImportTSV'] = 'SpecialImportTSV';
 
 $wgSpecialPages['ow_addFromExtAPI'] = 'SpecialOWAddFromExternalAPI';
 

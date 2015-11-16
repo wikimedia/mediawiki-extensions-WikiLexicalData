@@ -49,6 +49,7 @@
 	"exporttsv": "TSV (tab separated value).\n\nSee also:\n* {{msg-mw|Importtsv}}",
 	"ow_exporttsv_languages": "{{Identical|Language}}",
 	"ow_exporttsv_export_failed": "Used as page title.\n\nThe page body for this message is {{msg-mw|Ow impexptsv unknown lang}}.",
+	"ow-downloads-directory-missing": "Error message used in Special:Ow_Downloads telling that no exports are possible since the export directory is missing. The export directory is used to keep files to be downloaded for export.\n* $1 - the full path of the nonexisting directory on the server.",
 	"addcollection": "{{doc-special|AddCollection}}\nSee example: [http://www.omegawiki.org/Special:Specialpages omegawiki.org/Special:SpecialPages]",
 	"ow_searchnoresult": "{{doc-important|Don't translate the word <code>Expression</code> in <code><nowiki>[[Expression:$1]]</nowiki></code>.}}",
 	"ow_save": "{{Identical|Save}}",

@@ -190,7 +190,7 @@ class SpecialConceptMapping extends SpecialPage {
 	}
 
 	protected function getGroupName() {
-		return 'other';
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
 	}
 }
 

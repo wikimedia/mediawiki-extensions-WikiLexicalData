@@ -58,14 +58,21 @@ class SpecialOWDownloads extends SpecialPage {
 		$this->downloadIniExist = false;
 
 		// scan directory for filenames
-		$downloadDir = scandir( $wgWldDownloadScriptPath ) ;
+		if ( ! is_dir( $wgWldDownloadScriptPath ) || ! is_readable( $wgWldDownloadScriptPath ) ) {
+			$output->addHTML( wfMessage( 'ow-downloads-directory-missing' )
+				->params( htmlentities( $wgWldDownloadScriptPath ) )->plain() ) ;
+			$downloadDir = array() ;
+			$this->updateCheckChecked = True;
+		} else {
+			$downloadDir = scandir( $wgWldDownloadScriptPath ) ;
+			$this->updateCheckChecked = false;
+		}
 
 		// Segregate by groups
 		$this->segregateGroups( $downloadDir );
 
 		$this->updateCheck = null;
 		$this->updateCheckList = array();
-		$this->updateCheckChecked = false;
 		$this->processingOwd = false;
 
 		// This should change if non csv files will be produced.
@@ -216,7 +223,7 @@ class SpecialOWDownloads extends SpecialPage {
 		// see also
 		$wikiText .= "==Help==\n";
 		$wikiText .= "*[[Help:Downloading_the_data#CSV_Files|About the OmegaWiki Special Downloads Page]]\n";
-		$wikiText .="*[[Help:OmegaWiki's Development CSVs|OmegaWiki's Development CSVs]]\n";
+		$wikiText .= "*[[Help:OmegaWiki's Development CSVs|OmegaWiki's Development CSVs]]\n";
 		$output->addWikiText( $wikiText );
 	}
 
@@ -524,6 +531,6 @@ class SpecialOWDownloads extends SpecialPage {
 	}
 
 	protected function getGroupName() {
-		return 'wiki';
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
 	}
 }

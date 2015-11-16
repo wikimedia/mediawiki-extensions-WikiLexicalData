@@ -196,8 +196,6 @@ class SpecialNeedsTranslation extends SpecialPage {
 	}
 
 	protected function getGroupName() {
-		return 'maintenance';
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
 	}
 }
-
-

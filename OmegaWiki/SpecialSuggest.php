@@ -932,4 +932,8 @@ class SpecialSuggest extends SpecialPage {
 
 		return array( $recordSet, $editor );
 	}
+
+	protected function getGroupName() {
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
+	}
 }

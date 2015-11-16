@@ -60,6 +60,7 @@
 	"ow_exporttsv_languages": "Languages:",
 	"ow_exporttsv_not_allowed": "You do not have permission to do a TSV export.",
 	"ow_exporttsv_export_failed": "Export failed",
+	"ow-downloads-directory-missing": "The export directory <code>$1</code> is missing.",
 	"addcollection": "Add collection",
 	"ow_searchnoresult": "<p>You may:<br />\n* '''Create the expression \"[[Expression:$1]]\"''' (and add a definition)<br />\n* '''Create the page \"[[:$1]]\"''' (a standard wiki page)</p>",
 	"ow_save": "Save",
@@ -231,6 +232,7 @@
 	"ow-special-stat-definedmeanings": "{{PLURAL:$1|Definedmeaning|Definedmeanings}} [[Special:OW_Statistics/dm|(per language)]]",
 	"ow-special-stat-collections": "{{PLURAL:$1|Collection|Collections}}",
 	"ow-special-stat-classes": "{{PLURAL:$1|Class|Classes}}",
+	"ow_statistics": "Statistics of lexical data",
 	"ow-stat-header": "Statistics of lexical data",
 	"ow-stat-overview-link": "Overview",
 	"ow-stat-annotations-link": "Annotations",
@@ -250,5 +252,6 @@
 	"ow-stat-text-annotations": "{{PLURAL:$1|Text annotation|Text annotations}}",
 	"ow-stat-option-annotations": "{{PLURAL:$1|Option annotation|Option annotations}}",
 	"ow-stat-all-is": "all = $1",
-	"ow-stat-percent": "$1&nbsp;%"
+	"ow-stat-percent": "$1&nbsp;%",
+	"specialpages-group-omegawiki": "Omegawiki"
 }

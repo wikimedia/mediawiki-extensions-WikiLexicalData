@@ -160,6 +160,9 @@ class SpecialCopy extends UnlistedSpecialPage {
 		# }
 
 		return true; # seems everything went ok.
+	}
 
+	protected function getGroupName() {
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
 	}
 }

@@ -240,4 +240,8 @@ class SpecialImportTSV extends SpecialPage {
 			) );
 		}
 	}
+
+	protected function getGroupName() {
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
+	}
 }

@@ -22,7 +22,7 @@ require_once( __DIR__ . "/../../OmegaWiki/OmegaWikiDatabaseAPI.php" );
 class SpecialOWAddFromExternalAPI extends SpecialPage {
 
 	private $saveResult;	// string Used to output JSON via this class' web API (POST).
-	private $saveType;		// string The type to save. see save function.
+	private $saveType;	// string the type to save. see save function.
 
 	function __construct() {
 		global $wgWldProcessExternalAPIClasses;
@@ -40,8 +40,9 @@ class SpecialOWAddFromExternalAPI extends SpecialPage {
 	private function save() {
 
 		switch ( $this->saveType ) {
-			case 'synonym': $this->saveSynonym(); break;
-			break;
+			case 'synonym':
+				$this->saveSynonym();
+				break;
 		}
 
 		// disable wgOut in order to output only the JSON string.
@@ -314,4 +315,7 @@ class ExternalResources {
 		);
 	}
 
+	protected function getGroupName() {
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
+	}
 }

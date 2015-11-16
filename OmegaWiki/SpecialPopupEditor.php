@@ -245,4 +245,8 @@ class SpecialPopUpEditor extends SpecialPage {
 
 		RecentChange::notifyEdit( $now, $expressionTitle, false, $wgUser, $summary, 0, $now, false );
 	}
+
+	protected function getGroupName() {
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
+	}
 }

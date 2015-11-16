@@ -131,6 +131,9 @@ END
 END
 );
 		return true;
+	}
 
+	protected function getGroupName() {
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
 	}
 }

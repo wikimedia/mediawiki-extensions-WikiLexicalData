@@ -375,4 +375,8 @@ class SpecialExportTSV extends SpecialPage {
 		$fileName .= ".txt";
 		return $fileName;
 	}
+
+	protected function getGroupName() {
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
+	}
 }

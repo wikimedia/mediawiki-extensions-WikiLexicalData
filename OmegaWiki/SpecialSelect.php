@@ -53,4 +53,8 @@ class SpecialSelect extends SpecialPage {
 
 	echo $optionsString;
 	}
+
+	protected function getGroupName() {
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
+	}
 }

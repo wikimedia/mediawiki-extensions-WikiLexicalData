@@ -16,7 +16,7 @@ class SpecialImportLangNames extends SpecialPage {
 		// These operations should always be on the community database.
 		$dbr = wfGetDB( DB_SLAVE );
 		$dbw = wfGetDB( DB_MASTER );
-		$dc = "uw";
+		$dc = wdGetDataSetContext();
 		$output = $this->getOutput();
 
 		$output->setPageTitle( wfMessage( 'importlangnames_title' )->text() );
@@ -25,7 +25,6 @@ class SpecialImportLangNames extends SpecialPage {
 			$output->addHTML( wfMessage( 'importlangnames_not_allowed' )->text() );
 			return false;
 		}
-
 		/* Get defined meaning IDs and ISO codes for languages in collection. */
 		// wgIso639_3CollectionId is normally defined in LocalSettings.php
 		$lang_res = $dbr->select(
@@ -38,11 +37,9 @@ class SpecialImportLangNames extends SpecialPage {
 		);
 		$editable = '';
 		$first = true;
-
 		foreach ( $lang_res as $lang_row ) {
 			$iso_code = $lang_row->internal_member_id;
 			$dm_id = $lang_row->member_mid;
-
 			/*	Get the language ID for the current language. */
 			$lang_id = getLanguageIdForIso639_3( $iso_code ) ;
 
@@ -113,6 +110,6 @@ class SpecialImportLangNames extends SpecialPage {
 	}
 
 	protected function getGroupName() {
-		return 'other';
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
 	}
 }

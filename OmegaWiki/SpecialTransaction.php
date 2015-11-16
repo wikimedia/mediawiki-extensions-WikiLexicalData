@@ -90,6 +90,10 @@ class SpecialTransaction extends SpecialPage {
 				'</form>'
 			);
 	}
+
+	protected function getGroupName() {
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
+	}
 }
 
 function getFilterOptionsPanel( $fromTransactionId, $transactionCount, $userName, $showRollBackOptions ) {
@@ -1781,5 +1785,3 @@ function rollBackCollectionMembership( $rollBackAction, $collectionId, $collecti
 		addDefinedMeaningToCollection( $collectionMemberId, $collectionId, $sourceIdentifier );
 	}
 }
-
-

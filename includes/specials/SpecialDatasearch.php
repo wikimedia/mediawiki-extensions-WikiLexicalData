@@ -520,6 +520,6 @@ class SpecialDatasearch extends SpecialPage {
 	}
 
 	protected function getGroupName() {
-		return 'wiki';
+		return 'omegawiki';	// message 'specialpages-group-omegawiki'
 	}
 }
