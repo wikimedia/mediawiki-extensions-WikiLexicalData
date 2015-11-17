@@ -8,11 +8,13 @@
 			"Karduelis",
 			"Nyasar",
 			"Vito Genovese",
-			"Тест"
+			"Тест",
+			"HakanIST"
 		]
 	},
 	"wikidata-desc": "Farklı içerik türleri için viki benzeri bir veritabanı ekler",
 	"wikidata-handler-namespace-move-error": "VikiSözcükselVeri (WikiLexicalData) eklentisi tarafından kontrol edilen ad alanındaki sayfalar taşınamıyor.",
+	"wikidata-handler-namespace-move-to-error": "WikiLexicalData uzantısı tarafında çalışan herhangi bir isim alanına taşınabilecek sayfa yok.",
 	"languages": "Dil yöneticisi",
 	"langman-desc": "[[Special:Languages]] ile dil ayarlarını ekle ve değiştir",
 	"langman_title": "Dil yöneticisi",

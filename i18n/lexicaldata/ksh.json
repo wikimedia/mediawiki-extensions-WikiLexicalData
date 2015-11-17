@@ -6,6 +6,7 @@
 	},
 	"wikidata-desc": "Brängk en wiki_aadijje Dahtebangk met, för ungerscheidlijje Zoote Enhhalde.",
 	"wikidata-handler-namespace-move-error": "Sigge en de Appachtemangs vum Zohsazprojramm „<i lang=\"en\" xml:lang=\"en\" dir=\"ltr\" title\"Wiki met läxekahlesche Dahte\">WikiLexicalData </i>“ kam_mer nit ömnänne.",
+	"wikidata-handler-namespace-move-to-error": "Sigge lohße sesch nidd en de Appachtemangs met de läxekahlesche Dahte bränge.",
 	"languages": "Schprohche verwallde för {{GRAMMAR:Acc|{{ucfirst:{{SITENAME}}}}}}.",
 	"langman-desc": "Donn de Enschtällonge för Schprohche dobei, udder ömmoodelle, met [[Special:Languages|{{#special:Languages}}]].",
 	"langman_title": "Schprohche verwalde",

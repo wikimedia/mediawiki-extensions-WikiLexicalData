@@ -18,6 +18,7 @@
 	},
 	"wikidata-desc": "Aggiunge database basati su software wiki per diverse tipologie di contenuti.",
 	"wikidata-handler-namespace-move-error": "Le pagine nei namespace gestiti dall'estensione WikiLexicalData non possono essere spostate.",
+	"wikidata-handler-namespace-move-to-error": "Nessuna pagina può essere spostata in alcun namespace gestito dall'estensione WikiLexicalData.",
 	"languages": "Manager della lingua",
 	"langman-desc": "Aggiungi e modifica le impostazioni di lingua con [[Special:Languages]]",
 	"langman_title": "Manager della lingua",
