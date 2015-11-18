@@ -24,6 +24,7 @@
 	},
 	"wikidata-desc": "为各种类型的内容添加类wiki数据库",
 	"wikidata-handler-namespace-move-error": "在由WikiLexicaldata扩展处理的名字空间中的页面不能被移动。",
+	"wikidata-handler-namespace-move-to-error": "没有页面可被移动至任何由WikiLexicalData扩展控制的名字空间。",
 	"languages": "语言管理器",
 	"langman-desc": "在[[Special:Languages]]添加或更改语言设置",
 	"langman_title": "语言管理器",

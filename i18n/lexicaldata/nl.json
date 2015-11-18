@@ -5,7 +5,8 @@
 			"SPQRobin",
 			"Shirayuki",
 			"Siebrand",
-			"Tvdm"
+			"Tvdm",
+			"Sjoerddebruin"
 		]
 	},
 	"wikidata-desc": "Voegt een wiki-achtige database toe voor verschillende soorten inhoud",
@@ -204,7 +205,6 @@
 	"ow_needs_xlation_dest_lang": "Doeltaal:",
 	"ow_needs_xlation_no_dest_lang": "Geef een doeltaal op.",
 	"ow_data_search": "WikiLexicalData gegevens zoeken",
-	"ow_statistics": "Statistieken voor WikiLexicalData",
 	"ow_downloads": "WikiLexicalData downloads",
 	"ow_show": "Weergeven",
 	"ow_upload": "Uploaden",
@@ -219,5 +219,6 @@
 	"ow_shown_datasets": "Weergegeven datasets",
 	"prefs-ow-lang": "Talen",
 	"ow_pref_lang_switch": "Allen de geselecteerde talen weergeven",
-	"ow_pref_lang_select": "Weer te geven talen:"
+	"ow_pref_lang_select": "Weer te geven talen:",
+	"ow-stat-overview-link": "Overzicht"
 }

@@ -209,7 +209,6 @@
 	"ow_needs_xlation_dest_lang": "Målspråk:",
 	"ow_needs_xlation_no_dest_lang": "Ange ett målspråk.",
 	"ow_data_search": "WikiLexicalData-datasök",
-	"ow_statistics": "WikiLexicalData-statistik",
 	"ow_downloads": "WikiLexicalData-nedladdningar",
 	"ow_show": "Visa",
 	"ow_upload": "Skicka in",
@@ -224,5 +223,18 @@
 	"ow_shown_datasets": "Visade datauppsättningar",
 	"prefs-ow-lang": "Språk",
 	"ow_pref_lang_switch": "Visa endast valda språk",
-	"ow_pref_lang_select": "Språk att visa:"
+	"ow_pref_lang_select": "Språk att visa:",
+	"ow-special-stat-languages-used": "{{PLURAL:$1|Språk}} med uttryck",
+	"ow-special-stat-meanings": "{{PLURAL:$1|Betydelse|Betydelser}} [[Special:OW_Statistics/def|(per språk)]]",
+	"ow-special-stat-collections": "{{PLURAL:$1|Samling|Samlingar}}",
+	"ow-special-stat-classes": "{{PLURAL:$1|Klass|Klasser}}",
+	"ow-stat-overview-link": "Översikt",
+	"ow-stat-expressions-link": "Uttryck",
+	"ow-stat-expressions": "{{PLURAL:$1|Uttryck}}",
+	"ow-stat-meanings-link": "Betydelser",
+	"ow-stat-meanings": "{{PLURAL:$1|Betydelse|Betydelser}}",
+	"ow-stat-languages": "{{PLURAL:$1|Språk}}",
+	"ow-stat-collections": "{{PLURAL:$1|Samling|Samlingar}}",
+	"ow-stat-classes": "{{PLURAL:$1|Klass|Klasser}}",
+	"ow-stat-all-is": "alla = $1"
 }
