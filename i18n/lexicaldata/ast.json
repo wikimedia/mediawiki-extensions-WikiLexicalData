@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Esbardu"
+			"Esbardu",
+			"Xuacu"
 		]
 	},
+	"wikidata-handler-namespace-move-to-error": "Nun puede treslladase nenguna páxina a nengún espaciu de nomes xestionáu pola estensión WikiLexicalData.",
 	"ow_Language": "Llingua"
 }
