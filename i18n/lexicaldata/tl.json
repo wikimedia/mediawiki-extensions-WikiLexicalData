@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"AnakngAraw",
-			"Jewel457"
+			"Jewel457",
+			"Leeheonjin"
 		]
 	},
 	"wikidata-desc": "Nagdaragdag ng talaan ng datong kamukha ng sa wiki para sa sari-saring mga uri ng nilalaman",
@@ -197,7 +198,6 @@
 	"ow_needs_xlation_source_lang": "Pagmumulang wika:",
 	"ow_needs_xlation_dest_lang": "Kapupuntahang wika:",
 	"ow_needs_xlation_no_dest_lang": "Pakitukoy ang isang kapupuntahang wika.",
-	"ow_statistics": "Wikidata: Estadistika",
 	"ow_show": "Ipakita",
 	"ow_upload": "Ikarga",
 	"ow_create": "Likhain",
@@ -209,5 +209,8 @@
 	"ow_nstab_edit_copy": "baguhin ang sipi",
 	"right-addlanguage": "Magdagdag at baguhin ang mga katakdaang pangwika",
 	"ow_shown_datasets": "Ipinakitang mga pangkat ng dato",
-	"prefs-omegawiki": "OmegaWiki"
+	"prefs-omegawiki": "OmegaWiki",
+	"ow-stat-meanings-link": "Mga kahulugan",
+	"ow-stat-definedmeanings-link": "Mganatukoynakahulugan",
+	"ow-stat-all-is": "lahat = $1"
 }

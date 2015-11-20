@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Leeheonjin"
+		]
+	},
+	"ow-special-stat-languages-avail": "Deng malyaring {{PLURAL:$1|language|amanu/pamiyalita}}",
+	"ow-special-stat-expressions": "{{PLURAL:$1|Expression|Deng ekspresyun}} [[Special:OW_Statistics/exp|(kada amanu/pamiyalita)]]",
+	"ow-stat-header": "Deng estadistiku na ning datos pang-leksiku",
+	"ow-stat-overview-link": "Pangkabilugan a pamaglawe",
+	"ow-stat-annotations-link": "Deng anotasyun",
+	"ow-stat-meanings-link": "Deng kabaldugan",
+	"ow-stat-meanings": "{{PLURAL:$1|Meaning|Deng kabaldugan}}",
+	"ow-stat-languages": "{{PLURAL:$1|Language|Deng amanu/pamiyalita}}",
+	"ow-stat-classes": "{{PLURAL:$1|Class|Deng klasi}}",
+	"ow-stat-url-annotations": "{{PLURAL:$1|URL annotation|URL annotations}}",
+	"ow-stat-all-is": "eganagana = $1"
+}
