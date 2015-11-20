@@ -1,3 +1,6 @@
+-- This script is outdated. There is no table 'namespace' any more. Purodha 2015-11-20.
+--
+
 --
 -- Add the wikidata specific namespaces
 --

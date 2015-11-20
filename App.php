@@ -179,6 +179,7 @@ $wgHooks['SpecialStatsAddExtra'][] = 'WikiLexicalDataHooks::onSpecialStatsAddExt
 # $wgHooks['ParserBeforeStrip'][] = 'OmegaWikiHooks::onInternalParseBeforeLinks';
 # $wgHooks['ParserBeforeInternalParse'][] = 'OmegaWikiHooks::onInternalParseBeforeLinks';
 $wgHooks['InternalParseBeforeSanitize'][] = 'OmegaWikiHooks::onInternalParseBeforeLinks';
+$wgHooks['CanonicalNamespaces'][] = 'OmegaWikiHooks::addCanonicalNamespaces';
 
 // Jobs
 require_once( $wgWldSetupScriptPath . "OWJobs.php" );

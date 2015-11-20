@@ -61,4 +61,15 @@ class OmegaWikiHooks extends WikiLexicalDataHooks {
 		return True;
 	}
 
+	/**
+	 * Adds canonical namespaces.
+	 */
+	public static function addCanonicalNamespaces( &$list ) {
+		$list[NS_DEFINEDMEANING] = 'DefinedMeaning';
+		$list[NS_DEFINEDMEANING + 1] = 'DefinedMeaning_talk';
+		$list[NS_EXPRESSION] = 'Expression';
+		$list[NS_EXPRESSION + 1] = 'Expression_talk';
+		return true;
+	}
+
 }
