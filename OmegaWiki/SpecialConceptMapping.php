@@ -30,6 +30,11 @@ class SpecialConceptMapping extends SpecialPage {
 			$wgOut->addHTML( wfMessage( "ow_Permission_denied" )->text() );
 			return false;
 		}
+		$sets = wdGetDataSets();
+		if ( count( $set ) < 2 ) {
+			$wgOut->addHTML( wfMessage( "ow-conceptmapping-too-few" )->text() );
+			return false;
+		}
 		$action = $wgRequest->getText( 'action' );
 		if ( !$action ) {
 			$this->ui();

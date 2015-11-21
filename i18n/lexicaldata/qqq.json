@@ -69,6 +69,7 @@
 	"ow_transaction_object": "{{Identical|Object}}",
 	"ow_transaction_summary": "{{Identical|Summary}}",
 	"conceptmapping": "{{doc-special|ConceptMapping}}",
+	"ow-onceptmapping-too-few": "Informs the user that Special:ConceptMapping requires at least two data sets. Else there is nothing to map between.",
 	"ow_conceptmapping_title": "{{doc-special|ConceptMapping}}",
 	"ow_conceptmapping_uitext": "A \"dataset\" is an independant collection of data, such as an ontology, a thesaurus, or a specific dictionary.",
 	"ow_conceptmapping_no_action_specified": "Parameters:\n* $1 - unsupported action. It can be anything that has been provided by a client.\nSupported actions are: insert, get, help, get_associated",
