@@ -76,7 +76,7 @@
 	"ow_exporttsv_title": "导出集合至TSV",
 	"ow_exporttsv_header": "<p>将集合导出至标签分隔文本格式，以使您可以导入至OpenOffice.org、Excel或其他电子表格软件。<br />\n\t选择一个集合导出。在语言文本框中，输入逗号分隔的ISO 639-3语言代码列表。首个语言表示您将进行翻译的来源语言（任意选择您喜欢的），最后一个表示您的翻译模板语言。之后点击“创建”即可创建文件。</p>",
 	"ow_exporttsv_languages": "语言：",
-	"ow_exporttsv_not_allowed": "你没有导出TSV的权限。",
+	"ow_exporttsv_not_allowed": "您没有导出TSV的权限。",
 	"ow_exporttsv_export_failed": "导出失败",
 	"addcollection": "添加收藏",
 	"ow_searchnoresult": "<p>您可以：<br />\n* '''创建表达式“[[Expression:$1]]”'''（以及加入定义）<br />\n* '''创建页面“[[:$1]]”'''（标准wiki页面）</p>",
