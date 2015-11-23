@@ -9,6 +9,7 @@
 	},
 	"wikidata-desc": "Engade un wiki como base de datos para varios tipos de contido",
 	"wikidata-handler-namespace-move-error": "Non se poden mover as páxinas que están no espazo de nomes manipulado pola extensión WikiLexicalData.",
+	"wikidata-handler-namespace-move-to-error": "Non se pode mover ningunha páxina a un espazo de nomes xestionado pola extensión WikiLexicalData.",
 	"languages": "Xestor de linguas",
 	"langman-desc": "Engadir e modificar a configuración de lingua con [[Special:Languages]]",
 	"langman_title": "Xestor de linguas",
