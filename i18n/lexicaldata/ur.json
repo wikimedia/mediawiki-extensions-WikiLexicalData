@@ -2,9 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"පසිඳු කාවින්ද",
-			"عثمان خان شاہ"
+			"عثمان خان شاہ",
+			"Muhammad Shuaib"
 		]
 	},
+	"wikidata-desc": "متعدد اقسام پر مشتمل مواد کے لیے ویکی-مماثل ڈیٹابیس کا اندراج کرتا ہے",
+	"wikidata-handler-namespace-move-error": "WikiLexicalData توسیع کے زیر انتظام نام ہائے فضا میں موجود صفحات کو منتقل نہیں کیا جا سکتا.",
 	"langman_title": "زبان کے مینیجر",
 	"langman_langname": "زبان کے نام:",
 	"langman_field_optional": "(اختیاری)",
@@ -40,5 +43,14 @@
 	"ow_Definition": "تعریف",
 	"ow_Expression": "اظہار",
 	"ow_Expressions": "اظہار",
+	"ow_show": "دکھائیں",
+	"ow_upload": "اپ لوڈ کریں",
+	"ow_create": "تخلیق",
+	"ow_suggest_previous": "پچھلا",
+	"ow_suggest_next": "اگلا",
+	"ow_suggest_clear": "صاف کریں",
+	"prefs-ow-lang": "زبانیں",
+	"ow_pref_lang_switch": "محض منتخب زبانیں دکھائیں",
+	"ow_pref_lang_select": "دکھائی جانے والی زبانیں:",
 	"ow_addFromExtAPI_title": "اے پی اے سے ڈیٹا منتقل کریں"
 }
