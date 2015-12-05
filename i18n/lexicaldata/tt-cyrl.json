@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Умар"
+			"Умар",
+			"Ильнар"
 		]
 	},
-	"ow_uiprefs": "WikiLexicalData"
+	"ow_exporttsv_languages": "Телләр:",
+	"ow_uiprefs": "WikiLexicalData",
+	"prefs-ow-lang": "Телләр"
 }
