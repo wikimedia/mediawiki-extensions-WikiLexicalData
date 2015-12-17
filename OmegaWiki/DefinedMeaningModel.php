@@ -289,7 +289,6 @@ class DefinedMeaningModel {
 
 
 		// Insert transaction information into the DB
-		# startNewTransaction($wgUser->getID(), wfGetIP(), $summary);
 		startNewTransaction( 0, "0.0.0.0", "copy operation" );
 
 		// Perform regular save
