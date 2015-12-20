@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ebrahimi-amir"
+			"Ebrahimi-amir",
+			"Alp Er Tunqa"
 		]
 	},
-	"ow_transaction_no_action": "هئچ ایش گؤرمه"
+	"ow_transaction_no_action": "هئچ ایش گؤرمه",
+	"prefs-ow-lang": "دیل‌لر"
 }
