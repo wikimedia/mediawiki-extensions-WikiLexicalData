@@ -246,6 +246,7 @@
 	"ow-special-stat-definedmeanings": "{{PLURAL:$1|定义的含义}}[[Special:OW_Statistics/dm|（每种语言）]]",
 	"ow-special-stat-collections": "{{PLURAL:$1|收藏}}",
 	"ow-special-stat-classes": "{{PLURAL:$1|等级}}",
+	"ow_statistics": "WikiLexicalData统计",
 	"ow-stat-header": "词汇数据的统计",
 	"ow-stat-overview-link": "概述",
 	"ow-stat-annotations-link": "注释",

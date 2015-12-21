@@ -231,6 +231,7 @@
 	"ow-special-stat-definedmeanings": "Äxplezeht faßjelahte {{PLURAL:$1|Bedüggdeniß|Bedüggdeniße|Bedüggdeniße }} [[Special:OW_Statistics/dm|(pä Schprohch)]]",
 	"ow-special-stat-collections": "{{PLURAL:$1|Sammlong|Sammlonge|Sammlonge }}",
 	"ow-special-stat-classes": "{{PLURAL:$1|Klaß|Klaße|Klaße }}",
+	"ow_statistics": "Schtatistike vum WikiLexicalData",
 	"ow-stat-header": "Schtateßteke vun de läxekahlesche Dahte",
 	"ow-stat-overview-link": "Övverseesch",
 	"ow-stat-annotations-link": "Aanmärkonge",

@@ -70,6 +70,7 @@
 	"ow_exporttsv_languages": "Sprachen:",
 	"ow_exporttsv_not_allowed": "Du hast nicht die Berechtigung, einen TSV-Export durchzuführen.",
 	"ow_exporttsv_export_failed": "Export fehlgeschlagen",
+	"ow-downloads-directory-missing": "Das Exportverzeichnis <code>$1</code> fehlt.",
 	"addcollection": "Sammlung hinzufügen",
 	"ow_searchnoresult": "<p>Du kannst …<br />\n* '''… einen Ausdruck erstellen „[[Expression:$1]]“''' (und eine Definition hinzufügen) oder<br />\n* '''… eine Seite erstellen „[[:$1]]“''' (eine reguläre Seite)</p>",
 	"ow_save": "Speichern",
@@ -100,6 +101,7 @@
 	"ow_transaction_second_dm": "Zweite festgelegte Bedeutung",
 	"ow_transaction_summary": "Zusammenfassung",
 	"conceptmapping": "Concept-Mapping",
+	"ow-onceptmapping-too-few": "Es sind zwei oder mehrere Datensätze erforderlich.",
 	"ow_conceptmapping_title": "Concept-Mapping",
 	"ow_conceptmapping_help": "<p>Mögliche Aktionen: <ul>\n<li>&action=insert&<data_context_prefix>=<defined_id>&… Eine Verknüpfung hinzufügen</li>\n<li>&action=get&concept=<concept_id> Eine Verknüpfung abrufen</li>\n<li>&action=list_sets Eine Liste möglicher Datenkontextpräfixe ausgeben sowie, worauf sie sich beziehen</li>\n<li>&action=get_associated&dm=<defined_meaning_id>&dc=<dataset_context_prefix> für eine definierte Bedeutung in einem Kontext, zeige alle anderen</li>\n<li>&action=help Die Hilfe anzeigen.</li>\n</ul></p>",
 	"ow_conceptmapping_uitext": "<p>Mit Concept Mapping kann festgelegt werden, welche DefinedMeaning in einem Dataset mit anderen DefinedMeanings aus anderen Datasets identisch ist.</p>",
@@ -241,6 +243,7 @@
 	"ow-special-stat-definedmeanings": "Festgelegte {{PLURAL:$1|Bedeutung|Bedeutungen}} [[Special:OW_Statistics/dm|(pro Sprache)]]",
 	"ow-special-stat-collections": "{{PLURAL:$1|Sammlung|Sammlungen}}",
 	"ow-special-stat-classes": "{{PLURAL:$1|Klasse|Klassen}}",
+	"ow_statistics": "Statistiken lexikalischer Daten",
 	"ow-stat-header": "Statistiken lexikalischer Daten",
 	"ow-stat-overview-link": "Übersicht",
 	"ow-stat-annotations-link": "Annotationen",
@@ -259,5 +262,6 @@
 	"ow-stat-url-annotations": "{{PLURAL:$1|URL-Annotation|URL-Annotationen}}",
 	"ow-stat-text-annotations": "{{PLURAL:$1|Textannotation|Textannotationen}}",
 	"ow-stat-option-annotations": "{{PLURAL:$1|Optionsannotation|Optionsannotationen}}",
-	"ow-stat-all-is": "alle = $1"
+	"ow-stat-all-is": "alle = $1",
+	"specialpages-group-omegawiki": "Omegawiki"
 }

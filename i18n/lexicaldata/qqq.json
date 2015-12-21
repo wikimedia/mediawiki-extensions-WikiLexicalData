@@ -166,6 +166,7 @@
 	"ow-special-stat-definedmeanings": "Used in Special:Statistics as a label for the number of definedMeanings present in the  lexical data.\n* $1 - The number of definedMeanings for PLURAL use. Use only if needed in the tabular context. (optional)",
 	"ow-special-stat-collections": "Used in Special:Statistics as a label for the number of collecions existing in the  lexical data.\n* $1 - The number of collecions for PLURAL use. Use only if needed in the tabular context. (optional)",
 	"ow-special-stat-classes": "Used in Special:Statistics as a label for the number of classes in the lexical data.\n* $1 - The number of classes for PLURAL use. Use only if needed in the tabular context. (optional)",
+	"ow_statistics": "{{doc-special|Ow statistics}}",
 	"ow-stat-header": "Header of the Statistics page of Lexical Data",
 	"ow-stat-overview-link": "Action link anchor in the Statistics page of Lexical Data\n{{Identical|Overview}}",
 	"ow-stat-annotations-link": "Action link anchor in the Statistics page of Lexical Data",
