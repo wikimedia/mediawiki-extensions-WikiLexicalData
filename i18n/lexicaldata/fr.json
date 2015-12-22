@@ -73,6 +73,7 @@
 	"ow_exporttsv_languages": "Langues :",
 	"ow_exporttsv_not_allowed": "Vous n’avez pas la permission d’effectuer une exportation de données TSV.",
 	"ow_exporttsv_export_failed": "L’exportation de données TSV a échoué",
+	"ow-downloads-directory-missing": "Le répertoire d’exportation <code>$1</code> est absent.",
 	"addcollection": "Ajouter une collection",
 	"ow_searchnoresult": "<p>Vous pouvez :<br />\n* '''Créer l’expression « [[Expression:$1]] »''' (et ajouter une définition)<br />\n* '''Créer la page « [[:$1]] »''' (une page wiki standard)</p>",
 	"ow_save": "Sauvegarder",
@@ -103,6 +104,7 @@
 	"ow_transaction_second_dm": "Deuxième sens défini",
 	"ow_transaction_summary": "Résumé",
 	"conceptmapping": "Correspondances de concepts",
+	"ow-onceptmapping-too-few": "Deux ensembles de données ou plus sont nécessaires.",
 	"ow_conceptmapping_title": "Correspondances de concepts",
 	"ow_conceptmapping_help": "<p>actions possibles :<ul>\n<li><tt>&action=insert&<data_context_prefix>=<defined_id>&...</tt> : insérer une correspondance.</li>\n<li><tt>&action=get&concept=<concept_id></tt> : revoir une correspondance.</li>\n<li><tt>&action=list_sets</tt> : retourner une liste des préfixes de contextes possibles et ceux qu’ils référencent.</li>\n<li><tt>&action=get_associated&dm=<defined_meaning_id>&dc=<dataset_context_prefix></tt> : pour une définition d’un concept, retourner toutes les autres.</li>\n<li><tt>&action=help</tt> : afficher l’aide complète.</li>\n</ul></p>",
 	"ow_conceptmapping_uitext": "<p>Les correspondances de concepts vous permettent d’identifier quel sens défini dans un ensemble de données est identique aux sens définis dans d’autres ensembles de données.</p>",
@@ -244,6 +246,7 @@
 	"ow-special-stat-definedmeanings": "{{PLURAL:$1|Signification définie|Significations définies}} [[Special:OW_Statistics/dm|(par langue)]]",
 	"ow-special-stat-collections": "{{PLURAL:$1|Collection|Collections}}",
 	"ow-special-stat-classes": "{{PLURAL:$1|Classe|Classes}}",
+	"ow_statistics": "Statistiques des données lexicales",
 	"ow-stat-header": "Statistiques des données lexicales",
 	"ow-stat-overview-link": "Vue d’ensemble",
 	"ow-stat-annotations-link": "Annotations",
@@ -262,5 +265,6 @@
 	"ow-stat-url-annotations": "{{PLURAL:$1|Annotation d’URL|Annotations d’URL}}",
 	"ow-stat-text-annotations": "{{PLURAL:$1|Annotation de texte|Annotations de texte}}",
 	"ow-stat-option-annotations": "{{PLURAL:$1|Annotation d’option|Annotations d’option}}",
-	"ow-stat-all-is": "tous = $1"
+	"ow-stat-all-is": "tous = $1",
+	"specialpages-group-omegawiki": "Omegawiki"
 }

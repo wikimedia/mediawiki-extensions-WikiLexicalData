@@ -61,6 +61,7 @@
 	"ow_exporttsv_languages": "Јазици:",
 	"ow_exporttsv_not_allowed": "Немате дозвола да вршите TSV извоз.",
 	"ow_exporttsv_export_failed": "Извозот не успеа",
+	"ow-downloads-directory-missing": "Недостасува извозната папка <code>$1</code>.",
 	"addcollection": "Додај збирка",
 	"ow_searchnoresult": "<p>Можете да:<br />\n* '''Го создадете изразот „[[Expression:$1]]“''' (и додадете определница)<br />\n* '''Ја создадете страницата „[[:$1]]“''' (стандардна вики-страница)</p>",
 	"ow_save": "Зачувај",
@@ -90,6 +91,7 @@
 	"ow_transaction_second_dm": "Второ определено значење",
 	"ow_transaction_summary": "Опис",
 	"conceptmapping": "Пресликување на концепти",
+	"ow-onceptmapping-too-few": "Потребни се два или повеќе податочни збира.",
 	"ow_conceptmapping_title": "Пресликување на концепти",
 	"ow_conceptmapping_help": "<p>можни дејства: <ul>\n<li>&action=insert&<data_context_prefix>=<defined_id>&... вметни пресликување</li>\n<li>&action=get&concept=<concept_id> прочитај соодветство</li>\n<li>&action=list_sets наведи список на можни претставки за контекст на податоци и местата кадешто тие упатуваат.</li>\n<li>&action=get_associated&dm=<defined_meaning_id>&dc=<dataset_context_prefix> за едно определено значење во концепт, наведи ги сите останати</li>\n<li>&action=help Прикажи корисни помошни информации.</li>\n</ul></p>",
 	"ow_conceptmapping_uitext": "<p>Пресликувањето на концепти ви овозможува да посочите кое определено значење од еден збир податоци е истоветен со определени значења во други збирови податоци.</p>",
@@ -231,6 +233,7 @@
 	"ow-special-stat-definedmeanings": "{{PLURAL:$1|Определено значење|Определени значења}} [[Special:OW_Statistics/dm|(по јазик)]]",
 	"ow-special-stat-collections": "{{PLURAL:$1|Збирка|Збирки}}",
 	"ow-special-stat-classes": "{{PLURAL:$1|Класа|Класи}}",
+	"ow_statistics": "Статистики за лексички податоци",
 	"ow-stat-header": "Статистика за лексички податоци",
 	"ow-stat-overview-link": "Преглед",
 	"ow-stat-annotations-link": "Прибелешки",
@@ -249,5 +252,6 @@
 	"ow-stat-url-annotations": "{{PLURAL:$1|Прибелешка за URL|Прибелешки за URL}}",
 	"ow-stat-text-annotations": "{{PLURAL:$1|Текстуална забелешка|Текстуални забелешки}}",
 	"ow-stat-option-annotations": "{{PLURAL:$1|Прибелешка за можности|Прибелешки за можности}}",
-	"ow-stat-all-is": "сите = $1"
+	"ow-stat-all-is": "сите = $1",
+	"specialpages-group-omegawiki": "Омегавики"
 }

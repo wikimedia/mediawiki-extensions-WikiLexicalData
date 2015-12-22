@@ -223,6 +223,7 @@
 	"ow-special-stat-definedmeanings": "{{PLURAL:$1|Significato definito|Significati definiti}} [[Special:OW_Statistics/dm|(per lingua)]]",
 	"ow-special-stat-collections": "{{PLURAL:$1|Collezione|Collezioni}}",
 	"ow-special-stat-classes": "{{PLURAL:$1|Classe|Classi}}",
+	"ow_statistics": "Statistiche di dati lessicali",
 	"ow-stat-header": "Statistiche di dati lessicali",
 	"ow-stat-overview-link": "Panoramica",
 	"ow-stat-annotations-link": "Annotazioni",
@@ -241,5 +242,6 @@
 	"ow-stat-url-annotations": "{{PLURAL:$1|Annotazione|Annotazioni}} URL",
 	"ow-stat-text-annotations": "{{PLURAL:$1|Annotazione|Annotazioni}} testo",
 	"ow-stat-option-annotations": "Opzione {{PLURAL:$1|annotazione|annotazioni}}",
-	"ow-stat-all-is": "tutto = $1"
+	"ow-stat-all-is": "tutto = $1",
+	"specialpages-group-omegawiki": "Omegawiki"
 }
