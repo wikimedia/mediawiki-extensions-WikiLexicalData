@@ -231,6 +231,7 @@
 	"ow-special-stat-definedmeanings": "{{PLURAL:$1|Significado definido|Significados definidos}} [[Special:OW_Statistics/dm|(por lingua)]]",
 	"ow-special-stat-collections": "{{PLURAL:$1|Colección|Coleccións}}",
 	"ow-special-stat-classes": "{{PLURAL:$1|Clase|Clases}}",
+	"ow_statistics": "Estatísticas dos datos lexicais",
 	"ow-stat-header": "Estatísticas de datos léxicos",
 	"ow-stat-overview-link": "Vista xeral",
 	"ow-stat-annotations-link": "Anotacións",

@@ -78,6 +78,7 @@
 	"ow_exporttsv_languages": "语言：",
 	"ow_exporttsv_not_allowed": "您没有导出TSV的权限。",
 	"ow_exporttsv_export_failed": "导出失败",
+	"ow-downloads-directory-missing": "导出目录<code>$1</code>丢失。",
 	"addcollection": "添加收藏",
 	"ow_searchnoresult": "<p>您可以：<br />\n* '''创建表达式“[[Expression:$1]]”'''（以及加入定义）<br />\n* '''创建页面“[[:$1]]”'''（标准wiki页面）</p>",
 	"ow_save": "保存",
@@ -107,6 +108,7 @@
 	"ow_transaction_second_dm": "第二个定义的含义",
 	"ow_transaction_summary": "摘要",
 	"conceptmapping": "概念映射",
+	"ow-onceptmapping-too-few": "需要两个或更多数据集。",
 	"ow_conceptmapping_title": "概念映射",
 	"ow_conceptmapping_help": "<p>可能的action： <ul>\n<li>&action=insert&<data_context_prefix>=<defined_id>&...  插入一个映射</li>\n<li>&action=get&concept=<concept_id>  阅读映射返回</li>\n<li>&action=list_sets  返回一个关于可能的背景前缀和他们可能提到的列表。</li>\n<li>&action=get_associated&dm=<defined_meaning_id>&dc=<dataset_context_prefix> 为一个已经定义的概念返回所有其他的</li>\n<li>&action=help  阅读帮助</li>\n</ul></p>",
 	"ow_conceptmapping_uitext": "<p>概念映射允许您确定一个数据集中的哪个定义意思与其他数据集相同。</p>",
@@ -246,7 +248,7 @@
 	"ow-special-stat-definedmeanings": "{{PLURAL:$1|定义的含义}}[[Special:OW_Statistics/dm|（每种语言）]]",
 	"ow-special-stat-collections": "{{PLURAL:$1|收藏}}",
 	"ow-special-stat-classes": "{{PLURAL:$1|等级}}",
-	"ow_statistics": "WikiLexicalData统计",
+	"ow_statistics": "词汇数据的统计",
 	"ow-stat-header": "词汇数据的统计",
 	"ow-stat-overview-link": "概述",
 	"ow-stat-annotations-link": "注释",
@@ -265,5 +267,6 @@
 	"ow-stat-url-annotations": "{{PLURAL:$1|URL注释}}",
 	"ow-stat-text-annotations": "{{PLURAL:$1|文本注释}}",
 	"ow-stat-option-annotations": "{{PLURAL:$1|选项注释}}",
-	"ow-stat-all-is": "all = $1"
+	"ow-stat-all-is": "all = $1",
+	"specialpages-group-omegawiki": "Omegawiki"
 }
