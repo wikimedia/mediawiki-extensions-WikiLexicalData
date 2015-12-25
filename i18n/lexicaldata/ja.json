@@ -224,6 +224,7 @@
 	"ow_pref_lang_switch": "選択した言語のみを表示する",
 	"ow_pref_lang_select": "表示する言語:",
 	"ow-special-stat-languages-avail": "利用可能な{{PLURAL:$1|言語}}",
+	"ow_statistics": "lexical dataの統計",
 	"ow-stat-overview-link": "概要",
 	"ow-stat-annotations-link": "注釈"
 }
