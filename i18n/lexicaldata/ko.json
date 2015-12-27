@@ -205,7 +205,6 @@
 	"ow_needs_xlation_dest_lang": "대상 언어:",
 	"ow_needs_xlation_no_dest_lang": "대상 언어를 지정하세요.",
 	"ow_data_search": "위키어휘데이터 데이터 검색",
-	"ow_statistics": "위키어휘데이터 통계",
 	"ow_downloads": "위키어휘데이터 다운로드",
 	"ow_show": "보이기",
 	"ow_upload": "올리기",
@@ -221,5 +220,7 @@
 	"prefs-ow-lang": "언어",
 	"ow_pref_lang_switch": "선택한 언어만 보이기",
 	"ow_pref_lang_select": "보일 언어:",
-	"ow_addFromExtAPI": "외부 API에서 데이터 추가하기"
+	"ow_addFromExtAPI": "외부 API에서 데이터 추가하기",
+	"ow_statistics": "위키어휘데이터 통계",
+	"specialpages-group-omegawiki": "오메가위키"
 }
