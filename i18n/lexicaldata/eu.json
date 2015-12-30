@@ -151,5 +151,6 @@
 	"ow_addFromExtAPI": "Gehitu datuak kanpoko APIetatik",
 	"ow_addFromExtAPI_title": "Gehitu datuak APItik",
 	"ow-stat-meanings-link": "Esanahiak",
-	"ow-stat-all-is": "denak = $1"
+	"ow-stat-all-is": "denak = $1",
+	"specialpages-group-omegawiki": "Omegawiki"
 }
