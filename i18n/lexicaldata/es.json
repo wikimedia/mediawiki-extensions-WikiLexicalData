@@ -72,6 +72,7 @@
 	"ow_exporttsv_languages": "Idiomas:",
 	"ow_exporttsv_not_allowed": "No tienes permiso para hacer un exportación TSV.",
 	"ow_exporttsv_export_failed": "Falló la exportación",
+	"ow-downloads-directory-missing": "Falta el directorio de exportación <code>$1</code>.",
 	"addcollection": "Añadir colección",
 	"ow_searchnoresult": "<p>Puedes:<br />\n* '''Crear la expresión \"[[Expression:$1]]\"''' (y agregar una definición)<br />\n* '''Crear la página \"[[:$1]]\"''' (una página wiki estándar)</p>",
 	"ow_save": "Guardar",
