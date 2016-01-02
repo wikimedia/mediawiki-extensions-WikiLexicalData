@@ -139,8 +139,7 @@ class DefaultWikidataApplication {
 		$wgOut->enableClientCache( false );
 
 		if ( $wgUser->isBlockedFrom( $this->getTitle(), false ) ) {
-			$wgOut->blockedPage() ;
-			return false;
+			throw new UserBlockedError( $wgUser->getBlock() );
 		}
 
 		$dc = wdGetDataSetContext();
