@@ -91,7 +91,12 @@ class DefaultWikidataApplication {
 			$prefix = $dataset->getPrefix();
 
 			$class = $active ? 'dataset-panel-active' : 'dataset-panel-inactive';
-			$slot = $active ? "$name" : Linker::makeLinkObj( $this->title, $name, "dataset=$prefix" );
+			$slot = $active ? "$name" : Linker::link(
+				$this->title,
+				$name,
+				array(),
+				array( 'dataset' => $prefix )
+			);
 			$html .= "<tr><td class=\"$class\">$slot</td></tr>";
 		}
 		$html .= "</table>";

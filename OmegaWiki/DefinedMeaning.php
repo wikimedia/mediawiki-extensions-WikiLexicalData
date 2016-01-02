@@ -228,8 +228,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 	 * Potential refactor candidate!
 	 */
 	protected function getConceptPanel() {
-		global $wgTitle, $wdShowCopyPanel;
-		$active = true; # wrong place, but hey
+		global $wdShowCopyPanel;
 		$dmId = $this->getDefinedMeaningId();
 		$dc = wdGetDataSetContext();
 		$ow_conceptpanel = wfMessage( "ow_concept_panel" )->text();
@@ -245,7 +244,12 @@ class DefinedMeaning extends DefaultWikidataApplication {
 				$prefix = $dataset->getPrefix();
 
 				$class = $active ? 'dataset-panel-active' : 'dataset-panel-inactive';
-				$slot = $active ? "$name" : Linker::makeLinkObj( $dm->getTitleObject(), $name, "dataset=$prefix" );
+				$slot = $active ? "$name" : Linker::link(
+					$dm->getTitleObject(),
+					$name,
+					array(),
+					array( 'dataset' => $prefix )
+				);
 				$html .= "<tr><td class=\"$class\">$slot</td></tr>";
 			}
 		} else {
@@ -253,8 +257,12 @@ class DefinedMeaning extends DefaultWikidataApplication {
 				$html .= "<tr><td class=\"dataset-panel-active\">$name</td></tr>";
 		}
 		$cmtitle = Title::newFromText( "Special:ConceptMapping" );
-		$titleText = $wgTitle->getPrefixedURL();
-		$cmlink = Linker::makeLinkObj( $cmtitle, "<small>" . wfMessage( "ow_add_concept_link" )->text() . "</small>", "set_$dc=$dmId&suppressWarnings=true" );
+		$cmlink = Linker::link(
+			$cmtitle,
+			"<small>" . wfMessage( "ow_add_concept_link" )->text() . "</small>",
+			array(),
+			array( "set_$dc" => $dmId, 'suppressWarnings' => true )
+		);
 		$html .= "<tr><td>$cmlink</td></tr>\n";
 		if ( $wdShowCopyPanel ) {
 			$html .= "<tr><td>" . $this->getCopyPanel() . "<td><tr>";

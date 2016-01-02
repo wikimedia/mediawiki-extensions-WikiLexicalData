@@ -2345,7 +2345,7 @@ class RecordSpanEditor extends RecordEditor {
 class UserEditor extends ScalarEditor {
 	public function getViewHTML( IdStack $idPath, $value ) {
 		if ( $value != "" ) {
-			return Linker::makeLinkObj( Title::newFromText( "User:" . $value ), $value );
+			return Linker::link( Title::newFromText( "User:" . $value ), $value );
 		}
 		return "";
 	}

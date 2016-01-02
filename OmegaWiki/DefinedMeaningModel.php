@@ -466,7 +466,12 @@ class DefinedMeaningModel {
 		$dataset = $this->getDataset();
 		$prefix = $dataset->getPrefix();
 		$name = $this->getSyntransByLanguageCode( $languageCode, $fallbackCode );
-		return Linker::makeLinkObj( $titleObject, $name , "dataset=$prefix" );
+		return Linker::link(
+			$titleObject,
+			$name,
+			array(),
+			array( 'dataset' => $prefix )
+		);
 	}
 
 	/**
