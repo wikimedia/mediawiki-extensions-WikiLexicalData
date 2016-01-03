@@ -67,7 +67,7 @@ class WikiLexicalDataHooks {
 		);
 		$preferences['ow_language_filter'] = array(
 			'type' => 'check',
-			'label' => '<b>' . wfMessage( 'ow_pref_lang_switch' )->text() . '</b>',
+			'label' =>  wfMessage( 'ow_pref_lang_switch' )->text(),
 			'section' => 'omegawiki/ow-lang',
 		);
 		$preferences['ow_language_filter_list'] = array(
