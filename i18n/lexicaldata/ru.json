@@ -9,7 +9,8 @@
 			"Osd",
 			"Temuri rajavi",
 			"Александр Сигачёв",
-			"Чаховіч Уладзіслаў"
+			"Чаховіч Уладзіслаў",
+			"Iniquity"
 		]
 	},
 	"wikidata-desc": "Добавляет вики-подобную базу данных для различных видов контента",
@@ -208,7 +209,6 @@
 	"ow_needs_xlation_dest_lang": "Целевой язык:",
 	"ow_needs_xlation_no_dest_lang": "Пожалуйста, укажите целевой язык",
 	"ow_data_search": "Поиск данных WikiLexicalData",
-	"ow_statistics": "Статистика WikiLexicalData",
 	"ow_downloads": "Загрузки WikiLexicalData",
 	"ow_show": "Показать",
 	"ow_upload": "Загрузить",
@@ -226,5 +226,6 @@
 	"ow_pref_lang_select": "Языки для отображения:",
 	"ow_addFromExtAPI": "Добавление данных из внешних API",
 	"ow_addFromExtAPI_title": "Добавление данные из API",
-	"ow_api_source": "Внешний API-источник:"
+	"ow_api_source": "Внешний API-источник:",
+	"ow_statistics": "Статистика лексических данных"
 }
