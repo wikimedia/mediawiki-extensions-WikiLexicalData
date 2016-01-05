@@ -219,6 +219,7 @@
 	"ow_addFromExtAPI_title": "Dodawanie danych z API",
 	"ow-special-stat-languages-avail": "{{PLURAL:$1|Dostępny język|Dostępne języki}}",
 	"ow-special-stat-classes": "{{PLURAL:$1|Klasa|Klasy}}",
+	"ow_statistics": "Statystyki danych leksykalnych",
 	"ow-stat-overview-link": "Przegląd",
 	"ow-stat-annotations-link": "Adnotacje",
 	"ow-stat-syntranses-link": "Synonimy i tłumaczenia",
@@ -227,5 +228,6 @@
 	"ow-stat-meanings": "{{PLURAL:$1|Znaczenie|Znaczenia}}",
 	"ow-stat-languages": "{{PLURAL:$1|Język|Języki}}",
 	"ow-stat-classes": "{{PLURAL:$1|Klasa|Klasy}}",
-	"ow-stat-all-is": "wszystko = $1"
+	"ow-stat-all-is": "wszystko = $1",
+	"specialpages-group-omegawiki": "Omegawiki"
 }
