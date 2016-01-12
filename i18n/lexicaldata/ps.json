@@ -86,5 +86,6 @@
 	"ow-stat-meanings": "{{PLURAL:$1|مانا|ماناوې}}",
 	"ow-stat-languages": "{{PLURAL:$1|ژبه|ژبې}}",
 	"ow-stat-classes": "{{PLURAL:$1|ټولگی|ټولگي}}",
-	"ow-stat-all-is": "ټول = $1"
+	"ow-stat-all-is": "ټول = $1",
+	"specialpages-group-omegawiki": "اومېگاويکي"
 }
