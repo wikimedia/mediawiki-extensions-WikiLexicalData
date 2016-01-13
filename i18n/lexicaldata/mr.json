@@ -21,6 +21,7 @@
 	"ow_uipref_datasets": "अविचल दृश्य",
 	"ow_uiprefs": "विकिविदा",
 	"ow_none_selected": "कोणतेही निवडले नाही",
+	"ow-onceptmapping-too-few": "दोन किंवा अधिक माहितीसंच आवश्यक.",
 	"ow_conceptmapping_help": "<p>शक्य क्रिया: <ul>\n<li>&action=insert&<data_context_prefix>=<defined_id>&...  एक मॅपिंग टाका</li>\n<li>&action=get&concept=<concept_id>  एक मॅपिंग वाचा</li>\n<li>&action=list_sets  शक्य असलेले डाटा कन्टेक्स्ट उपपदांची यादी व ती काय दर्शवितात त्याच्यासकट द्या.</li>\n<li>&action=get_associated&dm=<defined_meaning_id>&dc=<dataset_context_prefix> एखाद्या विशिष्ट अर्थासाठी, इतर सर्व द्या</li>\n<li>&action=help  माहितीपूर्ण मदत दाखवा.</li>\n</ul></p>",
 	"ow_conceptmapping_uitext": "<p>कन्सेप्ट मॅपिंग मुळे तुम्हाला एखाद्या डाटाबेस मध्ये असणारा अर्थ दुसर्‍या डाटाबेस मधल्या कुठल्या अर्थाशी तंतोतंत जुळतो हे कळते.</p>",
 	"ow_conceptmapping_no_action_specified": "\"$1\" कसे करावे मला ठावूक नाही,क्षमस्व",
@@ -120,5 +121,6 @@
 	"ow-stat-url-annotations": "{{PLURAL:$1|URL चे विवरण|URL ची विवरणे}}",
 	"ow-stat-text-annotations": "{{PLURAL:$1|पाठ्य विवरण|पाठ्य विवरणे}}",
 	"ow-stat-option-annotations": "{{PLURAL:$1|पर्यायी विवरण|पर्यायी विवरणे}}",
-	"ow-stat-all-is": "all = $1"
+	"ow-stat-all-is": "all = $1",
+	"specialpages-group-omegawiki": "ओमेगाविकि"
 }
