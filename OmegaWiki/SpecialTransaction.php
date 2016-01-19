@@ -17,6 +17,10 @@ class SpecialTransaction extends SpecialPage {
 		parent::__construct( 'Transaction' );
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	function execute( $parameter ) {
 		global $wgOut;
 

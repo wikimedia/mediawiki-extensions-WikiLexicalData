@@ -11,6 +11,10 @@ class SpecialImportLangNames extends SpecialPage {
 		parent::__construct( 'ImportLangNames' );
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	function execute( $par ) {
 		global $wgIso639_3CollectionId;
 		// These operations should always be on the community database.

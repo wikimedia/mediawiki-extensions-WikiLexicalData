@@ -9,6 +9,10 @@ class SpecialAddCollection extends SpecialPage {
 		parent::__construct( 'AddCollection' );
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	function execute( $par ) {
 
 		global $wgOut, $wgUser, $wgRequest;

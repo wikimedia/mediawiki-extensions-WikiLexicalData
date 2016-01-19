@@ -21,6 +21,10 @@ class SpecialOWDownloads extends SpecialPage {
 		parent::__construct( 'ow_downloads' );
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	function execute( $par ) {
 		global $wgWldDownloadScriptPath, $wgWldOwScriptPath;
 
