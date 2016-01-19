@@ -33,6 +33,10 @@ class SpecialOWAddFromExternalAPI extends SpecialPage {
 		}
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	/** @brief This function is used as a web API by omegawiki-addExtAPI.js
 	 *	This function directs the program to the needed save function via $this->saveType.
 	 *	Afterwards, outputs a JSON string.

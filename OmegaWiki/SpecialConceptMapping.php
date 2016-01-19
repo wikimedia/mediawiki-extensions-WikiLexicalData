@@ -22,6 +22,10 @@ class SpecialConceptMapping extends SpecialPage {
 		parent::__construct( 'ConceptMapping' );
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	function execute( $par ) {
 		global $wgOut, $wgRequest, $wgUser, $wdTermDBDataSet;
 		$wgOut->setPageTitle( wfMessage( 'ow_conceptmapping_title' )->text() );

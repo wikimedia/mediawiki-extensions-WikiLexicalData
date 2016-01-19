@@ -25,6 +25,10 @@ class SpecialPopUpEditor extends SpecialPage {
 		parent::__construct( 'PopupEditor', 'UnlistedSpecialPage' );
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	function execute( $par ) {
 
 		require_once( 'WikiDataGlobals.php' );

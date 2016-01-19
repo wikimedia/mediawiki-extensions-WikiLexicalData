@@ -13,6 +13,10 @@ class SpecialImportTSV extends SpecialPage {
 		parent::__construct( 'ImportTSV' );
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	function execute( $par ) {
 
 		global $wgWldOwScriptPath, $wgRequest, $wgVersion;
