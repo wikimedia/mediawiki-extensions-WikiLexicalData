@@ -26,6 +26,10 @@ class SpecialLanguages extends SpecialPage {
 		parent::__construct( 'Languages' );
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	function execute( $par ) {
 		// added $wgDBprefix for wld and mw prefix compatibility
 		global $wgOut, $wgRequest, $wgUser, $wgDBprefix;
