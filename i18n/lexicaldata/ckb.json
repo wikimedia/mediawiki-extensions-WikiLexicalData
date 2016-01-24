@@ -42,7 +42,7 @@
 	"ow_uiprefs": "WikiLexicalData",
 	"ow_none_selected": "هیچ هەڵنەبژێردراوە",
 	"transaction": "لۆگی مامەڵەکان",
-	"ow_transaction_user": "ناوی بەکارهێنەر:",
+	"ow_transaction_user": "ناوی بەکارھێنەر:",
 	"ow_transaction_previous_version": "وەشانی پێشوو",
 	"ow_transaction_restore": "گەڕاندنەوە",
 	"ow_transaction_remove": "لابردن",
@@ -77,7 +77,7 @@
 	"ow_Link": "بەستەر",
 	"ow_LinkAttribute": "تایبەتمەندی",
 	"ow_LinkAttributeValues": "بەستەرەکان",
-	"ow_User": "بەکارهێنەر",
+	"ow_User": "بەکارھێنەر",
 	"ow_Property": "تایبەتمەندی",
 	"ow_Value": "نرخ",
 	"ow_added": "زیادکرا",
@@ -95,12 +95,12 @@
 	"ow_needs_xlation_source_lang": "زمانی سەرچاوە:",
 	"ow_needs_xlation_dest_lang": "زمانی مەبەست:",
 	"ow_needs_xlation_no_dest_lang": "تکایە زمانێکی مەبەست دیاری بکە.",
-	"ow_statistics": "ئامارەکانی WikiLexicalData",
 	"ow_show": "نیشانیبدە",
 	"ow_upload": "بارکردن",
 	"ow_create": "درووست‌کردن",
 	"ow_suggest_previous": "پێش ئەمە",
 	"ow_suggest_next": "پاش ئەمە",
 	"ow_suggest_clear": "سڕینەوە",
-	"right-addlanguage": "زمان زیاد بکە و هەڵبژاردەکانی بگۆڕە"
+	"right-addlanguage": "زمان زیاد بکە و هەڵبژاردەکانی بگۆڕە",
+	"ow_statistics": "ئامارەکانی WikiLexicalData"
 }
