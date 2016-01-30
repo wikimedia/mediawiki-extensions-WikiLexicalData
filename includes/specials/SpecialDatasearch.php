@@ -140,10 +140,18 @@ class SpecialDatasearch extends SpecialPage {
 	function search() {
 		$output = $this->getOutput();
 		if ( $this->withinWords ) {
-			if ( $this->languageId != 0 && $this->languageName != "" ) {
-				$headerText = wfMessage( 'datasearch_match_words_lang', $this->languageName, $this->searchText )->text();
+			if ( strlen( $this->searchText ) ) {
+				if ( $this->languageId != 0 && $this->languageName != "" ) {
+					$headerText = wfMessage( 'datasearch_match_words_lang', $this->languageName, $this->searchText )->text();
+				} else {
+					$headerText = wfMessage( 'datasearch_match_words', $this->searchText )->text();
+				}
 			} else {
-				$headerText = wfMessage( 'datasearch_match_words', $this->searchText )->text();
+				if ( $this->languageId != 0 && $this->languageName != "" ) {
+					$headerText = wfMessage( 'datasearch-match-expr-lang', $this->languageName )->text();
+				} else {
+					$headerText = wfMessage( 'datasearch-match-expr' )->text();
+				}
 			}
 			$output->addHTML( Html::rawElement( 'h1', array(), $headerText ) );
 
