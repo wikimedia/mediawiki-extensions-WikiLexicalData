@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"OC Ripper"
+			"OC Ripper",
+			"Conquistador"
 		]
 	},
+	"ow_OtherLanguages": "Drugi jezici:",
 	"ow_show": "Prikaži",
 	"ow_suggest_previous": "Prethodna"
 }
