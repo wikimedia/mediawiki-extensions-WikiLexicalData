@@ -59,7 +59,7 @@
 	"ow_importtsv_title1": "导入TSV（制表符分隔文件）",
 	"ow_importtsv_title2": "导入定义和翻译",
 	"ow_importtsv_header": "<p>您可能从 OpenOffice.org、Excel 或其他电子表格软件导出了文件，从它们定义文本文件的标签导入术语和翻译。</p>\n<p>文件格式必须与在 [[Special:ExportTSV|ExportTSV]] 页面导出的相同。\n如果您更改了列名，导入会失败。\n如果您更改了 ID 或任何定义释义的表达式，该行将被忽略。\n如果您加入了列数，它们必须符合“definitions_iso”或“translations_iso”形式，这里“iso”是 ISO 639-3 语言代码。</p>\n<p>如果“测试运行”框被选中，任何会进行的操作将被记录，但不会实际做出更改。\n我们建议您在实际导入前进行一次测试运行。</p>",
-	"ow_importtsv_not_allowed": "你没有权限导入TSV。",
+	"ow_importtsv_not_allowed": "您没有权限导入TSV。",
 	"ow_importtsv_importing": "导入TSV（制表符分隔文件）数据",
 	"ow_importtsv_import_failed": "导入失败",
 	"ow_importtsv_file": "TSV文件：",
