@@ -164,7 +164,7 @@
 	"ow_Text": "Tekst",
 	"ow_TextAttribute": "Eigenschap",
 	"ow_TextAttributeHeader": "Tekstattribuut",
-	"ow_TextAttributeValues": "Platte tekst",
+	"ow_TextAttributeValues": "Tekst zonder opmaak",
 	"ow_Time": "Tijd",
 	"ow_TranslatedTextAttribute": "Eigenschap",
 	"ow_TranslatedText": "Vertaalde tekst",
@@ -196,7 +196,7 @@
 	"ow_history_show_life_span": "Levensduur van record weergeven:",
 	"ow_class_attr_type_dm": "Gedefinieerde betekenis",
 	"ow_class_attr_type_xlate": "Vertaalbare tekst",
-	"ow_class_attr_type_plain": "Platte tekst",
+	"ow_class_attr_type_plain": "Tekst zonder opmaak",
 	"ow_class_attr_type_link": "Koppeling",
 	"ow_class_attr_type_option": "Optielijst",
 	"needstranslation": "Onvertaalde expressies",
@@ -220,5 +220,6 @@
 	"prefs-ow-lang": "Talen",
 	"ow_pref_lang_switch": "Allen de geselecteerde talen weergeven",
 	"ow_pref_lang_select": "Weer te geven talen:",
+	"ow_statistics": "Statistieken voor WikiLexicalData",
 	"ow-stat-overview-link": "Overzicht"
 }
