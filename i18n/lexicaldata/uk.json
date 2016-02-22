@@ -11,7 +11,8 @@
 			"Prima klasy4na",
 			"Riwnodennyk",
 			"Тест",
-			"Ата"
+			"Ата",
+			"Piramidion"
 		]
 	},
 	"wikidata-desc": "Додає вікі-подібну базу даних для різних типів контенту",
@@ -210,7 +211,6 @@
 	"ow_needs_xlation_dest_lang": "Цільова мова:",
 	"ow_needs_xlation_no_dest_lang": "Будь ласка, вкажіть цільову мову.",
 	"ow_data_search": "WikiLexicalData пошук даних",
-	"ow_statistics": "Статистика WikiLexicalData",
 	"ow_downloads": "WikiLexicalData завантаження",
 	"ow_show": "Показати",
 	"ow_upload": "Завантажити",
@@ -228,5 +228,6 @@
 	"ow_pref_lang_select": "Мови для відображення:",
 	"ow_addFromExtAPI": "Додавання даних із зовнішніх API",
 	"ow_addFromExtAPI_title": "Додати дані з API",
-	"ow_api_source": "Зовнішнє джерело API:"
+	"ow_api_source": "Зовнішнє джерело API:",
+	"ow_statistics": "Статистика лексичних даних"
 }
