@@ -188,7 +188,7 @@
 	"ow_please_proved_dmid": "It seems your input is missing a \"?dmid=<ID>\" (dmid=Defined Meaning ID)<br />\nPlease contact a server administrator.",
 	"ow_please_proved_dc1": "It seems your input is missing a \"?dc1=<something>\" (dc1=dataset context 1, dataset to copy FROM)<br />\nPlease contact a server administrator.",
 	"ow_please_proved_dc2": "It seems your input is missing a \"?dc2=<something>\" (dc2=dataset context 2, dataset to copy TO)<br />\nPlease contact a server administrator.",
-	"ow_copy_successful": "<h2>Copy successful</h2>\nYour data appears to have been copied successfully.\nDo not forget to doublecheck to make sure!",
+	"ow_copy_successful": "<h2>Copy successful</h2>\nYour data appears to have been copied.\nDo not forget to doublecheck to make sure!",
 	"ow_copy_unsuccessful": "<h3>Copy unsuccessful</h3>\nNo copy operation has taken place.",
 	"ow_no_action_specified": "<h3>No action was specified</h3>\nPerhaps you came to this page directly? Normally you do not need to be here.",
 	"ow_db_consistency_not_found": "<h2>Error</h2>\nThere is an issue with database consistency, no valid data can be found that is connected to this defined meaning ID.\nIt might be lost.\nPlease contact the server operator or administrator.",
