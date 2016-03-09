@@ -189,7 +189,7 @@
 	"ow_please_proved_dmid": "Parace que na súa contribución falta \"?dmid=<ID>\" (dmid=Definición ID)<br />\nPor favor, póñase en contacto cun administrador do servidor.",
 	"ow_please_proved_dc1": "Parace que na súa contribución falta \"?dc1=<algo>\" (dc1=contexto do conxunto de datos 1, conxunto de datos DO cual copiar)<br />\nPor favor, póñase en contacto cun administrador do servidor.",
 	"ow_please_proved_dc2": "Parace que na súa contribución falta \"?dc2=<algo>\" (dc2=contexto do conxunto de datos 2, conxunto de datos AO cual copiar)<br />\nPor favor, póñase en contacto cun administrador do servidor.",
-	"ow_copy_successful": "<h2>A copia realizouse correctamente</h2>\nParece que os seus datos se copiaron correctamente.\nNon esqueza volvelos comprobar para asegurarse!",
+	"ow_copy_successful": "<h2>A copia realizouse correctamente</h2>\nParece que os seus datos foron copiados.\nNon esqueza volvelos comprobar para asegurarse!",
 	"ow_copy_unsuccessful": "<h3>Copia sen éxito</h3>\nNon se produciu ningunha operación de copia.",
 	"ow_no_action_specified": "<h3>Non se especificou ningunha acción</h3>\nSe cadra, chegou ata esta páxina directamente? Normalmente non necesita estar aquí.",
 	"ow_db_consistency_not_found": "<h2>Erro</h2>\nHai un problema coa consistencia da base de datos e non se poden atopar datos válidos conectados con este identificador de significado definido.\nPoida que se perdesen.\nPor favor, póñase en contacto cun operador ou administrador do servidor.",

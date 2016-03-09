@@ -204,7 +204,7 @@
 	"ow_please_proved_dmid": "看起来您输入的内容丢失了\"?dmid=<ID>\" (dmid=Defined Meaning ID)<br />请联络服务器管理员。",
 	"ow_please_proved_dc1": "看起来您输入的内容丢失了\"?dc1=<something>\" (dc1=dataset context 1, dataset to copy FROM)<br />请联络服务器管理员。",
 	"ow_please_proved_dc2": "看起来您输入的内容丢失了\"?dc2=<something>\" (dc2=dataset context 2, dataset to copy TO)<br />请联络服务器管理员。",
-	"ow_copy_successful": "<h2>复制成功</h2>您的数据似乎已成功复制。不要忘记再次检查以确保准确性！",
+	"ow_copy_successful": "<h2>复制成功</h2>您的数据似乎已复制。不要忘记再次检查以确保准确性！",
 	"ow_copy_unsuccessful": "<h3>复制未成功</h3>\n没有发生复制操作。",
 	"ow_no_action_specified": "<h3>没有指定操作</h3>\n也许您直接进入了此页面？通常您不需要打开这里。",
 	"ow_db_consistency_not_found": "<h2>错误</h2>\n数据库一致性出现问题，没有发现连接此定义ID的有效数据。它可能已经丢失。请联络服务器操作者或管理员。",

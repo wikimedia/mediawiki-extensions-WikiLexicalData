@@ -187,7 +187,7 @@
 	"ow_copy_help": "Nessun aiuto è ancora stato implementato.",
 	"ow_please_proved_dmid": "Sembra che all'input manchi un \"?dmid=<ID>\" (dmid=Defined Meaning ID)<br />\nContattare un amministratore del server.",
 	"ow_please_proved_dc1": "Sembra che all'input manchi un \"?dc1=<something>\" (dc1=dataset context 1, dataset da cui copiare)<br />\nContattare un amministratore del server.",
-	"ow_copy_successful": "<h2>Copia riuscita</h2>\nI dati sembrano siano stati copiati correttamente.\nNon dimenticare di controllare per assicurartene!",
+	"ow_copy_successful": "<h2>Copia riuscita</h2>\nI dati sembrano siano stati copiati.\nNon dimenticare di ricontrollare per assicurartene!",
 	"ow_copy_unsuccessful": "<h3>Copia fallita</h3>\nNon è stata eseguita l'operazione di copia.",
 	"ow_no_action_specified": "<h3>Nessuna azione è stata specificata</h3>\nForse si è arrivati a questa pagina in maniera diretta? Di norma non c'è bisogno di trovarsi qui.",
 	"ow_history_transaction": "Transazione:",
