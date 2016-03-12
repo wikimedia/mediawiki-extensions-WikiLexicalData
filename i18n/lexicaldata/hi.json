@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Ashishbhatnagar72",
-			"Kaustubh"
+			"Kaustubh",
+			"Sfic"
 		]
 	},
 	"languages": "भाषा प्रबंधक",
@@ -11,7 +12,7 @@
 	"ow_save": "संजोयें",
 	"ow_history": "इतिहास",
 	"ow_noedit_title": "संपादन की अनुमति नहीं है",
-	"ow_noedit": "आपको डाटासेट \"$1\" में पन्ने संपादन करने की अनुमति नहीं है. कृपया हमारी [[{{MediaWiki:Ow editing policy url}}|संपादन नीति]] देखें.",
+	"ow_noedit": "आपको डाटासेट \"$1\" में पन्ने संपादन करने की अनुमति नहीं है। कृपया हमारी [[{{MediaWiki:Ow editing policy url}}|संपादन नीति]] देखें।",
 	"ow_none_selected": "कुछ चयनित नहीं",
 	"ow_dm_OK": "ओके",
 	"ow_dm_not_present": "प्रवेश नहीं किया गया",
