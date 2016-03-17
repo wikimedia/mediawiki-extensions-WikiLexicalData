@@ -14,7 +14,8 @@
 			"Sanbec",
 			"Translationista",
 			"Macofe",
-			"Yllelder"
+			"Yllelder",
+			"Matiia"
 		]
 	},
 	"wikidata-desc": "Agrega base de datos tipo wiki para varios tipos de contenido",
@@ -199,7 +200,7 @@
 	"ow_please_proved_dmid": "Falta un \"?dmid=<ID>\" (dmid=Identificador de significado definido)<br />\nContacta a un administrador del servidor.",
 	"ow_please_proved_dc1": "Falta un \"?dc1=<algo>\" (dc1=contexto 1 de la base DESDE la cual se copia)<br />\nContacta a un administrador del servidor.",
 	"ow_please_proved_dc2": "Falta un \"?dc2=<algo>\" (dc2=Contexto 2 de la base, HACIA la cual se copia)<br />\nContacta a un administrador del servidor.",
-	"ow_copy_successful": "<h2>Copia exitosa</h2>\nTus datos han sido copiados exitosamente.\nVerifícalo de todas formas para asegurarte.",
+	"ow_copy_successful": "<h2>Copia exitosa</h2>\nTus datos han sido copiados.\nVerifícalo de todas formas para asegurarte.",
 	"ow_copy_unsuccessful": "<h3>Copia fallida</h3>\nLa copia no se realizó.",
 	"ow_no_action_specified": "<h3>No se especificó ninguna acción</h3>\n¿Puede que hayas llegado a esta página directamente? Normalmente, no necesitas estar aquí.",
 	"ow_db_consistency_not_found": "<h2>Error</h2>\nHay un problema con la consistencia de la base de datos. No se pueden encontrar datos válidos conectados con este identificador de significado definido.\nPuede que esté perdido.\nContacta a un administrador del servidor.",
