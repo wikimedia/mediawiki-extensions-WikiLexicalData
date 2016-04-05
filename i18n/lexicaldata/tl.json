@@ -3,7 +3,8 @@
 		"authors": [
 			"AnakngAraw",
 			"Jewel457",
-			"Leeheonjin"
+			"Leeheonjin",
+			"Jojit fb"
 		]
 	},
 	"wikidata-desc": "Nagdaragdag ng talaan ng datong kamukha ng sa wiki para sa sari-saring mga uri ng nilalaman",
@@ -164,7 +165,7 @@
 	"ow_TranslatedTextAttributeValue": "Teksto",
 	"ow_TranslatedTextAttributeValues": "Mga tekstong maisasalinwika",
 	"ow_Label": "Tatak",
-	"ow_Link": "Kawing",
+	"ow_Link": "Link",
 	"ow_LinkAttribute": "Pag-aari",
 	"ow_LinkAttributeValues": "Mga kawing",
 	"ow_URL": "URL",
@@ -210,6 +211,7 @@
 	"right-addlanguage": "Magdagdag at baguhin ang mga katakdaang pangwika",
 	"ow_shown_datasets": "Ipinakitang mga pangkat ng dato",
 	"prefs-omegawiki": "OmegaWiki",
+	"ow_statistics": "Wikidata: Estadistika",
 	"ow-stat-meanings-link": "Mga kahulugan",
 	"ow-stat-definedmeanings-link": "Mganatukoynakahulugan",
 	"ow-stat-all-is": "lahat = $1"
