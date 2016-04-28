@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Meursault2004",
-			"Pras"
+			"Pras",
+			"NoiX180"
 		]
 	},
 	"languages": "Pangurus basa",
@@ -13,7 +14,7 @@
 	"ow_save": "Simpen",
 	"ow_history": "Sajarah",
 	"ow_datasets": "Sèlèksi data-set",
-	"ow_noedit_title": "Ora ana idin kanggo nyunting",
+	"ow_noedit_title": "Ora ana idin mbesut",
 	"ow_noedit": "Panjenengan ora diparengaké nyunting kaca-kaca ing dataset \"$1\".\nMangga mirsani [[{{MediaWiki:Ow editing policy url}}|kawicaksanan panyuntingan kita]].",
 	"ow_uipref_datasets": "Tampilan baku",
 	"ow_uiprefs": "WikiLexicalData",
