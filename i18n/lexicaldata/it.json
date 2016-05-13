@@ -68,7 +68,7 @@
 	"exporttsv": "Esporta TSV",
 	"ow_exporttsv_title": "Esporta una collezione in TSV",
 	"ow_exporttsv_languages": "Lingue:",
-	"ow_exporttsv_not_allowed": "Non hai il permesso per esportare un TSV.",
+	"ow_exporttsv_not_allowed": "Non si dispone dei permessi necessari per esportare un TSV.",
 	"ow_exporttsv_export_failed": "Esportazione fallita",
 	"addcollection": "Aggiungi collezione",
 	"ow_searchnoresult": "<p>È possibile:<br />\n* '''Creare l'espressione \"[[Expression:$1]]\"''' (e aggiungere una definizione)<br />\n* '''Creare la pagina \"[[:$1]]\"''' (una pagina standard wiki)</p>",
