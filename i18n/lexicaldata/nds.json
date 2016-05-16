@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Slomox"
+			"Slomox",
+			"Servien"
 		]
 	},
 	"ow_save": "Spiekern",
@@ -30,5 +31,6 @@
 	"ow_TranslatedTextAttributeValues": "Översettbor Text",
 	"ow_LinkAttribute": "Egenschop",
 	"ow_Property": "Egenschop",
-	"ow_meaningsoftitle": "Bedüden vun „$1“"
+	"ow_meaningsoftitle": "Bedüden vun „$1“",
+	"ow_show": "Wiesen"
 }
