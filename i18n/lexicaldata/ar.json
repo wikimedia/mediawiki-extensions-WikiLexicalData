@@ -79,7 +79,7 @@
 	"ow_transaction_user": "اسم المستخدم:",
 	"ow_transaction_show_rollback": "اعرض متحكمات الاسترجاع:",
 	"ow_transaction_rollback_button": "استرجع",
-	"ow_transaction_rollback_header": "استرجاع",
+	"ow_transaction_rollback_header": "إرجاع",
 	"ow_transaction_no_action": "لا تفعل شيئا",
 	"ow_transaction_previous_version": "النسخة السابقة",
 	"ow_transaction_restore": "استرجاع",
@@ -205,7 +205,6 @@
 	"ow_needs_xlation_dest_lang": "اللغة الهدف:",
 	"ow_needs_xlation_no_dest_lang": "من فضلك حدد لغة هدف.",
 	"ow_data_search": "بحث بيانات ويكي لكسكل داتا",
-	"ow_statistics": "إحصاءات ويكي لكسكل داتا",
 	"ow_downloads": "تحميلات ويكي لكسكل داتا",
 	"ow_show": "اعرض",
 	"ow_upload": "رفع",
@@ -221,5 +220,6 @@
 	"prefs-omegawiki": "أوميجاويكي",
 	"prefs-ow-lang": "لغات",
 	"ow_pref_lang_switch": "أظهر اللغات المحددة فقط",
-	"ow_pref_lang_select": "عرض اللغات:"
+	"ow_pref_lang_select": "عرض اللغات:",
+	"ow_statistics": "إحصاءات ويكي لكسكل داتا"
 }
