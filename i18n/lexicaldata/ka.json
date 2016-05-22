@@ -157,7 +157,6 @@
 	"ow_needs_xlation_source_lang": "საწყისი ენა:",
 	"ow_needs_xlation_dest_lang": "სამიზნე ენა:",
 	"ow_needs_xlation_no_dest_lang": "თუ შეიძლება, მიუთითეთ სამიზნე ენა.",
-	"ow_statistics": "ვიკილექსიკურიმონაცემების სტატისტიკა",
 	"ow_show": "ჩვენება",
 	"ow_upload": "ატვირთვა",
 	"ow_create": "შექმნა",
@@ -168,5 +167,6 @@
 	"ow_nstab_edit_copy": "ასლის რედაქტირება",
 	"right-addlanguage": "ენობრივი პარამეტრების დამატება და შეცვლა",
 	"prefs-ow-lang": "ენები",
-	"ow_pref_lang_switch": "მხოლოდ არჩეული ენების ჩვენება"
+	"ow_pref_lang_switch": "მხოლოდ არჩეული ენების ჩვენება",
+	"ow_statistics": "ლექსიკური მონაცემების სტატისტიკა"
 }
