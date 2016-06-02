@@ -8,7 +8,8 @@
 			"Iwan Novirion",
 			"Kandar",
 			"Rex",
-			"Shirayuki"
+			"Shirayuki",
+			"Beeyan"
 		]
 	},
 	"wikidata-desc": "Menambahkan basis data serupa-wiki untuk beragam tipe isi",
@@ -120,7 +121,7 @@
 	"ow_ClassAttributeAttribute": "Atribut",
 	"ow_ClassAttributes": "Atribut kelas",
 	"ow_ClassAttributeLevel": "Tingkat",
-	"ow_ClassAttributeType": "Tipe",
+	"ow_ClassAttributeType": "Jenis",
 	"ow_ClassMembership": "Keanggotaan kelas",
 	"ow_Collection": "Koleksi",
 	"ow_Collection_colon": "Koleksi:",
@@ -201,7 +202,8 @@
 	"ow_needs_xlation_source_lang": "Bahasa sumber:",
 	"ow_needs_xlation_dest_lang": "Bahasa yang dituju:",
 	"ow_needs_xlation_no_dest_lang": "Tentukan bahasa yang dituju.",
-	"ow_statistics": "Wikidata : Statistika",
+	"ow_data_search": "pencarian data WikiLexicalData",
+	"ow_downloads": "pengunduhan WikiLexicalData",
 	"ow_show": "Tampilkan",
 	"ow_upload": "Unggah",
 	"ow_create": "Buat",
@@ -212,5 +214,6 @@
 	"ow_nstab_definedmeaning": "makna terdefinisikan",
 	"ow_nstab_edit_copy": "sunting salinan",
 	"right-addlanguage": "Tambah dan rubah setelan bahasa",
-	"ow_shown_datasets": "Kumpulan data yang ditampilkan"
+	"ow_shown_datasets": "Kumpulan data yang ditampilkan",
+	"ow_statistics": "Wikidata : Statistika"
 }
