@@ -4,7 +4,8 @@
 			"Amire80",
 			"Rotemliss",
 			"YaronSh",
-			"דניאל ב."
+			"דניאל ב.",
+			"Guycn2"
 		]
 	},
 	"wikidata-desc": "הוספת מסד נתונים דמוי ויקי למגוון סוגי תוכן",
@@ -203,7 +204,6 @@
 	"ow_needs_xlation_dest_lang": "שפת היעד:",
 	"ow_needs_xlation_no_dest_lang": "נא לציין את שפת היעד.",
 	"ow_data_search": "חיפוש בנתונים של WikiLexicalData",
-	"ow_statistics": "סטטיסטיקה של WikiLexicalData",
 	"ow_downloads": "הורדות של WikiLexicalData",
 	"ow_show": "הצגה",
 	"ow_upload": "העלאה",
@@ -214,9 +214,10 @@
 	"ow_suggest_clear": "ניקוי",
 	"ow_nstab_definedmeaning": "משמעות מוגדרת",
 	"ow_nstab_edit_copy": "עריכת עותק",
-	"right-addlanguage": "הוספת ושינוי הגדרות שפה",
+	"right-addlanguage": "הוספה ושינוי של הגדרות שפה",
 	"ow_shown_datasets": "ערכות נתונים מוצגות",
 	"prefs-ow-lang": "שפות",
 	"ow_pref_lang_switch": "להציג רק את השפות שנבחרו",
-	"ow_pref_lang_select": "שפות להצגה:"
+	"ow_pref_lang_select": "שפות להצגה:",
+	"ow_statistics": "סטטיסטיקה של WikiLexicalData"
 }
