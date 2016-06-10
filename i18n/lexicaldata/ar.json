@@ -5,7 +5,8 @@
 			"Meno25",
 			"OsamaK",
 			"Tarawneh",
-			"زكريا"
+			"زكريا",
+			"Alaa"
 		]
 	},
 	"wikidata-desc": "يضيف قاعدة بيانات ذات طابع الويكي لأنواع عديدة من المحتويات",
@@ -79,7 +80,7 @@
 	"ow_transaction_user": "اسم المستخدم:",
 	"ow_transaction_show_rollback": "اعرض متحكمات الاسترجاع:",
 	"ow_transaction_rollback_button": "استرجع",
-	"ow_transaction_rollback_header": "استرجاع",
+	"ow_transaction_rollback_header": "تراجع",
 	"ow_transaction_no_action": "لا تفعل شيئا",
 	"ow_transaction_previous_version": "النسخة السابقة",
 	"ow_transaction_restore": "استرجاع",
