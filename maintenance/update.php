@@ -7,12 +7,6 @@
  * @ingroup Maintenance
  */
 
-if ( !function_exists( 'version_compare' ) || ( version_compare( phpversion(), '5.3.2' ) < 0 ) ) {
-	require dirname( __FILE__ ) . '/../includes/PHPVersionError.php';
-	wfPHPVersionError( 'cli' );
-}
-
-$wgUseMasterForMaintenance = true;
 //		require_once( __DIR__ . '/../../../maintenance/update.php' );
 
 require_once( __DIR__ . '/../../../maintenance/maintenance.php' );
