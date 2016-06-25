@@ -6,7 +6,8 @@
 			"Priviet",
 			"Yknok29",
 			"아라",
-			"IRTC1015"
+			"IRTC1015",
+			"Ykhwong"
 		]
 	},
 	"wikidata-desc": "내용의 다양한 종류에 대한 위키 데이터베이스를 추가합니다",
@@ -50,7 +51,7 @@
 	"ow_importtsv_import_failed": "가져오기 실패",
 	"ow_importtsv_file": "TSV 파일:",
 	"ow_importtsv_test_run": "테스트 실행:",
-	"ow_importtsv_not_utf8": "<p>UTF-8로 인코딩한 파일이 아닌 것 같습니다. 파일은 UTF-8로 인코딩<em>해야 합니다</em>.\n어플리케이션이 올바르게 파일을 저장하거나 내보냈는지 확인하세요.",
+	"ow_importtsv_not_utf8": "<p>UTF-8로 인코딩한 파일이 아닌 것 같습니다. 파일은 UTF-8로 인코딩<em>해야 합니다</em>.\n애플리케이션이 올바르게 파일을 저장하거나 내보냈는지 확인하세요.",
 	"ow_importtsv_not_tsv": "<p>올바른 TSV 파일이 아닌 것 같습니다.</p>",
 	"ow_importtsv_bad_columns": "<p>'$1' 이름은 잘못된 열 이름입니다.<br />\n열은 'definition_iso' 또는 'translations_iso'로 이름지어야 합니다.\niso는 언어 코드입니다</p>",
 	"ow_importtsv_test_run_title": "TSV 데이터 가져오기에 대한 테스트 실행",
