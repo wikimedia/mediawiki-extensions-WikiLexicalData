@@ -104,11 +104,11 @@
 	"ow_needs_xlation_source_lang": "Lähtekeel:",
 	"ow_needs_xlation_dest_lang": "Sihtkeel:",
 	"ow_needs_xlation_no_dest_lang": "Määratle sihtkeel.",
-	"ow_statistics": "WikiLexicalData arvandmed",
 	"ow_show": "Näita",
 	"ow_upload": "Laadi üles",
 	"ow_create": "Loo",
 	"ow_suggest_previous": "Eelmine",
 	"ow_suggest_next": "Järgmine",
-	"ow_suggest_clear": "Puhasta"
+	"ow_suggest_clear": "Puhasta",
+	"ow_statistics": "Sõnavaraandmete arvandmed"
 }
