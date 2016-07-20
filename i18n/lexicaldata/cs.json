@@ -6,7 +6,8 @@
 			"Mormegil",
 			"Reaperman",
 			"Cvanca",
-			"Walter Klosse"
+			"Walter Klosse",
+			"Dvorapa"
 		]
 	},
 	"wikidata-desc": "Přidává databázi na principu wiki pro různé druhy obsahu",
@@ -217,7 +218,7 @@
 	"ow_shown_datasets": "Zobrazené množiny dat",
 	"prefs-ow-lang": "Jazyky",
 	"ow_pref_lang_switch": "Zobrazit pouze vybrané jazyky",
-	"ow_pref_lang_select": "Jazyky pro zobrazení:",
+	"ow_pref_lang_select": "Zobrazit jazyky:",
 	"ow-special-stat-languages-avail": "{{PLURAL:$1|Dostupný jazyk|Dostupné jazyky|Dostupných jazyků}}",
 	"ow-special-stat-languages-used": "{{PLURAL:$1|Jazyk|Jazyky|Jazyků}} s výrazy",
 	"ow-special-stat-collections": "{{PLURAL:$1|Sbírka|Sbírky|Sbírek}}",
