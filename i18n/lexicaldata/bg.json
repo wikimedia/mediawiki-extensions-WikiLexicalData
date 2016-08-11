@@ -3,7 +3,8 @@
 		"authors": [
 			"DCLXVI",
 			"Spiritia",
-			"Gazimagomedov"
+			"Gazimagomedov",
+			"StanProg"
 		]
 	},
 	"wikidata-desc": "Добавяне на уики-подобна база данни за различни видове съдържание",
@@ -30,7 +31,7 @@
 	"exporttsv": "Изнасяне на TSV",
 	"ow_exporttsv_languages": "Езици:",
 	"ow_exporttsv_export_failed": "Изнасянето се провали",
-	"ow_save": "Съхранение",
+	"ow_save": "Съхраняване",
 	"ow_history": "История",
 	"ow_noedit_title": "Необходими са права за редактиране",
 	"ow_uipref_datasets": "Изглед по подразбиране:",

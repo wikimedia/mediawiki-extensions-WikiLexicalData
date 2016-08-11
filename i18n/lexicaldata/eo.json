@@ -6,7 +6,8 @@
 			"Jagwar",
 			"Malafaya",
 			"Michawiki",
-			"Yekrats"
+			"Yekrats",
+			"Robin van der Vliet"
 		]
 	},
 	"wikidata-handler-namespace-move-error": "Paĝoj en nomspacoj traktataj de la etendilo \"Wikidata\" ne estas moveblaj.",
@@ -55,7 +56,7 @@
 	"ow_none_selected": "Nenio elektita",
 	"ow_transaction_from_transaction": "el transakcio:",
 	"ow_transaction_count": "Nombro:",
-	"ow_transaction_user": "Salutnomo:",
+	"ow_transaction_user": "Uzantnomo:",
 	"ow_transaction_rollback_button": "Malfaregi",
 	"ow_transaction_rollback_header": "Malfaregi",
 	"ow_transaction_no_action": "Fari nenion",
