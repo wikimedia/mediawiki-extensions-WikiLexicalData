@@ -212,5 +212,6 @@
 	"ow_shown_datasets": "Afichar los ensembles de donadas",
 	"prefs-omegawiki": "OmegaWiki",
 	"prefs-ow-lang": "Lengas",
-	"ow_pref_lang_select": "Lengas d'afichar :"
+	"ow_pref_lang_select": "Lengas d'afichar :",
+	"ow-stat-languages": "{{PLURAL:$1|Lenga|Lengas}}"
 }
