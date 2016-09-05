@@ -108,7 +108,7 @@
 	"ow_conceptmapping_title": "Correspondances de concepts",
 	"ow_conceptmapping_help": "<p>actions possibles :<ul>\n<li><tt>&action=insert&<data_context_prefix>=<defined_id>&...</tt> : insérer une correspondance.</li>\n<li><tt>&action=get&concept=<concept_id></tt> : revoir une correspondance.</li>\n<li><tt>&action=list_sets</tt> : retourner une liste des préfixes de contextes possibles et ceux qu’ils référencent.</li>\n<li><tt>&action=get_associated&dm=<defined_meaning_id>&dc=<dataset_context_prefix></tt> : pour une définition d’un concept, retourner toutes les autres.</li>\n<li><tt>&action=help</tt> : afficher l’aide complète.</li>\n</ul></p>",
 	"ow_conceptmapping_uitext": "<p>Les correspondances de concepts vous permettent d’identifier quel sens défini dans un ensemble de données est identique aux sens définis dans d’autres ensembles de données.</p>",
-	"ow_conceptmapping_no_action_specified": "L’action « $1 » n’est pas supportée.",
+	"ow_conceptmapping_no_action_specified": "L’action « $1 » n’est pas prise en charge.",
 	"ow_dm_OK": "Valider",
 	"ow_dm_not_present": "non inscrit",
 	"ow_dm_not_found": "non trouvé dans la base de données ou mal rédigé",
