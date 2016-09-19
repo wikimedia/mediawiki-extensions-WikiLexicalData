@@ -6,7 +6,8 @@
 			"OsamaK",
 			"Tarawneh",
 			"زكريا",
-			"Alaa"
+			"Alaa",
+			"Mr. Ibrahem"
 		]
 	},
 	"wikidata-desc": "يضيف قاعدة بيانات ذات طابع الويكي لأنواع عديدة من المحتويات",
@@ -170,7 +171,7 @@
 	"ow_TranslatedText": "نص مترجم",
 	"ow_TranslatedTextAttributeValue": "نص",
 	"ow_TranslatedTextAttributeValues": "نصوص قابلة للترجمة",
-	"ow_Label": "علامة",
+	"ow_Label": "تسمية",
 	"ow_Link": "وصلة",
 	"ow_LinkAttribute": "خاصية",
 	"ow_LinkAttributeValues": "وصلات",
