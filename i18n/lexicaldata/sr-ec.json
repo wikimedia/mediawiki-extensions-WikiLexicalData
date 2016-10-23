@@ -6,7 +6,8 @@
 			"Rancher",
 			"Sasa Stefanovic",
 			"Жељко Тодоровић",
-			"Михајло Анђелковић"
+			"Михајло Анђелковић",
+			"Сербијана"
 		]
 	},
 	"languages": "Управљање језицима",
@@ -167,7 +168,7 @@
 	"ow_needs_xlation_dest_lang": "Потребан језик:",
 	"ow_needs_xlation_no_dest_lang": "Молимо Вас да означите језик на који преводите.",
 	"ow_show": "Прикажи",
-	"ow_upload": "Пошаљи",
+	"ow_upload": "Отпреми",
 	"ow_create": "Направи",
 	"ow_collection_added": "<strong>Колекција $1 је додата.</strong>",
 	"ow_suggest_previous": "Претходни",

@@ -4,7 +4,8 @@
 			"Michaello",
 			"Milicevic01",
 			"Rancher",
-			"Жељко Тодоровић"
+			"Жељко Тодоровић",
+			"Сербијана"
 		]
 	},
 	"languages": "Vikipodaci: Upravljanje jezicima",
@@ -161,7 +162,7 @@
 	"ow_needs_xlation_dest_lang": "Potreban jezik:",
 	"ow_needs_xlation_no_dest_lang": "Molimo Vas da označite jezik na koji prevodite.",
 	"ow_show": "Prikaži",
-	"ow_upload": "Pošalji",
+	"ow_upload": "Otpremi",
 	"ow_create": "Napravi",
 	"ow_collection_added": "<strong>Kolekcija $1 je dodata.</strong>",
 	"ow_suggest_previous": "Prethodni",
