@@ -77,7 +77,7 @@
 	"ow_available_contexts": "Mogući konteksti",
 	"ow_add_concept_link": "Dodaj link u druge koncepte",
 	"ow_concept_panel": "Tabla koncepata",
-	"ow_dm_badtitle": "Ova stranica ne pokazuje na DefinisanoZnačenje (koncept). Proveri veb adresu.",
+	"ow_dm_badtitle": "Ova stranica ne pokazuje na DefinisanoZnačenje (koncept). Proveri veb-adresu.",
 	"ow_dm_missing": "Ova stranica pokazuje na nepostojeće DefinisanoZnačenje (koncept). Proveri veb adresu.",
 	"ow_AddHint": "Unesite nove redove za dodavanje",
 	"ow_AlternativeDefinition": "Alternativna definicija",
