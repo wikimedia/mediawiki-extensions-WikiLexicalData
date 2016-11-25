@@ -193,7 +193,7 @@
 	"ow_please_proved_dc2": "Epá, parece que está a faltar um \"?dc2=<qualquercoisa>\" (dc2=contexto de conjunto de dados 2, conjunto de dados PARA o qual copiar) aos dados introduzidos<br />\nPor favor, contacte um administrador do servidor.",
 	"ow_copy_successful": "<h2>Cópia com sucesso</h2>\nOs seus dados aparentam ter sido copiados. \nNão se esqueça de verificar para ter a certeza!",
 	"ow_copy_unsuccessful": "<h3>Cópia sem sucesso</h3>\nNão foi feita nenhuma operação de cópia.",
-	"ow_no_action_specified": "<h3>Nenhuma ação foi especificada</h3>\nTalvez tenha vindo a esta página diretamente? Em condições normais, não precisa de estar aqui.",
+	"ow_no_action_specified": "<h3>Não foi especificada nenhuma ação</h3>\nTalvez tenha vindo ter a esta página diretamente? Em condições normais, não precisa de estar aqui.",
 	"ow_db_consistency_not_found": "<h2>Erro</h2>\nHá um problema com a consistência da base de dados, não é possível encontrar dados válidos relacionados com o ID deste significado definido.\nPoderá ter-se perdido.\nPor favor, contacte o operador ou administrador do servidor.",
 	"ow_history_transaction": "Transação:",
 	"ow_history_show_life_span": "Mostrar tempo de vida do registo:",
