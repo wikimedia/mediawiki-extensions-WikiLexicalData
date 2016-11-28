@@ -29,7 +29,7 @@
 	"langman-desc": "在[[Special:Languages]]添加或更改语言设置",
 	"langman_title": "语言管理器",
 	"langman_not_allowed": "您无权修改语言设置。",
-	"langman_header": "输入语言代码和English名称：",
+	"langman_header": "在下方输入语言代码及其英语名称：",
 	"langman_req_fields": "语言名称和ISO 639-3代码都需要输入！",
 	"langman_adding": "正在通过关键词$2添加语言$1。",
 	"langman_langname": "语言名称：",
