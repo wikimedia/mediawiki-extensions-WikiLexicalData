@@ -197,7 +197,7 @@
 	"ow_removed": "已移除",
 	"ow_meaningsoftitle": "“$1”的含义",
 	"ow_meaningsofsubtitle": "<em>Wiki链接：</em>[[$1]]",
-	"ow_Permission_denied": "<h2>没有权限</h2>",
+	"ow_Permission_denied": "<h2>权限被拒绝</h2>",
 	"copy": "复制",
 	"ow_copy_no_action_specified": "请指定一个动作",
 	"ow_copy_help": "帮助还没有实现。",
