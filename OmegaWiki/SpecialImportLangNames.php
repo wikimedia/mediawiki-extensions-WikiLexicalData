@@ -110,7 +110,10 @@ class SpecialImportLangNames extends SpecialPage {
 	function addDMsListToPage( $content, $title ) {
 		$titleObj = Title::makeTitle( NS_MAIN, $title );
 		$wikipage = new WikiPage( $titleObj );
-		$wikipage->doEdit( $content, 'updated via Special:ImportLangNames' );
+		$wikipage->doEditContent(
+			ContentHandler::makeContent($content, $titleObj ),
+			'updated via Special:ImportLangNames'
+		);
 	}
 
 	protected function getGroupName() {
