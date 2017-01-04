@@ -212,7 +212,7 @@
 	"ow_nstab_edit_copy": "modifica copia",
 	"right-addlanguage": "Aggiunge e modifica le impostazioni della lingua",
 	"prefs-ow-lang": "Lingue",
-	"ow_pref_lang_switch": "Mostra solo le lingue selezionate",
+	"ow_pref_lang_switch": "<strong>Mostra solo le lingue selezionate</strong>",
 	"ow_pref_lang_select": "Lingue da visualizzare:",
 	"ow-special-stat-head": "[[Special:OW_Statistics|Statistiche di dati lessicali]]",
 	"ow-special-stat-languages-avail": "{{PLURAL:$1|Lingua disponibile|Lingue disponibili}}",

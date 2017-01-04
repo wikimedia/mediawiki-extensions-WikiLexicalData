@@ -214,7 +214,7 @@
 	"right-addlanguage": "Dodawanie i zmiana ustawień językowych",
 	"ow_shown_datasets": "Widoczne zbiory danych",
 	"prefs-ow-lang": "Języki",
-	"ow_pref_lang_switch": "Pokaż tylko wybrane języki",
+	"ow_pref_lang_switch": "<strong>Pokaż tylko wybrane języki</strong>",
 	"ow_addFromExtAPI": "Dodawanie danych z zewnętrznych API",
 	"ow_addFromExtAPI_title": "Dodawanie danych z API",
 	"ow-special-stat-languages-avail": "{{PLURAL:$1|Dostępny język|Dostępne języki}}",

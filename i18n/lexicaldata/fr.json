@@ -232,7 +232,7 @@
 	"ow_shown_datasets": "Afficher les ensembles de données",
 	"prefs-omegawiki": "OmegaWiki",
 	"prefs-ow-lang": "Langues",
-	"ow_pref_lang_switch": "Afficher seulement les langues sélectionnées",
+	"ow_pref_lang_switch": "<strong>Afficher seulement les langues sélectionnées</strong>",
 	"ow_pref_lang_select": "Langues à afficher:",
 	"ow_addFromExtAPI": "Ajouter les données d'API externes",
 	"ow_addFromExtAPI_title": "Ajouter les données à partir d'API",

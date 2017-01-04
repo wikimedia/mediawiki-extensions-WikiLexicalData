@@ -217,9 +217,10 @@
 	"ow_shown_datasets": "Fà vedè le 'nzieme de date",
 	"prefs-omegawiki": "OmegaWiki",
 	"prefs-ow-lang": "Lènghe",
-	"ow_pref_lang_switch": "Fà vedè sulamende le lènghe scacchiate",
+	"ow_pref_lang_switch": "<strong>Fà 'ndrucà sulamende le lènghe scacchiate</strong>",
 	"ow_pref_lang_select": "Lènghe da fà vedè:",
 	"ow_addFromExtAPI": "Aggiunge date da le API de fore",
 	"ow_addFromExtAPI_title": "Aggiunge date da l'API",
-	"ow_api_source": "Sorgende de l'API de fore:"
+	"ow_api_source": "Sorgende de l'API de fore:",
+	"ow_statistics": "WikiDataLessiche:Statisteche"
 }

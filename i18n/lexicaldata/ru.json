@@ -10,7 +10,8 @@
 			"Temuri rajavi",
 			"Александр Сигачёв",
 			"Чаховіч Уладзіслаў",
-			"Iniquity"
+			"Iniquity",
+			"Kareyac"
 		]
 	},
 	"wikidata-desc": "Добавляет вики-подобную базу данных для различных видов контента",
@@ -222,7 +223,7 @@
 	"right-addlanguage": "добавление и изменение языковых настроек",
 	"ow_shown_datasets": "Показанные наборы данных",
 	"prefs-ow-lang": "Языки",
-	"ow_pref_lang_switch": "Показывать только выбранные языки",
+	"ow_pref_lang_switch": "<strong>Показать только выбранные языки</strong>",
 	"ow_pref_lang_select": "Языки для отображения:",
 	"ow_addFromExtAPI": "Добавление данных из внешних API",
 	"ow_addFromExtAPI_title": "Добавление данные из API",

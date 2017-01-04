@@ -234,7 +234,7 @@
 	"right-addlanguage": "添加和更改语言设置",
 	"ow_shown_datasets": "所显示的数据集",
 	"prefs-ow-lang": "语言",
-	"ow_pref_lang_switch": "仅显示所选语言",
+	"ow_pref_lang_switch": "<strong>仅显示所选语言</strong>",
 	"ow_pref_lang_select": "要显示的语言：",
 	"ow_addFromExtAPI": "从外部API添加数据",
 	"ow_addFromExtAPI_title": "从API添加数据",

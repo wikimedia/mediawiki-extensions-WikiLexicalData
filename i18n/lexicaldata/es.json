@@ -15,7 +15,9 @@
 			"Translationista",
 			"Macofe",
 			"Yllelder",
-			"Matiia"
+			"Matiia",
+			"Dgstranz",
+			"Indiralena"
 		]
 	},
 	"wikidata-desc": "Agrega base de datos tipo wiki para varios tipos de contenido",
@@ -230,7 +232,7 @@
 	"right-addlanguage": "Agregar y cambiar configuraciones de idioma",
 	"ow_shown_datasets": "Conjunto de datos mostrados",
 	"prefs-ow-lang": "Idiomas",
-	"ow_pref_lang_switch": "Solo mostrar los idiomas seleccionados",
+	"ow_pref_lang_switch": "<strong>Mostrar solamente los idiomas seleccionados</strong>",
 	"ow_pref_lang_select": "Idiomas que mostrar:",
 	"ow_addFromExtAPI": "Añadir datos de API externas",
 	"ow_addFromExtAPI_title": "Añadir datos de API",

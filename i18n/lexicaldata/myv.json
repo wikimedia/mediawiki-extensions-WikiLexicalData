@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Botuzhaleny-sodamo"
+			"Botuzhaleny-sodamo",
+			"Rueter"
 		]
 	},
 	"languages": "Келень кирдий",
@@ -54,5 +55,6 @@
 	"ow_class_attr_type_link": "Сюлмавома пе",
 	"ow_create": "Шкамс",
 	"ow_suggest_previous": "Седе икелев",
-	"ow_suggest_next": "Седе тов"
+	"ow_suggest_next": "Седе тов",
+	"ow_pref_lang_switch": "<strong>Невтемс ансяк кочказь кельтнень</strong>"
 }
