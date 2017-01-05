@@ -219,7 +219,7 @@
 	"right-addlanguage": "언어 설정을 추가하고 바꿈",
 	"ow_shown_datasets": "보이는 데이터 집합",
 	"prefs-ow-lang": "언어",
-	"ow_pref_lang_switch": "선택한 언어만 보이기",
+	"ow_pref_lang_switch": "<strong>선택한 언어만 보이기</strong>",
 	"ow_pref_lang_select": "보일 언어:",
 	"ow_addFromExtAPI": "외부 API에서 데이터 추가하기",
 	"ow_statistics": "어휘 데이터 통계",
