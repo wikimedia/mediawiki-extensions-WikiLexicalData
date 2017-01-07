@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Shirayuki"
+			"Shirayuki",
+			"Umherirrender"
 		]
 	},
-	"apiow-desc": "{{desc|name=OmegaWiki|url=http://www.omegawiki.org/Help:OmegaWiki_API}}"
+	"apiow-desc": "{{desc|name=OmegaWiki|url=https://www.omegawiki.org/Help:OmegaWiki_API}}"
 }
