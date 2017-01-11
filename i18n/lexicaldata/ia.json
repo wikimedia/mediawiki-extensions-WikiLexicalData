@@ -218,7 +218,7 @@
 	"right-addlanguage": "Adder e cambiar configurationes de linguas",
 	"ow_shown_datasets": "Collectiones de datos monstrate",
 	"prefs-ow-lang": "Linguas",
-	"ow_pref_lang_switch": "Monstrar solmente le linguas seligite",
+	"ow_pref_lang_switch": "<strong>Monstrar solmente le linguas seligite</strong>",
 	"ow_pref_lang_select": "Linguas a monstrar:",
 	"ow_addFromExtAPI": "Adder datos ab APIs externe",
 	"ow_addFromExtAPI_title": "Adder datos ab API",

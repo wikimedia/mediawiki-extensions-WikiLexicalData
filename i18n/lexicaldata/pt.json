@@ -221,7 +221,7 @@
 	"right-addlanguage": "Adicionar e modificar configurações de línguas",
 	"ow_shown_datasets": "Conjuntos de dados mostrados",
 	"prefs-ow-lang": "Línguas",
-	"ow_pref_lang_switch": "Mostrar apenas as línguas selecionadas",
+	"ow_pref_lang_switch": "<strong>Mostrar apenas as línguas selecionadas</strong>",
 	"ow_pref_lang_select": "Línguas a mostrar:",
 	"ow_statistics": "Estatísticas de dados lexicais"
 }
