@@ -132,7 +132,7 @@ class AddDefinition extends ApiBase {
 				) )
 			);
 
-		$text = $wikiText->mText;
+		$text = $wikiText->getNativeData();
 
 		// Check if the page is redirected,
 		// then adjust accordingly.
@@ -142,7 +142,7 @@ class AddDefinition extends ApiBase {
 			$csvWikiPageTitle = Title::newFromText( $redirectedText );
 			$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
 			$wikiText = $csvWikiPage->getContent( Revision::RAW );
-			$text = $wikiText->mText;
+			$text = $wikiText->getNativeData();
 		}
 
 		$this->getResult()->addValue( null, $this->getModuleName(),
