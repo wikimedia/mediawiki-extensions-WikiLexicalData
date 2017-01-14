@@ -74,6 +74,7 @@ $wgResourceModules['ext.Wikidata.suggest'] = $resourcePathArray + array(
 
 $wgAutoloadClasses['WikiLexicalDataHooks'] = $dir . 'Wikidata.hooks.php';
 $wgAutoloadClasses['OwDatabaseAPI'] = $dir . 'OmegaWiki/OmegaWikiDatabaseAPI.php';
+$wgAutoloadClasses['Syntrans'] = $dir . 'OmegaWiki/OmegaWikiDatabaseAPI.php';
 $wgAutoloadClasses['OmegaWikiHooks'] = $dir . 'OmegaWiki.hooks.php';
 
 $wgAutoloadClasses['WikidataArticle'      ] = $dir . 'includes/WikidataArticle.php';
@@ -85,8 +86,8 @@ $wgAutoloadClasses['OmegaWiki'] = $dir . 'OmegaWiki/OmegaWiki.php';
 $wgAutoloadClasses['DataSet'] = $dir . 'OmegaWiki/Wikidata.php';
 $wgAutoloadClasses['DefaultWikidataApplication'] = $dir . 'OmegaWiki/Wikidata.php';
 $wgAutoloadClasses['DefinedMeaning'] = $dir . 'OmegaWiki/DefinedMeaning.php';
+$wgAutoloadClasses['DefinedMeanings'] = $dir . 'OmegaWiki/DefinedMeaning.php';
 $wgAutoloadClasses['DefinedMeaningModel'] = $dir . 'OmegaWiki/DefinedMeaningModel.php';
-$wgAutoloadClasses['NeedsTranslationTo'] = $dir . 'OmegaWiki/NeedsTranslationTo.php';
 $wgAutoloadClasses['Search'] = $dir . 'OmegaWiki/Search.php';
 
 // Special Pages
