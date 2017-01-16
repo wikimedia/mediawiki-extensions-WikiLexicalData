@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Gazimagomedov"
+			"Gazimagomedov",
+			"Аль-Гимравий"
 		]
 	},
-	"ow_OptionAttributeOptions": "Рекъезаби"
+	"ow_transaction_user": "ГІахьалчиясул цІар:",
+	"ow_OptionAttributeOptions": "Рекъезаби",
+	"ow_show": "Бихьизабизе"
 }
