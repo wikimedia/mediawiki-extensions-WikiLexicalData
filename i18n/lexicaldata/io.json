@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Malafaya"
+			"Malafaya",
+			"Robin van der Vliet"
 		]
 	},
 	"langman_addlang": "Adjuntar linguo",
@@ -52,7 +53,7 @@
 	"ow_Link": "Ligilo",
 	"ow_LinkAttribute": "Proprajo",
 	"ow_LinkAttributeValues": "Ligili",
-	"ow_User": "Uzanto",
+	"ow_User": "Uzero",
 	"ow_Property": "Proprajo",
 	"ow_Value": "Valoro",
 	"ow_added": "Adjuntita",
