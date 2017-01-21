@@ -52,6 +52,7 @@
 	"ow_suggest_next": "Kitas",
 	"ow_suggest_clear": "Išvalyti",
 	"ow_nstab_edit_copy": "redaguoti kopiją",
+	"ow_pref_lang_switch": "<strong>Rodyti tik pasirinktas kalbas</strong>",
 	"ow_addFromExtAPI": "Įtraukti duomenis iš išorinių API",
 	"ow_addFromExtAPI_title": "Įtraukti duomenis iš API",
 	"ow_api_source": "Išorinis API šaltinis:"
