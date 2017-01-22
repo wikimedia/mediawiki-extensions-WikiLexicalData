@@ -7,7 +7,8 @@
 			"Malafaya",
 			"Michawiki",
 			"Yekrats",
-			"Robin van der Vliet"
+			"Robin van der Vliet",
+			"Psychoslave"
 		]
 	},
 	"wikidata-handler-namespace-move-error": "Paĝoj en nomspacoj traktataj de la etendilo \"Wikidata\" ne estas moveblaj.",
@@ -45,7 +46,7 @@
 	"ow_importtsv_results": "Aldonis $1 {{PLURAL:$1|difino|difinoj}} kaj $2 {{PLURAL:$2|traduko|tradukoj}}.",
 	"ow_impexptsv_unknown_lang": "<p>Nekonata aŭ malkorekta lingvo: $1.<br />\nLingvoj devas esti ISO 639-3 lingvaj kodoj.</p>",
 	"ow_exporttsv_languages": "Lingvoj:",
-	"ow_exporttsv_export_failed": "Eksporto malsukcesis",
+	"ow_exporttsv_export_failed": "Elporto malsukcesis",
 	"ow_save": "Konservi",
 	"ow_history": "Historio",
 	"ow_datasets": "Datumara selekto",
