@@ -64,7 +64,7 @@
 	"ow_importtsv_import_failed": "导入失败",
 	"ow_importtsv_file": "TSV文件：",
 	"ow_importtsv_test_run": "测试运行：",
-	"ow_importtsv_not_utf8": "<p>这个文件看起来不是UTF-8编码的。文件<em>必须</em>以UTF-8编码。\n确保你的应用程序正确保存或导出了文件。</p>",
+	"ow_importtsv_not_utf8": "<p>该文件似乎并非UTF-8编码文件。文件<em>必须</em>以UTF-8编码。确保您的应用程序正确保存或导出了文件。</p>",
 	"ow_importtsv_not_tsv": "<p>这看起来不是一个有效的TSV文件。</p>",
 	"ow_importtsv_bad_columns": "<p>错误的列名“$1”。<br />\n列应该命名为“definition_iso”或“translations_iso”，\n其中iso为语言代码。</p>",
 	"ow_importtsv_test_run_title": "导入TSV数据的测试运行",
