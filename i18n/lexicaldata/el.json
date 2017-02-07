@@ -8,7 +8,8 @@
 			"Glavkos",
 			"Nikosguard",
 			"Omnipaedista",
-			"ZaDiak"
+			"ZaDiak",
+			"Protnet"
 		]
 	},
 	"wikidata-desc": "Προσθέτει μία wiki βάση δεδομένων διαφόρων τυπών περιεχομένου",
@@ -185,8 +186,7 @@
 	"ow_needs_xlation_title": "Έννοιες που χρειάζονται μετάφραση",
 	"ow_needs_xlation_source_lang": "Γλώσσα πηγής:",
 	"ow_needs_xlation_dest_lang": "Γλώσσα προορισμού:",
-	"ow_needs_xlation_no_dest_lang": "Παρακαλώ δώστε μια γλώσσα προορισμού.",
-	"ow_statistics": "Βικιδεδομένα:Στατιστικά",
+	"ow_needs_xlation_no_dest_lang": "Παρακαλούμε καθορίστε γλώσσα προορισμού.",
 	"ow_show": "Προβολή",
 	"ow_upload": "Ανέβασμα αρχείου",
 	"ow_create": "Δημιουργία",
@@ -197,5 +197,6 @@
 	"ow_nstab_definedmeaning": "ορισμένη έννοια",
 	"ow_nstab_edit_copy": "αντίγραφο αλλαγής",
 	"right-addlanguage": "Προσθήκη και αλλαγή των γλωσσικών ρυθμίσεων",
-	"ow_shown_datasets": "Προβεβλημένα σύνολα δεδομένων"
+	"ow_shown_datasets": "Προβεβλημένα σύνολα δεδομένων",
+	"ow_statistics": "Βικιδεδομένα:Στατιστικά"
 }
