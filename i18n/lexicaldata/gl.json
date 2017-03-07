@@ -219,7 +219,7 @@
 	"right-addlanguage": "Engadir e modificar a configuración de lingua",
 	"ow_shown_datasets": "Conxunto de datos mostrados",
 	"prefs-ow-lang": "Linguas",
-	"ow_pref_lang_switch": "Mostrar só as linguas seleccionadas",
+	"ow_pref_lang_switch": "<strong>Mostrar só as linguas seleccionadas</strong>",
 	"ow_pref_lang_select": "Linguas que mostrar:",
 	"ow_addFromExtAPI": "Engadir datos dende APIs externas",
 	"ow_addFromExtAPI_title": "Engadir data dende API",
