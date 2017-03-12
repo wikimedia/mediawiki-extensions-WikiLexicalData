@@ -227,7 +227,7 @@
 	"right-addlanguage": "додавання і зміна мовних налаштувань",
 	"ow_shown_datasets": "Показані набори даних",
 	"prefs-ow-lang": "Мови",
-	"ow_pref_lang_switch": "Показувати лише вибрані мови",
+	"ow_pref_lang_switch": "<strong>Показувати лише вибрані мови</strong>",
 	"ow_pref_lang_select": "Мови для відображення:",
 	"ow_addFromExtAPI": "Додавання даних із зовнішніх API",
 	"ow_addFromExtAPI_title": "Додати дані з API",
