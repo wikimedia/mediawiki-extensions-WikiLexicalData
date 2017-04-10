@@ -25,7 +25,7 @@
 	"langman_langname": "Dil adı:",
 	"langman_iso639-3": "ISO 639-3 kodu:",
 	"langman_iso639-2": "ISO 639-2 kodu:",
-	"langman_wikimedia": "Vikimedya kodu:",
+	"langman_wikimedia": "Wikimedia kodu:",
 	"langman_field_optional": "(isteğe bağlı)",
 	"langman_addlang": "Dil ekle",
 	"importlangnames": "Dil adlarını içe aktar",
