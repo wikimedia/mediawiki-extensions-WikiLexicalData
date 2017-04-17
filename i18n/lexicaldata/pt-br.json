@@ -11,11 +11,13 @@
 			"Jorge Morais",
 			"Luckas",
 			"555",
-			"He7d3r"
+			"He7d3r",
+			"Felipe L. Ewald"
 		]
 	},
 	"wikidata-desc": "Adicionar banco de dados tipo wiki para vários tipos de conteúdo",
 	"wikidata-handler-namespace-move-error": "Páginas em domínios manipulados pela extensão WikiLexicalData não podem ser movidas",
+	"wikidata-handler-namespace-move-to-error": "Nenhuma página pode ser movida para qualquer namespaces manipulado pela extensão WikiLexicalData.",
 	"languages": "Gerenciador de línguas",
 	"langman-desc": "Adicione e mude configurações de língua com [[Special:Languages]]",
 	"langman_title": "Gerenciador de línguas",
@@ -208,7 +210,6 @@
 	"ow_needs_xlation_source_lang": "Língua de origem:",
 	"ow_needs_xlation_dest_lang": "Língua de destino:",
 	"ow_needs_xlation_no_dest_lang": "Por favor, especifique uma língua de destino.",
-	"ow_statistics": "Estatísticas WikiLexicalData",
 	"ow_show": "Exibir",
 	"ow_upload": "Enviar",
 	"ow_create": "Criar",
@@ -220,5 +221,6 @@
 	"ow_nstab_edit_copy": "editar cópia",
 	"right-addlanguage": "Adicionar e modificar configurações de língua",
 	"ow_shown_datasets": "Mostrar conjuntos de dados",
-	"prefs-ow-lang": "Línguas"
+	"prefs-ow-lang": "Línguas",
+	"ow_statistics": "Estatísticas WikiLexicalData"
 }
