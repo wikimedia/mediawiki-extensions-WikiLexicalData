@@ -1,12 +1,16 @@
 /*jshint node:true */
 module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-jsonlint' );
+	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-banana-checker' );
 
 	grunt.initConfig( {
 		banana: {
 			lexicaldata: 'i18n/lexicaldata/',
 			omegawiki: 'i18n/omegawiki/'
+		},
+		jshint: {
+			all: '.'
 		},
 		jsonlint: {
 			all: [
@@ -17,6 +21,6 @@ module.exports = function ( grunt ) {
 		}
 	} );
 
-	grunt.registerTask( 'test', [ 'jsonlint', 'banana' ] );
+	grunt.registerTask( 'test', [ 'jsonlint', 'banana', 'jshint' ] );
 	grunt.registerTask( 'default', 'test' );
 };
