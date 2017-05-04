@@ -99,7 +99,7 @@
 	"ow_dm_not_found": "nije pronađeno u bazi podataka ili je uništeno",
 	"ow_mapping_successful": "Sva mapirana polja su označena sa [OK]<br />",
 	"ow_mapping_unsuccessful": "Potrebno je imati bar dva definisana značenja prije nego se mogu povezati.",
-	"ow_will_insert": "Ubaciće se slijedeće:",
+	"ow_will_insert": "Umetnut će se sljedeće:",
 	"ow_contents_of_mapping": "Sadržaji mappinga",
 	"ow_available_contexts": "Dostupni konteksti",
 	"ow_add_concept_link": "Dodaj link ka drugim konceptima",
