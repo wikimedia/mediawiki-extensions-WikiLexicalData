@@ -5,6 +5,7 @@
 			"Aursani"
 		]
 	},
+	"ow_suggest_next": "اڳيون",
 	"ow-special-stat-languages-avail": "موجود {{PLURAL:$1|ٻولي|ٻوليون}}",
 	"ow-special-stat-languages-used": "{{PLURAL:$1|ٻولي|ٻوليون}} اظهارن سان",
 	"ow-stat-header": "لغوي اعداد جا انگ انکر",
