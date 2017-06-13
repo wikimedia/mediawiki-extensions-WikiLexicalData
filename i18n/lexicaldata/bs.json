@@ -75,7 +75,7 @@
 	"ow_transaction_from_transaction": "Iz transakcije:",
 	"ow_transaction_count": "Brojanje:",
 	"ow_transaction_user": "Ime korisnika:",
-	"ow_transaction_show_rollback": "Pokaži kontrole za vraćanje:",
+	"ow_transaction_show_rollback": "Prikaži kontrole za vraćanje:",
 	"ow_transaction_rollback_button": "Vraćanje",
 	"ow_transaction_rollback_header": "Vraćanje",
 	"ow_transaction_no_action": "Ne radi ništa",
@@ -185,7 +185,7 @@
 	"ow_no_action_specified": "<h3>Nijedna akcija nije određena</h3>\nMožda ste na ovu stranicu došli direktno? Normalno ne bi trebali biti ovdje.",
 	"ow_db_consistency_not_found": "<h2>Greška</h2>\nDesila se greška u samoj bazi podataka, wikidata ne može naći valjane podatke koji su povezani sa ovim naznačenim ID značenjem.\nMoguće je su izgubljeni.\nMolimo kontaktirajte operatora servera ili administratora.",
 	"ow_history_transaction": "Transakcija:",
-	"ow_history_show_life_span": "Pokaži period trajanja:",
+	"ow_history_show_life_span": "Prikaži period trajanja:",
 	"ow_class_attr_type_dm": "Definisano značenje",
 	"ow_class_attr_type_xlate": "Tekst koji se može prevoditi",
 	"ow_class_attr_type_plain": "Obični tekst",
@@ -206,6 +206,6 @@
 	"ow_nstab_definedmeaning": "definisano značenje",
 	"ow_nstab_edit_copy": "uređivanje kopije",
 	"right-addlanguage": "Dodavanje i promjena jezičnih postavki",
-	"ow_shown_datasets": "Pokaži setove podataka",
+	"ow_shown_datasets": "Prikaži setove podataka",
 	"ow_statistics": "Statistika leksičkih podataka"
 }
