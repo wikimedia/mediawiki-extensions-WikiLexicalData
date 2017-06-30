@@ -186,7 +186,7 @@
 	"ow_please_proved_dmid": "Pare ca quidde ca è mise manghe de 'nu \"?dmid=<ID>\" (dmid=Defined Meaning ID)<br />\nPe piacere condatte 'n'amminiistratore d'u server.",
 	"ow_please_proved_dc1": "Pare ca quidde ca è mise manghe de 'nu \"?dc1=<something>\" (dc1=dataset context 1, dataset to copy FROM)<br />\nPe piacere condatte 'n'amminiistratore d'u server.",
 	"ow_please_proved_dc2": "Pare ca quidde ca è mise manghe de 'nu \"?dc2=<something>\" (dc2=dataset context 2, dataset to copy TO)<br />\nPe piacere condatte 'n'amminiistratore d'u server.",
-	"ow_copy_successful": "<h2>Copie assute</h2>\nLe date tune parene ca onne state copiate senza probbleme.\nNò demendicà de fà 'na doppia verifiche pe essere secure!",
+	"ow_copy_successful": "<h2>Copie assute</h2>\nLe date tune parene ca onne state copiate senza probbleme.\nNò te scurdà de fà 'na doppia verifiche pe essere secure!",
 	"ow_copy_unsuccessful": "<h3>Copie non riuscite</h3>\nNisciune operazione de copie ha state fatte.",
 	"ow_no_action_specified": "<h3>Nisciune azione ha state specificate</h3>\nForse tu è venute jndr'à sta pàgene direttamende? Normalmende tu non ge è abbesogne de sta aqquà.",
 	"ow_db_consistency_not_found": "<h2>Errore</h2>\nQuiste jè 'nu probbleme de ingonsistenze d'u database, nisciune date valide non pò essere acchiate ca jè connesse a stu ID definite.\nPò essere ca s'ha perse.\nPe piacere condatte l'operatore o l'amministratore d'u server.",
@@ -222,5 +222,5 @@
 	"ow_addFromExtAPI": "Aggiunge date da le API de fore",
 	"ow_addFromExtAPI_title": "Aggiunge date da l'API",
 	"ow_api_source": "Sorgende de l'API de fore:",
-	"ow_statistics": "WikiDataLessiche:Statisteche"
+	"ow_statistics": "Statisteche de le date lessicale"
 }
