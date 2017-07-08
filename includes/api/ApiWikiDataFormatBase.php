@@ -24,11 +24,6 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	// Eclipse helper - will be ignored in production
-	require_once ( 'ApiFormatBase.php' );
-}
-
 abstract class ApiWikiDataFormatBase extends ApiFormatBase {
 
 	protected $dmRecords;
