@@ -70,7 +70,7 @@
 	"ow_importtsv_bad_columns": "<p>错误的列名“$1”。<br />\n列应该命名为“definition_iso”或“translations_iso”，\n其中iso为语言代码。</p>",
 	"ow_importtsv_test_run_title": "导入TSV数据的测试运行",
 	"ow_importtsv_nothing_added": "没有添加任何东西。",
-	"ow_importtsv_nothing_added_test": "没有添加任何东西（你进行了一次测试运行）。",
+	"ow_importtsv_nothing_added_test": "没有添加任何东西（您进行了一次测试运行）。",
 	"ow_importtsv_results": "已添加$1个定义和$2个翻译。",
 	"ow_impexptsv_unknown_lang": "<p>未知或错误的语言：$1<br />\n语言代码必须属于ISO 639-3。</p>",
 	"exporttsv": "导出TSV",
