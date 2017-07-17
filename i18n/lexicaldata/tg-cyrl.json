@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ibrahim"
+			"Ibrahim",
+			"ToJack"
 		]
 	},
 	"languages": "Викидода: Идоракуни забон",
@@ -29,6 +30,7 @@
 	"ow_available_contexts": "Матнҳои дастрас",
 	"ow_Annotation": "Тафсир",
 	"ow_ApproximateMeanings": "Маъниҳои тақрибӣ",
+	"ow_ClassAttributeAttribute": "Хусусият",
 	"ow_ClassAttributeLevel": "Сатҳ",
 	"ow_ClassAttributeType": "Навъ",
 	"ow_Collection": "Гирдовард",
@@ -40,7 +42,7 @@
 	"ow_IncomingRelations": "Робитаи воридшаванда",
 	"ow_GotoSource": "Рафтан ба манбаъ",
 	"ow_Language": "Забон",
-	"ow_OptionAttribute": "Хосият",
+	"ow_OptionAttribute": "Хусусият",
 	"ow_OptionAttributeOption": "Ихтиёр",
 	"ow_OptionAttributeOptions": "Ихтиёрот",
 	"ow_OptionAttributeValues": "Қиматҳои ихтиёр",
@@ -53,15 +55,15 @@
 	"ow_Source": "Манбаъ",
 	"ow_SourceIdentifier": "Ташхискунандаи манбаъ",
 	"ow_Text": "Матн",
-	"ow_TextAttribute": "Хосият",
+	"ow_TextAttribute": "Хусусият",
 	"ow_TextAttributeValues": "Матнҳои ҳамвор",
-	"ow_TranslatedTextAttribute": "Хосият",
+	"ow_TranslatedTextAttribute": "Хусусият",
 	"ow_TranslatedText": "Матни тарҷумашуда",
 	"ow_TranslatedTextAttributeValue": "Матн",
 	"ow_TranslatedTextAttributeValues": "Матнҳои қобили тарҷума",
-	"ow_LinkAttribute": "Хосият",
+	"ow_LinkAttribute": "Хусусият",
 	"ow_LinkAttributeValues": "Пайвандҳо",
-	"ow_Property": "Хосият",
+	"ow_Property": "Хусусият",
 	"ow_Value": "Қимат",
 	"ow_meaningsoftitle": "Маъниҳои \"$1\"",
 	"ow_meaningsofsubtitle": "<em>Вики пайванд:</em> [[$1]]",
