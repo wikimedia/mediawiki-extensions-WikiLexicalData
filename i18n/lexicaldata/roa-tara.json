@@ -222,5 +222,8 @@
 	"ow_addFromExtAPI": "Aggiunge date da le API de fore",
 	"ow_addFromExtAPI_title": "Aggiunge date da l'API",
 	"ow_api_source": "Sorgende de l'API de fore:",
-	"ow_statistics": "Statisteche de le date lessicale"
+	"ow_statistics": "Statisteche de le date lessicale",
+	"ow-stat-classes": "{{PLURAL:$1|Classe}}",
+	"ow-stat-all-is": "tutte = $1",
+	"specialpages-group-omegawiki": "OmegaUicchi"
 }

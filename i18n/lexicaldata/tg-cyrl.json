@@ -21,6 +21,8 @@
 	"ow_uipref_datasets": "Намуди пешфарз:",
 	"ow_uiprefs": "Викидода",
 	"ow_transaction_user": "Номи корбарӣ:",
+	"ow_transaction_rollback_button": "вогардонидан",
+	"ow_transaction_rollback_header": "вогардонидан",
 	"ow_transaction_restore": "Барқарор",
 	"ow_transaction_remove": "Ҳазф",
 	"ow_transaction_operation": "Амал",
