@@ -107,11 +107,6 @@ class AddSyntrans extends ApiBase {
 		return true;
 	}
 
-	// Description
-	public function getDescription() {
-		return 'Add expressions, synonyms/translations to Omegawiki.' ;
-	}
-
 	// Parameters.
 	public function getAllowedParams() {
 		return array(
@@ -142,21 +137,6 @@ class AddSyntrans extends ApiBase {
 			'ver' => array (
 				ApiBase::PARAM_TYPE => 'string',
 			),
-		);
-	}
-
-	// Describe the parameter
-	public function getParamDescription() {
-		return array(
-			'e' => 'The expression to be added' ,
-			'dm' => 'The defined meaning id where the expression will be added' ,
-			'lang' => 'The language id of the expression' ,
-			'im' => 'The identical meaning value. (boolean)' ,
-			'file' => 'The file to process. (csv format)' ,
-			'wikipage' => 'The wikipage to process. (csv format, using wiki page)',
-			'test' => 'test mode. No changes are made.',
-			'tid' => 'Use this Transaction id instead of creating a new one.',
-			'ver' => 'module version',
 		);
 	}
 

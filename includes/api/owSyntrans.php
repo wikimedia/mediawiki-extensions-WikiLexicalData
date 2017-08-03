@@ -138,11 +138,6 @@ class SynonymTranslation extends ApiBase {
 		return true;
 	}
 
-	// Description
-	public function getDescription() {
-		return 'Returns information about the synonyms and translations of a given concept (DefinedMeaningId)' ;
-	}
-
 	// Parameters.
 	public function getAllowedParams() {
 		return array(
@@ -162,17 +157,6 @@ class SynonymTranslation extends ApiBase {
 			'ver' => array (
 				ApiBase::PARAM_TYPE => 'string',
 			),
-		);
-	}
-
-	// Describe the parameter
-	public function getParamDescription() {
-		return array(
-			'dm' => 'defined_meaning_id corresponding to the concept to define.',
-			'lang' => "the language of the synonyms, or the language to translate in translations.",
-			'e' => "an expression of which one want the synonyms of.",
-			'part' => 'syn for synonyms and trans for translations. Requires lang',
-			'ver' => 'module version',
 		);
 	}
 

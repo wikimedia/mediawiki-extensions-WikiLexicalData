@@ -107,11 +107,6 @@ class Express extends Define {
 		return $express;
 	}
 
-	// Description
-	public function getDescription() {
-		return 'Returns information about the concepts ( DefinedMeaning ) and definitions of a given expression.' ;
-	}
-
 	// Parameters.
 	public function getAllowedParams() {
 		return array(
@@ -122,14 +117,6 @@ class Express extends Define {
 			'ver' => array (
 				ApiBase::PARAM_TYPE => 'string',
 			),
-		);
-	}
-
-	// Describe the parameter
-	public function getParamDescription() {
-		return array(
-			'search' => 'The expression being searched',
-			'ver' => 'module version'
 		);
 	}
 

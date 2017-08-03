@@ -303,11 +303,6 @@ class AddAnnotation extends ApiBase {
 		return true;
 	}
 
-	// Description
-	public function getDescription() {
-		return 'Add annotations to Omegawiki.' ;
-	}
-
 	// Parameters.
 	public function getAllowedParams() {
 		return array(
@@ -355,29 +350,6 @@ class AddAnnotation extends ApiBase {
 			'test' => array (
 				ApiBase::PARAM_TYPE => 'string'
 			)
-		);
-	}
-
-	// Describe the parameter
-	public function getParamDescription() {
-		return array(
-			'type' => 'Annotation type' ,
-			'e' => 'Expression to process',
-			'lang' => 'Expression language to process',
-			'dm' => 'Defined meaning id to process',
-			'attribute' => 'Attribute to process' ,
-			'attrib_lang' => 'Attribute language to process',
-			'text' => 'text to process',
-			'option' => 'option to process',
-			'option_lang' => 'option to process',
-			'relation' => 'relation to process',
-			'relation_lang' => 'relation to process',
-			'dm_relation' => "Defined meaning id relation to process
-				for defined meaning relations or a defined meaning id
-				for syntrans relations between two syntrans with
-				different defined meaning ids",
-			'wikipage' => 'The wikipage to process. (tsv format, using wiki page)',
-			'test' => 'test mode. No changes are made.'
 		);
 	}
 

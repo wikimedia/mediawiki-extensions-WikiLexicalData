@@ -87,11 +87,6 @@ class AddToCollection extends ApiBase {
 		return true;
 	}
 
-	// Description
-	public function getDescription() {
-		return 'Add annotations to Omegawiki.' ;
-	}
-
 	// Parameters.
 	public function getAllowedParams() {
 		return array(
@@ -110,17 +105,6 @@ class AddToCollection extends ApiBase {
 			'test' => array (
 				ApiBase::PARAM_TYPE => 'string'
 			),
-		);
-	}
-
-	// Describe the parameter
-	public function getParamDescription() {
-		return array(
-			'dm' => 'Defined meaning id to add to the Collection',
-			'coll_mid' => 'Defined meaning Id of the Collection' ,
-			'int_memb_id' => 'Internal member id, A further string that can be used to identify the member inside the collection',
-			'wikipage' => 'The wikipage to process. (csv format, using wiki page)',
-			'test' => 'test mode. No changes are made.'
 		);
 	}
 

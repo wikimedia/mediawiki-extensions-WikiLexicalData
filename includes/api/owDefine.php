@@ -153,11 +153,6 @@ class Define extends SynonymTranslation {
 		return $define;
 	}
 
-	// Description
-	public function getDescription() {
-		return 'Get the definition of a defined meaning.' ;
-	}
-
 	// Parameters.
 	public function getAllowedParams() {
 		return array(
@@ -174,16 +169,6 @@ class Define extends SynonymTranslation {
 			'syntrans' => array (
 				ApiBase::PARAM_TYPE => 'string',
 			),
-		);
-	}
-
-	// Describe the parameter
-	public function getParamDescription() {
-		return array(
-			'dm' => 'The defined meaning id to be defined',
-			'lang' => 'The language id to be defined',
-			'e' => 'The expression to be defined',
-			'syntrans' => 'include syntrans to the definition'
 		);
 	}
 

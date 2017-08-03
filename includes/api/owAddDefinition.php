@@ -78,11 +78,6 @@ class AddDefinition extends ApiBase {
 		return true;
 	}
 
-	// Description
-	public function getDescription() {
-		return 'Add definitions to Omegawiki.' ;
-	}
-
 	// Parameters.
 	public function getAllowedParams() {
 		return array(
@@ -104,18 +99,6 @@ class AddDefinition extends ApiBase {
 			'test' => array (
 				ApiBase::PARAM_TYPE => 'string'
 			),
-		);
-	}
-
-	// Describe the parameter
-	public function getParamDescription() {
-		return array(
-			'd' => 'The definition to be added' ,
-			'dm' => 'The defined meaning id where the definition will be added' ,
-			'lang' => 'The language id of the new definition' ,
-			'file' => 'The file to process. (csv format)' ,
-			'wikipage' => 'The wikipage to process. (csv format, using wiki page)',
-			'test' => 'test mode. No changes are made.'
 		);
 	}
 
