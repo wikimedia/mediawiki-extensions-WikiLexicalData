@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Uzdil"
+		]
+	},
+	"apihelp-ow_add_annotation-param-attribute": "بىر تەرەپ قىلىدىغان خاراكتېر.",
+	"apihelp-ow_add_annotation-param-text": "بىر تەرەپ قىلىدىغان تېكىست.",
+	"apihelp-ow_add_annotation-param-option": "بىر تەرەپ قىلىدىغان تاللانما.",
+	"apihelp-ow_add_annotation-param-option_lang": "بىر تەرەپ قىلىدىغان تاللانما.",
+	"apihelp-ow_add_annotation-param-relation": "بىر تەرەپ قىلىدىغان تاللانما.",
+	"apihelp-ow_syntrans-param-ver": "مودېل نەشىرى."
+}

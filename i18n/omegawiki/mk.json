@@ -4,5 +4,8 @@
 			"Bjankuloski06"
 		]
 	},
-	"apiow-desc": "Додаток WikiLexicalData за ОмегаВики на api.php на МедијаВики"
+	"apiow-desc": "Додаток WikiLexicalData за ОмегаВики на api.php на МедијаВики",
+	"apihelp-ow_add_annotation-summary": "Додај прибелешки во Омегавики.",
+	"apihelp-ow_add_annotation-param-type": "Вид прибелешка.",
+	"apihelp-ow_add_annotation-param-e": "Изразот за преработување."
 }
