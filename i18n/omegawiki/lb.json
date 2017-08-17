@@ -4,5 +4,6 @@
 			"Robby"
 		]
 	},
-	"apiow-desc": "WikiLexicalData OmegaWiki-Erweiderung vun der MediaWiki api.php"
+	"apiow-desc": "WikiLexicalData OmegaWiki-Erweiderung vun der MediaWiki api.php",
+	"apihelp-ow_syntrans-param-ver": "Versioun vum Modul."
 }
