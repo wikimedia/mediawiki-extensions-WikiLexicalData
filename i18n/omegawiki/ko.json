@@ -11,6 +11,7 @@
 	"apihelp-ow_add_syntrans-param-file": "처리할 파일 (csv 포맷).",
 	"apihelp-ow_add_syntrans-param-test": "테스트 모드. 변경사항은 발생하지 않습니다.",
 	"apihelp-ow_add_syntrans-param-ver": "모듈 버전.",
+	"apihelp-ow_add_to_collection-param-wikipage": "처리할 위키페이지(위키 페이지를 사용하는 csv 포맷)입니다.",
 	"apihelp-ow_add_to_collection-param-test": "테스트 모드. 변경사항은 발생하지 않습니다.",
 	"apihelp-ow_define-param-lang": "정의할 언어 id입니다.",
 	"apihelp-ow_express-param-ver": "모듈 버전.",
