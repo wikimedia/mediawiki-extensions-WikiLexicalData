@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Malafaya"
+			"Malafaya",
+			"MokaAkashiyaPT"
 		]
 	},
 	"datasearch_language": "Lhéngua:",
@@ -9,5 +10,6 @@
 	"ow_Collection_colon": "Coleçon:",
 	"ow_Definition": "Definiçon",
 	"ow_Expression": "Spresson",
-	"ow_Language": "Lhéngua"
+	"ow_Language": "Lhéngua",
+	"ow_nstab_definedmeaning": "segneficado defenido"
 }

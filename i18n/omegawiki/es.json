@@ -4,5 +4,6 @@
 			"Fitoschido"
 		]
 	},
-	"apiow-desc": "Extensión de WikiLexicalData de OmegaWiki para el archivo api.php de MediaWiki"
+	"apiow-desc": "Extensión de WikiLexicalData de OmegaWiki para el archivo api.php de MediaWiki",
+	"apihelp-ow_add_syntrans-param-e": "La expresión que se añadirá."
 }

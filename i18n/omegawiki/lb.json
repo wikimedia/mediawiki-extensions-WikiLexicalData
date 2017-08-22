@@ -5,5 +5,9 @@
 		]
 	},
 	"apiow-desc": "WikiLexicalData OmegaWiki-Erweiderung vun der MediaWiki api.php",
+	"apihelp-ow_add_annotation-param-test": "Test. Et goufe keng Ännerunge gemaach.",
+	"apihelp-ow_add_definition-summary": "Definitioune bei Omegawiki dobäisetzen.",
+	"apihelp-ow_add_definition-param-test": "Test. Et goufe keng Ännerunge gemaach.",
+	"apihelp-ow_express-param-ver": "Versioun vum Modul.",
 	"apihelp-ow_syntrans-param-ver": "Versioun vum Modul."
 }
