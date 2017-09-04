@@ -69,8 +69,8 @@
 	"ow_PopupAnnotation": "Chú thích",
 	"ow_Relations": "Các mối quan hệ",
 	"ow_Spelling": "Chính tả",
-	"ow_Synonyms": "Từ đồng âm",
-	"ow_SynonymsAndTranslations": "Từ đồng âm và cách dịch",
+	"ow_Synonyms": "Từ đồng nghĩa",
+	"ow_SynonymsAndTranslations": "Từ đồng nghĩa và bản dịch",
 	"ow_Source": "Nguồn",
 	"ow_Text": "Văn bản",
 	"ow_TextAttribute": "Thuộc tính",
@@ -101,6 +101,7 @@
 	"ow_suggest_next": "Tiếp theo",
 	"prefs-ow-lang": "Ngôn ngữ",
 	"ow-special-stat-languages-avail": "{{PLURAL:$1|Ngôn ngữ|Các ngôn ngữ}} sẵn dùng",
+	"ow_statistics": "Thống kê WikiLexicalData",
 	"ow-stat-overview-link": "Tổng quan",
 	"ow-stat-languages": "{{PLURAL:$1|Ngôn ngữ|Các ngôn ngữ}}"
 }
