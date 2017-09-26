@@ -4,5 +4,13 @@
 			"Metalhead64"
 		]
 	},
-	"apiow-desc": "OmegaWikis WikiLexicalData-Erweiterung der MediaWiki-API"
+	"apiow-desc": "OmegaWikis WikiLexicalData-Erweiterung der MediaWiki-API",
+	"apihelp-ow_add_syntrans-param-e": "Der hinzuzufügende Ausdruck.",
+	"apihelp-ow_add_syntrans-param-lang": "Die Sprachkennung des Ausdrucks.",
+	"apihelp-ow_add_syntrans-param-file": "Die zu verarbeitende Datei (CSV-Format).",
+	"apihelp-ow_add_syntrans-param-test": "Testmodus. Es wurden keine Änderungen durchgeführt.",
+	"apihelp-ow_add_syntrans-param-ver": "Modulversion.",
+	"apihelp-ow_add_to_collection-param-test": "Testmodus. Es wurden keine Änderungen durchgeführt.",
+	"apihelp-ow_define-param-lang": "Die zu definierende Sprachkennung.",
+	"apihelp-ow_define-param-e": "Der zu definierende Ausdruck."
 }
