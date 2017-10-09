@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ooswesthoesbes"
+			"Ooswesthoesbes",
+			"Pahles"
 		]
 	},
-	"ow_save": "Opslaon"
+	"ow_save": "Opslaon",
+	"ow_show": "Tuin"
 }
