@@ -60,7 +60,7 @@ class RemoveDuplicateSyntrans extends Maintenance {
 							$dc = wdGetDataSetContext();
 						}
 
-						$dbr = wfGetDB( DB_SLAVE );
+						$dbr = wfGetDB( DB_REPLICA );
 
 						$queryResult = $dbr->delete(
 							"{$dc}_syntrans",
@@ -124,7 +124,7 @@ class RemoveDuplicateSyntrans extends Maintenance {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$cond = null;
 
@@ -374,7 +374,7 @@ class RemoveDuplicateSyntrans extends Maintenance {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$cond = null;
 
@@ -407,7 +407,7 @@ class RemoveDuplicateSyntrans extends Maintenance {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$cond['ORDER BY'] = 'count(*) DESC';
 		$cond['GROUP BY'] = array(

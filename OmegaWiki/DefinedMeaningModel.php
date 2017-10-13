@@ -126,7 +126,7 @@ class DefinedMeaningModel {
 
 		$definingExpression = $this->definingExpression;
 		$id = $this->getId();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$dmRow = $dbr->selectRow(
 			array( 'dm' => "{$dc}_defined_meaning" ),
 			array(

@@ -29,7 +29,7 @@ class Search extends DefaultWikidataApplication {
 
 	function searchText( $text ) {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$queryResult = $dbr->selectSQLText(
 			array(
@@ -67,7 +67,7 @@ function getSearchResultAsRecordSet( $queryResult ) {
 	$o = OmegaWikiAttributes::getInstance();
 	global $definedMeaningReferenceType ;
 
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$spellingAttribute = new Attribute( "found-word", "Found word", "short-text" );
 	$languageAttribute = new Attribute( "language", "Language", "language" );
 

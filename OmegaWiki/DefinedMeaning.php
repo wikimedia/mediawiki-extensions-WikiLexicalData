@@ -354,7 +354,7 @@ class DefinedMeanings {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		// no exp.remove_transaction_id because definingExpression could have been deleted
 		// but is still needed to form the DM page title.
@@ -385,7 +385,7 @@ class DefinedMeanings {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$tables = array(
 				'exp' =>"{$dc}_expression",
@@ -450,7 +450,7 @@ class DefinedMeanings {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$test = false;
 		if ( isset( $options['test'] ) ) {
@@ -486,7 +486,7 @@ class DefinedMeanings {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		if ( isset( $options['ORDER BY'] ) ) {
 			$cond['ORDER BY']= $options['ORDER BY'];
@@ -581,7 +581,7 @@ class DefinedMeanings {
 	 */
 	public static function getExpressionForLanguage( $definedMeaningId, $languageId ) {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$spelling = $dbr->selectField(
 			array(
@@ -616,7 +616,7 @@ class DefinedMeanings {
 	 */
 	public static function getExpressionForAnyLanguage( $definedMeaningId ) {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$spelling = $dbr->selectField(
 			array(

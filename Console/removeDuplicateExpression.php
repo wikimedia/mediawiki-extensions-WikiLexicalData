@@ -96,7 +96,7 @@ class RemoveDuplicateExpressions extends Maintenance {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$cond = null;
 
@@ -136,7 +136,7 @@ class RemoveDuplicateExpressions extends Maintenance {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$cond = null;
 
@@ -160,7 +160,7 @@ class RemoveDuplicateExpressions extends Maintenance {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$cond = null;
 
@@ -192,7 +192,7 @@ class RemoveDuplicateExpressions extends Maintenance {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$cond['ORDER BY'] = 'expression_id';
 		$cond['LIMIT']= 2;
@@ -225,7 +225,7 @@ class RemoveDuplicateExpressions extends Maintenance {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$cond['ORDER BY'] = 'count(spelling) DESC';
 		$cond['GROUP BY'] = array(

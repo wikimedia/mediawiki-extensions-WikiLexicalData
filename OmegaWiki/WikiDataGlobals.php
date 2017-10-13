@@ -142,7 +142,7 @@ function wdGetDataSetContext( $dc = null ) {
 
 	$datasets = wdGetDataSets();
 	$groups = $wgUser->getGroups();
-	$dbs = wfGetDB( DB_SLAVE );
+	$dbs = wfGetDB( DB_REPLICA );
 	$pref = $wgUser->getOption( 'ow_uipref_datasets' );
 
 	$trydefault = '';
@@ -182,7 +182,7 @@ function &wdGetDataSets() {
 	static $datasets, $wgGroupPermissions;
 	if ( empty( $datasets ) ) {
 		// Load defs from the DB
-		$dbs = wfGetDB( DB_SLAVE );
+		$dbs = wfGetDB( DB_REPLICA );
 		$res = $dbs->select( 'wikidata_sets', array( 'set_prefix' ) );
 
 		while ( $row = $dbs->fetchObject( $res ) ) {

@@ -37,7 +37,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$this->o = OmegaWikiAttributes::getInstance();
 		$this->dc = wdGetDataSetContext();
-		$this->dbr = wfGetDB( DB_SLAVE );
+		$this->dbr = wfGetDB( DB_REPLICA );
 		$wgOut->disable();
 
 		$request = $this->getRequest();

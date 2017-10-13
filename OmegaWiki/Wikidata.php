@@ -296,7 +296,7 @@ class DataSet {
 
 		$fname = "DataSet::setPrefix";
 
-		$dbs = wfGetDB( DB_SLAVE );
+		$dbs = wfGetDB( DB_REPLICA );
 		$this->dataSetPrefix = $cp;
 		$res = $dbs->select(
 			"wikidata_sets",

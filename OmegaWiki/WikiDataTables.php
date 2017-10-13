@@ -800,7 +800,7 @@ function expressionToSQL( $expression ) {
 		return $expression;
 	}
 	elseif ( is_string( $expression ) ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		return $dbr->addQuotes( $expression );
 	}
 	elseif ( is_object( $expression ) && $expression instanceof DatabaseExpression ) {

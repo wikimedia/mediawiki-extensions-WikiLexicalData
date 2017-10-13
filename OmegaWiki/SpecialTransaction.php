@@ -449,7 +449,7 @@ function getTranslatedContentHistory( $translatedContentId, $languageId, $isLate
 	$recordSet = new ArrayRecordSet( $o->translatedContentHistoryStructure, $o->translatedContentHistoryKeyStructure );
 
 	if ( $isLatest ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$queryResult = $dbr->query(
 			"SELECT text_text, add_transaction_id, remove_transaction_id " .
 			" FROM {$wgDBprefix}{$dc}_translated_content, {$wgDBprefix}{$dc}_text" .
@@ -492,7 +492,7 @@ function getUpdatedDefinedMeaningDefinitionRecordSet( $transactionId ) {
 
 	$dc = wdGetDataSetContext();
 
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT defined_meaning_id, translated_content_id, language_id, text_text, " .
 			getOperationSelectColumn( "{$wgDBprefix}{$dc}_translated_content", $transactionId ) . ', ' .
@@ -528,7 +528,7 @@ function getUpdatedAlternativeDefinitionsRecordSet( $transactionId ) {
 	$o = OmegaWikiAttributes::getInstance();
 
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT meaning_mid, meaning_text_tcid, source_id, " .
 			getOperationSelectColumn( "{$wgDBprefix}{$dc}_alt_meaningtexts", $transactionId ) . ', ' .
@@ -566,7 +566,7 @@ function getUpdatedAlternativeDefinitionTextRecordSet( $transactionId ) {
 	$o = OmegaWikiAttributes::getInstance();
 
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT meaning_mid, translated_content_id, source_id, language_id, text_text, " .
 			getOperationSelectColumn( "{$wgDBprefix}{$dc}_translated_content", $transactionId ) . ', ' .
@@ -605,7 +605,7 @@ function getUpdatedSyntransesRecordSet( $transactionId, $dc = null ) {
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext( $dc );
 
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT syntrans_sid, defined_meaning_id, {$wgDBprefix}{$dc}_syntrans.expression_id, language_id, spelling, identical_meaning, " .
 			getOperationSelectColumn( "{$wgDBprefix}{$dc}_syntrans", $transactionId ) . ', ' .
@@ -665,7 +665,7 @@ function getUpdatedRelationsRecordSet( $transactionId ) {
 
 	$dc = wdGetDataSetContext();
 
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT relation_id, meaning1_mid, meaning2_mid, relationtype_mid, " .
 			getOperationSelectColumn( "{$dc}_meaning_relations", $transactionId ) . ', ' .
@@ -699,7 +699,7 @@ function getUpdatedClassMembershipRecordSet( $transactionId ) {
 
 	$dc = wdGetDataSetContext();
 
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT class_membership_id, class_mid, class_member_mid, " .
 		getOperationSelectColumn( "{$wgDBprefix}{$dc}_class_membership", $transactionId ) . ', ' .
@@ -731,7 +731,7 @@ function getUpdatedCollectionMembershipRecordSet( $transactionId ) {
 	$o = OmegaWikiAttributes::getInstance();
 
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT {$wgDBprefix}{$dc}_collection_contents.collection_id, collection_mid, member_mid, internal_member_id, " .
 			getOperationSelectColumn( "{$wgDBprefix}{$dc}_collection_contents", $transactionId ) . ', ' .
@@ -767,7 +767,7 @@ function getUpdatedClassAttributesRecordSet( $transactionId ) {
 	$o = OmegaWikiAttributes::getInstance();
 
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT object_id, class_mid, level_mid, attribute_mid, attribute_type, " .
 			getOperationSelectColumn( "{$wgDBprefix}{$dc}_class_attributes", $transactionId ) . ', ' .
@@ -811,7 +811,7 @@ function getUpdatedLinkRecordSet( $transactionId ) {
 	$o = OmegaWikiAttributes::getInstance();
 
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT value_id, object_id, attribute_mid, url, label, " .
 		getOperationSelectColumn( "{$dc}_url_attribute_values", $transactionId ) . ', ' .
@@ -843,7 +843,7 @@ function getUpdatedTextRecordSet( $transactionId ) {
 	$o = OmegaWikiAttributes::getInstance();
 
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT value_id, object_id, attribute_mid, text, " .
 		getOperationSelectColumn( "{$dc}_text_attribute_values", $transactionId ) . ', ' .
@@ -875,7 +875,7 @@ function getUpdatedTranslatedTextPropertyRecordSet( $transactionId ) {
 	$o = OmegaWikiAttributes::getInstance();
 
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT value_id, object_id, attribute_mid, value_tcid, " .
 			getOperationSelectColumn( "{$dc}_translated_content_attribute_values", $transactionId ) . ', ' .
@@ -911,7 +911,7 @@ function getUpdatedTranslatedTextRecordSet( $transactionId ) {
 	$o = OmegaWikiAttributes::getInstance();
 
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT value_id, object_id, attribute_mid, translated_content_id, language_id, text_text, " .
 			getOperationSelectColumn( "{$dc}_translated_content", $transactionId ) . ', ' .
@@ -1387,7 +1387,7 @@ function rollBackTranslatedContent( $idStack, $rollBackAction, $translatedConten
 function getTranslatedContentFromHistory( $translatedContentId, $languageId, $addTransactionId ) {
 
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query(
 		"SELECT text_text " .
 		" FROM {$dc}_translated_content, {$dc}_text " .

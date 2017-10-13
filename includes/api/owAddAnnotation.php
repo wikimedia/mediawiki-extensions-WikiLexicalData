@@ -711,7 +711,7 @@ class AddAnnotation extends ApiBase {
 
 	private function processAddOptionAttributeValues( $spelling, $language, $definedMeaningId, $attribute, $attribLang, $option, $optionLang ) {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		// if spelling is not null, process object as syntrans
 		// if null, process as defined meaning

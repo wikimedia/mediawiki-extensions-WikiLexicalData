@@ -15,7 +15,7 @@ class SpecialExportTSV extends SpecialPage {
 		$output = $this->getOutput();
 		$request = $this->getRequest();
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$dc = wdGetDataSetcontext();
 		$filterType = null;
 		$topicAttributeId = 1150889; // ugly but will do for now.
@@ -343,7 +343,7 @@ class SpecialExportTSV extends SpecialPage {
 		// wfDebug($langQuery."\n");
 
 		$languages = array();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$langResults = $dbr->query( $langQuery );
 		while ( $row = $dbr->fetchRow( $langResults ) ) {
 			$languages[] = $row;

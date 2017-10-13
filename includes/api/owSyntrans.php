@@ -296,7 +296,7 @@ class SynonymTranslation extends ApiBase {
  */
 function getSynonymAndTranslation( $definedMeaningId, $excludeSyntransId = null ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$result = $dbr->select(
 		array(

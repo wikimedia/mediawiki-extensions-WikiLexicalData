@@ -113,7 +113,7 @@ class Expressions {
 		} else {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$opt = array(
 			'spelling' => $spelling,
@@ -165,7 +165,7 @@ class Expressions {
 		} else {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$opt = array(
 			'spelling' => $spelling,
@@ -225,7 +225,7 @@ class Expressions {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$cond[] = null;
 
@@ -262,7 +262,7 @@ class Expressions {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		if ( isset( $options['ORDER BY'] ) ) {
 			$cond['ORDER BY']= $options['ORDER BY'];
@@ -311,7 +311,7 @@ class Expressions {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		if ( isset( $options['ORDER BY'] ) ) {
 			$cond['ORDER BY']= $options['ORDER BY'];

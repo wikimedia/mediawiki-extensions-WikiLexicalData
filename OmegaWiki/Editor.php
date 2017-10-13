@@ -2618,7 +2618,7 @@ class ObjectPathEditor extends Viewer {
 	}
 
 	protected function resolveAttribute( $objectId, $tableName ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		// @todo This query probably needs to be placed in the db API, but where? ~he
 		$attribute = $dbr->selectRow(

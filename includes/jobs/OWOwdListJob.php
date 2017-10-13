@@ -57,7 +57,7 @@ Class CreateOwdListJob extends Job {
 	protected function createList( $type, $code, $format, $start ) {
 		global $wgWldDownloadScriptPath;
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$csv = new WldFormatCSV();
 
 		// the greater the value of $sqlLimit the faster the download file is

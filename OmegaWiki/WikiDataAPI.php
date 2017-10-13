@@ -25,7 +25,7 @@ class OmegaWikiDataBase {
 		} else {
 			$dc = '';
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$existId = $dbr->selectField(
 			"{$dc}{$table}",
@@ -54,7 +54,7 @@ function getExpression( $expressionId, $dc = null ) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
 	}
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$expressionRecord = $dbr->selectRow(
 		"{$dc}_expression",
 		array( 'spelling', 'language_id' ),
@@ -96,7 +96,7 @@ function newObjectId( $table, $dc = null ) {
 function getTableNameWithObjectId( $objectId ) {
 	$dc = wdGetDataSetContext();
 
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$table = $dbr->selectField(
 		"{$dc}_objects",
 		'table',
@@ -124,7 +124,7 @@ function getExpressionIdAnyLanguage( $spelling ) {
 
 function getRemovedExpressionId( $spelling, $languageId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$expressionId = $dbr->selectField(
 		"{$dc}_expression",
@@ -146,7 +146,7 @@ function getExpressionIdFromSyntrans( $syntransId, $dc = null ) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
 	}
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$expressionId = $dbr->selectField(
 		"{$dc}_syntrans",
 		'expression_id',
@@ -241,7 +241,7 @@ function createInitialRevisionForPage( $wikipage, $comment ) {
 function existSpelling( $spelling, $languageId = 0 ) {
 	$dc = wdGetDataSetContext();
 
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$cond = array( 'spelling' => $spelling, 'remove_transaction_id' => null );
 
@@ -319,7 +319,7 @@ function findOrCreateExpression( $spelling, $languageId, $options = array() ) {
 
 function getSynonymId( $definedMeaningId, $expressionId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$syntransId = $dbr->selectField(
 		"{$dc}_syntrans",
 		'syntrans_sid',
@@ -369,7 +369,7 @@ function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identica
  */
 function expressionIsBoundToDefinedMeaning( $definedMeaningId, $expressionId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$syntransId = $dbr->selectField(
 		"{$dc}_syntrans",
@@ -397,7 +397,7 @@ function addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $id
 
 function getRelationId( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$relationId = $dbr->selectField(
 		"{$dc}_meaning_relations",
@@ -492,7 +492,7 @@ function removeRelationWithId( $relationId ) {
  */
 function getRelationDefinedMeanings( $relationTypeId = null, $lhs = null, $rhs = null, $dc = null ) {
 	$dc = wdGetDataSetContext( $dc );
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$result = array();
 	$queryResult = array();
@@ -599,7 +599,7 @@ function addClassAttribute( $classMeaningId, $levelMeaningId, $attributeMeaningI
 
 function getClassAttributeId( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$classAttributeId = $dbr->selectField(
 		"{$dc}_class_attributes",
@@ -663,7 +663,7 @@ function removeClassAttributeWithId( $classAttributeId ) {
 
 function getClassMembershipId( $classMemberId, $classId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$classMembershipId = $dbr->selectField(
 		"{$dc}_class_membership",
 		'class_membership_id',
@@ -809,7 +809,7 @@ function updateSynonymOrTranslation( $definedMeaningId, $expressionId, $identica
 
 function updateSynonymOrTranslationWithId( $syntransId, $identicalMeaningInput ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	// check that $identicalMeaningInput has the correct form
 	if ( $identicalMeaningInput != "true" && $identicalMeaningInput != "false" ) {
@@ -894,7 +894,7 @@ function translatedTextExists( $textId, $languageId ) {
 		throw new Exception( "translatedTextExists - languageId is null" );
 	}
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$translatedContentId = $dbr->selectField(
 		"{$dc}_translated_content",
@@ -925,7 +925,7 @@ function addTranslatedTextIfNotPresent( $translatedContentId, $languageId, $text
 
 function getDefinedMeaningDefinitionId( $definedMeaningId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$meaningTextTcid = $dbr->selectField(
 		"{$dc}_defined_meaning",
 		'meaning_text_tcid',
@@ -1054,7 +1054,7 @@ function removeDefinedMeaningDefinition( $definedMeaningId, $languageId ) {
 
 function definedMeaningInCollection( $definedMeaningId, $collectionId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$collectionId = $dbr->selectField(
 		"{$dc}_collection_contents",
 		'collection_id',
@@ -1092,7 +1092,7 @@ function addDefinedMeaningToCollectionIfNotPresent( $definedMeaningId, $collecti
 
 function getDefinedMeaningFromCollection( $collectionId, $internalMemberId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$memberMid = $dbr->selectField(
 		"{$dc}_collection_contents",
 		'member_mid',
@@ -1136,7 +1136,7 @@ function bootstrapCollection( $collection, $languageId, $collectionType ) {
 
 function getCollectionMeaningId( $collectionId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$collectionMid = $dbr->selectField(
 		"{$dc}_collection",
 		'collection_mid',
@@ -1151,7 +1151,7 @@ function getCollectionMeaningId( $collectionId ) {
 
 function getCollectionId( $collectionMeaningId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$collectionId = $dbr->selectField(
 		"{$dc}_collection",
 		'collection_id',
@@ -1259,7 +1259,7 @@ function updateTextAttributeValue( $text, $textValueAttributeId ) {
 
 function getTextValueAttribute( $textValueAttributeId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$textAttributeValue = $dbr->selectRow(
 		"{$dc}_text_attribute_values",
 		array( 'object_id', 'attribute_mid', 'text' ),
@@ -1275,7 +1275,7 @@ function getTextValueAttribute( $textValueAttributeId ) {
  * @return if not exists, false
  */
 function getTextAttributeValueId( $objectId, $textAttributeId, $text ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$dc = wdGetDataSetContext();
 
 	$valueId = $dbr->selectField(
@@ -1355,7 +1355,7 @@ function updateLinkAttributeValue( $linkValueAttributeId, $url, $label = "" ) {
 
 function getLinkValueAttribute( $linkValueAttributeId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$linkAttribute = $dbr->selectRow(
 		"{$dc}_url_attribute_values",
 		array( 'object_id', 'attribute_mid', 'url' ),
@@ -1393,7 +1393,7 @@ function addTranslatedTextAttributeValue( $objectId, $attributeId, $languageId, 
 
 function getTranslatedTextAttribute( $valueId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$translatedText = $dbr->selectRow(
 		"{$dc}_translated_content_attribute_values",
@@ -1430,7 +1430,7 @@ function removeTranslatedTextAttributeValue( $valueId ) {
 
 function optionAttributeValueExists( $objectId, $optionId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$valueId = $dbr->selectField(
 		"{$dc}_option_attribute_values",
@@ -1590,7 +1590,7 @@ function getOptionAttributeOptionsAttributeIdFromExpressionId ( $expressionId, $
 
 function getOptionAttributeOptionsAttributeIdFromDM( $definedMeaningId, $classMid, $levelMeaningId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	/** @todo Quick Fix: Better if we find a way of providing
 	 * the class_mid than to set a negative number
@@ -1653,7 +1653,7 @@ function getOptionAttributeOptionsOptionMidFromExpressionId ( $expressionId ) {
  * returns false if not exist
  */
 function getOptionAttributeValueId( $objectId, $optionId ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$dc = wdGetDataSetContext();
 	$valueId = $dbr->selectField(
 		"{$dc}_option_attribute_values",
@@ -1698,7 +1698,7 @@ function getDefinedMeaningSpellingForAnyLanguage( $definedMeaning ) {
  */
 function getDefinedMeaningSpellingLanguageId( $definedMeaning ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$languageId = $dbr->selectField(
 		array(
@@ -1724,7 +1724,7 @@ function getDefinedMeaningSpellingLanguageId( $definedMeaning ) {
  */
 function getLanguageIdForDefinedMeaningAndExpression( $definedMeaningId, $spelling ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$languageId = $dbr->selectField(
 		array(
 			'exp' => "{$dc}_expression",
@@ -1755,7 +1755,7 @@ function getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId,
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
 	}
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$text = $dbr->selectField(
 		array(
@@ -1787,7 +1787,7 @@ function getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId,
  */
 function getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$text = $dbr->selectField(
 		array(
@@ -1841,7 +1841,7 @@ function getDefinedMeaningDefinition( $definedMeaningId ) {
  */
 function getDefinedMeaningDefinitionLanguageForAnyLanguage( $definedMeaningId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$languageId = $dbr->selectField(
 		array(
@@ -1867,7 +1867,7 @@ function getDefinedMeaningDefinitionLanguageForAnyLanguage( $definedMeaningId ) 
 
 function getDefinedMeaningDefinitionLanguageIdForDefinition( $definedMeaningId, $text ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$languageId = $dbr->selectField(
 		array(
@@ -1944,7 +1944,7 @@ function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallback
 	if ( is_null ( $dc ) ) {
 		$dc = wdGetDataSetContext( $dc );
 	}
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	# wfDebug("User language: $userLanguageId\n");
 
@@ -2018,7 +2018,7 @@ function isClass( $objectId ) {
 
 	// if not, search in the db
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$collectionId = $dbr->selectField(
 		array(
@@ -2050,7 +2050,7 @@ function getCollectionContents( $collectionId ) {
 	global $wgWikidataDataSet;
 
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$queryResult = $dbr->query(
 		selectLatest(
@@ -2079,7 +2079,7 @@ function getCollectionContents( $collectionId ) {
 function getCollectionMembers( $collectionId, $dc = null ) {
 	$memberMids = array();
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$result = $dbr->select(
 		"{$dc}_collection_contents",
@@ -2099,7 +2099,7 @@ function getCollectionMembers( $collectionId, $dc = null ) {
 
 function getCollectionMemberId( $collectionId, $sourceIdentifier ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$memberMid = $dbr->selectField(
 		"{$dc}_collection_contents",
@@ -2119,7 +2119,7 @@ function getCollectionMemberId( $collectionId, $sourceIdentifier ) {
 
 function getAnyDefinedMeaningWithSourceIdentifier( $sourceIdentifier ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$memberMid = $dbr->selectField(
 		"{$dc}_collection_contents",
@@ -2154,7 +2154,7 @@ function getExpressionIdMeaningIds($expressionId, $dc = null) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
 	}
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$queryResult = $dbr->select(
 		array(
@@ -2199,7 +2199,7 @@ function createConceptMapping( $concepts, $override_transaction = null ) {
 }
 
 function getMapping( $dc, $collid, $dm_id ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$internalMemberId = $dbr->selectField(
 		"{$dc}_collection_contents",
@@ -2219,7 +2219,7 @@ function getMapping( $dc, $collid, $dm_id ) {
 /** ask db to provide a universally unique id
  */
 function getUUID( $concepts ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$uuid_array = array();
 	$uuid = - 1;
@@ -2247,7 +2247,7 @@ function getUUID( $concepts ) {
 /** this funtion assumes that there is only a single mapping collection */
 
 function getCollectionIdForDC( $dc ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$collectionId = $dbr->selectField(
 		"{$dc}_collection",
@@ -2303,7 +2303,7 @@ function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction
  * @see createConceptMapping($concepts)
  */
 function &readConceptMapping( $concept_id ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$sets = wdGetDataSets();
 	$map = array();
 
@@ -2332,7 +2332,7 @@ function getConceptId( $dm, $dc ) {
 		$dc = wdGetDataSetContext();
 	}
 	$collection_id = getCollectionIdForDC( $dc );
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$internalMemberId = $dbr->selectField(
 		"{$dc}_collection_contents",
@@ -2381,7 +2381,7 @@ function definingExpressionRow( $definedMeaningId, $dc = null ) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
 	}
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$expression = $dbr->selectRow(
 		array(
@@ -2438,7 +2438,7 @@ function definedMeaningExpression( $definedMeaningId ) {
 
 function getTextValue( $textId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$text = $dbr->selectField(
 		"{$dc}_text",
@@ -2461,7 +2461,7 @@ function getExpressions( $spelling, $dc = null ) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
 	}
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$viewInformation = new ViewInformation();
 	$langsubset = $viewInformation->getFilterLanguageList();
@@ -2516,7 +2516,7 @@ class ClassAttributes {
 	 */
 	public function __construct( $definedMeaningId ) {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		global $wgDefaultClassMids, $wgWikidataDataSet;
 		$queryResult = $dbr->select(
@@ -2584,7 +2584,7 @@ function verifyColumn( $table, $column, $value, $isDc ) {
  * null if not found
  */
 function verifyLanguageId( $languageId ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$existId = $dbr->selectField(
 		'language',
@@ -2641,7 +2641,7 @@ function verifyRelationtypeMId( $relationtypeMid ) {
 
 function getDefinedMeaningIdFromExpressionIdAndLanguageId( $expressionId, $languageId ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$queryResult = $dbr->select(
 		array(
@@ -2678,7 +2678,7 @@ class Collections {
 	 */
 	public static function getDefinedMeaningIdCollectionMembershipExpressions( $definedMeaningId, $languageId ) {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$queryResult = $dbr->select(
 			array(
@@ -2739,7 +2739,7 @@ class WLD_Class {
 	 */
 	public static function getDefinedMeaningIdClassMembershipExpressions( $definedMeaningId, $languageId ) {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$Expressions = new Expressions;
 
 		$queryResult = $dbr->select(

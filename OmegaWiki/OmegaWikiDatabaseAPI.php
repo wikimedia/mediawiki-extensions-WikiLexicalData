@@ -774,7 +774,7 @@ class Syntrans {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$test = false;
 		if ( isset( $options['test'] ) ) {
@@ -818,7 +818,7 @@ class Syntrans {
 		} else {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$opt = array(
 			'defined_meaning_id' => $definedMeaningId,

@@ -56,7 +56,7 @@ class SpecialOWStatistics extends SpecialPage {
 
 	private function getNumberOfDM ( ) {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$nbdm = $dbr->selectField(
 			"{$dc}_syntrans",
@@ -69,7 +69,7 @@ class SpecialOWStatistics extends SpecialPage {
 
 	public function getOverview ( $statspageformat=False ) {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$output = "";
 
 		$nbsyntrans = $dbr->selectField(
@@ -183,7 +183,7 @@ class SpecialOWStatistics extends SpecialPage {
 
 	private function getDefinedMeaningPerLanguage () {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		// get the number of DMs with at least one translation for each language
 		$queryResult = $dbr->select(
 			array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
@@ -197,7 +197,7 @@ class SpecialOWStatistics extends SpecialPage {
 
 	private function getDefinitionPerLanguage () {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		// get the number of definitions for each language (note : a definition is always unique )
 		$queryResult = $dbr->select(
 			array( 'tc' => "{$dc}_translated_content", 'dm' => "{$dc}_defined_meaning" ),
@@ -214,7 +214,7 @@ class SpecialOWStatistics extends SpecialPage {
 
 	private function getExpressionPerLanguage () {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		// get the number of expressions for each language
 		$queryResult = $dbr->select(
 			"{$dc}_expression",
@@ -228,7 +228,7 @@ class SpecialOWStatistics extends SpecialPage {
 
 	private function getSyntransPerLanguage () {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		// get the number of syntrans' for each language
 		$queryResult = $dbr->select(
 			array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
@@ -283,7 +283,7 @@ class SpecialOWStatistics extends SpecialPage {
 
 	private function getAnnotationStats () {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$output = "";
 
 		// option attributes

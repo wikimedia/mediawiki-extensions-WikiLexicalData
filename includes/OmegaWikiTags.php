@@ -68,7 +68,7 @@ function wldLanguageStats( $input ) {
  */
 function getNumberOfDefinedMeanings () {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$nbdm = $dbr->selectField(
 		"{$dc}_syntrans",
@@ -85,7 +85,7 @@ function getNumberOfDefinedMeanings () {
  */
 function getNumberOfLanguages () {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$nbdm = $dbr->selectField(
 		"{$dc}_expression",

@@ -66,7 +66,7 @@ class OmegaWikiRecordSets {
 
 		$foundDefinedMeaningIds = array();
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$queryResult = $dbr->select(
 			$sql['table'], $sql['vars'], $sql['conds'], __METHOD__
 		);
@@ -97,7 +97,7 @@ class OmegaWikiRecordSets {
  */
 function getDefiningSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$sqlQuery = $dbr->selectSQLText(
 		array(
@@ -123,7 +123,7 @@ function getDefiningSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 function fetchDefinedMeaningDefiningExpressions( array &$definedMeaningIds, array &$definedMeaningReferenceRecords ) {
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$queryResult = $dbr->select(
 		array(
@@ -238,7 +238,7 @@ function expandDefinedMeaningReferencesInRecordSet( RecordSet $recordSet, array 
 function getSyntransReferenceRecords( array $syntransIds, $usedAs ) {
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	// an array of records
 	$result = array();
@@ -308,7 +308,7 @@ function getExpressionSpellings( array $expressionIds ) {
 	$dc = wdGetDataSetContext();
 
 	if ( count( $expressionIds ) > 0 ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$queryResult = $dbr->select(
 			"{$dc}_expression",
@@ -346,7 +346,7 @@ function expandExpressionSpellingsInRecordSet( RecordSet $recordSet, array $expr
 function getTextReferences( array $textIds ) {
 	$dc = wdGetDataSetContext();
 	if ( count( $textIds ) > 0 ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$queryResult = $dbr->select(
 			"{$dc}_text",
@@ -393,7 +393,7 @@ function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInfor
 
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$identicalMeaning = $exactMeaning ? 1 : 0;
 	$recordSet = new ArrayRecordSet( $o->expressionMeaningStructure, new Structure( $o->definedMeaningId ) );
 
@@ -711,7 +711,7 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$vars = array( 'language_id', 'text_id' );
 	$cond = array( 'translated_content_id' => $translatedContentId );
@@ -785,7 +785,7 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $viewInformation, $excludeSyntransId = null ) {
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 
 	$vars = array(

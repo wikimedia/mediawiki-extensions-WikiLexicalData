@@ -18,7 +18,7 @@ function ConvertEpochToIso( $epoch ) {
 
 function getDefinedMeaning( $dc, $textId ) {
 	// translate the text id to a translated text id	
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query( "select translated_content_id from {$dc}_translated_content where text_id = $textId and remove_transaction_id is NULL" );
 	if ( $row = $dbr->fetchObject( $queryResult ) ) {
 		$tcid = $row->translated_content_id;
@@ -54,7 +54,7 @@ function getDefinedMeaning( $dc, $textId ) {
 function getInternalIdentifier( $dc, $definedMeaningId, $languageId ) {
 	$collectionName = "uw";
 
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$query = "SELECT collection_id, internal_member_id FROM {$dc}_collection_contents where member_mid = $definedMeaningId";
 	$queryResult = $dbr->query( "SELECT collection_id, internal_member_id FROM {$dc}_collection_contents where member_mid = $definedMeaningId" );
 	if ( $row = $dbr->fetchObject( $queryResult ) ) {
@@ -83,7 +83,7 @@ function getInternalIdentifier( $dc, $definedMeaningId, $languageId ) {
 }
 
 function getTextForId( $dc, $text_id ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$textResult = $dbr->query( "select text_text from {$dc}_text where text_id = $text_id" );
 	if ( $textRecord = $dbr->fetchObject( $textResult ) ) {
 		return $textRecord->text_text;
@@ -94,7 +94,7 @@ function getTextForId( $dc, $text_id ) {
 }
 
 function getDefinedMeaningTitle( $dc, $definedMeaningId ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$result = $dbr->query( "SELECT meaning_text_tcid FROM {$dc}_defined_meaning  where defined_meaning_id = $definedMeaningId" );
 	if ( $record = $dbr->fetchObject( $result ) ) {
 		$result = $dbr->query( "SELECT text_id FROM {$dc}_translated_content where translated_content_id = $record->meaning_text_tcid and remove_transaction_id IS NULL" );
@@ -106,7 +106,7 @@ function getDefinedMeaningTitle( $dc, $definedMeaningId ) {
 }
 
 function getUser( $user_id ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query( "SELECT user_name FROM `user` u where user_id = $user_id" );
 	if ( $row = $dbr->fetchObject( $queryResult ) ) {
 		return $row->user_name;
@@ -152,7 +152,7 @@ else {
 	$endClause = "";
 }
 
-$dbr = wfGetDB( DB_SLAVE );
+$dbr = wfGetDB( DB_REPLICA );
 
 $queryResult = $dbr->query( "select language_id from language where wikimedia_key='en'" );
 $languageId = $dbr->fetchObject( $queryResult )->language_id;

@@ -18,7 +18,7 @@ class SpecialImportLangNames extends SpecialPage {
 	function execute( $par ) {
 		global $wgIso639_3CollectionId;
 		// These operations should always be on the community database.
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$dbw = wfGetDB( DB_MASTER );
 		$dc = wdGetDataSetContext();
 		$output = $this->getOutput();

@@ -250,7 +250,7 @@ class ApiWikiData extends ApiBase {
 			$query .= "LIMIT $dump_start, $dump_items";
 			# echo $query;
 
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_REPLICA );
 			$result = $dbr->query( $query );
 			for ( $i = 0; $i < $dbr->numRows( $result ); $i++ ) {
 				$row = $dbr->fetchRow( $result );
@@ -468,7 +468,7 @@ class ApiWikiData extends ApiBase {
 			$query = "SELECT member_mid FROM uw_collection_contents WHERE collection_id=$id_safe";
 		}
 
-				$dbr = wfGetDB( DB_SLAVE );
+				$dbr = wfGetDB( DB_REPLICA );
 
 		$result = $dbr->query( $query );
 		$xml = new SimpleXMLElement( "<collection></collection>" );
@@ -507,7 +507,7 @@ class ApiWikiData extends ApiBase {
 			$language_list .= ")";
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$xml = new SimpleXMLElement( "<wikidata></wikidata>" );
 		$body = $xml->addChild( 'body' );
@@ -571,7 +571,7 @@ class ApiWikiData extends ApiBase {
 			ORDER BY spelling
 			";
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		try {
 			$result = $dbr->query( $query );
 		} catch ( Exception $e ) { echo $e->getTraceAsString(); echo mysql_error(); }

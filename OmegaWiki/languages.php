@@ -21,7 +21,7 @@ class WLDLanguage {
 	 * @see use OwDatabaseAPI::getLanguageId instead
 	 */
 	static function getId( $options ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$vars = 'language_id';
 
@@ -59,7 +59,7 @@ class WLDLanguage {
 	 * @see use OwDatabaseAPI::getOwLanguageNames instead
 	 */
 	static function getNames( $code ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$names = array();
 		list ( $table, $vars, $conds, $join_conds ) = WLDLanguage::getParametersForNames( $code );
 		$lang_res = $dbr->select(
@@ -76,7 +76,7 @@ class WLDLanguage {
 	 * @see use OwDatabaseAPI::getLanguageCodeForIso639_3 instead
 	 */
 	static function getCodeForIso639_3( $iso639_3 ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$wikimediaKey = $dbr->selectField(
 			'language',
 			'wikimedia_key',
@@ -101,7 +101,7 @@ class WLDLanguage {
 	static function getParametersForNames( $langCode, $lang_subset = array() ) {
 		/* Use a simpler query if the user's language is English. */
 		/* getLanguageIdForCode( 'en' ) = 85 */
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$langId = getLanguageIdForCode( $langCode );
 
 		if ( $langCode == WLD_ENGLISH_LANG_WMKEY || is_null( $langId ) ) {
@@ -163,7 +163,7 @@ function getLanguageIdForCode( $code ) {
 
 	static $languages = null;
 	if ( is_null( $languages ) ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$id_res = $dbr->select(
 			'language',
 			array( 'language_id', 'wikimedia_key'),
@@ -188,7 +188,7 @@ function getLanguageIdForIso639_3( $code ) {
 	static $languages = null;
 
 	if ( is_null( $languages ) ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$result = $dbr->select(
 			'language',
 			array( 'language_id', 'iso639_3'),
@@ -214,7 +214,7 @@ function getLanguageIso639_3ForId( $id ) {
 	static $languages = null;
 
 	if ( is_null( $languages ) ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$result = $dbr->select(
 			'language',
 			array( 'language_id', 'iso639_3'),
@@ -241,7 +241,7 @@ function getDMIdForIso639_3( $code ) {
 	global $wgIso639_3CollectionId;
 	// should we use the static approach, as for the other functions?
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$langdm = $dbr->selectField(
 		"{$dc}_collection_contents",
@@ -275,7 +275,7 @@ function getSQLForLanguageNames( $lang_code, $lang_subset = array() ) {
 }
 
 function getLanguageIdLanguageNameFromIds( $languageId, $nameLanguageId ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$languageId = $dbr->selectField(
 		'language_names',
@@ -294,7 +294,7 @@ function getLanguageIdLanguageNameFromIds( $languageId, $nameLanguageId ) {
 
 // Returns true or false
 function LanguageIdExist( $languageId ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 
 	$languageId = $dbr->selectField(
 		'language',

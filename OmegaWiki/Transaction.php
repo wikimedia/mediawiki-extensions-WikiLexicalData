@@ -220,7 +220,7 @@ function getUpdateTransactionId() {
 
 function getLatestTransactionId() {
 	$dc = wdGetDataSetContext();
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	// false if not found
 	$transactionId = $dbr->selectField(
 		"{$dc}_transactions",
@@ -268,7 +268,7 @@ function getInTransactionRestriction( $table, $transactionId ) {
 }
 
 function getUserName( $userId ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_REPLICA );
 	$userName = $dbr->selectField(
 		'user',
 		'user_name',
@@ -412,7 +412,7 @@ class Transactions {
 			return -1;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		// If jobs exist, skip this function and return -2
 		// unless if it is the same job that requires a transaction_id
@@ -453,7 +453,7 @@ class Transactions {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$result = $dbr->selectField(
 			array(
@@ -495,7 +495,7 @@ class Transactions {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$transaction = $dbr->selectRow(
 			"{$dc}_transactions",
 			array( 'user_id', 'user_ip', 'timestamp', 'comment' ),

@@ -17,7 +17,7 @@ class WldJobs {
 	 */
 	public function downloadJobExist( $jobTitle ) {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$title = $dbr->selectField(
 			'job',

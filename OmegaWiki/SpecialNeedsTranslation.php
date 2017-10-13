@@ -54,7 +54,7 @@ class SpecialNeedsTranslation extends SpecialPage {
 		require_once( "Editor.php" );
 		require_once( "WikiDataAPI.php" );
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		// get total Expressions needing translation
 		$table = array(

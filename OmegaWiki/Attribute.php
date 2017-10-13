@@ -187,7 +187,7 @@ class Attributes {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$cond = array();
 		if ( isset( $options['ORDER BY'] ) ) {
@@ -260,7 +260,7 @@ class Attributes {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$vars = array(
 				'oav.object_id' => $objectId,
@@ -329,7 +329,7 @@ class Attributes {
 	*/
 	public static function getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option = null ) {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$conds = array(
 			'attribute_id' => $attributeId,
@@ -392,7 +392,7 @@ class Attributes {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$vars = array(
 			'synt.defined_meaning_id' => $attributeId,
@@ -435,7 +435,7 @@ class Attributes {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$vars = array(
 			'synt.expression_id = exp.expression_id',
@@ -492,7 +492,7 @@ class Attributes {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$test = false;
 		if ( isset( $options['test'] ) ) {

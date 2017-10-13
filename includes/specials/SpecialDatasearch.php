@@ -190,7 +190,7 @@ class SpecialDatasearch extends SpecialPage {
 	}
 
 	function getSpellingRestriction( $spelling, $tableColumn ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		if ( trim( $spelling ) != '' )
 			return " AND " . $tableColumn . " LIKE " . $dbr->addQuotes( "%$spelling%" );
@@ -206,7 +206,7 @@ class SpecialDatasearch extends SpecialPage {
 	}
 
 	function getPositionSelectColumn( $spelling, $tableColumn ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		if ( trim( $spelling ) != '' )
 			return "INSTR(LCASE(" . $tableColumn . "), LCASE(" . $dbr->addQuotes( "$spelling" ) . ")) as position, ";
@@ -221,7 +221,7 @@ class SpecialDatasearch extends SpecialPage {
 	 */
 	function searchWords() {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$tables = array(
 			'exp' => "{$dc}_expression",
@@ -314,7 +314,7 @@ class SpecialDatasearch extends SpecialPage {
 
 		$o = OmegaWikiAttributes::getInstance();
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$recordSet = new ArrayRecordSet( new Structure( $o->definedMeaningId, $this->expressionAttribute, $this->meaningAttribute ), new Structure( $o->definedMeaningId ) );
 
 		while ( $row = $dbr->fetchObject( $queryResult ) ) {
@@ -352,7 +352,7 @@ class SpecialDatasearch extends SpecialPage {
 	function searchExternalIdentifiers() {
 		global $wgDBprefix;
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$sql =
 			"SELECT " .
@@ -385,7 +385,7 @@ class SpecialDatasearch extends SpecialPage {
 
 	function searchExternalIdentifiersCount() {
 		$dc = wdGetDataSetContext();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$table = array(
 			'colcont' => "{$dc}_collection_contents",
@@ -418,7 +418,7 @@ class SpecialDatasearch extends SpecialPage {
 	}
 
 	function getExternalIdentifiersSearchResultAsRecordSet( $queryResult ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		$externalIdentifierMatchStructure = new Structure( $this->externalIdentifierAttribute, $this->collectionAttribute, $this->collectionMemberAttribute );
 		$recordSet = new ArrayRecordSet( $externalIdentifierMatchStructure, new Structure( $this->externalIdentifierAttribute ) );
