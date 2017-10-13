@@ -35,7 +35,7 @@ class UpdateWikiLexicalData extends Maintenance {
 
 		if ( !$this->hasOption( 'quick' ) ) {
 			$this->output( "Abort with control-c in the next five seconds (skip this countdown with --quick) ... " );
-			wfCountDown( 5 );
+			$this->countDown( 5 );
 		}
 
 		// process the base database
