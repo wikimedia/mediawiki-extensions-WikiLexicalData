@@ -4,5 +4,22 @@
 			"Xuacu"
 		]
 	},
-	"apiow-desc": "Estensión de api.php de MediaWiki WikiLexicalData d'OmegaWiki"
+	"apiow-desc": "Estensión de api.php de MediaWiki WikiLexicalData d'OmegaWiki",
+	"apihelp-ow_add_annotation-summary": "Añadir anotaciones a Omegawiki.",
+	"apihelp-ow_add_annotation-param-type": "Triba d'anotación.",
+	"apihelp-ow_add_annotation-param-e": "Espresión a procesar.",
+	"apihelp-ow_add_annotation-param-lang": "Llingua de la espresión a procesar.",
+	"apihelp-ow_add_annotation-param-dm": "Id del significáu definíu a procesar.",
+	"apihelp-ow_add_annotation-param-attribute": "Atributu a procesar.",
+	"apihelp-ow_add_annotation-param-attrib_lang": "Llingua del atributu a procesar.",
+	"apihelp-ow_add_annotation-param-text": "Testu a procesar.",
+	"apihelp-ow_add_annotation-param-option": "Opción a procesar.",
+	"apihelp-ow_add_annotation-param-option_lang": "Opción a procesar.",
+	"apihelp-ow_add_annotation-param-relation": "Rellación a procesar.",
+	"apihelp-ow_add_annotation-param-relation_lang": "Rellación a procesar.",
+	"apihelp-ow_add_annotation-param-wikipage": "La páxina  wiki a procesar. (formatu tsv, usando una páxina wiki).",
+	"apihelp-ow_add_annotation-param-test": "Mou de prueba. Nun se faen cambeos.",
+	"apihelp-ow_add_definition-summary": "Añadir definiciones a Omegawiki.",
+	"apihelp-ow_add_definition-param-d": "La definición a añadir.",
+	"apihelp-ow_add_definition-param-dm": "Id del significáu definíu onde s'añadirá la definición."
 }
