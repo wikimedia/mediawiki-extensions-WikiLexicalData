@@ -10,7 +10,12 @@ module.exports = function ( grunt ) {
 			omegawiki: 'i18n/omegawiki/'
 		},
 		jshint: {
-			all: '.'
+			all: [
+				'*.js',
+				'!node_modules/**',
+				'!vendor/**',
+				'!resources/wforms.js' // # upstream lib
+			]
 		},
 		jsonlint: {
 			all: [
