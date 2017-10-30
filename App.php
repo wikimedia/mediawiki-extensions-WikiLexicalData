@@ -43,7 +43,6 @@ $wgExtensionCredits['other'][] = array(
 
 $wgMessagesDirs['LexicalData'] = __DIR__ . '/i18n/lexicaldata';
 $wgExtensionMessagesFiles['WikiLexicalDataTextAlias'] = __DIR__ . '/WikiLexicalData.i18n.alias.php' ;
-$wgExtensionMessagesFiles['LexicalData'] = $dir . 'Wikidata.i18n.php';
 
 // Resource modules
 
