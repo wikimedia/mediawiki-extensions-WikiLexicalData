@@ -82,7 +82,7 @@
 	"ow_history": "Historial",
 	"ow_datasets": "Selección de la base",
 	"ow_noedit_title": "No se permite modificar",
-	"ow_noedit": "No tienes permiso de modificar las páginas de la base \"$1\". Mira [[{{MediaWiki:Ow editing policy url}}|nuestras reglas de modificación]].",
+	"ow_noedit": "No tienes permiso de editar las páginas del conjunto de datos «$1».\nConsulta [[{{MediaWiki:Ow editing policy url}}|nuestra normativa de ediciones]].",
 	"ow_uipref_datasets": "Vista predeterminada:",
 	"ow_uiprefs": "WikiLexicalData",
 	"ow_none_selected": "No hay nada seleccionado",
