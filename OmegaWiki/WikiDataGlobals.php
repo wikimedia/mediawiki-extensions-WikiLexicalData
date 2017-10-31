@@ -92,7 +92,7 @@ $wgWldExpressionPageTitlePrefix = 'Multiple meanings';
  *		git grep -e wgWldUseExpressionPageTitlePrefix
  *		and
  *		git grep -e wgWldExpressionPageTitlePrefix
- *	If not going to be used. Should ow_Multiple_meanings @ Wikidata.i18n.php be removed also? ~he
+ *	If not going to be used. Should ow_Multiple_meanings @ i18n/lexicaldata/en.json be removed also? ~he
  */
 
 // Search page
