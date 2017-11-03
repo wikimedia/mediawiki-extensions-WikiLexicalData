@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Alison",
-			"පසිඳු කාවින්ද"
+			"පසිඳු කාවින්ද",
+			"Nmacu"
 		]
 	},
 	"languages": "Bainisteoir teangacha",
@@ -15,6 +16,7 @@
 	"ow_uiprefs": "Vicísonraí",
 	"ow_transaction_user": "Ainm úsáideora:",
 	"ow_transaction_summary": "Achoimriú",
+	"ow_will_insert": "Ionsáifear:",
 	"ow_Annotation": "Anótáil",
 	"ow_ClassAttributeAttribute": "Tréith",
 	"ow_ClassAttributeLevel": "Leibhéal",
