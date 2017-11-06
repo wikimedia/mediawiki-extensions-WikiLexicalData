@@ -1,8 +1,21 @@
 {
 	"@metadata": {
 		"authors": [
-			"Toliño"
+			"Toliño",
+			"Elisardojm"
 		]
 	},
-	"apiow-desc": "Extensión WikiLexicalData de OmegaWiki do api.php de MediaWiki"
+	"apiow-desc": "Extensión WikiLexicalData de OmegaWiki do api.php de MediaWiki",
+	"apihelp-ow_add_annotation-param-type": "Tipo de anotación.",
+	"apihelp-ow_add_annotation-param-e": "Expresión a procesar.",
+	"apihelp-ow_add_annotation-param-lang": "Lingua de expresión a procesar.",
+	"apihelp-ow_add_annotation-param-text": "Texto a procesar.",
+	"apihelp-ow_add_annotation-param-option": "Opción a procesar.",
+	"apihelp-ow_add_annotation-param-option_lang": "Opción a procesar.",
+	"apihelp-ow_add_annotation-param-relation": "Relación a procesar.",
+	"apihelp-ow_add_annotation-param-relation_lang": "Relación a procesar.",
+	"apihelp-ow_add_syntrans-param-ver": "Versión do módulo.",
+	"apihelp-ow_add_to_collection-summary": "Engadir anotacións a Omegawiki.",
+	"apihelp-ow_express-param-ver": "Versión do módulo.",
+	"apihelp-ow_syntrans-param-ver": "Versión do módulo."
 }
