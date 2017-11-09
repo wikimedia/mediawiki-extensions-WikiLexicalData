@@ -9,20 +9,23 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
-
-if ( !isset( $wgDBprefix ) ) { global $wgDBprefix; $wgDBprefix = null; }
+global $wgWldScriptPath, $wgWldOwScriptPath, $wgWldDownloadScriptPath, $wgWldIncludesScriptPath, $wgWldSpecialsScriptPath, $wgWldAPIScriptPath, $wgWldSetupScriptPath, $wgWldJobsScriptPath, $wgWldDbScripts ;
 
 $dir = dirname( __FILE__ ) . '/';
-
 $dir = str_replace( '\\', '/', $dir );
-
+if ( !isset( $wgDBprefix ) ) {
+	global $wgDBprefix;
+	$wgDBprefix = null;
+}
+if ( ! isset ( $wdHandlerPath ) ) {
+	$wdHandlerPath = $dir . '/OmegaWiki/' ;
+}
 require_once( $dir . 'OmegaWiki/WikiDataGlobals.php' );
 require_once( $dir . 'OmegaWiki/Wikidata.php' );
-
-require_once( $wgWldScriptPath . 'SpecialLanguages.php' );
+require_once( $wgWldScriptPath . '/SpecialLanguages.php' );
 
 // API
-require_once( $wgWldAPIScriptPath . 'OmegaWikiExt.php' );
+require_once( $wgWldAPIScriptPath . '/OmegaWikiExt.php' );
 
 $wgExtensionCredits['other'][] = array(
 	'path'            => __FILE__,
@@ -45,9 +48,8 @@ $wgMessagesDirs['LexicalData'] = __DIR__ . '/i18n/lexicaldata';
 $wgExtensionMessagesFiles['WikiLexicalDataTextAlias'] = __DIR__ . '/WikiLexicalData.i18n.alias.php' ;
 
 // Resource modules
-
 $resourcePathArray = array(
-	'localBasePath' => dirname( __FILE__ ) . '/resources',
+	'localBasePath' => $dir . '/resources',
 	'remoteExtPath' => 'WikiLexicalData/resources'
 );
 
@@ -157,9 +159,7 @@ $wdCopyDryRunOnly = false;
 # in a single database.
 if ( !isset( $wdSiteContext ) ) $wdSiteContext = "uw";
 
-#
-## Hooks
-#
+// Hooks
 $wgHooks['BeforePageDisplay'][] = 'WikiLexicalDataHooks::onBeforePageDisplay';
 $wgHooks['GetPreferences'][] = 'WikiLexicalDataHooks::onGetPreferences';
 $wgHooks['ArticleFromTitle'][] = 'WikiLexicalDataHooks::onArticleFromTitle';
@@ -192,3 +192,4 @@ if ( file_exists ( dirname(__FILE__) . "LocalApp.php" )) {
 
 // Tags
 require_once( $wgWldSetupScriptPath . "OWTags.php" );
+

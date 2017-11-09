@@ -45,13 +45,13 @@ $wdCurrentContext = null;
 $wgIso639_3CollectionId = null;
 
 // paths
+global $wgWldScriptPath, $wgWldOwScriptPath, $wgWldDownloadScriptPath, $wgWldIncludesScriptPath, $wgWldSpecialsScriptPath, $wgWldAPIScriptPath, $wgWldSetupScriptPath, $wgWldJobsScriptPath, $wgWldDbScripts ;
 $wgWldScriptPath = __DIR__ . '/';
 $wgWldScriptPath = str_replace( '\\', '/', $wgWldScriptPath );
 $wgWldScriptPath = str_replace( 'OmegaWiki/', '', $wgWldScriptPath );
 if ( !isset( $IP ) ) {
 	$IP = $wgWldScriptPath . '../../';
 }
-
 $wgWldOwScriptPath     = $wgWldScriptPath . "OmegaWiki/";
 $wgWldDownloadScriptPath = $IP . "/downloads/";
 $wgWldDownloadScriptPath = str_replace( '//', '/', $wgWldDownloadScriptPath );
