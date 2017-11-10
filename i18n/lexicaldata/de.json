@@ -47,6 +47,8 @@
 	"datasearch_match_ext_ids": "Externe Identifikatoren passend zu <em>$1</em>",
 	"datasearch_match_words": "Zu <em>$1</em> passende Ausdrücke und zugehörige Bedeutungen",
 	"datasearch_match_words_lang": "Zu <em>$2</em> passende Ausdrücke in <em>$1</em> und zugehörige Bedeutungen",
+	"datasearch-match-expr": "Ausdrücke und ihre dazugehörigen Bedeutungen",
+	"datasearch-match-expr-lang": "Ausdrücke in <em>$1</em> und ihre dazugehörigen Bedeutungen",
 	"importtsv": "TSV importieren",
 	"ow_importtsv_title1": "TSV importieren",
 	"ow_importtsv_title2": "Definitionen und Übersetzungen importieren",

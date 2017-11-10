@@ -13,7 +13,8 @@
 			"Reza1615",
 			"ZxxZxxZ",
 			"Alirezaaa",
-			"MohandesWiki"
+			"MohandesWiki",
+			"Ommmmid"
 		]
 	},
 	"wikidata-desc": "پایگاه دادهٔ ویکی‌پیوند را برای انواع گوناگون محتواها می‌افزاید",
@@ -48,6 +49,7 @@
 	"datasearch_match_ext_ids": "شناسهٔ تطابق بیرونی <em>$1</em>",
 	"datasearch_match_words": "واژه‌های مطابق با <em>$1</em> و معنی‌های مرتبط",
 	"datasearch_match_words_lang": "واژه‌های موجود در <em>$1</em> مطابق با <em>$2</em> و معنی‌های مرتبط",
+	"datasearch-match-expr": "عبارتها و معانی مرتبط شده آنها",
 	"importtsv": "درون‌ریزی تی‌اس‌وی",
 	"ow_importtsv_title1": "درون‌ریزی تی‌اس‌وی",
 	"ow_importtsv_title2": "درون‌ریزی معانی و ترجمه‌ها",
