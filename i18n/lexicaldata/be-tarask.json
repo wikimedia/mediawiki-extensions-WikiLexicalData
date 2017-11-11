@@ -40,7 +40,7 @@
 	"datasearch_showing_only": "Паказаныя ня больш за $1 {{PLURAL:$1|супадзеньне|супадзеньні|супадзеньняў}} (з $2).",
 	"datasearch_match_ext_ids": "Вонкавыя ідэнтыфікатары, якія супадаюць з <em>$1</em>",
 	"datasearch_match_words": "Выразы, якія супадаюць з <em>$1</em>, і іх зьвязаныя значэньні",
-	"datasearch_match_words_lang": "Словы ў <em>$1</em>, якія супадаюць з <em>$2</em>, і іх зьвязаныя значэньні",
+	"datasearch_match_words_lang": "Выразы ў <em>$1</em>, якія супадаюць з <em>$2</em>, і іх зьвязаныя значэньні",
 	"importtsv": "ВікіЗьвесткі: Імпартаваць TSV",
 	"ow_importtsv_title1": "Імпартаваць TSV",
 	"ow_importtsv_title2": "Імпартаваць вызначэньні і пераклады",
