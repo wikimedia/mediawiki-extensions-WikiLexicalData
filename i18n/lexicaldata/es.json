@@ -17,7 +17,8 @@
 			"Yllelder",
 			"Matiia",
 			"Dgstranz",
-			"Indiralena"
+			"Indiralena",
+			"KATRINE1992"
 		]
 	},
 	"wikidata-desc": "Agrega base de datos tipo wiki para varios tipos de contenido",
@@ -52,6 +53,8 @@
 	"datasearch_match_ext_ids": "Identificadores externos coincidentes con <em>$1</em>",
 	"datasearch_match_words": "Palabras coincidentes con <em>$1</em> y significados asociados",
 	"datasearch_match_words_lang": "Palabras en <em>$1</em> coincidentes con <em>$2</em> y significados asociados",
+	"datasearch-match-expr": "Expresiones y sus sgnificados",
+	"datasearch-match-expr-lang": "Expresiones en <em>$1</em> y sus significados asociados",
 	"importtsv": "Importar TSV",
 	"ow_importtsv_title1": "Importar TSV",
 	"ow_importtsv_title2": "Importar definiciones y traducciones",

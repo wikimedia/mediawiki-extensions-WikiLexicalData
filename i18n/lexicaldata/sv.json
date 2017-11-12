@@ -45,6 +45,8 @@
 	"datasearch_match_ext_ids": "Externa identifierare som svarar mot <em>$1</em>",
 	"datasearch_match_words": "Ord som passar in på <em>$1</em> och betydelser som hör ihop med dessa.",
 	"datasearch_match_words_lang": "Ord på <em>$1</em> som passar in på <em>$2</em> och betydelser som hör ihop med dessa",
+	"datasearch-match-expr": "Uttryck och deras associerade betydelser",
+	"datasearch-match-expr-lang": "Uttryck i <em>$1</em> och deras associerade betydelser",
 	"importtsv": "Importera TSV",
 	"ow_importtsv_title1": "Importera TSV",
 	"ow_importtsv_title2": "Importera definitioner och översättningar",
