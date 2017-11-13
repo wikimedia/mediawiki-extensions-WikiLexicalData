@@ -49,6 +49,8 @@
 	"datasearch_match_ext_ids": "Identificatori esterni di corrispondenza <em>$1</em>",
 	"datasearch_match_words": "Espressioni corrispondenti a <em>$1</em> e i loro significati associabili",
 	"datasearch_match_words_lang": "Espressioni in <em>$1</em> corrispondenti a <em>$2</em> e i loro significati associabili",
+	"datasearch-match-expr": "Espressioni e loro significati associabili",
+	"datasearch-match-expr-lang": "Espressioni in <em>$1</em> e i loro significati associabili",
 	"importtsv": "Importa TSV",
 	"ow_importtsv_title1": "Importa TSV",
 	"ow_importtsv_title2": "Importa definizioni e traduzioni",
