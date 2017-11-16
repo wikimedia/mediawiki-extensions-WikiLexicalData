@@ -38,6 +38,9 @@
 	"apihelp-ow_add_to_collection-summary": "Añadir anotaciones a Omegawiki.",
 	"apihelp-ow_add_to_collection-param-dm": "Identificador de significáu definíu a añadir a la Coleición.",
 	"apihelp-ow_add_to_collection-param-coll_mid": "Identificador de significáu definíu de la Coleición.",
+	"apihelp-ow_add_to_collection-param-test": "Mou de prueba. Nun se faen cambeos.",
+	"apihelp-ow_define-summary": "Llograr la definición d'un significáu definíu.",
 	"apihelp-ow_express-param-ver": "Versión del módulu.",
+	"apihelp-ow_syntrans-param-part": "Syn pa sinónimos y trans pa traducciones. Rique lang.",
 	"apihelp-ow_syntrans-param-ver": "Versión del módulu."
 }
