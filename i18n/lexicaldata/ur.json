@@ -3,7 +3,8 @@
 		"authors": [
 			"පසිඳු කාවින්ද",
 			"عثمان خان شاہ",
-			"Muhammad Shuaib"
+			"Muhammad Shuaib",
+			"Zainab Meher"
 		]
 	},
 	"wikidata-desc": "متعدد اقسام پر مشتمل مواد کے لیے ویکی-مماثل ڈیٹابیس کا اندراج کرتا ہے",
@@ -17,6 +18,8 @@
 	"datasearch_found_word": "لفظ پایا",
 	"datasearch_meaning": "فرمان",
 	"datasearch_search_text": "تلاش کا متن:",
+	"datasearch-match-expr": "جملہ کلمات اور ان سے منسوب معنی",
+	"datasearch-match-expr-lang": "<em>$1</em>میں موجود جملہ کلمات اور ان سے منسلک معنی",
 	"ow_importtsv_import_failed": "درآمد میں ناکام رہے",
 	"ow_exporttsv_languages": "زبانیں:",
 	"ow_save": "محفوظ کریں",
