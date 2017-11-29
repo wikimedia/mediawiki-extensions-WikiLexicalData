@@ -4,7 +4,8 @@
 			"පසිඳු කාවින්ද",
 			"عثمان خان شاہ",
 			"Muhammad Shuaib",
-			"Zainab Meher"
+			"Zainab Meher",
+			"BukhariSaeed"
 		]
 	},
 	"wikidata-desc": "متعدد اقسام پر مشتمل مواد کے لیے ویکی-مماثل ڈیٹابیس کا اندراج کرتا ہے",
@@ -46,6 +47,7 @@
 	"ow_Definition": "تعریف",
 	"ow_Expression": "اظہار",
 	"ow_Expressions": "اظہار",
+	"ow_Label": "لیبل",
 	"ow_show": "دکھائیں",
 	"ow_upload": "اپ لوڈ کریں",
 	"ow_create": "تخلیق",
