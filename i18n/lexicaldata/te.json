@@ -134,7 +134,6 @@
 	"ow_needs_xlation_source_lang": "మూల భాష:",
 	"ow_needs_xlation_dest_lang": "లక్ష్యిత భాష:",
 	"ow_needs_xlation_no_dest_lang": "ఒక లక్ష్యిత భాషను పేర్కొనండి.",
-	"ow_statistics": "Wikidata: గణాంకాలు",
 	"ow_show": "చూపించు",
 	"ow_upload": "ఎక్కించు",
 	"ow_create": "సృష్టించు",
@@ -142,5 +141,6 @@
 	"ow_suggest_next": "తర్వాతి",
 	"ow_suggest_clear": "తుడిచివేయి",
 	"ow_nstab_definedmeaning": "నిర్వచిత అర్థం",
-	"right-addlanguage": "భాషా అమరికలని చేర్చడం మరియు మార్చడం"
+	"right-addlanguage": "భాషా అమరికలని చేర్చడం మరియు మార్చడం",
+	"ow_statistics": "Wikidata: గణాంకాలు"
 }

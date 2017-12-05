@@ -197,7 +197,6 @@
 	"ow_needs_xlation_source_lang": "Žrědłowa rěc:",
 	"ow_needs_xlation_dest_lang": "Celowa rěc:",
 	"ow_needs_xlation_no_dest_lang": "Pšosym pódaj celowu rěc.",
-	"ow_statistics": "Statistika WikiLexicalData",
 	"ow_show": "Pokazaś",
 	"ow_upload": "Nagraś",
 	"ow_create": "Napóraś",
@@ -211,5 +210,6 @@
 	"ow_shown_datasets": "Pokazane datowe sajźby",
 	"prefs-ow-lang": "Rěcy",
 	"ow_pref_lang_switch": "Jano wubrane rěcy pokazaś",
-	"ow_pref_lang_select": "Rěcy za zwobraznjenje:"
+	"ow_pref_lang_select": "Rěcy za zwobraznjenje:",
+	"ow_statistics": "Statistika WikiLexicalData"
 }

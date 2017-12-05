@@ -200,7 +200,6 @@
 	"ow_needs_xlation_source_lang": "Lenga sorgiss:",
 	"ow_needs_xlation_dest_lang": "Lenga destinassion:",
 	"ow_needs_xlation_no_dest_lang": "Për piasì specìfica na lenga ëd destinassion.",
-	"ow_statistics": "Wikidàit: Statìstiche",
 	"ow_show": "Mosta",
 	"ow_upload": "Caria",
 	"ow_create": "Crea",
@@ -212,5 +211,6 @@
 	"ow_nstab_edit_copy": "modìfica còpia",
 	"right-addlanguage": "Gionta e cambia ampostassion ëd lenga",
 	"ow_shown_datasets": "Mostra j'ansem ëd dàit",
-	"prefs-omegawiki": "OmegaWiki"
+	"prefs-omegawiki": "OmegaWiki",
+	"ow_statistics": "Wikidàit: Statìstiche"
 }

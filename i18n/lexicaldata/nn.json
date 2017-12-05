@@ -199,7 +199,6 @@
 	"ow_needs_xlation_source_lang": "Kjeldespråk:",
 	"ow_needs_xlation_dest_lang": "Målspråk:",
 	"ow_needs_xlation_no_dest_lang": "Oppgje eit målspråk.",
-	"ow_statistics": "Wikidata: Statistikk",
 	"ow_show": "Syna",
 	"ow_upload": "Last opp",
 	"ow_create": "Opprett",
@@ -213,5 +212,6 @@
 	"ow_shown_datasets": "Synte datasett",
 	"prefs-ow-lang": "Språk",
 	"ow_pref_lang_switch": "Vis berre dei valde språka",
-	"ow_pref_lang_select": "Språk som skal visast:"
+	"ow_pref_lang_select": "Språk som skal visast:",
+	"ow_statistics": "Wikidata: Statistikk"
 }

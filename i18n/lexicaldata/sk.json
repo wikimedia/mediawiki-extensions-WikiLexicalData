@@ -197,7 +197,6 @@
 	"ow_needs_xlation_source_lang": "Zdrojový jazyk:",
 	"ow_needs_xlation_dest_lang": "Cieľový jazyk:",
 	"ow_needs_xlation_no_dest_lang": "Prosím, zadajte cieľový jazyk.",
-	"ow_statistics": "Wikidata: Štatistiky",
 	"ow_show": "Zobraziť",
 	"ow_upload": "Nahrať",
 	"ow_create": "Vytvoriť",
@@ -208,5 +207,6 @@
 	"ow_nstab_definedmeaning": "definovaný význam",
 	"ow_nstab_edit_copy": "upraviť kópiu",
 	"right-addlanguage": "Pridať a zmeniť jazykové nastavenia pomocou",
-	"ow_shown_datasets": "Zobrazené množiny dát"
+	"ow_shown_datasets": "Zobrazené množiny dát",
+	"ow_statistics": "Wikidata: Štatistiky"
 }

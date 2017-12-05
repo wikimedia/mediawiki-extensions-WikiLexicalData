@@ -196,7 +196,6 @@
 	"ow_needs_xlation_source_lang": "මූලාශ්‍ර භාෂාව",
 	"ow_needs_xlation_dest_lang": "ගමනාන්ත භාෂාව",
 	"ow_needs_xlation_no_dest_lang": "කරුණාකර ගමනාන්ත භාෂාවක් සඳහන් කරන්න.",
-	"ow_statistics": "විකිදත්ත: සංඛ්‍යාන",
 	"ow_show": "පෙන්වන්න",
 	"ow_upload": "උඩුගතකරන්න",
 	"ow_create": "නිර්මාණය කරන්න",
@@ -208,5 +207,6 @@
 	"ow_nstab_edit_copy": "පිටපත සංස්කරණය කරන්න",
 	"right-addlanguage": "භාෂා සිටවුම් එකතු කිරීම හා වෙනස් කිරීම",
 	"ow_shown_datasets": "පෙන්වනු ලැබූ දත්ත කුලක",
-	"ow_addFromExtAPI_title": "API වලින් දත්ත එකතු කරන්න"
+	"ow_addFromExtAPI_title": "API වලින් දත්ත එකතු කරන්න",
+	"ow_statistics": "විකිදත්ත: සංඛ්‍යාන"
 }

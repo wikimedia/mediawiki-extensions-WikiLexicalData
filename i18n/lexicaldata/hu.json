@@ -199,7 +199,6 @@
 	"ow_needs_xlation_source_lang": "Forrásnyelv:",
 	"ow_needs_xlation_dest_lang": "Célnyelv:",
 	"ow_needs_xlation_no_dest_lang": "Add meg a célnyelvet.",
-	"ow_statistics": "Wikiadat: statisztika",
 	"ow_show": "Megjelenítés",
 	"ow_upload": "Feltöltés",
 	"ow_create": "Létrehozás",
@@ -213,5 +212,6 @@
 	"ow_shown_datasets": "Adatkészletek megjelenítése",
 	"prefs-ow-lang": "Nyelvek",
 	"ow_pref_lang_switch": "Csak a kiválasztott nyelvek megjelenítése",
-	"ow_pref_lang_select": "Megjelenítendő nyelvek:"
+	"ow_pref_lang_select": "Megjelenítendő nyelvek:",
+	"ow_statistics": "Wikiadat: statisztika"
 }

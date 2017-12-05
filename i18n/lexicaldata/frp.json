@@ -176,7 +176,6 @@
 	"ow_needs_xlation_source_lang": "Lengoua sôrsa :",
 	"ow_needs_xlation_dest_lang": "Lengoua de dèstinacion :",
 	"ow_needs_xlation_no_dest_lang": "Volyéd spècefiar una lengoua de dèstinacion.",
-	"ow_statistics": "Wikidata : statistiques",
 	"ow_show": "Montrar",
 	"ow_upload": "Tèlèchargiér",
 	"ow_create": "Fâre",
@@ -187,5 +186,6 @@
 	"ow_nstab_definedmeaning": "significacion dèfenia",
 	"ow_nstab_edit_copy": "changiér la copia",
 	"right-addlanguage": "Apondre et changiér los paramètres de lengoues",
-	"ow_shown_datasets": "Fâre vêre los ensemblos de balyês"
+	"ow_shown_datasets": "Fâre vêre los ensemblos de balyês",
+	"ow_statistics": "Wikidata : statistiques"
 }

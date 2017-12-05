@@ -200,7 +200,6 @@
 	"ow_needs_xlation_dest_lang": "Cilowa rěč:",
 	"ow_needs_xlation_no_dest_lang": "Prošu podaj cilowu rěč.",
 	"ow_data_search": "Datowe pytanje WikiLexicalData",
-	"ow_statistics": "Statistika WikiLexicalData",
 	"ow_downloads": "Sćehnjenja WikiLexicalData",
 	"ow_show": "Pokazać",
 	"ow_upload": "Nahrać",
@@ -215,5 +214,6 @@
 	"ow_shown_datasets": "Pokazane datowe sadźby",
 	"prefs-ow-lang": "Rěče",
 	"ow_pref_lang_switch": "Jenož wubrane rěče pokazać",
-	"ow_pref_lang_select": "Rěče za zwobraznjenje:"
+	"ow_pref_lang_select": "Rěče za zwobraznjenje:",
+	"ow_statistics": "Statistika WikiLexicalData"
 }

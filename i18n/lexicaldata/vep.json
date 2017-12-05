@@ -147,7 +147,6 @@
 	"ow_class_attr_type_option": "Opcijoiden nimikirjutez",
 	"ow_needs_xlation_source_lang": "Purtken kel':",
 	"ow_needs_xlation_dest_lang": "Metkel':",
-	"ow_statistics": "Wikidata: Statistik",
 	"ow_show": "Ozutada",
 	"ow_upload": "Jügutoitta",
 	"ow_create": "Säta",
@@ -156,5 +155,6 @@
 	"ow_suggest_clear": "Puhtastada",
 	"ow_nstab_definedmeaning": "märhapandud znamoičend",
 	"ow_nstab_edit_copy": "redaktiruida kopijad",
-	"right-addlanguage": "Ližata da toižetada kel'järgendused"
+	"right-addlanguage": "Ližata da toižetada kel'järgendused",
+	"ow_statistics": "Wikidata: Statistik"
 }

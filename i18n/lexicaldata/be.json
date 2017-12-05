@@ -199,7 +199,6 @@
 	"ow_needs_xlation_source_lang": "Зыходная мова:",
 	"ow_needs_xlation_dest_lang": "Мэтавая мова:",
 	"ow_needs_xlation_no_dest_lang": "Калі ласка, пазначце мэтавую мову",
-	"ow_statistics": "Вікідадзеныя: Статыстыка",
 	"ow_show": "Паказаць",
 	"ow_upload": "Укласці",
 	"ow_create": "Стварыць",
@@ -213,5 +212,6 @@
 	"ow_shown_datasets": "Паказаныя наборы дадзеных",
 	"prefs-ow-lang": "Мовы",
 	"ow_pref_lang_switch": "Паказваць толькі вызначаныя мовы",
-	"ow_pref_lang_select": "Мовы для паказу"
+	"ow_pref_lang_select": "Мовы для паказу",
+	"ow_statistics": "Вікідадзеныя: Статыстыка"
 }

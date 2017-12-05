@@ -197,7 +197,6 @@
 	"ow_needs_xlation_source_lang": "Ursprungssproch:",
 	"ow_needs_xlation_dest_lang": "Ziilsproch:",
 	"ow_needs_xlation_no_dest_lang": "Bitte gib e Ziilsproch aa",
-	"ow_statistics": "Wikidata: Statischtike",
 	"ow_show": "Zeige",
 	"ow_upload": "Uffelade",
 	"ow_create": "Aalege",
@@ -208,5 +207,6 @@
 	"ow_nstab_definedmeaning": "Definierti Bedytig",
 	"ow_nstab_edit_copy": "Kopii bearbeite",
 	"right-addlanguage": "Sprochyystellige zuefiege un ändere",
-	"ow_shown_datasets": "Aazeigti Datesammlige"
+	"ow_shown_datasets": "Aazeigti Datesammlige",
+	"ow_statistics": "Wikidata: Statischtike"
 }

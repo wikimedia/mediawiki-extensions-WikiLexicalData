@@ -103,7 +103,6 @@
 	"ow_needs_xlation_source_lang": "Brontaal:",
 	"ow_needs_xlation_dest_lang": "Doeltaal:",
 	"ow_needs_xlation_no_dest_lang": "Verskaf asseblief 'n doeltaal.",
-	"ow_statistics": "Wikidata: Statistieke",
 	"ow_show": "Wys",
 	"ow_upload": "Oplaai",
 	"ow_create": "Skep",
@@ -114,5 +113,6 @@
 	"ow_nstab_definedmeaning": "gedefinieerde betekenis",
 	"ow_nstab_edit_copy": "wysig kopie",
 	"right-addlanguage": "Byvoeg en verandering van taalinstellings",
-	"ow_shown_datasets": "Wys datastelle"
+	"ow_shown_datasets": "Wys datastelle",
+	"ow_statistics": "Wikidata: Statistieke"
 }

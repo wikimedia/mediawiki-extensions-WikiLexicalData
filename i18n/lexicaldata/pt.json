@@ -9,7 +9,8 @@
 			"Luckas",
 			"Malafaya",
 			"Waldir",
-			"Vitorvicentevalente"
+			"Vitorvicentevalente",
+			"MokaAkashiyaPT"
 		]
 	},
 	"wikidata-desc": "Adiciona uma base de dados tipo wiki para vários tipos de conteúdo",
@@ -181,7 +182,7 @@
 	"ow_Label": "Etiqueta",
 	"ow_Link": "Link",
 	"ow_LinkAttribute": "Propriedade",
-	"ow_LinkAttributeValues": "Links",
+	"ow_LinkAttributeValues": "Ligações",
 	"ow_User": "Utilizador",
 	"ow_Property": "Propriedade",
 	"ow_Value": "Valor",

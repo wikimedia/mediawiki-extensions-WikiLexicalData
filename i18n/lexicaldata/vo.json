@@ -72,12 +72,12 @@
 	"ow_Permission_denied": "<h2>Däl no pegevon</h2>",
 	"ow_copy_help": "Yuf no nog gebidon.",
 	"ow_class_attr_type_link": "Yüm",
-	"ow_statistics": "Wikidata: Statits",
 	"ow_show": "Jonolöd",
 	"ow_upload": "Löpükön",
 	"ow_create": "Jafön",
 	"ow_collection_added": "<strong>Konlet: $1 peläükon.</strong>",
 	"ow_suggest_previous": "Büik",
 	"ow_suggest_next": "Sököl",
-	"ow_suggest_clear": "Kulön"
+	"ow_suggest_clear": "Kulön",
+	"ow_statistics": "Wikidata: Statits"
 }

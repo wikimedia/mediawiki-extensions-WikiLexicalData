@@ -5,7 +5,8 @@
 			"Nghtwlkr",
 			"Njardarlogar",
 			"Simny",
-			"Danmichaelo"
+			"Danmichaelo",
+			"Jon Harald Søby"
 		]
 	},
 	"wikidata-desc": "Legger til en wiki-liknende database for ulike typer innhold.",
@@ -203,7 +204,6 @@
 	"ow_needs_xlation_dest_lang": "Målspråk:",
 	"ow_needs_xlation_no_dest_lang": "Vennligst oppgi et målspråk.",
 	"ow_data_search": "WikiLexicalData-datasøk",
-	"ow_statistics": "Wikidata: Statistikk",
 	"ow_downloads": "WikiLexicalData-nedlastinger",
 	"ow_show": "Vis",
 	"ow_upload": "Last opp",
@@ -218,5 +218,6 @@
 	"ow_shown_datasets": "Viste datasett",
 	"prefs-ow-lang": "Språk",
 	"ow_pref_lang_switch": "Vis bare valgte språk",
-	"ow_pref_lang_select": "Språk som skal vises:"
+	"ow_pref_lang_select": "Språk som skal vises:",
+	"ow_statistics": "Wikidata: Statistikk"
 }

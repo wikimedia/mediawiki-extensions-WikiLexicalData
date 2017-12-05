@@ -62,12 +62,12 @@
 	"copy": "Вікідата: копіровати",
 	"ow_history_transaction": "Трансакція:",
 	"ow_class_attr_type_link": "Одказ",
-	"ow_statistics": "Вікідата: Штатістікы",
 	"ow_show": "Вказати",
 	"ow_upload": "Награти",
 	"ow_create": "Створити",
 	"ow_suggest_previous": "Попереднїй",
 	"ow_suggest_next": "Наступный",
 	"ow_suggest_clear": "Вычістити",
-	"prefs-ow-lang": "Языкы"
+	"prefs-ow-lang": "Языкы",
+	"ow_statistics": "Вікідата: Штатістікы"
 }

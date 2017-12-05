@@ -149,12 +149,12 @@
 	"ow_needs_xlation_title": "Expresii care trebuie traduse",
 	"ow_needs_xlation_source_lang": "Limba sursă:",
 	"ow_needs_xlation_dest_lang": "Limba destinație:",
-	"ow_statistics": "Wikidata: Statistici",
 	"ow_show": "Arată",
 	"ow_upload": "Încarcă",
 	"ow_create": "Creare",
 	"ow_suggest_previous": "Anterior",
 	"ow_suggest_next": "Următorul",
 	"ow_suggest_clear": "Șterge",
-	"ow_shown_datasets": "Seturi de date afișate"
+	"ow_shown_datasets": "Seturi de date afișate",
+	"ow_statistics": "Wikidata: Statistici"
 }

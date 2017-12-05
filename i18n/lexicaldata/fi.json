@@ -183,7 +183,6 @@
 	"ow_needs_xlation_source_lang": "Lähdekieli:",
 	"ow_needs_xlation_dest_lang": "Kohdekieli:",
 	"ow_needs_xlation_no_dest_lang": "Määritä kohdekieli.",
-	"ow_statistics": "WikiLexicalData-tilastot",
 	"ow_show": "Näytä",
 	"ow_upload": "Tallenna",
 	"ow_create": "Luo",
@@ -195,5 +194,6 @@
 	"ow_nstab_edit_copy": "muokkaa kopiota",
 	"right-addlanguage": "Lisätä ja muuttaa kieliasetuksia",
 	"ow_shown_datasets": "Näytetyt tietuekokonaisuudet",
-	"prefs-ow-lang": "Kielet"
+	"prefs-ow-lang": "Kielet",
+	"ow_statistics": "WikiLexicalData-tilastot"
 }
