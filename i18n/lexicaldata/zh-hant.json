@@ -164,7 +164,7 @@
 	"ow_added": "已新增",
 	"ow_removed": "已被移除",
 	"ow_meaningsoftitle": "「$1」的含義",
-	"ow_meaningsofsubtitle": "<em>Wiki 連結：</em>[[$1]]",
+	"ow_meaningsofsubtitle": "<em>wiki 連結：</em>[[$1]]",
 	"ow_Permission_denied": "<h2>沒有權限</h2>",
 	"copy": "複製",
 	"ow_copy_no_action_specified": "請指定一個動作",

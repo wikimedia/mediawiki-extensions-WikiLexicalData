@@ -3,16 +3,17 @@
 		"authors": [
 			"Bhawani Gautam",
 			"RajeshPandey",
-			"राम प्रसाद जोशी"
+			"राम प्रसाद जोशी",
+			"सरोज कुमार ढकाल"
 		]
 	},
 	"langman_langname": "भाषा नाम:",
 	"langman_iso639-3": "ISO 639-3 कोड:",
 	"langman_iso639-2": "ISO 639-2 कोड:",
-	"langman_wikimedia": "विकिमीडिया कोड:",
+	"langman_wikimedia": "विकिमिडिया कोड:",
 	"langman_field_optional": "(वैकल्पिक)",
 	"langman_addlang": "भाषा थप्ने",
-	"importlangnames": "विकिमीडिया: भाषा नामहरु आयात गर्ने",
+	"importlangnames": "विकिमिडिया: भाषाका नामहरू आयात गर्नुहोस्",
 	"importlangnames_title": "भाषा नामहरु आयात गर्ने",
 	"importlangnames_not_allowed": "तपाईंलाई  भाषा आयात गर्ने अनुमति छैन।",
 	"importlangnames_added": " \"$1\" को लागि भाषा नाम थपियो।",
