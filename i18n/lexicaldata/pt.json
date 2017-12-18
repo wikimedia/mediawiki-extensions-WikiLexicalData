@@ -10,7 +10,8 @@
 			"Malafaya",
 			"Waldir",
 			"Vitorvicentevalente",
-			"MokaAkashiyaPT"
+			"MokaAkashiyaPT",
+			"Athena in Wonderland"
 		]
 	},
 	"wikidata-desc": "Adiciona uma base de dados tipo wiki para vários tipos de conteúdo",
@@ -114,7 +115,7 @@
 	"ow_will_insert": "Será inserido o seguinte:",
 	"ow_contents_of_mapping": "Conteúdo de mapeamento",
 	"ow_available_contexts": "Contextos disponíveis",
-	"ow_add_concept_link": "Adicionar link para outros conceitos",
+	"ow_add_concept_link": "Adicionar hiperligação para outros conceitos",
 	"ow_concept_panel": "Painel de Conceitos",
 	"ow_dm_badtitle": "Esta página não aponta para nenhum Significado Definido (conceito). Por favor, verifique o endereço web.",
 	"ow_dm_missing": "Esta página parece apontar para um Significado Definido (conceito) inexistente. Por favor, verifique o endereço web.",
