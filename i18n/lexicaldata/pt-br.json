@@ -12,7 +12,8 @@
 			"Luckas",
 			"555",
 			"He7d3r",
-			"Felipe L. Ewald"
+			"Felipe L. Ewald",
+			"Eduardo Addad de Oliveira"
 		]
 	},
 	"wikidata-desc": "Adicionar banco de dados tipo wiki para vários tipos de conteúdo",
@@ -46,8 +47,8 @@
 	"datasearch_within_ext_ids": "Dentre identificadores externos:",
 	"datasearch_showing_only": "Mostrando apenas um máximo de $1 {{PLURAL:$1|resultado|resultados}} (de um total de $2).",
 	"datasearch_match_ext_ids": "Identificadores externos correspondendo a <em>$1</em>",
-	"datasearch_match_words": "Palavras correspondendo a <em>$1</em> e significados associados",
-	"datasearch_match_words_lang": "Palavras em <em>$1</em> correspondendo a <em>$2</em> e significados associados",
+	"datasearch_match_words": "Expressões que correspondem a <em>$1</em> e significados a elas associados",
+	"datasearch_match_words_lang": "Expressões em <em>$1</em> que correspondem a <em>$2</em> e significados a elas associados",
 	"importtsv": "Imporat TSV",
 	"ow_importtsv_title1": "Importar TSV",
 	"ow_importtsv_title2": "Importar definições e traduções",
@@ -194,7 +195,7 @@
 	"ow_please_proved_dmid": "Parece que em sua entrada está faltando um \"?dmid=<qualquercoisa>\" (dmid=ID do Significado Definido)<br />\nPor favor, contate um administrador do servidor.",
 	"ow_please_proved_dc1": "Parece que em sua entrada está faltando um \"?dc1=<qualquercoisa>\" (dc1=contexto de conjunto de dados 1, conjunto de dados DO QUAL copiar)<br />\nPor favor, contate um administrador do servidor.",
 	"ow_please_proved_dc2": "Parece que em sua entrada está faltando um \"?dc2=<qualquercoisa>\" (dc2=contexto de conjunto de dados 2, conjunto de dados PARA O QUAL copiar)<br />\nPor favor, contate um administrador do servidor.",
-	"ow_copy_successful": "<h2>Sucesso na cópia</h2>\nOs seus dados parecem ter sido copiados com sucesso.\nNão se esqueça de verificar para ter a certeza!",
+	"ow_copy_successful": "<h2>Cópia com sucesso</h2>\nOs seus dados aparentam ter sido copiados. \nNão se esqueça de verificar para ter a certeza!",
 	"ow_copy_unsuccessful": "<h3>Falha na cópia</h3>\nNão houve nenhuma operação de cópia.",
 	"ow_no_action_specified": "<h3>Nenhuma ação foi especificada</h3>\nTalvez você tenha vindo a esta página diretamente? Normalmente você não precisaria estar aqui.",
 	"ow_db_consistency_not_found": "<h2>Erro</h2>\nHá um problema com a consistência do banco de dados, wikidata não consegue encontrar dados válidos relacionados com o ID deste significado definido.\nPode ter sido perdido.\nPor favor, contate o operador ou administrador do servidor.",
@@ -222,5 +223,5 @@
 	"right-addlanguage": "Adicionar e modificar configurações de língua",
 	"ow_shown_datasets": "Mostrar conjuntos de dados",
 	"prefs-ow-lang": "Línguas",
-	"ow_statistics": "Estatísticas WikiLexicalData"
+	"ow_statistics": "Estatísticas de dados lexicais"
 }
