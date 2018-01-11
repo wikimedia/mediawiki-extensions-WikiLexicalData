@@ -6,6 +6,7 @@
 		]
 	},
 	"ow_save": "سانڍيو",
+	"ow_TranslatedText": "ترجمايل متن",
 	"ow_suggest_next": "اڳيون",
 	"ow-special-stat-languages-avail": "موجود {{PLURAL:$1|ٻولي|ٻوليون}}",
 	"ow-special-stat-languages-used": "{{PLURAL:$1|ٻولي|ٻوليون}} اظهارن سان",
