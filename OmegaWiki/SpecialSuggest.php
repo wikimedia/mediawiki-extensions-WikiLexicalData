@@ -1,6 +1,8 @@
 <?php
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 class SpecialSuggest extends SpecialPage {
 
@@ -21,19 +23,19 @@ class SpecialSuggest extends SpecialPage {
 
 	function execute( $par ) {
 		global $wgOut;
-		require_once( "Attribute.php" );
-		require_once( "WikiDataBootstrappedMeanings.php" );
-		require_once( "RecordSet.php" );
+		require_once "Attribute.php";
+		require_once "WikiDataBootstrappedMeanings.php";
+		require_once "RecordSet.php";
 		// This made my local copy useless, I do not know why. ~he
-	//	require_once( "Editor.php" );
-		require_once( "HTMLtable.php" );
-		require_once( "Transaction.php" );
-		require_once( "OmegaWikiEditors.php" );
-		require_once( "Utilities.php" );
-		require_once( "Wikidata.php" );
-		require_once( "WikiDataTables.php" );
-		require_once( "WikiDataGlobals.php" );
-		require_once( 'OmegaWikiDatabaseAPI.php' );
+		// require_once( "Editor.php" );
+		require_once "HTMLtable.php";
+		require_once "Transaction.php";
+		require_once "OmegaWikiEditors.php";
+		require_once "Utilities.php";
+		require_once "Wikidata.php";
+		require_once "WikiDataTables.php";
+		require_once "WikiDataGlobals.php";
+		require_once 'OmegaWikiDatabaseAPI.php';
 
 		$this->o = OmegaWikiAttributes::getInstance();
 		$this->dc = wdGetDataSetContext();
@@ -56,7 +58,7 @@ class SpecialSuggest extends SpecialPage {
 
 		if ( !$this->userLangId ) {
 			// English default
-			$this->userLangId = WLD_ENGLISH_LANG_ID ;
+			$this->userLangId = WLD_ENGLISH_LANG_ID;
 		}
 
 		$this->table = null;
@@ -70,8 +72,8 @@ class SpecialSuggest extends SpecialPage {
 			case 'relation-type':
 				$sqlActual = $this->getSQLForCollectionOfType( 'RELT' );
 				$sqlFallback = $this->getSQLForCollectionOfType( 'RELT', WLD_ENGLISH_LANG_ID );
-				$sql = $this->constructSQLWithFallback( $sqlActual, $sqlFallback, array( "member_mid", "spelling", "collection_mid" ) );
-				$this->table = array( 'coalesced' => "({$this->sql})" );
+				$sql = $this->constructSQLWithFallback( $sqlActual, $sqlFallback, [ "member_mid", "spelling", "collection_mid" ] );
+				$this->table = [ 'coalesced' => "({$this->sql})" ];
 				$this->vars = '*';
 				break;
 			case 'class':
@@ -97,8 +99,8 @@ class SpecialSuggest extends SpecialPage {
 				$this->getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, 'OPTN' );
 				break;
 			case 'language':
-				require_once( 'OmegaWikiDatabaseAPI.php' );
-				list (
+				require_once 'OmegaWikiDatabaseAPI.php';
+				list(
 					$this->table,
 					$this->vars,
 					$this->conds,
@@ -119,14 +121,14 @@ class SpecialSuggest extends SpecialPage {
 				$this->getParametersForCollection();
 				break;
 			case 'transaction':
-				$this->table = array( "{$this->dc}_transactions" );
+				$this->table = [ "{$this->dc}_transactions" ];
 				// @todo check vars compatibility with SQLite
-				$this->vars = array(
+				$this->vars = [
 					'transaction_id', 'user_id', 'user_ip',
 					'time' => " CONCAT(SUBSTRING(timestamp, 1, 4), '-', SUBSTRING(timestamp, 5, 2), '-', SUBSTRING(timestamp, 7, 2), ' '," .
 					" SUBSTRING(timestamp, 9, 2), ':', SUBSTRING(timestamp, 11, 2), ':', SUBSTRING(timestamp, 13, 2))", 'comment'
-				);
-				$this->conds = array( '1' );
+				];
+				$this->conds = [ '1' ];
 
 				$rowText = "CONCAT(SUBSTRING(timestamp, 1, 4), '-', SUBSTRING(timestamp, 5, 2), '-', SUBSTRING(timestamp, 7, 2), ' '," .
 						" SUBSTRING(timestamp, 9, 2), ':', SUBSTRING(timestamp, 11, 2), ':', SUBSTRING(timestamp, 13, 2))";
@@ -136,25 +138,19 @@ class SpecialSuggest extends SpecialPage {
 		if ( $search != '' ) {
 			if ( $query == 'transaction' ) {
 				$this->conds[] = $rowText . $this->dbr->buildLike( $this->dbr->anyString(), $search, $this->dbr->anyString() );
-			}
-			elseif ( $query == 'class' ) {
+			} elseif ( $query == 'class' ) {
 				$this->conds[] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
-			}
-			elseif ( $query == WLD_RELATIONS or
+			} elseif ( $query == WLD_RELATIONS or
 				$query == WLD_LINK_ATTRIBUTE or
 				$query == WLD_OPTION_ATTRIBUTE or
 				$query == 'translated-text-attribute' or
-				$query == 'text-attribute' )
-			{
+				$query == 'text-attribute' ) {
 				$this->options['HAVING'] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
-			}
-			elseif ( $query == 'language' ) {
+			} elseif ( $query == 'language' ) {
 				$this->options['HAVING'] = $rowText . $this->dbr->buildLike( $this->dbr->anyString(), $search, $this->dbr->anyString() );
-			}
-			elseif ( $query == 'relation-type' ) { // not sure in which case 'relation-type' happens...
+			} elseif ( $query == 'relation-type' ) { // not sure in which case 'relation-type' happens...
 				$this->conds[] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
-			}
-			else {
+			} else {
 				$this->conds[] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
 			}
 		}
@@ -187,7 +183,7 @@ class SpecialSuggest extends SpecialPage {
 		);
 
 		# == Process query
-		switch( $query ) {
+		switch ( $query ) {
 			case 'relation-type':
 				list( $recordSet, $editor ) = $this->getRelationTypeAsRecordSet( $queryResult );
 				break;
@@ -242,21 +238,20 @@ class SpecialSuggest extends SpecialPage {
 	 * As a (minor) hack, the 0th element of $fields is assumed to be the key field.
 	 */
 	private function constructSQLWithFallback( $actual_query, $fallback_query, $fields ) {
-
 		# if ($actual_query==$fallback_query)
-		#	return $actual_query;
+		# return $actual_query;
 
 		foreach ( $fields as $field ) {
-			$vars[] =  "COALESCE(actual.{$field}, fallback.{$field}) as {$field}";
+			$vars[] = "COALESCE(actual.{$field}, fallback.{$field}) as {$field}";
 		}
 
 		$table['fallback'] = "({$fallback_query})";
 		$table['actual'] = "({$actual_query})";
 
 		$field0 = $fields[0]; # slightly presumptuous
-		$join_conds = array( 'fallback' => array(
+		$join_conds = [ 'fallback' => [
 			'LEFT JOIN', "actual.{$field0} = fallback.{$field0}"
-		) );
+		] ];
 
 		$this->sql = $this->dbr->selectSQLText(
 			$table,
@@ -270,7 +265,6 @@ class SpecialSuggest extends SpecialPage {
 		$this->sql = str_replace( "``", '`', $this->sql );
 		$this->sql = str_replace( "`(", '(', $this->sql );
 		$this->sql = str_replace( ")`", ')', $this->sql );
-
 	}
 
 	/**
@@ -280,84 +274,86 @@ class SpecialSuggest extends SpecialPage {
 	private function getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, $attributesType ) {
 		global $wgDefaultClassMids, $wgIso639_3CollectionId, $wgDBprefix;
 
-		$classMids = $wgDefaultClassMids ;
+		$classMids = $wgDefaultClassMids;
 
-		if ( ( !is_null($syntransId) ) && ( !is_null($wgIso639_3CollectionId)) ) {
-			// find the language of the syntrans and add attributes of that language 
+		if ( ( !is_null( $syntransId ) ) && ( !is_null( $wgIso639_3CollectionId ) ) ) {
+			// find the language of the syntrans and add attributes of that language
 			// by adding the language DM to the list of default classes
 			// this first query returns the language_id
-			$language_id = OwDatabaseAPI::getLanguageId( array( 'sid' => $syntransId ) );
+			$language_id = OwDatabaseAPI::getLanguageId( [ 'sid' => $syntransId ] );
 
 			// this second query finds the DM number for a given language_id
 			$language_dm_id = $this->dbr->selectField(
-				array( 'colcont' => $this->dc . '_collection_contents', 'lng' => 'language' ),
+				[ 'colcont' => $this->dc . '_collection_contents', 'lng' => 'language' ],
 				'member_mid',
-				array(
+				[
 					'lng.language_id' => $language_id,
 					'colcont.collection_id' => $wgIso639_3CollectionId,
 					'lng.iso639_3 = colcont.internal_member_id',
 					'colcont.remove_transaction_id' => null
-				), __METHOD__
+				], __METHOD__
 			);
 
 			if ( !$language_dm_id ) {
 				// this language does not have an associated dm
 				$classMids = $wgDefaultClassMids;
 			} else {
-				$classMids = array_merge ( $wgDefaultClassMids , array($language_dm_id) ) ;
+				$classMids = array_merge( $wgDefaultClassMids, [ $language_dm_id ] );
 			}
 		}
 
 		$this->getFilteredAttributesRestriction( $annotationAttributeId );
 
 		// fallback is English, and second fallback is the DM id
-			$this->vars = array(
+			$this->vars = [
 				'object_id',
 				'attribute_mid'
-			);
+			];
 		if ( $this->userLangId != WLD_ENGLISH_LANG_ID ) {
 			$this->vars['spelling'] = 'COALESCE( exp_lng.spelling, exp_en.spelling, attribute_mid )';
 		} else {
 			$this->vars['spelling'] = 'COALESCE( exp_en.spelling, attribute_mid )';
 		}
-		$table = array(
+		$table = [
 			'bdm' => "{$this->dc}_bootstrapped_defined_meanings",
 			'clatt' => "{$this->dc}_class_attributes"
-		);
+		];
 		$tables = $this->getTableSQL( $table );
 		if ( $this->userLangId != WLD_ENGLISH_LANG_ID ) {
-			$table = null; $join_conds = null;
+			$table = null;
+			$join_conds = null;
 			$table['synt_lng'] = "{$this->dc}_syntrans";
 			$table['exp_lng'] = "{$this->dc}_expression";
-			$join_conds['synt_lng'] = array(
-				'LEFT JOIN', array(
+			$join_conds['synt_lng'] = [
+				'LEFT JOIN', [
 					'clatt.attribute_mid = synt_lng.defined_meaning_id',
 					'exp_lng.expression_id = synt_lng.expression_id',
 					"exp_lng.language_id = {$this->userLangId}"
-				)
-			);
+				]
+			];
 			$addJoinTable = $this->getComplexTableJoin( $table, $join_conds );
 			$tables .= " $addJoinTable";
 		}
-		$table = null; $join_conds = null;
+		$table = null;
+		$join_conds = null;
 		$table['synt_en'] = "{$this->dc}_syntrans";
 		$table['exp_en'] = "{$this->dc}_expression";
-		$join_conds['synt_en'] = array(
-			'LEFT JOIN', array(
+		$join_conds['synt_en'] = [
+			'LEFT JOIN', [
 				'clatt.attribute_mid = synt_en.defined_meaning_id',
 				'exp_en.expression_id = synt_en.expression_id',
 				'exp_en.language_id = ' . WLD_ENGLISH_LANG_ID
-			)
-		);
+			]
+		];
 		$addJoinTable = $this->getComplexTableJoin( $table, $join_conds );
 		$tables .= " $addJoinTable";
 		$this->table = $tables;
 
-		$this->conds = array(
+		$this->conds = [
 			'bdm.name' => $attributesLevel,
 			'bdm.defined_meaning_id = clatt.level_mid',
 			'clatt.attribute_type' => $attributesType // lacks $filteredAttributesRestriction
-		);
+		];
 
 		if ( $this->userLangId != WLD_ENGLISH_LANG_ID ) {
 			$this->conds['synt_lng.remove_transaction_id'] = null;
@@ -367,18 +363,18 @@ class SpecialSuggest extends SpecialPage {
 
 		$iniConds = 'clatt.class_mid IN ( ';
 		$insertSQL = $this->dbr->selectSQLText(
-			array(
+			[
 				'clmem' => "{$this->dc}_class_membership"
-			), 'class_mid',
-			array(
+			], 'class_mid',
+			[
 				"clmem.class_member_mid = {$definedMeaningId}",
 				'clmem.remove_transaction_id' => null
-			), __METHOD__
+			], __METHOD__
 		);
 		$insertSQL = preg_replace( '/,$/', '', $insertSQL );
 
 		if ( count( $classMids ) > 0 ) {
-			$finalConds = "OR clatt.class_mid IN (" . join( $classMids, ", " ) . ")";
+			$finalConds = "OR clatt.class_mid IN (" . implode( $classMids, ", " ) . ")";
 		}
 		$this->conds[] = "{$iniConds}{$insertSQL} ) {$finalConds}";
 
@@ -397,13 +393,13 @@ class SpecialSuggest extends SpecialPage {
 
 	private function getComplexTableJoin( $table, $join_conds ) {
 		// get join key
-		foreach( $join_conds as $key => $value ) {
+		foreach ( $join_conds as $key => $value ) {
 			$joinTableKey = $key;
 			$joinTypeKey = $value[0];
 		}
-		foreach( $table as $key => $value ) {
+		foreach ( $table as $key => $value ) {
 			$tempTable['key'] = "`$value` `$key`";
-			preg_match( '/' . $joinTableKey . '/', $tempTable['key'] , $match );
+			preg_match( '/' . $joinTableKey . '/', $tempTable['key'], $match );
 			if ( $match ) {
 				$replaceThis = $tempTable['key'];
 			} else {
@@ -443,14 +439,14 @@ class SpecialSuggest extends SpecialPage {
 		if ( $propertyToColumnFilter != null ) {
 			return $propertyToColumnFilter->attributeIDs;
 		} else {
-			return array();
+			return [];
 		}
 	}
 
 	private function getAllFilteredAttributes() {
 		global $wgPropertyToColumnFilters;
 
-		$result = array();
+		$result = [];
 
 		foreach ( $wgPropertyToColumnFilters as $propertyToColumnFilter ) {
 			$result = array_merge( $result, $propertyToColumnFilter->attributeIDs );
@@ -460,23 +456,21 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	private function getFilteredAttributesRestriction( $annotationAttributeId ) {
-
 		$propertyToColumnFilter = $this->getPropertyToColumnFilterForAttribute( $annotationAttributeId );
 
 		if ( $propertyToColumnFilter != null ) {
 			$filteredAttributes = $propertyToColumnFilter->attributeIDs;
 
 			if ( count( $filteredAttributes ) > 0 ) {
-				$this->conds[] = "clatt.attribute_mid IN (" . join( $filteredAttributes, ", " ) . ")";
+				$this->conds[] = "clatt.attribute_mid IN (" . implode( $filteredAttributes, ", " ) . ")";
 			} else {
 				$this->conds[] = '0';
 			}
-		}
-		else {
+		} else {
 			$allFilteredAttributes = $this->getAllFilteredAttributes();
 
 			if ( count( $allFilteredAttributes ) > 0 ) {
-				$this->conds[] = "clatt.attribute_mid NOT IN (" . join( $allFilteredAttributes, ", " ) . ")";
+				$this->conds[] = "clatt.attribute_mid NOT IN (" . implode( $allFilteredAttributes, ", " ) . ")";
 			}
 		}
 	}
@@ -485,49 +479,49 @@ class SpecialSuggest extends SpecialPage {
 	 * @return sql parameters for query needed to select a DM in a DM-DM relation
 	 */
 	private function getParametersForDMs() {
-		$this->table = array( // tables
+		$this->table = [ // tables
 			'exp' => "{$this->dc}_expression",
 			'synt' => "{$this->dc}_syntrans"
-		);
-		$this->vars = array( // fields
+		];
+		$this->vars = [ // fields
 			'defined_meaning_id' => 'synt.defined_meaning_id',
 			'spelling' => 'exp.spelling',
 			'language_id' => 'exp.language_id'
-		);
-		$this->conds = array( // where
+		];
+		$this->conds = [ // where
 			'exp.remove_transaction_id' => null
-		);
-		$this->options = array( 'STRAIGHT_JOIN' ); // options
-		$this->join_conds = array( 'synt' => array( 'JOIN', array(
+		];
+		$this->options = [ 'STRAIGHT_JOIN' ]; // options
+		$this->join_conds = [ 'synt' => [ 'JOIN', [
 			'exp.expression_id = synt.expression_id',
 			'synt.identical_meaning' => 1,
 			'synt.remove_transaction_id' => null
-		)));
+		] ] ];
 	}
 
 	/**
 	 * @return sql parameters for query used to select a syntrans in a syntrans-syntrans relation
 	 */
 	private function getParametersForSyntranses() {
-		$this->table = array( // tables
+		$this->table = [ // tables
 			'exp' => "{$this->dc}_expression",
 			'synt' => "{$this->dc}_syntrans"
-		);
-		$this->vars = array( // fields
+		];
+		$this->vars = [ // fields
 			'syntrans_sid' => 'synt.syntrans_sid',
 			'defined_meaning_id' => 'synt.defined_meaning_id',
 			'spelling' => 'exp.spelling',
 			'language_id' => 'exp.language_id'
-		);
-		$this->conds = array( // where
+		];
+		$this->conds = [ // where
 			'exp.remove_transaction_id' => null
-		);
-		$this->options = array( 'STRAIGHT_JOIN' ); // options
-		$this->join_conds = array( 'synt' => array( 'JOIN', array(
+		];
+		$this->options = [ 'STRAIGHT_JOIN' ]; // options
+		$this->join_conds = [ 'synt' => [ 'JOIN', [
 			'exp.expression_id = synt.expression_id',
 			'synt.identical_meaning' => 1,
 			'synt.remove_transaction_id' => null
-		)));
+		] ] ];
 	}
 
 	/**
@@ -535,42 +529,42 @@ class SpecialSuggest extends SpecialPage {
 	 *	in the user language or in English
 	 */
 	private function getParametersForClasses() {
-		$this->table = array(
+		$this->table = [
 			'col_contents' => "{$this->dc}_collection_contents",
 			'col' => "{$this->dc}_collection",
 			'synt' => "{$this->dc}_syntrans",
 			'exp' => "{$this->dc}_expression",
 			'dm' => "{$this->dc}_defined_meaning"
-		);
-		$this->vars = array( 'member_mid', 'spelling' );
-		$this->conds = array(
+		];
+		$this->vars = [ 'member_mid', 'spelling' ];
+		$this->conds = [
 			"col.collection_type='CLAS'",
 			"col_contents.collection_id = col.collection_id",
 			"synt.defined_meaning_id = col_contents.member_mid",
-//			"synt.identical_meaning" => 1,
+			// "synt.identical_meaning" => 1,
 			"exp.expression_id = synt.expression_id",
 			"dm.defined_meaning_id = synt.defined_meaning_id"
-		);
+		];
 
 		// fallback is English
 		$iniCond = "exp.language_id = {$this->userLangId} ";
 		if ( $this->userLangId != WLD_ENGLISH_LANG_ID ) {
 			$notExistsQuery = $this->dbr->selectSQLText(
-				array(
+				[
 					'synt2' => "{$this->dc}_syntrans",
 					'exp2' => "{$this->dc}_expression"
-				),
+				],
 				'*',
-				array(
+				[
 					'synt2.defined_meaning_id = synt.defined_meaning_id',
 					'exp2.expression_id = synt2.expression_id',
 					'exp2.language_id' => $this->userLangId,
 					'synt2.remove_transaction_id' => null
-				), __METHOD__,
-				array( 'LIMIT' => 1 )
+				], __METHOD__,
+				[ 'LIMIT' => 1 ]
 			);
 			$iniCond .= " OR ( language_id = " . WLD_ENGLISH_LANG_ID .
-				" AND NOT EXISTS ( {$notExistsQuery} ) ) " ;
+				" AND NOT EXISTS ( {$notExistsQuery} ) ) ";
 		}
 		$this->conds[] = $iniCond;
 
@@ -579,11 +573,10 @@ class SpecialSuggest extends SpecialPage {
 		$this->conds['synt.remove_transaction_id'] = null;
 		$this->conds['exp.remove_transaction_id'] = null;
 		$this->conds['dm.remove_transaction_id'] = null;
-
 	}
 
 	private function getSQLForCollectionOfType( $collectionType, $language = "<ANY>" ) {
-		$cond = array(
+		$cond = [
 			'colcont.collection_id = col.collection_id',
 			'col.collection_type' => $collectionType,
 			'synt.defined_meaning_id = colcont.member_mid',
@@ -593,20 +586,20 @@ class SpecialSuggest extends SpecialPage {
 			'exp.remove_transaction_id' => null,
 			'col.remove_transaction_id' => null,
 			'colcont.remove_transaction_id' => null
-		);
+		];
 
 		if ( $language != "<ANY>" ) {
 			$cond['language_id'] = $language;
 		}
 
 		$sql = $this->dbr->selectSQLText(
-			array(
+			[
 				'colcont' => $this->dc . '_collection_contents',
 				'col' => $this->dc . '_collection',
 				'synt' => $this->dc . '_syntrans',
 				'exp' => $this->dc . '_expression'
-			),
-			array( 'member_mid', 'spelling', 'collection_mid' ),
+			],
+			[ 'member_mid', 'spelling', 'collection_mid' ],
 			$cond,
 			__METHOD__
 		);
@@ -615,38 +608,38 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	private function getParametersForCollection() {
-		$this->table = array(
+		$this->table = [
 			'exp' => "{$this->dc}_expression",
 			'col' => "{$this->dc}_collection",
 			'synt' => "{$this->dc}_syntrans",
 			'dm' => "{$this->dc}_defined_meaning"
-		);
-		$this->vars = array( 'collection_id', 'spelling' );
-		$this->conds = array(
+		];
+		$this->vars = [ 'collection_id', 'spelling' ];
+		$this->conds = [
 			'exp.expression_id=synt.expression_id',
 			'synt.defined_meaning_id=col.collection_mid',
 			'dm.defined_meaning_id = synt.defined_meaning_id',
 			'synt.identical_meaning=1'
-		);
+		];
 
 		// fallback is English
 		$iniCond = "exp.language_id = {$this->userLangId} ";
 		if ( $this->userLangId != WLD_ENGLISH_LANG_ID ) {
 			$notExistsQuery = $this->dbr->selectSQLText(
-				array(
+				[
 					'synt2' => "{$this->dc}_syntrans",
 					'exp2' => "{$this->dc}_expression"
-				), 'exp2.expression_id', // whatever
-				array(
+				], 'exp2.expression_id', // whatever
+				[
 					'synt2.defined_meaning_id = synt.defined_meaning_id',
 					'exp2.expression_id = synt2.expression_id',
 					'exp2.language_id' => $this->userLangId,
 					'synt2.remove_transaction_id' => null
-				), __METHOD__,
-				array( 'LIMIT' => 1 )
+				], __METHOD__,
+				[ 'LIMIT' => 1 ]
 			);
 			$iniCond .= " OR ( language_id = " . WLD_ENGLISH_LANG_ID .
-				" AND NOT EXISTS ( {$notExistsQuery} ) ) " ;
+				" AND NOT EXISTS ( {$notExistsQuery} ) ) ";
 		}
 		$this->conds[] = $iniCond;
 
@@ -656,28 +649,27 @@ class SpecialSuggest extends SpecialPage {
 		$this->conds['dm.remove_transaction_id'] = null;
 	}
 
-	private function getParametersForLevels( ) {
+	private function getParametersForLevels() {
 		global $wgWldClassAttributeLevels;
 
 		// TO DO: Add support for multiple languages here
-		$this->table = array(
+		$this->table = [
 			'dm' => "{$this->dc}_defined_meaning",
 			'exp' => "{$this->dc}_expression",
-			'bsdm' =>"{$this->dc}_bootstrapped_defined_meanings"
-		);
-		$this->vars = array(
+			'bsdm' => "{$this->dc}_bootstrapped_defined_meanings"
+		];
+		$this->vars = [
 			'bsdm.defined_meaning_id',
 			'exp.spelling'
-		);
-		$this->conds = array(
+		];
+		$this->conds = [
 			'name IN (' . implodeFixed( $wgWldClassAttributeLevels ) . ')',
 			'dm.defined_meaning_id = bsdm.defined_meaning_id',
 			'dm.expression_id = exp.expression_id'
-		);
+		];
 	}
 
 	private function getRelationTypeAsRecordSet( $queryResult ) {
-
 		$relationTypeAttribute = new Attribute( "relation-type", wfMessage( 'ow_RelationType' )->text(), "short-text" );
 		$collectionAttribute = new Attribute( "collection", wfMessage( 'ow_Collection' )->text(), "short-text" );
 
@@ -687,13 +679,13 @@ class SpecialSuggest extends SpecialPage {
 		);
 
 		foreach ( $queryResult as $row ) {
-			$recordSet->addRecord( array( $row->member_mid, $row->spelling, OwDatabaseAPI::getDefinedMeaningExpression( $row->collection_mid ) ) );
+			$recordSet->addRecord( [ $row->member_mid, $row->spelling, OwDatabaseAPI::getDefinedMeaningExpression( $row->collection_mid ) ] );
 		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $relationTypeAttribute ) );
 		$editor->addEditor( createShortTextViewer( $collectionAttribute ) );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	/**
@@ -703,7 +695,6 @@ class SpecialSuggest extends SpecialPage {
 	 * @param $queryResult the result of a SQL query to be made into an html table
 	 */
 	function getClassAsRecordSet( $queryResult ) {
-
 		// Setting the two column, with titles
 		$classAttribute = new Attribute( "class", wfMessage( 'ow_Class' )->text(), "short-text" );
 		$definitionAttribute = new Attribute( "definition", wfMessage( 'ow_Definition' )->text(), "short-text" );
@@ -714,18 +705,17 @@ class SpecialSuggest extends SpecialPage {
 		);
 
 		foreach ( $queryResult as $row ) {
-			$recordSet->addRecord( array( $row->member_mid, $row->spelling, getDefinedMeaningDefinition( $row->member_mid ) ) );
+			$recordSet->addRecord( [ $row->member_mid, $row->spelling, getDefinedMeaningDefinition( $row->member_mid ) ] );
 		}
 
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $classAttribute ) );
 		$editor->addEditor( createShortTextViewer( $definitionAttribute ) );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	private function getDefinedMeaningAttributeAsRecordSet( $queryResult ) {
-
 		$definedMeaningAttributeAttribute = new Attribute( WLD_DM_ATTRIBUTES, wfMessage( 'ow_Relations' )->plain(), "short-text" );
 		$recordSet = new ArrayRecordSet(
 			new Structure( $this->o->id, $definedMeaningAttributeAttribute ),
@@ -733,16 +723,15 @@ class SpecialSuggest extends SpecialPage {
 		);
 
 		foreach ( $queryResult as $row ) {
-			$recordSet->addRecord( array( $row->attribute_mid, $row->spelling ) );
+			$recordSet->addRecord( [ $row->attribute_mid, $row->spelling ] );
 		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $definedMeaningAttributeAttribute ) );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	private function getTextAttributeAsRecordSet( $queryResult ) {
-
 		$textAttributeAttribute = new Attribute( "text-attribute", wfMessage( 'ow_TextAttributeHeader' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet(
 			new Structure( $this->o->id, $textAttributeAttribute ),
@@ -750,16 +739,15 @@ class SpecialSuggest extends SpecialPage {
 		);
 
 		foreach ( $queryResult as $row ) {
-			$recordSet->addRecord( array( $row->attribute_mid, $row->spelling ) );
+			$recordSet->addRecord( [ $row->attribute_mid, $row->spelling ] );
 		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $textAttributeAttribute ) );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	private function getLinkAttributeAsRecordSet( $queryResult ) {
-
 		$linkAttributeAttribute = new Attribute( WLD_LINK_ATTRIBUTE, wfMessage( 'ow_LinkAttributeHeader' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet(
 			new Structure( $this->o->id, $linkAttributeAttribute ),
@@ -767,16 +755,15 @@ class SpecialSuggest extends SpecialPage {
 		);
 
 		foreach ( $queryResult as $row ) {
-			$recordSet->addRecord( array( $row->attribute_mid, $row->spelling ) );
+			$recordSet->addRecord( [ $row->attribute_mid, $row->spelling ] );
 		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $linkAttributeAttribute ) );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	private function getTranslatedTextAttributeAsRecordSet( $queryResult ) {
-
 		$translatedTextAttributeAttribute = new Attribute( "translated-text-attribute", "Translated text attribute", "short-text" );
 
 		$recordSet = new ArrayRecordSet(
@@ -785,16 +772,15 @@ class SpecialSuggest extends SpecialPage {
 		);
 
 		foreach ( $queryResult as $row ) {
-			$recordSet->addRecord( array( $row->attribute_mid, $row->spelling ) );
+			$recordSet->addRecord( [ $row->attribute_mid, $row->spelling ] );
 		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $translatedTextAttributeAttribute ) );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	private function getOptionAttributeAsRecordSet( $queryResult ) {
-
 		$optionAttributeAttribute = new Attribute( WLD_OPTION_ATTRIBUTE, wfMessage( 'ow_OptionAttributeHeader' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet(
 			new Structure( $this->o->id, $optionAttributeAttribute ),
@@ -802,12 +788,12 @@ class SpecialSuggest extends SpecialPage {
 		);
 
 		foreach ( $queryResult as $row ) {
-			$recordSet->addRecord( array( $row->object_id, $row->spelling ) );
+			$recordSet->addRecord( [ $row->object_id, $row->spelling ] );
 		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $optionAttributeAttribute ) );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	/**
@@ -816,7 +802,6 @@ class SpecialSuggest extends SpecialPage {
 	* The three together represent a specific (unique) defined_meaning_id
 	*/
 	private function getDefinedMeaningAsRecordSet( $queryResult ) {
-
 		$definitionAttribute = new Attribute( "definition", wfMessage( 'ow_Definition' )->text(), "definition" );
 
 		$spellingLangDefStructure = new Structure( $this->o->id, $this->o->spelling, $this->o->language, $definitionAttribute );
@@ -825,7 +810,7 @@ class SpecialSuggest extends SpecialPage {
 		foreach ( $queryResult as $row ) {
 			$definition = getDefinedMeaningDefinition( $row->defined_meaning_id );
 
-			$recordSet->addRecord( array( $row->defined_meaning_id, $row->spelling, $row->language_id, $definition ) );
+			$recordSet->addRecord( [ $row->defined_meaning_id, $row->spelling, $row->language_id, $definition ] );
 		}
 
 		$definitionEditor = new TextEditor( $definitionAttribute, new SimplePermissionController( false ), false, true, 75 );
@@ -835,7 +820,7 @@ class SpecialSuggest extends SpecialPage {
 		$editor->addEditor( createLanguageViewer( $this->o->language ) );
 		$editor->addEditor( $definitionEditor );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	/**
@@ -844,7 +829,6 @@ class SpecialSuggest extends SpecialPage {
 	* The three together represent a specific (unique) syntrans_sid
 	*/
 	private function getSyntransAsRecordSet( $queryResult ) {
-
 		$definitionAttribute = new Attribute( "definition", wfMessage( 'ow_Definition' )->text(), "definition" );
 
 		$spellingLangDefStructure = new Structure( $this->o->id, $this->o->spelling, $this->o->language, $definitionAttribute );
@@ -853,7 +837,7 @@ class SpecialSuggest extends SpecialPage {
 		foreach ( $queryResult as $row ) {
 			$definition = getDefinedMeaningDefinition( $row->defined_meaning_id );
 
-			$recordSet->addRecord( array( $row->syntrans_sid, $row->spelling, $row->language_id, $definition ) );
+			$recordSet->addRecord( [ $row->syntrans_sid, $row->spelling, $row->language_id, $definition ] );
 		}
 
 		$definitionEditor = new TextEditor( $definitionAttribute, new SimplePermissionController( false ), false, true, 75 );
@@ -863,55 +847,51 @@ class SpecialSuggest extends SpecialPage {
 		$editor->addEditor( createLanguageViewer( $this->o->language ) );
 		$editor->addEditor( $definitionEditor );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	private function getClassAttributeLevelAsRecordSet( $queryResult ) {
-
 		$classAttributeLevelAttribute = new Attribute( "class-attribute-level", wfMessage( 'ow_ClassAttributeLevel' )->text(), "short-text" );
 		$recordSet = new ArrayRecordSet( new Structure( $this->o->id, $classAttributeLevelAttribute ), new Structure( $this->o->id ) );
 
 		foreach ( $queryResult as $row ) {
-			$recordSet->addRecord( array( $row->defined_meaning_id, $row->spelling ) );
+			$recordSet->addRecord( [ $row->defined_meaning_id, $row->spelling ] );
 		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $classAttributeLevelAttribute ) );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	private function getCollectionAsRecordSet( $queryResult ) {
-
 		$collectionAttribute = new Attribute( "collection", wfMessage( 'ow_Collection' )->text(), "short-text" );
 
 		$recordSet = new ArrayRecordSet( new Structure( $this->o->id, $collectionAttribute ), new Structure( $this->o->id ) );
 
 		foreach ( $queryResult as $row ) {
-			$recordSet->addRecord( array( $row->collection_id, $row->spelling ) );
+			$recordSet->addRecord( [ $row->collection_id, $row->spelling ] );
 		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $collectionAttribute ) );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	private function getLanguageAsRecordSet( $queryResult ) {
-
 		$languageAttribute = new Attribute( "language", wfMessage( 'ow_Language' )->text(), "short-text" );
 
 		$recordSet = new ArrayRecordSet( new Structure( $this->o->id, $languageAttribute ), new Structure( $this->o->id ) );
 
-		foreach ( $queryResult as $row )  {
-			$recordSet->addRecord( array( $row->row_id, $row->language_name ) );
+		foreach ( $queryResult as $row ) {
+			$recordSet->addRecord( [ $row->row_id, $row->language_name ] );
 		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $languageAttribute ) );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	private function getTransactionAsRecordSet( $queryResult ) {
-
 		$userAttribute = new Attribute( "user", wfMessage( 'ow_User' )->text(), "short-text" );
 		$timestampAttribute = new Attribute( "timestamp", wfMessage( 'ow_Time' )->text(), "timestamp" );
 		$summaryAttribute = new Attribute( "summary", wfMessage( 'ow_transaction_summary' )->text(), "short-text" );
@@ -922,7 +902,7 @@ class SpecialSuggest extends SpecialPage {
 		);
 
 		foreach ( $queryResult as $row ) {
-			$recordSet->addRecord( array( $row->transaction_id, getUserLabel( $row->user_id, $row->user_ip ), $row->time, $row->comment ) );
+			$recordSet->addRecord( [ $row->transaction_id, getUserLabel( $row->user_id, $row->user_ip ), $row->time, $row->comment ] );
 		}
 		$editor = createSuggestionsTableViewer( null );
 		$editor->addEditor( createShortTextViewer( $timestampAttribute ) );
@@ -930,7 +910,7 @@ class SpecialSuggest extends SpecialPage {
 		$editor->addEditor( createShortTextViewer( $userAttribute ) );
 		$editor->addEditor( createShortTextViewer( $summaryAttribute ) );
 
-		return array( $recordSet, $editor );
+		return [ $recordSet, $editor ];
 	}
 
 	protected function getGroupName() {

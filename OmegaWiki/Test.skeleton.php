@@ -7,23 +7,20 @@
 define( 'MEDIAWIKI', true );
 
 if ( !defined( "PHPUnit_MAIN_METHOD" ) ) {
-    define( "PHPUnit_MAIN_METHOD", "RecordHelperTest::main" );
+	define( "PHPUnit_MAIN_METHOD", "RecordHelperTest::main" );
 }
 
-
 # do we seriously need ALL of these?
-require_once( "../../../StartProfiler.php" );
-require_once( "../../../LocalSettings.php" );
-require_once( "../php-tools/ProgressBar.php" );
-require_once( "Setup.php" );
-require_once( "DefinedMeaningModel.php" );
-require_once( "Transaction.php" );
+require_once "../../../StartProfiler.php";
+require_once "../../../LocalSettings.php";
+require_once "../php-tools/ProgressBar.php";
+require_once "Setup.php";
+require_once "DefinedMeaningModel.php";
+require_once "Transaction.php";
 
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
-require_once( "RecordHelper.php" );
-
-
+require_once "RecordHelper.php";
 
 class RecordHelperTest extends PHPUnit_Framework_TestCase {
 
@@ -36,9 +33,7 @@ class RecordHelperTest extends PHPUnit_Framework_TestCase {
 		$result = PHPUnit_TextUI_TestRunner::run( $suite );
 	}
 
-
 	function setUp() {
-			
 		global $wgCommandLineMode;
 		$wgCommandLineMode = true;
 		$dc = "uw";
@@ -46,10 +41,10 @@ class RecordHelperTest extends PHPUnit_Framework_TestCase {
 		$viewInformation = new ViewInformation();
 		$viewInformation->queryTransactionInformation = new QueryLatestTransactionInformation();
 
-		$model = new DefinedMeaningModel( $definedMeaningId, array( "viewinformation" => $viewInformation ) );
+		$model = new DefinedMeaningModel( $definedMeaningId, [ "viewinformation" => $viewInformation ] );
 		$testRecord = $model->getRecord();
 	}
-	
+
 	function tearDown() {
 		$testRecord = null;
 	}
@@ -57,7 +52,5 @@ class RecordHelperTest extends PHPUnit_Framework_TestCase {
 }
 
 if ( PHPUnit_MAIN_METHOD == "RecordHelperTest::main" ) {
-    RecordHelperTest::main();
+	RecordHelperTest::main();
 }
-
-?>

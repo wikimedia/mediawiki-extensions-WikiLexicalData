@@ -6,15 +6,15 @@
  * @Ingroup Api
  */
 
-require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
-require_once( 'extensions/WikiLexicalData/OmegaWiki/Transaction.php' );
+require_once 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php';
+require_once 'extensions/WikiLexicalData/OmegaWiki/Transaction.php';
 
 class AddDefinition extends ApiBase {
 
 	public $definition, $dm, $languageId, $result, $fp;
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, null);
+		parent::__construct( $main, $action, null );
 	}
 
 	public function execute() {
@@ -33,7 +33,7 @@ class AddDefinition extends ApiBase {
 		$this->transacted = false;
 
 		if ( isset( $params['test'] ) ) {
-			if ( $params['test'] == '1' OR $params['test'] == null ) {
+			if ( $params['test'] == '1' or $params['test'] == null ) {
 				$this->test = true;
 			}
 		}
@@ -65,46 +65,46 @@ class AddDefinition extends ApiBase {
 		$definition = $params['d'];
 		$definedMeaningId = $params['dm'];
 		$languageId = $params['lang'];
-		$this->getResult()->addValue( null, $this->getModuleName(), array (
+		$this->getResult()->addValue( null, $this->getModuleName(), [
 			'definition' => $definition,
 			'dmid' => $definedMeaningId,
 			'lang' => $languageId,
-			)
+			]
 		);
 		$result = $this->owAddDefinition( $definition, $languageId, $definedMeaningId );
 		$this->getResult()->addValue( null, $this->getModuleName(),
-			array ( 'result' => $result )
+			[ 'result' => $result ]
 		);
 		return true;
 	}
 
 	// Parameters.
 	public function getAllowedParams() {
-		return array(
-			'd' => array (
+		return [
+			'd' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-			'dm' => array (
+			],
+			'dm' => [
 				ApiBase::PARAM_TYPE => 'integer',
-			),
-			'lang' => array (
+			],
+			'lang' => [
 				ApiBase::PARAM_TYPE => 'integer',
-			),
-			'file' => array (
+			],
+			'file' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-			'wikipage' => array (
+			],
+			'wikipage' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-			'test' => array (
+			],
+			'test' => [
 				ApiBase::PARAM_TYPE => 'string'
-			),
-		);
+			],
+		];
 	}
 
 	// Get examples
 	public function getExamples() {
-	return array(
+	return [
 		'Add a defintion in another language to the defined meaning.',
 		'If a definition is already present for the language, nothing happens.',
 		'api.php?action=ow_add_definition&d=Not%20where%20something%20or%20someone%20usually%20is.&dm=334562&lang=85&format=xml',
@@ -116,72 +116,73 @@ class AddDefinition extends ApiBase {
 		'api.php?action=ow_add_definition&wikipage=User:Purodha/uploads/2&format=xml',
 		'or to test it',
 		'api.php?action=ow_add_definition&wikipage=User:Purodha/uploads/2&format=xml&test'
-		);
+		];
 	}
 
 	public function processBatch( $wikiPage ) {
 		global $params;
 
 		$csvWikiPageTitle = Title::newFromText( $wikiPage );
-		$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
+		$csvWikiPage = new WikiPage( $csvWikiPageTitle );
 
-		if ( !$wikiText = $csvWikiPage->getContent( Revision::RAW ) )
+		if ( !$wikiText = $csvWikiPage->getContent( Revision::RAW ) ) {
 			return $this->getResult()->addValue( null, $this->getModuleName(),
-				array ( 'result' => array (
+				[ 'result' => [
 					'error' => "WikiPage ( $csvWikiPageTitle ) does not exist"
-				) )
+				] ]
 			);
+		}
 
 		$text = $wikiText->getNativeData();
 
 		// Check if the page is redirected,
 		// then adjust accordingly.
 		preg_match( "/REDIRECT \[\[(.+)\]\]/", $text, $match2 );
-		if ( isset($match2[1]) ) {
+		if ( isset( $match2[1] ) ) {
 			$redirectedText = $match2[1];
 			$csvWikiPageTitle = Title::newFromText( $redirectedText );
-			$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
+			$csvWikiPage = new WikiPage( $csvWikiPageTitle );
 			$wikiText = $csvWikiPage->getContent( Revision::RAW );
 			$text = $wikiText->getNativeData();
 		}
 
 		$this->getResult()->addValue( null, $this->getModuleName(),
-			array ( 'process' => array (
-			'text' =>  'wikipage',
+			[ 'process' => [
+			'text' => 'wikipage',
 			'type' => 'batch processing'
-			) )
+			] ]
 		);
 
-		$inputLine = explode("\n", $text);
+		$inputLine = explode( "\n", $text );
 		$ctr = 0;
 		while ( $inputData = array_shift( $inputLine ) ) {
 			$ctr = $ctr + 1;
 			$inputData = trim( $inputData );
 			if ( $inputData == "" ) {
-				$result = array ( 'note' => "skipped blank line");
+				$result = [ 'note' => "skipped blank line" ];
 				$this->getResult()->addValue( null, $this->getModuleName(),
-					array ( 'result' . $ctr => $result )
+					[ 'result' . $ctr => $result ]
 				);
 				continue;
 			}
 
-			$inputMatch = preg_match("/^\"(.+)/", $inputData, $match);
-			if ($inputMatch == 1) {
+			$inputMatch = preg_match( "/^\"(.+)/", $inputData, $match );
+			if ( $inputMatch == 1 ) {
 				$inputData = $match[1];
-				preg_match("/(.+)\",(.+)/", $inputData, $match2);
+				preg_match( "/(.+)\",(.+)/", $inputData, $match2 );
 				$definition = $match2[1];
 				$inputData = $match2[2];
-				$inputData = explode(',',$inputData);
+				$inputData = explode( ',', $inputData );
 				$inputDataCount = count( $inputData );
 				$languageId = $inputData[0];
 				$definedMeaningId = $inputData[1];
 			} else {
-				$inputData = explode(',',$inputData);
+				$inputData = explode( ',', $inputData );
 				$inputDataCount = count( $inputData );
 				if ( $inputDataCount == 1 ) {
-					$result = array ( 'note' => "skipped blank line");
+					$result = [ 'note' => "skipped blank line" ];
 					$this->getResult()->addValue( null, $this->getModuleName(),
-						array ( 'result' . $ctr => $result )
+						[ 'result' . $ctr => $result ]
 					);
 					continue;
 				}
@@ -190,19 +191,19 @@ class AddDefinition extends ApiBase {
 				$definedMeaningId = $inputData[2];
 			}
 			if ( $definition === '' ) {
-				$result = array ( 'note' => 'skipped empty definition' );
-			} elseif ( !is_numeric($languageId) || !is_numeric($definedMeaningId) ) {
-				if($ctr == 1) {
-					$result = array ( 'note' => "either $languageId or $definedMeaningId is not an int or probably just the CSV header");
+				$result = [ 'note' => 'skipped empty definition' ];
+			} elseif ( !is_numeric( $languageId ) || !is_numeric( $definedMeaningId ) ) {
+				if ( $ctr == 1 ) {
+					$result = [ 'note' => "either $languageId or $definedMeaningId is not an int or probably just the CSV header" ];
 				} else {
-					$result = array ( 'note' => "either $languageId or $definedMeaningId is not an int");
+					$result = [ 'note' => "either $languageId or $definedMeaningId is not an int" ];
 				}
 			} else {
 				$result = $this->owAddDefinition( $definition, $languageId, $definedMeaningId );
 			}
 
 			$this->getResult()->addValue( null, $this->getModuleName(),
-				array ( 'result' . $ctr => $result )
+				[ 'result' . $ctr => $result ]
 			);
 		}
 		return true;
@@ -213,16 +214,18 @@ class AddDefinition extends ApiBase {
 		$dc = wdGetDataSetContext();
 
 		// check that the language_id exists
-		if ( !verifyLanguageId( $languageId ) )
-			return array(
+		if ( !verifyLanguageId( $languageId ) ) {
+			return [
 				'WARNING' => 'Nonexisting language id(' . $languageId . ').'
-			);
+			];
+		}
 
 		// check that defined_meaning_id exists
-		if ( !verifyDefinedMeaningId( $definedMeaningId ) )
-			return array(
+		if ( !verifyDefinedMeaningId( $definedMeaningId ) ) {
+			return [
 				'WARNING' => 'Nonexisting definedmeaning id (' . $definedMeaningId . ').'
-			);
+			];
+		}
 
 		// trim definition
 		$definition = trim( $definition );
@@ -231,31 +234,31 @@ class AddDefinition extends ApiBase {
 		// check if a definition already exists for this language
 		$definitionId = getDefinedMeaningDefinitionId( $definedMeaningId );
 		if ( translatedTextExists( $definitionId, $languageId ) ) {
-			$note = array (
+			$note = [
 				'status' => 'existing definition kept',
 				'in' => "$concept DM($definedMeaningId)",
 				'd' => $definition,
 				'langid' => $languageId,
 				'dm' => $definedMeaningId,
-			);
+			];
 			if ( $this->test ) {
 				$note['note'] = 'test run only';
 			}
 			return $note;
 		}
 		// add the definition
-		$note = array (
+		$note = [
 			'status' => 'added',
 			'to' => "$concept DM($definedMeaningId)",
 			'd' => $definition,
 			'langid' => $languageId,
 			'dm' => $definedMeaningId,
-		);
+		];
 
 		if ( !$this->test ) {
 			if ( !$this->transacted ) {
 				$this->transacted = true;
-				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_definitiion", $dc);
+				startNewTransaction( $this->getUser()->getID(), "0.0.0.0", "Added using API function add_definitiion", $dc );
 			}
 			addDefinedMeaningDefinition( $definedMeaningId, $languageId, $definition );
 		} else {
@@ -265,4 +268,3 @@ class AddDefinition extends ApiBase {
 		return $note;
 	}
 }
-

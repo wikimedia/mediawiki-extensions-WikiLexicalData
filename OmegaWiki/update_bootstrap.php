@@ -2,15 +2,14 @@
 
 define( 'MEDIAWIKI', true );
 
-require_once( "../../../StartProfiler.php" );
-require_once( "../../../includes/Defines.php" );
-require_once( "../../../LocalSettings.php" );
-require_once( "Setup.php" );
-require_once( "Copy.php" );
+require_once "../../../StartProfiler.php";
+require_once "../../../includes/Defines.php";
+require_once "../../../LocalSettings.php";
+require_once "Setup.php";
+require_once "Copy.php";
 
 /** connect to database. */
 function connect() {
-
 	global $wgDBserver, $wgDBuser, $wgDBpassword, $wgDBname;
 
 	$db1 = $wgDBserver;  # hostname
@@ -19,7 +18,9 @@ function connect() {
 	$db4 = $wgDBname;  # db-name
 
 	$connection = MySQL_connect( $db1, $db2, $db3 );
-	if ( !$connection )die( "Cannot connect to SQL server. Try again later." );
+	if ( !$connection ) {
+		die( "Cannot connect to SQL server. Try again later." );
+	}
 	MySQL_select_db( $db4 ) or die( "Cannot open database" );
 	mysql_query( "SET NAMES 'utf8'" );
 }
@@ -35,12 +36,9 @@ function main() {
 
 	mysql_query( "START TRANSACTION" );
 	echo "doing bootstraps\n";
-	CopyTools::map_bootstraps( "uw", array( "uw", "sp" ) );
+	CopyTools::map_bootstraps( "uw", [ "uw", "sp" ] );
 	mysql_query( "COMMIT" );
 	echo "done.\n";
 }
 
-
 main();
-
-?>

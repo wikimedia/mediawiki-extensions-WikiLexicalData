@@ -1,9 +1,9 @@
 <?php
 
-require_once( 'Attribute.php' );
-require_once( 'Record.php' );
-require_once( 'RecordSet.php' );
-require_once( 'Wikidata.php' );
+require_once 'Attribute.php';
+require_once 'Record.php';
+require_once 'RecordSet.php';
+require_once 'Wikidata.php';
 
 /**
  * @file Transaction.php
@@ -24,7 +24,6 @@ require_once( 'Wikidata.php' );
  * (Please document anything else that's really needed for anything)
  */
 
-
 interface QueryTransactionInformation {
 	public function getRestriction( Table $table );
 	public function getTables();
@@ -41,23 +40,23 @@ class DefaultQueryTransactionInformation implements QueryTransactionInformation 
 	}
 
 	public function getTables() {
-		return array();
+		return [];
 	}
 
 	public function versioningAttributes() {
-		return array();
+		return [];
 	}
 
 	public function versioningFields( $tableName ) {
-		return array();
+		return [];
 	}
 
 	public function versioningOrderBy() {
-		return array();
+		return [];
 	}
 
 	public function versioningGroupBy( Table $table ) {
-		return array();
+		return [];
 	}
 
 	public function setVersioningAttributes( Record $record, $row ) {
@@ -79,22 +78,20 @@ class QueryLatestTransactionInformation extends DefaultQueryTransactionInformati
 
 class QueryHistoryTransactionInformation extends DefaultQueryTransactionInformation {
 	public function versioningAttributes() {
-
 		$o = OmegaWikiAttributes::getInstance();
 
-		return array( $o->recordLifeSpan );
+		return [ $o->recordLifeSpan ];
 	}
 
 	public function versioningFields( $tableName ) {
-		return array( $tableName . '.add_transaction_id', $tableName . '.remove_transaction_id', $tableName . '.remove_transaction_id IS NULL AS is_live' );
+		return [ $tableName . '.add_transaction_id', $tableName . '.remove_transaction_id', $tableName . '.remove_transaction_id IS NULL AS is_live' ];
 	}
 
 	public function versioningOrderBy() {
-		return array( 'is_live DESC', 'add_transaction_id DESC' );
+		return [ 'is_live DESC', 'add_transaction_id DESC' ];
 	}
 
 	public function setVersioningAttributes( Record $record, $row ) {
-
 		$o = OmegaWikiAttributes::getInstance();
 
 		$record->recordLifeSpan = getRecordLifeSpanTuple( $row['add_transaction_id'], $row['remove_transaction_id'] );
@@ -115,25 +112,25 @@ class QueryAtTransactionInformation extends DefaultQueryTransactionInformation {
 	}
 
 	public function versioningAttributes() {
-
 		$o = OmegaWikiAttributes::getInstance();
 
-		if ( $this->addAttributes )
-			return array( $o->recordLifeSpan );
-		else
-			return array();
+		if ( $this->addAttributes ) {
+			return [ $o->recordLifeSpan ];
+		} else {
+			return [];
+		}
 	}
 
 	public function versioningFields( $tableName ) {
-		return array( $tableName . '.add_transaction_id', $tableName . '.remove_transaction_id', $tableName . '.remove_transaction_id IS NULL AS is_live' );
+		return [ $tableName . '.add_transaction_id', $tableName . '.remove_transaction_id', $tableName . '.remove_transaction_id IS NULL AS is_live' ];
 	}
 
 	public function setVersioningAttributes( Record $record, $row ) {
-
 		$o = OmegaWikiAttributes::getInstance();
 
-		if ( $this->addAttributes )
+		if ( $this->addAttributes ) {
 			$record->recordLifeSpan = getRecordLifeSpanTuple( $row['add_transaction_id'], $row['remove_transaction_id'] );
+		}
 	}
 }
 
@@ -145,36 +142,33 @@ class QueryUpdateTransactionInformation extends DefaultQueryTransactionInformati
 	}
 
 	public function getRestriction( Table $table ) {
-		return
-			" " . $table->getIdentifier() . ".add_transaction_id =" . $this->transactionId .
+		return " " . $table->getIdentifier() . ".add_transaction_id =" . $this->transactionId .
 			" OR " . $table->getIdentifier() . ".removeTransactionId =" . $this->transactionId;
 	}
 
-//	public function versioningAttributes() {
-//		global
-//			$recordLifeSpanAttribute;
-//
-//		return array();
-//	}
+	// public function versioningAttributes() {
+	// global
+	// $recordLifeSpanAttribute;
+	//
+	// return array();
+	// }
 
-//	public function versioningFields($tableName) {
-//		return array($tableName . '.add_transaction_id', $tableName . '.remove_transaction_id', $tableName . '.remove_transaction_id IS NULL AS is_live');
-//	}
+	// public function versioningFields($tableName) {
+	// return array($tableName . '.add_transaction_id', $tableName . '.remove_transaction_id', $tableName . '.remove_transaction_id IS NULL AS is_live');
+	// }
 
-//	public function setVersioningAttributes($record, $row) {
-//		global
-//			$recordLifeSpanAttribute;
-//
-//		$record->setAttributeValue($recordLifeSpanAttribute, getRecordLifeSpanTuple($row['add_transaction_id'], $row['remove_transaction_id']));
-//	}
+	// public function setVersioningAttributes($record, $row) {
+	// global
+	// $recordLifeSpanAttribute;
+	//
+	// $record->setAttributeValue($recordLifeSpanAttribute, getRecordLifeSpanTuple($row['add_transaction_id'], $row['remove_transaction_id']));
+	// }
 }
-
 
 global
 	$updateTransactionId;
 
 function startNewTransaction( $userID, $userIP, $comment, $dc = null ) {
-
 	global
 		$updateTransactionId;
 
@@ -185,7 +179,6 @@ function startNewTransaction( $userID, $userIP, $comment, $dc = null ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$timestamp = wfTimestampNow();
 
-
 	// do not store IP for logged in users
 	if ( $userID > 0 ) {
 		$userIP = "";
@@ -193,11 +186,11 @@ function startNewTransaction( $userID, $userIP, $comment, $dc = null ) {
 
 	$dbw->insert(
 		"{$dc}_transactions",
-		array( 'user_id' => $userID,
+		[ 'user_id' => $userID,
 			'user_ip' => $userIP,
 			'timestamp' => $timestamp,
 			'comment' => $comment
-		), __METHOD__
+		], __METHOD__
 	);
 	$updateTransactionId = $dbw->insertId();
 	// return is not really needed, as the global variable is set,
@@ -208,7 +201,7 @@ function startNewTransaction( $userID, $userIP, $comment, $dc = null ) {
 function getUpdateTransactionId() {
 	global $updateTransactionId, $wgRequest;
 
-	if ( ! isset ( $updateTransactionId ) ) {
+	if ( ! isset( $updateTransactionId ) ) {
 		// normally startNewTransaction is invoqued before this function
 		// but actually we can call it from here directly, it should work the same
 		global $wgUser;
@@ -272,9 +265,9 @@ function getUserName( $userId ) {
 	$userName = $dbr->selectField(
 		'user',
 		'user_name',
-		array(
+		[
 			'user_id' => $userId
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $userName ) {
@@ -323,20 +316,21 @@ function getTransactionRecord( $transactionId ) {
 	$result->transactionId = $transactionId;
 
 	if ( $transactionId > 0 ) {
-		$transaction = OwDatabaseAPI::getTransactionIdDetails( $transactionId, array(), $dc );
+		$transaction = OwDatabaseAPI::getTransactionIdDetails( $transactionId, [], $dc );
 
 		if ( $transaction ) {
 			$result->user = getUserLabel( $transaction->user_id, $transaction->user_ip );
-			if ( $result->user == null ) $result->user = "userId " . $transaction->user_id . " not found" ;
+			if ( $result->user == null ) { $result->user = "userId " . $transaction->user_id . " not found";
+			}
 			$result->timestamp = $transaction->timestamp;
 			$result->summary = $transaction->comment;
 		}
-	}
-	else {
-		if ( $transactionId != null )
+	} else {
+		if ( $transactionId != null ) {
 			$result->user = "Unknown";
-		else
+		} else {
 			$result->user = "";
+		}
 
 		$result->timestamp = "";
 		$result->summary = "";
@@ -346,7 +340,6 @@ function getTransactionRecord( $transactionId ) {
 }
 
 function getRecordLifeSpanTuple( $addTransactionId, $removeTransactionId ) {
-
 	$o = OmegaWikiAttributes::getInstance();
 
 	$result = new ArrayRecord( $o->recordLifeSpanStructure );
@@ -357,7 +350,6 @@ function getRecordLifeSpanTuple( $addTransactionId, $removeTransactionId ) {
 }
 
 function getTransactionLabel( $transactionId ) {
-
 	$o = OmegaWikiAttributes::getInstance();
 
 	if ( $transactionId > 0 ) {
@@ -369,13 +361,14 @@ function getTransactionLabel( $transactionId ) {
 
 		$summary = $record->summary;
 
-		if ( $summary != "" )
+		if ( $summary != "" ) {
 			$label .= ', ' . $summary;
+		}
 
 		return $label;
-	}
-	else
+	} else {
 		return "";
+	}
 }
 
 class Transactions {
@@ -405,8 +398,7 @@ class Transactions {
 	 * Also note that this function currently includes all data, even removed ones.
 
 	 */
-	public static function getLanguageIdLatestTransactionId( $languageId, $options = array(), $dc = null ) {
-
+	public static function getLanguageIdLatestTransactionId( $languageId, $options = [], $dc = null ) {
 		// If non numeric, skip this function and return -1
 		if ( !is_numeric( $languageId ) ) {
 			return -1;
@@ -420,9 +412,9 @@ class Transactions {
 			"job",
 			'job_id',
 			null, __METHOD__,
-			array(
+			[
 				'LIMIT' => 1
-			)
+			]
 		);
 
 		if ( !isset( $options['is_the_job'] ) ) {
@@ -444,32 +436,31 @@ class Transactions {
 			return $transaction_id;
 		}
 		return -1;
-
 	}
 
 /** @see static function Transactions::getLanguageIdLatestTransactionId
  */
-	protected function getLanguageIdLatestSynonymsAndTranslationsTransactionId( $languageId, $options = array(), $dc = null ) {
+	protected function getLanguageIdLatestSynonymsAndTranslationsTransactionId( $languageId, $options = [], $dc = null ) {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
 
 		$result = $dbr->selectField(
-			array(
+			[
 				'exp' => "{$dc}_expression",
 				'synt' => "{$dc}_syntrans"
-			),
+			],
 			'synt.add_transaction_id AS tid',
-			array(
+			[
 				'language_id' => $languageId,
 				'synt.expression_id = exp.expression_id',
 				'synt.remove_transaction_id' => null,
 				'exp.remove_transaction_id' => null
-			), __METHOD__,
-			array(
+			], __METHOD__,
+			[
 				'ORDER BY' => 'syntrans_sid DESC'
-			)
+			]
 		);
 
 		if ( $result ) {
@@ -498,14 +489,14 @@ class Transactions {
 		$dbr = wfGetDB( DB_REPLICA );
 		$transaction = $dbr->selectRow(
 			"{$dc}_transactions",
-			array( 'user_id', 'user_ip', 'timestamp', 'comment' ),
-			array( 'transaction_id' => $transactionId ), __METHOD__
+			[ 'user_id', 'user_ip', 'timestamp', 'comment' ],
+			[ 'transaction_id' => $transactionId ], __METHOD__
 		);
 
 		if ( $transaction ) {
 			return $transaction;
 		}
-		return array();
+		return [];
 	}
 
 }

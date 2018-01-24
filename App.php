@@ -8,30 +8,32 @@
  * hooks and jobs
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
-global $wgWldScriptPath, $wgWldOwScriptPath, $wgWldDownloadScriptPath, $wgWldIncludesScriptPath, $wgWldSpecialsScriptPath, $wgWldAPIScriptPath, $wgWldSetupScriptPath, $wgWldJobsScriptPath, $wgWldDbScripts ;
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die( 'Invalid entry point.' );
+}
+global $wgWldScriptPath, $wgWldOwScriptPath, $wgWldDownloadScriptPath, $wgWldIncludesScriptPath, $wgWldSpecialsScriptPath, $wgWldAPIScriptPath, $wgWldSetupScriptPath, $wgWldJobsScriptPath, $wgWldDbScripts;
 
-$dir = dirname( __FILE__ ) . '/';
+$dir = __DIR__ . '/';
 $dir = str_replace( '\\', '/', $dir );
 if ( !isset( $wgDBprefix ) ) {
 	global $wgDBprefix;
 	$wgDBprefix = null;
 }
-if ( ! isset ( $wdHandlerPath ) ) {
-	$wdHandlerPath = $dir . '/OmegaWiki/' ;
+if ( ! isset( $wdHandlerPath ) ) {
+	$wdHandlerPath = $dir . '/OmegaWiki/';
 }
-require_once( $dir . 'OmegaWiki/WikiDataGlobals.php' );
-require_once( $dir . 'OmegaWiki/Wikidata.php' );
-require_once( $wgWldScriptPath . '/SpecialLanguages.php' );
+require_once $dir . 'OmegaWiki/WikiDataGlobals.php';
+require_once $dir . 'OmegaWiki/Wikidata.php';
+require_once $wgWldScriptPath . '/SpecialLanguages.php';
 
 // API
-require_once( $wgWldAPIScriptPath . '/OmegaWikiExt.php' );
+require_once $wgWldAPIScriptPath . '/OmegaWikiExt.php';
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
 	'path'            => __FILE__,
 	'name'            => 'WikiLexicalData',
 	'version'         => '0.2.0',
-	'author'          => array(
+	'author'          => [
 		'Erik Möller',
 		'Kim Bruning',
 		'Maarten van Hoof',
@@ -39,39 +41,39 @@ $wgExtensionCredits['other'][] = array(
 		'Kipcool',
 		'庄向荣',
 		'Purodha Blissenbach'
-	),
+	],
 	'url'             => 'http://www.mediawiki.org/wiki/Extension:WikiLexicalData',
 	'descriptionmsg'  => 'wikidata-desc',
-);
+];
 
 $wgMessagesDirs['LexicalData'] = __DIR__ . '/i18n/lexicaldata';
-$wgExtensionMessagesFiles['WikiLexicalDataTextAlias'] = __DIR__ . '/WikiLexicalData.i18n.alias.php' ;
+$wgExtensionMessagesFiles['WikiLexicalDataTextAlias'] = __DIR__ . '/WikiLexicalData.i18n.alias.php';
 
 // Resource modules
-$resourcePathArray = array(
+$resourcePathArray = [
 	'localBasePath' => $dir . '/resources',
 	'remoteExtPath' => 'WikiLexicalData/resources'
-);
+];
 
 // separated css with position "top" to avoid
 // so-called Flash of unstyled content
-$wgResourceModules['ext.Wikidata.css'] = $resourcePathArray + array(
-	'styles' => array( 'suggest.css', 'tables.css' ),
+$wgResourceModules['ext.Wikidata.css'] = $resourcePathArray + [
+	'styles' => [ 'suggest.css', 'tables.css' ],
 	'position' => 'top'
-);
+];
 
-$wgResourceModules['ext.Wikidata.ajax'] = $resourcePathArray + array(
+$wgResourceModules['ext.Wikidata.ajax'] = $resourcePathArray + [
 	'scripts' => 'omegawiki-ajax.js'
-);
+];
 
-$wgResourceModules['ext.Wikidata.edit'] = $resourcePathArray + array(
+$wgResourceModules['ext.Wikidata.edit'] = $resourcePathArray + [
 	'scripts' => 'omegawiki-edit.js'
-);
+];
 
-$wgResourceModules['ext.Wikidata.suggest'] = $resourcePathArray + array(
+$wgResourceModules['ext.Wikidata.suggest'] = $resourcePathArray + [
 	'scripts' => 'suggest.js',
-	'messages' => array( 'ow_suggest_clear', 'ow_suggest_previous', 'ow_suggest_next' )
-);
+	'messages' => [ 'ow_suggest_clear', 'ow_suggest_previous', 'ow_suggest_next' ]
+];
 
 $wgAutoloadClasses['WikiLexicalDataHooks'] = $dir . 'Wikidata.hooks.php';
 $wgAutoloadClasses['OwDatabaseAPI'] = $dir . 'OmegaWiki/OmegaWikiDatabaseAPI.php';
@@ -92,7 +94,7 @@ $wgAutoloadClasses['DefinedMeaningModel'] = $dir . 'OmegaWiki/DefinedMeaningMode
 $wgAutoloadClasses['Search'] = $dir . 'OmegaWiki/Search.php';
 
 // Special Pages
-require_once( $wgWldSetupScriptPath . "OWSpecials.php" );
+require_once $wgWldSetupScriptPath . "OWSpecials.php";
 
 # FIXME: These should be modified to make Wikidata more reusable.
 $wgAvailableRights[] = 'editwikidata-uw';
@@ -122,9 +124,9 @@ $wgGroupPermissions['TSV-import-export']['importtsv'] = true;
 // WikiLexicalData Configuration.
 
 # Array of namespace ids and the handler classes they use.
-$wdHandlerClasses = array();
+$wdHandlerClasses = [];
 # Path to the handler class directory, will be deprecated in favor of autoloading shortly.
-//$wdHandlerPath = '';
+// $wdHandlerPath = '';
 
 # The term dataset prefix identifies the Wikidata instance that will
 # be used as a resource for obtaining language-independent strings
@@ -143,7 +145,7 @@ $wdShowCopyPanel = false;
 $wdShowEditCopy = true;
 
 # FIXME: These should be modified to make WikiLexicalData more reusable.
-$wdGroupDefaultView = array();
+$wdGroupDefaultView = [];
 $wdGroupDefaultView['wikidata-omega'] = 'uw';
 # $wdGroupDefaultView['wikidata-umls']='umls';
 # $wdGroupDefaultView['wikidata-sp']='sp';
@@ -157,7 +159,9 @@ $wdCopyDryRunOnly = false;
 # The site prefix allows us to have multiple sets of customized
 # messages (for different, typically site-specific UIs)
 # in a single database.
-if ( !isset( $wdSiteContext ) ) $wdSiteContext = "uw";
+if ( !isset( $wdSiteContext ) ) {
+	$wdSiteContext = "uw";
+}
 
 // Hooks
 $wgHooks['BeforePageDisplay'][] = 'WikiLexicalDataHooks::onBeforePageDisplay';
@@ -182,14 +186,13 @@ $wgHooks['InternalParseBeforeSanitize'][] = 'OmegaWikiHooks::onInternalParseBefo
 $wgHooks['CanonicalNamespaces'][] = 'OmegaWikiHooks::addCanonicalNamespaces';
 
 // Jobs
-require_once( $wgWldSetupScriptPath . "OWJobs.php" );
+require_once $wgWldSetupScriptPath . "OWJobs.php";
 
 // LocalApp.php is optional. Its function is like LocalSettings.php,
 // if you want to separate the MediaWiki configuration from the Wikidata configuration
-if ( file_exists ( dirname(__FILE__) . "LocalApp.php" )) {
-	require_once( dirname(__FILE__) . "LocalApp.php" );
+if ( file_exists( __DIR__ . "LocalApp.php" ) ) {
+	require_once __DIR__ . "LocalApp.php";
 }
 
 // Tags
-require_once( $wgWldSetupScriptPath . "OWTags.php" );
-
+require_once $wgWldSetupScriptPath . "OWTags.php";

@@ -4,10 +4,10 @@
  *
  */
 global $wgWldOwScriptPath, $wgWldIncludesScriptPath;
-require_once( $wgWldOwScriptPath . 'Expression.php' );
-require_once( $wgWldIncludesScriptPath . 'formatCSV.php' );
+require_once $wgWldOwScriptPath . 'Expression.php';
+require_once $wgWldIncludesScriptPath . 'formatCSV.php';
 
-Class CreateDefinedExpressionListJob extends Job {
+class CreateDefinedExpressionListJob extends Job {
 
 	public function __construct( $title, $params ) {
 		parent::__construct( 'CreateDefinedExpressionList', $title, $params );
@@ -88,7 +88,7 @@ Class CreateDefinedExpressionListJob extends Job {
 		}
 		$ctr = 0;
 		if ( $start != 0 ) {
-			foreach( $languageExpressions as $row ) {
+			foreach ( $languageExpressions as $row ) {
 				$spelling = $csv->formatCSVcolumn( $row->spelling );
 				$spelling = preg_replace( '/\\n/', ' ', $spelling );
 				// create a function to check if the expression has
@@ -97,15 +97,15 @@ Class CreateDefinedExpressionListJob extends Job {
 				foreach ( $defineList as $text ) {
 					fwrite( $fh, $spelling . ',' . $csv->formatCSVcolumn( $text ) . "\n" );
 				}
-				$defineList = array();
+				$defineList = [];
 				$ctr ++;
 			}
 		}
 		fclose( $fh );
 
 		// incomplete job
-		if( $ctr == $sqlLimit ) {
-			$jobParams = array( 'type' => $type, 'langcode' => $code, 'format' => $format );
+		if ( $ctr == $sqlLimit ) {
+			$jobParams = [ 'type' => $type, 'langcode' => $code, 'format' => $format ];
 			$jobParams['start'] = $start + $sqlLimit;
 			$jobName = 'User:JobQuery/' . $type . '_' . $code . '.' . $format;
 			$title = Title::newFromText( $jobName );
@@ -117,19 +117,18 @@ Class CreateDefinedExpressionListJob extends Job {
 			}
 			rename( $tempFileName, $fileName );
 		}
-
 	}
 
 	function getDefineList( $spelling, $languageId ) {
-		$dmlist = getExpressionMeaningIdsForLanguages( $spelling, array( $languageId ) );
-		$express = array();
+		$dmlist = getExpressionMeaningIdsForLanguages( $spelling, [ $languageId ] );
+		$express = [];
 		foreach ( $dmlist as $definedMeaningId ) {
 			$text = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId );
 			if ( $text ) {
 				$express[] = $text;
 			}
 		}
-		$dmlist = array();
+		$dmlist = [];
 		return $express;
 	}
 }

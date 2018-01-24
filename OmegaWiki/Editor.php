@@ -2,15 +2,14 @@
 /** @file
  *
  */
-require_once( "WikiDataGlobals.php" );
-require_once( 'IdStack.php' );
-require_once( "HTMLtable.php" );
-require_once( "Controller.php" );
-require_once( "type.php" );
-require_once( "Wikidata.php" );
-require_once( "ContextFetcher.php" );
-require_once( "OmegaWikiDatabaseAPI.php" );
-
+require_once "WikiDataGlobals.php";
+require_once 'IdStack.php';
+require_once "HTMLtable.php";
+require_once "Controller.php";
+require_once "type.php";
+require_once "Wikidata.php";
+require_once "ContextFetcher.php";
+require_once "OmegaWikiDatabaseAPI.php";
 
 # End of line string for readable HTML, set to "\n" for testing
 define( 'EOL', "\n" ); # Makes human (and vim :-p) readable output (somewhat...)
@@ -78,7 +77,7 @@ interface Editor {
 }
 
 class AttributeEditorMap {
-	protected $attributeEditorMap = array();
+	protected $attributeEditorMap = [];
 
 	public function addEditor( $editor ) {
 		$attributeId = $editor->getAttribute()->id;
@@ -109,7 +108,7 @@ abstract class DefaultEditor implements Editor {
 
 	public function __construct( Attribute $attribute = null ) {
 		$this->attribute = $attribute;
-		$this->editors = array();
+		$this->editors = [];
 		$this->attributeEditorMap = new AttributeEditorMap();
 		$this->isCollapsible = true;
 		// show header by default
@@ -134,17 +133,17 @@ abstract class DefaultEditor implements Editor {
 	}
 
 	/**
-	* returns true if the editor is collapsible
-	* @return boolean
-	*/
+	 * returns true if the editor is collapsible
+	 * @return bool
+	 */
 	public function getCollapsible() {
 		return $this->isCollapsible;
 	}
 
 	/**
-	* set the editor as collapsible or not collapsible
-	* @param $value boolean
-	*/
+	 * set the editor as collapsible or not collapsible
+	 * @param $value boolean
+	 */
 	public function setCollapsible( $value ) {
 		$this->isCollapsible = $value;
 	}
@@ -173,15 +172,15 @@ abstract class DefaultEditor implements Editor {
 
 		// if it is collapsible, continue
 		global $wgLang;
-		$arrow = ( $wgLang->getDir() == 'ltr' ) ? "►" : "◄" ;
-		$prefix = Html::element('span', array(
+		$arrow = ( $wgLang->getDir() == 'ltr' ) ? "►" : "◄";
+		$prefix = Html::element( 'span', [
 			'class' => "prefix collapse-$class"
-			) , $arrow ) ;
-		$prefix .= Html::element('span', array(
+			], $arrow );
+		$prefix .= Html::element( 'span', [
 			'class' => "prefix expand-$class"
-			) , "▼" ) ;
+			], "▼" );
 
-		return $prefix ;
+		return $prefix;
 	}
 }
 
@@ -241,9 +240,9 @@ abstract class RecordSetEditor extends DefaultEditor {
 		$addStructure = $this->getAddStructure();
 
 		if ( count( $addStructure->getAttributes() ) > 0 ) {
-			$relations = array();
+			$relations = [];
 
-			$value_array_array = array(array());
+			$value_array_array = [ [] ];
 
 			foreach ( $this->getEditors() as $editor ) {
 				if ( $attribute = $editor->getAddAttribute() ) {
@@ -252,7 +251,7 @@ abstract class RecordSetEditor extends DefaultEditor {
 					$addValues = $editor->getAddValues( $idPath );
 					$i = 0;
 					foreach ( $addValues as $value ) {
-						$value_array_array[$i][] = $value ;
+						$value_array_array[$i][] = $value;
 						$i++;
 					}
 
@@ -261,16 +260,15 @@ abstract class RecordSetEditor extends DefaultEditor {
 			}
 
 			foreach ( $value_array_array as $value_array ) {
-				$relation = new ArrayRecordSet( $addStructure, $addStructure ) ;  // TODO Determine real key
+				$relation = new ArrayRecordSet( $addStructure, $addStructure );  // TODO Determine real key
 				$relation->addRecord( $value_array );
-				$relations[] = $relation ;
+				$relations[] = $relation;
 			}
 
-			return $relations ;
+			return $relations;
 		}
 		return null;
 	}
-
 
 	protected function saveRecord( IdStack $idPath, Record $record ) {
 		foreach ( $this->getEditors() as $editor ) {
@@ -304,7 +302,7 @@ abstract class RecordSetEditor extends DefaultEditor {
 	}
 
 	public function getStructure() {
-		$attributes = array();
+		$attributes = [];
 
 		foreach ( $this->getEditors() as $editor ) {
 			$attributes[] = $editor->getAttribute();
@@ -317,7 +315,7 @@ abstract class RecordSetEditor extends DefaultEditor {
 	}
 
 	protected function getUpdateStructure() {
-		$attributes = array();
+		$attributes = [];
 
 		foreach ( $this->getEditors() as $editor ) {
 			if ( $updateAttribute = $editor->getUpdateAttribute() ) {
@@ -328,7 +326,7 @@ abstract class RecordSetEditor extends DefaultEditor {
 	}
 
 	protected function getAddStructure() {
-		$attributes = array();
+		$attributes = [];
 
 		foreach ( $this->getEditors() as $editor ) {
 			if ( $addAttribute = $editor->getAddAttribute() ) {
@@ -339,7 +337,7 @@ abstract class RecordSetEditor extends DefaultEditor {
 	}
 
 	protected function getUpdateEditors() {
-		$updateEditors = array();
+		$updateEditors = [];
 
 		foreach ( $this->getEditors() as $editor ) {
 			if ( $editor->getUpdateAttribute() ) {
@@ -350,7 +348,7 @@ abstract class RecordSetEditor extends DefaultEditor {
 	}
 
 	protected function getAddEditors() {
-		$addEditors = array();
+		$addEditors = [];
 
 		foreach ( $this->getEditors() as $editor ) {
 			if ( $editor->getAddAttribute() ) {
@@ -361,19 +359,19 @@ abstract class RecordSetEditor extends DefaultEditor {
 	}
 
 	public function getAddRecord( IdStack $idPath, Structure $structure, $editors ) {
-		$results = array();
+		$results = [];
 
 		foreach ( $editors as $editor ) {
 			if ( $attribute = $editor->getAddAttribute() ) {
 				$idPath->pushAttribute( $attribute );
 				$addValues = $editor->getAddValues( $idPath );
-				$i = 0 ;
+				$i = 0;
 				foreach ( $addValues as $value ) {
-					if ( ! array_key_exists($i, $results ) ) {
+					if ( ! array_key_exists( $i, $results ) ) {
 						$results[$i] = new ArrayRecord( $structure );
 					}
 					$results[$i]->setAttributeValue( $attribute, $value );
-					$i++ ;
+					$i++;
 				}
 				$idPath->popAttribute();
 			}
@@ -402,7 +400,7 @@ abstract class RecordSetEditor extends DefaultEditor {
 			if ( count( $addStructure->getAttributes() ) > 0 ) {
 				$addEditors = $this->getAddEditors(); // array of editors
 
-				$records = array();
+				$records = [];
 				$records = $this->getAddRecord( $idPath, $addStructure, $addEditors );
 				foreach ( $records as $record ) {
 					$this->controller->add( $idPath, $record );
@@ -460,7 +458,7 @@ abstract class RecordSetEditor extends DefaultEditor {
 } // class RecordSetEditor
 
 class RecordSetTableEditor extends RecordSetEditor {
-	protected $rowHTMLAttributes = array();
+	protected $rowHTMLAttributes = [];
 	protected $repeatInput = false;
 	protected $hideEmptyColumns = true;
 
@@ -473,10 +471,10 @@ class RecordSetTableEditor extends RecordSetEditor {
 	}
 
 	/**
-	* Determines if there is at least one non-empty cell in the column
-	* and returns true in that case.
-	* This can be used so that columns that are empty are not displayed.
-	*/
+	 * Determines if there is at least one non-empty cell in the column
+	 * and returns true in that case.
+	 * This can be used so that columns that are empty are not displayed.
+	 */
 	protected function columnShowsData( Editor $columnEditor, RecordSet $value, $attributePath ) {
 		$result = false;
 		$recordCount = $value->getRecordCount();
@@ -496,7 +494,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 	}
 
 	public function getTableStructure( Editor $editor ) {
-		$attributes = array();
+		$attributes = [];
 
 		foreach ( $editor->getEditors() as $childEditor ) {
 			$childAttribute = $childEditor->getAttribute();
@@ -513,8 +511,8 @@ class RecordSetTableEditor extends RecordSetEditor {
 		return new Structure( $attributes );
 	}
 
-	protected function getTableStructureShowingData( $viewOrEdit, Editor $editor, IdStack $idPath, RecordSet $value, $attributePath = array() ) {
-		$attributes = array();
+	protected function getTableStructureShowingData( $viewOrEdit, Editor $editor, IdStack $idPath, RecordSet $value, $attributePath = [] ) {
+		$attributes = [];
 
 		foreach ( $editor->getEditors() as $childEditor ) {
 			$childAttribute = $childEditor->getAttribute();
@@ -526,13 +524,11 @@ class RecordSetTableEditor extends RecordSetEditor {
 				if ( count( $type->getAttributes() ) > 0 ) {
 					$attributes[] = new Attribute( $childAttribute->id, $childAttribute->name, $type );
 				}
-			}
-			elseif ( $viewOrEdit == "view" ) {
+			} elseif ( $viewOrEdit == "view" ) {
 				if ( $this->columnShowsData( $childEditor, $value, $attributePath ) ) {
 					$attributes[] = new Attribute( $childAttribute->id, $childAttribute->name, 'short-text' );
 				}
-			}
-			elseif ( $viewOrEdit == "edit" ) {
+			} elseif ( $viewOrEdit == "edit" ) {
 				if ( $childEditor->showEditField( $idPath ) ) {
 					$attributes[] = new Attribute( $childAttribute->id, $childAttribute->name, 'short-text' );
 				}
@@ -545,11 +541,11 @@ class RecordSetTableEditor extends RecordSetEditor {
 	}
 
 	public function viewHeader( IdStack $idPath, Structure $visibleStructure ) {
-		$attribs = array( 'id' => $idPath->getId(), 'class' => 'wiki-data-table' );
+		$attribs = [ 'id' => $idPath->getId(), 'class' => 'wiki-data-table' ];
 		$result = Html::openElement( 'table', $attribs );
 
 		foreach ( getStructureAsTableHeaderRows( $visibleStructure, 0, $idPath ) as $headerRow ) {
-			$result .= Html::rawElement( 'tr', array(), $headerRow );
+			$result .= Html::rawElement( 'tr', [], $headerRow );
 		}
 
 		return $result;
@@ -564,7 +560,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 		for ( $i = 0; $i < $recordCount; $i++ ) {
 			$record = $value->getRecord( $i );
 			$idPath->pushKey( project( $record, $key ) );
-			$trattr = array( 'id' => $idPath->getId() );
+			$trattr = [ 'id' => $idPath->getId() ];
 			$trattr += $rowAttributes;
 			$trcontent = getRecordAsTableCells( $idPath, $this, $visibleStructure, $record );
 			$result .= Html::rawElement( 'tr', $trattr, $trcontent );
@@ -576,7 +572,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 	}
 
 	public function viewFooter( IdStack $idPath, Structure $visibleStructure ) {
-		return Html::closeElement('table');
+		return Html::closeElement( 'table' );
 	}
 
 	public function getTableStructureForView( IdStack $idPath, RecordSet $value ) {
@@ -603,7 +599,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 	}
 
 	public function edit( IdStack $idPath, $value ) {
-		$tableattr = array( 'id' => $idPath->getId(), 'class' => 'wiki-data-table' );
+		$tableattr = [ 'id' => $idPath->getId(), 'class' => 'wiki-data-table' ];
 		$result = Html::openElement( 'table', $tableattr );
 		$key = $value->getKey();
 		$rowAttributes = $this->getRowAttributesArray();
@@ -615,16 +611,16 @@ class RecordSetTableEditor extends RecordSetEditor {
 		$result .= Html::openElement( 'thead' );
 
 		if ( $this->allowRemove ) {
-			$thattr = array( 'class' => 'wld-remove-header', 'rowspan' => count( $headerRows ), 'title' => wfMessage( "ow_RemoveHint" )->text());
-			$headerRows[0] = Html::element( 'th', $thattr  ).$headerRows[0];
+			$thattr = [ 'class' => 'wld-remove-header', 'rowspan' => count( $headerRows ), 'title' => wfMessage( "ow_RemoveHint" )->text() ];
+			$headerRows[0] = Html::element( 'th', $thattr ).$headerRows[0];
 		}
 
 		if ( $this->repeatInput ) {
-			$thattr = array( 'class' => 'add', 'rowspan' => count( $headerRows ) );
-			$headerRows[0] .= Html::element('th', $thattr, 'Input rows');
+			$thattr = [ 'class' => 'add', 'rowspan' => count( $headerRows ) ];
+			$headerRows[0] .= Html::element( 'th', $thattr, 'Input rows' );
 		}
 		foreach ( $headerRows as $headerRow ) {
-			$trattr = array( 'id' => $idPath->getId() );
+			$trattr = [ 'id' => $idPath->getId() ];
 			$trattr += $rowAttributes;
 			$result .= Html::rawElement( 'tr', $trattr, $headerRow );
 		}
@@ -635,17 +631,17 @@ class RecordSetTableEditor extends RecordSetEditor {
 		$recordCount = $value->getRecordCount();
 
 		for ( $i = 0; $i < $recordCount; $i++ ) {
-			$result .= Html::openElement('tr');
+			$result .= Html::openElement( 'tr' );
 			$record = $value->getRecord( $i );
 			$idPath->pushKey( project( $record, $key ) );
 
 			if ( $this->allowRemove ) {
-				$result .= Html::openElement('td', array( 'class' => 'remove' ) );
+				$result .= Html::openElement( 'td', [ 'class' => 'remove' ] );
 
 				if ( $this->permissionController->allowRemovalOfValue( $idPath, $record ) ) {
-				 	$result .= getRemoveCheckBox( 'remove-' . $idPath->getId() );
+					$result .= getRemoveCheckBox( 'remove-' . $idPath->getId() );
 				}
-				$result .= Html::closeElement('td');
+				$result .= Html::closeElement( 'td' );
 			}
 
 			if ( $this->permissionController->allowUpdateOfValue( $idPath, $record ) ) {
@@ -656,9 +652,9 @@ class RecordSetTableEditor extends RecordSetEditor {
 			$idPath->popKey();
 
 			if ( $this->repeatInput ) {
-				$result .= Html::element('td');
+				$result .= Html::element( 'td' );
 			}
-			$result .= Html::closeElement('tr');
+			$result .= Html::closeElement( 'tr' );
 		}
 
 		$result .= Html::closeElement( 'tbody' );
@@ -677,7 +673,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 	public function add( IdStack $idPath ) {
 		if ( $this->isAddField ) {
-			$tableattr = array( 'id' => $idPath->getId(), 'class' => 'wiki-data-table' );
+			$tableattr = [ 'id' => $idPath->getId(), 'class' => 'wiki-data-table' ];
 			$result = Html::openElement( 'table', $tableattr );
 			$headerRows = getStructureAsTableHeaderRows( $this->getAddStructure(), 0, $idPath );
 
@@ -708,7 +704,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 			} else {
 				if ( $childEditor->showEditField( $idPath ) ) {
 					$tdclass = getHTMLClassForType( $type, $attribute ) . ' column-' . parityClass( $startColumn );
-					$result .= Html::openElement( 'td', array( 'class' => $tdclass ));
+					$result .= Html::openElement( 'td', [ 'class' => $tdclass ] );
 					$result .= $childEditor->add( $idPath );
 					$result .= Html::closeElement( 'td' );
 				}
@@ -725,7 +721,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 		global $wgScriptPath;
 
 		$attrid = 'add-' . $idPath->getId();
-		$attr = array( 'id' => $attrid );
+		$attr = [ 'id' => $attrid ];
 		if ( $repeatInput ) {
 			$attr['class'] = 'repeat';
 		}
@@ -735,9 +731,9 @@ class RecordSetTableEditor extends RecordSetEditor {
 		if ( $allowRemove ) {
 			$imgsrc = $wgScriptPath . '/extensions/WikiLexicalData/Images/Add.png';
 			$imgtitle = wfMessage( "ow_AddHint" )->text();
-			$imgattr = array( 'src' => $imgsrc, 'title' => $imgtitle, 'alt' => 'Add' );
+			$imgattr = [ 'src' => $imgsrc, 'title' => $imgtitle, 'alt' => 'Add' ];
 
-			$result .= Html::openElement( 'td', array( 'class' => 'add addemptyrow') );
+			$result .= Html::openElement( 'td', [ 'class' => 'add addemptyrow' ] );
 			$result .= Html::element( 'img', $imgattr );
 			$result .= Html::closeElement( 'td' );
 		}
@@ -745,7 +741,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 		$result .= $this->getStructureAsAddCells( $idPath, $this );
 
 		if ( $repeatInput ) {
-			$result .= Html::element( 'td', array( 'class' => 'input-rows' ) );
+			$result .= Html::element( 'td', [ 'class' => 'input-rows' ] );
 		}
 		$result .= Html::closeElement( 'tr' );
 
@@ -762,7 +758,7 @@ class RecordSetTableEditor extends RecordSetEditor {
  */
 abstract class RecordEditor extends DefaultEditor {
 	protected function getUpdateStructure() {
-		$attributes = array();
+		$attributes = [];
 
 		foreach ( $this->getEditors() as $editor ) {
 			if ( $updateAttribute = $editor->getUpdateAttribute() ) {
@@ -773,7 +769,7 @@ abstract class RecordEditor extends DefaultEditor {
 	}
 
 	protected function getAddStructure() {
-		$attributes = array();
+		$attributes = [];
 
 		foreach ( $this->getEditors() as $editor ) {
 			if ( $addAttribute = $editor->getAddAttribute() ) {
@@ -797,25 +793,25 @@ abstract class RecordEditor extends DefaultEditor {
 	}
 
 	public function getAddValues( IdStack $idPath ) {
-		$results = array();
+		$results = [];
 
 		foreach ( $this->getEditors() as $editor ) {
 			if ( $attribute = $editor->getAddAttribute() ) {
 				$idPath->pushAttribute( $attribute );
-				$addValues = array();
+				$addValues = [];
 				$addValues = $editor->getAddValues( $idPath );
-				$i = 0 ;
+				$i = 0;
 				foreach ( $addValues as $value ) {
-					if ( ! array_key_exists($i, $results ) ) {
+					if ( ! array_key_exists( $i, $results ) ) {
 						$results[$i] = new ArrayRecord( $this->getAddStructure() );
 					}
 					$results[$i]->setAttributeValue( $attribute, $value );
-					$i++ ;
+					$i++;
 				}
 				$idPath->popAttribute();
 			}
 		}
-		return $results ;
+		return $results;
 	}
 
 	public function getUpdateAttribute() {
@@ -837,7 +833,9 @@ abstract class RecordEditor extends DefaultEditor {
 	}
 
 	public function save( IdStack $idPath, $value ) {
-		if ( !$value ) return;
+		if ( !$value ) {
+			return;
+		}
 		foreach ( $this->getEditors() as $editor ) {
 			$attribute = $editor->getAttribute();
 			$idPath->pushAttribute( $attribute );
@@ -919,9 +917,9 @@ abstract class ScalarEditor extends DefaultEditor {
 		return null;
 	}
 
-	public abstract function getViewHTML( IdStack $idPath, $value );
-	public abstract function getEditHTML( IdStack $idPath, $value );
-	public abstract function getInputValue( $id );
+	abstract public function getViewHTML( IdStack $idPath, $value );
+	abstract public function getEditHTML( IdStack $idPath, $value );
+	abstract public function getInputValue( $id );
 
 	public function getUpdateValue( IdStack $idPath ) {
 		return $this->getInputValue( "update-" . $idPath->getId() );
@@ -930,15 +928,15 @@ abstract class ScalarEditor extends DefaultEditor {
 	// tries to get multiple "add" values e.g. adding multiple translations at once
 	// the "X-" corresponds to what is in omegawiki-ajax.js, function recursiveChangeId
 	public function getAddValues( IdStack $idPath ) {
-		$addValues = array();
-		$prefix = "add-" ;
+		$addValues = [];
+		$prefix = "add-";
 
 		while ( ( $value = $this->getInputValue( $prefix . $idPath->getId() ) ) != '' ) {
-			$addValues[] = $value ;
-			$prefix = $prefix . "X-" ;
+			$addValues[] = $value;
+			$prefix = $prefix . "X-";
 		}
 
-		return $addValues ;
+		return $addValues;
 	}
 
 	public function view( IdStack $idPath, $value ) {
@@ -1006,57 +1004,55 @@ class TabLanguageEditor extends ScalarEditor {
 		$expressionId = $idPath->getKeyStack()->peek( 0 )->expressionId;
 		$spelling = getExpression( $expressionId, $dc )->spelling;
 		$title = Title::makeTitle( NS_EXPRESSION, $spelling );
-		$expressionsArray = getExpressions( $spelling, $dc ) ;
+		$expressionsArray = getExpressions( $spelling, $dc );
 
-		$languageIdList = array() ;
+		$languageIdList = [];
 		foreach ( $expressionsArray as $expression ) {
 			if ( $expression->languageId != $value ) {
 				// only add languages that are not the current language
-				$languageIdList[] = $expression->languageId ;
+				$languageIdList[] = $expression->languageId;
 			}
 		}
 
-		if ( ! empty ( $languageIdList ) ) {
-
+		if ( ! empty( $languageIdList ) ) {
 			// there might be duplicates
-			$languageIdList = array_unique ( $languageIdList ) ;
+			$languageIdList = array_unique( $languageIdList );
 
 			// Now the names
-			$languageNameList = array();
+			$languageNameList = [];
 			foreach ( $languageIdList as $languageId ) {
-				$languageNameList[$languageId] = languageIdAsText($languageId) ;
+				$languageNameList[$languageId] = languageIdAsText( $languageId );
 			}
-			asort($languageNameList);
+			asort( $languageNameList );
 
-			$output .= Html::openElement('span', array('class' => 'wd-tablist' ));
+			$output .= Html::openElement( 'span', [ 'class' => 'wd-tablist' ] );
 			$output .= wfMessage( 'ow_OtherLanguages' )->text();
 
 			// now the <li> definining the menu
 			// display: none is also in the .css, but defined here to prevent the list to show
 			// when the .css is not yet loaded.
 			foreach ( $languageNameList as $languageId => $languageName ) {
-				$output .= Html::openElement('span', array('class' => 'wd-tabitem' ));
+				$output .= Html::openElement( 'span', [ 'class' => 'wd-tabitem' ] );
 
 				// create links to other available languages
-				$urlOptions = array( 'explang' => $languageId );
-				if ( $wgRequest->getVal("action") == "edit" ) {
-					$urlOptions['action'] = "edit" ;
+				$urlOptions = [ 'explang' => $languageId ];
+				if ( $wgRequest->getVal( "action" ) == "edit" ) {
+					$urlOptions['action'] = "edit";
 				}
-				$aHref = $title->getLocalURL( $urlOptions ) ;
-				$output .= Html::rawElement('a', array('href' => $aHref), $languageName );
+				$aHref = $title->getLocalURL( $urlOptions );
+				$output .= Html::rawElement( 'a', [ 'href' => $aHref ], $languageName );
 
-				$output .= Html::closeElement('span'); // wd-tabitem
+				$output .= Html::closeElement( 'span' ); // wd-tabitem
 			}
-			$output .= Html::closeElement('span'); // wd-tablist
-			$output .= Html::rawElement('br');
-			$output .= Html::rawElement('br');
+			$output .= Html::closeElement( 'span' ); // wd-tablist
+			$output .= Html::rawElement( 'br' );
+			$output .= Html::rawElement( 'br' );
 		} // if not empty other languages
 
 		// Add the "Language: German" part
-		$output .= Html::openElement('span', array('class' => 'wd-languagecurrent') ) ;
-		$output .= wfMessage( 'ow_Language' )->text() . ": " . languageIdAsText($value) ;
-		$output .= Html::closeElement('span');
-
+		$output .= Html::openElement( 'span', [ 'class' => 'wd-languagecurrent' ] );
+		$output .= wfMessage( 'ow_Language' )->text() . ": " . languageIdAsText( $value );
+		$output .= Html::closeElement( 'span' );
 
 		return $output;
 	}
@@ -1067,10 +1063,10 @@ class TabLanguageEditor extends ScalarEditor {
 	}
 
 	public function add( IdStack $idPath ) {
-		$output = Html::openElement('div', array('class' => 'wd-languageadd') ) ;
-		$output .= wfMessage( 'ow_Language' )->text() . ': ' ;
+		$output = Html::openElement( 'div', [ 'class' => 'wd-languageadd' ] );
+		$output .= wfMessage( 'ow_Language' )->text() . ': ';
 		$output .= getSuggest( $this->addId( $idPath->getId() ), "language" );
-		$output .= Html::closeElement('div');
+		$output .= Html::closeElement( 'div' );
 
 		return $output;
 	}
@@ -1134,7 +1130,6 @@ class DefinedMeaningEditor extends ScalarEditor {
 	}
 }
 
-
 class DefinedMeaningHeaderEditor extends ScalarEditor {
 
 	/** Integer type
@@ -1156,7 +1151,7 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 		 * the first definition will be used as a meta descriptor for search engines
 		 * then isMetaDescSet is set to one, to indicate that the meta descriptor is already set
 		 */
-		static $isMetaDescSet = 0 ;
+		static $isMetaDescSet = 0;
 
 		$output = "";
 
@@ -1174,23 +1169,23 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 			$escapedDefinition = htmlspecialchars( $definition );
 			$shortdef = htmlspecialchars( mb_substr( $definition, 0, $this->truncateAt ) ) . wfMessage( 'ellipsis' )->text();
 
-			$htmlDefinition = Html::element('span', array( 'class' => 'defheader', 'title' => $escapedDefinition ), $shortdef );
+			$htmlDefinition = Html::element( 'span', [ 'class' => 'defheader', 'title' => $escapedDefinition ], $shortdef );
 		} else {
 			// normal situation, no truncation
-			$htmlDefinition = Html::element('span', array( 'class' => 'defheader' ), $definition );
+			$htmlDefinition = Html::element( 'span', [ 'class' => 'defheader' ], $definition );
 		}
 		// setting the definition as meta description for the page
 		if ( $isMetaDescSet == 0 ) {
 			$wgOut->addMeta( 'Description', $definition );
-			$isMetaDescSet = 1 ;
+			$isMetaDescSet = 1;
 		}
 
 		// creating the link to edit the DM directly, that will be displayed on the right
-		$DMPageName = $definingExpression . " (" . $definedMeaningId . ")" ;
-		$DMTitle = Title::makeTitle( NS_DEFINEDMEANING , $DMPageName );
-		$editURL = $DMTitle->getLocalURL( 'action=edit' ) ;
-		$editLinkContent = '['. createLink( $editURL , wfMessage( 'edit')->text() ) . ']';
-		$editLink = Html::rawElement( 'span', array( 'class' => 'dm_edit_link' ), $editLinkContent );
+		$DMPageName = $definingExpression . " (" . $definedMeaningId . ")";
+		$DMTitle = Title::makeTitle( NS_DEFINEDMEANING, $DMPageName );
+		$editURL = $DMTitle->getLocalURL( 'action=edit' );
+		$editLinkContent = '['. createLink( $editURL, wfMessage( 'edit' )->text() ) . ']';
+		$editLink = Html::rawElement( 'span', [ 'class' => 'dm_edit_link' ], $editLinkContent );
 
 		if ( $wgUser->getOption( 'ow_alt_layout' ) ) {
 			// EXPERIMENTAL LAYOUT:
@@ -1198,17 +1193,17 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 			$translation = "";
 			$definedMeaningAsLink = definedMeaningReferenceAsLink( $definedMeaningId, $definingExpression, $expression->spelling );
 
-			if ( ( $userLanguageId != $expression->languageId ) && ( $userLanguageId > 0 )) {
+			if ( ( $userLanguageId != $expression->languageId ) && ( $userLanguageId > 0 ) ) {
 				// find a translation in the user language if exists
 				// returns "" if not found
 				$translation = OwDatabaseAPI::getDefinedMeaningExpressionForLanguage( $definedMeaningId, $userLanguageId );
 			}
-			$output = $editLink ;
+			$output = $editLink;
 			$output .= $definedMeaningAsLink;
 			if ( $translation != "" ) {
 				$output .= " : " . $translation;
 			}
-			$output .= Html::element('br') . $htmlDefinition ;
+			$output .= Html::element( 'br' ) . $htmlDefinition;
 
 		} else {
 			// STANDARD CLASSIC LAYOUT:
@@ -1220,10 +1215,10 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 				// try to get a translation
 				$definedMeaningAsLink = definedMeaningAsLink( $definedMeaningId );
 			}
-			$output =  $definedMeaningAsLink . $editLink . " : " . $htmlDefinition ;
+			$output = $definedMeaningAsLink . $editLink . " : " . $htmlDefinition;
 		}
 
-		return $output ;
+		return $output;
 	}
 
 	public function getEditHTML( IdStack $idPath, $definedMeaningId ) {
@@ -1270,16 +1265,16 @@ class TextEditor extends ScalarEditor {
 			return $escapedValue;// $parserOutput->getText();
 		} else {
 			$spancontent = htmlspecialchars( substr( $value, 0, $this->truncateAt ) ) . wfMessage( 'ellipsis' )->text();
-			return Html::element( 'span', array( 'title' => $escapedValue ), $spancontent );
+			return Html::element( 'span', [ 'title' => $escapedValue ], $spancontent );
 		}
 	}
 
 	public function getEditHTML( IdStack $idPath, $value ) {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
-		if ( ($dc == "uw") and (! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+		if ( ( $dc == "uw" ) and ( ! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
 		// disable
-			return getTextArea( $this->updateId( $idPath->getId() ), $value, 3, 80 , true );
+			return getTextArea( $this->updateId( $idPath->getId() ), $value, 3, 80, true );
 		} else {
 			return getTextArea( $this->updateId( $idPath->getId() ), $value, 3 );
 		}
@@ -1330,7 +1325,7 @@ class ShortTextEditor extends ScalarEditor {
 	public function getEditHTML( IdStack $idPath, $value ) {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
-		if ( ($dc == "uw") and (! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+		if ( ( $dc == "uw" ) and ( ! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
 			// disable
 			return getTextBox( $this->updateId( $idPath->getId() ), $value, $this->onChangeHandler, true );
 		} else {
@@ -1355,7 +1350,7 @@ class ShortTextEditor extends ScalarEditor {
 
 class ShortTextNoEscapeEditor extends ShortTextEditor {
 	public function getViewHTML( IdStack $idPath, $value ) {
-		return $value ;
+		return $value;
 	}
 }
 
@@ -1367,7 +1362,7 @@ class LinkEditor extends ShortTextEditor {
 		if ( $label == "" ) {
 			$label = $url;
 		}
-		$output = Html::element( 'a', array( 'href' => $url ), $label );
+		$output = Html::element( 'a', [ 'href' => $url ], $label );
 		return $output;
 	}
 }
@@ -1388,7 +1383,7 @@ class BooleanEditor extends ScalarEditor {
 	public function getEditHTML( IdStack $idPath, $value ) {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
-		if ( ($dc == "uw") and (! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+		if ( ( $dc == "uw" ) and ( ! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
 			return getCheckBox( $this->updateId( $idPath->getId() ), $value, true );
 		} else {
 			return getCheckBox( $this->updateId( $idPath->getId() ), $value );
@@ -1427,14 +1422,18 @@ class IdenticalMeaningEditor extends ScalarEditor {
 		parent::__construct( $attribute, $permissionController, $isAddField );
 
 		$this->defaultValue = "true";
-		$this->textValuesView = array( "true" => "&nbsp;", "false" => "≈" );
-		$this->textValuesEdit = array( "true" => "=", "false" => "≈" );
+		$this->textValuesView = [ "true" => "&nbsp;", "false" => "≈" ];
+		$this->textValuesEdit = [ "true" => "=", "false" => "≈" ];
 	}
 
 	public function getViewHTML( IdStack $idPath, $value ) {
 		// $value is what is returned from the database, i.e. an integer, 0 or 1
-		if ( $value == 0 ) return $this->textValuesView["false"];
-		if ( $value == 1 ) return $this->textValuesView["true"];
+		if ( $value == 0 ) {
+			return $this->textValuesView["false"];
+		}
+		if ( $value == 1 ) {
+			return $this->textValuesView["true"];
+		}
 		return "undefined"; // should not happen
 	}
 
@@ -1458,7 +1457,7 @@ class IdenticalMeaningEditor extends ScalarEditor {
 
 	public function add( IdStack $idPath ) {
 		if ( $this->isAddField ) {
-			return getSelect( $this->addId( $idPath->getId() ), $this->textValuesEdit, $this->defaultValue);
+			return getSelect( $this->addId( $idPath->getId() ), $this->textValuesEdit, $this->defaultValue );
 		}
 		return "";
 	}
@@ -1470,7 +1469,6 @@ class IdenticalMeaningEditor extends ScalarEditor {
 	}
 }
 
-
 abstract class SuggestEditor extends ScalarEditor {
 	public function add( IdStack $idPath ) {
 		if ( $this->isAddField ) {
@@ -1479,7 +1477,7 @@ abstract class SuggestEditor extends ScalarEditor {
 		return "";
 	}
 
-	protected abstract function suggestType();
+	abstract protected function suggestType();
 
 	public function getEditHTML( IdStack $idPath, $value ) {
 		return getSuggest( $this->updateId( $idPath->getId() ), $this->suggestType() );
@@ -1535,7 +1533,7 @@ class ClassAttributesLevelDefinedMeaningEditor extends SuggestEditor {
 }
 
 abstract class SelectEditor extends ScalarEditor {
-	protected abstract function getOptions();
+	abstract protected function getOptions();
 
 	public function add( IdStack $idPath ) {
 		if ( $this->isAddField ) {
@@ -1573,20 +1571,20 @@ class ClassAttributesTypeEditor extends SelectEditor {
 */
 	// more descriptive titles, but without translation for the moment
 	// this is only seen by the users who have access to adding new annotations
-		return array(
+		return [
 			'DM' => "Relation to DefinedMeaning",
 			'TRNS' => "Text, translatable",
 			'SYNT' => "Relation to SynTrans",
 			'TEXT' => "Text, plain",
 			'URL' => "Link to URL",
 			'OPTN' => "List of options",
-		);
+		];
 	}
 }
 
 class OptionSelectEditor extends SelectEditor {
 	protected function getOptions() {
-		return array();
+		return [];
 	}
 
 	public function getViewHTML( IdStack $idPath, $value ) {
@@ -1629,11 +1627,11 @@ class AttributeEditor extends DefinedMeaningReferenceEditor {
 
 	public function add( IdStack $idPath ) {
 		if ( $this->isAddField ) {
-			$parameters = array(
+			$parameters = [
 				"level" => $this->attributesLevelName,
 				"definedMeaningId" => $idPath->getDefinedMeaningId(),
 				"annotationAttributeId" => $idPath->getAnnotationAttribute()->getId()
-			);
+			];
 
 			if ( $this->attributesLevelName == WLD_SYNTRANS_MEANING_NAME ) {
 				// find and add syntransId as a parameter
@@ -1653,7 +1651,7 @@ class AttributeEditor extends DefinedMeaningReferenceEditor {
 	}
 
 	public function getEditHTML( IdStack $idPath, $value ) {
-		$parameters = array( "level" => $this->attributesLevelName );
+		$parameters = [ "level" => $this->attributesLevelName ];
 		return getSuggest( $this->updateId( $idPath->getId() ), $this->suggestType(), $parameters );
 	}
 
@@ -1693,11 +1691,11 @@ class OptionAttributeEditor extends AttributeEditor {
 
 	public function add( IdStack $idPath ) {
 		if ( $this->isAddField ) {
-			$parameters = array(
+			$parameters = [
 				"level" => $this->attributesLevelName,
 				"definedMeaningId" => $idPath->getDefinedMeaningId(),
 				"annotationAttributeId" => $idPath->getAnnotationAttribute()->getId()
-			);
+			];
 
 			if ( $this->attributesLevelName == WLD_SYNTRANS_MEANING_NAME ) {
 				// find and add syntransId as a parameter
@@ -1717,9 +1715,9 @@ class OptionAttributeEditor extends AttributeEditor {
 	}
 
 	public function getEditHTML( IdStack $idPath, $value ) {
-		$parameters = array(
+		$parameters = [
 			"level" => $this->attributesLevelName
-		);
+		];
 
 		return getSuggest( $this->updateId( $idPath->getId() ), $this->suggestType(), $parameters );
 	}
@@ -1788,7 +1786,7 @@ class RecordListEditor extends RecordEditor {
 
 			if ( $editor->showsData( $attributeValue ) ) {
 				if ( !$compress ) {
-					$result .= Html::openElement( $htmlTag, array('class' => $class )) ;
+					$result .= Html::openElement( $htmlTag, [ 'class' => $class ] );
 
 					if ( $editor->getDisplayHeader() ) {
 						$result .= $this->childHeader( $editor, $attribute, $class, $attributeId );
@@ -1844,7 +1842,7 @@ class RecordListEditor extends RecordEditor {
 				$attributeId = $idPath->getId();
 
 				if ( !$compress ) {
-					$result .= Html::openElement( $htmlTag, array('class' => $class )) ;
+					$result .= Html::openElement( $htmlTag, [ 'class' => $class ] );
 
 					if ( $editor->getDisplayHeader() ) {
 						$result .= $this->childHeader( $editor, $attribute, $class, $attributeId );
@@ -1900,18 +1898,18 @@ class RecordListEditor extends RecordEditor {
 	protected function childHeader( Editor $editor, Attribute $attribute, $class, $attributeId ) {
 		$expansionPrefix = $this->getExpansionPrefix( $class, $attributeId );
 
-		$divclass = 'level' . $this->headerLevel ;
-		$childHeaderHtml = Html::openElement ('div', array( 'class' => $divclass )) ;
+		$divclass = 'level' . $this->headerLevel;
+		$childHeaderHtml = Html::openElement( 'div', [ 'class' => $divclass ] );
 
 		$spanclass = $class;
 		if ( $this->isCollapsible ) {
-			$spanclass = 'toggle ' . $this->addCollapsablePrefixToClass( $class ) ;
+			$spanclass = 'toggle ' . $this->addCollapsablePrefixToClass( $class );
 		}
-		$spanattribs = array('class' => $spanclass );
-		$spantext = $expansionPrefix . '&#160;' . $attribute->name ;
+		$spanattribs = [ 'class' => $spanclass ];
+		$spantext = $expansionPrefix . '&#160;' . $attribute->name;
 
-		$childHeaderHtml .= Html::rawElement ('span', $spanattribs, $spantext ) ;
-		$childHeaderHtml .= Html::closeElement ('div');
+		$childHeaderHtml .= Html::rawElement( 'span', $spanattribs, $spantext );
+		$childHeaderHtml .= Html::closeElement( 'div' );
 
 		return $childHeaderHtml;
 	}
@@ -1920,25 +1918,25 @@ class RecordListEditor extends RecordEditor {
 		$divid = 'collapsable-' . $attributeId;
 		$divclass = 'expand-' . $class;
 		$divcontent = $editor->view( $idPath, $value->getAttributeValue( $attribute ) );
-		return Html::rawElement( 'div', array( 'id' => $divid, 'class' => $divclass ), $divcontent );
+		return Html::rawElement( 'div', [ 'id' => $divid, 'class' => $divclass ], $divcontent );
 	}
 
 	protected function editChild( Editor $editor, IdStack $idPath, $value, Attribute $attribute, $class, $attributeId ) {
 		if ( $this->isCollapsible ) {
-			$divid = 'collapsable-' . $attributeId ;
+			$divid = 'collapsable-' . $attributeId;
 			$divclass = 'expand-' . $class;
 		} else {
 			$divid = $attributeId;
 			$divclass = $class;
 		}
 		$divcontent = $editor->edit( $idPath, $value->getAttributeValue( $attribute ) );
-		return Html::rawElement ('div', array( 'id' => $divid, 'class' => $divclass ), $divcontent);
+		return Html::rawElement( 'div', [ 'id' => $divid, 'class' => $divclass ], $divcontent );
 	}
 
 	protected function addChild( Editor $editor, IdStack $idPath, Attribute $attribute, $class, $attributeId ) {
 		$attrid = 'collapsable-' . $attributeId;
 		$attrclass = 'expand-' . $class;
-		$attr = array( 'id' => $attrid, 'class' => $attrclass );
+		$attr = [ 'id' => $attrid, 'class' => $attrclass ];
 		$divcontent = $editor->add( $idPath );
 		return Html::rawElement( 'div', $attr, $divcontent );
 	}
@@ -1951,16 +1949,16 @@ class RecordUnorderedListEditor extends RecordListEditor {
 
 	protected function wrapInList( $listItems ) {
 		if ( $listItems != "" ) {
-			return Html::rawElement( 'ul', array( 'class' => 'collapsable-items' ), $listItems );
+			return Html::rawElement( 'ul', [ 'class' => 'collapsable-items' ], $listItems );
 		}
 		return "";
 	}
 
 	public function view( IdStack $idPath, $value ) {
 		$editors = $this->getEditors();
-//
-//		$compress = $this->shouldCompressOnView( $idPath, $value, $editors );
-		$compress = false ;
+
+		// $compress = $this->shouldCompressOnView( $idPath, $value, $editors );
+		$compress = false;
 		$result = $this->viewEditors( $idPath, $value, $editors, $this->htmlTag, $compress );
 
 		if ( !$compress ) {
@@ -1993,7 +1991,7 @@ class RecordDivListEditor extends RecordListEditor {
 	}
 
 	protected function wrapInDiv( $listItems ) {
-		return Html::rawElement( 'div', array(), $listItems );
+		return Html::rawElement( 'div', [], $listItems );
 	}
 
 	public function view( IdStack $idPath, $value ) {
@@ -2039,7 +2037,7 @@ class RecordSetListEditor extends RecordSetEditor {
 		$recordCount = $arrayRecordSet->getRecordCount();
 
 		if ( $recordCount > 0 ) {
-			$result = Html::openElement ('ul', array( 'class' => 'collapsable-items')) ;
+			$result = Html::openElement( 'ul', [ 'class' => 'collapsable-items' ] );
 			$key = $arrayRecordSet->getKey();
 			$captionAttribute = $this->captionEditor->getAttribute();
 			$valueAttribute = $this->valueEditor->getAttribute();
@@ -2052,13 +2050,13 @@ class RecordSetListEditor extends RecordSetEditor {
 				if ( ! is_null( $extraLevelName ) ) {
 					// close the previous extraHierarchy if needed
 					if ( $extraLevelUlOpen ) {
-						$result .= Html::closeElement ('ul') ;
+						$result .= Html::closeElement( 'ul' );
 					}
 					$extraLevelClass = $idPath->getClass() . "-sortcaption";
-					$result .= Html::openElement ('li', array('class' => $extraLevelClass));
-					$result .= Html::rawElement ('span', array(), $extraLevelName) ;
-					$result .= Html::closeElement ('li') ;
-					$result .= Html::openElement ('ul', array( 'class' => 'collapsable-items')) ;
+					$result .= Html::openElement( 'li', [ 'class' => $extraLevelClass ] );
+					$result .= Html::rawElement( 'span', [], $extraLevelName );
+					$result .= Html::closeElement( 'li' );
+					$result .= Html::openElement( 'ul', [ 'class' => 'collapsable-items' ] );
 					$extraLevelUlOpen = true;
 				}
 
@@ -2070,40 +2068,40 @@ class RecordSetListEditor extends RecordSetEditor {
 				$valueClass = $idPath->getClass() . "-record";
 
 				$idPath->pushAttribute( $captionAttribute );
-				$result .= Html::openElement ('li') ;
-				$class = 'level' . $this->headerLevel ;
-				$result .= Html::openElement ('div', array( 'class' => $class )) ;
+				$result .= Html::openElement( 'li' );
+				$class = 'level' . $this->headerLevel;
+				$result .= Html::openElement( 'div', [ 'class' => $class ] );
 
 				$text = $captionExpansionPrefix . '&#160;'
-					. $this->captionEditor->view( $idPath, $record->getAttributeValue( $captionAttribute ) ) ;
+					. $this->captionEditor->view( $idPath, $record->getAttributeValue( $captionAttribute ) );
 
-				$attribs = array(); // default if not collapsible
+				$attribs = []; // default if not collapsible
 				if ( $this->isCollapsible ) {
 					// collapsible element
-					$class = 'toggle ' . $this->addCollapsablePrefixToClass( $captionClass ) ;
-					$attribs = array('class' => $class );
+					$class = 'toggle ' . $this->addCollapsablePrefixToClass( $captionClass );
+					$attribs = [ 'class' => $class ];
 				}
-				$result .= Html::rawElement ('span', $attribs, $text ) ;
-				$result .= Html::closeElement ('div');
+				$result .= Html::rawElement( 'span', $attribs, $text );
+				$result .= Html::closeElement( 'div' );
 
 				$idPath->popAttribute();
 				$idPath->pushAttribute( $valueAttribute );
 
 				$text = $this->valueEditor->view( $idPath, $record->getAttributeValue( $valueAttribute ) );
-				$class = 'expand-' . $valueClass ;
-				$id = 'collapsable-' . $recordId ;
-				$result .= Html::rawElement ('div', array('class' => $class , 'id' => $id), $text ) ;
-				$result .= Html::closeElement ('li') ;
+				$class = 'expand-' . $valueClass;
+				$id = 'collapsable-' . $recordId;
+				$result .= Html::rawElement( 'div', [ 'class' => $class , 'id' => $id ], $text );
+				$result .= Html::closeElement( 'li' );
 				$idPath->popAttribute();
 				$idPath->popKey();
 			}
 
 			// close the extraHierarchy if needed
 			if ( $extraLevelUlOpen ) {
-				$result .= Html::closeElement ('ul') ;
+				$result .= Html::closeElement( 'ul' );
 			}
 
-			$result .= Html::closeElement ('ul');
+			$result .= Html::closeElement( 'ul' );
 			wfProfileOut( __METHOD__ );
 			return $result;
 		}
@@ -2115,7 +2113,7 @@ class RecordSetListEditor extends RecordSetEditor {
 		$recordCount = $arrayRecordSet->getRecordCount();
 
 		if ( $recordCount > 0 || $this->allowAddController->check( $idPath ) ) {
-			$result = Html::openElement ('ul', array( 'class' => "collapsable-items" )) ;
+			$result = Html::openElement( 'ul', [ 'class' => "collapsable-items" ] );
 			$key = $arrayRecordSet->getKey();
 			$captionAttribute = $this->captionEditor->getAttribute();
 			$valueAttribute = $this->valueEditor->getAttribute();
@@ -2131,36 +2129,36 @@ class RecordSetListEditor extends RecordSetEditor {
 
 				$idPath->pushAttribute( $captionAttribute );
 
-				$result .= Html::openElement ('li');
-				$divclass = 'level' . $this->headerLevel ;
-				$result .= Html::openElement ('div', array( 'class' => $divclass ));
+				$result .= Html::openElement( 'li' );
+				$divclass = 'level' . $this->headerLevel;
+				$result .= Html::openElement( 'div', [ 'class' => $divclass ] );
 
 				$spantext = $captionExpansionPrefix . '&#160;'
-					. $this->captionEditor->edit( $idPath, $record->getAttributeValue( $captionAttribute ) ) ;
-				$spanattribs = array(); // default if not collapsible
+					. $this->captionEditor->edit( $idPath, $record->getAttributeValue( $captionAttribute ) );
+				$spanattribs = []; // default if not collapsible
 				if ( $this->isCollapsible ) {
 					// add toggle as a class
-					$spanclass = 'toggle ' . $this->addCollapsablePrefixToClass( $captionClass ) ;
-					$spanattribs = array('class' => $spanclass );
+					$spanclass = 'toggle ' . $this->addCollapsablePrefixToClass( $captionClass );
+					$spanattribs = [ 'class' => $spanclass ];
 				}
-				$result .= Html::rawElement ('span', $spanattribs, $spantext ) ;
-				$result .= Html::closeElement ('div');
+				$result .= Html::rawElement( 'span', $spanattribs, $spantext );
+				$result .= Html::closeElement( 'div' );
 
 				$idPath->popAttribute();
 				$idPath->pushAttribute( $valueAttribute );
 
 				if ( $this->isCollapsible ) {
-					$divid = 'collapsable-' . $recordId ;
-					$divclass = 'expand-' . $valueClass ;
+					$divid = 'collapsable-' . $recordId;
+					$divclass = 'expand-' . $valueClass;
 				} else {
-					$divid = $recordId ;
-					$divclass = $valueClass ;
+					$divid = $recordId;
+					$divclass = $valueClass;
 				}
-				$divattribs = array( 'id' => $divid, 'class' => $divclass ) ;
-				$divtext = $this->valueEditor->edit( $idPath, $record->getAttributeValue( $valueAttribute ) ) ;
-				$result .= Html::rawElement ('div', $divattribs, $divtext ) ;
+				$divattribs = [ 'id' => $divid, 'class' => $divclass ];
+				$divtext = $this->valueEditor->edit( $idPath, $record->getAttributeValue( $valueAttribute ) );
+				$result .= Html::rawElement( 'div', $divattribs, $divtext );
 
-				$result .= Html::closeElement ('li');
+				$result .= Html::closeElement( 'li' );
 				$idPath->popAttribute();
 
 				$idPath->popKey();
@@ -2171,35 +2169,35 @@ class RecordSetListEditor extends RecordSetEditor {
 				$idPath->pushAttribute( $captionAttribute );
 				$class = $idPath->getClass();
 
-				$result .= Html::openElement ('li');
-				$divclass = 'level' . $this->headerLevel ;
-				$result .= Html::openElement ('div', array( 'class' => $divclass ));
+				$result .= Html::openElement( 'li' );
+				$divclass = 'level' . $this->headerLevel;
+				$result .= Html::openElement( 'div', [ 'class' => $divclass ] );
 
 				$spantext = $this->getExpansionPrefix( $idPath->getClass(), $idPath->getId() ) . $this->captionEditor->add( $idPath );
-				$spanattribs = array(); // default if not collapsible
+				$spanattribs = []; // default if not collapsible
 				if ( $this->isCollapsible ) {
 					// add toggle as a class
-					$spanclass = 'toggle ' . $this->addCollapsablePrefixToClass( $class ) ;
-					$spanattribs = array('class' => $spanclass );
+					$spanclass = 'toggle ' . $this->addCollapsablePrefixToClass( $class );
+					$spanattribs = [ 'class' => $spanclass ];
 				}
-				$result .= Html::rawElement ('span', $spanattribs, $spantext ) ;
-				$result .= Html::closeElement ('div');
+				$result .= Html::rawElement( 'span', $spanattribs, $spantext );
+				$result .= Html::closeElement( 'div' );
 
 				$idPath->popAttribute();
 				$idPath->pushAttribute( $valueAttribute );#
 
-				$divid = 'collapsable-' . $recordId ;
-				$divclass = 'expand-' . $class ;
-				$divattribs = array( 'id' => $divid, 'class' => $divclass ) ;
-				$divtext = $this->valueEditor->add( $idPath ) ;
+				$divid = 'collapsable-' . $recordId;
+				$divclass = 'expand-' . $class;
+				$divattribs = [ 'id' => $divid, 'class' => $divclass ];
+				$divtext = $this->valueEditor->add( $idPath );
 
-				$result .= Html::rawElement ('div', $divattribs, $divtext ) ;
-				$result .= Html::closeElement ('li');
+				$result .= Html::rawElement( 'div', $divattribs, $divtext );
+				$result .= Html::closeElement( 'li' );
 
 				$idPath->popAttribute();
 			}
 
-			$result .= Html::closeElement ('ul');
+			$result .= Html::closeElement( 'ul' );
 
 			return $result;
 		}
@@ -2207,7 +2205,7 @@ class RecordSetListEditor extends RecordSetEditor {
 	}
 
 	public function add( IdStack $idPath ) {
-		$result = Html::openElement( 'ul', array( 'class' => 'collapsable-items' ) );
+		$result = Html::openElement( 'ul', [ 'class' => 'collapsable-items' ] );
 		$captionAttribute = $this->captionEditor->getAttribute();
 		$valueAttribute = $this->valueEditor->getAttribute();
 
@@ -2218,9 +2216,9 @@ class RecordSetListEditor extends RecordSetEditor {
 
 		$result .= Html::openElement( 'li' );
 		$divclass = 'level' . $this->headerLevel;
-		$result .= Html::openElement( 'div', array( 'class' => $divclass ) );
+		$result .= Html::openElement( 'div', [ 'class' => $divclass ] );
 
-		$spanattr = array();
+		$spanattr = [];
 		if ( $this->isCollapsible ) {
 			$spanclass = 'toggle ' . $this->addCollapsablePrefixToClass( $class );
 			$spanattr['class'] = $spanclass;
@@ -2237,7 +2235,7 @@ class RecordSetListEditor extends RecordSetEditor {
 		$idPath->pushAttribute( $valueAttribute );
 		$divid = 'collapsable-' . $recordId;
 		$divclass = 'expand-' . $class;
-		$result .= Html::openElement( 'div', array( 'id' => $divid, 'class' => $divclass ) );
+		$result .= Html::openElement( 'div', [ 'id' => $divid, 'class' => $divclass ] );
 		$result .= $this->valueEditor->add( $idPath );
 		$result .= Html::closeElement( 'div' );
 		$result .= Html::closeElement( 'li' );
@@ -2282,7 +2280,7 @@ class RecordSpanEditor extends RecordEditor {
 	}
 
 	public function view( IdStack $idPath, $value ) {
-		$fields = array();
+		$fields = [];
 
 		foreach ( $this->getEditors() as $editor ) {
 			$attribute = $editor->getAttribute();
@@ -2304,7 +2302,7 @@ class RecordSpanEditor extends RecordEditor {
 	}
 
 	public function add( IdStack $idPath ) {
-		$fields = array();
+		$fields = [];
 
 		foreach ( $this->getEditors() as $editor ) {
 			if ( $attribute = $editor->getAddAttribute() ) {
@@ -2325,7 +2323,7 @@ class RecordSpanEditor extends RecordEditor {
 	}
 
 	public function edit( IdStack $idPath, $value ) {
-		$fields = array();
+		$fields = [];
 
 		foreach ( $this->getEditors() as $editor ) {
 			$attribute = $editor->getAttribute();
@@ -2387,27 +2385,27 @@ class TimestampEditor extends ScalarEditor {
 // to show the roll back check box.
 
 // class RollbackEditor extends BooleanEditor {
-//	public function __construct($attribute)  {
-//		parent::__construct($attribute, new SimplePermissionController(false), false, false);
-//	}
+// public function __construct($attribute)  {
+// parent::__construct($attribute, new SimplePermissionController(false), false, false);
+// }
 //
-//	public function getViewHTML($idPath, $value) {
-//		if ($value)
-//			return $this->getEditHTML($idPath, false);
-//		else
-//			return "";
-//	}
+// public function getViewHTML($idPath, $value) {
+// if ($value)
+// return $this->getEditHTML($idPath, false);
+// else
+// return "";
+// }
 //
-//	public function shouldRollBack($id, $value) {
-//		return $value && isset($_POST[$id]);
-//	}
+// public function shouldRollBack($id, $value) {
+// return $value && isset($_POST[$id]);
+// }
 // }
 
 class RollBackEditor extends ScalarEditor {
 	protected $hasValueFields;
 	protected $suggestionsEditor;
 
-	public function __construct( Attribute $attribute = null, $hasValueFields )  {
+	public function __construct( Attribute $attribute = null, $hasValueFields ) {
 		parent::__construct( $attribute, new SimplePermissionController( false ), false, false );
 
 		$this->hasValueFields = $hasValueFields;
@@ -2418,13 +2416,12 @@ class RollBackEditor extends ScalarEditor {
 		$operation = $value->operation;
 
 		if ( $isLatest ) {
-			$options = array( 'do-nothing' => wfMessage( 'ow_transaction_no_action' )->text() );
+			$options = [ 'do-nothing' => wfMessage( 'ow_transaction_no_action' )->text() ];
 
 			if ( $this->hasValueFields ) {
 				$previousVersionLabel = wfMessage( 'ow_transaction_previous_version' )->text();
 				$rollBackChangeHandler = 'rollBackOptionChanged(this);';
-			}
-			else {
+			} else {
 				$previousVersionLabel = wfMessage( 'ow_transaction_restore' )->text();
 				$rollBackChangeHandler = '';
 			}
@@ -2441,7 +2438,7 @@ class RollBackEditor extends ScalarEditor {
 				$divid = $idPath->getId() . '-version-selector';
 				$divstyle = 'display: none; padding-top: 4px;';
 				$divcontent = $this->getSuggestionsHTML( $idPath, $value );
-				$result .=Html::rawElement( 'div', array( 'id' => $divid, 'style' => $divstyle ), $divcontent );
+				$result .= Html::rawElement( 'div', [ 'id' => $divid, 'style' => $divstyle ], $divcontent );
 			}
 			return $result;
 		}
@@ -2546,10 +2543,9 @@ class RecordSetFirstRecordEditor extends RecordSetEditor {
 			$idPath->pushKey( project( $record, $value->getKey() ) );
 			$this->recordEditor->save( $idPath, $record );
 			$idPath->popKey();
-		}
-		else {
-			$addValues = array() ;
-			$addValues = $this->recordEditor->getAddValues( $idPath ) ;
+		} else {
+			$addValues = [];
+			$addValues = $this->recordEditor->getAddValues( $idPath );
 			foreach ( $addValues as $addValue ) {
 				$this->controller->add( $idPath, $addValue );
 			}
@@ -2596,20 +2592,17 @@ class ObjectPathEditor extends Viewer {
 				default:
 					$result = $tableName . " - " . $objectId;
 			}
-		}
-		else {
+		} else {
 			$result = "Object $objectId";
 		}
 		return $result;
 	}
 
 	protected function resolveRelation( $objectId ) {
-
 		$relation = OwDatabaseAPI::getRelationIdRelationAttribute( $objectId );
 
 		if ( $relation ) {
-			return
-				definedMeaningAsLink( $relation->meaning1_mid ) . " - " .
+			return definedMeaningAsLink( $relation->meaning1_mid ) . " - " .
 				definedMeaningAsLink( $relation->relationtype_mid ) . " - " .
 				definedMeaningAsLink( $relation->meaning2_mid );
 		} else {
@@ -2623,44 +2616,38 @@ class ObjectPathEditor extends Viewer {
 		// @todo This query probably needs to be placed in the db API, but where? ~he
 		$attribute = $dbr->selectRow(
 			$tableName,
-			array(
+			[
 				'object_id',
 				'attribute_mid'
-			),
-			array(
+			],
+			[
 				'value_id' => $objectId
-			), __METHOD__
+			], __METHOD__
 		);
 
 		if ( $attribute ) {
-			return
-				$this->resolveObject( $attribute->object_id ) . " > " .
+			return $this->resolveObject( $attribute->object_id ) . " > " .
 				definedMeaningAsLink( $attribute->attribute_mid );
-		}
-		else {
+		} else {
 			return "Attribute " . $objectId;
 		}
 	}
 
 	protected function resolveTranslatedContent( $objectId ) {
-
 		$definedMeaning = OwDatabaseAPI::getTranslatedContentIdDefinedMeaningId( $objectId );
 
 		if ( $definedMeaning ) {
-			return
-				definedMeaningAsLink( $definedMeaning->defined_meaning_id ) . " > Definition ";
+			return definedMeaningAsLink( $definedMeaning->defined_meaning_id ) . " > Definition ";
 		} else {
 			return "Translated content " . $objectId;
 		}
 	}
 
 	protected function resolveSyntrans( $objectId ) {
-
 		$syntrans = OwDatabaseAPI::getSyntransSpellingWithDM( $objectId );
 
 		if ( $syntrans ) {
-			return
-				definedMeaningAsLink( $syntrans->defined_meaning_id ) . " > " . spellingAsLink( $syntrans->spelling );
+			return definedMeaningAsLink( $syntrans->defined_meaning_id ) . " > " . spellingAsLink( $syntrans->spelling );
 		} else {
 			return "Syntrans " . $objectId;
 		}
@@ -2674,4 +2661,3 @@ class ObjectPathEditor extends Viewer {
 		return true;
 	}
 }
-

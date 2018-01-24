@@ -1,9 +1,9 @@
 <?php
 
-require_once( "Attribute.php" );
-require_once( "WikiDataGlobals.php" );
-require_once( "ViewInformation.php" );
-require_once( "Utilities.php" );
+require_once "Attribute.php";
+require_once "WikiDataGlobals.php";
+require_once "ViewInformation.php";
+require_once "Utilities.php";
 
 /**
  *
@@ -31,12 +31,11 @@ function initializeOmegaWikiAttributes( ViewInformation $viewInformation ) {
 	$init_and_discard_this = OmegaWikiAttributes::getInstance( $viewInformation );
 }
 
-
 class OmegaWikiAttributes {
 
-	/** pseudo-Singleton, if viewinformation changes, will construct new instance*/
+	/** pseudo-Singleton, if viewinformation changes, will construct new instance */
 	static function getInstance( ViewInformation $viewInformation = null ) {
-		static $instance = array();
+		static $instance = [];
 		if ( !is_null( $viewInformation ) ) {
 			if ( !array_key_exists( $viewInformation->hashCode(), $instance ) ) {
 				$instance["last"] = new OmegaWikiAttributes( $viewInformation );
@@ -49,10 +48,9 @@ class OmegaWikiAttributes {
 		return $instance["last"];
 	}
 
-
-	protected $attributes = array();
-	protected $setup_completed = False;
-	protected $in_setup = False; # for use by functions doing the setup itself (currently hardValues)
+	protected $attributes = [];
+	protected $setup_completed = false;
+	protected $in_setup = false; # for use by functions doing the setup itself (currently hardValues)
 	protected $viewInformation = null;
 
 	function __construct( ViewInformation $viewInformation ) {
@@ -60,8 +58,9 @@ class OmegaWikiAttributes {
 	}
 
 	protected function setup( ViewInformation $viewInformation = null ) {
-		if ( $this->in_setup or $this->setup_completed )
-			return True;
+		if ( $this->in_setup or $this->setup_completed ) {
+			return true;
+		}
 
 		if ( !is_null( $viewInformation ) ) {
 			$this->viewInformation = $viewInformation;
@@ -72,10 +71,10 @@ class OmegaWikiAttributes {
 			if ( !$this->setup_completed ) {
 				$this->hardValues( $viewInformation );
 			}
-			$this->setup_completed = True;
-			return True;
+			$this->setup_completed = true;
+			return true;
 		}
-		return False;
+		return false;
 	}
 
 	/** Hardcoded schema for now. Later refactor to load from file or DB
@@ -84,8 +83,7 @@ class OmegaWikiAttributes {
 	 * 	(-"Structure" is retained, -"Attributes" is retained)
 	*/
 	private function hardValues( viewInformation $viewInformation ) {
-
-		assert ( !is_null( $viewInformation ) );
+		assert( !is_null( $viewInformation ) );
 
 		global $wgWlddefinedMeaningReferenceType;
 
@@ -137,7 +135,6 @@ class OmegaWikiAttributes {
 		$this->translatedTextId = new Attribute( "translated-text-id", "Translated text ID", "integer" );
 		$this->translatedTextValueId = new Attribute( "translated-text-value-id", "Translated text value identifier", "translated-text-value-id" );
 
-
 		// *** STRUCTURES AND STRUCTURE-TYPE ATTRIBUTES ***
 		$this->expressionStructure = new Structure( WLD_EXPRESSION, $this->language, $this->spelling );
 		$this->expression = new Attribute( WLD_EXPRESSION, wfMessage( "ow_Expression" )->plain(), $this->expressionStructure );
@@ -186,7 +183,7 @@ class OmegaWikiAttributes {
 
 		$this->source = new Attribute( "source-id", wfMessage( "ow_Source" )->plain(), $this->definedMeaningReferenceStructure );
 
-		$this->alternativeDefinitionsStructure =  new Structure( WLD_ALTERNATIVE_DEFINITIONS, $this->definitionId, $this->alternativeDefinition, $this->source );
+		$this->alternativeDefinitionsStructure = new Structure( WLD_ALTERNATIVE_DEFINITIONS, $this->definitionId, $this->alternativeDefinition, $this->source );
 		$this->alternativeDefinitions = new Attribute( null, wfMessage( "ow_AlternativeDefinitions" )->plain(), $this->alternativeDefinitionsStructure );
 
 		$this->synonymsTranslationsStructure = new Structure( WLD_SYNONYMS_TRANSLATIONS, $this->identicalMeaning, $this->syntransId, $this->expression );
@@ -271,7 +268,7 @@ class OmegaWikiAttributes {
 		$this->expressionsStructure = new Structure( "expressions", $this->expressionId, $this->expression, $this->expressionMeanings );
 		$this->expressions = new Attribute( null, wfMessage( "ow_Expressions" )->plain(), $this->expressionsStructure );
 
-		$annotatedAttributes = array(
+		$annotatedAttributes = [
 			$this->definedMeaning,
 			$this->definition,
 			$this->synonymsAndTranslations,
@@ -281,7 +278,7 @@ class OmegaWikiAttributes {
 			$this->linkAttributeValues,
 			$this->translatedTextAttributeValues,
 			$this->optionAttributeValues
-		);
+		];
 
 		foreach ( $annotatedAttributes as $annotatedAttribute ) {
 			$annotatedAttribute->type->addAttribute( $this->objectAttributes );
@@ -319,15 +316,17 @@ class OmegaWikiAttributes {
 	}
 
 	public function __set( $key, $value ) {
-		if ( !$this->setup() )
+		if ( !$this->setup() ) {
 			throw new Exception( "OmegaWikiAttributes accessed, but was not properly initialized" );
+		}
 		$attributes =& $this->attributes;
 		$attributes[$key] = $value;
 	}
 
 	public function __get( $key ) {
-		if ( !$this->setup() )
+		if ( !$this->setup() ) {
 			throw new MwException( "OmegaWikiAttributes accessed, but was not properly initialized" );
+		}
 		$attributes =& $this->attributes;
 		if ( !array_key_exists( $key, $attributes ) ) {
 			throw new MwException( "Key does not exist: " . $key );
@@ -335,6 +334,3 @@ class OmegaWikiAttributes {
 		return $attributes[$key];
 	}
 }
-
-
-

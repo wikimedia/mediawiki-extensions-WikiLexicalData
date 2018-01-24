@@ -37,7 +37,8 @@ class ExtensionDatabaseUpdater {
 	 */
 	protected function checkSQLExists() {
 		if ( !file_exists( $this->path ) ) {
-			$this->output( $this->path . ' does not exists.' ); die;
+			$this->output( $this->path . ' does not exists.' );
+			die;
 		}
 	}
 
@@ -55,19 +56,24 @@ class ExtensionDatabaseUpdater {
 			$line = trim( fgets( $this->fh, 1024 ) );
 			$sl = strlen( $line ) - 1;
 
-			if ( $sl < 0 ) { continue; }
-			if ( '-' == $line { 0 } && '-' == $line { 1 } ) { continue; }
+			if ( $sl < 0 ) {
+				continue;
+			}
+			if ( '-' == $line { 0 } && '-' == $line { 1 } ) {
+				continue;
+			}
 
 			if ( ';' == $line { $sl } && ( $sl < 2 || ';' != $line { $sl - 1 } ) ) {
 				$this->done = true;
 				$line = substr( $line, 0, $sl );
 			}
 
-			if ( '' != $this->cmd ) { $this->cmd .= ' '; }
+			if ( '' != $this->cmd ) {
+				$this->cmd .= ' ';
+			}
 			$this->cmd .= "$line\n";
 
 			if ( $this->done ) {
-
 				if ( preg_match( '/CREATE TABLE/', $this->cmd ) ) {
 					$this->processTable();
 				}
@@ -90,10 +96,10 @@ class ExtensionDatabaseUpdater {
 		// process table if not exists
 		$found = $this->dbr->tableExists( $this->table );
 		if ( $found ) {
-			$this->output( '...' . $wgSitename . "'s " . $this->table . ' table already exists.');
+			$this->output( '...' . $wgSitename . "'s " . $this->table . ' table already exists.' );
 		} else {
 			$this->processQuery();
-			$this->output( '...' . $wgSitename . "'s " . $this->table . ' table added.');
+			$this->output( '...' . $wgSitename . "'s " . $this->table . ' table added.' );
 		}
 	}
 
@@ -106,7 +112,7 @@ class ExtensionDatabaseUpdater {
 		// process table if not exists
 		$found = $this->dbr->indexExists( $this->table, $this->index );
 		if ( $found ) {
-			$this->output( '...' . $wgSitename . "'s " . $this->index . ' index already exists.');
+			$this->output( '...' . $wgSitename . "'s " . $this->index . ' index already exists.' );
 		} else {
 			if ( $this->dbr->indexUnique( $this->table, $this->index ) ) {
 				$this->output( '...' . $wgSitename . "'s " . $this->index . ' index not unique.' );
@@ -130,7 +136,7 @@ class ExtensionDatabaseUpdater {
 	}
 
 	/** @brief commits the query. Either reports a query error or set the
-	 *	$this->processed flag to true.
+	 * $this->processed flag to true.
 	 */
 	protected function commit() {
 		$result = $this->dbw->query( $this->cmd, __METHOD__, true );

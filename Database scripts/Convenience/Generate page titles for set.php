@@ -1,9 +1,9 @@
 <?php
-//	ini_set('mysql.default_socket','/var/run/mysqld/mysqld.sock');
+// ini_set('mysql.default_socket','/var/run/mysqld/mysqld.sock');
 	define( 'MEDIAWIKI', true );
-	require_once( '../../../../LocalSettings.php' );
-	require_once( 'ProfilerStub.php' );
-	require_once( 'Setup.php' );
+	require_once '../../../../LocalSettings.php';
+	require_once 'ProfilerStub.php';
+	require_once 'Setup.php';
 	# Which dataset to generate page titles for
 	$dc = 'sp';
 	ob_end_flush();
@@ -24,7 +24,7 @@
 
 	}
 	$dbr->freeResult( $res );
-	
+
 	echo( "Inserting page titles for DefinedMeanings ...\n" );
 	$sql = "select spelling,defined_meaning_id from {$dc}_defined_meaning, {$dc}_expression_ns where {$dc}_defined_meaning.expression_id={$dc}_expression_ns.expression_id";
 	$res = $dbr->query( $sql );
@@ -38,6 +38,3 @@
 
 	}
 	$dbr->freeResult( $res );
-				
-
-?>

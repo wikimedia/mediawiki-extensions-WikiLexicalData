@@ -7,85 +7,84 @@
 
  # Alert the user that this is not a valid access point to MediaWiki if they try to access the special pages file directly.
 if ( !defined( 'MEDIAWIKI' ) ) {
-	echo
-	'To install my extension, put the following line in LocalSettings.php:' .
+	echo 'To install my extension, put the following line in LocalSettings.php:' .
 	"\n" .
 	'require_once( "' . $wgWldScriptPath . 'OWSpecials.php" );
 	';
 	exit( 1 );
 }
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'SpecialCopy',
-	'author' => array(
+	'author' => [
 		'Erik Möller',
 		'Kim Bruning',
 		'Alan Smithee',
-	),
-);
+	],
+];
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'SpecialConceptMapping',
-	'author' => array(
+	'author' => [
 		'Erik Möller',
 		'Kim Bruning',
-	),
-);
+	],
+];
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'SpecialSuggest',
-	'author' => array(
+	'author' => [
 		'Peter-Jan Roes',
 		'Kim Bruning',
-	),
-);
+	],
+];
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'SpecialPopupEditor',
-	'author' => array(
+	'author' => [
 		'Kipcool',
-	),
-);
+	],
+];
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'SpecialAddCollection',
-	'author' => array(
+	'author' => [
 		'Erik Möller',
 		'Kim Bruning',
-	),
-);
+	],
+];
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'SpecialDatasearch',
-	'author' => array(
+	'author' => [
 		'Peter-Jan Roes',
 		'Karsten Uil',
 		'Kipcool',
-	),
-);
+	],
+];
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'SpecialNeedsTranslation',
-	'author' => array(
+	'author' => [
 		'Peter-Jan Roes',
 		'Kipcool',
-	),
-);
+	],
+];
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'SpecialOWStatistics',
 	'author' => 'Kipcool',
-);
+];
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'SpecialOWDownloads',
 	'author' => 'Hiong3-eng5',
-);
+];
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'SpecialAddFromExternalAPI',
 	'author' => 'Hiong3-eng5',
-);
+];
 
 # Location of the SpecialMyExtension class (Tell MediaWiki to load this file)
 $wgAutoloadClasses['SpecialCopy'] = $dir . 'OmegaWiki/SpecialCopy.php';
@@ -132,8 +131,8 @@ $wgSpecialPages['ow_addFromExtAPI'] = 'SpecialOWAddFromExternalAPI';
 // $wgSpecialPages['Transaction'] = 'SpecialTransaction';
 
 global $wgWldProcessExternalAPIClasses, $wgWldExtenalResourceLanguages, $wgWldScriptPath;
-$wgWldProcessExternalAPIClasses = array();
-$wgWldExtenalResourceLanguages = array();
+$wgWldProcessExternalAPIClasses = [];
+$wgWldExtenalResourceLanguages = [];
 
 if ( file_exists( $wgWldScriptPath . '/external/wordnik/wordnik/Swagger.php' ) ) {
 	$wgAutoloadClasses['WordnikExtension' ] = $wgWldSpecialsScriptPath . 'ExternalWordnik.php';
@@ -143,17 +142,17 @@ if ( file_exists( $wgWldScriptPath . '/external/wordnik/wordnik/Swagger.php' ) )
 	$wgWldProcessExternalAPIClasses['WordnikWiktionaryExtension'] = 'Wordnik Wiktionary';
 	$wgWldProcessExternalAPIClasses['WordnikWordnetExtension'] = 'Wordnik Wordnet';
 	$wgWldExtenalResourceLanguages[WLD_ENGLISH_LANG_ID] = 'English';
-	require_once( $wgWldScriptPath . '/external/wordnikConfig.php' );
+	require_once $wgWldScriptPath . '/external/wordnikConfig.php';
 }
 
 if ( $wgWldProcessExternalAPIClasses ) {
-	$wgResourceModules['ext.OwAddFromExtAPI.js'] = $resourcePathArray + array(
+	$wgResourceModules['ext.OwAddFromExtAPI.js'] = $resourcePathArray + [
 		'scripts' => 'omegawiki-addExtAPI.js'
-	);
+	];
 }
 
 # Location of an aliases file (Tell MediaWiki to load this file)
-//$wgExtensionMessagesFiles[ 'OWSpecialsAlias' ] = #dir . '../i18n/OWSpecials.alias.php';
+// $wgExtensionMessagesFiles[ 'OWSpecialsAlias' ] = #dir . '../i18n/OWSpecials.alias.php';
 
 // Return true so that MediaWiki continues to load extensions.
 return true;

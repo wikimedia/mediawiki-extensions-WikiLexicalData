@@ -27,19 +27,19 @@
  *
  */
 
-require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
+require_once 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php';
 
 class Define extends SynonymTranslation {
 
 	public $languageId, $text, $spelling, $spellingLanguageId;
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, null);
+		parent::__construct( $main, $action, null );
 	}
 
 	public function execute() {
 		global $wgUser, $wgOut;
-		$options = array();
+		$options = [];
 
 		// Get the parameters
 		$params = $this->extractRequestParams();
@@ -51,18 +51,26 @@ class Define extends SynonymTranslation {
 
 	/** Cache the function
 	 *  Note: dieUsage must be used outside the cache lest the cache will return empty the
-	 *		next time it is accessed.
+	 * 		next time it is accessed.
 	 */
 	protected function cacheDefine( $params ) {
 		$defineCacheKey = 'API:ow_define:dm=' . $params['dm'];
-		if ( isset( $params['lang'] ) ) $defineCacheKey .= ":ver={$params['lang']}";
-		if ( isset( $params['syntrans'] ) ) $defineCacheKey .= ":ver={$params['syntrans']}";
-		if ( isset( $params['e'] ) ) $defineCacheKey .= ":ver={$params['e']}";
-		if ( isset( $params['ver'] ) ) $defineCacheKey .= ":ver={$params['ver']}";
+		if ( isset( $params['lang'] ) ) {
+			$defineCacheKey .= ":ver={$params['lang']}";
+		}
+		if ( isset( $params['syntrans'] ) ) {
+			$defineCacheKey .= ":ver={$params['syntrans']}";
+		}
+		if ( isset( $params['e'] ) ) {
+			$defineCacheKey .= ":ver={$params['e']}";
+		}
+		if ( isset( $params['ver'] ) ) {
+			$defineCacheKey .= ":ver={$params['ver']}";
+		}
 
 		$cache = new CacheHelper();
 
-		$cache->setCacheKey( array( $defineCacheKey ) );
+		$cache->setCacheKey( [ $defineCacheKey ] );
 		$define = $cache->getCachedValue(
 			function ( $params ) {
 				// Required parameter
@@ -70,12 +78,12 @@ class Define extends SynonymTranslation {
 				if ( isset( $params['dm'] ) ) {
 					// check that defined_meaning_id exists
 					if ( !verifyDefinedMeaningId( $params['dm'] ) ) {
-						return array( 'error' => 'dm not found' );
+						return [ 'error' => 'dm not found' ];
 					}
 				}
 
 				// Optional parameter
-				$options = array();
+				$options = [];
 				$partIsValid = false;
 
 				if ( isset( $params['syntrans'] ) ) {
@@ -87,7 +95,7 @@ class Define extends SynonymTranslation {
 
 				// error if $params['part'] is empty
 				if ( $options['part'] == '' ) {
-					return array( 'error' => 'nullsyntrans' );
+					return [ 'error' => 'nullsyntrans' ];
 				}
 
 				// get syntrans
@@ -95,49 +103,49 @@ class Define extends SynonymTranslation {
 				if ( $options['part'] == 'syn' or $options['part'] == 'trans' or $options['part'] == 'all' ) {
 					$partIsValid = true;
 					if ( !isset( $params['lang'] ) ) {
-						return array( 'error' => 'nolang' );
+						return [ 'error' => 'nolang' ];
 					}
 				}
 
 				if ( !$partIsValid ) {
-					return array( 'error' => 'invalidsyntrans' );
+					return [ 'error' => 'invalidsyntrans' ];
 				}
 
 				if ( $params['e'] ) {
-					$trueOrFalse = getExpressionId( $params['e'], $params['lang']);
+					$trueOrFalse = getExpressionId( $params['e'], $params['lang'] );
 					if ( $trueOrFalse == true ) {
 						$options['e'] = $params['e'];
 					}
 				}
 
 				if ( $params['e'] && !isset( $options['e'] ) ) {
-					return array( 'error' => 'e not found' );
+					return [ 'error' => 'e not found' ];
 				}
 
 				if ( $params['lang'] ) {
-					$trueOrFalse = LanguageIdExist( $params['lang']);
+					$trueOrFalse = LanguageIdExist( $params['lang'] );
 					if ( $trueOrFalse == true ) {
 						$options['lang'] = $params['lang'];
 						$defined = $this->defining( $params['dm'], $params['lang'], $options, $this->getModuleName() );
 					} else {
-						return array( 'error' => 'lang not found' );
+						return [ 'error' => 'lang not found' ];
 					}
 				} else {
 					if ( $options['part'] == 'syn' or $options['part'] == 'trans' or $options['part'] == 'all' ) {
-						return array( 'error' => 'nulllang' );
+						return [ 'error' => 'nulllang' ];
 					}
 					$defined = $this->definingForAnyLanguage( $params['dm'], $options, $this->getModuleName() );
 				}
 
 				return $defined[ $this->getModuleName() ];
-			}, array( $params )
+			}, [ $params ]
 		);
 		$cache->setExpiry( 10800 ); // 3 hours
 		$cache->saveCache();
 
 		// catch errors here
-		if ( isset ( $define['error'] ) ) {
-			$defineErrCode = array(
+		if ( isset( $define['error'] ) ) {
+			$defineErrCode = [
 				'nolang' => 'The lang parameter must be set',
 				'dm not found' => 'Non existent dm id (' . $params['dm'] . ')',
 				'e not found' => 'Non existent e id (' . $params['e'] . ')',
@@ -145,7 +153,7 @@ class Define extends SynonymTranslation {
 				'nullsyntrans' => 'parameter syntrans for adding syntrans is empty',
 				'nulllang' => 'parameter lang for adding syntrans is empty',
 				'invalidsyntrans' => 'parameter syntrans is neither syn, trans nor all',
-			);
+			];
 			$this->dieUsage( $defineErrCode["{$define['error']}"], $define['error'] );
 		}
 
@@ -155,26 +163,26 @@ class Define extends SynonymTranslation {
 
 	// Parameters.
 	public function getAllowedParams() {
-		return array(
-			'dm' => array (
+		return [
+			'dm' => [
 				ApiBase::PARAM_TYPE => 'integer',
 				ApiBase::PARAM_REQUIRED => true
-			),
-			'lang' => array (
+			],
+			'lang' => [
 				ApiBase::PARAM_TYPE => 'integer',
-			),
-			'e' => array (
+			],
+			'e' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-			'syntrans' => array (
+			],
+			'syntrans' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-		);
+			],
+		];
 	}
 
 	// Get examples
 	public function getExamples() {
-		return array(
+		return [
 			'Get a definition from a defined meaning id only.',
 			'api.php?action=ow_define&dm=8218',
 			'',
@@ -200,14 +208,14 @@ class Define extends SynonymTranslation {
 			'api.php?action=ow_define&dm=8218&syntrans=all&e=字母&lang=107',
 			'Get the synonyms of a defined meaning id',
 			'api.php?action=ow_define&dm=8218&syntrans=syn&e=aksara&lang=231',
-		);
+		];
 	}
 
 	/**
 	 * Define expression when the language is not specified.
 	 */
-	protected function defining( $definedMeaningId, $languageId, $options = array(), $moduleName = null ) {
-		$syntrans = array();
+	protected function defining( $definedMeaningId, $languageId, $options = [], $moduleName = null ) {
+		$syntrans = [];
 
 		if ( is_null( $moduleName ) ) {
 			$moduleName = 'ow_define';
@@ -238,34 +246,33 @@ class Define extends SynonymTranslation {
 		$definitionSpelling = getSpellingForLanguageId( $definedMeaningId, $definitionLanguageId, WLD_ENGLISH_LANG_ID );
 
 		if ( isset( $options['part'] ) ) {
-			if( $options['part'] == 'all' ) {
+			if ( $options['part'] == 'all' ) {
 				$options['part'] = null;
 			}
 			$syntrans = $this->synTrans( $definedMeaningId, $options );
 		}
 
-		return array(
-			$moduleName => array(
+		return [
+			$moduleName => [
 				'dmid' => $definedMeaningId,
 				'spelling' => $spelling,
 				'langid' => $spellingLanguageId,
 				'lang' => $spellingLanguage,
-				'definition' => array (
+				'definition' => [
 					'spelling' => $definitionSpelling,
 					'langid' => $definitionLanguageId,
 					'lang' => $definitionLanguage,
 					'text' => $text
-				),
+				],
 				'syntrans' => $syntrans
-			)
-		);
-
+			]
+		];
 	}
 
 	/**
 	 * Define expression when the language is not specified.
 	 */
-	protected function definingForAnyLanguage( $definedMeaningId, $options = array(), $moduleName = null ) {
+	protected function definingForAnyLanguage( $definedMeaningId, $options = [], $moduleName = null ) {
 		$languageId = null;
 		$language = null;
 
@@ -290,19 +297,19 @@ class Define extends SynonymTranslation {
 		$definitionLanguage = getLanguageIdLanguageNameFromIds( $definitionLanguageId, $definitionLanguageId );
 		$definitionSpelling = getSpellingForLanguageId( $definedMeaningId, $definitionLanguageId, WLD_ENGLISH_LANG_ID );
 
-		$definition = array(
-			$moduleName => array(
+		$definition = [
+			$moduleName => [
 				'dmid' => $definedMeaningId,
 				'langid' => $languageId,
 				'lang' => $language,
-				'definition' => array (
+				'definition' => [
 					'spelling' => $definitionSpelling,
 					'langid' => $definitionLanguageId,
 					'lang' => $definitionLanguage,
-					'text'=> $text
-				)
-			)
-		);
+					'text' => $text
+				]
+			]
+		];
 
 		if ( $remove_langIdArray == 1 ) {
 			unset( $definition[$moduleName]['langid'] );
@@ -310,6 +317,5 @@ class Define extends SynonymTranslation {
 		}
 
 		return $definition;
-
 	}
 }

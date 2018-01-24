@@ -4,19 +4,18 @@
  * Created on April 2, 2013
  */
 
-require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
-require_once( 'extensions/WikiLexicalData/OmegaWiki/Transaction.php' );
+require_once 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php';
+require_once 'extensions/WikiLexicalData/OmegaWiki/Transaction.php';
 
 class AddAnnotation extends ApiBase {
 
 	private $objectId, $attributeId, $optionId;
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, null );
+		parent::__construct( $main, $action, null );
 	}
 
 	public function execute() {
-
 		$this->wikipage = false;
 		$typeExist = 0;
 		$result = '';
@@ -39,14 +38,13 @@ class AddAnnotation extends ApiBase {
 		$this->transacted = false;
 
 		if ( isset( $params['test'] ) ) {
-			if ( $params['test'] == '1' OR $params['test'] == null ) {
+			if ( $params['test'] == '1' or $params['test'] == null ) {
 				$this->test = true;
 			}
 		}
 
 		// The Type of Annotation
 		if ( $params['type'] == 'text' ) {
-
 			// If wikipage, use batch processing
 			if ( $params['wikipage'] ) {
 				$this->wikipage = true;
@@ -60,7 +58,7 @@ class AddAnnotation extends ApiBase {
 			// Parameter checks
 
 			// * optional parameters if uw_objects's "table" = 'uw_syntrans'
-			//   not needed when uw_objects's "table" = 'uw_defined_meaning'
+			// not needed when uw_objects's "table" = 'uw_defined_meaning'
 			if ( !isset( $params['e'] ) ) {
 				$spelling = null;
 			} else {
@@ -92,29 +90,28 @@ class AddAnnotation extends ApiBase {
 
 			$result = $this->processAddTextAttributeValues( $spelling, $language, $definedMeaningId, $attribute, $attribLang, $text );
 
-			if ( !isset ( $result['error'] ) ) {
+			if ( !isset( $result['error'] ) ) {
 				$this->getResult()->addValue( null, $this->getModuleName(),
-					array ( 'variables' => array (
+					[ 'variables' => [
 						'e' => $spelling,
 						'lang' => $language,
 						'dm' => $definedMeaningId,
 						'attribute' => $attribute,
 						'attriblang' => $attribLang
-					) )
+					] ]
 				);
 				$this->getResult()->addValue( null, $this->getModuleName(),
-					array ( 'process' => array (
+					[ 'process' => [
 						'object_id' => $this->objectId,
 						'attrib_mid' => $this->attributeId,
 						'text' => $text
-					) )
+					] ]
 				);
 			}
 			$typeExist = 1;
 		}
 
 		if ( $params['type'] == 'option' ) {
-
 			// If wikipage, use batch processing
 			if ( $params['wikipage'] ) {
 				$this->wikipage = true;
@@ -151,7 +148,7 @@ class AddAnnotation extends ApiBase {
 			$optionLang = $params['option_lang'];
 
 			// * optional parameters if uw_objects's "table" = 'uw_syntrans'
-			//   not needed when uw_objects's "table" = 'uw_defined_meaning'
+			// not needed when uw_objects's "table" = 'uw_defined_meaning'
 			if ( !isset( $params['e'] ) ) {
 				$spelling = null;
 				$language = null;
@@ -169,9 +166,9 @@ class AddAnnotation extends ApiBase {
 				$option, $optionLang
 			);
 
-			if ( !isset ( $result['error'] ) ) {
+			if ( !isset( $result['error'] ) ) {
 				$this->getResult()->addValue( null, $this->getModuleName(),
-					array ( 'variables' => array (
+					[ 'variables' => [
 						'e' => $spelling,
 						'lang' => $language,
 						'dm' => $definedMeaningId,
@@ -179,31 +176,30 @@ class AddAnnotation extends ApiBase {
 						'attriblang' => $attribLang,
 						'option' => $option,
 						'optionlang' => $optionLang
-					) )
+					] ]
 				);
 				$this->getResult()->addValue( null, $this->getModuleName(),
-					array ( 'process' => array (
+					[ 'process' => [
 						'object_id' => $this->objectId,
 						'option_id' => $this->optionId
-					) )
+					] ]
 				);
 			}
 			$typeExist = 1;
 		}
 
 		// Types to be added later.
-	//	if ( $params['type'] == 'url' ) {
-	//		$typeExist = 1;
-	//	}
+	// if ( $params['type'] == 'url' ) {
+	// $typeExist = 1;
+	// }
 
 		if ( $params['type'] == 'relation' ) {
-
 			// If wikipage, use batch processing
 			if ( $params['wikipage'] ) {
 				$this->wikipage = true;
 				$this->type = 'relation';
 				$text = $this->processBatch( $params['wikipage'] );
-			//	$text = $this->processBatchRelation( $params['wikipage'] );
+			// $text = $this->processBatchRelation( $params['wikipage'] );
 				return true;
 			}
 
@@ -227,7 +223,7 @@ class AddAnnotation extends ApiBase {
 			$attribLang = $params['attrib_lang'];
 
 			// * optional parameters if uw_objects's "table" = 'uw_syntrans'
-			//   not needed when uw_objects's "table" = 'uw_defined_meaning'
+			// not needed when uw_objects's "table" = 'uw_defined_meaning'
 			if ( !isset( $params['e'] ) ) {
 				$spelling = null;
 				$language = null;
@@ -275,10 +271,9 @@ class AddAnnotation extends ApiBase {
 				$relation, $relationLang, $relationDM
 			);
 
-
-			if ( !isset ( $result['error'] ) ) {
+			if ( !isset( $result['error'] ) ) {
 				$this->getResult()->addValue( null, $this->getModuleName(),
-					array ( 'variables' => array (
+					[ 'variables' => [
 						'e' => $spelling,
 						'lang' => $language,
 						'dm' => $definedMeaningId,
@@ -287,7 +282,7 @@ class AddAnnotation extends ApiBase {
 						'relation' => $relation,
 						'relationlang' => $relationLang,
 						'dm_relation' => $relationDM
-					) )
+					] ]
 				);
 			}
 			$typeExist = 1;
@@ -305,57 +300,57 @@ class AddAnnotation extends ApiBase {
 
 	// Parameters.
 	public function getAllowedParams() {
-		return array(
-			'type' => array (
+		return [
+			'type' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true
-			),
-			'e' => array (
+			],
+			'e' => [
 				ApiBase::PARAM_TYPE => 'string'
-			),
-			'lang' => array (
+			],
+			'lang' => [
 				ApiBase::PARAM_TYPE => 'string'
-			),
-			'dm' => array (
+			],
+			'dm' => [
 				ApiBase::PARAM_TYPE => 'integer',
 				ApiBase::PARAM_REQUIRED => true
-			),
-			'attribute' => array (
+			],
+			'attribute' => [
 				ApiBase::PARAM_TYPE => 'string'
-			),
-			'attrib_lang' => array (
+			],
+			'attrib_lang' => [
 				ApiBase::PARAM_TYPE => 'string'
-			),
-			'text' => array (
+			],
+			'text' => [
 				ApiBase::PARAM_TYPE => 'string'
-			),
-			'option' => array (
+			],
+			'option' => [
 				ApiBase::PARAM_TYPE => 'string'
-			),
-			'option_lang' => array (
+			],
+			'option_lang' => [
 				ApiBase::PARAM_TYPE => 'string'
-			),
-			'relation' => array (
+			],
+			'relation' => [
 				ApiBase::PARAM_TYPE => 'string'
-			),
-			'relation_lang' => array (
+			],
+			'relation_lang' => [
 				ApiBase::PARAM_TYPE => 'string'
-			),
-			'dm_relation' => array (
+			],
+			'dm_relation' => [
 				ApiBase::PARAM_TYPE => 'integer'
-			),
-			'wikipage' => array (
+			],
+			'wikipage' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-			'test' => array (
+			],
+			'test' => [
 				ApiBase::PARAM_TYPE => 'string'
-			)
-		);
+			]
+		];
 	}
 
 	// Get examples
 	public function getExamples() {
-		return array(
+		return [
 			'',
 			'Add text type syntrans annotation',
 			' api.php?action=ow_add_annotation&type=text&e=acusar&lang=spa&dm=837820&attribute=hyphenation&attrib_lang=eng&text=a·cu·sar&format=xml',
@@ -433,20 +428,20 @@ class AddAnnotation extends ApiBase {
 			'  or to test it',
 			'  api.php?action=ow_add_annotation&type=relation&wikipage=User:Minnan.import.bot/addRelationAnnotationTest&dm=0&format=xml&test',
 			''
-		);
+		];
 	}
 
 	public function processBatch( $wikiPage ) {
 		global $params;
 
 		$csvWikiPageTitle = Title::newFromText( $wikiPage );
-		$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
+		$csvWikiPage = new WikiPage( $csvWikiPageTitle );
 
 		if ( !$wikiText = $csvWikiPage->getContent( Revision::RAW ) ) {
 			return $this->getResult()->addValue( null, $this->getModuleName(),
-				array ( 'result' => array (
+				[ 'result' => [
 					'error' => "WikiPage ( $csvWikiPageTitle ) does not exist"
-				) )
+				] ]
 			);
 		}
 
@@ -458,23 +453,23 @@ class AddAnnotation extends ApiBase {
 		if ( isset( $match2[1] ) ) {
 			$redirectedText = $match2[1];
 			$csvWikiPageTitle = Title::newFromText( $redirectedText );
-			$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
+			$csvWikiPage = new WikiPage( $csvWikiPageTitle );
 			$wikiText = $csvWikiPage->getContent( Revision::RAW );
 			$text = $wikiText->getNativeData();
 		}
 
-		$process = array (
-			'text' =>  'wikipage',
+		$process = [
+			'text' => 'wikipage',
 			'type' => 'batch processing',
-		);
+		];
 
 		if ( $this->test ) {
 			$process['note'] = 'test run only';
 		}
 
 		$this->getResult()->addValue( null, $this->getModuleName(),
-			array ( 'process' => $process
-			)
+			[ 'process' => $process
+			]
 		);
 
 		$inputLine = explode( "\n", $text );
@@ -485,7 +480,7 @@ class AddAnnotation extends ApiBase {
 			$inputData = trim( $inputData );
 
 			// Check if TSV
-			$inputMatch = preg_match("/	/", $inputData, $match );
+			$inputMatch = preg_match( "/	/", $inputData, $match );
 
 			if ( $inputMatch and $this->continue ) {
 				$inputData = explode( "	", $inputData );
@@ -516,10 +511,10 @@ class AddAnnotation extends ApiBase {
 					}
 				}
 
-				if ( $inputDataCount < $noOfCol OR $inputDataCount > $noOfCol and $this->continue ) {
-					$result = array ( 'note' => "invalid column count. {$inputDataCount} instead of {$noOfCol}" );
+				if ( $inputDataCount < $noOfCol or $inputDataCount > $noOfCol and $this->continue ) {
+					$result = [ 'note' => "invalid column count. {$inputDataCount} instead of {$noOfCol}" ];
 					$this->getResult()->addValue( null, $this->getModuleName(),
-						array ( 'result' . $ctr => $result )
+						[ 'result' . $ctr => $result ]
 					);
 					$this->continue = false;
 				}
@@ -550,15 +545,15 @@ class AddAnnotation extends ApiBase {
 				}
 			} else {
 				if ( $inputData == null ) {
-					$result = array ( 'note' => "skipped blank line" );
+					$result = [ 'note' => "skipped blank line" ];
 					$this->getResult()->addValue( null, $this->getModuleName(),
-						array ( 'result' . $ctr => $result )
+						[ 'result' . $ctr => $result ]
 					);
 					$this->continue = false;
 				} else {
-					$result = array ( 'note' => "non TSV line `{$inputData}`" );
+					$result = [ 'note' => "non TSV line `{$inputData}`" ];
 					$this->getResult()->addValue( null, $this->getModuleName(),
-						array ( 'result' . $ctr => $result )
+						[ 'result' . $ctr => $result ]
 					);
 					$this->continue = false;
 				}
@@ -567,9 +562,9 @@ class AddAnnotation extends ApiBase {
 			if ( $this->continue ) {
 				if ( !is_numeric( $definedMeaningId ) ) {
 					if ( $ctr == 1 ) {
-						$result = array ( 'note' => "$definedMeaningId is not an int or probably just the CSV header" );
+						$result = [ 'note' => "$definedMeaningId is not an int or probably just the CSV header" ];
 					} else {
-						$result = array ( 'note' => "$definedMeaningId is not an int" );
+						$result = [ 'note' => "$definedMeaningId is not an int" ];
 					}
 				} else {
 					if ( $this->type == 'text' ) {
@@ -584,7 +579,7 @@ class AddAnnotation extends ApiBase {
 				}
 
 				$this->getResult()->addValue( null, $this->getModuleName(),
-					array ( 'result' . $ctr => $result )
+					[ 'result' . $ctr => $result ]
 				);
 			}
 
@@ -601,29 +596,29 @@ class AddAnnotation extends ApiBase {
 			// Convert Iso369 to language_id
 			$languageId = getLanguageIdForIso639_3( $language );
 			if ( !$languageId ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'param lang does not exist',
 						'info' => "No lang_id found for language $language"
-					)
-				);
+					]
+				];
 			}
 			// Get Expression Id
 			$expressionId = getExpressionId( $spelling, $languageId );
 			if ( !$expressionId ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'param e does not exist',
 						'info' => "The expression (spelling: $spelling, lang: $languageId) does not exist"
-					)
-				);
+					]
+				];
 			}
 			// Get object_id (syntrans_sid)
 			$this->objectId = getSynonymId( $definedMeaningId, $expressionId );
 			if ( !$this->objectId ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'param object does not exist',
 						'info' => "The object id for (dm: $definedMeaningId, exp: $expressionId $spelling) does not exist"
-					)
-				);
+					]
+				];
 			}
 		} else {
 			// Set object_id (defined_meaning_id)
@@ -633,29 +628,29 @@ class AddAnnotation extends ApiBase {
 		// Convert Iso369 to language_id
 		$attribLangId = getLanguageIdForIso639_3( $attribLang );
 		if ( !$attribLangId ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'param attrib_lang does not exist',
 					'info' => "The attribute language $attribLang does not exist"
-				)
-			);
+				]
+			];
 		}
 		// Check if attribute exist
 		$attributeExpressionId = getExpressionId( $attribute, $attribLangId );
 		if ( !$attributeExpressionId ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'not exist: attribute',
 					'info' => "The attribute (att: $attribute, lang: $attribLangId) for text type annotation does not exist"
-				)
-			);
+				]
+			];
 		}
 		// Get Attribute Id from expression Id
 		$this->attributeId = getTextAttributeOptionsAttributeMidFromExpressionId( $attributeExpressionId );
 		if ( is_null( $this->attributeId ) ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'not exist: attribute_mid',
 					'info' => "attribute ($attribute) does not exist"
-				)
-			);
+				]
+			];
 		}
 
 		// get DM expression for clarity
@@ -677,9 +672,9 @@ class AddAnnotation extends ApiBase {
 				}
 				$valueId = addTextAttributeValue( $this->objectId, $this->attributeId, $text );
 			}
-			$note = array(
+			$note = [
 				'status' => 'added'
-			);
+			];
 
 			if ( $valueId ) {
 				$note['value_id'] = $valueId;
@@ -693,10 +688,10 @@ class AddAnnotation extends ApiBase {
 				$note['note'] = 'test run only';
 			}
 		} else {
-			$note = array(
+			$note = [
 				'status' => 'exists',
 				'value_id' => $valueId
-			);
+			];
 
 			if ( $this->wikipage ) {
 				$note['note'] = "{$attribute} `{$text}` {$syntrans}for concept {$expression}({$definedMeaningId})";
@@ -719,11 +714,11 @@ class AddAnnotation extends ApiBase {
 			// Convert Iso369 to language_id
 			$languageId = getLanguageIdForIso639_3( $language );
 			if ( !$languageId ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'param lang does not exist',
 						'info' => "No lang_id found for language $language"
-					)
-				);
+					]
+				];
 			}
 			// Get Language DM Id
 			$languageNameDMId = getDMIdForIso639_3( $language );
@@ -731,25 +726,25 @@ class AddAnnotation extends ApiBase {
 			// Get Expression Id
 			$expressionId = getExpressionId( $spelling, $languageId );
 			if ( !$expressionId ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'param e does not exist',
 						'info' => "The expression (spelling: $spelling, lang: $languageId) does not exist"
-					)
-				);
+					]
+				];
 			}
 			// Get object_id (syntrans_sid)
 			$this->objectId = getSynonymId( $definedMeaningId, $expressionId );
 			if ( !$this->objectId ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'param object does not exist',
 						'info' => "The object id for (dm: $definedMeaningId, exp: $expressionId - $spelling) does not exist"
-					)
-				);
+					]
+				];
 			}
 			$levelMeaningId = $dbr->selectField(
 				"{$dc}_bootstrapped_defined_meanings",
 				'defined_meaning_id',
-				array( 'name' => 'SynTrans' ),
+				[ 'name' => 'SynTrans' ],
 				__METHOD__
 			);
 		} else {
@@ -758,7 +753,7 @@ class AddAnnotation extends ApiBase {
 			$levelMeaningId = $dbr->selectField(
 				"{$dc}_bootstrapped_defined_meanings",
 				'defined_meaning_id',
-				array( 'name' => 'DefinedMeaning' ),
+				[ 'name' => 'DefinedMeaning' ],
 				__METHOD__
 			);
 			$languageNameDMId = -1;
@@ -768,58 +763,58 @@ class AddAnnotation extends ApiBase {
 		// Convert Iso369 to language_id
 		$attribLang = getLanguageIdForIso639_3( $attribLang );
 		if ( !$attribLang ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'param attrib_lang does not exist',
 					'info' => "The attribute language $attribLang does not exist"
-				)
-			);
+				]
+			];
 		}
 		// Check if attribute exist
 		$attributeExpressionId = getExpressionId( $attribute, $attribLang );
 		if ( !$attributeExpressionId ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'not exist: attribute',
 					'info' => "The attribute (att: $attribute, lang: $attribLang) for text type annotation does not exist"
-				)
-			);
+				]
+			];
 		}
 		// Convert Iso369 to language_id
 		$optionLang = getLanguageIdForIso639_3( $optionLang );
 		if ( !$optionLang ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'param option_lang does not exist',
 					'info' => "The option language $optionLang does not exist"
-				)
-			);
+				]
+			];
 		}
 		// Check if option exist
 		$optionExpressionId = getExpressionId( $option, $optionLang );
 		if ( !$optionExpressionId ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'not exist: attribute',
 					'info' => "The attribute (opt: $option, lang: $optionLang) for text type annotation does not exist"
-				)
-			);
+				]
+			];
 		}
 		// Get attribute_id from attribute expression Id
 		$this->attributeId = getOptionAttributeOptionsAttributeIdFromExpressionId( $attributeExpressionId, $languageNameDMId, $levelMeaningId );
 
 		if ( is_null( $this->attributeId ) ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'not exist: attribute_id',
 					'info' => "attribute ($attribute) does not exist"
-				)
-			);
+				]
+			];
 		}
 		// Get option_mid from option expression Id
 		$optionMeaningId = getOptionAttributeOptionsOptionMidFromExpressionId( $optionExpressionId );
 
 		if ( is_null( $optionMeaningId ) ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'not exist: option_mid',
 					'info' => "attribute ($option) does not exist"
-				)
-			);
+				]
+			];
 		}
 		// Get option_id
 		$tof = optionAttributeOptionExists( $this->attributeId, $optionMeaningId, $languageId );
@@ -840,7 +835,6 @@ class AddAnnotation extends ApiBase {
 		if ( $optionIdExist == 2 ) {
 			$this->optionId = getOptionAttributeOptionsOptionId( $this->attributeId, $optionMeaningId, 0 );
 		}
-
 
 		// get DM expression for clarity
 		$definedMeaningLanguageId = WLD_ENGLISH_LANG_ID;
@@ -863,9 +857,9 @@ class AddAnnotation extends ApiBase {
 				$valueId = getOptionAttributeValueId( $this->objectId, $this->optionId );
 				echo $valueId . '"';
 			}
-			$note = array(
+			$note = [
 				'status' => 'added'
-			);
+			];
 
 			if ( $valueId ) {
 				$note['value_id'] = $valueId;
@@ -879,10 +873,10 @@ class AddAnnotation extends ApiBase {
 				$note['note'] = 'test run only';
 			}
 		} else {
-			$note = array(
+			$note = [
 				'status' => 'exists',
 				'value_id' => $valueId
-			);
+			];
 
 			if ( $this->wikipage ) {
 				$note['note'] = "{$attribute} `{$option}` {$syntrans}for concept {$expression}({$definedMeaningId})";
@@ -901,19 +895,19 @@ class AddAnnotation extends ApiBase {
 		// Check defined_meaning_id if exist
 		$definedMeaningId = verifyDefinedMeaningId( $definedMeaningId );
 		if ( !$definedMeaningId ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'defined_meaning_id does not exist',
 					'info' => "The defined_meaning_mid ($definedMeaningId) does not exist"
-				)
-			);
+				]
+			];
 		}
 		$relationDM = verifyDefinedMeaningId( $relationDM );
 		if ( !$relationDM ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => ' relation defined_meaning_id does not exist',
 					'info' => "The relation's defined_meaning_mid ($relationDM) does not exist"
-				)
-			);
+				]
+			];
 		}
 		// if spelling is not null, process object as syntrans
 		// if null, process as defined meaning
@@ -921,54 +915,54 @@ class AddAnnotation extends ApiBase {
 			// Convert Iso369 to language_id
 			$languageId = getLanguageIdForIso639_3( $language );
 			if ( !$languageId ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'language_id does not exist',
 						'info' => "No lang_id found for language $language"
-					)
-				);
+					]
+				];
 			}
 			$relationLanguageId = getLanguageIdForIso639_3( $relationLang );
 			if ( !$relationLanguageId ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'relation language_id does not exist',
 						'info' => "No lang_id found for relation language $relationLang"
-					)
-				);
+					]
+				];
 			}
 			// Get Expression Ids
 			$expressionId = getExpressionId( $spelling, $languageId );
 			if ( !$expressionId ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'expression_id does not exist',
 						'info' => "The expression_id for (spelling: $spelling, lang_id: $languageId) does not exist"
-					)
-				);
+					]
+				];
 			}
 			$relationExpressionId = getExpressionId( $relation, $relationLanguageId );
 			if ( !$relationExpressionId ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'relation expression_id does not exist',
 						'info' => "No expression_id found corresponding to (exp: $relation, lang: $relationLanguageId )"
-					)
-				);
+					]
+				];
 			}
 			// Get meaning1_mid (syntrans_sid)
 			$meaning1Mid = getSynonymId( $definedMeaningId, $expressionId );
 			if ( !$meaning1Mid ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'meaning1_mid does not exist',
 						'info' => "No meaning1_mid found for (dm: $definedMeaningId, exp_id: $expressionId)"
-					)
-				);
+					]
+				];
 			}
 			// Get meaning2_mid (syntrans_sid)
 			$meaning2Mid = getSynonymId( $relationDM, $relationExpressionId );
 			if ( !$meaning2Mid ) {
-				return array( 'error' => array (
+				return [ 'error' => [
 						'code' => 'meaning2_mid does not exist',
 						'info' => "No meaning2_mid found for (dm: $relationDM, exp_id: $relationExpressionId)"
-					)
-				);
+					]
+				];
 			}
 		} else {
 			// Set meaning1_mid (defined_meaning_id)
@@ -979,20 +973,20 @@ class AddAnnotation extends ApiBase {
 		// Convert Iso369 to language_id
 		$attribLangId = getLanguageIdForIso639_3( $attribLang );
 		if ( !$attribLangId ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'param attrib_lang does not exist',
 					'info' => "The languageId for isocode ($attribLang) does not exist"
-				)
-			);
+				]
+			];
 		}
 		// Check if attribute exist
 		$attributeExpressionId = getExpressionId( $attribute, $attribLangId );
 		if ( !$attributeExpressionId ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'not exist: attribute',
 					'info' => "The attribute ($attribute) with lang ($attribLangId) does not exist"
-				)
-			);
+				]
+			];
 		}
 		// Get attribute's dm
 		$relationtypeMid = null;
@@ -1006,11 +1000,11 @@ class AddAnnotation extends ApiBase {
 		}
 
 		if ( !$relationtypeMid ) {
-			return array( 'error' => array (
+			return [ 'error' => [
 					'code' => 'relationtype_mid not found',
 					'info' => "No relation found corresponding to (exp: $attribute, lang: $attribLangId)"
-				)
-			);
+				]
+			];
 		}
 
 		// get DM expression for clarity

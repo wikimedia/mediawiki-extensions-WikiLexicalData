@@ -16,8 +16,8 @@ class OmegaWikiHooks extends WikiLexicalDataHooks {
 		global $wgExtraNamespaces, $wgWldOwScriptPath;
 		// FIXME: skip if not action=submit
 		// FIXME: skip if not page text
-		if ( True ) {
-			$nspace = 'DefinedMeaning' ;	// FIXME: compute the standard (english) name, do not use a constant.
+		if ( true ) {
+			$nspace = 'DefinedMeaning';	// FIXME: compute the standard (english) name, do not use a constant.
 			$namspce = $wgExtraNamespaces[NS_DEFINEDMEANING];
 			if ( $nspace !== $namspce ) {
 				$nspace .= '|';
@@ -29,36 +29,36 @@ class OmegaWikiHooks extends WikiLexicalDataHooks {
 			preg_match_all( $pattern, $text, $match );
 			if ( $match[0] ) {
 				// collect all DefinedMeaning IDs, all links to any of them, point to their array position
-				foreach( $match[5] as $index => $dmNumber ) {
-					$dmIds[0+$dmNumber][$match[0][$index]] = $index;
+				foreach ( $match[5] as $index => $dmNumber ) {
+					$dmIds[0 + $dmNumber][$match[0][$index]] = $index;
 				}
-				foreach( $dmIds as $dmId => $links ) {
+				foreach ( $dmIds as $dmId => $links ) {
 					if ( OwDatabaseAPI::verifyDefinedMeaningId( $dmId ) ) {
-						$title = OwDatabaseAPI::definingExpression( $dmId ) . '_(' . $dmId . ')' ;
+						$title = OwDatabaseAPI::definingExpression( $dmId ) . '_(' . $dmId . ')';
 					} else {
-						$title = '_(0)' ;
+						$title = '_(0)';
 					}
-					foreach( $links as $link => $index ) {
+					foreach ( $links as $link => $index ) {
 						if ( trim( $match[3][$index] ) != $title ) {
 							// alter only if it would change
 							switch ( strlen( trim( $match[6][$index] ) ) ) {
 							  case 0:	// there was no "|" in the link
-								$replace = '|' . $match[1][$index] ;
+								$replace = '|' . $match[1][$index];
 								break;
-							  case 1:	//there was an "|" not followed by text
-								$replace = '|' . $match[3][$index] ;
+							  case 1:	// there was an "|" not followed by text
+								$replace = '|' . $match[3][$index];
 								break;
-							  default:	//there was an "|" followed by text
-								$replace = $match[6][$index] ;
+							  default:	// there was an "|" followed by text
+								$replace = $match[6][$index];
 							}
-							$replace = '[[' . $namspce . ':' . $title . $replace . ']]' ;
-							$text = str_replace( $link , $replace , $text );
+							$replace = '[[' . $namspce . ':' . $title . $replace . ']]';
+							$text = str_replace( $link, $replace, $text );
 						}
 					}
 				}
 			}
 		}
-		return True;
+		return true;
 	}
 
 	/**

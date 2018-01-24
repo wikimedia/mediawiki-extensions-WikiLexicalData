@@ -22,12 +22,11 @@ function main() {
 	$maxSubSet = dom2set( $fullSet );
 	# sort($maxSubSet); foreach ($maxSubSet as $dmid) {print "$dmid,";}
 
-
 	# var_dump($fullSet->saveXML());
 	$exercise = new Exercise( $fetcher, $fullSet, $maxSubSet ); # pwease, not the max!
 	# $exercise->setLanguages(array("eng","fra","deu"));
-	$exercise->setQuestionLanguages( array( "deu" ) );
-	$exercise->setAnswerLanguages( array( "eng" ) );
+	$exercise->setQuestionLanguages( [ "deu" ] );
+	$exercise->setAnswerLanguages( [ "eng" ] );
 
 	# $question_dmid=$maxSubSet[array_rand($maxSubSet)];
 	echo "question...\n";
@@ -43,7 +42,6 @@ function main() {
 	$loadex = loadExercise( $exid );
 	$loadex->setFetcher( $fetcher );
 	dumpExercise( $loadex, 10 );
-
 }
 function dumpExercise( $exercise, $questions ) {
 	for ( $i = 0; $i < $questions; $i++ ) {
@@ -53,40 +51,36 @@ function dumpExercise( $exercise, $questions ) {
 		var_dump( $question->getQuestionWords() );
 		var_dump( $question->getAnswers() );
 	}
-	
 }
 
-
 # function dumpExercise($exercise,$questions) {
-#	for ($i=0;$i<$questions;$i++) {
-#		$question=$exercise->nextQuestion();
-#		print $question->getDmid()."\n";
-#		var_dump($question->getQuestionDefinitions("eng"));
-#		var_dump($question->getQuestionWords("eng"));
-#		var_dump($question->getQuestionWords("deu"));
-#		var_dump($question->getQuestionWords("deu"));
-#		var_dump($question->getAnswers("eng"));
-#		var_dump($question->getAnswers("deu"));
-#	}
-#	
+# for ($i=0;$i<$questions;$i++) {
+# $question=$exercise->nextQuestion();
+# print $question->getDmid()."\n";
+# var_dump($question->getQuestionDefinitions("eng"));
+# var_dump($question->getQuestionWords("eng"));
+# var_dump($question->getQuestionWords("deu"));
+# var_dump($question->getQuestionWords("deu"));
+# var_dump($question->getAnswers("eng"));
+# var_dump($question->getAnswers("deu"));
+# }
+#
 # }
 
 
 
-/** gets array of dmids from DOMDocument 
-* now dupped in Exercise... can we drop it?
-*/
+/** gets array of dmids from DOMDocument
+ * now dupped in Exercise... can we drop it?
+ */
 function dom2set( $set_dom ) {
-	$set = array();
+	$set = [];
 
 	$xpath = new domxpath( $set_dom );
 	$nodes = $xpath->query( "//defined-meaning" );
 
 	foreach ( $nodes as $node ) {
-		$set[] = (int) $node->getAttribute( "defined-meaning-id" );
+		$set[] = (int)$node->getAttribute( "defined-meaning-id" );
 	}
 
 	return $set;
 }
-
-?>

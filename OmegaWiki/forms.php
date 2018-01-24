@@ -1,17 +1,18 @@
 <?php
 
-require_once( 'languages.php' );
+require_once 'languages.php';
 
 function getTextBox( $name, $value = "", $onChangeHandler = "", $disabled = false ) {
-	if ( $onChangeHandler != "" )
+	if ( $onChangeHandler != "" ) {
 		$onChangeAttribute = ' onchange="' . $onChangeHandler . '"';
-	else
+	} else {
 		$onChangeAttribute = '';
+	}
 
-	$disableText = $disabled ? 'disabled="disabled" ' : '' ;
+	$disableText = $disabled ? 'disabled="disabled" ' : '';
 	$inputHTML = '<input ' . $disableText . 'type="text" id="' . $name . '" name="' . $name .
 		'" value="' . htmlspecialchars( $value ) . '"' . $onChangeAttribute .
-		' style="width: 100%; padding: 0px; margin: 0px;"/>' ;
+		' style="width: 100%; padding: 0px; margin: 0px;"/>';
 
 	return $inputHTML;
 }
@@ -61,7 +62,7 @@ function getCheckBoxWithClass( $name, $isChecked, $class, $disabled = false ) {
 function getRemoveCheckBox( $name ) {
 	global $wgUser;
 	$dc = wdGetDataSetContext();
-	if ( ($dc == "uw") and (! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+	if ( ( $dc == "uw" ) and ( ! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
 		// do not print the checkbox
 		return '';
 	} else {
@@ -77,10 +78,11 @@ function getSelect( $name, $options, $selectedValue = "", $onChangeHandler = "" 
 }
 
 function getFileField( $name, $onChangeHandler = "" ) {
-	if ( $onChangeHandler != "" )
+	if ( $onChangeHandler != "" ) {
 		$onChangeAttribute = ' onchange="' . $onChangeHandler . '"';
-	else
+	} else {
 		$onChangeAttribute = '';
+	}
 
 	return '<input type="file" id="' . $name . '" name="' . $name . '"' . $onChangeAttribute . ' style="width: 100%; padding: 0px; margin: 0px;"/>';
 }
@@ -96,8 +98,8 @@ function getFileField( $name, $onChangeHandler = "" ) {
  * @param Array Override column titles
  * @param DataSet Override standard dataset
  *
-*/
-function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = '', $displayLabelColumns = array( 0 ), DataSet $dc = null ) {
+ */
+function getSuggest( $name, $query, $parameters = [], $value = 0, $label = '', $displayLabelColumns = [ 0 ], DataSet $dc = null ) {
 	global
 		$wgScriptPath;
 
@@ -108,18 +110,18 @@ function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = 
 		$label = '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;';
 	}
 
-	$result = Html::openElement('span', array( 'class' => 'suggest' ) );
+	$result = Html::openElement( 'span', [ 'class' => 'suggest' ] );
 
 	// the input that will contain the value selected with suggest.js
-	$inputOptions = array(
+	$inputOptions = [
 		'id' => $name,
 		'name' => $name,
 		'value' => $value,
 		'type' => 'hidden'
-	);
-	$result .= Html::element('input', $inputOptions);
+	];
+	$result .= Html::element( 'input', $inputOptions );
 
-	$spanOptions = array(
+	$spanOptions = [
 		'id' => $name . '-suggest-link',
 		'name' => $name . '-suggest-link',
 		'class' => 'suggest-link',
@@ -128,16 +130,16 @@ function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = 
 		'offset' => 0,
 		'label-columns' => implode( ', ', $displayLabelColumns ),
 		'dataset' => $dc
-	);
+	];
 
-	foreach( $parameters as $parameter => $parameterValue ) {
+	foreach ( $parameters as $parameter => $parameterValue ) {
 		// parameters like level, definedMeaningId, annotationAttributeId, syntransId
 		$spanOptions[$parameter] = $parameterValue;
 	}
 
-	$result .= Html::rawElement('span', $spanOptions, $label);
+	$result .= Html::rawElement( 'span', $spanOptions, $label );
 
-	$result .= Html::closeElement('span');
+	$result .= Html::closeElement( 'span' );
 
 	// The table that then allows to select from a dropdown list
 	// is generated with javascript (cf. suggest.js)
@@ -145,22 +147,22 @@ function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = 
 	return $result;
 }
 
-function getStaticSuggest( $name, $suggestions, $idColumns = 1, $value = 0, $label = '', $displayLabelColumns = array( 0 ) ) {
+function getStaticSuggest( $name, $suggestions, $idColumns = 1, $value = 0, $label = '', $displayLabelColumns = [ 0 ] ) {
 	if ( $label == "" ) {
 		$label = '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;';
 	}
 
-	$result = Html::openElement('span', array( 'class' => 'suggest' ) );
+	$result = Html::openElement( 'span', [ 'class' => 'suggest' ] );
 
 	// the input that will contain the value selected with suggest.js
-	$inputOptions = array(
+	$inputOptions = [
 		'id' => $name,
 		'name' => $name,
 		'value' => $value,
 		'type' => 'hidden'
-	);
-	$result .= Html::element('input', $inputOptions);
-	$spanOptions = array(
+	];
+	$result .= Html::element( 'input', $inputOptions );
+	$spanOptions = [
 		'id' => $name . '-suggest-link',
 		'name' => $name . '-suggest-link',
 		'class' => 'suggest-link',
@@ -169,34 +171,36 @@ function getStaticSuggest( $name, $suggestions, $idColumns = 1, $value = 0, $lab
 		'offset' => 0,
 		'label-columns' => implode( ', ', $displayLabelColumns ),
 		'dataset' => $dc
-	);
+	];
 
 	if ( $idColumns > 1 ) {
 		$spanOptions['id-columns'] = $idColumns;
 	}
 
-	$result .= Html::rawElement('span', $spanOptions, $label);
+	$result .= Html::rawElement( 'span', $spanOptions, $label );
 
-	$result .= Html::closeElement('span');
+	$result .= Html::closeElement( 'span' );
 
 	return $result;
 }
 
-function getLanguageOptions( $languageIdsToExclude = array() ) {
+function getLanguageOptions( $languageIdsToExclude = [] ) {
 	$userLanguage = OwDatabaseAPI::getUserLanguage();
 	$idNameIndex = getLangNames( $userLanguage );
 
-	$result = array();
+	$result = [];
 
-	foreach ( $idNameIndex as $id => $name )
-		if ( !in_array( $id, $languageIdsToExclude ) )
+	foreach ( $idNameIndex as $id => $name ) {
+		if ( !in_array( $id, $languageIdsToExclude ) ) {
 			$result[$id] = $name;
+		}
+	}
 
 	return $result;
 }
 
 // @note unused	function
-function getLanguageSelect( $name, $languageIdsToExclude = array() ) {
+function getLanguageSelect( $name, $languageIdsToExclude = [] ) {
 	$userLanguageId = OwDatabaseAPI::getUserLanguageId();
 
 	return getSelect( $name, getLanguageOptions( $languageIdsToExclude ), $userLanguageId );
@@ -206,7 +210,7 @@ function getSubmitButton( $name, $value ) {
 	return '<input type="submit" name="' . $name . '" value="' . $value . '"/>';
 }
 
-function getOptionPanel( $fields, $action = '', $buttons = array( "show" => null ) ) {
+function getOptionPanel( $fields, $action = '', $buttons = [ "show" => null ] ) {
 	global
 		$wgTitle;
 
@@ -216,16 +220,17 @@ function getOptionPanel( $fields, $action = '', $buttons = array( "show" => null
 				'<table cellpadding="0" cellspacing="0">' .
 					'<input type="hidden" name="title" value="' . $wgTitle->getNsText() . ':' . htmlspecialchars( $wgTitle->getText() ) . '"/>';
 
-	if ( $action && $action != '' )
+	if ( $action && $action != '' ) {
 		$result .= '<input type="hidden" name="action" value="' . $action . '"/>';
+	}
 
-	foreach ( $fields as $caption => $field )
+	foreach ( $fields as $caption => $field ) {
 		$result .= '<tr><th>' . $caption . '</th><td class="option-field">' . $field . '</td></tr>';
+	}
 
 	$buttonHTML = "";
 
-	foreach ( $buttons as $name => $caption )
-	{
+	foreach ( $buttons as $name => $caption ) {
 		if ( $caption == null ) {
 			// Default parameter/value => Show
 			$caption = wfMessage( 'ow_show' )->text();
@@ -242,7 +247,7 @@ function getOptionPanel( $fields, $action = '', $buttons = array( "show" => null
 	return $result;
 }
 
-function getOptionPanelForFileUpload( $fields, $action = '', $buttons = array( "upload" => null ) ) {
+function getOptionPanelForFileUpload( $fields, $action = '', $buttons = [ "upload" => null ] ) {
 	global
 		$wgTitle;
 
@@ -252,16 +257,17 @@ function getOptionPanelForFileUpload( $fields, $action = '', $buttons = array( "
 				'<table cellpadding="0" cellspacing="0">' .
 					'<input type="hidden" name="title" value="' . $wgTitle->getNsText() . ':' . htmlspecialchars( $wgTitle->getText() ) . '"/>';
 
-	if ( $action && $action != '' )
+	if ( $action && $action != '' ) {
 		$result .= '<input type="hidden" name="action" value="' . $action . '"/>';
+	}
 
-	foreach ( $fields as $caption => $field )
+	foreach ( $fields as $caption => $field ) {
 		$result .= '<tr><th>' . $caption . '</th><td class="option-field">' . $field . '</td></tr>';
+	}
 
 	$buttonHTML = "";
 
-	foreach ( $buttons as $name => $caption )
-	{
+	foreach ( $buttons as $name => $caption ) {
 		if ( $caption == null ) {
 			// Default parameter/value => Upload
 			$caption = wfMessage( 'ow_upload' )->text();
@@ -285,7 +291,6 @@ class GenericForms {
 	public function __construct() {
 		$this->labelTemplate = '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;';
 	}
-
 
 	/**
 	 * @return HTML string for HTML tag select
@@ -363,8 +368,8 @@ class OmegaWikiForms extends GenericForms {
 	 * @param displayLabelColumns arr Override column titles
 	 * @param DataSet             str Override standard dataset
 	 *
-	*/
-	function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = '', $displayLabelColumns = array( 0 ), DataSet $dc = null ) {
+	 */
+	function getSuggest( $name, $query, $parameters = [], $value = 0, $label = '', $displayLabelColumns = [ 0 ], DataSet $dc = null ) {
 		global $wgScriptPath;
 
 		if ( is_null( $dc ) ) {
@@ -374,18 +379,18 @@ class OmegaWikiForms extends GenericForms {
 			$label = $this->labelTemplate;
 		}
 
-		$result = Html::openElement('span', array( 'class' => 'suggest' ) );
+		$result = Html::openElement( 'span', [ 'class' => 'suggest' ] );
 
 		// the input that will contain the value selected with suggest.js
-		$inputOptions = array(
+		$inputOptions = [
 			'id' => $name,
 			'name' => $name,
 			'value' => $value,
 			'type' => 'hidden'
-		);
-		$result .= Html::element('input', $inputOptions);
+		];
+		$result .= Html::element( 'input', $inputOptions );
 
-		$spanOptions = array(
+		$spanOptions = [
 			'id' => $name . '-suggest-link',
 			'name' => $name . '-suggest-link',
 			'class' => 'suggest-link',
@@ -394,9 +399,9 @@ class OmegaWikiForms extends GenericForms {
 			'offset' => 0,
 			'label-columns' => implode( ', ', $displayLabelColumns ),
 			'dataset' => $dc
-		);
+		];
 
-		foreach( $parameters as $parameter => $parameterValue ) {
+		foreach ( $parameters as $parameter => $parameterValue ) {
 			// parameters like level, definedMeaningId, annotationAttributeId, syntransId
 			$spanOptions[$parameter] = $parameterValue;
 		}

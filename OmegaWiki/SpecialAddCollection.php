@@ -1,8 +1,10 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
-require_once( "WikiDataAPI.php" ); // for bootstrapCollection
-require_once( "Utilities.php" );
+require_once "WikiDataAPI.php"; // for bootstrapCollection
+require_once "Utilities.php";
 
 class SpecialAddCollection extends SpecialPage {
 	function SpecialAddCollection() {
@@ -14,7 +16,6 @@ class SpecialAddCollection extends SpecialPage {
 	}
 
 	function execute( $par ) {
-
 		global $wgOut, $wgUser, $wgRequest;
 
 		$wgOut->setPageTitle( 'Add Collection' );
@@ -27,8 +28,8 @@ class SpecialAddCollection extends SpecialPage {
 		$dbr = wfGetDB( DB_MASTER );
 
 		if ( $wgRequest->getText( 'collection' ) ) {
-			require_once( 'WikiDataAPI.php' );
-			require_once( 'Transaction.php' );
+			require_once 'WikiDataAPI.php';
+			require_once 'Transaction.php';
 
 			$dc = $wgRequest->getText( 'dataset' );
 			$collectionName = $wgRequest->getText( 'collection' );
@@ -48,22 +49,22 @@ class SpecialAddCollection extends SpecialPage {
 		// which allows one to add lang-specific attributes (such as defining "part of speech" for that language
 		// so, it acts a bit like a class, but it is not possible to attach an object to that class manually
 		// this is done automatically when a word is known to belong to a language.
-		$collectionTypes = array(
+		$collectionTypes = [
 			'' => 'None',
 			'CLAS' => 'CLAS',
 			'LANG' => 'LANG',
 			'LEVL' => 'LEVL',
 			'MAPP' => 'MAPP',
 			'RELT' => 'RELT'
-		);
+		];
 		$wgOut->addHTML( getOptionPanel(
-			array(
+			[
 				'Collection name:' => getTextBox( 'collection' ),
 				'Language of name:' => getSuggest( 'language', 'language' ),
 				'Collection type:' => getSelect( 'type', $collectionTypes ),
 				'Dataset:' => getSelect( 'dataset', $datasetarray )
-			),
-			'', array( 'create' => wfMessage( 'ow_create' )->text() )
+			],
+			'', [ 'create' => wfMessage( 'ow_create' )->text() ]
 		) );
 	}
 
@@ -71,4 +72,3 @@ class SpecialAddCollection extends SpecialPage {
 		return 'omegawiki';	// message 'specialpages-group-omegawiki'
 	}
 }
-

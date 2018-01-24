@@ -1,11 +1,11 @@
 <?php
 /** @file
  */
-require_once( 'OmegaWikiAttributes.php' );
-require_once( 'OmegaWikiRecordSets.php' );
-require_once( 'OmegaWikiAttributes.php' );
-require_once( "Transaction.php" );
-require_once( "WikiDataAPI.php" );
+require_once 'OmegaWikiAttributes.php';
+require_once 'OmegaWikiRecordSets.php';
+require_once 'OmegaWikiAttributes.php';
+require_once "Transaction.php";
+require_once "WikiDataAPI.php";
 
 /**
  * A front end for the database information/ArrayRecord and any other information
@@ -21,7 +21,7 @@ class DefinedMeaningModel {
 	protected $viewInformation = null;
 	protected $definingExpression = null; # String
 	protected $dataset = null;
-	protected $syntrans = array();
+	protected $syntrans = [];
 	// optionally, a syntransId can be given to see syntrans annotations
 	// inside of the DM Editor (e.g. when viewing a DM inside an expression page).
 	protected $syntransId = null;
@@ -36,25 +36,26 @@ class DefinedMeaningModel {
 	 * can be "viewinformation" of type ViewInformation, or "dataset" of type DataSet
 	 * or "syntransid" which is an integer
 	 */
-	public function __construct( $definedMeaningId, $params = array() ) {
-
-		if ( !$definedMeaningId ) throw new Exception( "DM needs at least a DMID!" );
+	public function __construct( $definedMeaningId, $params = [] ) {
+		if ( !$definedMeaningId ) {
+			throw new Exception( "DM needs at least a DMID!" );
+		}
 		$this->setId( $definedMeaningId );
 
-		if ( array_key_exists ( "viewinformation", $params ) ) {
+		if ( array_key_exists( "viewinformation", $params ) ) {
 			$this->viewInformation = $params["viewinformation"];
 		} else {
 			$viewInformation = new ViewInformation();
 			$viewInformation->queryTransactionInformation = new QueryLatestTransactionInformation();
 		}
 
-		if ( array_key_exists ( "dataset", $params ) ) {
+		if ( array_key_exists( "dataset", $params ) ) {
 			$this->dataset = $params["dataset"];
 		} else {
 			$this->dataset = wdGetDataSetContext();
 		}
 
-		if ( array_key_exists ( "syntransid", $params ) ) {
+		if ( array_key_exists( "syntransid", $params ) ) {
 			$this->syntransId = $params["syntransid"];
 		}
 	}
@@ -73,7 +74,6 @@ class DefinedMeaningModel {
 	 *
 	 */
 	public function checkExistence( $searchAllDataSets = false, $switchContext = false ) {
-
 		global $wdCurrentContext;
 		$match = $this->checkExistenceInDataSet( $this->dataset );
 		if ( !is_null( $match ) ) {
@@ -81,7 +81,9 @@ class DefinedMeaningModel {
 			return $match;
 		} else {
 			$this->exists = false;
-			if ( !$searchAllDataSets ) return null;
+			if ( !$searchAllDataSets ) {
+				return null;
+			}
 		}
 		// Continue search
 		$datasets = wdGetDataSets();
@@ -100,17 +102,18 @@ class DefinedMeaningModel {
 		}
 		$this->exists = false;
 		return null;
-
 	}
 
 	public function CheckIfStub() {
 		$dataset = $this->getDataset();
 		$id = $this->getId();
-		if ( is_null( $dataset ) )
-			throw new Exception ( "DefinedMeaningModel->isStub: Dataset is null." );
-		if ( is_null( $id ) )
-			throw new Exception ( "DefinedMeaningModel->isStub: Id is null." );
-		require_once( "Copy.php" );
+		if ( is_null( $dataset ) ) {
+			throw new Exception( "DefinedMeaningModel->isStub: Dataset is null." );
+		}
+		if ( is_null( $id ) ) {
+			throw new Exception( "DefinedMeaningModel->isStub: Id is null." );
+		}
+		require_once "Copy.php";
 		return CopyTools::CheckIfStub( $dataset, $id );
 	}
 
@@ -123,20 +126,19 @@ class DefinedMeaningModel {
 	 *
 	 */
 	public function checkExistenceInDataSet( DataSet $dc ) {
-
 		$definingExpression = $this->definingExpression;
 		$id = $this->getId();
 		$dbr = wfGetDB( DB_REPLICA );
 		$dmRow = $dbr->selectRow(
-			array( 'dm' => "{$dc}_defined_meaning" ),
-			array(
+			[ 'dm' => "{$dc}_defined_meaning" ],
+			[
 				'defined_meaning_id',
 				'expression_id'
-			),
-			array(
+			],
+			[
 				'defined_meaning_id' => $this->id,
 				'dm.remove_transaction_id' => null
-			), __METHOD__
+			], __METHOD__
 		);
 
 		if ( !$dmRow || !$dmRow->defined_meaning_id ) {
@@ -147,7 +149,9 @@ class DefinedMeaningModel {
 		} else {
 			$expid = (int)$dmRow->expression_id;
 			$storedExpression = getExpression( $expid, $dc );
-			if ( is_null( $storedExpression ) ) return null;
+			if ( is_null( $storedExpression ) ) {
+				return null;
+			}
 			if ( $storedExpression->spelling != $definingExpression ) {
 				// Defining expression does not match, but check was requested!
 				return null;
@@ -163,7 +167,6 @@ class DefinedMeaningModel {
 	 * @return Boolean indicating success.
 	 */
 	public function loadRecord() {
-
 		if ( is_null( $this->exists ) ) {
 			$this->checkExistence();
 		}
@@ -180,7 +183,7 @@ class DefinedMeaningModel {
 
 		$record = new ArrayRecord( $o->definedMeaning->type );
 		$record->definedMeaningId = $id;
-		$record->definedMeaningCompleteDefiningExpression =  getDefiningExpressionRecord( $id );
+		$record->definedMeaningCompleteDefiningExpression = getDefiningExpressionRecord( $id );
 		$record->definition = getDefinedMeaningDefinitionRecord( $id, $view );
 		$record->classAttributes = getClassAttributesRecordSet( $id, $view );
 		// Kip: alternative definitions disabled until we find a use for that field
@@ -199,7 +202,7 @@ class DefinedMeaningModel {
 		$objectAttributesRecord = getObjectAttributesRecord( $id, $view, null, "DM" );
 		$record->definedMeaningAttributes = $objectAttributesRecord;
 		// what this does is not clear...
-//		applyPropertyToColumnFiltersToRecord( $record, $objectAttributesRecord, $view );
+		// applyPropertyToColumnFiltersToRecord( $record, $objectAttributesRecord, $view );
 
 		// if syntransAttributes should be displayed, get them
 		if ( $this->syntransId ) {
@@ -230,7 +233,6 @@ class DefinedMeaningModel {
 		# more here?
 		$expression->createNewInDatabase();
 
-
 		# shouldn't this stuff be protected?
 		$expressionId = $expression->id;
 		$languageId = $expression->languageId;
@@ -239,12 +241,10 @@ class DefinedMeaningModel {
 		$text = $this->getDefiningExpression();
 		$this->unhackDC(); // XXX
 
-
 		# here we assume the DM is not there yet.. not entirely wise
 		# in the long run.
 		echo "id: $expressionId lang: $languageId";
 		$newDefinedMeaningId = createNewDefinedMeaning( $expressionId, $languageId, $text );
-
 
 		getDefinedMeaningEditor( $this->viewInformation )->save(
 			$this->getIdStack( $newDefinedMeaningId ),
@@ -274,8 +274,8 @@ class DefinedMeaningModel {
 	 * @todo FIXME - work in progress
 	 */
 	public function saveWithinTransaction() {
-#		global
-# 			$wgTitle, $wgUser, $wgRequest;
+		# global
+		# 	$wgTitle, $wgUser, $wgRequest;
 
 		global
 			$wgUser, $wgOut;
@@ -286,7 +286,6 @@ class DefinedMeaningModel {
 			return false;
 		}
 		# $summary = $wgRequest->getText('summary');
-
 
 		// Insert transaction information into the DB
 		startNewTransaction( 0, "0.0.0.0", "copy operation" );
@@ -309,7 +308,6 @@ class DefinedMeaningModel {
 	 */
 	public function getRecord() {
 		if ( !$this->recordIsLoaded ) {
-
 			$this->hackDC(); // XXX don't do this at home
 			$this->loadRecord();
 			$this->unhackDC(); // XXX
@@ -330,9 +328,9 @@ class DefinedMeaningModel {
 
 	/** Attempts to save defining expression if it does not exist "here"
 	 * (This works right now because we override the datasetcontext in
-	 * SaveDM.php . dc should be handled more solidly) */
+	 * SaveDM.php . dc should be handled more solidly)
+	 */
 	protected function dupDefiningExpression() {
-
 		$record = $this->getRecord();
 		$expression = $record->expression;
 		$spelling = $expression->definedMeaningDefiningExpression;
@@ -358,7 +356,7 @@ class DefinedMeaningModel {
 		global
 			$wdCurrentContext;
 
-		$concept_map = array(); # while we're here, let's map the concepts.
+		$concept_map = []; # while we're here, let's map the concepts.
 
 		$from_dc = $this->getDataSet();
 		$oldId = $this->getId();
@@ -391,8 +389,9 @@ class DefinedMeaningModel {
 		global
 			$wdCurrentContext;
 
-		if ( $to_dataset == null )
+		if ( $to_dataset == null ) {
 			$to_dataset = $this->dataset;
+		}
 
 		$this->_saved_dc = $wdCurrentContext;
 		$wdCurrentContext = $to_dataset;
@@ -419,9 +418,9 @@ class DefinedMeaningModel {
 	 *
 	 */
 	public function getSyntransByLanguageCode( $languageCode, $fallbackCode = WLD_ENGLISH_LANG_WMKEY ) {
-
-		if ( array_key_exists( $languageCode, $this->syntrans ) )
+		if ( array_key_exists( $languageCode, $this->syntrans ) ) {
 		  return $this->syntrans[$languageCode];
+		}
 
 		$syntrans = getSpellingForLanguage( $this->getId(), $languageCode, $fallbackCode, $this->dataset );
 		if ( !is_null( $syntrans ) ) {
@@ -451,7 +450,6 @@ class DefinedMeaningModel {
 		return $this->titleObject;
 	}
 
-
 	/**
 	 * @return HTML link including the wrapping tag
 	 * @param String Language code of synonym/translation to show
@@ -460,8 +458,9 @@ class DefinedMeaningModel {
 	 */
 	public function getHTMLLink( $languageCode, $fallbackCode = WLD_ENGLISH_LANG_WMKEY ) {
 		$titleObject = $this->getTitleObject();
-		if ( $titleObject == null )
+		if ( $titleObject == null ) {
 			throw new Exception( "Need title object to create link" );
+		}
 
 		$dataset = $this->getDataset();
 		$prefix = $dataset->getPrefix();
@@ -469,8 +468,8 @@ class DefinedMeaningModel {
 		return Linker::link(
 			$titleObject,
 			$name,
-			array(),
-			array( 'dataset' => $prefix )
+			[],
+			[ 'dataset' => $prefix ]
 		);
 	}
 
@@ -485,9 +484,10 @@ class DefinedMeaningModel {
 	 */
 	public static function splitTitleText( $titleText ) {
 		$bracketPosition = strrpos( $titleText, "(" );
-		if ( $bracketPosition === false )
+		if ( $bracketPosition === false ) {
 			return null; # Defined Meaning ID is missing from title string
-		$rv = array();
+		}
+		$rv = [];
 		if ( $bracketPosition > 0 ) {
 			$definingExpression = substr( $titleText, 0, $bracketPosition - 1 );
 			$definingExpression = str_replace( "_", " ", $definingExpression );

@@ -1,11 +1,11 @@
 <?php
 /** @file
  */
-require_once( "forms.php" );
-require_once( "Transaction.php" );
-require_once( "OmegaWikiAttributes.php" );
-require_once( "WikiDataAPI.php" );
-require_once( "Utilities.php" );
+require_once "forms.php";
+require_once "Transaction.php";
+require_once "OmegaWikiAttributes.php";
+require_once "WikiDataAPI.php";
+require_once "Utilities.php";
 
 class DefaultWikidataApplication {
 	protected $title;
@@ -18,7 +18,7 @@ class DefaultWikidataApplication {
 	// The following member variables control some application specific preferences
 	protected $showClassicPageTitles = true;	// Show classic page titles instead of prettier page titles
 
-	protected $propertyToColumnFilters = array();
+	protected $propertyToColumnFilters = [];
 	protected $viewInformation;
 
 	// Show a panel to select expressions from available data-sets
@@ -82,7 +82,7 @@ class DefaultWikidataApplication {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
 		$ow_datasets = wfMessage( "ow_datasets" )->text();
-		$html = "<div class=\"dataset-panel\">"; ;
+		$html = "<div class=\"dataset-panel\">";
 		$html .= "<table border=\"0\"><tr><th class=\"dataset-panel-heading\">$ow_datasets</th></tr>";
 		$dataSets = wdGetDataSets();
 		foreach ( $dataSets as $dataset ) {
@@ -94,8 +94,8 @@ class DefaultWikidataApplication {
 			$slot = $active ? "$name" : Linker::link(
 				$this->title,
 				$name,
-				array(),
-				array( 'dataset' => $prefix )
+				[],
+				[ 'dataset' => $prefix ]
 			);
 			$html .= "<tr><td class=\"$class\">$slot</td></tr>";
 		}
@@ -154,8 +154,9 @@ class DefaultWikidataApplication {
 			return false;
 		}
 
-		if ( $wgRequest->getText( 'save' ) != '' )
+		if ( $wgRequest->getText( 'save' ) != '' ) {
 			$this->saveWithinTransaction();
+		}
 
 		$viewInformation = new ViewInformation();
 		$viewInformation->showRecordLifeSpan = false;
@@ -178,34 +179,35 @@ class DefaultWikidataApplication {
 
 		$title = $this->title->getPrefixedText();
 
-		if ( !$this->showClassicPageTitles )
+		if ( !$this->showClassicPageTitles ) {
 			$title = $this->title;
+		}
 
 		$wgOut->setPageTitle( wfMessage( "ow_history", $title )->text() );
 
 		# Plain filter for the lifespan info about each record
 		if ( isset( $_GET['show'] ) ) {
 			$this->showRecordLifeSpan = isset( $_GET["show-record-life-span"] );
-			$this->transaction = (int) $_GET["transaction"];
-		}
-		else {
+			$this->transaction = (int)$_GET["transaction"];
+		} else {
 			$this->showRecordLifeSpan = true;
 			$this->transaction = 0;
 		}
 
 		# Up to which transaction to view the data
-		if ( $this->transaction == 0 )
+		if ( $this->transaction == 0 ) {
 			$this->queryTransactionInformation = new QueryHistoryTransactionInformation();
-		else
+		} else {
 			$this->queryTransactionInformation = new QueryAtTransactionInformation( $this->transaction, $this->showRecordLifeSpan );
+		}
 
 		$transactionId = $wgRequest->getInt( 'transaction' );
 
 		$wgOut->addHTML( getOptionPanel(
-			array(
-				wfMessage( 'ow_history_transaction' )->text() => getSuggest( 'transaction', 'transaction', array(), $transactionId, getTransactionLabel( $transactionId ), array( 0, 2, 3 ) ),
+			[
+				wfMessage( 'ow_history_transaction' )->text() => getSuggest( 'transaction', 'transaction', [], $transactionId, getTransactionLabel( $transactionId ), [ 0, 2, 3 ] ),
 				wfMessage( 'ow_history_show_life_span' )->text() => getCheckBox( 'show-record-life-span', $this->showRecordLifeSpan )
-			),
+			],
 			'history'
 		) );
 
@@ -225,8 +227,9 @@ class DefaultWikidataApplication {
 
 		$title = $this->title->getPrefixedText();
 
-		if ( !$this->showClassicPageTitles )
+		if ( !$this->showClassicPageTitles ) {
 			$title = $this->title;
+		}
 
 		$wgOut->setPageTitle( $title );
 		$wgOut->setPageTitle( wfMessage( "editing", $title )->text() );
@@ -293,21 +296,20 @@ class DataSet {
 	}
 
 	public function setPrefix( $cp ) {
-
 		$fname = "DataSet::setPrefix";
 
 		$dbs = wfGetDB( DB_REPLICA );
 		$this->dataSetPrefix = $cp;
 		$res = $dbs->select(
 			"wikidata_sets",
-			array(
+			[
 				'set_prefix',
 				'set_fallback_name',
 				'set_dmid'
-			),
-			array(
+			],
+			[
 				'set_prefix' => $cp
-			), __METHOD__
+			], __METHOD__
 		);
 
 		// invalid unless proven valid :) ~he
@@ -317,14 +319,12 @@ class DataSet {
 			$this->setDefinedMeaningId( $row->set_dmid );
 			$this->setFallbackName( $row->set_fallback_name );
 		}
-
 	}
 
 	public function setDBprefix( $cp ) {
 		global $wgDBprefix;
 		$fname = "DataSet::setDBprefix";
 		$this->mwPrefix = $cp;
-
 	}
 
 	// Fetch!
@@ -334,7 +334,9 @@ class DataSet {
 			$userLanguage = $wgLang->getCode();
 			// @note any user/lang global problem here is solved by the getSpellingForUserLanguage() function.
 			$spelling = getSpellingForUserLanguage( $this->dmId, $userLanguage, 'en', $wdTermDBDataSet );
-			if ( $spelling ) return $spelling;
+			if ( $spelling ) {
+				return $spelling;
+			}
 		}
 		return $this->getFallbackName();
 	}

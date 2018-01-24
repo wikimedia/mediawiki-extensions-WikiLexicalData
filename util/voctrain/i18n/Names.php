@@ -3,7 +3,7 @@
  * @file
  * @ingroup Language
  */
-$languageNames = array(
+$languageNames = [
 	'aa' => 'Afar',			# Afar
 	'ab' => 'Аҧсуа',	# Abkhaz, should possibly add ' бысжѡа'
 	'af' => 'Afrikaans',	# Afrikaans
@@ -21,7 +21,7 @@ $languageNames = array(
 	'az' => 'Azərbaycan',	# Azerbaijani
 	'ba' => 'Башҡорт',	# Bashkir
 	'bar' => 'Boarisch',	# Bavarian (Austro-Bavarian and South Tyrolean)
-	'bat-smg' => 'Žemaitėška', # Samogitian 
+	'bat-smg' => 'Žemaitėška', # Samogitian
 	'be' => 'Беларуская',	# Belarusian ''or'' Byelarussian
 	'bg' => 'Български',	# Bulgarian
 	'bh' => 'भोजपुरी',	# Bihara
@@ -128,7 +128,7 @@ $languageNames = array(
 	'ko' => '한국어',	# Korean
 	'kr' => 'Kanuri',		# Kanuri (FIXME!)
 	'ks' => 'कश्मीरी - (كشميري)',	# Kashmiri
-	'ksh' => 'Ripoarisch', 	# Ripuarian 
+	'ksh' => 'Ripoarisch', 	# Ripuarian
 	'ku' => 'Kurdî / كوردي',	# Kurdish
 	'kv' => 'Коми', 	# Komi, cyrillic is common script but also written in latin script
 	'kw' => 'Kernewek',		# Cornish
@@ -147,7 +147,7 @@ $languageNames = array(
 	'lt' => 'Lietuvių',	# Lithuanian
 	'lv' => 'Latviešu',	# Latvian
 	'lzz' => 'Lazuri Nena',	# Laz
-	'map-bms' => 'Basa Banyumasan', # Banyumasan 
+	'map-bms' => 'Basa Banyumasan', # Banyumasan
 	'mg' => 'Malagasy',		# Malagasy
 	'mh' => 'Ebon',			# Marshallese
 	'mi' => 'Māori',	# Maori
@@ -283,5 +283,4 @@ $languageNames = array(
 	'zh-tw' => '中文(繁體)',	# Traditional
 	'zh-yue' => '粵語',	# Cantonese
 	'zu' => 'isiZulu'		# Zulu
-);
-?>
+];

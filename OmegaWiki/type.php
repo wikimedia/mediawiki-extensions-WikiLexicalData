@@ -1,15 +1,15 @@
 <?php
 
-require_once( 'languages.php' );
-require_once( 'forms.php' );
-require_once( 'Attribute.php' );
-require_once( 'Record.php' );
-require_once( 'Transaction.php' );
-require_once( 'WikiDataAPI.php' );
-require_once( 'Wikidata.php' );
-require_once( 'WikiDataGlobals.php' );
+require_once 'languages.php';
+require_once 'forms.php';
+require_once 'Attribute.php';
+require_once 'Record.php';
+require_once 'Transaction.php';
+require_once 'WikiDataAPI.php';
+require_once 'Wikidata.php';
+require_once 'WikiDataGlobals.php';
 
-function booleanAsText( $boolValue, $textValues = array("true" => "Yes", "false" => "No") ) {
+function booleanAsText( $boolValue, $textValues = [ "true" => "Yes", "false" => "No" ] ) {
 	if ( $boolValue ) {
 		return $textValues["true"];
 	} else {
@@ -26,29 +26,30 @@ function booleanAsHTML( $value ) {
 }
 
 /**
-* adds a parameter to a url, with "?" or "&" depending on
-* what is already in the url
-* $parameter is for example "dataset=$dc"
-*/
+ * adds a parameter to a url, with "?" or "&" depending on
+ * what is already in the url
+ * $parameter is for example "dataset=$dc"
+ */
 function addParameterToURL( &$url, $parameter ) {
-	if ( strpos($url , "?") ) {
-		$url .= "&" . $parameter ;
+	if ( strpos( $url, "?" ) ) {
+		$url .= "&" . $parameter;
 	} else {
 		$url .= "?" . $parameter;
 	}
 }
 
 function pageAsURL( $nameSpace, $title, $usedc = true ) {
-
 	global $wgArticlePath, $wdDefaultViewDataSet;
 
-	$myTitle = str_replace( "&", urlencode("&") , $title ) ;
-	$myTitle = str_replace( "?", urlencode("?") , $title ) ;
-	$url = str_replace( "$1", $nameSpace . ':' . $myTitle , $wgArticlePath );
+	$myTitle = str_replace( "&", urlencode( "&" ), $title );
+	$myTitle = str_replace( "?", urlencode( "?" ), $title );
+	$url = str_replace( "$1", $nameSpace . ':' . $myTitle, $wgArticlePath );
 
 	if ( $usedc ) {
 		$dc = wdGetDataSetContext();
-		if ( $dc == $wdDefaultViewDataSet ) return $url;
+		if ( $dc == $wdDefaultViewDataSet ) {
+			return $url;
+		}
 		addParameterToURL( $url, "dataset=$dc" );
 	}
 	return $url;
@@ -58,17 +59,17 @@ function spellingAsURL( $spelling, $lang = 0 ) {
 	global $wdDefaultViewDataSet;
 
 	$title = Title::makeTitle( NS_EXPRESSION, $spelling );
-	$query = array() ;
+	$query = [];
 
 	$dc = wdGetDataSetContext();
 	if ( $dc != $wdDefaultViewDataSet ) {
-		$query['dataset'] = $dc ;
+		$query['dataset'] = $dc;
 	}
 	if ( $lang != 0 ) {
-		$query['explang'] = $lang ;
+		$query['explang'] = $lang;
 	}
 
-	return $title->getLocalURL( $query ) ;
+	return $title->getLocalURL( $query );
 }
 
 function definedMeaningReferenceAsURL( $definedMeaningId, $definingExpression ) {
@@ -77,7 +78,7 @@ function definedMeaningReferenceAsURL( $definedMeaningId, $definingExpression ) 
 
 function definedMeaningIdAsURL( $definedMeaningId ) {
 	global $wgWldOwScriptPath;
-	require_once( $wgWldOwScriptPath . 'OmegaWikiDatabaseAPI.php' );
+	require_once $wgWldOwScriptPath . 'OmegaWikiDatabaseAPI.php';
 	return definedMeaningReferenceAsURL( $definedMeaningId, OwDatabaseAPI::definingExpression( $definedMeaningId ) );
 }
 
@@ -90,9 +91,9 @@ function spellingAsLink( $spelling, $lang = 0 ) {
 }
 
 function syntransAsLink( $syntransId, $spelling ) {
-	$url = spellingAsURL( $spelling ) ;
+	$url = spellingAsURL( $spelling );
 	addParameterToURL( $url, "syntrans=$syntransId" );
-	return createLink( $url, $spelling);
+	return createLink( $url, $spelling );
 }
 
 function definedMeaningReferenceAsLink( $definedMeaningId, $definingExpression, $label ) {
@@ -111,7 +112,7 @@ function languageIdAsText( $languageId ) {
 
 function collectionIdAsText( $collectionId ) {
 	if ( $collectionId > 0 ) {
-		require_once( 'OmegaWikiDatabaseAPI.php' );
+		require_once 'OmegaWikiDatabaseAPI.php';
 		return OwDatabaseAPI::getDefinedMeaningExpression( getCollectionMeaningId( $collectionId ) );
 	} else {
 		return "";
@@ -119,20 +120,19 @@ function collectionIdAsText( $collectionId ) {
 }
 
 function timestampAsText( $timestamp ) {
-	return
-		substr( $timestamp, 0, 4 ) . '-' . substr( $timestamp, 4, 2 ) . '-' . substr( $timestamp, 6, 2 ) . ' ' .
+	return substr( $timestamp, 0, 4 ) . '-' . substr( $timestamp, 4, 2 ) . '-' . substr( $timestamp, 6, 2 ) . ' ' .
 		substr( $timestamp, 8, 2 ) . ':' . substr( $timestamp, 10, 2 ) . ':' . substr( $timestamp, 12, 2 );
 }
 
 function definingExpressionAsLink( $definedMeaningId ) {
 	global $wgWldOwScriptPath;
-	require_once( $wgWldOwScriptPath . 'OmegaWikiDatabaseAPI.php' );
+	require_once $wgWldOwScriptPath . 'OmegaWikiDatabaseAPI.php';
 	return spellingAsLink( OwDatabaseAPI::definingExpression( $definedMeaningId ) );
 }
 
 function definedMeaningAsLink( $definedMeaningId ) {
 	if ( $definedMeaningId > 0 ) {
-		require_once( 'OmegaWikiDatabaseAPI.php' );
+		require_once 'OmegaWikiDatabaseAPI.php';
 		return createLink( definedMeaningIdAsURL( $definedMeaningId ), OwDatabaseAPI::getDefinedMeaningExpression( $definedMeaningId ) );
 	} else {
 		return "";

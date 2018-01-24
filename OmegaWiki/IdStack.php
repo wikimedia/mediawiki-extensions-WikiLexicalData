@@ -1,6 +1,6 @@
 <?php
 
-require_once( "Record.php" );
+require_once "Record.php";
 
 /**
  * Class IdStack is used to keep track of context during the rendering of
@@ -10,25 +10,26 @@ require_once( "Record.php" );
 
 class IdStack {
 	protected $keyStack;
-	protected $idStack = array();
+	protected $idStack = [];
 	protected $currentId;
-	protected $classStack = array();
+	protected $classStack = [];
 	protected $currentClass;
-	protected $definedMeaningIdStack = array(); 	// Used to keep track of which defined meaning is being rendered
-	protected $annotationAttributeStack = array();	// Used to keep track of which annotation attribute currently is being rendered
-	protected $classAttributesStack = array();		// Used to keep track of the class attributes that are currently in effect
+	protected $definedMeaningIdStack = []; 	// Used to keep track of which defined meaning is being rendered
+	protected $annotationAttributeStack = [];	// Used to keep track of which annotation attribute currently is being rendered
+	protected $classAttributesStack = [];		// Used to keep track of the class attributes that are currently in effect
 
 	public function __construct( $prefix ) {
-	 	$this->keyStack = new RecordStack();
-	 	$this->currentId = $prefix;
-	 	$this->currentClass = $prefix;
+		$this->keyStack = new RecordStack();
+		$this->currentId = $prefix;
+		$this->currentClass = $prefix;
 	}
 
 	protected function getKeyIds( Record $record ) {
-		$ids = array();
+		$ids = [];
 
-		foreach ( $record->getStructure()->getAttributes() as $attribute )
+		foreach ( $record->getStructure()->getAttributes() as $attribute ) {
 			$ids[] = $record->getAttributeValue( $attribute );
+		}
 
 		return $ids;
 	}
@@ -84,35 +85,36 @@ class IdStack {
 	public function getKeyStack() {
 		return $this->keyStack;
 	}
-	
+
 	public function pushDefinedMeaningId( $definedMeaningId ) {
 		$this->definedMeaningIdStack[] = $definedMeaningId;
 	}
-	
+
 	public function popDefinedMeaningId() {
 		return array_pop( $this->definedMeaningIdStack );
 	}
-	
+
 	public function getDefinedMeaningId() {
 		$stackSize = count( $this->definedMeaningIdStack );
-		
-		if ( $stackSize > 0 )
+
+		if ( $stackSize > 0 ) {
 			return $this->definedMeaningIdStack[$stackSize - 1];
-		else
+		} else {
 			throw new Exception( "There is no defined meaning defined in the current context" );
+		}
 	}
 
 	public function pushAnnotationAttribute( Attribute $annotationAttribute ) {
 		$this->annotationAttributeStack[] = $annotationAttribute;
 	}
-	
+
 	public function popAnnotationAttribute() {
 		return array_pop( $this->annotationAttributeStack );
 	}
-	
+
 	public function getAnnotationAttribute() {
 		$stackSize = count( $this->annotationAttributeStack );
-		
+
 		if ( $stackSize > 0 ) {
 			return $this->annotationAttributeStack[$stackSize - 1];
 		} else {
@@ -123,14 +125,14 @@ class IdStack {
 	public function pushClassAttributes( ClassAttributes $classAttributes ) {
 		$this->classAttributesStack[] = $classAttributes;
 	}
-	
+
 	public function popClassAttributes() {
 		return array_pop( $this->classAttributesStack );
 	}
-	
+
 	public function getClassAttributes() {
 		$stackSize = count( $this->classAttributesStack );
-		
+
 		if ( $stackSize > 0 ) {
 			return $this->classAttributesStack[$stackSize - 1];
 		} else {
@@ -139,21 +141,21 @@ class IdStack {
 	}
 
 	public function __tostring() {
-		return "IdStack(" . $this->getId() . ")\n" ;
+		return "IdStack(" . $this->getId() . ")\n";
 	}
 }
 
 class RecordStack {
-	protected $stack = array();
-	
+	protected $stack = [];
+
 	public function push( Record $record ) {
 		$this->stack[] = $record;
 	}
-	
+
 	public function pop() {
 		return array_pop( $this->stack );
 	}
-	
+
 	public function peek( $level ) {
 		return $this->stack[count( $this->stack ) - $level - 1];
 	}

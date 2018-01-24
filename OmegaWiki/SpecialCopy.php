@@ -1,8 +1,10 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 /**
  * A Special Page extension to copy defined meanings between datasets.
- * 
+ *
  * Copied over from SpecialConceptMapping.
  * User Interface temporarily retained (but currently flawed)
  * Web API will be implemented
@@ -16,23 +18,21 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  # @author Alan Smithee <Alan.Smithee@brown.paper.bag> (if code quality improves, may yet claim)
  * @license GPLv2 or later.
  */
-
-require_once( "WikiDataAPI.php" );
-require_once( "Utilities.php" );
-require_once( "Copy.php" );
+require_once "WikiDataAPI.php";
+require_once "Utilities.php";
+require_once "Copy.php";
 
 class SpecialCopy extends UnlistedSpecialPage {
 
 	function __construct() {
 		parent::__construct( 'Copy' );
 	}
-	
+
 	function execute( $par ) {
 		global $wgOut, $wgRequest, $wgUser, $wdTermDBDataSet;
 
 		# $wgOut->setPageTitle("Special:Copy");
 		if ( !$wgUser->isAllowed( 'wikidata-copy' ) ) {
-
 			$wgOut->addHTML( wfMessage( "ow_Permission_denied" )->text() );
 			return false;
 		}
@@ -54,13 +54,11 @@ class SpecialCopy extends UnlistedSpecialPage {
 
 	/** reserved for ui elements */
 	protected function ui() {
-
-		global $wgOut ;
+		global $wgOut;
 		$wgOut->addWikiText( wfMessage( "ow_no_action_specified" )->text() );
-
 	}
 
-	/** display a helpful help message. 
+	/** display a helpful help message.
 	 * (if desired)
 	 */
 	protected function help() {
@@ -68,14 +66,14 @@ class SpecialCopy extends UnlistedSpecialPage {
 		$wgOut->addWikiText( "<h2>Help</h2>" );
 		$wgOut->addWikiText( wfMessage( "ow_copy_help" )->text() );
 	}
-	
-	/**read in and partially validate parameters,
+
+	/** read in and partially validate parameters,
 	 * then call _doCopy()
 	 */
 	protected function copy_by_param() {
 		global
 			$wgRequest, $wgOut;
-		
+
 		$dmid_dirty = $wgRequest->getText( "dmid" );
 		$dc1_dirty = $wgRequest->getText( "dc1" );
 		$dc2_dirty = $wgRequest->getText( "dc2" );
@@ -95,15 +93,17 @@ class SpecialCopy extends UnlistedSpecialPage {
 			$abort = true;
 		}
 
-		if ( $abort )
+		if ( $abort ) {
 			return;
+		}
 
 		# seems ok so far, let's try and copy.
 		$success = $this->_doCopy( $dmid_dirty, $dc1_dirty, $dc2_dirty );
-		if ( $success )
+		if ( $success ) {
 			$this->autoredir();
-		else
+		} else {
 			$wgOut->addWikiText( wfMessage( "ow_copy_unsuccessful" )->text() );
+		}
 	}
 
 	/** automatically redirects to another page.
@@ -128,13 +128,12 @@ class SpecialCopy extends UnlistedSpecialPage {
 		# $wgOut->addHTML("<a href=\"$url\">$url</a>");
 	}
 
-
 	/* Using Copy.php; perform a copy of a defined meaning from one dataset to another,
 	   provided the user has permission to do so,*/
 	protected function _doCopy( $dmid_dirty, $dc1_dirty, $dc2_dirty ) {
 		global
 			$wgCommunityEditPermission, $wgOut, $wgUser, $wgCommunity_dc;
-		
+
 		# escape parameters
 		$dmid = mysql_real_escape_string( $dmid_dirty );
 		$dc1 = mysql_real_escape_string( $dc1_dirty );
@@ -151,12 +150,12 @@ class SpecialCopy extends UnlistedSpecialPage {
 		$dmc = new DefinedMeaningCopier( $dmid, $dc1, $dc2 );
 		$dmc->dup();
 
-		# For purposes of current "edit copy", 
+		# For purposes of current "edit copy",
 		# having the dm be already_there() is ok.
 		# (hence commented out)
 		# if ($dmc->already_there() ) {
-		#	$wgOut->addHTML(wfMessage("ow_already_there")->text());
-		#	return false;
+		# $wgOut->addHTML(wfMessage("ow_already_there")->text());
+		# return false;
 		# }
 
 		return true; # seems everything went ok.

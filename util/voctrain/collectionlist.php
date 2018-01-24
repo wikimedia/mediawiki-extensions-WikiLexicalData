@@ -1,6 +1,6 @@
 <?php
 
-require_once( "functions.php" );
+require_once "functions.php";
 
 class CollectionList {
 	private $list;
@@ -11,16 +11,17 @@ class CollectionList {
 	}
 
 	public function fetch() {
-		if ( $this->fetcher === null )
+		if ( $this->fetcher === null ) {
 			throw new Exception( "not initialized" );
-		
+		}
+
 		$xmlString = $this->fetcher->getCollectionListXML_asString();
 		$xml = simpleXML_load_string( $xmlString );
 		$this->list = $xml->xpath( "//collection" );
 	}
 
 	/** returns a list of collections... in simplexml format
-	 * This list is currently unchecked. 
+	 * This list is currently unchecked.
 	 * items are id, name (and name->dmid), and count
 	 */
 	public function getList() {
@@ -28,7 +29,3 @@ class CollectionList {
 	}
 
 }
-
-
-
-?>

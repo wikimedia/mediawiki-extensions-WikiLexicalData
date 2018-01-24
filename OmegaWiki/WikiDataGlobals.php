@@ -11,33 +11,33 @@ define( 'WLD_ENGLISH_LANG_WMKEY', "en" );
 
 // Achtung: the following defines should match the strings used in
 // the Javascript files
-define ( 'WLD_ALTERNATIVE_DEF', "altDef" );
-define ( 'WLD_ALTERNATIVE_DEFINITIONS', "altDefs" );
-define ( 'WLD_CLASS_ATTRIBUTES', "classAtt" );
-define ( 'WLD_CLASS_MEMBERSHIP', "classMembers" );
-define ( 'WLD_COLLECTION_MEMBERSHIP', "colMembers" );
-define ( 'WLD_DEFINED_MEANING', "dm" );
-define ( 'WLD_DM_ATTRIBUTES', "dmAtt" );
-define ( 'WLD_DEFINITION', "def" );
-define ( 'WLD_EXPRESSION', "exp" );
-define ( 'WLD_EXPRESSION_APPROX_MEANINGS', "approx" );
-define ( 'WLD_EXPRESSION_EXACT_MEANINGS', "exact" );
-define ( 'WLD_EXPRESSION_MEANINGS', "meanings" );
-define ( 'WLD_IDENTICAL_MEANING', "identMeaning" );
-define ( 'WLD_INCOMING_RELATIONS', "incomingRel" );
-define ( 'WLD_LINK_ATTRIBUTE', "linkAtt" );
-define ( 'WLD_LINK_ATTRIBUTE_VALUES', "linkAttVal" );
-define ( 'WLD_OBJECT_ATTRIBUTES', "objAtt" );
-define ( 'WLD_OPTION_ATTRIBUTE', "optnAtt" );
-define ( 'WLD_OPTION_ATTRIBUTE_OPTION', "optnAttOptn" ); // WLD_OPTION_ATTRIBUTE . WLD_OPTION_SUFFIX
-define ( 'WLD_OPTION_ATTRIBUTE_VALUES', "optnAttVal" ); // WLD_OPTION_ATTRIBUTE . "Val"
-define ( 'WLD_OPTION_SUFFIX', "Optn" );
-define ( 'WLD_OTHER_OBJECT', "otherObj" );
-define ( 'WLD_RELATIONS', "rel" );
-define ( 'WLD_SYNONYMS_TRANSLATIONS', "syntrans" );
-define ( 'WLD_SYNT_ATTRIBUTES', "syntAtt" );
-define ( 'WLD_TEXT_ATTRIBUTES_VALUES', "txtAttVal" );
-define ( 'WLD_TRANSLATED_TEXT', "transl" );
+define( 'WLD_ALTERNATIVE_DEF', "altDef" );
+define( 'WLD_ALTERNATIVE_DEFINITIONS', "altDefs" );
+define( 'WLD_CLASS_ATTRIBUTES', "classAtt" );
+define( 'WLD_CLASS_MEMBERSHIP', "classMembers" );
+define( 'WLD_COLLECTION_MEMBERSHIP', "colMembers" );
+define( 'WLD_DEFINED_MEANING', "dm" );
+define( 'WLD_DM_ATTRIBUTES', "dmAtt" );
+define( 'WLD_DEFINITION', "def" );
+define( 'WLD_EXPRESSION', "exp" );
+define( 'WLD_EXPRESSION_APPROX_MEANINGS', "approx" );
+define( 'WLD_EXPRESSION_EXACT_MEANINGS', "exact" );
+define( 'WLD_EXPRESSION_MEANINGS', "meanings" );
+define( 'WLD_IDENTICAL_MEANING', "identMeaning" );
+define( 'WLD_INCOMING_RELATIONS', "incomingRel" );
+define( 'WLD_LINK_ATTRIBUTE', "linkAtt" );
+define( 'WLD_LINK_ATTRIBUTE_VALUES', "linkAttVal" );
+define( 'WLD_OBJECT_ATTRIBUTES', "objAtt" );
+define( 'WLD_OPTION_ATTRIBUTE', "optnAtt" );
+define( 'WLD_OPTION_ATTRIBUTE_OPTION', "optnAttOptn" ); // WLD_OPTION_ATTRIBUTE . WLD_OPTION_SUFFIX
+define( 'WLD_OPTION_ATTRIBUTE_VALUES', "optnAttVal" ); // WLD_OPTION_ATTRIBUTE . "Val"
+define( 'WLD_OPTION_SUFFIX', "Optn" );
+define( 'WLD_OTHER_OBJECT', "otherObj" );
+define( 'WLD_RELATIONS', "rel" );
+define( 'WLD_SYNONYMS_TRANSLATIONS', "syntrans" );
+define( 'WLD_SYNT_ATTRIBUTES', "syntAtt" );
+define( 'WLD_TEXT_ATTRIBUTES_VALUES', "txtAttVal" );
+define( 'WLD_TRANSLATED_TEXT', "transl" );
 
 # Global context override. This is an evil hack to allow saving, basically.
 $wdCurrentContext = null;
@@ -45,7 +45,7 @@ $wdCurrentContext = null;
 $wgIso639_3CollectionId = null;
 
 // paths
-global $wgWldScriptPath, $wgWldOwScriptPath, $wgWldDownloadScriptPath, $wgWldIncludesScriptPath, $wgWldSpecialsScriptPath, $wgWldAPIScriptPath, $wgWldSetupScriptPath, $wgWldJobsScriptPath, $wgWldDbScripts ;
+global $wgWldScriptPath, $wgWldOwScriptPath, $wgWldDownloadScriptPath, $wgWldIncludesScriptPath, $wgWldSpecialsScriptPath, $wgWldAPIScriptPath, $wgWldSetupScriptPath, $wgWldJobsScriptPath, $wgWldDbScripts;
 $wgWldScriptPath = __DIR__ . '/';
 $wgWldScriptPath = str_replace( '\\', '/', $wgWldScriptPath );
 $wgWldScriptPath = str_replace( 'OmegaWiki/', '', $wgWldScriptPath );
@@ -70,7 +70,7 @@ $wgWldDbScripts          = $wgWldIncludesScriptPath . 'updateScripts/';
 $wgWldSortingAnnotationDM = null;
 
 // Defined meaning editor
-$wdDefinedMeaningAttributesOrder = array(
+$wdDefinedMeaningAttributesOrder = [
 	WLD_SYNT_ATTRIBUTES,
 	WLD_DEFINITION,
 	// Kip: alternative definitions disabled until we find a use for that field
@@ -81,7 +81,7 @@ $wdDefinedMeaningAttributesOrder = array(
 	WLD_CLASS_ATTRIBUTES,
 	WLD_COLLECTION_MEMBERSHIP,
 	WLD_INCOMING_RELATIONS
-);
+];
 
 // Page titles
 $wgWldUseExpressionPageTitlePrefix = true;	# malafaya: Use the expression prefix "Multiple meanings:" from message ow_Multiple_meanings
@@ -104,7 +104,6 @@ $wgWldSearchWordsDefault = true;
 $wgWldSearchExternalIDOption = false;
 $wgWldSearchWordsOption = false;
 
-
 /**
  * $wgPropertyToColumnFilters is an array of property to column filters
  *
@@ -114,20 +113,19 @@ $wgWldSearchWordsOption = false;
  *   )
  *
  */
-$wgPropertyToColumnFilters = array();
-
+$wgPropertyToColumnFilters = [];
 
 /**
-* A Wikidata application can manage multiple data sets.
-* The current "context" is dependent on multiple factors:
-* - the URL can have a dataset parameter
-* - there is a global default
-* - there can be defaults for different user groups
-* @param $dc	optional, for convenience.
-*		if the dataset context is already set, will
+ * A Wikidata application can manage multiple data sets.
+ * The current "context" is dependent on multiple factors:
+ * - the URL can have a dataset parameter
+ * - there is a global default
+ * - there can be defaults for different user groups
+ * @param $dc	optional, for convenience.
+ * 		if the dataset context is already set, will
 		return that value, else will find the relevant value
-* @return prefix (without underscore)
-**/
+ * @return prefix (without underscore)
+ */
 function wdGetDataSetContext( $dc = null ) {
 	global $wgRequest, $wdDefaultViewDataSet, $wdGroupDefaultView, $wgUser,
 		$wdCurrentContext;
@@ -161,13 +159,12 @@ function wdGetDataSetContext( $dc = null ) {
 		return $datasets[$pref];
 	}
 	# Group preference
-	elseif ( !empty( $trydefault ) && array_key_exists( $trydefault, $datasets ) ) {
+ elseif ( !empty( $trydefault ) && array_key_exists( $trydefault, $datasets ) ) {
 		return $datasets[$trydefault];
 	} else {
 		return $datasets[$wdDefaultViewDataSet];
 	}
 }
-
 
 /**
  * Load dataset definitions from the database if necessary.
@@ -183,10 +180,9 @@ function &wdGetDataSets() {
 	if ( empty( $datasets ) ) {
 		// Load defs from the DB
 		$dbs = wfGetDB( DB_REPLICA );
-		$res = $dbs->select( 'wikidata_sets', array( 'set_prefix' ) );
+		$res = $dbs->select( 'wikidata_sets', [ 'set_prefix' ] );
 
 		while ( $row = $dbs->fetchObject( $res ) ) {
-
 			$dc = new DataSet();
 			$dc->setPrefix( $row->set_prefix );
 			$dc->setDBprefix( $wgDBprefix );

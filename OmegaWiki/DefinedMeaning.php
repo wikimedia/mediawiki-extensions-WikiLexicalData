@@ -1,11 +1,11 @@
 <?php
 /** @file
  */
-require_once( 'IdStack.php' );
-require_once( 'Wikidata.php' );
-require_once( 'OmegaWikiRecordSets.php' );
-require_once( 'OmegaWikiEditors.php' );
-require_once( 'DefinedMeaningModel.php' );
+require_once 'IdStack.php';
+require_once 'Wikidata.php';
+require_once 'OmegaWikiRecordSets.php';
+require_once 'OmegaWikiEditors.php';
+require_once 'DefinedMeaningModel.php';
 
 /**
  * @brief The Defined Meaning Namespace class
@@ -25,10 +25,10 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 		// WikiData compatibility. Using title with dmid only
 		if ( is_null( $dmInfo ) && is_numeric( $titleText ) ) {
-			$dmInfo = array(
+			$dmInfo = [
 				"expression" => null,
 				"id" => $titleText
-			);
+			];
 		}
 
 		$dmNumber = $dmInfo["id"];
@@ -39,12 +39,11 @@ class DefinedMeaning extends DefaultWikidataApplication {
 			return false;
 		}
 		parent::view();
-		$this->definedMeaningModel = new DefinedMeaningModel( $dmNumber, array( "viewinformation" => $this->viewInformation ) );
+		$this->definedMeaningModel = new DefinedMeaningModel( $dmNumber, [ "viewinformation" => $this->viewInformation ] );
 
 		if ( !empty( $dmInfo["expression"] ) ) {
 			$this->definedMeaningModel->setDefiningExpression( $dmInfo["expression"] );
 		}
-
 
 		// check that the constructed DM actually exists in the database
 		$match = $this->definedMeaningModel->checkExistence( true, true );
@@ -86,14 +85,14 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		}
 
 		$this->outputViewHeader();
-// concept panel is annoying and useless
-//		$wgOut->addHTML( $this->getConceptPanel() );
-		$expressionTranslated = OwDatabaseAPI::getDefinedMeaningExpression( $this->definedMeaningModel->getId() ) ;
+		// concept panel is annoying and useless
+		// $wgOut->addHTML( $this->getConceptPanel() );
+		$expressionTranslated = OwDatabaseAPI::getDefinedMeaningExpression( $this->definedMeaningModel->getId() );
 
 		// @note Since the defined meaning expression can be misleading and
 		// the software is now able to redirect using the dm id only, it seems logical
 		// to replace the full dm title and replace it with the id. ~he
-		$wgOut->setPageTitle( "DefinedMeaning:{$dmInfo['id']} - $expressionTranslated" ) ;
+		$wgOut->setPageTitle( "DefinedMeaning:{$dmInfo['id']} - $expressionTranslated" );
 
 		$editor = getDefinedMeaningEditor( $this->viewInformation );
 		$idStack = $this->getIdStack( $this->definedMeaningModel->getId() );
@@ -105,7 +104,9 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		global
 			$wgOut, $wgTitle;
 
-		if ( !parent::edit() ) return false;
+		if ( !parent::edit() ) {
+			return false;
+		}
 
 		$definedMeaningId = $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
 
@@ -116,7 +117,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		}
 
 		$this->outputEditHeader();
-		$dmModel = new DefinedMeaningModel( $definedMeaningId, array( "viewinformation" => $this->viewInformation ) );
+		$dmModel = new DefinedMeaningModel( $definedMeaningId, [ "viewinformation" => $this->viewInformation ] );
 
 		// check that the constructed DM actually exists in the database
 		$match = $dmModel->checkExistence( true, true );
@@ -140,7 +141,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 	}
 
 	public function history() {
-		global $wgOut, $wgTitle ;
+		global $wgOut, $wgTitle;
 
 		$definedMeaningId = $this->getDefinedMeaningIdFromTitle( $wgTitle->getText() );
 		// Title doesn't have an ID in it (or ID 0)
@@ -151,7 +152,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 		parent::history();
 
-		$dmModel = new DefinedMeaningModel( $definedMeaningId, array ( "viewinformation" => $this->viewInformation ) );
+		$dmModel = new DefinedMeaningModel( $definedMeaningId, [ "viewinformation" => $this->viewInformation ] );
 
 		// check that the constructed DM actually exists in the database
 		$match = $dmModel->checkExistence( true, true );
@@ -179,22 +180,20 @@ class DefinedMeaning extends DefaultWikidataApplication {
 			return false;
 		}
 
-		$dmModel = new DefinedMeaningModel( $definedMeaningId, array ( "viewinformation" => $this->viewInformation ) );
+		$dmModel = new DefinedMeaningModel( $definedMeaningId, [ "viewinformation" => $this->viewInformation ] );
 
 		getDefinedMeaningEditor( $this->viewInformation )->save(
 			$this->getIdStack( $definedMeaningId ),
 			$dmModel->getRecord()
 		);
-
 	}
 
 	public function getTitle() {
 		global $wgTitle;
-		return $wgTitle->getFullText() ;
+		return $wgTitle->getFullText();
 	}
 
 	protected function getIdStack( $definedMeaningId ) {
-
 		$o = OmegaWikiAttributes::getInstance();
 
 		$definedMeaningIdStructure = new Structure( $o->definedMeaningId );
@@ -233,7 +232,8 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$dc = wdGetDataSetContext();
 		$ow_conceptpanel = wfMessage( "ow_concept_panel" )->text();
 
-		$html = "<div class=\"dataset-panel\">"; ;
+		$html = "<div class=\"dataset-panel\">";
+;
 		$html .= "<table border=\"0\"><tr><th class=\"dataset-panel-heading\">$ow_conceptpanel</th></tr>";
 		$meanings = getDefinedMeaningDataAssociatedByConcept( $dmId, $dc );
 		if ( $meanings ) {
@@ -247,8 +247,8 @@ class DefinedMeaning extends DefaultWikidataApplication {
 				$slot = $active ? "$name" : Linker::link(
 					$dm->getTitleObject(),
 					$name,
-					array(),
-					array( 'dataset' => $prefix )
+					[],
+					[ 'dataset' => $prefix ]
 				);
 				$html .= "<tr><td class=\"$class\">$slot</td></tr>";
 			}
@@ -260,8 +260,8 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$cmlink = Linker::link(
 			$cmtitle,
 			"<small>" . wfMessage( "ow_add_concept_link" )->text() . "</small>",
-			array(),
-			array( "set_$dc" => $dmId, 'suppressWarnings' => true )
+			[],
+			[ "set_$dc" => $dmId, 'suppressWarnings' => true ]
 		);
 		$html .= "<tr><td>$cmlink</td></tr>\n";
 		if ( $wdShowCopyPanel ) {
@@ -277,7 +277,6 @@ class DefinedMeaning extends DefaultWikidataApplication {
 	 * actually doesn't have permission to edit.
 	 */
 	protected function getCopyPanel() {
-
 		# mostly same code as in SpecialAddCollection... possibly might
 		# make a nice separate function
 
@@ -327,7 +326,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 	/** safety net to ensure that the OmegaWiki Database API is called.
 	 */
 	protected function requireDBAPI() {
-		require_once( 'OmegaWikiDatabaseAPI.php' );
+		require_once 'OmegaWikiDatabaseAPI.php';
 	}
 }
 
@@ -336,7 +335,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 class DefinedMeanings {
 
 	public function __construct() {
-		require_once( 'OmegaWikiDatabaseAPI.php' );
+		require_once 'OmegaWikiDatabaseAPI.php';
 	}
 
 	/** @brief Returns the spelling of an expression used as
@@ -359,16 +358,16 @@ class DefinedMeanings {
 		// no exp.remove_transaction_id because definingExpression could have been deleted
 		// but is still needed to form the DM page title.
 		$spelling = $dbr->selectField(
-			array(
+			[
 				'dm' => "{$dc}_defined_meaning",
 				'exp' => "{$dc}_expression"
-			),
+			],
 			'spelling',
-			array(
+			[
 				'dm.defined_meaning_id' => $definedMeaningId,
 				'exp.expression_id = dm.expression_id',
 				'dm.remove_transaction_id' => null
-			), __METHOD__
+			], __METHOD__
 		);
 
 		if ( $spelling ) {
@@ -378,7 +377,7 @@ class DefinedMeanings {
 	}
 
 	/** @brief spelling via the defined meaning and/or language id
-	 * @return spelling. empty string if not exists
+	 * @return spelling empty string if not exists
 	 * @see use OwDatabaseAPI::getDefinedMeaningSpelling instead
 	 */
 	public static function getSpelling( $definedMeaning, $languageId = null, $dc = null ) {
@@ -387,17 +386,17 @@ class DefinedMeanings {
 		}
 		$dbr = wfGetDB( DB_REPLICA );
 
-		$tables = array(
-				'exp' =>"{$dc}_expression",
-				'synt' => "{$dc}_syntrans"
-		);
+		$tables = [
+			'exp' => "{$dc}_expression",
+			'synt' => "{$dc}_syntrans"
+		];
 		$vars = 'spelling';
-		$conds = array(
-				"synt.defined_meaning_id" => $definedMeaning,
-				"exp.expression_id = synt.expression_id",
-				'exp.remove_transaction_id' => null,
-				"synt.remove_transaction_id" => null
-		);
+		$conds = [
+			"synt.defined_meaning_id" => $definedMeaning,
+			"exp.expression_id = synt.expression_id",
+			'exp.remove_transaction_id' => null,
+			"synt.remove_transaction_id" => null
+		];
 		if ( $languageId ) {
 			$conds['exp.language_id'] = $languageId;
 		}
@@ -460,17 +459,23 @@ class DefinedMeanings {
 		$definedMeaningId = $dbr->selectRow(
 			"{$dc}_defined_meaning",
 			'defined_meaning_id',
-			array(
+			[
 				'meaning_text_tcid' => $translatedContentId
-			), __METHOD__
+			], __METHOD__
 		);
 
 		if ( $definedMeaningId ) {
-			if ( $test ) { var_dump( $definedMeaningId ); die; }
+			if ( $test ) {
+				var_dump( $definedMeaningId );
+				die;
+			}
 			return $definedMeaningId;
 		}
-		if ( $test ) { echo 'array()'; die; }
-		return array();
+		if ( $test ) {
+			echo 'array()';
+			die;
+		}
+		return [];
 	}
 
 	/**
@@ -482,48 +487,48 @@ class DefinedMeanings {
 	 * @return an array of "Defined Meaning Id" objects for a language
 	 * @return if not exists, null
 	 */
-	public static function getLanguageIdDefinedMeaningId( $languageId, $options = array(), $dc = null ) {
+	public static function getLanguageIdDefinedMeaningId( $languageId, $options = [], $dc = null ) {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
 
 		if ( isset( $options['ORDER BY'] ) ) {
-			$cond['ORDER BY']= $options['ORDER BY'];
+			$cond['ORDER BY'] = $options['ORDER BY'];
 		} else {
-			$cond['ORDER BY']= 'defined_meaning_id';
+			$cond['ORDER BY'] = 'defined_meaning_id';
 		}
 
 		if ( isset( $options['LIMIT'] ) ) {
-			$cond['LIMIT']= $options['LIMIT'];
+			$cond['LIMIT'] = $options['LIMIT'];
 		}
 		if ( isset( $options['OFFSET'] ) ) {
-			$cond['OFFSET']= $options['OFFSET'];
+			$cond['OFFSET'] = $options['OFFSET'];
 		}
 
 		$cond[] = 'DISTINCT';
 
 		$queryResult = $dbr->select(
-			array(
+			[
 				'synt' => "{$dc}_syntrans",
 				'exp' => "{$dc}_expression"
-			),
+			],
 			'defined_meaning_id',
-			array(
+			[
 				'synt.expression_id = exp.expression_id',
 				'language_id' => $languageId,
 				'synt.remove_transaction_id' => null,
 				'exp.remove_transaction_id' => null
-			),
+			],
 			__METHOD__,
 			$cond
 		);
 
-		$definedMeaningId = array();
+		$definedMeaningId = [];
 		foreach ( $queryResult as $dm ) {
 			$definedMeaningId[] = $dm->defined_meaning_id;
 		}
-		$queryResult = array();
+		$queryResult = [];
 
 		if ( $definedMeaningId ) {
 			return $definedMeaningId;
@@ -532,9 +537,9 @@ class DefinedMeanings {
 	}
 
 	/** @brief Returns one spelling of an expression corresponding to a given DM
-	 *	- in a given language if it exists
-	 *	- or else in English
-	 *	- or else in any language
+	 * 	- in a given language if it exists
+	 * 	- or else in English
+	 * 	- or else in any language
 	 *
 	 * @param definedMeaningId int
 	 * @return spelling str
@@ -548,17 +553,17 @@ class DefinedMeanings {
 		$spelling = '';
 
 		if ( $userLanguageId > 0 ) {
-			$spelling = DefinedMeanings::getExpressionForLanguage( $definedMeaningId, $userLanguageId );
+			$spelling = self::getExpressionForLanguage( $definedMeaningId, $userLanguageId );
 		}
 
 		list( $definingExpressionId, $definingExpression, $definingExpressionLanguage ) = definingExpressionRow( $definedMeaningId );
 
 		if ( $spelling == "" ) {
 			// if no spelling exists for the specified language : look for an spelling in English
-			$spelling = DefinedMeanings::getExpressionForLanguage( $definedMeaningId, WLD_ENGLISH_LANG_ID );
+			$spelling = self::getExpressionForLanguage( $definedMeaningId, WLD_ENGLISH_LANG_ID );
 
 			if ( $spelling == "" ) {
-				$spelling = DefinedMeanings::getExpressionForAnyLanguage( $definedMeaningId );
+				$spelling = self::getExpressionForAnyLanguage( $definedMeaningId );
 
 				if ( $spelling == "" ) {
 					$spelling = $definingExpression;
@@ -584,19 +589,19 @@ class DefinedMeanings {
 		$dbr = wfGetDB( DB_REPLICA );
 
 		$spelling = $dbr->selectField(
-			array(
+			[
 				'exp' => "{$dc}_expression",
 				'synt' => "{$dc}_syntrans"
-			),
+			],
 			'spelling',
-			array(
+			[
 				'defined_meaning_id' => $definedMeaningId,
 				'exp.expression_id = synt.expression_id',
 				'exp.language_id' => $languageId,
 				'synt.identical_meaning' => 1,
 				'synt.remove_transaction_id' => null,
 				'exp.remove_transaction_id' => null
-			), __METHOD__
+			], __METHOD__
 		);
 
 		if ( $spelling ) {
@@ -619,18 +624,18 @@ class DefinedMeanings {
 		$dbr = wfGetDB( DB_REPLICA );
 
 		$spelling = $dbr->selectField(
-			array(
+			[
 				'exp' => "{$dc}_expression",
 				'synt' => "{$dc}_syntrans"
-			),
+			],
 			'spelling',
-			array(
+			[
 				'defined_meaning_id' => $definedMeaningId,
 				'exp.expression_id = synt.expression_id',
 				'synt.identical_meaning' => 1,
 				'synt.remove_transaction_id' => null,
 				'exp.remove_transaction_id' => null
-			), __METHOD__
+			], __METHOD__
 		);
 
 		if ( $spelling ) {

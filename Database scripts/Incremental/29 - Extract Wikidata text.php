@@ -1,8 +1,8 @@
 <?php
 	define( 'MEDIAWIKI', true );
-	require_once( '../../../../LocalSettings.php' );
-	require_once( 'ProfilerStub.php' );
-	require_once( 'Setup.php' );
+	require_once '../../../../LocalSettings.php';
+	require_once 'ProfilerStub.php';
+	require_once 'Setup.php';
 
 	echo "try";
 
@@ -12,7 +12,6 @@
 	$wgCommandLineMode = true;
 
 	$dbr = wfGetDB( DB_MASTER );
-
 
 	$sql = 'select old_id,old_text from text,uw_translated_content where uw_translated_content.text_id=text.old_id';
 	$res = $dbr->query( $sql );

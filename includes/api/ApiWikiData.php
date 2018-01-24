@@ -22,14 +22,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
- 
+
 class ApiWikiData extends ApiBase {
-	
+
 	private $printer;
 	private $rintseIsRight = false;
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, 'wd' );
+		parent::__construct( $main, $action, 'wd' );
 	}
 
 	public function execute() {
@@ -50,60 +50,51 @@ class ApiWikiData extends ApiBase {
 		$relright = null;
 		$translanguage = null;
 		$deflanguage = null;
-		
+
 		// read the request parameters
 		extract( $this->extractRequestParams() );
-		
+
 		$datasets = wdGetDataSets();
 		if ( !isset( $datasets[$dataset] ) ) {
 			$this->dieUsage( "Unknown data set: $dataset", 'unknown_dataset' );
 		}
-		
+
 		// **********************************
 		// create and configure the formatter
 		// **********************************
 		$printer = $this->getCustomPrinter();
-		
+
 		$printer->setFormat( $format );
-		
+
 		// Figure out what to output
 		if ( $sections != null ) { // default is to show everything
 			$printer->excludeAll();
 			foreach ( $sections as $section ) {
 				if ( $section == 'syntrans' ) {
 					$printer->setIncludeSynTrans( true );
-				}
-				else if ( $section == 'syntransann' ) {
+				} elseif ( $section == 'syntransann' ) {
 					$printer->setIncludeSynTransAnnotations( true );
-				}
-				else if ( $section == 'def' ) {
+				} elseif ( $section == 'def' ) {
 					$printer->setIncludeDefinitions( true );
-				}
-				else if ( $section == 'altdef' ) {
+				} elseif ( $section == 'altdef' ) {
 					$printer->setIncludeAltDefinitions( true );
-				}
-				else if ( $section == 'ann' ) {
+				} elseif ( $section == 'ann' ) {
 					$printer->setIncludeAnnotations( true );
-				}
-				else if ( $section == 'classatt' ) {
+				} elseif ( $section == 'classatt' ) {
 					$printer->setIncludeClassAttributes( true );
-				}
-				else if ( $section == 'classmem' ) {
+				} elseif ( $section == 'classmem' ) {
 					$printer->setIncludeClassMembership( true );
-				}
-				else if ( $section == 'colmem' ) {
+				} elseif ( $section == 'colmem' ) {
 					$printer->setIncludeCollectionMembership( true );
-				}
-				else if ( $section == 'rel' ) {
+				} elseif ( $section == 'rel' ) {
 					$printer->setIncludeRelations( true );
-				}
-				else {
+				} else {
 					$printer->addErrorMessage( "Unknown section: $section" );
 				}
-				
+
 			}
 		}
-		
+
 		// Figure out which languages to output
 		if ( $languages != null ) {
 			// echo $languages;
@@ -112,17 +103,16 @@ class ApiWikiData extends ApiBase {
 				$langId = getLanguageIdForIso639_3( $langCode );
 				if ( $langId != null ) {
 					$printer->addOutputLanguageId( $langId );
-				}
-				else {
+				} else {
 					$printer->addErrorMessage( $langCode . ' is not an ISO 639-3 language code.' );
 				}
 			}
 		}
-		
+
 		// The response language
 		global $wgRecordSetLanguage;
 		$wgRecordSetLanguage = getLanguageIdForIso639_3( $resplanguage );
-		
+
 		// *************************
 		// Handle the actual request
 		// *************************
@@ -131,114 +121,107 @@ class ApiWikiData extends ApiBase {
 			$dmModel->loadRecord();
 			$record = $dmModel->getRecord();
 			$printer->addDefinedMeaningRecord( $record );
-		}
-		// *******************
-		// QUERY BY EXPRESSION
-		// *******************
-		else if ( $type == 'expression' ) {
-			$dmIds = array();
+		} elseif ( $type == 'expression' ) {
+			// *******************
+			// QUERY BY EXPRESSION
+			// *******************
+			$dmIds = [];
 			if ( $explanguage == null ) {
 				$dmIds = getExpressionMeaningIds( $expression, $dataset );
-			}
-			else {
-				$srcLanguages = array();
+			} else {
+				$srcLanguages = [];
 				$srcLanguages[] = getLanguageIdForIso639_3( $explanguage );
 				$dmIds = getExpressionMeaningIdsForLanguages( $expression, $srcLanguages, $dataset );
 			}
-			
-			$uniqueDmIds = array();
+
+			$uniqueDmIds = [];
 			foreach ( $dmIds as $dmId ) {
 				// Should we return duplicates? If Rintse is right, we should.
 				if ( !$this->rintseIsRight && in_array( $dmId, $uniqueDmIds ) ) {
 					continue;
 				}
 				$uniqueDmIds[] = $dmId;
-				
+
 				$dmModel = new DefinedMeaningModel( $dmId, null, $datasets[$dataset] );
 				$dmModel->loadRecord();
 				$record = $dmModel->getRecord();
 				$printer->addDefinedMeaningRecord( $record );
 			}
-			
-		}
-		// **********************
-		// RANDOM DEFINED MEANING
-		// **********************
-		// Why is this a section marked with a comment, rather than a proper function?
-		else if ( $type == 'randomdm' or $type == 'dump' ) {
-		 
-			
-			// I want all the allowed parameters for this type of query to work in combination. 
-			// So a client can, for example, get a random defined meaning from the destiazione 
-			// italia collection that has a definition and translation in spanish and that has 
-			// a 'part of theme' relationship with some other defined meaning.  
+
+		} elseif ( $type == 'randomdm' or $type == 'dump' ) {
+			// **********************
+			// RANDOM DEFINED MEANING
+			// **********************
+			// Why is this a section marked with a comment, rather than a proper function?
+			// I want all the allowed parameters for this type of query to work in combination.
+			// So a client can, for example, get a random defined meaning from the destiazione
+			// italia collection that has a definition and translation in spanish and that has
+			// a 'part of theme' relationship with some other defined meaning.
 			// We'll build one monster query for all these parameters. I've seen this take up
 			// to one second on a development machine.
 
-			$query =  "SELECT dm.defined_meaning_id " .
-			          "FROM {$dataset}_defined_meaning dm ";
-			
-			// JOINS GO HERE 
+			$query = "SELECT dm.defined_meaning_id " .
+				"FROM {$dataset}_defined_meaning dm ";
+
+			// JOINS GO HERE
 			// dm must have a translation in given language
 			if ( $translanguage != null ) {
 				$query .= "INNER JOIN {$dataset}_syntrans st ON dm.defined_meaning_id=st.defined_meaning_id " .
-			              "INNER JOIN {$dataset}_expression exp ON st.expression_id=exp.expression_id ";
+					"INNER JOIN {$dataset}_expression exp ON st.expression_id=exp.expression_id ";
 			}
-			
+
 			// dm must have a definition in given language
 			if ( $deflanguage != null ) {
 				$query .= "INNER JOIN {$dataset}_translated_content tc ON dm.meaning_text_tcid=tc.translated_content_id ";
 			}
-			
+
 			// dm must be part of given collection
 			if ( $collection != null ) {
 				$query .= "INNER JOIN {$dataset}_collection_contents col on dm.defined_meaning_id=col.member_mid ";
 			}
-					
+
 			// dm must be related to another dm
 			if ( $relation != null && ( $relleft != null || $relright != null ) ) {
 				if ( $relright != null ) {
 					$query .= "INNER JOIN {$dataset}_meaning_relations rel ON dm.defined_meaning_id=rel.meaning1_mid ";
-				}
-				else {
+				} else {
 					$query .= "INNER JOIN {$dataset}_meaning_relations rel ON dm.defined_meaning_id=rel.meaning2_mid ";
 				}
 			}
-			
+
 			// WHERE CLAUSE GOES HERE
 			$query .= "WHERE dm.remove_transaction_id is null ";
-			
+
 			// dm must have a translation in given language
 			if ( $translanguage != null ) {
 				$query .= "AND st.remove_transaction_id is null " .
-			              "AND exp.remove_transaction_id is null " .
-			              "AND exp.language_id=" . getLanguageIdForIso639_3( $translanguage ) . " ";
+						  "AND exp.remove_transaction_id is null " .
+					"AND exp.language_id=" . getLanguageIdForIso639_3( $translanguage ) . " ";
 			}
-			
+
 			// dm must have a definition in given language
 			if ( $deflanguage != null ) {
 				$query .= "AND tc.remove_transaction_id is null " .
-			              "AND tc.language_id=" . getLanguageIdForIso639_3( $deflanguage ) . " ";
+					"AND tc.language_id=" . getLanguageIdForIso639_3( $deflanguage ) . " ";
 			}
-			
+
 			// dm must be part of given collection
 			if ( $collection != null ) {
 				$query .= "AND col.remove_transaction_id is null " .
-			              "AND col.collection_id=$collection ";
+					"AND col.collection_id=$collection ";
 			}
-			
+
 			// dm must be related to another dm
 			if ( $relation != null && ( $relleft != null || $relright != null ) ) {
 				$query .= "AND rel.remove_transaction_id is null " .
-			              "AND rel.relationtype_mid=$relation ";
+					"AND rel.relationtype_mid=$relation ";
 				if ( $relright != null ) {
 					$query .= "AND rel.meaning2_mid=$relright ";
-				}
-				else {
+				} else {
 					$query .= "AND rel.meaning1_mid=$relleft ";
 				}
 			}
-			
+
 			// We may get doubles for multiple expressions or relations. Pretty trivial, but affects probability
 			$query .= "GROUP BY dm.defined_meaning_id ";
 			// pick one at random
@@ -259,11 +242,9 @@ class ApiWikiData extends ApiBase {
 				$record = $dmModel->getRecord();
 				$printer->addDefinedMeaningRecord( $record );
 			}
-			
-		}
-		else if ( $type == 'relation' ) {
+		} elseif ( $type == 'relation' ) {
 			if ( $relation != null || $relleft != null || $relright != null ) {
-				$related = 	getRelationDefinedMeanings( $relation, $relleft, $relright, $datasets[$dataset] );
+				$related = getRelationDefinedMeanings( $relation, $relleft, $relright, $datasets[$dataset] );
 				if ( count( $related ) > 0 ) {
 					foreach ( $related as $dmId ) {
 						$dmModel = new DefinedMeaningModel( $dmId, null, $datasets[$dataset] );
@@ -271,15 +252,13 @@ class ApiWikiData extends ApiBase {
 						$record = $dmModel->getRecord();
 						$printer->addDefinedMeaningRecord( $record );
 					}
-				}
-				else {
+				} else {
 					$printer->addErrorMessage( "Your relations query did not return any results." );
 				}
-			}
-			else {
+			} else {
 				$printer->addErrorMessage( 'To get relations you must at least specify a left or right hand side dmid and optionally a relation type dmid.' );
 			}
-			
+
 		} elseif ( $type == 'collection' ) {
 			try {
 				$printer->suppress_output();
@@ -304,21 +283,20 @@ class ApiWikiData extends ApiBase {
 			}
 
 		}
-		
 	}
-	
+
 	public function & getCustomPrinter() {
 		if ( is_null( $this->printer ) ) {
 			$this->printer = new ApiWikiDataFormatXml( $this->getMain() );
 		}
 		return $this->printer;
 	}
-	
+
 	public function getAllowedParams() {
-		return array (
-			'type' => array (
-				ApiBase :: PARAM_DFLT => 'expression',
-				ApiBase :: PARAM_TYPE => array (
+		return [
+			'type' => [
+				ApiBase::PARAM_DFLT => 'expression',
+				ApiBase::PARAM_TYPE => [
 					'expression',
 					'definedmeaning',
 					'randomdm',
@@ -327,8 +305,8 @@ class ApiWikiData extends ApiBase {
 					'collection',
 					'translation',
 					'listCollections'
-				)
-			),
+				]
+			],
 			'expression' => null,
 			'explanguage' => null,
 			'dmid' => null,
@@ -344,10 +322,10 @@ class ApiWikiData extends ApiBase {
 			'languages' => null,
 			'dump_start' => 0,
 			'dump_items' => 1,
-			'sections' => array (
-				ApiBase :: PARAM_DFLT => null,
-				ApiBase :: PARAM_ISMULTI => true,
-				ApiBase :: PARAM_TYPE => array (
+			'sections' => [
+				ApiBase::PARAM_DFLT => null,
+				ApiBase::PARAM_ISMULTI => true,
+				ApiBase::PARAM_TYPE => [
 					'def',
 					'altdef',
 					'syntrans',
@@ -357,18 +335,18 @@ class ApiWikiData extends ApiBase {
 					'classmem',
 					'colmem',
 					'rel'
-				)
-			),
-			'format' => array (
-				ApiBase :: PARAM_DFLT => 'plain',
-				ApiBase :: PARAM_TYPE => array ( 'plain', 'tbx' )
-			)
-		);
+				]
+			],
+			'format' => [
+				ApiBase::PARAM_DFLT => 'plain',
+				ApiBase::PARAM_TYPE => [ 'plain', 'tbx' ]
+			]
+		];
 	}
 
 	public function getParamDescription() {
-		return array (
-			'type' => array (
+		return [
+			'type' => [
 				'Query type.',
 				'expression:		query an expression.',
 				'definedmeaning:	defined meaning by id',
@@ -378,7 +356,7 @@ class ApiWikiData extends ApiBase {
 				'collection:		a listing of collection members (defined meaning id only)',
 				'translation:		defined meaning by id, but only translated text and synonyms/translations (faster query)',
 				'listCollections:	provide a list of collections: id, name (defined meaning dmid, defining expression spelling) , count (number of items in collection)'
-			),
+			],
 			'expression' => 'For type \'expression\': the expression.',
 			'explanguage' => 'For type \'expression\': the expression language. Omit to search all languages.',
 			'dmid' => 'For type \'definedmeaning\': the defined meaning id.',
@@ -390,11 +368,11 @@ class ApiWikiData extends ApiBase {
 			'deflanguage' => 'For type \'randomdm\': a definition in this language must be present. ISO 639-3 language code.',
 			'dataset' => 'The dataset to query.',
 			'resplanguage' => 'Response language: language strings in the response document are set in this language. ISO 639-3 language code.',
-			'languages' => array (
+			'languages' => [
 				'Output languages.',
 				'Values (separate with \'|\'): any ISO 639-3 language code'
-			),
-			'sections' => array(
+			],
+			'sections' => [
 				'Which sections to include in the output. If omitted, everything is returned. ',
 				'def:          include definitions',
 				'altdef:       include alternative definitions',
@@ -405,21 +383,21 @@ class ApiWikiData extends ApiBase {
 				'classmem:     include class membership',
 				'colmem:       include collection membership',
 				'rel:          include relations'
-			),
+			],
 			'format' => 'The output format.',
 			'dump_start' => 'Starting defined meaning in the dump, counting from 0. A value of 5 is just the 6th item in the dump, (not dmid 5)',
 			'dump_items' => 'How many defined meanings to dump. A value of 10 means to dump 10 items (not dump \'till dmid 10 or \'till item 10). If you start at the 5th item, you will end up dumping items 5 through 15'
-		);
+		];
 	}
 
 	public function getDescription() {
-		return array (
+		return [
 			'This module provides an API to WikiData.'
-		);
+		];
 	}
-	
+
 	protected function getExamples() {
-		return array(
+		return [
 			'api.php?action=wikidata&wdexpression=bier&wdexplanguage=nld&wdsections=def|syntrans&wdlanguages=deu|eng|fra',
 			'api.php?action=wikidata&wdtype=definedmeaning&wddmid=6715&wdformat=tbx',
 			'api.php?action=wikidata&wdtype=randomdm&wdtranslanguage=nld&wddeflanguage=nld&wdcollection=376322',
@@ -427,14 +405,14 @@ class ApiWikiData extends ApiBase {
 			'api.php?action=wikidata&wdtype=relation&wdrelleft=339',
 			'api.php?action=wikidata&wdtype=randomdm&wdrelation=3&wdrelright=339',
 			'api.php?action=wikidata&wdtype=randomdm&wdformat=tbx&wdresplanguage=nld'
-		);
+		];
 	}
 
 	public function collection( $collection_id, $languages ) {
 		$id_safe = mysql_real_escape_string( $collection_id );
 
 		$language_list = "";
-		
+
 		if ( @is_string( $languages ) ) {
 			# clean it
 			$unsafe_language_list = explode( "|", $languages );
@@ -480,27 +458,28 @@ class ApiWikiData extends ApiBase {
 		return $xml->asXML();
 	}
 
-	# db structure: 
+	# db structure:
 	# uw_defined_meaning.meaning_text_tcid -> uw_translated_content.translated_content_id
 	# uw_translated_content.text_id -> uw_text.text_id
 	# uw_translated_content.langauge_id -> languages.language_id
 
-	/** return defined meaning xml, containing just translated_text and syntrans, 
-	 	see also: any example full defined meaning xml output 
-		Uses custom query to go fast (hopefully)*/
+	/** return defined meaning xml, containing just translated_text and syntrans,
+	 * see also: any example full defined meaning xml output
+	 * Uses custom query to go fast (hopefully)
+	 */
 	public function translation( $dmid, $languages ) {
 		$dmid_safe = mysql_real_escape_string( $dmid );
 		$language_list = "";
-		
+
 		if ( @is_string( $languages ) ) {
 			# clean it
 			$unsafe_language_list = explode( "|", $languages );
-			$s_language = array();
+			$s_language = [];
 			foreach ( $unsafe_language_list as $language ) {
 				$s = mysql_real_escape_string( $language );
 				$s_language[] = "language.iso639_3='$s'";
 			}
-			
+
 			# then use it
 			$language_list .= " AND (";
 			$language_list .= implode( " OR ", $s_language );
@@ -513,7 +492,6 @@ class ApiWikiData extends ApiBase {
 		$body = $xml->addChild( 'body' );
 		$defined_meaning = $body->addChild( "defined-meaning" );
 		$defined_meaning->addAttribute( "defined-meaning-id", "$dmid" );
-		
 
 		# translated-text-list
 		$query = "SELECT iso639_3, text_text FROM uw_defined_meaning, uw_translated_content, uw_text, language
@@ -524,7 +502,10 @@ class ApiWikiData extends ApiBase {
 			" . $language_list;
 		try {
 			$result = $dbr->query( $query );
-		} catch ( Exception $e ) { echo $e->getTraceAsString(); echo mysql_error(); }
+		} catch ( Exception $e ) {
+			echo $e->getTraceAsString();
+			echo mysql_error();
+		}
 		$definition = $defined_meaning->addChild( "definition" );
 		$translated_text_list = $definition->addChild( "translated-text-list" );
 		while ( $row = mysql_fetch_assoc( $result ) ) {
@@ -540,7 +521,10 @@ class ApiWikiData extends ApiBase {
 			" . $language_list;
 		try {
 			$result = $dbr->query( $query );
-		} catch ( Exception $e ) { echo $e->getTraceAsString(); echo mysql_error(); }
+		} catch ( Exception $e ) {
+			echo $e->getTraceAsString();
+			echo mysql_error();
+		}
 		$synonyms_translations_list = $defined_meaning->addChild( "synonyms-translations-list" );
 		while ( $row = mysql_fetch_assoc( $result ) ) {
 			$synonyms_translations = $synonyms_translations_list->addChild( "synonyms-translations" );
@@ -554,28 +538,30 @@ class ApiWikiData extends ApiBase {
 	}
 
 	public function listCollections() {
-
 		$xml = new SimpleXMLElement( "<wikidata></wikidata>" );
 		$body = $xml->addChild( 'body' );
-	
+
 		# query
 		$query = "SELECT uw_collection.collection_id, collection_mid, spelling, counts.total FROM  
 				uw_collection, uw_defined_meaning, uw_expression,
-				( 
-				SELECT collection_id,count(*) AS total FROM uw_collection_contents 
+				(
+				SELECT collection_id,count(*) AS total FROM uw_collection_contents
 				GROUP by collection_id
-				) counts 
-			WHERE uw_collection.collection_id=counts.collection_id 
-			AND uw_collection.collection_mid=uw_defined_meaning.defined_meaning_id 
-			AND uw_expression.expression_id=uw_defined_meaning.expression_id  
+				) counts
+			WHERE uw_collection.collection_id=counts.collection_id
+			AND uw_collection.collection_mid=uw_defined_meaning.defined_meaning_id
+			AND uw_expression.expression_id=uw_defined_meaning.expression_id
 			ORDER BY spelling
 			";
 
 		$dbr = wfGetDB( DB_REPLICA );
 		try {
 			$result = $dbr->query( $query );
-		} catch ( Exception $e ) { echo $e->getTraceAsString(); echo mysql_error(); }
-		
+		} catch ( Exception $e ) {
+			echo $e->getTraceAsString();
+			echo mysql_error();
+		}
+
 		$collections_list = $body->addchild( "collections_list" );
 		while ( $row = mysql_fetch_assoc( $result ) ) {
 			$collection = $collections_list->addChild( "collection" );
@@ -590,4 +576,3 @@ class ApiWikiData extends ApiBase {
 	}
 
 }
-?>

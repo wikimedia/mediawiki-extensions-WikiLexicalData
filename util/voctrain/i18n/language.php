@@ -1,7 +1,9 @@
 <?php
 
-class LocalisationException extends Exception { } ;
-class NoSuchMessageFileException extends LocalisationException { } ;
+class LocalisationException extends Exception {
+};
+class NoSuchMessageFileException extends LocalisationException {
+};
 
 /**loosely inspired on class of same name from mediawiki.
 * (mediawiki version is overkill for our purposes though)
@@ -16,12 +18,11 @@ class WDLanguage {
 	private $direction = "ltr";
 
 	public function __construct( $code = "Default" ) {
-		if ( !$code )
+		if ( !$code ) {
 			$code = "Default";
+		}
 		$this->code = $code;
 		$this->loadMessages( $code );
-
-
 	}
 
 	/** getter, returns writing direction of this language ("rtl" or "ltr"); */
@@ -34,7 +35,7 @@ class WDLanguage {
 			$code = "en";
 		}
 
-		include( "language.i18n.php" );
+		include "language.i18n.php";
 		if ( array_key_exists( $code, $messages ) ) {
 			foreach ( $messages[$code] as $key => $message ) {
 				$this->messages[$key] = $message; # messages is from the included file
@@ -42,7 +43,7 @@ class WDLanguage {
 		} else {
 			throw new LocalisationException( "messages problem, there's no messages for $code" );
 		}
-			
+
 		if ( array_key_exists( $code, $fallback ) ) {
 			if ( $fallback[$code] === false ) {
 				$this->fallback = false;
@@ -55,10 +56,8 @@ class WDLanguage {
 			$this->direction = $direction[$code];
 		}
 
-
 		$this->code = $code;
 	}
-
 
 	/** safe takes a string and makes it safe for use as a key on
 	 * translatewiki. http://translatewiki.net will translate my i18n for
@@ -78,23 +77,21 @@ class WDLanguage {
 		return $string;
 	}
 
-	
 	/** safeMatch two strings, after safe()-ing them.
 	 * @return true if safe($one)==safe($two)
-	*/
+	 */
 	public static function safeMatch( $one, $two ) {
-		return WDLanguage::safe( $one ) == WDLanguage::safe( $two );
+		return self::safe( $one ) == self::safe( $two );
 	}
 
-	
 	/**
 	 * Get language names available for i18n, indexed by code.
 	 */
 	public static function getI18NLanguageNames() {
-		include( "language.i18n.php" );
-		include( "Names.php" );
+		include "language.i18n.php";
+		include "Names.php";
 		$keys = array_keys( $messages );
-		$names = array();
+		$names = [];
 		foreach ( $keys as $key ) {
 			if ( array_key_exists( $key, $languageNames ) ) {
 				$names[$key] = $languageNames[$key];
@@ -112,8 +109,9 @@ class WDLanguage {
 		}
 	}
 
-	/** translate the phrase, but doesn't do any substitutions. 
-	 * Use printf,sprintf, or vsprintf etc...  for subsitutions */
+	/** translate the phrase, but doesn't do any substitutions.
+	 * Use printf,sprintf, or vsprintf etc...  for subsitutions
+	 */
 	public function translate( $phrase ) {
 		if ( $this->translation_exists( $phrase ) ) {
 			return $this->messages[Language::safe( $phrase )];
@@ -123,26 +121,25 @@ class WDLanguage {
 			return "{untranslated: '$phrase'}";
 		}
 	}
-	
 
-	# == Diverse sprintf-ish functions 
+	# == Diverse sprintf-ish functions
 	# (see also: php documentation for non-i18nified versions)
 
 	/** i18nsprint is a simpler way to go about things, will do i18n replacement
 	on antyhing enclosed in <|  |>, any %signs in these substrings
-	    will be substituted with items from the array*/
-	public function i18nsprint( $string, $replacements = array() ) {
+		will be substituted with items from the array
+		*/
+	public function i18nsprint( $string, $replacements = [] ) {
 		$callback = new I18Ncallback();
 		$callback->replacements = $replacements;
 		$callback->language = $this;
-		return preg_replace_callback( "#(?U)(<\|.*\|>)#", array( $callback, "replace" ), $string );
+		return preg_replace_callback( "#(?U)(<\|.*\|>)#", [ $callback, "replace" ], $string );
 	}
 
 	/* like i18nsprint, but prints directly to output*/
-	public function i18nprint( $string, $replacements = array() ) {
+	public function i18nprint( $string, $replacements = [] ) {
 		print $this->i18nsprint( $string, $replacements );
 	}
-
 
 	# internationalized printf
 	public function printf( $phrase ) {
@@ -169,9 +166,11 @@ class WDLanguage {
 	 * original apparently  Copyright © 2001-2008 The PHP Group, copied here
 	 * on condition that copyright notice is retained. )
 	 */
-	function vsprintf2( $phrase = '', $vars = array(), $char = '%' ) {
+	function vsprintf2( $phrase = '', $vars = [], $char = '%' ) {
 		$str = $this->translate( $phrase );
-		if ( !$str ) return '';
+		if ( !$str ) {
+			return '';
+		}
 		if ( count( $vars ) > 0 ) {
 			foreach ( $vars as $k => $v ) {
 				$str = str_replace( $char . $k, $v, $str );
@@ -183,19 +182,18 @@ class WDLanguage {
 
 	# == Getters/setters
 
-	/**@return iso693_3 3-letter language code, or "Default".*/
+	/** @return iso693_3 3-letter language code, or "Default". */
 	public function getCode() {
 		return $this->code;
 	}
-	
+
 	/** @return all possible languages indexed by code */
 	public static function getAllLanguageNames() {
-		include( "Names.php" );
+		include "Names.php";
 		return $languageNames;
 	}
 
 }
-
 
 /** for use by Language::i18nprint */
 class I18Ncallback {
@@ -207,5 +205,3 @@ class I18Ncallback {
 		return $this->language->vsprintf2( $match, $this->replacements );
 	}
 }
-
-?>

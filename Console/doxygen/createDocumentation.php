@@ -3,10 +3,10 @@
  *  \brief Maintenance script to create a WikiLexicalData/OmegaWiki documentation
  */
 
-$baseDir = dirname( __FILE__ ) . '/../../../..' ;
-require_once( $baseDir . '/maintenance/Maintenance.php' );
-require_once( $baseDir . '/extensions/WikiLexicalData/OmegaWiki/WikiDataGlobals.php' );
-require_once( $baseDir . '/extensions/WikiLexicalData/OmegaWiki/Transaction.php' );
+$baseDir = __DIR__ . '/../../../..';
+require_once $baseDir . '/maintenance/Maintenance.php';
+require_once $baseDir . '/extensions/WikiLexicalData/OmegaWiki/WikiDataGlobals.php';
+require_once $baseDir . '/extensions/WikiLexicalData/OmegaWiki/Transaction.php';
 
 echo "start\n";
 
@@ -27,7 +27,6 @@ class CreateDocumentation extends Maintenance {
 	/** \brief public function execute
 	 */
 	public function execute() {
-
 		global $wdCurrentContext, $wgDBprefix, $wgWldDownloadScriptPath;
 
 		// checking that the needed parameters are given
@@ -43,7 +42,7 @@ class CreateDocumentation extends Maintenance {
 		$dhtml .= $wgWldDownloadScriptPath . 'docF.html ';
 		$dhtml .= $wgWldDownloadScriptPath . 'doc.css';
 		chdir( '../..' );
-		echo  getcwd() . "\n";
+		echo getcwd() . "\n";
 		$this->readTemplateConfigFile( $config, $configFinal );
 
 		// create a command to execute.
@@ -76,9 +75,9 @@ class CreateDocumentation extends Maintenance {
 		$this->output( "\nParsing config file $configFinal...\n\n" );
 
 		$str = file_get_contents( $configFinal );
-		$wldBase = dirname( __FILE__ ) . '/../';
-		$str = trim( str_replace( '/*$wgWLDdir*/', $wldBase , $str ) );
-		$str = trim( str_replace( '/*$wgWLDdownload*/', $wgWldDownloadScriptPath , $str ) );
+		$wldBase = __DIR__ . '/../';
+		$str = trim( str_replace( '/*$wgWLDdir*/', $wldBase, $str ) );
+		$str = trim( str_replace( '/*$wgWLDdownload*/', $wgWldDownloadScriptPath, $str ) );
 		$fp = fopen( $configFinal, 'w' );
 		if ( false === $fp ) {
 			return "Could not open \"{$filename}\".\n";
@@ -93,4 +92,4 @@ class CreateDocumentation extends Maintenance {
 }
 
 $maintClass = 'CreateDocumentation';
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

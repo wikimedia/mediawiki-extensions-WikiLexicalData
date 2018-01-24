@@ -1,12 +1,12 @@
 <?php
 
-require_once( "extensions/Wikidata/OmegaWiki/WikiDataAPI.php" ); // for bootstrapCollection
-require_once( "extensions/Wikidata/OmegaWiki/Transaction.php" );
-require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
+require_once "extensions/Wikidata/OmegaWiki/WikiDataAPI.php"; // for bootstrapCollection
+require_once "extensions/Wikidata/OmegaWiki/Transaction.php";
+require __DIR__ . '/includes/WebStart.php';
 global $wgUser, $wgRequest;
 
 function getDatasets() {
-	$datasets = array();
+	$datasets = [];
 	$dbr = wfGetDB( DB_REPLICA );
 	$result = $dbr->query( "select set_prefix from wikidata_sets" );
 	while ( $record = $dbr->fetchObject( $result ) ) {
@@ -36,8 +36,7 @@ function getUserId( $userName ) {
 	$result = $dbr->query( "select user_id from user where user_name = '$userName'" );
 	if ( $row = $dbr->fetchObject( $result ) ) {
 		return $row->user_id;
-	}
-	else {
+	} else {
 		return - 1;
 	}
 }
@@ -62,4 +61,3 @@ foreach ( $datasets as $dataset ) {
 		}
 	}
 }
-?>

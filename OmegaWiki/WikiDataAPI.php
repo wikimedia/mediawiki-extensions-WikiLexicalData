@@ -2,9 +2,9 @@
 /** @file
  *  @brief This a part of the the WiKiLexicalData's PHP API
  */
-require_once( 'Expression.php' );
-require_once( 'Transaction.php' );
-require_once( 'WikiDataGlobals.php' );
+require_once 'Expression.php';
+require_once 'Transaction.php';
+require_once 'WikiDataGlobals.php';
 
 /** @brief non specific entity class that access the database directly
  *
@@ -30,10 +30,10 @@ class OmegaWikiDataBase {
 		$existId = $dbr->selectField(
 			"{$dc}{$table}",
 			$column,
-			array(
+			[
 				$column => $value,
 				"remove_transaction_id" => null
-			), __METHOD__
+			], __METHOD__
 		);
 
 		if ( $existId ) {
@@ -57,8 +57,8 @@ function getExpression( $expressionId, $dc = null ) {
 	$dbr = wfGetDB( DB_REPLICA );
 	$expressionRecord = $dbr->selectRow(
 		"{$dc}_expression",
-		array( 'spelling', 'language_id' ),
-		array( 'expression_id' => $expressionId ),
+		[ 'spelling', 'language_id' ],
+		[ 'expression_id' => $expressionId ],
 		__METHOD__
 	);
 
@@ -69,7 +69,6 @@ function getExpression( $expressionId, $dc = null ) {
 		return null;
 	}
 }
-
 
 /** @brief Creates a new object id for the Object table
  *
@@ -86,7 +85,7 @@ function newObjectId( $table, $dc = null ) {
 	$uuid = UIDGenerator::newUUIDv4();
 	$dbw->insert(
 		"{$dc}_objects",
-		array(  '`table`' => "{$wgDBprefix}{$table}", '`UUID`' => $uuid ),
+		[ '`table`' => "{$wgDBprefix}{$table}", '`UUID`' => $uuid ],
 		__METHOD__
 	);
 
@@ -100,7 +99,7 @@ function getTableNameWithObjectId( $objectId ) {
 	$table = $dbr->selectField(
 		"{$dc}_objects",
 		'table',
-		array ( 'object_id' => $objectId ),
+		[ 'object_id' => $objectId ],
 		__METHOD__
 	);
 	// false returned if not found
@@ -129,11 +128,11 @@ function getRemovedExpressionId( $spelling, $languageId ) {
 	$expressionId = $dbr->selectField(
 		"{$dc}_expression",
 		'expression_id',
-		array(
+		[
 			'spelling' => $spelling,
 			'language_id' => $languageId,
 			'remove_transaction_id IS NOT NULL'
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $expressionId ) {
@@ -150,7 +149,7 @@ function getExpressionIdFromSyntrans( $syntransId, $dc = null ) {
 	$expressionId = $dbr->selectField(
 		"{$dc}_syntrans",
 		'expression_id',
-		array( 'syntrans_sid' => $syntransId ),
+		[ 'syntrans_sid' => $syntransId ],
 		__METHOD__
 	);
 
@@ -163,8 +162,8 @@ function getExpressionIdFromSyntrans( $syntransId, $dc = null ) {
 
 /** @deprecated use OwDatabaseAPI::createExpressionId instead.
  */
-function createExpressionId( $spelling, $languageId, $options = array() ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+function createExpressionId( $spelling, $languageId, $options = [] ) {
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::createExpressionId( $spelling, $languageId, $options );
 }
 
@@ -172,12 +171,12 @@ function reviveExpression( $expressionId ) {
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
 	$dbw->update( "{$dc}_expression",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => null
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'expression_id' => $expressionId
-		), __METHOD__,
-		array( 'LIMIT' => 1 )
+		], __METHOD__,
+		[ 'LIMIT' => 1 ]
 	);
 }
 
@@ -185,9 +184,8 @@ function getPageTitle( $spelling ) {
 	return str_replace( ' ', '_', $spelling );
 }
 
-
 function createPage( $namespace, $title ) {
-	$wikipage = new Wikipage( Title::makeTitle( $namespace , $title ) );
+	$wikipage = new Wikipage( Title::makeTitle( $namespace, $title ) );
 
 	if ( $wikipage->exists() ) {
 		return $wikipage;
@@ -201,11 +199,11 @@ function createPage( $namespace, $title ) {
 function setPageLatestRevision( $pageId, $latestRevision ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$dbw->update( 'page',
-		array( /* SET */
+		[ /* SET */
 			'page_latest' => $latestRevision
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'page_id' => $pageId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -219,14 +217,14 @@ function createInitialRevisionForPage( $wikipage, $comment ) {
 
 	$dbw->insert(
 		'revision',
-		array( 'rev_page' => $pageId,
+		[ 'rev_page' => $pageId,
 			'rev_comment' => $comment,
 			'rev_user' => $userId,
 			'rev_user_text' => $userName,
 			'rev_timestamp' => $timestamp,
 			'rev_parent_id' => 0,
 			'rev_text_id' => 0
-		), __METHOD__
+		], __METHOD__
 	);
 
 	$revisionId = $dbw->insertId();
@@ -236,14 +234,14 @@ function createInitialRevisionForPage( $wikipage, $comment ) {
 }
 
 /**
- * @return boolean if a spelling exists in the expression table of the database
+ * @return bool if a spelling exists in the expression table of the database
  */
 function existSpelling( $spelling, $languageId = 0 ) {
 	$dc = wdGetDataSetContext();
 
 	$dbr = wfGetDB( DB_REPLICA );
 
-	$cond = array( 'spelling' => $spelling, 'remove_transaction_id' => null );
+	$cond = [ 'spelling' => $spelling, 'remove_transaction_id' => null ];
 
 	if ( $languageId > 0 ) {
 		$cond['language_id'] = $languageId;
@@ -293,17 +291,17 @@ function findRemovedExpression( $spelling, $languageId ) {
 	return null;
 }
 
-function createExpression( $spelling, $languageId, $options = array() ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+function createExpression( $spelling, $languageId, $options = [] ) {
+	require_once 'OmegaWikiDatabaseAPI.php';
 	$expression = new Expression( OwDatabaseAPI::createExpressionId( $spelling, $languageId, $options ), $spelling, $languageId );
-	$expressionTitle = Title::makeTitle( NS_EXPRESSION , $spelling );
-	if( !$expressionTitle->exists() ) {
+	$expressionTitle = Title::makeTitle( NS_EXPRESSION, $spelling );
+	if ( !$expressionTitle->exists() ) {
 		$expression->createNewInDatabase();
 	}
 	return $expression;
 }
 
-function findOrCreateExpression( $spelling, $languageId, $options = array() ) {
+function findOrCreateExpression( $spelling, $languageId, $options = [] ) {
 	$expression = findExpression( $spelling, $languageId );
 	if ( ! is_null( $expression ) ) {
 		return $expression;
@@ -323,10 +321,10 @@ function getSynonymId( $definedMeaningId, $expressionId ) {
 	$syntransId = $dbr->selectField(
 		"{$dc}_syntrans",
 		'syntrans_sid',
-		array( 'defined_meaning_id' => $definedMeaningId,
+		[ 'defined_meaning_id' => $definedMeaningId,
 			'expression_id' => $expressionId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $syntransId ) {
@@ -354,12 +352,12 @@ function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identica
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert(
 		"{$dc}_syntrans",
-		array( 'syntrans_sid' => $synonymId,
+		[ 'syntrans_sid' => $synonymId,
 			'defined_meaning_id' => $definedMeaningId,
 			'expression_id' => $expressionId,
 			'identical_meaning' => $identicalMeaningInteger,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -374,10 +372,10 @@ function expressionIsBoundToDefinedMeaning( $definedMeaningId, $expressionId ) {
 	$syntransId = $dbr->selectField(
 		"{$dc}_syntrans",
 		'syntrans_sid',
-		array( 'defined_meaning_id' => $definedMeaningId,
+		[ 'defined_meaning_id' => $definedMeaningId,
 			'expression_id' => $expressionId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $syntransId ) {
@@ -386,12 +384,11 @@ function expressionIsBoundToDefinedMeaning( $definedMeaningId, $expressionId ) {
 	return false;
 }
 
-
 /** @todo for deprecation. use OwDatabaseAPI::addSynonymOrTranslation instead.
- *	Currently used only by SwissProtImport.php on the php-tools folder.
+ * 	Currently used only by SwissProtImport.php on the php-tools folder.
  */
-function addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning, $options = array() ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+function addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning, $options = [] ) {
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::addSynonymOrTranslation( $spelling, $languageId, $definedMeaningId, $identicalMeaning, $options );
 }
 
@@ -402,10 +399,10 @@ function getRelationId( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id 
 	$relationId = $dbr->selectField(
 		"{$dc}_meaning_relations",
 		'relation_id',
-		array( 'meaning1_mid' => $definedMeaning1Id,
+		[ 'meaning1_mid' => $definedMeaning1Id,
 			'meaning2_mid' => $definedMeaning2Id,
 			'relationtype_mid' => $relationTypeId
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $relationId ) {
@@ -433,18 +430,19 @@ function createRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert(
 		"{$dc}_meaning_relations",
-		array( 'relation_id' => $relationId,
+		[ 'relation_id' => $relationId,
 			'meaning1_mid' => $definedMeaning1Id,
 			'meaning2_mid' => $definedMeaning2Id,
 			'relationtype_mid' => $relationTypeId,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
 function addRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) {
-	if ( !relationExists( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) )
+	if ( !relationExists( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) ) {
 		createRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id );
+	}
 }
 
 function removeRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) {
@@ -452,14 +450,14 @@ function removeRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_meaning_relations",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'meaning1_mid' => $definedMeaning1Id,
 			'meaning2_mid' => $definedMeaning2Id,
 			'relationtype_mid' => $relationTypeId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -468,12 +466,12 @@ function removeRelationWithId( $relationId ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_meaning_relations",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'relation_id' => $relationId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -494,8 +492,8 @@ function getRelationDefinedMeanings( $relationTypeId = null, $lhs = null, $rhs =
 	$dc = wdGetDataSetContext( $dc );
 	$dbr = wfGetDB( DB_REPLICA );
 
-	$result = array();
-	$queryResult = array();
+	$result = [];
+	$queryResult = [];
 
 	if ( $relationTypeId == null ) {
 		if ( $lhs == null ) {
@@ -503,84 +501,80 @@ function getRelationDefinedMeanings( $relationTypeId = null, $lhs = null, $rhs =
 				return $result;
 			}
 			$queryResult = $dbr->select(
-				array( 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ),
+				[ 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ],
 				'rel.relationtype_mid',
-				array( /* WHERE */
+				[ /* WHERE */
 					'rel.meaning2_mid' => $rhs,
 					'rel.remove_transaction_id' => null
-				), __METHOD__,
-				array( 'GROUP BY' => 'rel.relationtype_mid' ),
-				array( 'dm' => array( 'INNER JOIN', array(
+				], __METHOD__,
+				[ 'GROUP BY' => 'rel.relationtype_mid' ],
+				[ 'dm' => [ 'INNER JOIN', [
 						'rel.relationtype_mid = dm.defined_meaning_id',
 						'dm.remove_transaction_id' => null
-				)))
+				] ] ]
 			);
-		}
-		elseif ( $rhs == null ) {
+		} elseif ( $rhs == null ) {
 			$queryResult = $dbr->select(
-				array( 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ),
+				[ 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ],
 				'rel.relationtype_mid',
-				array( /* WHERE */
+				[ /* WHERE */
 					'rel.meaning1_mid' => $lhs,
 					'rel.remove_transaction_id' => null
-				), __METHOD__,
-				array( 'GROUP BY' => 'rel.relationtype_mid' ),
-				array( 'dm' => array( 'INNER JOIN', array(
+				], __METHOD__,
+				[ 'GROUP BY' => 'rel.relationtype_mid' ],
+				[ 'dm' => [ 'INNER JOIN', [
 						'rel.relationtype_mid = dm.defined_meaning_id',
 						'dm.remove_transaction_id' => null
-				)))
+				] ] ]
 			);
-		}
-		else {
+		} else {
 			$queryResult = $dbr->select(
-				array( 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ),
+				[ 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ],
 				'rel.relationtype_mid',
-				array( /* WHERE */
+				[ /* WHERE */
 					'rel.meaning1_mid' => $lhs,
 					'rel.meaning2_mid' => $rhs,
 					'rel.remove_transaction_id' => null
-				), __METHOD__,
-				array( ), /* options */
-				array( 'dm' => array( 'INNER JOIN', array(
+				], __METHOD__,
+				[], /* options */
+				[ 'dm' => [ 'INNER JOIN', [
 						'rel.relationtype_mid = dm.defined_meaning_id',
 						'dm.remove_transaction_id' => null
-				)))
+				] ] ]
 			);
 		}
-	}
-	elseif ( $lhs == null ) {
+	} elseif ( $lhs == null ) {
 		if ( $rhs == null ) {
 			return $result;
 		}
 		$queryResult = $dbr->select(
-			array( 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ),
+			[ 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ],
 			'rel.meaning1_mid',
-			array( /* WHERE */
+			[ /* WHERE */
 				'rel.meaning2_mid' => $rhs,
 				'rel.relationtype_mid' => $relationTypeId,
 				'rel.remove_transaction_id' => null
-			), __METHOD__,
-			array( ), /* options */
-			array( 'dm' => array( 'INNER JOIN', array(
+			], __METHOD__,
+			[], /* options */
+			[ 'dm' => [ 'INNER JOIN', [
 					'rel.meaning1_mid = dm.defined_meaning_id',
 					'dm.remove_transaction_id' => null
-			)))
+			] ] ]
 		);
-	}
-	else {
+	} else {
 		$queryResult = $dbr->select(
-			array( 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ),
+			[ 'rel' => "{$dc}_meaning_relations", 'dm' => "{$dc}_defined_meaning" ],
 			'rel.meaning2_mid',
-			array( /* WHERE */
+			[ /* WHERE */
 				'rel.meaning1_mid' => $lhs,
 				'rel.relationtype_mid' => $relationTypeId,
 				'rel.remove_transaction_id' => null
-			), __METHOD__,
-			array( ), /* options */
-			array( 'dm' => array( 'INNER JOIN', array(
+			], __METHOD__,
+			[], /* options */
+			[ 'dm' => [ 'INNER JOIN', [
 					'rel.meaning2_mid = dm.defined_meaning_id',
 					'dm.remove_transaction_id' => null
-			)))
+			] ] ]
 		);
 	}
 
@@ -604,11 +598,11 @@ function getClassAttributeId( $classMeaningId, $levelMeaningId, $attributeMeanin
 	$classAttributeId = $dbr->selectField(
 		"{$dc}_class_attributes",
 		'object_id',
-		array( 'class_mid' => $classMeaningId,
+		[ 'class_mid' => $classMeaningId,
 			'level_mid' => $levelMeaningId,
 			'attribute_mid' => $attributeMeaningId,
 			'attribute_type' => $attributeType
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $classAttributeId ) {
@@ -636,13 +630,13 @@ function createClassAttribute( $classMeaningId, $levelMeaningId, $attributeMeani
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert(
 		"{$dc}_class_attributes",
-		array( 'object_id' => $objectId,
+		[ 'object_id' => $objectId,
 			'class_mid' => $classMeaningId,
 			'level_mid' => $levelMeaningId,
 			'attribute_mid' => $attributeMeaningId,
 			'attribute_type' => $attributeType,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -652,12 +646,12 @@ function removeClassAttributeWithId( $classAttributeId ) {
 
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_class_attributes",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'object_id' => $classAttributeId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -667,7 +661,7 @@ function getClassMembershipId( $classMemberId, $classId ) {
 	$classMembershipId = $dbr->selectField(
 		"{$dc}_class_membership",
 		'class_membership_id',
-		array( 'class_mid' => $classId, 'class_member_mid' => $classMemberId ),
+		[ 'class_mid' => $classId, 'class_member_mid' => $classMemberId ],
 		__METHOD__
 	);
 
@@ -696,11 +690,11 @@ function createClassMembership( $classMemberId, $classId ) {
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert(
 		"{$dc}_class_membership",
-		array( 'class_membership_id' => $classMembershipId,
+		[ 'class_membership_id' => $classMembershipId,
 			'class_mid' => $classId,
 			'class_member_mid' => $classMemberId,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -715,13 +709,13 @@ function removeClassMembership( $classMemberId, $classId ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_class_membership",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'class_mid' => $classId,
 			'class_member_mid' => $classMemberId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -730,12 +724,12 @@ function removeClassMembershipWithId( $classMembershipId ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_class_membership",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'class_membership_id' => $classMembershipId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -748,13 +742,13 @@ function removeSynonymOrTranslation( $definedMeaningId, $expressionId ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_syntrans",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'defined_meaning_id' => $definedMeaningId,
 			'expression_id' => $expressionId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	// this function is called only by updateSynonymOrTranslation
@@ -771,12 +765,12 @@ function removeSynonymOrTranslationWithId( $syntransId ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_syntrans",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'syntrans_sid' => $syntransId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	// check if the corresponding expression is still in use
@@ -784,20 +778,20 @@ function removeSynonymOrTranslationWithId( $syntransId ) {
 	$result = $dbw->selectField(
 		"{$dc}_syntrans",
 		'syntrans_sid',
-		array(
+		[
 			'expression_id' => $expressionId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $result == false ) {
 		// the expression is not in use anymore, remove it
 		$dbw->update( "{$dc}_expression",
-			array( /* SET */
+			[ /* SET */
 				'remove_transaction_id' => $transactionId
-			), array( /* WHERE */
+			], [ /* WHERE */
 				'expression_id' => $expressionId
-			), __METHOD__
+			], __METHOD__
 		);
 	}
 }
@@ -819,14 +813,14 @@ function updateSynonymOrTranslationWithId( $syntransId, $identicalMeaningInput )
 
 	$syntrans = $dbr->selectRow(
 		"{$dc}_syntrans",
-		array( 'defined_meaning_id', 'expression_id', 'identical_meaning' ),
-		array( 'syntrans_sid' => $syntransId, 'remove_transaction_id' => null ),
+		[ 'defined_meaning_id', 'expression_id', 'identical_meaning' ],
+		[ 'syntrans_sid' => $syntransId, 'remove_transaction_id' => null ],
 		__METHOD__
 	);
 
 	if ( $syntrans ) {
 		// transform the identical_meaning value into the string form used in the html form
-		$identicalMeaningDB = ( $syntrans->identical_meaning == 1 ) ? "true" : "false" ;
+		$identicalMeaningDB = ( $syntrans->identical_meaning == 1 ) ? "true" : "false";
 
 		// check if the "identicalMeaning" value of the database is different
 		// from the value provided as an input in the html form.
@@ -864,7 +858,7 @@ function createText( $text ) {
 	$dbw = wfGetDB( DB_MASTER );
 
 	$dbw->insert( "{$dc}_text",
-		array( 'text_text' => $text ),
+		[ 'text_text' => $text ],
 		__METHOD__
 	);
 	return $dbw->insertId();
@@ -876,12 +870,12 @@ function createTranslatedContent( $translatedContentId, $languageId, $textId ) {
 
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert( "{$dc}_translated_content",
-		array(
+		[
 			'translated_content_id' => $translatedContentId,
 			'language_id' => $languageId,
 			'text_id' => $textId,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 	return $dbw->insertId();
 }
@@ -899,11 +893,11 @@ function translatedTextExists( $textId, $languageId ) {
 	$translatedContentId = $dbr->selectField(
 		"{$dc}_translated_content",
 		'translated_content_id',
-		array(
+		[
 			'translated_content_id' => $textId,
 			'language_id' => $languageId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $translatedContentId ) {
@@ -929,10 +923,10 @@ function getDefinedMeaningDefinitionId( $definedMeaningId ) {
 	$meaningTextTcid = $dbr->selectField(
 		"{$dc}_defined_meaning",
 		'meaning_text_tcid',
-		array(
+		[
 			'defined_meaning_id' => $definedMeaningId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	return $meaningTextTcid;
@@ -942,12 +936,12 @@ function updateDefinedMeaningDefinitionId( $definedMeaningId, $definitionId ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$dc = wdGetDataSetContext();
 	$dbw->update( "{$dc}_defined_meaning",
-		array( /* SET */
+		[ /* SET */
 			'meaning_text_tcid' => $definitionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'defined_meaning_id' => $definedMeaningId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -977,12 +971,12 @@ function createDefinedMeaningAlternativeDefinition( $definedMeaningId, $translat
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert( "{$dc}_alt_meaningtexts",
-		array(
+		[
 			'meaning_mid' => $definedMeaningId,
 			'meaning_text_tcid' => $translatedContentId,
 			'source_id' => $sourceMeaningId,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -998,13 +992,13 @@ function removeTranslatedText( $translatedContentId, $languageId ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_translated_content",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'translated_content_id' => $translatedContentId,
 			'language_id' => $languageId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1013,12 +1007,12 @@ function removeTranslatedTexts( $translatedContentId ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_translated_content",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'translated_content_id' => $translatedContentId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1028,19 +1022,19 @@ function removeDefinedMeaningAlternativeDefinition( $definedMeaningId, $definiti
 	// alternative definition? There are pros and cons. For
 	// now it is easier to not remove them so they can be rolled
 	// back easier.
-//	removeTranslatedTexts($definitionId);
+// removeTranslatedTexts($definitionId);
 
 	$dc = wdGetDataSetContext();
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_alt_meaningtexts",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'meaning_text_tcid' => $definitionId,
 			'meaning_mid' => $definedMeaningId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1058,11 +1052,11 @@ function definedMeaningInCollection( $definedMeaningId, $collectionId ) {
 	$collectionId = $dbr->selectField(
 		"{$dc}_collection_contents",
 		'collection_id',
-		array(
+		[
 			'collection_id' => $collectionId,
 			'member_mid' => $definedMeaningId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 	if ( $collectionId ) {
 		return true;
@@ -1075,12 +1069,12 @@ function addDefinedMeaningToCollection( $definedMeaningId, $collectionId, $inter
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert( "{$dc}_collection_contents",
-		array(
+		[
 			'collection_id' => $collectionId,
 			'member_mid' => $definedMeaningId,
 			'internal_member_id' => $internalId,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1096,11 +1090,11 @@ function getDefinedMeaningFromCollection( $collectionId, $internalMemberId ) {
 	$memberMid = $dbr->selectField(
 		"{$dc}_collection_contents",
 		'member_mid',
-		array(
+		[
 			'collection_id' => $collectionId,
 			'internal_member_id' => $internalMemberId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 	// null if not found
 	return $memberMid;
@@ -1111,13 +1105,13 @@ function removeDefinedMeaningFromCollection( $definedMeaningId, $collectionId ) 
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_collection_contents",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'collection_id' => $collectionId,
 			'member_mid' => $definedMeaningId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1140,10 +1134,10 @@ function getCollectionMeaningId( $collectionId ) {
 	$collectionMid = $dbr->selectField(
 		"{$dc}_collection",
 		'collection_mid',
-		array(
+		[
 			'collection_id' => $collectionId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	return $collectionMid;
@@ -1155,10 +1149,10 @@ function getCollectionId( $collectionMeaningId ) {
 	$collectionId = $dbr->selectField(
 		"{$dc}_collection",
 		'collection_id',
-		array(
+		[
 			'collection_mid' => $collectionMeaningId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $collectionId ) {
@@ -1174,12 +1168,12 @@ function addCollection( $definedMeaningId, $collectionType ) {
 	$transactionId = getUpdateTransactionId();
 
 	$dbw->insert( "{$dc}_collection",
-		array(
+		[
 			'collection_id' => $collectionId,
 			'collection_mid' => $definedMeaningId,
 			'collection_type' => $collectionType,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 	return $collectionId;
 }
@@ -1191,11 +1185,11 @@ function addDefinedMeaning( $definingExpressionId ) {
 	$transactionId = getUpdateTransactionId();
 
 	$dbw->insert( "{$dc}_defined_meaning",
-		array(
+		[
 			'defined_meaning_id' => $definedMeaningId,
 			'expression_id' => $definingExpressionId,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 
 	$expression = getExpression( $definingExpressionId );
@@ -1227,13 +1221,13 @@ function createTextAttributeValue( $textValueAttributeId, $objectId, $textAttrib
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert( "{$dc}_text_attribute_values",
-		array(
+		[
 			'value_id' => $textValueAttributeId,
 			'object_id' => $objectId,
 			'attribute_mid' => $textAttributeId,
 			'text' => $text,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1242,12 +1236,12 @@ function removeTextAttributeValue( $textValueAttributeId ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_text_attribute_values",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'value_id' => $textValueAttributeId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1262,8 +1256,8 @@ function getTextValueAttribute( $textValueAttributeId ) {
 	$dbr = wfGetDB( DB_REPLICA );
 	$textAttributeValue = $dbr->selectRow(
 		"{$dc}_text_attribute_values",
-		array( 'object_id', 'attribute_mid', 'text' ),
-		array( 'value_id' => $textValueAttributeId, 'remove_transaction_id' => null ),
+		[ 'object_id', 'attribute_mid', 'text' ],
+		[ 'value_id' => $textValueAttributeId, 'remove_transaction_id' => null ],
 		__METHOD__
 	);
 
@@ -1281,12 +1275,12 @@ function getTextAttributeValueId( $objectId, $textAttributeId, $text ) {
 	$valueId = $dbr->selectField(
 		"{$dc}_text_attribute_values",
 		'value_id',
-		array(
+		[
 			'object_id' => $objectId,
 			'attribute_mid' => $textAttributeId,
 			'text' => $text,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $valueId ) {
@@ -1301,8 +1295,8 @@ function getTextAttributeValueId( $objectId, $textAttributeId, $text ) {
  */
 function getTextAttributeOptionsAttributeMidFromExpressionId( $expressionId ) {
 	$definedMeaningIds = getExpressionIdMeaningIds( $expressionId );
-	foreach ($definedMeaningIds as $definedMeaningId ) {
-		$candidate = verifyTextAttributeValueAttributeMid($definedMeaningId);
+	foreach ( $definedMeaningIds as $definedMeaningId ) {
+		$candidate = verifyTextAttributeValueAttributeMid( $definedMeaningId );
 		if ( $candidate ) {
 			return $candidate;
 		}
@@ -1321,14 +1315,14 @@ function createLinkAttributeValue( $linkValueAttributeId, $objectId, $linkAttrib
 	$dbw = wfGetDB( DB_MASTER );
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert( "{$dc}_url_attribute_values",
-		array(
+		[
 			'value_id' => $linkValueAttributeId,
 			'object_id' => $objectId,
 			'attribute_mid' => $linkAttributeId,
 			'url' => $url,
 			'label' => $label,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1338,12 +1332,12 @@ function removeLinkAttributeValue( $linkValueAttributeId ) {
 	$transactionId = getUpdateTransactionId();
 
 	$dbw->update( "{$dc}_url_attribute_values",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'value_id' => $linkValueAttributeId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1358,8 +1352,8 @@ function getLinkValueAttribute( $linkValueAttributeId ) {
 	$dbr = wfGetDB( DB_REPLICA );
 	$linkAttribute = $dbr->selectRow(
 		"{$dc}_url_attribute_values",
-		array( 'object_id', 'attribute_mid', 'url' ),
-		array( 'value_id' => $linkValueAttributeId, 'remove_transaction_id' => null ),
+		[ 'object_id', 'attribute_mid', 'url' ],
+		[ 'value_id' => $linkValueAttributeId, 'remove_transaction_id' => null ],
 		__METHOD__
 	);
 
@@ -1372,13 +1366,13 @@ function createTranslatedTextAttributeValue( $valueId, $objectId, $attributeId, 
 	$transactionId = getUpdateTransactionId();
 
 	$dbw->insert( "{$dc}_translated_content_attribute_values",
-		array(
+		[
 			'value_id' => $valueId,
 			'object_id' => $objectId,
 			'attribute_mid' => $attributeId,
 			'value_tcid' => $translatedContentId,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1397,8 +1391,8 @@ function getTranslatedTextAttribute( $valueId ) {
 
 	$translatedText = $dbr->selectRow(
 		"{$dc}_translated_content_attribute_values",
-		array( 'value_id', 'object_id', 'attribute_mid', 'value_tcid' ),
-		array( 'value_id' => $valueId, 'remove_transaction_id' => null ),
+		[ 'value_id', 'object_id', 'attribute_mid', 'value_tcid' ],
+		[ 'value_id' => $valueId, 'remove_transaction_id' => null ],
 		__METHOD__
 	);
 
@@ -1416,15 +1410,15 @@ function removeTranslatedTextAttributeValue( $valueId ) {
 	// translated content attribute? There are pros and cons. For
 	// now it is easier to not remove them so they can be rolled
 	// back easier.
-//	removeTranslatedTexts($translatedTextAttribute->value_tcid);
+// removeTranslatedTexts($translatedTextAttribute->value_tcid);
 
 	$dbw->update( "{$dc}_translated_content_attribute_values",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'value_id' => $valueId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1435,11 +1429,11 @@ function optionAttributeValueExists( $objectId, $optionId ) {
 	$valueId = $dbr->selectField(
 		"{$dc}_option_attribute_values",
 		'value_id',
-		array(
+		[
 			'object_id' => $objectId,
 			'option_id' => $optionId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $valueId ) {
@@ -1461,12 +1455,12 @@ function createOptionAttributeValue( $objectId, $optionId ) {
 	$transactionId = getUpdateTransactionId();
 
 	$dbw->insert( "{$dc}_option_attribute_values",
-		array(
+		[
 			'value_id' => $valueId,
 			'object_id' => $objectId,
 			'option_id' => $optionId,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1476,19 +1470,19 @@ function removeOptionAttributeValue( $valueId ) {
 	$transactionId = getUpdateTransactionId();
 
 	$dbw->update( "{$dc}_option_attribute_values",
-		array( /* SET */
+		[ /* SET */
 			'remove_transaction_id' => $transactionId
-		), array( /* WHERE */
+		], [ /* WHERE */
 			'value_id' => $valueId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
 /** @todo for deprecation. Use OwDatabaseAPI::getOptionAttributeOptionsOptionId instead.
  */
 function getOptionAttributeOptionsOptionId( $attributeId, $optionMeaningId, $languageId ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::getOptionAttributeOptions( $attributeId, $optionMeaningId, $languageId );
 }
 
@@ -1501,7 +1495,7 @@ function optionAttributeOptionExists( $attributeId, $optionMeaningId, $languageI
 /** @todo for deprecation. Use OwDatabaseAPI::getOptionAttributeOptions instead.
  */
 function getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option = null ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::getOptionAttributeOptions( $attributeId, null, $languageId, $options );
 }
 
@@ -1518,13 +1512,13 @@ function createOptionAttributeOption( $attributeId, $optionMeaningId, $languageI
 	$transactionId = getUpdateTransactionId();
 
 	$dbw->insert( "{$dc}_option_attribute_options",
-		array(
+		[
 			'option_id' => $optionId,
 			'attribute_id' => $attributeId,
 			'option_mid' => $optionMeaningId,
 			'language_id' => $languageId,
 			'add_transaction_id' => $transactionId
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -1536,26 +1530,26 @@ function removeOptionAttributeOption( $optionId ) {
 	$valueId = $dbw->selectField(
 		"{$dc}_option_attribute_values",
 		'value_id',
-		array(
+		[
 			'option_id' => $optionId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
-	if ( $valueId == false ){
+	if ( $valueId == false ) {
 		// option not used, can proceed to delete
-		$transactionId = getUpdateTransactionId() ;
+		$transactionId = getUpdateTransactionId();
 		$dbw->update(
 			"{$dc}_option_attribute_options",
-			array( /* SET */
+			[ /* SET */
 				'remove_transaction_id' => $transactionId
-			), array( /* WHERE */
+			], [ /* WHERE */
 				'option_id' => $optionId,
 				'remove_transaction_id' => null
-			), __METHOD__
+			], __METHOD__
 		);
 	} else {
-		echo "\nThe option $optionId cannot be deleted because it is still in use!\n" ;
+		echo "\nThe option $optionId cannot be deleted because it is still in use!\n";
 	}
 }
 
@@ -1564,10 +1558,9 @@ function removeOptionAttributeOption( $optionId ) {
  * acquired through expression_id.
  * returns null if empty
  */
-function getOptionAttributeOptionsAttributeIdFromExpressionId ( $expressionId, $classMid, $levelMeaningId ) {
+function getOptionAttributeOptionsAttributeIdFromExpressionId( $expressionId, $classMid, $levelMeaningId ) {
 	$definedMeaningIds = getExpressionIdMeaningIds( $expressionId );
-	foreach ($definedMeaningIds as $definedMeaningId ) {
-
+	foreach ( $definedMeaningIds as $definedMeaningId ) {
 		$objectId = getOptionAttributeOptionsAttributeIdFromDM( $definedMeaningId, $classMid, $levelMeaningId );
 
 		if ( !$objectId && $classMid <> -1 ) {
@@ -1597,31 +1590,30 @@ function getOptionAttributeOptionsAttributeIdFromDM( $definedMeaningId, $classMi
 	 * if there is a possibility of a two dm attribute.
 	 */
 	if ( $classMid == -1 ) {
-		$arrayIs = array(
+		$arrayIs = [
 			'attribute_mid' => $definedMeaningId,
 			'object_id = attribute_id',
 			'attribute_type' => "OPTN",
 			'level_mid' => $levelMeaningId,
 			'ca.remove_transaction_id' => null
-		);
+		];
 	} else {
-		$arrayIs = array(
+		$arrayIs = [
 			'attribute_mid' => $definedMeaningId,
 			'object_id = attribute_id',
 			'class_mid' => $classMid,
 			'attribute_type' => "OPTN",
 			'level_mid' => $levelMeaningId,
 			'ca.remove_transaction_id' => null
-		);
+		];
 	}
 	$objectId = $dbr->selectField(
-		array(
+		[
 			'ca' => "{$dc}_class_attributes",
 			'ovo' => "{$dc}_option_attribute_options"
-		),
+		],
 		'object_id',
-		$arrayIs
-		, __METHOD__
+		$arrayIs, __METHOD__
 	);
 
 	if ( $objectId ) {
@@ -1635,10 +1627,10 @@ function getOptionAttributeOptionsAttributeIdFromDM( $definedMeaningId, $classMi
  * acquired through expression_id.
  * returns null if empty
  */
-function getOptionAttributeOptionsOptionMidFromExpressionId ( $expressionId ) {
+function getOptionAttributeOptionsOptionMidFromExpressionId( $expressionId ) {
 	$definedMeaningIds = getExpressionIdMeaningIds( $expressionId );
-	foreach ($definedMeaningIds as $definedMeaningId ) {
-		if ( $candidate = verifyOptionAttributeOptionsOptionMid($definedMeaningId) ) {
+	foreach ( $definedMeaningIds as $definedMeaningId ) {
+		if ( $candidate = verifyOptionAttributeOptionsOptionMid( $definedMeaningId ) ) {
 			$optionMeaningId = $candidate;
 		}
 	}
@@ -1658,11 +1650,11 @@ function getOptionAttributeValueId( $objectId, $optionId ) {
 	$valueId = $dbr->selectField(
 		"{$dc}_option_attribute_values",
 		'value_id',
-		array(
+		[
 			'object_id' => $objectId,
 			'option_id' => $optionId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $valueId ) {
@@ -1674,7 +1666,7 @@ function getOptionAttributeValueId( $objectId, $optionId ) {
 /** @todo for deprecation. use OwDatabaseAPI::getDefinedMeaningSpelling instead.
  */
 function getDefinedMeaningSpelling( $definedMeaningId, $languageId = null, $dc = null ) {
-	return OwDatabaseAPI::getDefinedMeaningSpelling( $definedMeaningId, $languageId , $dc );
+	return OwDatabaseAPI::getDefinedMeaningSpelling( $definedMeaningId, $languageId, $dc );
 }
 
 /** @brief a spelling that is one of the possible translations of a given DM
@@ -1701,16 +1693,16 @@ function getDefinedMeaningSpellingLanguageId( $definedMeaning ) {
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$languageId = $dbr->selectField(
-		array(
+		[
 			"{$dc}_expression" ,
 			"{$dc}_syntrans"
-		),
+		],
 		'language_id',
-		array(
+		[
 			"{$dc}_syntrans.defined_meaning_id" => $definedMeaning,
 			"{$dc}_expression.expression_id = {$dc}_syntrans.expression_id",
 			"{$dc}_syntrans.remove_transaction_id" => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $languageId ) {
@@ -1726,17 +1718,17 @@ function getLanguageIdForDefinedMeaningAndExpression( $definedMeaningId, $spelli
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_REPLICA );
 	$languageId = $dbr->selectField(
-		array(
+		[
 			'exp' => "{$dc}_expression",
 			'st' => "{$dc}_syntrans"
-		),
+		],
 		'language_id',
-		array(
+		[
 			'defined_meaning_id' => $definedMeaningId,
 			'spelling' => $spelling,
 			'st.expression_id = exp.expression_id',
 			'st.remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $languageId ) {
@@ -1758,20 +1750,20 @@ function getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId,
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$text = $dbr->selectField(
-		array(
+		[
 			'dm' => "{$dc}_defined_meaning",
 			'tc' => "{$dc}_translated_content",
 			't' => "{$dc}_text"
-		),
+		],
 		'text_text',
-		array(
+		[
 			'dm.defined_meaning_id' => $definedMeaningId,
 			'dm.remove_transaction_id' => null,
 			'tc.remove_transaction_id' => null,
 			'dm.meaning_text_tcid = tc.translated_content_id',
 			'tc.language_id' => $languageId,
 			't.text_id = tc.text_id'
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $text ) {
@@ -1790,19 +1782,19 @@ function getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId ) {
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$text = $dbr->selectField(
-		array(
+		[
 			'dm' => "{$dc}_defined_meaning",
 			'tc' => "{$dc}_translated_content",
 			't' => "{$dc}_text"
-		),
+		],
 		'text_text',
-		array(
+		[
 			'dm.defined_meaning_id' => $definedMeaningId,
 			'dm.remove_transaction_id' => null,
 			'tc.remove_transaction_id' => null,
 			'dm.meaning_text_tcid = tc.translated_content_id',
 			't.text_id = tc.text_id'
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $text ) {
@@ -1817,7 +1809,7 @@ function getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId ) {
  * @param $definedMeaningId
  */
 function getDefinedMeaningDefinition( $definedMeaningId ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+	require_once 'OmegaWikiDatabaseAPI.php';
 	$userLanguageId = OwDatabaseAPI::getUserLanguageId();
 	$result = '';
 	if ( $userLanguageId > 0 ) {
@@ -1844,19 +1836,19 @@ function getDefinedMeaningDefinitionLanguageForAnyLanguage( $definedMeaningId ) 
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$languageId = $dbr->selectField(
-		array(
+		[
 			'dm' => "{$dc}_defined_meaning",
 			'tc' => "{$dc}_translated_content",
 			't' => "{$dc}_text"
-		),
+		],
 		'tc.language_id',
-		array(
+		[
 			'dm.defined_meaning_id' => $definedMeaningId,
 			'dm.remove_transaction_id' => null,
 			'tc.remove_transaction_id' => null,
 			'dm.meaning_text_tcid = tc.translated_content_id',
 			't.text_id = tc.text_id'
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $languageId ) {
@@ -1870,20 +1862,20 @@ function getDefinedMeaningDefinitionLanguageIdForDefinition( $definedMeaningId, 
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$languageId = $dbr->selectField(
-		array(
+		[
 			'dm' => "{$dc}_defined_meaning",
 			'tc' => "{$dc}_translated_content",
 			't' => "{$dc}_text"
-		),
+		],
 		'tc.language_id',
-		array(
+		[
 			'dm.defined_meaning_id' => $definedMeaningId,
 			'dm.remove_transaction_id' => null,
 			'tc.remove_transaction_id' => null,
 			'dm.meaning_text_tcid = tc.translated_content_id',
 			't.text_id = tc.text_id',
 			't.text_text' => $text
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $languageId ) {
@@ -1893,26 +1885,23 @@ function getDefinedMeaningDefinitionLanguageIdForDefinition( $definedMeaningId, 
 }
 
 /**
-* returns one of the possible translations of
-* a given DefinedMeaning ( $definedMeaningId )
-* preferably in a given language ( $languageCode )
-* or in English otherwise.
-* null if not found
-*/
-function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = WLD_ENGLISH_LANG_WMKEY, $dc = null, $options = array() ) {
-
+ * returns one of the possible translations of
+ * a given DefinedMeaning ( $definedMeaningId )
+ * preferably in a given language ( $languageCode )
+ * or in English otherwise.
+ * null if not found
+ */
+function getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = WLD_ENGLISH_LANG_WMKEY, $dc = null, $options = [] ) {
 	$userLanguageId = getLanguageIdForCode( $languageCode );
 	$fallbackLanguageId = getLanguageIdForCode( $fallbackLanguageCode );
 
 	return getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallbackLanguageId, $dc, $options );
-
 }
 
 function getSpellingForUserLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode = WLD_ENGLISH_LANG_WMKEY, $dc = null ) {
-
 	// @note There are functions that need this check due to user and lang globals issue. ~he
 	$languageCode = checkLanguageCode( $languageCode );
-	$options = array( 'identical' => true );
+	$options = [ 'identical' => true ];
 	return getSpellingForLanguage( $definedMeaningId, $languageCode, $fallbackLanguageCode, $dc, $options );
 }
 
@@ -1923,7 +1912,7 @@ function checkLanguageCode( $languageCode ) {
 	if ( !$userLanguageId = getLanguageIdForCode( $languageCode ) ) {
 		global $wgLang;
 		if ( $languageCode == $wgLang->getCode() ) {
-			require_once( 'OmegaWikiDatabaseAPI.php' );
+			require_once 'OmegaWikiDatabaseAPI.php';
 			$languageCode = OwDatabaseAPI::getLanguageCodeForIso639_3( $languageCode );
 		} else {
 			$languageCode = $wgLang->getCode();
@@ -1934,30 +1923,30 @@ function checkLanguageCode( $languageCode ) {
 }
 
 /**
-* returns one of the possible translations of
-* a given DefinedMeaning ( $definedMeaningId )
-* preferably in a given language ( $languageId )
-* or in English otherwise.
-* null if not found
-*/
-function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallbackLanguageId = WLD_ENGLISH_LANG_ID, $dc = null, $options = array() ) {
-	if ( is_null ( $dc ) ) {
+ * returns one of the possible translations of
+ * a given DefinedMeaning ( $definedMeaningId )
+ * preferably in a given language ( $languageId )
+ * or in English otherwise.
+ * null if not found
+ */
+function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallbackLanguageId = WLD_ENGLISH_LANG_ID, $dc = null, $options = [] ) {
+	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext( $dc );
 	}
 	$dbr = wfGetDB( DB_REPLICA );
 
 	# wfDebug("User language: $userLanguageId\n");
 
-	$table = array(
+	$table = [
 		'synt' => "{$dc}_syntrans",
 		'exp' => "{$dc}_expression"
-	);
-	$whereTemplate = array(
+	];
+	$whereTemplate = [
 		"synt.defined_meaning_id" => $definedMeaningId,
 		"exp.expression_id = synt.expression_id",
 		"exp.remove_transaction_id" => null,
 		"synt.remove_transaction_id" => null
-	);
+	];
 
 	if ( isset( $options['identical'] ) ) {
 		if ( $options['identical'] ) {
@@ -2021,21 +2010,21 @@ function isClass( $objectId ) {
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$collectionId = $dbr->selectField(
-		array(
+		[
 			'cont' => "{$dc}_collection_contents",
 			'col' => "{$dc}_collection"
-		),
+		],
 		'col.collection_id',
-		array(
+		[
 			'cont.member_mid' => $objectId,
 			'cont.remove_transaction_id' => null
-		), __METHOD__,
-		array(),
-		array( 'col' => array( 'INNER JOIN', array(
+		], __METHOD__,
+		[],
+		[ 'col' => [ 'INNER JOIN', [
 			'col.collection_id = cont.collection_id',
-			'col.collection_type' => array( 'CLAS', 'LANG' ),
+			'col.collection_type' => [ 'CLAS', 'LANG' ],
 			'col.remove_transaction_id' => null
-		)))
+		] ] ]
 	);
 
 	if ( $collectionId ) {
@@ -2054,13 +2043,13 @@ function getCollectionContents( $collectionId ) {
 
 	$queryResult = $dbr->query(
 		selectLatest(
-			array( $wgWikidataDataSet->collectionMemberships->memberMid, $wgWikidataDataSet->collectionMemberships->internalMemberId ),
-			array( $wgWikidataDataSet->collectionMemberships ),
-			array( equals( $wgWikidataDataSet->collectionMemberships->collectionId, $collectionId ) )
+			[ $wgWikidataDataSet->collectionMemberships->memberMid, $wgWikidataDataSet->collectionMemberships->internalMemberId ],
+			[ $wgWikidataDataSet->collectionMemberships ],
+			[ equals( $wgWikidataDataSet->collectionMemberships->collectionId, $collectionId ) ]
 		)
 	);
 
-	$collectionContents = array();
+	$collectionContents = [];
 
 	while ( $collectionEntry = $dbr->fetchObject( $queryResult ) ) {
 		$collectionContents[$collectionEntry->internal_member_id] = $collectionEntry->member_mid;
@@ -2077,17 +2066,17 @@ function getCollectionContents( $collectionId ) {
  * @param unknown_type $dc
  */
 function getCollectionMembers( $collectionId, $dc = null ) {
-	$memberMids = array();
+	$memberMids = [];
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$result = $dbr->select(
 		"{$dc}_collection_contents",
 		'member_mid',
-		array(
+		[
 			'collection_id' => $collectionId,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	foreach ( $result as $row ) {
@@ -2104,11 +2093,11 @@ function getCollectionMemberId( $collectionId, $sourceIdentifier ) {
 	$memberMid = $dbr->selectField(
 		"{$dc}_collection_contents",
 		'member_mid',
-		array(
+		[
 			'collection_id' => $collectionId,
 			'internal_member_id' => $sourceIdentifier,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $memberMid ) {
@@ -2124,10 +2113,10 @@ function getAnyDefinedMeaningWithSourceIdentifier( $sourceIdentifier ) {
 	$memberMid = $dbr->selectField(
 		"{$dc}_collection_contents",
 		'member_mid',
-		array(
+		[
 			'internal_member_id' => $sourceIdentifier,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $memberMid ) {
@@ -2139,38 +2128,38 @@ function getAnyDefinedMeaningWithSourceIdentifier( $sourceIdentifier ) {
 /** @todo for deprecation. use OwDatabaseAPI::getExpressionMeaningIds instead.
  */
 function getExpressionMeaningIds( $spelling, $dc = null ) {
-	return OwDatabaseAPI::getExpressionMeaningIds( $spelling, array( 'dc' => $dc ) );
+	return OwDatabaseAPI::getExpressionMeaningIds( $spelling, [ 'dc' => $dc ] );
 }
 
 /** @todo for deprecation. use OwDatabaseAPI::getExpressionMeaningIdsForLanguages instead.
  */
 function getExpressionMeaningIdsForLanguages( $spelling, $languageIds, $dc = null ) {
-	return OwDatabaseAPI::getExpressionMeaningIdsForLanguages( $spelling, $languageIds, array( 'dc' => $dc ) );
+	return OwDatabaseAPI::getExpressionMeaningIdsForLanguages( $spelling, $languageIds, [ 'dc' => $dc ] );
 }
 
 /** Get Defined Meaning Ids from Expression Id
  */
-function getExpressionIdMeaningIds($expressionId, $dc = null) {
+function getExpressionIdMeaningIds( $expressionId, $dc = null ) {
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$queryResult = $dbr->select(
-		array(
+		[
 			'exp' => "{$dc}_expression",
 			'synt' => "{$dc}_syntrans"
-		),
+		],
 		'defined_meaning_id',
-		array(
+		[
 			'exp.expression_id' => $expressionId,
 			'exp.remove_transaction_id' => null,
 			'synt.remove_transaction_id' => null,
 			'exp.expression_id = synt.expression_id'
-		), __METHOD__
+		], __METHOD__
 	);
 
-	$dmlist = array();
+	$dmlist = [];
 
 	foreach ( $queryResult as $synonymRecord ) {
 		$dmlist[] = $synonymRecord->defined_meaning_id;
@@ -2184,7 +2173,7 @@ function getExpressionIdMeaningIds($expressionId, $dc = null) {
  * array("dataset_prefix"=>defined_meaning_id,...)
  * @returns: assoc array of uuids used for mapping. (typically you can just
  *           discard this, but it is used in copy.php for objects table support
- *	     array values set to -1 were not mapped.
+ * 	     array values set to -1 were not mapped.
  */
 
 function createConceptMapping( $concepts, $override_transaction = null ) {
@@ -2204,10 +2193,10 @@ function getMapping( $dc, $collid, $dm_id ) {
 	$internalMemberId = $dbr->selectField(
 		"{$dc}_collection_contents",
 		'internal_member_id',
-		array(
+		[
 			'collection_id' => $collid,
 			'member_mid' => $dm_id
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $internalMemberId ) {
@@ -2221,7 +2210,7 @@ function getMapping( $dc, $collid, $dm_id ) {
 function getUUID( $concepts ) {
 	$dbr = wfGetDB( DB_REPLICA );
 
-	$uuid_array = array();
+	$uuid_array = [];
 	$uuid = - 1;
 
 	foreach ( $concepts as $dc => $dm_id ) {
@@ -2252,10 +2241,10 @@ function getCollectionIdForDC( $dc ) {
 	$collectionId = $dbr->selectField(
 		"{$dc}_collection",
 		'collection_id',
-		array(
+		[
 			'collection_type' => 'MAPP',
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $collectionId ) {
@@ -2269,7 +2258,7 @@ function getCollectionIdForDC( $dc ) {
 function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction = null ) {
 	global $wgUser, $wgRequest;
 	// if(is_null($dc)) {
-	//	$dc=wdGetDataSetContext();
+	// $dc=wdGetDataSetContext();
 	// }
 	$dbw = wfGetDB( DB_MASTER );
 
@@ -2281,12 +2270,12 @@ function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction
 
 	$dbw->insert(
 		"{$dc}_collection_contents",
-		array(
+		[
 			'collection_id' => $collid,
 			'internal_member_id' => $uuid,
 			'member_mid' => $dm_id,
 			'add_transaction_id' => $add_transaction_id
-		), __METHOD__
+		], __METHOD__
 	);
 }
 
@@ -2305,7 +2294,7 @@ function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction
 function &readConceptMapping( $concept_id ) {
 	$dbr = wfGetDB( DB_REPLICA );
 	$sets = wdGetDataSets();
-	$map = array();
+	$map = [];
 
 	foreach ( $sets as $key => $set ) {
 		# wfdebug ("$key => $set");
@@ -2315,10 +2304,10 @@ function &readConceptMapping( $concept_id ) {
 		$memberMid = $dbr->selectField(
 			"{$dc}_collection_contents",
 			'member_mid',
-			array(
+			[
 				'collection_id' => $collection_id,
 				'internal_member_id' => $concept_id
-			), __METHOD__
+			], __METHOD__
 		);
 		if ( $memberMid ) {
 			$map[$dc] = $memberMid;
@@ -2337,10 +2326,10 @@ function getConceptId( $dm, $dc ) {
 	$internalMemberId = $dbr->selectField(
 		"{$dc}_collection_contents",
 		'internal_member_id',
-		array(
+		[
 			'member_mid' => $dm,
 			'collection_id' => $collection_id
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $internalMemberId ) {
@@ -2357,21 +2346,21 @@ function &getAssociatedByConcept( $dm, $dc ) {
 function &getDataSetsAssociatedByConcept( $dm, $dc ) {
 	$map = getAssociatedByConcept( $dm, $dc );
 	$sets = wdGetDataSets();
-	$newSets = array();
+	$newSets = [];
 	foreach ( $map as $map_dc => $map_dm ) {
 		$dataset = $sets[$map_dc];
-	#	$dataset->setDefinedMeaningId($map_dm);
+	# $dataset->setDefinedMeaningId($map_dm);
 		$newSets[$map_dc] = $dataset;
 	}
 	return $newSets;
 }
 
 function &getDefinedMeaningDataAssociatedByConcept( $dm, $dc ) {
-	$meanings = array();
+	$meanings = [];
 	$map = getDataSetsAssociatedByConcept( $dm, $dc );
 	$dm_map = getAssociatedByConcept( $dm, $dc );
 	foreach ( $map as $map_dc => $map_dataset ) {
-		$dmModel = new DefinedMeaningModel( $dm_map[$map_dc], array( "dataset" => $map_dataset ) );
+		$dmModel = new DefinedMeaningModel( $dm_map[$map_dc], [ "dataset" => $map_dataset ] );
 		$meanings[$map_dc] = $dmModel;
 	}
 	return $meanings;
@@ -2384,21 +2373,21 @@ function definingExpressionRow( $definedMeaningId, $dc = null ) {
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$expression = $dbr->selectRow(
-		array(
+		[
 			'dm' => "{$dc}_defined_meaning",
 			'exp' => "{$dc}_expression"
-		),
-		array( 'exp.expression_id', 'spelling', 'language_id' ),
-		array(
+		],
+		[ 'exp.expression_id', 'spelling', 'language_id' ],
+		[
 			'dm.defined_meaning_id' => $definedMeaningId,
 			'exp.expression_id = dm.expression_id',
 			'dm.remove_transaction_id' => null,
 			'exp.remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $expression ) {
-		return array( $expression->expression_id, $expression->spelling, $expression->language_id );
+		return [ $expression->expression_id, $expression->spelling, $expression->language_id ];
 	}
 	return null;
 }
@@ -2408,7 +2397,7 @@ function definingExpressionRow( $definedMeaningId, $dc = null ) {
  */
 function definingExpression( $definedMeaningId, $dc = null ) {
 	echo __METHOD__ . ' is deprecated';
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::definingExpression( $definedMeaningId, $dc );
 }
 
@@ -2416,7 +2405,7 @@ function definingExpression( $definedMeaningId, $dc = null ) {
  * @deprecated use OwDatabaseAPI::getDefinedMeaningExpressionForLanguage instead
  */
 function definedMeaningExpressionForLanguage( $definedMeaningId, $languageId ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::getDefinedMeaningExpressionForLanguage( $definedMeaningId, $languageId );
 }
 
@@ -2424,7 +2413,7 @@ function definedMeaningExpressionForLanguage( $definedMeaningId, $languageId ) {
  * @deprecated use OwDatabaseAPI::getDefinedMeaningExpressionForAnyLanguage instead
  */
 function definedMeaningExpressionForAnyLanguage( $definedMeaningId ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::getDefinedMeaningExpressionForAnyLanguage( $definedMeaningId );
 }
 
@@ -2432,7 +2421,7 @@ function definedMeaningExpressionForAnyLanguage( $definedMeaningId ) {
  * @deprecated use OwDatabaseAPI::getDefinedMeaningExpression instead.
  */
 function definedMeaningExpression( $definedMeaningId ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::getDefinedMeaningExpression( $definedMeaningId );
 }
 
@@ -2443,7 +2432,7 @@ function getTextValue( $textId ) {
 	$text = $dbr->selectField(
 		"{$dc}_text",
 		'text_text',
-		array( 'text_id' => $textId ),
+		[ 'text_id' => $textId ],
 		__METHOD__
 	);
 
@@ -2468,24 +2457,24 @@ function getExpressions( $spelling, $dc = null ) {
 
 	// when the remove_transaction_id will be automatically updated,
 	// we can get rid of using the syntrans table
-	$cond = array(
+	$cond = [
 		'spelling' => $spelling,
 		'exp.remove_transaction_id' => null
-	);
+	];
 	if ( ! empty( $langsubset ) ) {
 		$cond['language_id'] = $langsubset;
 	}
 
 	$queryResult = $dbr->select(
-		array(
+		[
 			'exp' => "{$dc}_expression"
-		),
-		array( 'exp.expression_id', 'spelling', 'language_id' ),
+		],
+		[ 'exp.expression_id', 'spelling', 'language_id' ],
 		$cond,
 		__METHOD__
 	);
 
-	$rv = array();
+	$rv = [];
 	foreach ( $queryResult as $exp ) {
 		$rv[] = new Expression( $exp->expression_id, $exp->spelling, $exp->language_id );
 	}
@@ -2520,15 +2509,15 @@ class ClassAttributes {
 
 		global $wgDefaultClassMids, $wgWikidataDataSet;
 		$queryResult = $dbr->select(
-			array( 'ca' => "{$dc}_class_attributes", 'bdm' => "{$dc}_bootstrapped_defined_meanings" ),
-			array( 'DISTINCT ca.attribute_mid', 'ca.attribute_type', 'bdm.name' ),
-			array(
+			[ 'ca' => "{$dc}_class_attributes", 'bdm' => "{$dc}_bootstrapped_defined_meanings" ],
+			[ 'DISTINCT ca.attribute_mid', 'ca.attribute_type', 'bdm.name' ],
+			[
 				'ca.level_mid = bdm.defined_meaning_id',
 				'ca.remove_transaction_id' => null
-			), __METHOD__
+			], __METHOD__
 		);
 
-		$this->classAttributes = array();
+		$this->classAttributes = [];
 
 		foreach ( $queryResult as $row ) {
 			$classAttribute = new ClassAttribute();
@@ -2543,7 +2532,7 @@ class ClassAttributes {
 	/** returns the Class Attribute Object that has the given levelName and type
 	 */
 	public function filterClassAttributesOnLevelAndType( $levelName, $type ) {
-		$result = array();
+		$result = [];
 
 		foreach ( $this->classAttributes as $classAttribute ) {
 			if ( $classAttribute->levelName == $levelName && $classAttribute->type == $type ) {
@@ -2557,7 +2546,7 @@ class ClassAttributes {
 	/** returns the Class Attribute Object that has the given levelName
 	 */
 	public function filterClassAttributesOnLevel( $levelName ) {
-		$result = array();
+		$result = [];
 
 		foreach ( $this->classAttributes as $classAttribute ) {
 			if ( $classAttribute->levelName == $levelName ) {
@@ -2575,7 +2564,7 @@ class ClassAttributes {
  * @todo refactor all functions that uses this function to the latest method. ~he
  */
 function verifyColumn( $table, $column, $value, $isDc ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::verifyColumn( $table, $column, $value, $isDc );
 }
 
@@ -2589,9 +2578,9 @@ function verifyLanguageId( $languageId ) {
 	$existId = $dbr->selectField(
 		'language',
 		'language_id',
-		array(
+		[
 			'language_id' => $languageId,
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $existId ) {
@@ -2606,7 +2595,7 @@ function verifyLanguageId( $languageId ) {
  * @todo refactor all functions that uses this function to the latest method. ~he
  */
 function verifyDefinedMeaningId( $definedMeaningId ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::verifyDefinedMeaningId( $definedMeaningId );
 }
 
@@ -2615,7 +2604,7 @@ function verifyDefinedMeaningId( $definedMeaningId ) {
  * null if not found
  */
 function verifyTextAttributeValueAttributeMid( $attributeMid ) {
-	return verifyColumn('text_attribute_values', 'attribute_mid', $attributeMid, 1 );
+	return verifyColumn( 'text_attribute_values', 'attribute_mid', $attributeMid, 1 );
 }
 
 /**
@@ -2623,8 +2612,8 @@ function verifyTextAttributeValueAttributeMid( $attributeMid ) {
  * null if not found
  */
 function verifyOptionAttributeOptionsAttributeId( $attributeId ) {
-//	return verifyColumn('option_attribute_options', 'attribute_id', $attributeId, 1 );
-	return verifyColumn('class_attribute', 'attribute_mid', $attributeId, 1 );
+// return verifyColumn('option_attribute_options', 'attribute_id', $attributeId, 1 );
+	return verifyColumn( 'class_attribute', 'attribute_mid', $attributeId, 1 );
 }
 
 /**
@@ -2632,11 +2621,11 @@ function verifyOptionAttributeOptionsAttributeId( $attributeId ) {
  * null if not found
  */
 function verifyOptionAttributeOptionsOptionMid( $optionMeaningId ) {
-	return verifyColumn('option_attribute_options', 'option_mid', $optionMeaningId, 1 );
+	return verifyColumn( 'option_attribute_options', 'option_mid', $optionMeaningId, 1 );
 }
 
 function verifyRelationtypeMId( $relationtypeMid ) {
-	return verifyColumn('meaning_relations', 'relationtype_mid', $relationtypeMid, 1 );
+	return verifyColumn( 'meaning_relations', 'relationtype_mid', $relationtypeMid, 1 );
 }
 
 function getDefinedMeaningIdFromExpressionIdAndLanguageId( $expressionId, $languageId ) {
@@ -2644,21 +2633,21 @@ function getDefinedMeaningIdFromExpressionIdAndLanguageId( $expressionId, $langu
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$queryResult = $dbr->select(
-		array(
+		[
 			'exp' => "{$dc}_expression",
 			'synt' => "{$dc}_syntrans"
-		),
+		],
 		'defined_meaning_id',
-		array(
+		[
 			'synt.expression_id' => $expressionId,
 			'language_id' => $languageId,
 			'exp.remove_transaction_id' => null,
 			'synt.remove_transaction_id' => null,
 			'exp.expression_id = synt.expression_id'
-		), __METHOD__
+		], __METHOD__
 	);
 
-	$dmlist = array();
+	$dmlist = [];
 
 	foreach ( $queryResult as $synonymRecord ) {
 		$dmlist[] = $synonymRecord->defined_meaning_id;
@@ -2681,45 +2670,44 @@ class Collections {
 		$dbr = wfGetDB( DB_REPLICA );
 
 		$queryResult = $dbr->select(
-			array(
+			[
 				'exp' => "{$dc}_expression",
 				'synt' => "{$dc}_syntrans",
 				'cc' => "{$dc}_collection_contents"
-			),
+			],
 			'collection_id',
-			array(
+			[
 				'member_mid' => $definedMeaningId,
 				'exp.remove_transaction_id' => null,
 				'synt.remove_transaction_id' => null,
 				'cc.remove_transaction_id' => null,
 				'exp.expression_id = synt.expression_id',
 				'synt.defined_meaning_id = member_mid'
-			), __METHOD__,
-			array(
+			], __METHOD__,
+			[
 				'DISTINCT'
-			)
+			]
 		);
 
-		$expressions = array();
+		$expressions = [];
 
 		foreach ( $queryResult as $collectionId ) {
 			$definedMeaningId = getCollectionMeaningId( $collectionId->collection_id );
 			$tempExpressions = Expressions::getDefinedMeaningIdAndLanguageIdExpressions( $languageId, $definedMeaningId );
-			if ( $tempExpressions ){
-				$expressions[] = array(
+			if ( $tempExpressions ) {
+				$expressions[] = [
 					'expression' => $tempExpressions[0],
 					'definedMeaningId' => $definedMeaningId
-				);
+				];
 			} else {
-				$expressions[] = array(
+				$expressions[] = [
 					'expression' => '',
 					'definedMeaningId' => $definedMeaningId
-				);
+				];
 			}
 		}
 
 		return $expressions;
-
 	}
 }
 
@@ -2743,43 +2731,42 @@ class WLD_Class {
 		$Expressions = new Expressions;
 
 		$queryResult = $dbr->select(
-			array(
+			[
 				'exp' => "{$dc}_expression",
 				'synt' => "{$dc}_syntrans",
 				'cm' => "{$dc}_class_membership"
-			),
+			],
 			'class_mid',
-			array(
+			[
 				'class_member_mid' => $definedMeaningId,
 				'exp.remove_transaction_id' => null,
 				'synt.remove_transaction_id' => null,
 				'cm.remove_transaction_id' => null,
 				'exp.expression_id = synt.expression_id',
 				'synt.defined_meaning_id = class_mid'
-			), __METHOD__,
-			array(
+			], __METHOD__,
+			[
 				'DISTINCT'
-			)
+			]
 		);
 
-		$expressions = array();
+		$expressions = [];
 
 		foreach ( $queryResult as $definedMeaningId ) {
 			$tempExpressions = Expressions::getDefinedMeaningIdAndLanguageIdExpressions( $languageId, $definedMeaningId->class_mid );
-			if ( $tempExpressions ){
-				$expressions[] = array(
+			if ( $tempExpressions ) {
+				$expressions[] = [
 					'expression' => $tempExpressions[0],
 					'definedMeaningId' => $definedMeaningId->class_mid
-				);
+				];
 			} else {
-				$expressions[] = array(
+				$expressions[] = [
 					'expression' => '',
 					'definedMeaningId' => $definedMeaningId->class_mid
-				);
+				];
 			}
 		}
 
 		return $expressions;
-
 	}
 }

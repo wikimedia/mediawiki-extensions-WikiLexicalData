@@ -3,7 +3,7 @@
 
 /*
  * Created on 9 nov 2007
- * 
+ *
  * Base formatter for WikiData defined meanings.
  *
  * Copyright (C) 2007 Edia <info@edia.nl>
@@ -30,38 +30,38 @@ abstract class ApiWikiDataFormatBase extends ApiFormatBase {
 	protected $excluded;
 	protected $languages;
 	protected $errorMessages;
-	
+
 	public function __construct( $main, $format ) {
-		parent :: __construct( $main, $format );
-		$this->dmRecords = array();
-		$this->languages = array();
-		$this->excluded = array();
-		$this->errorMessages = array();
+		parent::__construct( $main, $format );
+		$this->dmRecords = [];
+		$this->languages = [];
+		$this->excluded = [];
+		$this->errorMessages = [];
 	}
-	
+
 	public function addDefinedMeaningRecord( & $dm ) {
 		$this->dmRecords[] = $dm;
 	}
-	
+
 	public function & getDefinedMeaningRecords() {
 		return $this->dmRecords;
 	}
-	
+
 	public function addOutputLanguageId( $id ) {
 		$this->languages[] = $id;
 	}
-	
+
 	public function & getOutputLanguageIds() {
 		return $this->languages;
 	}
-	
+
 	public function addErrorMessage( $message ) {
 		$this->errorMessages[] = $message;
 	}
-	
+
 	/**
-	 * Exclude everything. 
-	 * Standard behaviour is to include everything. If you want to start 
+	 * Exclude everything.
+	 * Standard behaviour is to include everything. If you want to start
 	 * from nothing and then include specific things, call this method first.
 	 */
 	public function excludeAll() {
@@ -75,11 +75,11 @@ abstract class ApiWikiDataFormatBase extends ApiFormatBase {
 		$this->setIncludeSynTrans( false );
 		$this->setIncludeSynTransAnnotations( false );
 	}
-	
+
 	public function setIncludeDefinitions( $include ) {
 		$this->setInclude( 'definition', $include );
 	}
-	
+
 	public function isIncludeDefinitions() {
 		return $this->isInclude( 'definition' );
 	}
@@ -88,7 +88,7 @@ abstract class ApiWikiDataFormatBase extends ApiFormatBase {
 	public function setIncludeAltDefinitions( $include ) {
 		$this->setInclude( 'alternative-definitions', $include );
 	}
-	
+
 	public function isIncludeAltDefinitions() {
 		return $this->isInclude( 'alternative-definitions' );
 	}
@@ -97,70 +97,69 @@ abstract class ApiWikiDataFormatBase extends ApiFormatBase {
 	public function setIncludeSynTrans( $include ) {
 		$this->setInclude( 'synonyms-translations', $include );
 	}
-	
+
 	public function isIncludeSynTrans() {
 		return $this->isInclude( 'synonyms-translations' );
 	}
-	
+
 	/** Include annotations of synonyms and translations such as part of speech. */
 	public function setIncludeSynTransAnnotations( $include ) {
 		$this->setInclude( 'option-attribute-values', $include );
 	}
-	
+
 	public function isIncludeSynTransAnnotations() {
 		return $this->isInclude( 'option-attribute-values' );
 	}
-	
+
 	public function setIncludeClassAttributes( $include ) {
 		$this->setInclude( 'class-attributes', $include );
 	}
-	
+
 	public function isIncludeClassAttributes() {
 		return $this->isInclude( 'class-attributes' );
 	}
-	
+
 	/** Include annotations of the defined meaning itself, such as part of theme. */
 	public function setIncludeAnnotations( $include ) {
 		$this->setInclude( 'defined-meaning-attributes', $include );
 	}
-	
+
 	public function isIncludeAnnotations() {
 		return $this->isInclude( 'defined-meaning-attributes' );
 	}
-	
+
 	public function setIncludeClassMembership( $include ) {
 		$this->setInclude( 'class-membership', $include );
 	}
-	
+
 	public function isIncludeClassMembership() {
 		return $this->isInclude( 'class-membership' );
 	}
-	
+
 	public function setIncludeCollectionMembership( $include ) {
 		$this->setInclude( 'collection-membership', $include );
 	}
-	
+
 	public function isIncludeCollectionMembership() {
 		return $this->isInclude( 'collection-membership' );
 	}
-	
+
 	public function setIncludeRelations( $include ) {
 		$this->setInclude( 'reciprocal-relations', $include );
 	}
-	
+
 	public function isIncludeRelations() {
 		return $this->isInclude( 'reciprocal-relations' );
 	}
-	
+
 	private function setInclude( $section, $include ) {
 		if ( $include ) {
 			unset( $this->excluded[$section] );
-		}
-		else {
+		} else {
 			$this->excluded[$section] = $section;
 		}
 	}
-	
+
 	private function isInclude( $section ) {
 		return !isset( $this->excluded[$section] );
 	}
@@ -169,4 +168,3 @@ abstract class ApiWikiDataFormatBase extends ApiFormatBase {
 		return __CLASS__ . ': $Id: $';
 	}
 }
-?>

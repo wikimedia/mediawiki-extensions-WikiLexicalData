@@ -1,10 +1,10 @@
 <?php
 
-require_once( 'type.php' );
-require_once( 'Attribute.php' );
-require_once( 'Transaction.php' );
+require_once 'type.php';
+require_once 'Attribute.php';
+require_once 'Transaction.php';
 
-require_once( "Wikidata.php" );
+require_once "Wikidata.php";
 interface Converter {
 	public function getStructure();
 	public function convert( $record );
@@ -24,8 +24,9 @@ class ProjectConverter implements Converter {
 	public function convert( $record ) {
 		$result = new ArrayRecord( $this->structure );
 
-		foreach ( $this->structure->getStructure() as $attribute )
+		foreach ( $this->structure->getStructure() as $attribute ) {
 			$result->setAttributeValue( $attribute, $record->getAttributeValue( $attribute ) );
+		}
 
 		return $result;
 	}
@@ -53,10 +54,9 @@ class DefaultConverter implements Converter {
 }
 
 class ExpressionIdConverter extends DefaultConverter {
-	protected $attributes = array();
+	protected $attributes = [];
 
 	public function __construct( $attribute ) {
-
 		$o = OmegaWikiAttributes::getInstance();
 
 		parent::__construct( $attribute );
@@ -69,7 +69,6 @@ class ExpressionIdConverter extends DefaultConverter {
 
 	public function convert( $record ) {
 		$dc = wdGetDataSetContext();
-
 
 		$o = OmegaWikiAttributes::getInstance();
 
@@ -86,5 +85,3 @@ class ExpressionIdConverter extends DefaultConverter {
 		return $result;
 	}
 }
-
-

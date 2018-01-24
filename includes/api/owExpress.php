@@ -25,30 +25,29 @@
  *		& o p t i o n s = p i n y i n | I P A | h y p h e n a t i o n
  */
 
-require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
-require_once( 'owDefine.php' );
+require_once 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php';
+require_once 'owDefine.php';
 
 class Express extends Define {
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, null);
+		parent::__construct( $main, $action, null );
 	}
 
 	public function execute() {
-
 		global $wgScriptPath;
 
 		// Get the parameters
 		$params = $this->extractRequestParams();
 
 		// Parameter checks
-		if ( !isset($params['search']) ) {
+		if ( !isset( $params['search'] ) ) {
 			$this->dieUsage( 'parameter search is missing', 'param search is missing' );
 		}
 
 		$spelling = $params['search'];
 
-		$options = array();
+		$options = [];
 		if ( isset( $params['ver'] ) ) {
 			$options['ver'] = $params['ver'];
 		} else {
@@ -70,19 +69,21 @@ class Express extends Define {
 	/** Cache!
 	 *
 	 */
-	protected function cacheExpress( $spelling, $options = array() ) {
+	protected function cacheExpress( $spelling, $options = [] ) {
 		$expressCacheKey = 'API:ow_express:dm=' . $spelling;
-		if ( isset( $options['ver'] ) ) $expressCacheKey .= ":ver={$options['ver']}";
+		if ( isset( $options['ver'] ) ) {
+			$expressCacheKey .= ":ver={$options['ver']}";
+		}
 
 		$cache = new CacheHelper();
 
-		$cache->setCacheKey( array( $expressCacheKey ) );
+		$cache->setCacheKey( [ $expressCacheKey ] );
 		$express = $cache->getCachedValue(
-			function ( $spelling, $options = array() ) {
+			function ( $spelling, $options = [] ) {
 				$dmlist = getExpressionMeaningIds( $spelling );
 				$options['e'] = $spelling;
 				// There are duplicates using getExpressionMeaningIds !!!
-				$dmlist = array_unique ( $dmlist );
+				$dmlist = array_unique( $dmlist );
 				$express['expression'] = $spelling;
 				$dmlistCtr = 1;
 				foreach ( $dmlist as $dmrow ) {
@@ -99,7 +100,7 @@ class Express extends Define {
 					$dmlistCtr += 1;
 				}
 				return $express;
-			}, array( $spelling, $options )
+			}, [ $spelling, $options ]
 		);
 		$cache->setExpiry( 10800 ); // 3 hours
 		$cache->saveCache();
@@ -109,20 +110,20 @@ class Express extends Define {
 
 	// Parameters.
 	public function getAllowedParams() {
-		return array(
-			'search' => array (
+		return [
+			'search' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true
-			),
-			'ver' => array (
+			],
+			'ver' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-		);
+			],
+		];
 	}
 
 	// Get examples
 	public function getExamples() {
-		return array(
+		return [
 			'The following examples return information about the concept and definition of the given expression.',
 			'api.php?action=ow_express&search=acusar&format=xml',
 			'api.php?action=ow_express&search=pig&format=xml',
@@ -130,7 +131,7 @@ class Express extends Define {
 			'',
 			'Version 1.1 returns information that is better for a javascript client. To use this, just add ver=1.1',
 			'api.php?action=ow_express&search=acusar&format=xml&ver=1.1',
-		);
+		];
 	}
 
 }

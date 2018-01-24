@@ -9,27 +9,26 @@
  *		using only one transaction id at one go. Conserves database space.
  */
 
-require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
-require_once( 'extensions/WikiLexicalData/OmegaWiki/Transaction.php' );
+require_once 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php';
+require_once 'extensions/WikiLexicalData/OmegaWiki/Transaction.php';
 
 class AddSyntrans extends ApiBase {
 
-	public
-		$spelling,				//< spelling ( string )
-		$definedMeaningId,		//< defined meaning id ( integer )
-		$languageId,			//< language id ( integer )
-		$identicalMeaning,		//< identical meaning id ( boolean )
-		$identicalMeaningStr,	//< identical meaning ( string ) true or false
-		$ver = '1',				//< API version ( string )
-		$test = false,			//< test status ( boolean )
-		$transacted = false,	//< transacted status ( boolean )
-		$tid = null,			//< transaction id ( integer )
-		$options = array(
+	public $spelling,				// < spelling ( string )
+		$definedMeaningId,		// < defined meaning id ( integer )
+		$languageId,			// < language id ( integer )
+		$identicalMeaning,		// < identical meaning id ( boolean )
+		$identicalMeaningStr,	// < identical meaning ( string ) true or false
+		$ver = '1',				// < API version ( string )
+		$test = false,			// < test status ( boolean )
+		$transacted = false,	// < transacted status ( boolean )
+		$tid = null,			// < transaction id ( integer )
+		$options = [
 			'updateId' => -1
-		);						//< options ( array )
+		];						// < options ( array )
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, null );
+		parent::__construct( $main, $action, null );
 	}
 
 	public function execute() {
@@ -49,7 +48,7 @@ class AddSyntrans extends ApiBase {
 		$this->params = $this->extractRequestParams();
 
 		if ( isset( $this->params['test'] ) ) {
-			if ( $this->params['test'] == '1' OR $this->params['test'] == null ) {
+			if ( $this->params['test'] == '1' or $this->params['test'] == null ) {
 				$this->test = true;
 			}
 		}
@@ -93,56 +92,56 @@ class AddSyntrans extends ApiBase {
 		$this->definedMeaningId = $this->params['dm'];
 		$this->languageId = $this->params['lang'];
 		$this->identicalMeaning = $this->params['im'];
-		$this->getResult()->addValue( null, $this->getModuleName(), array (
+		$this->getResult()->addValue( null, $this->getModuleName(), [
 			'spelling' => $this->spelling,
 			'dmid' => $this->definedMeaningId,
 			'lang' => $this->languageId,
 			'im' => $this->identicalMeaning
-			)
+			]
 		);
 		$result = $this->owAddSynonymOrTranslation();
 		$this->getResult()->addValue( null, $this->getModuleName(),
-			array ( 'result' => $result )
+			[ 'result' => $result ]
 		);
 		return true;
 	}
 
 	// Parameters.
 	public function getAllowedParams() {
-		return array(
-			'e' => array (
+		return [
+			'e' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-			'dm' => array (
+			],
+			'dm' => [
 				ApiBase::PARAM_TYPE => 'integer',
-			),
-			'lang' => array (
+			],
+			'lang' => [
 				ApiBase::PARAM_TYPE => 'integer',
-			),
-			'im' => array (
+			],
+			'im' => [
 				ApiBase::PARAM_TYPE => 'integer',
-			),
-			'file' => array (
+			],
+			'file' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-			'wikipage' => array (
+			],
+			'wikipage' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-			'test' => array (
+			],
+			'test' => [
 				ApiBase::PARAM_TYPE => 'string'
-			),
-			'tid' => array (
+			],
+			'tid' => [
 				ApiBase::PARAM_TYPE => 'integer'
-			),
-			'ver' => array (
+			],
+			'ver' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-		);
+			],
+		];
 	}
 
 	// Get examples
 	public function getExamples() {
-	return array(
+	return [
 		'Add a synonym/translation to the defined meaning definition',
 		'If the expression is already present. Nothing happens',
 		'api.php?action=ow_add_syntrans&e=欠席&dm=334562&lang=387&im=1&ver=1.1&format=xml',
@@ -157,75 +156,77 @@ class AddSyntrans extends ApiBase {
 		'api.php?action=ow_add_syntrans&wikipage=User:MinnanBot/addSyntrans130124.csv&ver=1.1&format=xml',
 		'or to test it',
 		'api.php?action=ow_add_syntrans&wikipage=User:MinnanBot/addSyntrans130124.csv&ver=1.1&format=xml&test'
-		);
+		];
 	}
 
 	public function processBatch( $wikiPage ) {
-
 		$csvWikiPageTitle = Title::newFromText( $wikiPage );
-		$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
+		$csvWikiPage = new WikiPage( $csvWikiPageTitle );
 
-		if ( !$wikiText = $csvWikiPage->getContent( Revision::RAW ) )
+		if ( !$wikiText = $csvWikiPage->getContent( Revision::RAW ) ) {
 			return $this->getResult()->addValue( null, $this->getModuleName(),
-				array ( 'result' => array (
+				[ 'result' => [
 					'error' => "WikiPage ( $csvWikiPageTitle ) does not exist"
-				) )
+				] ]
 			);
+		}
 
 		$text = $wikiText->getNativeData();
 
 		// Check if the page is redirected,
 		// then adjust accordingly.
 		preg_match( "/REDIRECT \[\[(.+)\]\]/", $text, $match2 );
-		if ( isset($match2[1]) ) {
+		if ( isset( $match2[1] ) ) {
 			$redirectedText = $match2[1];
 			$csvWikiPageTitle = Title::newFromText( $redirectedText );
-			$csvWikiPage = new WikiPage ( $csvWikiPageTitle );
+			$csvWikiPage = new WikiPage( $csvWikiPageTitle );
 			$wikiText = $csvWikiPage->getContent( Revision::RAW );
 			$text = $wikiText->getNativeData();
 		}
 
 		$this->getResult()->addValue( null, $this->getModuleName(),
-			array ( 'process' => array (
-			'text' =>  'wikipage',
+			[ 'process' => [
+			'text' => 'wikipage',
 			'type' => 'batch processing'
-			) )
+			] ]
 		);
 
-		$inputLine = explode("\n", $text);
+		$inputLine = explode( "\n", $text );
 		$ctr = 0;
 		while ( $inputData = array_shift( $inputLine ) ) {
 			$ctr = $ctr + 1;
 			$inputData = trim( $inputData );
 			if ( $inputData == "" ) {
-				$result = array ( 'note' => "skipped blank line");
+				$result = [ 'note' => "skipped blank line" ];
 				$this->getResult()->addValue( null, $this->getModuleName(),
-					array ( 'result' . $ctr => $result )
+					[ 'result' . $ctr => $result ]
 				);
 				continue;
 			}
 
-			$inputMatch = preg_match("/^\"(.+)/", $inputData, $match);
-			if ($inputMatch == 1) {
+			$inputMatch = preg_match( "/^\"(.+)/", $inputData, $match );
+			if ( $inputMatch == 1 ) {
 				$inputData = $match[1];
-				preg_match("/(.+)\",(.+)/", $inputData, $match2);
+				preg_match( "/(.+)\",(.+)/", $inputData, $match2 );
 				$this->spelling = $match2[1];
 				$inputData = $match2[2];
-				$inputData = explode(',',$inputData);
+				$inputData = explode( ',', $inputData );
 				$inputDataCount = count( $inputData );
 				$this->languageId = $inputData[0];
 				$this->definedMeaningId = $inputData[1];
-				if ( $inputDataCount == 3 )
+				if ( $inputDataCount == 3 ) {
 					$this->identicalMeaning = $inputData[2];
-				if ( $inputDataCount == 2 )
+				}
+				if ( $inputDataCount == 2 ) {
 					$this->identicalMeaning = 1;
+				}
 			} else {
-				$inputData = explode(',',$inputData);
+				$inputData = explode( ',', $inputData );
 				$inputDataCount = count( $inputData );
 				if ( $inputDataCount == 1 ) {
-					$result = array ( 'note' => "skipped blank line");
+					$result = [ 'note' => "skipped blank line" ];
 					$this->getResult()->addValue( null, $this->getModuleName(),
-						array ( 'result' . $ctr => $result )
+						[ 'result' . $ctr => $result ]
 					);
 					continue;
 				}
@@ -236,22 +237,22 @@ class AddSyntrans extends ApiBase {
 					$this->identicalMeaning = $inputData[3];
 				}
 				if ( $inputDataCount == 3 ) {
-					$this->identicalMeaning = 1 ;
+					$this->identicalMeaning = 1;
 				}
 			}
 
 			if ( !is_numeric( $this->languageId ) || !is_numeric( $this->definedMeaningId ) ) {
-				if($ctr == 1) {
-					$result = array ( 'note' => 'either ' . $this->languageId . 'or ' . $this->definedMeaningId . 'is not an int or probably just the CSV header' );
+				if ( $ctr == 1 ) {
+					$result = [ 'note' => 'either ' . $this->languageId . 'or ' . $this->definedMeaningId . 'is not an int or probably just the CSV header' ];
 				} else {
-					$result = array ( 'note' => 'either ' . $this->languageId . 'or ' . $this->definedMeaningId . 'is not an int' );
+					$result = [ 'note' => 'either ' . $this->languageId . 'or ' . $this->definedMeaningId . 'is not an int' ];
 				}
 			} else {
 				$result = $this->owAddSynonymOrTranslation();
 			}
 
 			$this->getResult()->addValue( null, $this->getModuleName(),
-				array ( 'result' . $ctr => $result )
+				[ 'result' . $ctr => $result ]
 			);
 		}
 		return true;
@@ -262,25 +263,28 @@ class AddSyntrans extends ApiBase {
 		$dc = wdGetDataSetContext();
 
 		// check that the language_id exists
-		if ( !verifyLanguageId( $this->languageId ) )
-			return array(
+		if ( !verifyLanguageId( $this->languageId ) ) {
+			return [
 				'WARNING' => 'Non existent language id(' . $this->languageId . ').'
-			);
+			];
+		}
 
 		// check that defined_meaning_id exists
-		if ( !verifyDefinedMeaningId( $this->definedMeaningId ) )
-			return array(
+		if ( !verifyDefinedMeaningId( $this->definedMeaningId ) ) {
+			return [
 				'WARNING' => 'Non existent dm id (' . $this->definedMeaningId . ').'
-			);
+			];
+		}
 
 		if ( $this->identicalMeaning == 1 ) {
 			$this->identicalMeaningStr = "true";
-			if ( $this->ver == '1' ) { $this->identicalMeaning = "true"; }
-		}
-		else {
+			if ( $this->ver == '1' ) { $this->identicalMeaning = "true";
+   }
+		} else {
 			$this->identicalMeaningStr = "false";
 			$this->identicalMeaning = 0;
-			if ( $this->ver == '1' ) { $this->identicalMeaning = "false"; }
+			if ( $this->ver == '1' ) { $this->identicalMeaning = "false";
+   }
 		}
 
 		// first check if it exists, then create the transaction and put it in db
@@ -288,10 +292,10 @@ class AddSyntrans extends ApiBase {
 		$concept = getDefinedMeaningSpellingForLanguage( $this->definedMeaningId, WLD_ENGLISH_LANG_ID );
 		if ( $expression ) {
 			// the expression exists, check if it has this syntrans
-			$bound = expressionIsBoundToDefinedMeaning ( $this->definedMeaningId, $expression->id );
-			if (  $bound == true ) {
+			$bound = expressionIsBoundToDefinedMeaning( $this->definedMeaningId, $expression->id );
+			if ( $bound == true ) {
 				$synonymId = getSynonymId( $this->definedMeaningId, $expression->id );
-				$note = array (
+				$note = [
 					'status' => 'exists',
 					'in' => $concept . ' DM(' . $this->definedMeaningId . ')',
 					'sid' => $synonymId,
@@ -299,7 +303,7 @@ class AddSyntrans extends ApiBase {
 					'langid' => $this->languageId,
 					'dm' => $this->definedMeaningId,
 					'im' => $this->identicalMeaning
-				);
+				];
 				if ( $this->test ) {
 					$note['note'] = 'test run only';
 				}
@@ -311,7 +315,7 @@ class AddSyntrans extends ApiBase {
 		// adding the expression
 		$expressionId = getExpressionId( $this->spelling, $this->languageId );
 		$synonymId = getSynonymId( $this->definedMeaningId, $expressionId );
-		$note = array (
+		$note = [
 			'status' => 'added',
 			'to' => $concept . ' DM(' . $this->definedMeaningId . ')',
 			'sid' => $synonymId,
@@ -319,7 +323,7 @@ class AddSyntrans extends ApiBase {
 			'langid' => $this->languageId,
 			'dm' => $this->definedMeaningId,
 			'im' => $this->identicalMeaning
-		);
+		];
 
 		// add note['tid'] from $this->tid (transaction id), if null, get value
 		// from $this->options['updateId'].

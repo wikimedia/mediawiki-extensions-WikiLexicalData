@@ -1,8 +1,8 @@
 <?php
 	define( 'MEDIAWIKI', true );
-	require_once( '../../../../LocalSettings.php' );
-	require_once( 'ProfilerStub.php' );
-	require_once( 'Setup.php' );
+	require_once '../../../../LocalSettings.php';
+	require_once 'ProfilerStub.php';
+	require_once 'Setup.php';
 
 	ob_end_flush();
 
@@ -35,10 +35,11 @@
 						' AND COLUMN_NAME LIKE "' . $col_row->Field . '"';
 				$collation_res = $dbr->query( $sql );
 				$collation_row = $dbr->fetchObject( $collation_res );
-				if ( substr( $collation_row->COLLATION_NAME, - 3 ) == "bin" )
+				if ( substr( $collation_row->COLLATION_NAME, - 3 ) == "bin" ) {
 					$collate = ' COLLATE utf8_bin';
-				else
+				} else {
 					$collate = '';
+				}
 
 				$sql = 'ALTER TABLE `' . $table_row[0] . '`' .
 						' MODIFY `' . $col_row->Field . '`' .
@@ -56,4 +57,3 @@
 
 	$dbr->query( 'INSERT INTO script_log (time, script_name) ' .
 				'VALUES (' . wfTimestampNow() . ',' . $dbr->addQuotes( '26 - Correct character set.php' ) . ')' );
-

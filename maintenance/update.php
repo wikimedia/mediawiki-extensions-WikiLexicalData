@@ -7,10 +7,10 @@
  * @ingroup Maintenance
  */
 
-//		require_once( __DIR__ . '/../../../maintenance/update.php' );
+// require_once( __DIR__ . '/../../../maintenance/update.php' );
 
-require_once( __DIR__ . '/../../../maintenance/maintenance.php' );
-//require_once( __DIR__ . '/../App.php' );
+require_once __DIR__ . '/../../../maintenance/maintenance.php';
+// require_once( __DIR__ . '/../App.php' );
 global $processed, $lexicalItemDMId, $iso6393CollectionId;
 
 /**
@@ -24,10 +24,10 @@ class UpdateWikiLexicalData extends Maintenance {
 		global $wgDBprefix, $wgWldIncludesScriptPath, $wgWldDbScripts, $install;
 		global $processed, $lexicalItemDMId, $iso6393CollectionId;
 
-		require_once( $wgWldIncludesScriptPath . '/Installer.php' );
-		require_once( $wgWldIncludesScriptPath . '/WikiLexicalDataInstaller.php' );
-//		require_once( __DIR__ . '/../includes/Installer.php' );
-//		require_once( __DIR__ . '/../includes/WikiLexicalDataInstaller.php' );
+		require_once $wgWldIncludesScriptPath . '/Installer.php';
+		require_once $wgWldIncludesScriptPath . '/WikiLexicalDataInstaller.php';
+		// require_once( __DIR__ . '/../includes/Installer.php' );
+		// require_once( __DIR__ . '/../includes/WikiLexicalDataInstaller.php' );
 
 		$install = new WikiLexicalDataDatabaseUpdater();
 
@@ -40,14 +40,14 @@ class UpdateWikiLexicalData extends Maintenance {
 
 		// process the base database
 		$processed = $install->addExtensionSCHEMA(
-			array( // pattern
+			[ // pattern
 				0 => '/*wgDBprefix*/',
 				1 => '/*wgWDprefix*/'
-			),
-			array( // prefix
+			],
+			[ // prefix
 				0 => $wgDBprefix,
 				1 => 'uw_' // he: this is the ultimate dataset concept!
-			), $wgWldDbScripts . 'baseWld.sql' // script path
+			], $wgWldDbScripts . 'baseWld.sql' // script path
 		);
 
 		// If core was freshly installed, add these settings
@@ -66,7 +66,7 @@ class UpdateWikiLexicalData extends Maintenance {
 
 		$this->output( "\n" . '...done.' . "\n" );
 
-		require_once( __DIR__ . '/../../../maintenance/update.php' );
+		require_once __DIR__ . '/../../../maintenance/update.php';
 
 		$lexicalItemDMId = $install->lexicalItemDMId;
 		$iso6393CollectionId = $install->iso6393CollectionId;
@@ -75,11 +75,9 @@ class UpdateWikiLexicalData extends Maintenance {
 		$update->mOptions = $this->mOptions;
 
 		$update->execute();
-
 	}
 
 }
-
 
 $maintClass = 'UpdateWikiLexicalData';
 require_once RUN_MAINTENANCE_IF_MAIN;

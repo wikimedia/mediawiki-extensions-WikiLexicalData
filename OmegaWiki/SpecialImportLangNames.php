@@ -1,10 +1,12 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
-require_once( 'Wikidata.php' );
-require_once( 'WikiDataAPI.php' );
-require_once( 'Transaction.php' );
-require_once( 'languages.php' );
+require_once 'Wikidata.php';
+require_once 'WikiDataAPI.php';
+require_once 'Transaction.php';
+require_once 'languages.php';
 
 class SpecialImportLangNames extends SpecialPage {
 	function SpecialImportLangNames() {
@@ -33,11 +35,11 @@ class SpecialImportLangNames extends SpecialPage {
 		// wgIso639_3CollectionId is normally defined in LocalSettings.php
 		$lang_res = $dbr->select(
 			"{$dc}_collection_contents",
-			array( 'member_mid' , 'internal_member_id' ),
-			array(
+			[ 'member_mid' , 'internal_member_id' ],
+			[
 				'collection_id' => $wgIso639_3CollectionId,
 				'remove_transaction_id' => null
-			), __METHOD__
+			], __METHOD__
 		);
 		$editable = '';
 		$first = true;
@@ -45,7 +47,7 @@ class SpecialImportLangNames extends SpecialPage {
 			$iso_code = $lang_row->internal_member_id;
 			$dm_id = $lang_row->member_mid;
 			/*	Get the language ID for the current language. */
-			$lang_id = getLanguageIdForIso639_3( $iso_code ) ;
+			$lang_id = getLanguageIdForIso639_3( $iso_code );
 
 			if ( $lang_id ) {
 				if ( !$first ) {
@@ -58,39 +60,41 @@ class SpecialImportLangNames extends SpecialPage {
 				/* Add current language to list of portals/DMs. */
 				// select definingExpression of a DM
 				$dm_expr = definingExpression( $dm_id );
-				if ( $editable != '' ) $editable .= "\n";
+				if ( $editable != '' ) {
+					$editable .= "\n";
+				}
 				$editable .= '*[[Portal:' . $iso_code . ']] - [[DefinedMeaning:' . $dm_expr . ' (' . $dm_id . ')]]';
 
 				/*	Delete all language names that match current language ID. */
 				$dbw->delete(
 					'language_names',
-					array( 'language_id' => $lang_id ),
+					[ 'language_id' => $lang_id ],
 					__METHOD__
 				);
 
 				/* Get syntrans expressions for names of language and IDs for the languages the names are in. */
 				$syntrans_res = $dbr->select(
-					array( 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ),
-					array( 'spelling', 'language_id' ),
-					array(
+					[ 'exp' => "{$dc}_expression", 'synt' => "{$dc}_syntrans" ],
+					[ 'spelling', 'language_id' ],
+					[
 						'defined_meaning_id' => $dm_id,
 						'exp.remove_transaction_id' => null
-					), __METHOD__,
-					array( 'GROUP BY' => 'language_id' ),
-					array( 'synt' => array( 'JOIN', array(
+					], __METHOD__,
+					[ 'GROUP BY' => 'language_id' ],
+					[ 'synt' => [ 'JOIN', [
 						'synt.expression_id = exp.expression_id',
 						'synt.remove_transaction_id' => null
-					)))
+					] ] ]
 				);
 
 				foreach ( $syntrans_res as $syntrans_row ) {
 					$dbw->insert(
 						'language_names',
-						array(
+						[
 							'language_id' => $lang_id,
 							'name_language_id' => $syntrans_row->language_id,
 							'language_name' => $syntrans_row->spelling
-						), __METHOD__
+						], __METHOD__
 					);
 				}
 
@@ -111,7 +115,7 @@ class SpecialImportLangNames extends SpecialPage {
 		$titleObj = Title::makeTitle( NS_MAIN, $title );
 		$wikipage = new WikiPage( $titleObj );
 		$wikipage->doEditContent(
-			ContentHandler::makeContent($content, $titleObj ),
+			ContentHandler::makeContent( $content, $titleObj ),
 			'updated via Special:ImportLangNames'
 		);
 	}

@@ -1,7 +1,7 @@
 <?php
 
-require_once( 'Attribute.php' );
-require_once( 'OmegaWikiAttributes.php' );
+require_once 'Attribute.php';
+require_once 'OmegaWikiAttributes.php';
 
 interface Record {
 	public function getStructure();
@@ -11,49 +11,51 @@ interface Record {
 
 class ArrayRecord implements Record {
 	protected $structure;
-	protected $values = array();
+	protected $values = [];
 
 	public function __construct( Structure $structure ) {
 		$this->structure = $structure;
 	}
-	
+
 	public function getStructure() {
 		return $this->structure;
 	}
-	
+
 	protected function getAttributeValueForId( $attributeId ) {
 		if ( $this->structure->supportsAttributeId( $attributeId ) ) {
-			if ( isset( $this->values[$attributeId] ) )
+			if ( isset( $this->values[$attributeId] ) ) {
 				return $this->values[$attributeId];
-			else
+			} else {
 				return null;
-		}
-		else
+			}
+		} else {
 			throw new Exception( "Structure does not support attribute!\n  Structure: " . $this->structure . "\n  Attribute: " . $attributeId );
+		}
 	}
-	
+
 	public function getAttributeValue( $attribute ) {
 		return $this->getAttributeValueForId( $attribute->id );
 	}
-	
+
 	/**
 	 * Look up the correct attribute using omegaWikiAttributes
 	 * and return its value
- 	 */
+	 */
 	public function __get( $attributeName ) {
 		$o = OmegaWikiAttributes::getInstance();
 		return $this->getAttributeValue( $o->$attributeName );
 	}
-		
+
 	/**
 	 * Look up the correct attribute using omegaWikiAttributes
 	 * and set its value
- 	 */
+	 */
 	public function __set( $attributeName, $value ) {
 		$o = OmegaWikiAttributes::getInstance();
 		return $this->setAttributeValue( $o->$attributeName, $value );
 	}
-	/** 
+
+	/**
 	 * Obtains a value based on the provided key.
 	 * In future, this should check against an attributes global with string
 	 * lookup, and might even be smart.
@@ -71,16 +73,17 @@ class ArrayRecord implements Record {
 	}
 
 	public function setAttributeValueForId( $attributeId, $value ) {
-		if ( $this->structure->supportsAttributeId( $attributeId ) )
+		if ( $this->structure->supportsAttributeId( $attributeId ) ) {
 			$this->values[$attributeId] = $value;
-		else
+		} else {
 			throw new Exception( "Structure does not support attribute!\n  Structure: " . $this->structure . "\n  Attribute: " . $attributeId );
+		}
 	}
 
 	public function setAttributeValue( Attribute $attribute, $value ) {
 		$this->setAttributeValueForId( $attribute->id, $value );
 	}
-	
+
 	/**
 	 *
 	 * @param $values Array to write into the record, by order of the structure
@@ -89,29 +92,30 @@ class ArrayRecord implements Record {
 	public function setAttributeValuesByOrder( $values ) {
 		$atts = $this->structure->getAttributes();
 		for ( $i = 0; $i < count( $atts ); $i++ ) {
-			if ( array_key_exists ( $i, $values ) ) {
+			if ( array_key_exists( $i, $values ) ) {
 				$this->values[$atts[$i]->id] = $values[$i];
 			}
 		}
 	}
-	
+
 	/*
 	 *
 	 * @param $record Another record object whose values get written into this one
 	 *
 	 */
 	public function setSubRecord( Record $record ) {
-		foreach ( $record->getStructure()->getAttributes() as $attribute )
+		foreach ( $record->getStructure()->getAttributes() as $attribute ) {
 			$this->values[$attribute->id] = $record->getAttributeValue( $attribute );
+		}
 	}
 
-	/** 
+	/**
 	 * @return comma-separated values
 	 */
 	public function __tostring() {
 		return $this->tostring_indent();
 	}
-	
+
 	public function tostring_indent( $depth = 0, $key = "" ) {
 		$rv = "\n" . str_pad( "", $depth * 8 );
 		$str = $this->getStructure();
@@ -122,8 +126,8 @@ class ArrayRecord implements Record {
 			$rv = $comma;
 			$repr = "$key:$value";
 			// $value is never a class??
-			if ( is_object ( $value ) ) {
-				if ( property_exists ( $value , 'tostring_indent' ) ) {
+			if ( is_object( $value ) ) {
+				if ( property_exists( $value, 'tostring_indent' ) ) {
 					$repr = $value->tostring_indent( $depth + 1, $key );
 				}
 			}
@@ -140,17 +144,18 @@ class ArrayRecord implements Record {
 
 function project( Record $record, Structure $structure ) {
 	$result = new ArrayRecord( $structure );
-	
+
 	foreach ( $structure->getAttributes() as $attribute ) {
 		$type = $attribute->type;
 		$value = $record->getAttributeValue( $attribute );
-		
-		if ( $type instanceof Structure )
+
+		if ( $type instanceof Structure ) {
 			$result->setAttributeValue( $attribute, project( $record, $type->getStructure() ) );
-		else
+		} else {
 			$result->setAttributeValue( $attribute, $value );
+		}
 	}
-		
+
 	return $result;
 }
 
@@ -158,21 +163,21 @@ function equalRecords( Structure $structure, Record $lhs, Record $rhs ) {
 	$result = true;
 	$attributes = $structure->getAttributes();
 	$i = 0;
-	
+
 	while ( $result && $i < count( $attributes ) ) {
 		$attribute = $attributes[$i];
 		$type = $attribute->type;
 		$lhsValue = $lhs->getAttributeValue( $attribute );
 		$rhsValue = $rhs->getAttributeValue( $attribute );
-		
-		if ( $type instanceof Structure )
+
+		if ( $type instanceof Structure ) {
 			$result = $lhsValue instanceof Record && $rhsValue instanceof Record && equalRecords( $type, $lhsValue, $rhsValue );
-		else
+		} else {
 			$result = $lhsValue == $rhsValue;
-			
+		}
+
 		$i++;
 	}
-	
+
 	return $result;
 }
-

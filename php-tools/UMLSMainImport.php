@@ -2,16 +2,16 @@
 
 define( 'MEDIAWIKI', true );
 
-require_once( "../../../includes/Defines.php" );
-require_once( "../../../includes/ProfilerStub.php" );
-require_once( "../../../LocalSettings.php" );
-require_once( "Setup.php" );
-require_once( "../OmegaWiki/WikiDataAPI.php" );
-require_once( "../OmegaWiki/Transaction.php" );
-require_once( 'XMLImport.php' );
-require_once( '2GoMappingImport.php' );
-require_once( "UMLSImport.php" );
-require_once( "../../../includes/Namespace.php" );
+require_once "../../../includes/Defines.php";
+require_once "../../../includes/ProfilerStub.php";
+require_once "../../../LocalSettings.php";
+require_once "Setup.php";
+require_once "../OmegaWiki/WikiDataAPI.php";
+require_once "../OmegaWiki/Transaction.php";
+require_once 'XMLImport.php';
+require_once '2GoMappingImport.php';
+require_once "UMLSImport.php";
+require_once "../../../includes/Namespace.php";
 
 ob_end_flush();
 
@@ -23,8 +23,7 @@ function getUserId( $real_name ) {
 	$queryResult = $dbr->query( "SELECT user_id FROM user where user_real_name = '$real_name'" );
 	if ( $row = $dbr->fetchObject( $queryResult ) ) {
 		return( $row->user_id );
-	}
-	else {
+	} else {
 		return( - 1 );
 	}
 }
@@ -35,7 +34,7 @@ $wdDefaultViewDataSet = 'umls';
 
 $arg = reset( $argv );
 if ( $arg !== false ) {
- 	$wdDefaultViewDataSet = next( $argv );
+	$wdDefaultViewDataSet = next( $argv );
 }
 
 /*
@@ -57,5 +56,3 @@ $umlsImport = importUMLSFromDatabase( "localhost", "umls2007aa", "root", "crosby
 
 $endTime = time();
 echo "\n\nTime elapsed: " . durationToString( $endTime - $beginTime );
-
-?>

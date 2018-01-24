@@ -32,12 +32,12 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 	private $suppress_output = false;
 
 	public function __construct( $main ) {
-		parent :: __construct( $main, 'xml' );
+		parent::__construct( $main, 'xml' );
 	}
 
 	public function initPrinter( $isError ) {
 		$this->isError = $isError;
-		parent :: initPrinter( $isError );
+		parent::initPrinter( $isError );
 	}
 
 	public function suppress_output( $suppress_output = true ) {
@@ -47,8 +47,7 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 	public function getMimeType() {
 		if ( !$this->isError && count( $this->errorMessages ) == 0 ) {
 			return 'text/xml';
-		}
-		else {
+		} else {
 			 return 'text/plain';
 		}
 	}
@@ -95,8 +94,7 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 				$tbxProc->setParameter( '', 'siteUrl', 'http://kantoor.edia.nl/wikidata/index.php?title=DefinedMeaning:' );
 			}
 			return $tbxProc;
-		}
-		else {
+		} else {
 			if ( $plainProc == null ) {
 				$xsl = new DOMDocument();
 				$xsl->load( "extensions/Wikidata/util/plaincopy.xsl" );
@@ -130,9 +128,10 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 	}
 
 	private function appendRecord( & $record, $elmName, & $parentElm ) {
-
 		$aExcluded = & $this->excluded;
-		if ( isset( $aExcluded[$elmName] ) ) return;
+		if ( isset( $aExcluded[$elmName] ) ) {
+			return;
+		}
 
 		$element = new DOMElement( $elmName );
 		$parentElm->appendChild( $element );
@@ -143,26 +142,22 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 				if ( $attribute->type == 'text' || $attribute->type == 'spelling' ) {
 					$textNode = new DOMText( $record->getAttributeValue( $attribute ) );
 					$element->appendChild( $textNode );
-				}
-				else if ( $attribute->type == 'language' ) {
+				} elseif ( $attribute->type == 'language' ) {
 					// We'll add the language code, but keep the language id because we need it later.
 					// eventually, we'll remove it jusyt before we're done with the document.
-					$languageId =  $record->getAttributeValue( $attribute );
+					$languageId = $record->getAttributeValue( $attribute );
 					$languageCode = getLanguageIso639_3ForId( $languageId );
 					$element->setAttribute( 'language-id', $languageId );
 					$element->setAttribute( $attribute->id, $languageCode );
-				}
-				else {
+				} else {
 					$element->setAttribute( $attribute->id, $record->getAttributeValue( $attribute ) );
 				}
-			}
-			else {
+			} else {
 				$value = $record->getAttributeValue( $attribute );
 				if ( $value instanceof Record ) {
 					// echo 'record: ' . $attribute->id . "\r\n";
 					$this->appendRecord( $value, $attribute->id, $element );
-				}
-				else if ( $value instanceof RecordSet && $value->getRecordCount() > 0 ) {
+				} elseif ( $value instanceof RecordSet && $value->getRecordCount() > 0 ) {
 					$listElement = new DOMElement( $attribute->id . '-list' );
 					$element->appendChild( $listElement );
 					for ( $i = 0; $i < $value->getRecordCount(); $i++ ) {
@@ -187,21 +182,18 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 				if ( !in_array( $language, $this->languages ) ) {
 					$parentElm->removeChild( $element );
 				}
-			}
-			// remove synonyms-translations that aren't in a requested
-			else if ( $elmName == 'synonyms-translations' ) {
+			} elseif ( $elmName == 'synonyms-translations' ) {
+				// remove synonyms-translations that aren't in a requested
 				$language = $element->getElementsByTagName( 'expression' )->item( 0 )->getAttribute( 'language-id' );
 				if ( !in_array( $language, $this->languages ) ) {
 					$parentElm->removeChild( $element );
 				}
 			}
 		}
-
 	}
 
 	public function getDescription() {
-		return 'Output WikiData defined meaning in XML format' . parent :: getDescription();
+		return 'Output WikiData defined meaning in XML format' . parent::getDescription();
 	}
 
 }
-?>

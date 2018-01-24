@@ -7,6 +7,7 @@
 class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 
 	public $lexicalItemDMId, $iso6393CollectionId;
+
 	/** constructor
 	 */
 	public function __construct() {
@@ -17,8 +18,8 @@ class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 	 */
 	public function setWikiLexicalDataSettings( $dc, $fallbackName = null, $text = null, $languageId = WLD_ENGLISH_LANG_ID ) {
 		global $wgWldOwScriptPath;
-	//	require_once( $wgWldOwScriptPath . 'OmegaWikiDatabaseAPI.php' );
-		require_once( $wgWldOwScriptPath . 'languages.php' );
+		// require_once( $wgWldOwScriptPath . 'OmegaWikiDatabaseAPI.php' );
+		require_once $wgWldOwScriptPath . 'languages.php';
 
 		$this->dc = $dc;
 		$this->fallbackName = $fallbackName;
@@ -36,24 +37,23 @@ class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 	public function log( $scriptName, $comment ) {
 		$this->dbr->insert(
 			$this->dc . '_script_log',
-			array(
+			[
 				'time' => wfTimestampNow(),
 				'script_name' => $scriptName,
 				'comment' => $comment
-			), __METHOD__
+			], __METHOD__
 		);
 	}
 
 	/** @brief setup the dataset
 	 */
 	protected function setDc() {
-
 		$alreadySet = $this->dbr->selectField(
 			'wikidata_sets',
 			'set_prefix',
-			array(
+			[
 			'set_prefix' => $this->dc
-			), __METHOD__
+			], __METHOD__
 		);
 
 		if ( $alreadySet ) {
@@ -64,11 +64,11 @@ class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 		// if not, insert it.
 		$this->dbw->insert(
 			'wikidata_sets',
-			array(
+			[
 			 'set_prefix' => $this->dc,
 			 'set_fallback_name' => $this->fallbackName,
 			 'set_dmid' => 0 	// he: temporarily set to zero. Since I do not
-			),					// it would be hard to enter expression and definition
+			],					// it would be hard to enter expression and definition
 			__METHOD__			// when the dc is not set.
 		);
 
@@ -82,8 +82,8 @@ class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 		// update the dmid
 		$this->dbw->update(
 			'wikidata_sets',
-			array( 'set_dmid' => $definedMeaningId ),
-			array( 'set_prefix' => $this->dc ), __METHOD__
+			[ 'set_dmid' => $definedMeaningId ],
+			[ 'set_prefix' => $this->dc ], __METHOD__
 		);
 
 		$this->output( '...dataset ' . $this->dc . ' is set.' );
@@ -102,36 +102,36 @@ class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 
 		// not already exist: create
 		$this->output( '...adding language. English.' );
-		$this->createLanguage( 'English', WLD_ENGLISH_LANG_WMKEY, 'eng', WLD_ENGLISH_LANG_WMKEY, WLD_ENGLISH_LANG_ID);
+		$this->createLanguage( 'English', WLD_ENGLISH_LANG_WMKEY, 'eng', WLD_ENGLISH_LANG_WMKEY, WLD_ENGLISH_LANG_ID );
 	}
 
 	/** @adds language details to tables language and language_names
 	 */
 	protected function createLanguage( $language, $iso6392, $iso6393, $wmf, $languageId ) {
 		global $wgDBtype;
-		$options = array();
+		$options = [];
 		if ( $wgDBtype == 'sqlite' ) {
-			$options = array( 'IGNORE' => true );
+			$options = [ 'IGNORE' => true ];
 		}
 
 		$this->dbw->insert(
 			'language',
-			array(
+			[
 				'language_id' => $languageId,
 				'iso639_2' => $iso6392,
 				'iso639_3' => $iso6393,
 				'wikimedia_key' => $wmf
-			), __METHOD__,
+			], __METHOD__,
 			$options
 		);
 
 		$this->dbw->insert(
 			'language_names',
-			array(
+			[
 				'language_id' => $languageId,
 				'name_language_id' => $languageId,
 				'language_name' => $language
-			), __METHOD__,
+			], __METHOD__,
 			$options
 		);
 	}
@@ -140,7 +140,7 @@ class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 	 */
 	protected function bootStrappedDefinedMeanings() {
 		// Admin user
-		$userId = 1 ;
+		$userId = 1;
 		global $wgDBprefix;
 
 		// check that it is really a fresh install
@@ -165,7 +165,7 @@ class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 		$synTransMeaningName = 'SynTrans';
 		$annotationMeaningName = 'Annotation';
 
-		$meanings = array();
+		$meanings = [];
 		$meanings[$definedMeaningMeaningName] = $this->bootstrapDefinedMeaning( $definedMeaningMeaningName, WLD_ENGLISH_LANG_ID, 'The combination of an expression and definition in one language defining a concept.' );
 		$meanings[$definitionMeaningName] = $this->bootstrapDefinedMeaning( $definitionMeaningName, WLD_ENGLISH_LANG_ID, 'A paraphrase describing a concept.' );
 		$meanings[$synTransMeaningName] = $this->bootstrapDefinedMeaning( $synTransMeaningName, WLD_ENGLISH_LANG_ID, 'A translation or a synonym that is equal or near equal to the concept defined by the defined meaning.' );
@@ -177,14 +177,13 @@ class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 
 			$this->dbw->insert(
 				$this->dc . '_bootstrapped_defined_meanings',
-				array( 'name' => $internalName,
+				[ 'name' => $internalName,
 					'defined_meaning_id' => $meaningId
-				), __METHOD__
+				], __METHOD__
 			);
 
 			$this->output( '... with ' . $internalName . '.' );
 		}
-
 	}
 
 	/** @brief adds Expression with the corresponding definition.
@@ -200,7 +199,7 @@ class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 	 */
 	protected function enableAnnotations() {
 		// Admin user
-		$userId = 1 ;
+		$userId = 1;
 
 		$this->output( 'Adding some more data to enable annotations...' );
 		startNewTransaction( $userId, 0, "Script bootstrap class attribute meanings", $this->dc );
@@ -230,7 +229,6 @@ class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 			. " the Commonwealth of Nations, the United States of America, and other parts of the world."
 		);
 		addDefinedMeaningToCollection( $englishDMId, $this->iso6393CollectionId, "eng" );
-
 	}
 
 }

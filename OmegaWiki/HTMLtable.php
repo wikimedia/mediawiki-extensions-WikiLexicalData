@@ -1,8 +1,8 @@
 <?php
 
-require_once( "Attribute.php" );
-require_once( "Record.php" );
-require_once( "RecordSet.php" );
+require_once "Attribute.php";
+require_once "Record.php";
+require_once "RecordSet.php";
 
 function parityClass( $value ) {
 	if ( $value % 2 == 0 ) {
@@ -21,15 +21,15 @@ class TableHeaderNode {
 	public $width = 0;
 	public $height = 0;
 	public $column = 0;
-	public $childNodes = array();
+	public $childNodes = [];
 }
 
 function getTableHeaderNode( Structure $structure, &$currentColumn = 0 ) {
 	$tableHeaderNode = new TableHeaderNode();
-	
+
 	foreach ( $structure->getAttributes() as $attribute ) {
 		$type = $attribute->type;
-		
+
 		if ( $type instanceof Structure ) {
 			$atts = $type->getAttributes();
 			$childNode = getTableHeaderNode( new Structure( $atts ), $currentColumn );
@@ -45,19 +45,19 @@ function getTableHeaderNode( Structure $structure, &$currentColumn = 0 ) {
 		$tableHeaderNode->childNodes[] = $childNode;
 		$childNode->attribute = $attribute;
 	}
-	
+
 	$tableHeaderNode->height++;
-	
+
 	return $tableHeaderNode;
 }
 
-function addChildNodesToRows( TableHeaderNode $headerNode, &$rows, $currentDepth, $columnOffset, IdStack $idPath, $leftmost = True ) {
+function addChildNodesToRows( TableHeaderNode $headerNode, &$rows, $currentDepth, $columnOffset, IdStack $idPath, $leftmost = true ) {
 	$height = $headerNode->height;
 	foreach ( $headerNode->childNodes as $childNode ) {
 		$attribute = $childNode->attribute;
 		$idPath->pushAttribute( $attribute );
 		$type = $attribute->type;
-		
+
 		if ( !$type instanceof Structure ) {
 			$class = $type . ' ' . $attribute->id;
 		} else {
@@ -66,7 +66,7 @@ function addChildNodesToRows( TableHeaderNode $headerNode, &$rows, $currentDepth
 		$id = $idPath->getId() . '-h';
 		$rowSpan = $height - $childNode->height;
 		$colSpan = $childNode->width;
-		$attr = array( 'id' => $id, 'class' => $class, 'rowspan' => $rowSpan, 'colspan' => $colSpan );
+		$attr = [ 'id' => $id, 'class' => $class, 'rowspan' => $rowSpan, 'colspan' => $colSpan ];
 		$rows[$currentDepth] .= Html::element( 'th', $attr, $attribute->name );
 
 		addChildNodesToRows( $childNode, $rows, $currentDepth + $rowSpan, $columnOffset, $idPath, $leftmost );
@@ -76,8 +76,8 @@ function addChildNodesToRows( TableHeaderNode $headerNode, &$rows, $currentDepth
 
 function getStructureAsTableHeaderRows( Structure $structure, $columnOffset, IdStack $idPath ) {
 	$rootNode = getTableHeaderNode( $structure );
-	$result = array();
-	
+	$result = [];
+
 	for ( $i = 0; $i < $rootNode->height - 1; $i++ ) {
 		$result[$i] = "";
 	}
@@ -97,22 +97,22 @@ function getHTMLClassForType( $type, Attribute $attribute ) {
 function getRecordAsTableCells( IdStack $idPath, Editor $editor, Structure $visibleStructure, Record $record, &$startColumn = 0 ) {
 	$result = '';
 	$childEditorMap = $editor->getAttributeEditorMap();
-	
+
 	foreach ( $visibleStructure->getAttributes() as $visibleAttribute ) {
 		$childEditor = $childEditorMap->getEditorForAttribute( $visibleAttribute );
-		
+
 		if ( $childEditor != null ) {
 			$attribute = $childEditor->getAttribute();
 			$type = $attribute->type;
 			$value = $record->getAttributeValue( $attribute );
 			$idPath->pushAttribute( $attribute );
 			$attributeId = $idPath->getId();
-			
+
 			if ( $childEditor instanceof RecordTableCellEditor ) {
 				$result .= getRecordAsTableCells( $idPath, $childEditor, $visibleAttribute->type, $value, $startColumn );
 			} else {
 				$tdclass = getHTMLClassForType( $type, $attribute ) . ' column-' . parityClass( $startColumn );
-				$tdattribs = array( "class" => $tdclass );
+				$tdattribs = [ "class" => $tdclass ];
 				$displayValue = $childEditor->showsData( $value ) ? $childEditor->view( $idPath, $value ) : "";
 
 				if ( $childEditor instanceof LanguageEditor ) {
@@ -121,11 +121,10 @@ function getRecordAsTableCells( IdStack $idPath, Editor $editor, Structure $visi
 				$result .= Html::rawElement( 'td', $tdattribs, $displayValue );
 				$startColumn++;
 			}
-			
+
 			$idPath->popAttribute();
-		}
-		else {
-			$result .= Html::element('td');
+		} else {
+			$result .= Html::element( 'td' );
 		}
 	}
 	return $result;
@@ -134,21 +133,21 @@ function getRecordAsTableCells( IdStack $idPath, Editor $editor, Structure $visi
 function getRecordAsEditTableCells( IdStack $idPath, Editor $editor, Structure $visibleStructure, Record $record, &$startColumn = 0 ) {
 	$result = '';
 	$childEditorMap = $editor->getAttributeEditorMap();
-	
+
 	foreach ( $visibleStructure->getAttributes() as $visibleAttribute ) {
 		$childEditor = $childEditorMap->getEditorForAttribute( $visibleAttribute );
-		
+
 		if ( $childEditor != null ) {
 			$attribute = $childEditor->getAttribute();
 			$type = $attribute->type;
 			$value = $record->getAttributeValue( $attribute );
 			$idPath->pushAttribute( $attribute );
-				
+
 			if ( $childEditor instanceof RecordTableCellEditor ) {
 				$result .= getRecordAsEditTableCells( $idPath, $childEditor, $visibleAttribute->type, $value, $startColumn );
 			} else {
 				$tdclass = getHTMLClassForType( $type, $attribute ) . ' column-' . parityClass( $startColumn );
-				$tdattribs = array( "class" => $tdclass );
+				$tdattribs = [ "class" => $tdclass ];
 				$displayValue = $childEditor->showEditField( $idPath ) ? $childEditor->edit( $idPath, $value ) : "";
 
 				if ( $childEditor instanceof LanguageEditor ) {
@@ -157,14 +156,11 @@ function getRecordAsEditTableCells( IdStack $idPath, Editor $editor, Structure $
 				$result .= Html::rawElement( 'td', $tdattribs, $displayValue );
 				$startColumn++;
 			}
-			
+
 			$idPath->popAttribute();
-		}
-		else {
-			$result .= Html::element('td');
+		} else {
+			$result .= Html::element( 'td' );
 		}
 	}
 	return $result;
 }
-
-?>

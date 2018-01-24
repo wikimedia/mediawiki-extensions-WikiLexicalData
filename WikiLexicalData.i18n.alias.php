@@ -6,24 +6,24 @@
  * @ingroup Extensions
  */
 
-$specialPageAliases = array();
+$specialPageAliases = [];
 
 /** English (English) */
-$specialPageAliases['en'] = array(
-	'Languages' => array( 'Languages' , 'LanguageManager' , 'OwLanguages' , 'OwLanguageManager' ),
-	'AddCollection' => array( 'AddCollection' ,'OwAddCollection' , 'CreateCollection' ,'OwCreateCollection' ),
-	'ConceptMapping' => array( 'ConceptMapping' , 'OwConceptMapping' ),
-	'ow_data_search' => array( 'ow_data_search' , 'OwDataSearch' ),
-	'ImportLangNames' => array( 'ImportLangNames' , 'ImportLanguageNames' , 'OwImportLangNames' , 'OwImportLanguageNames' ),
-	'NeedsTranslation' => array( 'NeedsTranslation' , 'OwNeedsTranslation' ),
-	'ow_statistics' => array( 'ow_statistics' , 'OwStatistics' , 'OwStatistic'  ),
-	'ow_downloads' => array( 'ow_downloads' , 'OwDownloads' ),
-	'ExportTSV' => array( 'ExportTSV' , 'OwExportTSV' ),
-	'ImportTSV' => array( 'ImportTSV' , 'OwImportTSV' ),
+$specialPageAliases['en'] = [
+	'Languages' => [ 'Languages' , 'LanguageManager' , 'OwLanguages' , 'OwLanguageManager' ],
+	'AddCollection' => [ 'AddCollection' ,'OwAddCollection' , 'CreateCollection' ,'OwCreateCollection' ],
+	'ConceptMapping' => [ 'ConceptMapping' , 'OwConceptMapping' ],
+	'ow_data_search' => [ 'ow_data_search' , 'OwDataSearch' ],
+	'ImportLangNames' => [ 'ImportLangNames' , 'ImportLanguageNames' , 'OwImportLangNames' , 'OwImportLanguageNames' ],
+	'NeedsTranslation' => [ 'NeedsTranslation' , 'OwNeedsTranslation' ],
+	'ow_statistics' => [ 'ow_statistics' , 'OwStatistics' , 'OwStatistic' ],
+	'ow_downloads' => [ 'ow_downloads' , 'OwDownloads' ],
+	'ExportTSV' => [ 'ExportTSV' , 'OwExportTSV' ],
+	'ImportTSV' => [ 'ImportTSV' , 'OwImportTSV' ],
 	// unlisted:
-	'Suggest' => array( 'Suggest' ),
-	'Copy' => array( 'Copy' ),
-	'PopupEditor' => array( 'PopsUpEditor' ),
-	'Transaction' => array( 'Transaction' ),
-	'Select' => array( 'Select' ),
-);
+	'Suggest' => [ 'Suggest' ],
+	'Copy' => [ 'Copy' ],
+	'PopupEditor' => [ 'PopsUpEditor' ],
+	'Transaction' => [ 'Transaction' ],
+	'Select' => [ 'Select' ],
+];

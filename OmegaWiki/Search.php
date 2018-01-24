@@ -1,14 +1,14 @@
 <?php
 
-require_once( "Wikidata.php" );
-require_once( "Transaction.php" );
-require_once( "RecordSet.php" );
-require_once( "Editor.php" );
-require_once( "WikiDataAPI.php" );
-require_once( "OmegaWikiAttributes.php" );
-require_once( "OmegaWikiRecordSets.php" );
-require_once( "OmegaWikiEditors.php" );
-require_once( "WikiDataGlobals.php" );
+require_once "Wikidata.php";
+require_once "Transaction.php";
+require_once "RecordSet.php";
+require_once "Editor.php";
+require_once "WikiDataAPI.php";
+require_once "OmegaWikiAttributes.php";
+require_once "OmegaWikiRecordSets.php";
+require_once "OmegaWikiEditors.php";
+require_once "WikiDataGlobals.php";
 
 /**
  * @todo Check if this class is used or not, I can not find how to use this.
@@ -32,40 +32,40 @@ class Search extends DefaultWikidataApplication {
 		$dbr = wfGetDB( DB_REPLICA );
 
 		$queryResult = $dbr->selectSQLText(
-			array(
+			[
 				'exp' => '{$dc}_expression',
 				'synt' => '{$dc}_syntrans'
-			),
-			array(
+			],
+			[
 				'INSTR( LOWER( exp.spelling ), LOWER( {$text} ) )  AS position', // LCASE replaced with LOWER for SQLite compatibility
 				'synt.defined_meaning_id AS defined_meaning_id',
 				'exp.spelling AS spelling',
 				'exp.language_id AS language_id'
-			),
-			array(
+			],
+			[
 				'exp.expression_id = synt.expression_id',
 				'synt.identical_meaning = 1',
 				'exp.remove_transaction_id' => null,
 				'synt.remove_transaction_id' => null,
 				'spelling LIKE ' . $dbr->addQuotes( "%$text%" )
-			), __METHOD__,
-			array(
+			], __METHOD__,
+			[
 				'ORDER BY' => 'position ASC',
 				'ORDER BY' => 'exp.spelling ASC',
 				'LIMIT' => 100
-			)
+			]
 		);
-	var_dump( $queryResult ); die;
+		var_dump( $queryResult );
+		die;
 		list( $recordSet, $editor ) = getSearchResultAsRecordSet( $queryResult );
-//		return $sql;
+		// return $sql;
 		return $editor->view( new IdStack( "expression" ), $recordSet );
 	}
 }
 
 function getSearchResultAsRecordSet( $queryResult ) {
-
 	$o = OmegaWikiAttributes::getInstance();
-	global $definedMeaningReferenceType ;
+	global $definedMeaningReferenceType;
 
 	$dbr = wfGetDB( DB_REPLICA );
 	$spellingAttribute = new Attribute( "found-word", "Found word", "short-text" );
@@ -91,7 +91,7 @@ function getSearchResultAsRecordSet( $queryResult ) {
 		$meaningRecord->setAttributeValue( $definedMeaningAttribute, getDefinedMeaningReferenceRecord( $row->defined_meaning_id ) );
 		$meaningRecord->setAttributeValue( $definitionAttribute, getDefinedMeaningDefinition( $row->defined_meaning_id ) );
 
-		$recordSet->addRecord( array( $row->defined_meaning_id, $expressionRecord, $meaningRecord ) );
+		$recordSet->addRecord( [ $row->defined_meaning_id, $expressionRecord, $meaningRecord ] );
 	}
 
 	$expressionEditor = new RecordTableCellEditor( $expressionAttribute );
@@ -106,7 +106,5 @@ function getSearchResultAsRecordSet( $queryResult ) {
 	$editor->addEditor( $expressionEditor );
 	$editor->addEditor( $meaningEditor );
 
-	return array( $recordSet, $editor );
+	return [ $recordSet, $editor ];
 }
-
-

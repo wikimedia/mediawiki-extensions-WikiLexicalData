@@ -1,6 +1,6 @@
 <?php
 
-require_once( "Editor.php" );
+require_once "Editor.php";
 
 /**
  * an editor that wraps around another unique editor
@@ -8,7 +8,7 @@ require_once( "Editor.php" );
  */
 class WrappingEditor implements Editor {
 	protected $wrappedEditor;
-	
+
 	public function __construct( Editor $wrappedEditor ) {
 		$this->wrappedEditor = $wrappedEditor;
 	}
@@ -16,11 +16,11 @@ class WrappingEditor implements Editor {
 	public function getAttribute() {
 		return $this->wrappedEditor->getAttribute();
 	}
-	
+
 	public function getUpdateAttribute() {
 		return $this->wrappedEditor->getUpdateAttribute();
 	}
-	
+
 	public function getAddAttribute() {
 		return $this->wrappedEditor->getAddAttribute();
 	}
@@ -28,23 +28,23 @@ class WrappingEditor implements Editor {
 	public function showsData( $value ) {
 		return $this->wrappedEditor->showsData( $value );
 	}
-	
+
 	public function showEditField( IdStack $idPath ) {
 		return $this->wrappedEditor->showEditField( $idPath );
 	}
-	
+
 	public function view( IdStack $idPath, $value ) {
 		return $this->wrappedEditor->view( $idPath, $value );
 	}
-	
+
 	public function edit( IdStack $idPath, $value ) {
 		return $this->wrappedEditor->edit( $idPath, $value );
 	}
-	
+
 	public function add( IdStack $idPath ) {
 		return $this->wrappedEditor->add( $idPath );
 	}
-	
+
 	public function save( IdStack $idPath, $value ) {
 		$this->wrappedEditor->save( $idPath, $value );
 	}
@@ -52,7 +52,7 @@ class WrappingEditor implements Editor {
 	public function getUpdateValue( IdStack $idPath ) {
 		return $this->wrappedEditor->getUpdateValue( $idPath );
 	}
-	
+
 	public function getAddValues( IdStack $idPath ) {
 		return $this->wrappedEditor->getAddValues( $idPath );
 	}
@@ -60,7 +60,7 @@ class WrappingEditor implements Editor {
 	public function getEditors() {
 		return $this->wrappedEditor->getEditors();
 	}
-	
+
 	public function getAttributeEditorMap() {
 		return $this->wrappedEditor->getAttributeEditorMap();
 	}
@@ -71,7 +71,6 @@ class WrappingEditor implements Editor {
 		return true;
 	}
 }
-
 
 /**
  * Editor to edit object attributes, i.e. annotations
@@ -84,14 +83,14 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 	protected $attributeIDFilter;
 	protected $levelName;
 	protected $showPropertyColumn;
-	
+
 	public function __construct( Attribute $attribute, $propertyCaption, $valueCaption, ViewInformation $viewInformation, $levelName, AttributeIDFilter $attributeIDFilter ) {
 		$this->wrappedEditor = new RecordUnorderedListEditor( $attribute, 5 );
-		
+
 		$this->levelName = $levelName;
 		$this->attributeIDFilter = $attributeIDFilter;
 		$this->showPropertyColumn = !$attributeIDFilter->leavesOnlyOneOption();
-		
+
 		$this->recordSetTableEditor = new RecordSetTableEditor(
 			$attribute,
 			new SimplePermissionController( false ),
@@ -101,84 +100,88 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 			false,
 			null
 		);
-		
+
 		$this->propertyAttribute = new Attribute( "property", $propertyCaption, "short-text" );
 		$this->valueAttribute = new Attribute( "value", $valueCaption, "short-text" );
-		
-		foreach ( $viewInformation->getPropertyToColumnFilters() as $propertyToColumnFilter )
+
+		foreach ( $viewInformation->getPropertyToColumnFilters() as $propertyToColumnFilter ) {
 			$this->recordSetTableEditor->addEditor( new DummyViewer( $propertyToColumnFilter->getAttribute() ) );
+		}
 
 		$o = OmegaWikiAttributes::getInstance();
-			
+
 		$this->recordSetTableEditor->addEditor( new DummyViewer( $o->objectAttributes ) );
 
 		if ( $viewInformation->showRecordLifeSpan ) {
 			$this->recordSetTableEditor->addEditor( createTableLifeSpanEditor( $o->recordLifeSpan ) );
 		}
 	}
-	
+
 	public function getAttributeIDFilter() {
 		return $this->attributeIDFilter;
 	}
-	
+
 	public function getLevelName() {
 		return $this->levelName;
 	}
-	
+
 	protected function attributeInStructure( Attribute $attribute, Structure $structure ) {
 		$result = false;
 		$attributes = $structure->getAttributes();
 		$i = 0;
-		
+
 		while ( !$result && $i < count( $attributes ) ) {
 			$result = $attribute->id == $attributes[$i]->id;
 			$i++;
 		}
-		
+
 		return $result;
 	}
-	
+
 	protected function attributeInStructures( Attribute $attribute, array &$structures ) {
 		$result = false;
 		$i = 0;
-		
+
 		while ( !$result && $i < count( $structures ) ) {
 			$result = $this->attributeInStructure( $attribute, $structures[$i] );
 			$i++;
 		}
-		
+
 		return $result;
 	}
-	
+
 	protected function getSubStructureForAttribute( Structure $structure, Attribute $attribute ) {
 		$attributes = $structure->getAttributes();
 		$result = null;
 		$i = 0;
-		
-		while ( $result == null && $i < count( $attributes ) )
-			if ( $attribute->id == $attributes[$i]->id )
+
+		while ( $result == null && $i < count( $attributes ) ) {
+			if ( $attribute->id == $attributes[$i]->id ) {
 				$result = $attributes[$i]->type;
-			else
+			} else {
 				$i++;
-		
+			}
+		}
+
 		return $result;
 	}
-	
+
 	protected function filterStructuresOnAttribute( array &$structures, Attribute $attribute ) {
-		$result = array();
-		
+		$result = [];
+
 		foreach ( $structures as $structure ) {
 			$subStructure = $this->getSubStructureForAttribute( $structure, $attribute );
-			
-			if ( $subStructure != null )
+
+			if ( $subStructure != null ) {
 				$result[] = $subStructure;
+			}
 		}
-		
+
 		return $result;
 	}
-	
+
 	protected function filterAttributesByStructures( array &$attributes, array &$structures ) {
-		$result = array();
+		$result = [];
 
 		foreach ( $attributes as $attribute ) {
 			if ( $attribute->type instanceof Structure ) {
@@ -190,21 +193,20 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 				if ( count( $filteredAttributes ) > 0 ) {
 					$result[] = new Attribute( $attribute->id, $attribute->name, new Structure( $filteredAttributes ) );
 				}
-			}
-			elseif ( $this->attributeInStructures( $attribute, $structures ) ) {
+			} elseif ( $this->attributeInStructures( $attribute, $structures ) ) {
 				$result[] = $attribute;
 			}
 		}
 
 		return $result;
 	}
-	
+
 	public function determineVisibleSuffixAttributes( IdStack $idPath, $value ) {
-		$visibleStructures = array();
-		
+		$visibleStructures = [];
+
 		foreach ( $this->getEditors() as $editor ) {
 			$visibleStructure = $editor->getTableStructureForView( $idPath, $value->getAttributeValue( $editor->getAttribute() ) );
-			
+
 			if ( count( $visibleStructure->getAttributes() ) > 0 ) {
 				$visibleStructures[] = $visibleStructure;
 			}
@@ -215,15 +217,15 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 		$result = $this->filterAttributesByStructures( $attributes, $visibleStructures );
 		return $result;
 	}
-	
+
 	public function addEditor( Editor $editor ) {
 		$this->wrappedEditor->addEditor( $editor );
 	}
-	
+
 	protected function getVisibleStructureForEditor( Editor $editor, $showPropertyColumn, array &$suffixAttributes ) {
-		$leadingAttributes = array();
+		$leadingAttributes = [];
 		$childEditors = $editor->getEditors();
-		
+
 		for ( $i = $showPropertyColumn ? 0 : 1; $i < 2; $i++ ) {
 			$leadingAttributes[] = $childEditors[$i]->getAttribute();
 		}
@@ -232,8 +234,7 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 	}
 
 	public function view( IdStack $idPath, $value ) {
-
-		$visibleAttributes = array();
+		$visibleAttributes = [];
 
 		if ( $this->showPropertyColumn ) {
 			$visibleAttributes[] = $this->propertyAttribute;
@@ -243,9 +244,9 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 
 		$idPath->pushAnnotationAttribute( $this->getAttribute() );
 		$visibleSuffixAttributes = $this->determineVisibleSuffixAttributes( $idPath, $value );
-		
+
 		$visibleStructure = new Structure( array_merge( $visibleAttributes, $visibleSuffixAttributes ) );
-		
+
 		$result = $this->recordSetTableEditor->viewHeader( $idPath, $visibleStructure );
 
 		foreach ( $this->getEditors() as $editor ) {
@@ -258,7 +259,7 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 			);
 			$idPath->popAttribute();
 		}
-		
+
 		$result .= $this->recordSetTableEditor->viewFooter( $idPath, $visibleStructure );
 
 		$idPath->popAnnotationAttribute();
@@ -270,28 +271,28 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 		$idPath->pushAnnotationAttribute( $this->getAttribute() );
 		$result = $this->wrappedEditor->edit( $idPath, $value );
 		$idPath->popAnnotationAttribute();
-		
+
 		return $result;
 	}
-	
+
 	public function add( IdStack $idPath ) {
 		$idPath->pushAnnotationAttribute( $this->getAttribute() );
 		$result = $this->wrappedEditor->add( $idPath );
 		$idPath->popAnnotationAttribute();
-		
+
 		return $result;
 	}
-	
+
 	public function save( IdStack $idPath, $value ) {
 		$idPath->pushAnnotationAttribute( $this->getAttribute() );
 		$this->wrappedEditor->save( $idPath, $value );
 		$idPath->popAnnotationAttribute();
 	}
-	
+
 	protected function getAttributeOptionCount( IdStack $idPath ) {
 		$classAttributes = $idPath->getClassAttributes()->filterClassAttributesOnLevel( $this->getLevelName() );
 		$classAttributes = $this->getAttributeIDFilter()->filter( $classAttributes );
-		
+
 		return count( $classAttributes );
 	}
 
@@ -300,7 +301,6 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 		return $this->getAttributeOptionCount( $idPath ) > 0;
 	}
 }
-
 
 /**
  * A WrappingEditor that adds a "show/hide" button
@@ -317,45 +317,43 @@ class PopUpEditor extends WrappingEditor {
 	}
 
 	public function view( IdStack $idPath, $value ) {
-		return
-			$this->startToggleCode( $idPath->getId() ) .
+		return $this->startToggleCode( $idPath->getId() ) .
 			$this->wrappedEditor->view( $idPath, $value ) .
 			$this->endToggleCode( $idPath->getId() );
 	}
-	
+
 	/**
 	 * $value is an ArrayRecord
 	 */
 	public function edit( IdStack $idPath, $value ) {
-		return
-			$this->startToggleCode( $idPath->getId() ) .
+		return $this->startToggleCode( $idPath->getId() ) .
 			$this->wrappedEditor->edit( $idPath, $value ) .
 			$this->endToggleCode( $idPath->getId() );
 	}
 
 	protected function startToggleCode( $attributeId ) {
-		$id = 'popup-' . $attributeId . '-link' ;
-		$result = Html::openElement ('a', array( 'class' => "togglePopup", 'id' => $id));
+		$id = 'popup-' . $attributeId . '-link';
+		$result = Html::openElement( 'a', [ 'class' => "togglePopup", 'id' => $id ] );
 
-		$popupShow = Html::element('span', array(
+		$popupShow = Html::element( 'span', [
 			'class' => "popupshow"
-			) , wfMessage( 'showtoc' )->plain() . " ▼"  ) ;
-		$popupHide = Html::element('span', array(
+			], wfMessage( 'showtoc' )->plain() . " ▼" );
+		$popupHide = Html::element( 'span', [
 			'class' => "popuphide",
 			'style' => "display:none;"
-			) , wfMessage( 'hidetoc' )->plain() . " ▲"  ) ;
+			], wfMessage( 'hidetoc' )->plain() . " ▲" );
 
-		$result .= $popupShow . $popupHide ;
-		$result .= Html::closeElement('a');
+		$result .= $popupShow . $popupHide;
+		$result .= Html::closeElement( 'a' );
 
-		$id = 'popup-' . $attributeId . '-toggleable' ;
-		$result .= Html::openElement ('div', array( 'class' => "popupToggleable", 'id' => $id ));
+		$id = 'popup-' . $attributeId . '-toggleable';
+		$result .= Html::openElement( 'div', [ 'class' => "popupToggleable", 'id' => $id ] );
 
-		return $result ;
+		return $result;
 	}
 
 	protected function endToggleCode( $attributeId ) {
-		return  Html::closeElement('div');
+		return Html::closeElement( 'div' );
 	}
 }
 
@@ -376,7 +374,6 @@ class SyntransPopupEditor extends PopUpEditor {
 	 * the value is loaded dynamically when requested with SpecialPopUpEditor
 	 */
 	public function view( IdStack $idPath, $value ) {
-
 		return $this->getOpenHideLink( $idPath );
 	}
 
@@ -385,7 +382,6 @@ class SyntransPopupEditor extends PopUpEditor {
 	 * the value is loaded dynamically when requested with SpecialPopUpEditor
 	 */
 	public function edit( IdStack $idPath, $value ) {
-
 		return $this->getOpenHideLink( $idPath );
 	}
 
@@ -394,37 +390,36 @@ class SyntransPopupEditor extends PopUpEditor {
 	 * the annotation pannel when clicked
 	 */
 	public function getOpenHideLink( IdStack $idPath ) {
-
 		$idPathFlat = $idPath->getId();
 		$syntransId = $idPath->getKeyStack()->peek( 0 )->syntransId;
 		$definedMeaningId = $idPath->getKeyStack()->peek( 1 )->definedMeaningId;
 
-		$id = 'popup-' . $idPathFlat . '-link' ;
+		$id = 'popup-' . $idPathFlat . '-link';
 
-		$htmlOptions = array(
+		$htmlOptions = [
 			'class' => 'togglePopup',
 			'id' => $id,
 			'syntransid' => $syntransId,
 			'dmid' => $definedMeaningId,
 			'idpathflat' => $idPathFlat
-		);
+		];
 		if ( $this->viewInformation->showRecordLifeSpan ) {
 			$htmlOptions['action'] = 'history';
 		}
-		$result = Html::openElement ('a', $htmlOptions );
+		$result = Html::openElement( 'a', $htmlOptions );
 
-		$popupShow = Html::element('span', array(
+		$popupShow = Html::element( 'span', [
 			'class' => 'popupshow'
-			) , wfMessage( 'showtoc' )->plain() . " ▼"  ) ;
-		$popupHide = Html::element('span', array(
+			], wfMessage( 'showtoc' )->plain() . " ▼" );
+		$popupHide = Html::element( 'span', [
 			'class' => 'popuphide',
 			'style' => 'display:none;'
-			) , wfMessage( 'hidetoc' )->plain() . " ▲"  ) ;
+			], wfMessage( 'hidetoc' )->plain() . " ▲" );
 
-		$result .= $popupShow . $popupHide ;
-		$result .= Html::closeElement('a');
+		$result .= $popupShow . $popupHide;
+		$result .= Html::closeElement( 'a' );
 
-		return $result ;
+		return $result;
 	}
 
   // temporary save function
@@ -442,7 +437,6 @@ class SyntransPopupEditor extends PopUpEditor {
 	}
 }
 
-
 class RecordSetRecordSelector extends WrappingEditor {
 	public function view( IdStack $idPath, $value ) {
 		return getStaticSuggest(
@@ -453,13 +447,12 @@ class RecordSetRecordSelector extends WrappingEditor {
 	}
 }
 
-
 class DefinedMeaningContextEditor extends WrappingEditor {
 	public function view( IdStack $idPath, $value ) {
 		if ( is_null( $value ) ) {
 			return;
 		}
-		$definedMeaningId = (int) $value->definedMeaningId;
+		$definedMeaningId = (int)$value->definedMeaningId;
 
 		$idPath->pushDefinedMeaningId( $definedMeaningId );
 		$idPath->pushClassAttributes( new ClassAttributes( $definedMeaningId ) );
@@ -468,10 +461,10 @@ class DefinedMeaningContextEditor extends WrappingEditor {
 
 		$idPath->popClassAttributes();
 		$idPath->popDefinedMeaningId();
-		
+
 		return $result;
 	}
-	
+
 	public function edit( IdStack $idPath, $value ) {
 		if ( is_null( $idPath ) ) {
 			throw new Exception( "Null provided for idPath while trying to edit()" );
@@ -481,22 +474,22 @@ class DefinedMeaningContextEditor extends WrappingEditor {
 			throw new Exception( "Null provided for value while trying to edit()" );
 		}
 
-		$definedMeaningId = (int) $value->definedMeaningId;
-		
+		$definedMeaningId = (int)$value->definedMeaningId;
+
 		$idPath->pushDefinedMeaningId( $definedMeaningId );
 		$idPath->pushClassAttributes( new ClassAttributes( $definedMeaningId ) );
-			
+
 		$result = $this->wrappedEditor->edit( $idPath, $value );
-		
+
 		$idPath->popClassAttributes();
 		$idPath->popDefinedMeaningId();
-		
+
 		return $result;
 	}
-	
+
 	public function save( IdStack $idPath, $value ) {
-		$definedMeaningId = (int) $value->definedMeaningId;
-		
+		$definedMeaningId = (int)$value->definedMeaningId;
+
 		$idPath->pushDefinedMeaningId( $definedMeaningId );
 		$idPath->pushClassAttributes( new ClassAttributes( $definedMeaningId ) );
 
@@ -507,7 +500,6 @@ class DefinedMeaningContextEditor extends WrappingEditor {
 	}
 }
 
-
 class ObjectContextEditor extends WrappingEditor {
 	public function view( IdStack $idPath, $value ) {
 		if ( is_null( $value ) ) {
@@ -515,8 +507,8 @@ class ObjectContextEditor extends WrappingEditor {
 		}
 		$o = OmegaWikiAttributes::getInstance();
 
-		$objectId = (int) $value->objectId;
-		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId) ) ;
+		$objectId = (int)$value->objectId;
+		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId ) );
 		$objectIdRecord->setAttributeValue( $o->objectId, $objectId );
 
 		$idPath->pushKey( $objectIdRecord );
@@ -538,8 +530,8 @@ class ObjectContextEditor extends WrappingEditor {
 		}
 
 		$o = OmegaWikiAttributes::getInstance();
-		$objectId = (int) $value->objectId;
-		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId) ) ;
+		$objectId = (int)$value->objectId;
+		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId ) );
 		$objectIdRecord->setAttributeValue( $o->objectId, $objectId );
 
 		$idPath->pushKey( $objectIdRecord );
@@ -554,8 +546,8 @@ class ObjectContextEditor extends WrappingEditor {
 	public function save( IdStack $idPath, $value ) {
 		$o = OmegaWikiAttributes::getInstance();
 
-		$objectId = (int) $value->objectId;
-		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId) ) ;
+		$objectId = (int)$value->objectId;
+		$objectIdRecord = new ArrayRecord( new Structure( "noname", $o->objectId ) );
 		$objectIdRecord->setAttributeValue( $o->objectId, $objectId );
 
 		$idPath->pushKey( $objectIdRecord );

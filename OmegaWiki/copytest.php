@@ -2,11 +2,11 @@
 
 define( 'MEDIAWIKI', true );
 
-require_once( "../../../StartProfiler.php" );
-require_once( "../../../includes/Defines.php" );
-require_once( "../../../LocalSettings.php" );
-require_once( "Setup.php" );
-require_once( "Copy.php" );
+require_once "../../../StartProfiler.php";
+require_once "../../../includes/Defines.php";
+require_once "../../../LocalSettings.php";
+require_once "Setup.php";
+require_once "Copy.php";
 
 function doCopy( $dmid_dirty, $dc1_dirty, $dc2_dirty ) {
 	$dmid = mysql_real_escape_string( $dmid_dirty );
@@ -19,11 +19,9 @@ function doCopy( $dmid_dirty, $dc1_dirty, $dc2_dirty ) {
 	$dmc->dup();
 
 	return true; # seems everything went ok.
-
 }
 
 function connect() {
-
 	global $wgDBserver, $wgDBuser, $wgDBpassword, $wgDBname;
 
 	$db1 = $wgDBserver;  # hostname
@@ -32,7 +30,9 @@ function connect() {
 	$db4 = $wgDBname;  # db-name
 
 	$connection = MySQL_connect( $db1, $db2, $db3 );
-	if ( !$connection )die( "Cannot connect to SQL server. Try again later." );
+	if ( !$connection ) {
+		die( "Cannot connect to SQL server. Try again later." );
+	}
 	MySQL_select_db( $db4 ) or die( "Cannot open database" );
 	mysql_query( "SET NAMES 'utf8'" );
 }
@@ -43,20 +43,18 @@ function connect() {
  * db over again.
  */
 function main() {
+	$sequence = [];
+	$sequence[] = [ '5249216', 'sp', 'uw' ];
+	$sequence[] = [ '5499828', 'sp', 'uw' ];
+	$sequence[] = [ '6247771', 'sp', 'uw' ];
+	$sequence[] = [ '7229499', 'sp', 'uw' ];
 
-	$sequence = array();
-	$sequence[] = array( '5249216', 'sp', 'uw' );
-	$sequence[] = array( '5499828', 'sp', 'uw' );
-	$sequence[] = array( '6247771', 'sp', 'uw' );
-	$sequence[] = array( '7229499', 'sp', 'uw' );
+	$sequence[] = [ '68242', 'umls', 'uw' ];
+	$sequence[] = [ '69856', 'umls', 'uw' ];
+	$sequence[] = [ '69931', 'umls', 'uw' ];
+	$sequence[] = [ '71663', 'umls', 'uw' ];
+	$sequence[] = [ '71902', 'umls', 'uw' ];
 
-	
-	$sequence[] = array( '68242', 'umls', 'uw' );
-	$sequence[] = array( '69856', 'umls', 'uw' );
-	$sequence[] = array( '69931', 'umls', 'uw' );
-	$sequence[] = array( '71663', 'umls', 'uw' );
-	$sequence[] = array( '71902', 'umls', 'uw' );
-	
 	echo "Connect ... \n";
 	connect();
 
@@ -64,10 +62,10 @@ function main() {
 	echo "doing bootstraps\n";
 
 	mysql_query( "START TRANSACTION" );
-	CopyTools::map_bootstraps( "uw", array( "uw", "sp" ) );
-	
+	CopyTools::map_bootstraps( "uw", [ "uw", "sp" ] );
+
 	echo "now copying\n";
-	
+
 	foreach ( $sequence as $test ) {
 		$dmid = $test[0];
 		$dc1 = $test[1];
@@ -80,7 +78,4 @@ function main() {
 	# mysql_query("COMMIT");
 }
 
-
 main();
-
-?>

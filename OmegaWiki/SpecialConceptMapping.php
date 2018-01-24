@@ -1,5 +1,7 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 /**
  * A Special Page extension to create concept-mappings
  * also provides a web-api. Minimal documentation is available by calling with &action=help, as a parameter
@@ -11,10 +13,9 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  * @author Kim Bruning <kim@bruning.xs4all.nl>
  * @license  GPLv2 or later
  */
-
-require_once( "WikiDataAPI.php" );
-require_once( "Utilities.php" );
-require_once( "WikiDataGlobals.php" );
+require_once "WikiDataAPI.php";
+require_once "Utilities.php";
+require_once "WikiDataGlobals.php";
 
 class SpecialConceptMapping extends SpecialPage {
 
@@ -59,16 +60,15 @@ class SpecialConceptMapping extends SpecialPage {
 	}
 
 	protected function ui() {
-
 		global $wgOut, $wgRequest, $wgLang;
 		$lang = $wgLang->getCode();
-		require_once( "forms.php" );
+		require_once "forms.php";
 		$wgOut->addHTML( wfMessage( "ow_conceptmapping_uitext" )->text() );
 		$sets = wdGetDataSets();
-		$options = array();
+		$options = [];
 		$html = "";
-		$mappings = array();
-		$rq = array();
+		$mappings = [];
+		$rq = [];
 
 		foreach ( $sets as $key => $setObject ) {
 			$set = $setObject->getPrefix();
@@ -76,11 +76,11 @@ class SpecialConceptMapping extends SpecialPage {
 			$rq[$set] = trim( $rq[$set] );
 			$rq[$set] = (int)$rq[$set];
 			if ( $rq[$set] ) {
-				$dmModel = new DefinedMeaningModel( $rq[$set], array( "dataset" => $setObject ) );
+				$dmModel = new DefinedMeaningModel( $rq[$set], [ "dataset" => $setObject ] );
 				$defaultSel = $dmModel->getSyntransByLanguageCode( $lang );
-				$options[$setObject->fetchName()] = getSuggest( "set_$set", WLD_DEFINED_MEANING, array(), $rq[$set], $defaultSel, array( 0 ), $setObject );
+				$options[$setObject->fetchName()] = getSuggest( "set_$set", WLD_DEFINED_MEANING, [], $rq[$set], $defaultSel, [ 0 ], $setObject );
 			} else {
-				$options[$setObject->fetchName()] = getSuggest( "set_$set", WLD_DEFINED_MEANING, array(), null, null, array( 0 ), $setObject );
+				$options[$setObject->fetchName()] = getSuggest( "set_$set", WLD_DEFINED_MEANING, [], null, null, [ 0 ], $setObject );
 			}
 
 		}
@@ -91,8 +91,8 @@ class SpecialConceptMapping extends SpecialPage {
 			$set = $setObject->getPrefix();
 			if ( !$rq[$set] ) {
 				$wgOut->addHTML( ' <span style="color:yellow">[' . wfMessage( "ow_dm_not_present" )->text() . ']</span>' );
-			} else  {
-				$dmModel = new DefinedMeaningModel( $rq[$set], array( "dataset" => $setObject ) );
+			} else {
+				$dmModel = new DefinedMeaningModel( $rq[$set], [ "dataset" => $setObject ] );
 				$dmModel->checkExistence();
 				if ( $dmModel->exists() ) {
 					$id = $dmModel->getId();
@@ -123,7 +123,6 @@ class SpecialConceptMapping extends SpecialPage {
 		} else {
 			$wgOut->addHTML( wfMessage( "ow_mapping_unsuccessful" )->text() );
 		}
-
 	}
 
 	protected function getDm( $dataset ) {
@@ -134,30 +133,30 @@ class SpecialConceptMapping extends SpecialPage {
 		return $html;
 	}
 
-	
 	protected function help() {
 		global $wgOut;
 		$wgOut->addWikiText( "<h2>Help</h2>" );
 		$wgOut->addWikiText( wfMessage( "ow_conceptmapping_help" )->text() );
 	}
-	
+
 	protected function insert() {
 		global
 			$wgRequest, $wgOut;
-		
+
 		# $wgRequest->getText( 'page' );
 		$sets = wdGetDataSets();
 		# $requests=$wgRequest->getValues();
 		$wgOut->addWikiText( "<h2>" . wfMessage( "ow_will_insert" )->text() . "</h2>" );
-		$map = array();
+		$map = [];
 		foreach ( $sets as $key => $set ) {
 			$dc = $set->getPrefix();
 			$dm_id = $wgRequest->getText( $dc );
 			$name = $set->fetchName();
 
 			$dm_id_ui = $dm_id; # Only for teh purdy
-			if ( $dm_id_ui == null )
+			if ( $dm_id_ui == null ) {
 				$dm_id_ui = "unset";
+			}
 			$wgOut->addWikiText( "$name ->$dm_id_ui" );
 			$map[$dc] = $dm_id;
 		# $dbr=&wfGetDB(DB_MASTER);
@@ -202,4 +201,3 @@ class SpecialConceptMapping extends SpecialPage {
 		return 'omegawiki';	// message 'specialpages-group-omegawiki'
 	}
 }
-

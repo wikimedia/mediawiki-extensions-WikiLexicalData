@@ -2,22 +2,22 @@
 /** @file
  * @todo create a language class for OwDatabaseAPI class
  */
-require_once( 'WikiDataGlobals.php' );
+require_once 'WikiDataGlobals.php';
 
 /** @brief PHP API class for WikiLexicalData Extension's Language
  */
 class WLDLanguage {
 
 	function __construct() {
-		require_once( 'WikiDataGlobals.php' );
+		require_once 'WikiDataGlobals.php';
 	}
 
 	/** @brief returns the languageId
 	 * @param options req'd arr
-	 *	- options:
-	 *		- sid   str return the language Id using the syntrans id
-	 *		- wmkey str return the language Id for the wikimedia key
-	 *		- dc    str the dataset prefix
+	 * 	- options:
+	 * 		- sid   str return the language Id using the syntrans id
+	 * 		- wmkey str return the language Id for the wikimedia key
+	 * 		- dc    str the dataset prefix
 	 * @see use OwDatabaseAPI::getLanguageId instead
 	 */
 	static function getId( $options ) {
@@ -27,23 +27,23 @@ class WLDLanguage {
 
 		if ( isset( $options['wmkey'] ) ) {
 			$tables = 'language';
-			$conds = array( 'wikimedia_key' => $options['wmkey'] );
+			$conds = [ 'wikimedia_key' => $options['wmkey'] ];
 		}
 
 		if ( isset( $options['sid'] ) ) {
-			$tables = array(
+			$tables = [
 				'synt' => $options['dc'] . '_syntrans',
 				'exp' => $options['dc'] . '_expression'
-			);
-			$conds = array(
+			];
+			$conds = [
 				'synt.syntrans_sid' => $options['sid'],
 				'synt.remove_transaction_id' => null,
 				'exp.expression_id = synt.expression_id',
 				'exp.remove_transaction_id' => null
-			);
+			];
 		}
 
-		$query = array( $tables, $vars, $conds, __METHOD__ );
+		$query = [ $tables, $vars, $conds, __METHOD__ ];
 
 		$languageId = $dbr->selectField( $tables, $vars, $conds, __METHOD__ );
 
@@ -60,13 +60,14 @@ class WLDLanguage {
 	 */
 	static function getNames( $code ) {
 		$dbr = wfGetDB( DB_REPLICA );
-		$names = array();
-		list ( $table, $vars, $conds, $join_conds ) = WLDLanguage::getParametersForNames( $code );
+		$names = [];
+		list( $table, $vars, $conds, $join_conds ) = self::getParametersForNames( $code );
 		$lang_res = $dbr->select(
 			$table, $vars, $conds, __METHOD__, null, $join_conds
 		);
-		while ( $lang_row = $dbr->fetchObject( $lang_res ) )
+		while ( $lang_row = $dbr->fetchObject( $lang_res ) ) {
 			$names[$lang_row->row_id] = $lang_row->language_name;
+		}
 		return $names;
 	}
 
@@ -80,10 +81,10 @@ class WLDLanguage {
 		$wikimediaKey = $dbr->selectField(
 			'language',
 			'wikimedia_key',
-			array(
+			[
 				"iso639_3 LIKE '$iso639_3%'",
 				'wikimedia_key <> ' . "''"
-			), __METHOD__
+			], __METHOD__
 		);
 
 		if ( $wikimediaKey ) {
@@ -97,44 +98,44 @@ class WLDLanguage {
 	 * @param $langCode the language in which to retrieve the language names
 	 * @param $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
 	 * this array can be generated with ViewInformation->getFilterLanguageList() according to user preferences
-	 **/
-	static function getParametersForNames( $langCode, $lang_subset = array() ) {
+	 */
+	static function getParametersForNames( $langCode, $lang_subset = [] ) {
 		/* Use a simpler query if the user's language is English. */
 		/* getLanguageIdForCode( 'en' ) = 85 */
 		$dbr = wfGetDB( DB_REPLICA );
 		$langId = getLanguageIdForCode( $langCode );
 
 		if ( $langCode == WLD_ENGLISH_LANG_WMKEY || is_null( $langId ) ) {
-			$cond = array( 'name_language_id' => WLD_ENGLISH_LANG_ID );
+			$cond = [ 'name_language_id' => WLD_ENGLISH_LANG_ID ];
 			if ( ! empty( $lang_subset ) ) {
 				$cond['language_id'] = $lang_subset;
 			}
 			$table = 'language_names';
-			$vars = array( 'row_id' => 'language_id', 'language_name' );
+			$vars = [ 'row_id' => 'language_id', 'language_name' ];
 			$join_conds = null;
 		} else {
 			/* Fall back on English in cases where a language name is not present in the
 			user's preferred language. */
-			$cond = array( 'eng.name_language_id' => WLD_ENGLISH_LANG_ID );
+			$cond = [ 'eng.name_language_id' => WLD_ENGLISH_LANG_ID ];
 
 			if ( ! empty( $lang_subset ) ) {
 				$cond['eng.language_id'] = $lang_subset;
 			}
 
-			$table = array( 'eng' => 'language_names', 'ln2' => 'language_names' );
-			$vars = array(
+			$table = [ 'eng' => 'language_names', 'ln2' => 'language_names' ];
+			$vars = [
 				'row_id' => 'eng.language_id',
 				'language_name' => 'COALESCE(ln2.language_name,eng.language_name)'
-			);
-			$join_conds = array( 'ln2' => array(
-				'LEFT JOIN', array(
+			];
+			$join_conds = [ 'ln2' => [
+				'LEFT JOIN', [
 					'eng.language_id = ln2.language_id',
 					'ln2.name_language_id' => $langId
-				)
-			) );
+				]
+			] ];
 		}
 
-		return array( $table, $vars, $cond, $join_conds );
+		return [ $table, $vars, $cond, $join_conds ];
 	}
 
 }
@@ -143,9 +144,9 @@ class WLDLanguage {
  * @param $purge purge cache
  * @return array of language names for the user's language preference
  * @todo for deprecation, use OwDatabaseAPI::getOwLanguageNames instead
- **/
+ */
 function getOwLanguageNames( $purge = false ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::getOwLanguageNames( $purge );
 }
 
@@ -155,18 +156,17 @@ function getOwLanguageNames( $purge = false ) {
  * @todo for deprecation, use OwDatabaseAPI::getOwLanguageNames instead
  */
 function getLangNames( $code ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
+	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::getOwLanguageNames( null, $code );
 }
 
 function getLanguageIdForCode( $code ) {
-
 	static $languages = null;
 	if ( is_null( $languages ) ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$id_res = $dbr->select(
 			'language',
-			array( 'language_id', 'wikimedia_key'),
+			[ 'language_id', 'wikimedia_key' ],
 			'', __METHOD__
 		);
 		foreach ( $id_res as $id_row ) {
@@ -184,14 +184,13 @@ function getLanguageIdForCode( $code ) {
  * iso639_3 $code
  */
 function getLanguageIdForIso639_3( $code ) {
-
 	static $languages = null;
 
 	if ( is_null( $languages ) ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$result = $dbr->select(
 			'language',
-			array( 'language_id', 'iso639_3'),
+			[ 'language_id', 'iso639_3' ],
 			'', __METHOD__
 		);
 		foreach ( $result as $row ) {
@@ -210,17 +209,16 @@ function getLanguageIdForIso639_3( $code ) {
  * language_id $id
  */
 function getLanguageIso639_3ForId( $id ) {
-
 	static $languages = null;
 
 	if ( is_null( $languages ) ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$result = $dbr->select(
 			'language',
-			array( 'language_id', 'iso639_3'),
+			[ 'language_id', 'iso639_3' ],
 			'', __METHOD__
 		);
-		foreach( $result as $row ) {
+		foreach ( $result as $row ) {
 			$languages['id' . $row->language_id] = $row->iso639_3;
 		}
 	}
@@ -237,7 +235,6 @@ function getLanguageIso639_3ForId( $id ) {
  * null if not found
  */
 function getDMIdForIso639_3( $code ) {
-
 	global $wgIso639_3CollectionId;
 	// should we use the static approach, as for the other functions?
 	$dc = wdGetDataSetContext();
@@ -246,11 +243,11 @@ function getDMIdForIso639_3( $code ) {
 	$langdm = $dbr->selectField(
 		"{$dc}_collection_contents",
 		'member_mid',
-		array(
+		[
 			'collection_id' => $wgIso639_3CollectionId,
 			'internal_member_id' => $code,
 			'remove_transaction_id' => null
-		), __METHOD__
+		], __METHOD__
 	);
 
 	// langdm is false if not found
@@ -260,7 +257,6 @@ function getDMIdForIso639_3( $code ) {
 	return null;
 }
 
-
 /* @return Return an array containing all language names translated into the language
  * Returns a SQL query string for fetching language names in a given language.
  * @param $lang_code the language in which to retrieve the language names
@@ -269,9 +265,9 @@ function getDMIdForIso639_3( $code ) {
  *
  * @todo for deprecation, use OwDatabaseAPI::getSQLForLanguageNames instead
  */
-function getSQLForLanguageNames( $lang_code, $lang_subset = array() ) {
-	require_once( 'OmegaWikiDatabaseAPI.php' );
-	return OwDatabaseAPI::getSQLForLanguageNames( $lang_code, $lang_subset = array() );
+function getSQLForLanguageNames( $lang_code, $lang_subset = [] ) {
+	require_once 'OmegaWikiDatabaseAPI.php';
+	return OwDatabaseAPI::getSQLForLanguageNames( $lang_code, $lang_subset = [] );
 }
 
 function getLanguageIdLanguageNameFromIds( $languageId, $nameLanguageId ) {
@@ -280,10 +276,10 @@ function getLanguageIdLanguageNameFromIds( $languageId, $nameLanguageId ) {
 	$languageId = $dbr->selectField(
 		'language_names',
 		'language_name',
-		array(
+		[
 			'language_id' => $languageId,
 			'name_language_id' => $nameLanguageId
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $languageId ) {
@@ -299,9 +295,9 @@ function LanguageIdExist( $languageId ) {
 	$languageId = $dbr->selectField(
 		'language',
 		'language_id',
-		array(
+		[
 			'language_id' => $languageId
-		), __METHOD__
+		], __METHOD__
 	);
 
 	if ( $languageId ) {

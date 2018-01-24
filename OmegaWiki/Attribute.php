@@ -77,7 +77,6 @@ class Structure {
 		$this->type = $type;
 	}
 
-
 	/**
 	 * Construct named Structure which contains Attribute objects
 	 *
@@ -90,7 +89,6 @@ class Structure {
 	 *
 	 */
 	public function __construct( $argumentList ) {
-
 		# We're trying to be clever.
 		$args = func_get_args();
 		$this->attributes = null;
@@ -104,10 +102,10 @@ class Structure {
 		if ( is_array( $this->attributes ) ) {
 			# We don't know what to call an unnamed
 			# structure with multiple attributes.
-			if ( sizeof( $this->attributes ) > 1 ) {
+			if ( count( $this->attributes ) > 1 ) {
 				$this->type = 'anonymous-structure';
 			# Meh, just one Attribute. Let's eat it.
-			} elseif ( sizeof( $this->attributes ) == 1 ) {
+			} elseif ( count( $this->attributes ) == 1 ) {
 				$this->type = $this->attributes[0]->id;
 			} else {
 				$this->type = 'empty-structure';
@@ -129,15 +127,15 @@ class Structure {
 	}
 
 	public function supportsAttributeId( $attributeId ) {
-//		$result = false;
-//		$i = 0;
-//
-//		while (!$result && $i < count($this->attributes)) {
-//			$result = $this->attributes[$i]->id == $attributeId;
-//			$i++;
-//		}
-//
-//		return $result;
+		// $result = false;
+		// $i = 0;
+		//
+		// while (!$result && $i < count($this->attributes)) {
+		// $result = $this->attributes[$i]->id == $attributeId;
+		// $i++;
+		// }
+		//
+		// return $result;
 		return true;
 	}
 
@@ -151,8 +149,9 @@ class Structure {
 		if ( count( $this->attributes ) > 0 ) {
 			$result .= $this->attributes[0]->id;
 
-			for ( $i = 1; $i < count( $this->attributes ); $i++ )
+			for ( $i = 1; $i < count( $this->attributes ); $i++ ) {
 				$result .= ", " . $this->attributes[$i]->id;
+			}
 		}
 
 		$result .= "}";
@@ -166,7 +165,7 @@ class Structure {
 class Attributes {
 
 	public function __construct() {
-		require_once( 'OmegaWikiDatabaseAPI.php' );
+		require_once 'OmegaWikiDatabaseAPI.php';
 	}
 
 	/**
@@ -175,103 +174,27 @@ class Attributes {
 	 * @param dc       opt'l str the dataset to use
 	 *
 	 * @return array(
-	 *	'text' => $string,
-	 *	'attribute_name' => $string,
-	 *	'attribute_id' => $integer
+	 * 	'text' => $string,
+	 * 	'attribute_name' => $string,
+	 * 	'attribute_id' => $integer
 	 * )
 	 * @return if not exists, array()
 	 *
 	 * Note: $options can be used to introduce new variables
 	 */
-	public static function getTextAttributes( $objectId, $options = array(), $dc = null ) {
+	public static function getTextAttributes( $objectId, $options = [], $dc = null ) {
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
 
-		$cond = array();
+		$cond = [];
 		if ( isset( $options['ORDER BY'] ) ) {
-			$cond['ORDER BY']= $options['ORDER BY'];
+			$cond['ORDER BY'] = $options['ORDER BY'];
 		} else {
-			$cond['ORDER BY']= 'text';
+			$cond['ORDER BY'] = 'text';
 		}
 
-		if ( isset( $options['LIMIT'] ) ) {
-			$cond['LIMIT']= $options['LIMIT'];
-		}
-		if ( isset( $options['OFFSET'] ) ) {
-			$cond['OFFSET']= $options['OFFSET'];
-		}
-
-		$cond[] = 'DISTINCT';
-
-		$languageId = null;
-		if ( isset( $options['languageId'] ) ) {
-			$languageId = $options['languageId'];
-		}
-
-		$queryResult = $dbr->select(
-			"{$dc}_text_attribute_values",
-			array(
-				'text',
-				'attribute_mid',
-			),
-			array(
-				'object_id' => $objectId,
-				'remove_transaction_id' => null
-			),
-			__METHOD__,
-			$cond
-		);
-
-		$textAttributes = array();
-		$attributes = new Attributes;
-		foreach ( $queryResult as $ta ) {
-			$textAttributes[] = array(
-				'text' => $ta->text,
-				'attribute_name' => $attributes->getAttributeName( $ta->attribute_mid, $languageId ),
-				'attribute_id' => $ta->attribute_mid
-			);
-		}
-
-		if ( $textAttributes ) {
-			return $textAttributes;
-		}
-		return array();
-	}
-
-	/**
-	 * @param objectId req'd int the object id
-	 * @param option   opt'l arr optional array
-	 * @param dc       opt'l str the dataset to use
-	 *
-	 * @return array(
-	 *	'attribute_name' => $string,
-	 *	'attribute_option_name' => $string,
-	 *	'attribute_id' => $integer
-	 * )
-	 * @return if not exists array()
-	 *
-	 * @note $objectId can be either syntransId or definedMeaningId
-	 *
-	 * Note: $options can be used to introduce new variables
-	 */
-	public static function getOptionAttributes( $objectId, $options = array(), $dc = null ) {
-		if ( is_null( $dc ) ) {
-			$dc = wdGetDataSetContext();
-		}
-		$dbr = wfGetDB( DB_REPLICA );
-
-		$vars = array(
-				'oav.object_id' => $objectId,
-				'oav.option_id = oao.option_id',
-				'ca.object_id = oao.attribute_id',
-				'oav.remove_transaction_id' => null,
-				'oao.remove_transaction_id' => null,
-				'ca.remove_transaction_id' => null
-		);
-
-		$cond = array();
 		if ( isset( $options['LIMIT'] ) ) {
 			$cond['LIMIT'] = $options['LIMIT'];
 		}
@@ -287,35 +210,111 @@ class Attributes {
 		}
 
 		$queryResult = $dbr->select(
-			array(
+			"{$dc}_text_attribute_values",
+			[
+				'text',
+				'attribute_mid',
+			],
+			[
+				'object_id' => $objectId,
+				'remove_transaction_id' => null
+			],
+			__METHOD__,
+			$cond
+		);
+
+		$textAttributes = [];
+		$attributes = new Attributes;
+		foreach ( $queryResult as $ta ) {
+			$textAttributes[] = [
+				'text' => $ta->text,
+				'attribute_name' => $attributes->getAttributeName( $ta->attribute_mid, $languageId ),
+				'attribute_id' => $ta->attribute_mid
+			];
+		}
+
+		if ( $textAttributes ) {
+			return $textAttributes;
+		}
+		return [];
+	}
+
+	/**
+	 * @param objectId req'd int the object id
+	 * @param option   opt'l arr optional array
+	 * @param dc       opt'l str the dataset to use
+	 *
+	 * @return array(
+	 * 	'attribute_name' => $string,
+	 * 	'attribute_option_name' => $string,
+	 * 	'attribute_id' => $integer
+	 * )
+	 * @return if not exists array()
+	 *
+	 * @note $objectId can be either syntransId or definedMeaningId
+	 *
+	 * Note: $options can be used to introduce new variables
+	 */
+	public static function getOptionAttributes( $objectId, $options = [], $dc = null ) {
+		if ( is_null( $dc ) ) {
+			$dc = wdGetDataSetContext();
+		}
+		$dbr = wfGetDB( DB_REPLICA );
+
+		$vars = [
+			'oav.object_id' => $objectId,
+			'oav.option_id = oao.option_id',
+			'ca.object_id = oao.attribute_id',
+			'oav.remove_transaction_id' => null,
+			'oao.remove_transaction_id' => null,
+			'ca.remove_transaction_id' => null
+		];
+
+		$cond = [];
+		if ( isset( $options['LIMIT'] ) ) {
+			$cond['LIMIT'] = $options['LIMIT'];
+		}
+		if ( isset( $options['OFFSET'] ) ) {
+			$cond['OFFSET'] = $options['OFFSET'];
+		}
+
+		$cond[] = 'DISTINCT';
+
+		$languageId = null;
+		if ( isset( $options['languageId'] ) ) {
+			$languageId = $options['languageId'];
+		}
+
+		$queryResult = $dbr->select(
+			[
 				'oav' => "{$dc}_option_attribute_values",
 				'oao' => "{$dc}_option_attribute_options",
 				'ca' => "{$dc}_class_attributes"
-			),
-			array(
+			],
+			[
 				'attribute_mid',
 				'option_mid'
-			),
+			],
 			$vars,
 			__METHOD__,
 			$cond
 		);
 
-		$optionAttributes = array();
+		$optionAttributes = [];
 		$attributes = new Attributes;
 		foreach ( $queryResult as $oa ) {
-			$optionAttributes[] = array(
+			$optionAttributes[] = [
 				'attribute_name' => $attributes->getAttributeName( $oa->attribute_mid, $languageId ),
 				'attribute_option_name' => $attributes->getAttributeName( $oa->option_mid, $languageId ),
 				'attribute_id' => $oa->attribute_mid,
 				'option_id' => $oa->option_mid
-			);
+			];
 		}
 
 		if ( $optionAttributes ) {
 			return $optionAttributes;
 		}
-		return array();
+		return [];
 	}
 
 	/** @brief getOptionsAttributeOption Template
@@ -323,25 +322,25 @@ class Attributes {
 	 * @param optionMeaningId opt'l int/nul
 	 * @param languageId      req'd str/arr
 	 * @param option          opt'l str
-	 *	- multiple multiple lines
-	 *	- exists   returns boolean, depending whether the queried values exists or not.
+	 * 	- multiple multiple lines
+	 * 	- exists   returns boolean, depending whether the queried values exists or not.
 	 * @see use OwDatabaseAPI::getOptionAttributeOptions instead.
-	*/
+	 */
 	public static function getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option = null ) {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_REPLICA );
 
-		$conds = array(
+		$conds = [
 			'attribute_id' => $attributeId,
 			'language_id' => $languageId,
 			'remove_transaction_id' => null
-		);
+		];
 
 		$vars = 'option_id';
 		if ( $optionMeaningId ) {
 			$conds['option_mid'] = $optionMeaningId;
 		} else {
-			$vars = array( $vars, 'option_mid' );
+			$vars = [ $vars, 'option_mid' ];
 		}
 
 		if ( is_array( $vars ) ) {
@@ -394,22 +393,22 @@ class Attributes {
 		}
 		$dbr = wfGetDB( DB_REPLICA );
 
-		$vars = array(
+		$vars = [
 			'synt.defined_meaning_id' => $attributeId,
 			'synt.expression_id = exp.expression_id',
 			'synt.remove_transaction_id' => null,
 			'exp.remove_transaction_id' => null
-		);
+		];
 
 		if ( $languageId ) {
 			$vars['exp.language_id'] = $languageId;
 		}
 
 		$attributeName = $dbr->selectField(
-			array(
+			[
 				'exp' => "{$dc}_expression",
 				'synt' => "{$dc}_syntrans",
-			),
+			],
 			'spelling',
 			$vars,
 			__METHOD__
@@ -437,7 +436,7 @@ class Attributes {
 		}
 		$dbr = wfGetDB( DB_REPLICA );
 
-		$vars = array(
+		$vars = [
 			'synt.expression_id = exp.expression_id',
 			'ca.attribute_mid = synt.defined_meaning_id',
 			'spelling' => $attributeExpression,
@@ -445,7 +444,7 @@ class Attributes {
 			'synt.remove_transaction_id' => null,
 			'exp.remove_transaction_id' => null,
 			'ca.remove_transaction_id' => null
-		);
+		];
 
 		if ( $languageId ) {
 			$vars['exp.language_id'] = $languageId;
@@ -454,11 +453,11 @@ class Attributes {
 		$cond[] = 'DISTINCT';
 
 		$attributeId = $dbr->selectField(
-			array(
+			[
 				'exp' => "{$dc}_expression",
 				'synt' => "{$dc}_syntrans",
 				'ca' => "{$dc}_class_attributes",
-			),
+			],
 			'attribute_mid',
 			$vars,
 			__METHOD__,
@@ -501,22 +500,28 @@ class Attributes {
 
 		$relation = $dbr->selectRow(
 			"{$dc}_meaning_relations",
-			array(
+			[
 				'meaning1_mid',
 				'relationtype_mid',
 				'meaning2_mid'
-			),
-			array(
+			],
+			[
 				'relation_id' => $objectId
-			), __METHOD__
+			], __METHOD__
 		);
 
 		if ( $relation ) {
-			if ( $test ) { var_dump( $relation); die; }
+			if ( $test ) {
+				var_dump( $relation );
+				die;
+			}
 			return $relation;
 		}
-		if ( $test ) { echo 'array()'; die; }
-		return array();
+		if ( $test ) {
+			echo 'array()';
+			die;
+		}
+		return [];
 	}
 
 }

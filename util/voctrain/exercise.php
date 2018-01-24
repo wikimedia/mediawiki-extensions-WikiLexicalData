@@ -1,21 +1,22 @@
 <?PHP
 
-require_once( "functions.php" );  // testing only.
-require_once( "question.php" );
-require_once( "util.php" );
+require_once "functions.php";  // testing only.
+require_once "question.php";
+require_once "util.php";
 
-class NotInitializedException extends Exception { }
-class NoMoreQuestionsException extends Exception { }
-
+class NotInitializedException extends Exception {
+}
+class NoMoreQuestionsException extends Exception {
+}
 
 /** An Exercise consists of a number of questions that
  * are asked in order.
- * 
+ *
  * An exercise that is too large to ask in one go can
  * be split into sub-exercises.
  *
  * pseudocode for usage:
- * 
+ *
  * - Obtain a full list of questions from the Omegawiki server
  * - Generate a subExercise which has a more human-manageable size.
  * - ask each Question in the subExercise {
@@ -42,7 +43,7 @@ class Exercise implements Iterator {
 	private $questionLanguages;
 	private $answerLanguages;
 	private $id;	# exercise id in database
-	private $hide = array();
+	private $hide = [];
 
 	/**
 	 * @param $fetcher class for retrieving xml for questions from some source
@@ -57,11 +58,13 @@ class Exercise implements Iterator {
 		} else {
 			try {
 				$this->currentSubset = $this->getSet();
-			} catch ( NotInitializedException $ignored ) { /*Can still be loaded later*/ }
+			} catch ( NotInitializedException $ignored ) {
+				/* Can still be loaded later */
+			}
 		}
 	}
 
-	# == Iterator implementation 
+	# == Iterator implementation
 	# (see documentation for php Iterator)
 	# used in eg. View->allQuestionsTable
 
@@ -70,10 +73,12 @@ class Exercise implements Iterator {
 	}
 
 	public function current() {
-		if ( $this->currentQuestion === null )
+		if ( $this->currentQuestion === null ) {
 			return $this->nextQuestion();
-		if ( count( $this->getCurrentSubset() ) == 0 )
+		}
+		if ( count( $this->getCurrentSubset() ) == 0 ) {
 			return false;
+		}
 		return $this->currentQuestion;
 	}
 
@@ -88,8 +93,9 @@ class Exercise implements Iterator {
 	}
 
 	public function valid() {
-		if ( count( $this->getCurrentSubset() ) > 0 )
+		if ( count( $this->getCurrentSubset() ) > 0 ) {
 			return true;
+		}
 		return false;
 	}
 
@@ -101,7 +107,6 @@ class Exercise implements Iterator {
 	public function getFullSet() {
 		return $this->fullSet;
 	}
-
 
 	public function getId() {
 		return $this->id;
@@ -131,8 +136,6 @@ class Exercise implements Iterator {
 		$this->answerLanguages = Util::array_trim( $answerLanguages );
 	}
 
-	
-
 	public function getAnswerLanguages() {
 		return $this->answerLanguages;
 	}
@@ -156,14 +159,15 @@ class Exercise implements Iterator {
 			return $this->languages;
 		}
 	}
-	
+
 	public function setLanguages( $languages ) {
 		$this->languages = $languages;
 	}
 
 	public function getQuestionNode( $dmid ) {
-		if ( !is_int( $dmid ) )
-			throw new Exception ( "Invalid dmid, must be a valid integer" );
+		if ( !is_int( $dmid ) ) {
+			throw new Exception( "Invalid dmid, must be a valid integer" );
+		}
 
 		return $this->_getQuestionNode( $dmid, $this->fullSet, 0 );
 	}
@@ -176,8 +180,7 @@ class Exercise implements Iterator {
 		$this->hide = $hide;
 	}
 
-
-	# ==  All other methods 
+	# ==  All other methods
 
 	/**
 	 * Initially, we start out with a question set (DOMDocument) with empty
@@ -190,33 +193,38 @@ class Exercise implements Iterator {
 	 * @param $dmid 	the dmid to fetch
 	 * @param $targetDOM 	the DOM to work with
 	 * @param $_depth  	traps recursion, $_depth may not be larger than 1.
-	 * @param $fetch 	
+	 * @param $fetch
 	 */
 	private function _getQuestionNode( $dmid, $targetDOM, $_depth = 0, $fetch = true ) {
-		if ( !is_int( $dmid ) )
-			throw new Exception ( "Invalid dmid, must be a valid integer" );
+		if ( !is_int( $dmid ) ) {
+			throw new Exception( "Invalid dmid, must be a valid integer" );
+		}
 
-		if ( $targetDOM === null )
-			throw new Exception ( "Invalid internal reference to DOM, cannot be null" );
+		if ( $targetDOM === null ) {
+			throw new Exception( "Invalid internal reference to DOM, cannot be null" );
+		}
 
 		$xpath = new domxpath( $targetDOM );
 		$nodes = $xpath->query( "//defined-meaning[@defined-meaning-id=\"$dmid\"]" );
 
-		if ( $nodes->length > 1 )
+		if ( $nodes->length > 1 ) {
 			throw new Exception( "More than one element with same dmid, while trying to parse XML (at depth $_depth)" ); # There Can Be Only One!
-		if ( $nodes->length === 0 )
+		}
+		if ( $nodes->length === 0 ) {
 			throw new Exception( "dmid $dmid not found at depth $_depth" );
+		}
 
 		$questionNode = $nodes->item( 0 );
 
 		# Is the node empty? Then fill it (provided $fetch says we've been asked to do so).
 		if ( $fetch && !$questionNode->hasChildNodes() ) {
-			if ( $_depth > 0 )
+			if ( $_depth > 0 ) {
 				throw new Exception( "Failed to obtain full question node" );
+			}
 
 			$questionNode = $this->_fetchQuestionNode( $dmid, $questionNode );
 		}
-		
+
 		return $questionNode;
 	}
 
@@ -242,11 +250,10 @@ class Exercise implements Iterator {
 		$result = $oldNode->parentNode->replaceChild( $newNode, $oldNode );
 
 		if ( $result === null ) {
-			throw new Exception ( "couldn't update full question set" );
+			throw new Exception( "couldn't update full question set" );
 		}
 		return $newNode;
 	}
-
 
 	/** On the basis of the subset array provided, create new exercise object */
 	public function getSubExercize( $subset ) {
@@ -255,7 +262,7 @@ class Exercise implements Iterator {
 		$dom->appendChild( $collection );
 		foreach ( $subset as $dmid ) {
 			 # Grab each node from the current full set, $_depth must always start at 0
-			 # and ($fetch=false) we just want the current state, 
+			 # and ($fetch=false) we just want the current state,
 			 # we can fetch things later at our leisure.
 			$questionNode = $this->_getQuestionNode( $dmid, $this->fullSet, 0, false );
 			$questionNode = $dom->importNode( $questionNode, true );
@@ -273,70 +280,77 @@ class Exercise implements Iterator {
 	 * in this exercise
 	 */
 	public function getSet() {
-		if ( $this->fullSet === null )
+		if ( $this->fullSet === null ) {
 			throw new NotInitializedException( "no fullSet available" );
-		$set = array();
+		}
+		$set = [];
 
 		$xpath = new domxpath( $this->fullSet );
 		$nodes = $xpath->query( "//defined-meaning" );
 
 		foreach ( $nodes as $node ) {
-			$set[] = (int) $node->getAttribute( "defined-meaning-id" );
+			$set[] = (int)$node->getAttribute( "defined-meaning-id" );
 		}
 
 		return $set;
 	}
 
-	/** Make a basic (unweighted) subexercise, 
-	  *  with up to $size questions. 
-	  */
+	/** Make a basic (unweighted) subexercise,
+	 *  with up to $size questions.
+	 */
 	public function randSubExercise( $size ) {
 		$set = $this->getSet();
 		shuffle( $set );
 
-		if ( $size > count( $set ) )
+		if ( $size > count( $set ) ) {
 			$size = count( $set );
-		
+		}
+
 		$subset = array_slice( $set, 0, $size );
 		return $this->getSubExercize( $subset );
 	}
 
-	
 	/** return question associated with the dmid,
 	 * or throws MissingWordsException if words are missing.
 	 * (I wish I had compile-time checks like in java )
 	 * (you can suppress question consistency checking by setting $selfCheck to false)
 	 */
 	public function getQuestion( $dmid, $selfCheck = true ) {
-		if ( !is_int( $dmid ) )
-			throw new Exception ( "Invalid dmid, must be a valid integer" );
+		if ( !is_int( $dmid ) ) {
+			throw new Exception( "Invalid dmid, must be a valid integer" );
+		}
 
 		$questionNode = $this->getQuestionNode( $dmid );
 		$question = new Question( $this, $questionNode );
 		$question->setQuestionLanguages( $this->getQuestionLanguages() );
 		$question->setAnswerLanguages( $this->getAnswerLanguages() );
 
-		if ( $selfCheck )
+		if ( $selfCheck ) {
 			$question->selfCheck();
+		}
 
 		return $question;
 	}
 
 	/** select a random question, and return it */
 	public function nextQuestion() {
-		if ( !is_array( $this->currentSubset ) )
+		if ( !is_array( $this->currentSubset ) ) {
 			throw new NotInitializedException( "no currentSubset available" );
-		
-		if ( count( $this->currentSubset ) == 0 )
+		}
+
+		if ( count( $this->currentSubset ) == 0 ) {
 			throw new NoMoreQuestionsException( "Done!" );
+		}
 
 		$next = $this->currentSubset[array_rand( $this->currentSubset )];
 		try {
 			$question = $this->getQuestion( $next );
 			$this->currentQuestion = $question;
 		} catch ( MissingWordsException $e ) {
-			if ( count( $this->currentSubset ) == 1 )	# 1 left? Oh dear, that's this one.
+			if ( count( $this->currentSubset ) == 1 ) {
+				# 1 left? Oh dear, that's this one.
 				throw new NoMoreQuestionsException( "Last question threw MissingWordsException!" );
+			}
 			$this->hideQuestion_byDMID( $next );
 			return $this->nextQuestion();
 		}
@@ -345,13 +359,14 @@ class Exercise implements Iterator {
 
 	/** called back from Question, if the question has been answered correctly */
 	public function AnswerCorrect( $question ) {
-		if ( $this->currentSubset === null )
+		if ( $this->currentSubset === null ) {
 			throw new NotInitializedException( "no fullSet available" );
-		if ( count( $this->currentSubset ) <= 0 )
+		}
+		if ( count( $this->currentSubset ) <= 0 ) {
 			throw new NoMoreQuestionsException( "somehow a question was answered that was never asked." );
-		
-		$this->hideQuestion( $question );
+		}
 
+		$this->hideQuestion( $question );
 	}
 
 	/** called back from Question, if the question has been answered incorrectly */
@@ -359,26 +374,22 @@ class Exercise implements Iterator {
 		/** do something useful here */
 	}
 
-	/** A  question is "hidden" by removing it from the list of questions to be asked. (currentSubset) 
-		it can still be accessed in other ways*/
+	/** A  question is "hidden" by removing it from the list of questions to be asked. (currentSubset)
+	 * it can still be accessed in other ways
+	 */
 	public function hideQuestion( $question ) {
-		$id = (int) $question->getDmid();
+		$id = (int)$question->getDmid();
 		unset( $this->currentSubset[array_search( $id, $this->currentSubset )] );
-
 	}
-	
+
 	public function hideQuestion_byDMID( $dmid ) {
 		unset( $this->currentSubset[array_search( $dmid, $this->currentSubset )] );
-
 	}
-
-
 
 	/** rturns a count of the number of questions remaining to be asked */
 	public function countQuestionsRemaining() {
 		return count( $this->getCurrentSubset() );
 	}
-
 
 	/** returns a count of the number of questions available in this Exercise */
 	public function countQuestionsTotal() {
@@ -390,8 +401,9 @@ class Exercise implements Iterator {
 
 	/** store subset data in current dom tree */
 	private function put_subset_in_dom() {
-		if ( $this->fullSet === null )
+		if ( $this->fullSet === null ) {
 			throw new NotInitializedException( "no fullSet available" );
+		}
 		if ( $this->currentSubset === null ) {
 			return;
 		}
@@ -421,16 +433,16 @@ class Exercise implements Iterator {
 		$xpath = new domxpath( $dom );
 		$nodes = $xpath->query( "/collection/subset/dmid" );
 		if ( $nodes->length > 0 ) {
-			$subset = array();
+			$subset = [];
 			foreach ( $nodes as $node ) {
-				$subset[] = (int) $node->nodeValue;
+				$subset[] = (int)$node->nodeValue;
 			}
 		} else {
 			$exists = $xpath->query( "/collection/subset" );
 			if ( $exists->length == 0 ) {
 				$subset = $this->getSet(); // if not present, make a new one.
 			} else {
-				$subset = array(); // if present but empty, we need an empty one
+				$subset = []; // if present but empty, we need an empty one
 			}
 		}
 
@@ -439,8 +451,9 @@ class Exercise implements Iterator {
 
 	/** store hides data in current dom tree */
 	private function put_hides_in_dom() {
-		if ( $this->fullSet === null )
+		if ( $this->fullSet === null ) {
 			throw new NotInitializedException( "no fullSet available" );
+		}
 
 		$dom = $this->fullSet;
 		$hides = $dom->createElement( 'hides' );
@@ -467,18 +480,16 @@ class Exercise implements Iterator {
 		$xpath = new domxpath( $dom );
 		$nodes = $xpath->query( "/collection/hides/hide" );
 		if ( $nodes->length > 0 ) {
-			$hides = array();
+			$hides = [];
 			foreach ( $nodes as $node ) {
 				$hides[] = $node->nodeValue;
 			}
 		} else {
-			$hides = array();
+			$hides = [];
 		}
 
 		$this->setHide( $hides );
 	}
-
-
 
 	/** provide an xml dump (this is not sufficient data to fully persist this Exercise) */
 	public function saveXML() {
@@ -490,10 +501,12 @@ class Exercise implements Iterator {
 
 	/** load previously saved xml */
 	public function loadXML( $xmlString ) {
-		if ( !is_string( $xmlString ) )
-			throw new Exception ( "Exercise::loadXML input is not a string" );
-		if ( $xmlString === "" )
-			throw new Exception ( "Exercise::loadXML empty string supplied as input" );
+		if ( !is_string( $xmlString ) ) {
+			throw new Exception( "Exercise::loadXML input is not a string" );
+		}
+		if ( $xmlString === "" ) {
+			throw new Exception( "Exercise::loadXML empty string supplied as input" );
+		}
 
 		$this->fullSet = new DOMDOcument();
 		$this->fullSet->loadXML( $xmlString );
@@ -502,5 +515,3 @@ class Exercise implements Iterator {
 	}
 
 }
-
-?>

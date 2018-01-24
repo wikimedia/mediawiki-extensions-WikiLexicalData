@@ -2,10 +2,10 @@
 
 define( 'MEDIAWIKI', true );
 
-require_once( "../../../../LocalSettings.php" );
-require_once( "../../php-tools/ProgressBar.php" );
-require_once( "DatabaseUtilities.php" );
-require_once( "Setup.php" );
+require_once "../../../../LocalSettings.php";
+require_once "../../php-tools/ProgressBar.php";
+require_once "DatabaseUtilities.php";
+require_once "Setup.php";
 
 ob_end_flush();
 
@@ -23,5 +23,3 @@ for ( $i = 1; $i < $argc; $i++ ) {
 
 $endTime = time();
 echo( "\n\nTime elapsed: " . durationToString( $endTime - $beginTime ) );
-
-

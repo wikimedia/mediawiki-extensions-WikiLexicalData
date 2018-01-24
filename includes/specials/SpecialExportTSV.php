@@ -1,5 +1,7 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 class SpecialExportTSV extends SpecialPage {
 
@@ -8,9 +10,8 @@ class SpecialExportTSV extends SpecialPage {
 	}
 
 	function execute( $par ) {
-
 		global $wgWldOwScriptPath, $wgDBprefix;
-		require_once( $wgWldOwScriptPath . "WikiDataAPI.php" ); // for bootstrapCollection
+		require_once $wgWldOwScriptPath . "WikiDataAPI.php"; // for bootstrapCollection
 
 		$output = $this->getOutput();
 		$request = $this->getRequest();
@@ -27,14 +28,11 @@ class SpecialExportTSV extends SpecialPage {
 		// get the collection to export.
 		if ( $request->getText( 'createcol' ) && $collectionId ) {
 			$filterType = 'collection';
-		}
-		elseif ( $request->getText( 'createcla' ) && $classId ) {
+		} elseif ( $request->getText( 'createcla' ) && $classId ) {
 			$filterType = 'class';
-		}
-		elseif ( $request->getText( 'createtopic' ) && $topicId ) {
+		} elseif ( $request->getText( 'createtopic' ) && $topicId ) {
 			$filterType = 'topic';
 		}
-
 
 		if ( $filterType && $request->getText( 'languages' ) ) {
 			// render the tsv file
@@ -71,29 +69,27 @@ class SpecialExportTSV extends SpecialPage {
 			}
 			echo( "\r\n" );
 
-			$sqltables = array(
+			$sqltables = [
 				'dm' => "{$dc}_defined_meaning",
 				'exp' => "{$dc}_expression"
-			);
-			$sqlcond = array(
+			];
+			$sqlcond = [
 				'dm.expression_id = exp.expression_id',
 				'dm.remove_transaction_id' => null,
 				'exp.remove_transaction_id' => null
-			);
+			];
 
 			if ( $filterType == 'collection' ) {
 				$sqltables['col'] = "{$dc}_collection_contents";
 				$sqlcond['col.collection_id'] = $collectionId;
 				$sqlcond[] = 'col.member_mid=dm.defined_meaning_id';
 				$sqlcond['col.remove_transaction_id'] = null;
-			}
-			elseif ( $filterType == 'class' ) {
+			} elseif ( $filterType == 'class' ) {
 				$sqltables['cla'] = "{$dc}_class_membership";
 				$sqlcond['cla.class_mid'] = $classId;
 				$sqlcond[] = 'cla.class_member_mid=dm.defined_meaning_id';
 				$sqlcond['cla.remove_transaction_id'] = null;
-			}
-			elseif ( $filterType == 'topic' ) {
+			} elseif ( $filterType == 'topic' ) {
 				$sqltables['oav'] = "{$dc}_option_attribute_values";
 				$sqlcond['oav.option_id '] = $topicId;
 				$sqlcond[] = 'oav.object_id=dm.defined_meaning_id';
@@ -103,10 +99,10 @@ class SpecialExportTSV extends SpecialPage {
 			// get all the defined meanings in the collection
 			$queryResult = $dbr->select(
 				$sqltables,
-				array( 'dm.defined_meaning_id' , 'exp.spelling' ),
+				[ 'dm.defined_meaning_id' , 'exp.spelling' ],
 				$sqlcond,
 				__METHOD__,
-				array( 'ORDER BY' => 'exp.spelling' )
+				[ 'ORDER BY' => 'exp.spelling' ]
 			);
 
 			foreach ( $queryResult as $row ) {
@@ -120,7 +116,7 @@ class SpecialExportTSV extends SpecialPage {
 				// proper order.
 
 				// the associative array holding the definitions and translations
-				$data = array();
+				$data = [];
 
 				// ****************************
 				// query to get the definitions
@@ -133,8 +129,9 @@ class SpecialExportTSV extends SpecialPage {
 				$qry .= 'AND trans.language_id IN (';
 				for ( $i = 0; $i < count( $languages ); $i++ ) {
 					$language = $languages[$i];
-					if ( $i > 0 )
+					if ( $i > 0 ) {
 						$qry .= ",";
+					}
 					$qry .= $language['language_id'];
 				}
 				$qry .= ') AND ' . getLatestTransactionRestriction( 'trans' );
@@ -210,10 +207,11 @@ class SpecialExportTSV extends SpecialPage {
 					if ( isset( $isoLookup['id' . $rowtrans->language_id] ) ) {
 						// $key becomes something like trans_eng
 						$key = 'trans_' . $isoLookup['id' . $rowtrans->language_id];
-						if ( !isset( $data[$key] ) )
+						if ( !isset( $data[$key] ) ) {
 							$data[$key] = $rowtrans->spelling;
-						else
+						} else {
 							$data[$key] = $data[$key] . '|' . $rowtrans->spelling;
+						}
 					}
 				}
 				$dbr->freeResult( $translations );
@@ -223,53 +221,53 @@ class SpecialExportTSV extends SpecialPage {
 					// if statements save a bunch of notices in the log about
 					// undefined indices.
 					echo( "\t" );
-					if ( isset( $data['def_' . $isoCode] ) )
+					if ( isset( $data['def_' . $isoCode] ) ) {
 						echo( $this->escapeDelimitedValue( $data['def_' . $isoCode] ) );
+					}
 					echo( "\t" );
-					if ( isset( $data['trans_' . $isoCode] ) )
+					if ( isset( $data['trans_' . $isoCode] ) ) {
 						echo( $data['trans_' . $isoCode] );
+					}
 				}
 				echo( "\r\n" );
 			}
 
-		}
-		else {
-			$collections = array();
-			$topics = array();
+		} else {
+			$collections = [];
+			$topics = [];
 
 			// Get the collections
 			$colResults = $dbr->select(
-				array( 'col' => "{$dc}_collection", 'dm' => "{$dc}_defined_meaning", 'exp' => "{$dc}_expression" ),
-				array( 'col.collection_id', 'exp.spelling' ),
-				array( 'col.remove_transaction_id' => null ),
+				[ 'col' => "{$dc}_collection", 'dm' => "{$dc}_defined_meaning", 'exp' => "{$dc}_expression" ],
+				[ 'col.collection_id', 'exp.spelling' ],
+				[ 'col.remove_transaction_id' => null ],
 				__METHOD__,
-				array(),
-				array(
-					'dm' => array( 'INNER JOIN', array( 'col.collection_mid=dm.defined_meaning_id' )),
-					'exp' => array( 'INNER JOIN', array( 'dm.expression_id=exp.expression_id' ))
-				)
+				[],
+				[
+					'dm' => [ 'INNER JOIN', [ 'col.collection_mid=dm.defined_meaning_id' ] ],
+					'exp' => [ 'INNER JOIN', [ 'dm.expression_id=exp.expression_id' ] ]
+				]
 			);
 			foreach ( $colResults as $rowcol ) {
 				$collections[$rowcol->collection_id] = $rowcol->spelling;
 			}
 
 			$topicResults = $dbr->select(
-				array( 'oao' => "{$dc}_option_attribute_options", 'dm' => "{$dc}_defined_meaning", 'exp' => "{$dc}_expression" ),
-				array( 'oao.option_id', 'exp.spelling' ),
-				array(
+				[ 'oao' => "{$dc}_option_attribute_options", 'dm' => "{$dc}_defined_meaning", 'exp' => "{$dc}_expression" ],
+				[ 'oao.option_id', 'exp.spelling' ],
+				[
 					'oao.attribute_id' => $topicAttributeId,
 					'oao.remove_transaction_id' => null
-				), __METHOD__,
-				array(),
-				array(
-					'dm' => array( 'INNER JOIN', array( 'oao.option_mid=dm.defined_meaning_id' )),
-					'exp' => array( 'INNER JOIN', array( 'dm.expression_id=exp.expression_id' ))
-				)
+				], __METHOD__,
+				[],
+				[
+					'dm' => [ 'INNER JOIN', [ 'oao.option_mid=dm.defined_meaning_id' ] ],
+					'exp' => [ 'INNER JOIN', [ 'dm.expression_id=exp.expression_id' ] ]
+				]
 			);
 			foreach ( $topicResults as $row ) {
 				$topics[$row->option_id] = $row->spelling;
 			}
-
 
 			// render the page
 			$output->setPageTitle( wfMessage( 'ow_exporttsv_title' )->text() );
@@ -277,34 +275,32 @@ class SpecialExportTSV extends SpecialPage {
 
 			// all DM from a collection
 			$output->addHTML( getOptionPanel(
-				array(
+				[
 					wfMessage( 'ow_Collection' )->text() => getSelect( 'collection', $collections, '376322' ),
 					wfMessage( 'prefs-ow-lang' )->text() => getTextBox( 'languages', 'ita, eng, deu, fra, cat' ),
-				),
-				'', array( 'createcol' => wfMessage( 'ow_create' )->text() )
+				],
+				'', [ 'createcol' => wfMessage( 'ow_create' )->text() ]
 			) );
 
 			// all DM from a class
 			$output->addHTML( getOptionPanel(
-				array(
+				[
 					wfMessage( 'ow_Class' )->text() => getSuggest( 'class', 'class' ),
 					wfMessage( 'prefs-ow-lang' )->text() => getTextBox( 'languages', 'ita, eng, deu, fra, cat' ),
-				),
-				'', array( 'createcla' => wfMessage( 'ow_create' )->text() )
+				],
+				'', [ 'createcla' => wfMessage( 'ow_create' )->text() ]
 			) );
 
 			// all DM from a given subject/topic
 			$output->addHTML( getOptionPanel(
-				array(
+				[
 					'topic' => getSelect( 'topic', $topics ),
 					wfMessage( 'prefs-ow-lang' )->text() => getTextBox( 'languages', 'ita, eng, deu, fra, cat' ),
-				),
-				'', array( 'createtopic' => wfMessage( 'ow_create' )->text() )
+				],
+				'', [ 'createtopic' => wfMessage( 'ow_create' )->text() ]
 			) );
 		}
-
 	}
-
 
 	/* HELPER METHODS START HERE */
 
@@ -342,7 +338,7 @@ class SpecialExportTSV extends SpecialPage {
 
 		// wfDebug($langQuery."\n");
 
-		$languages = array();
+		$languages = [];
 		$dbr = wfGetDB( DB_REPLICA );
 		$langResults = $dbr->query( $langQuery );
 		while ( $row = $dbr->fetchRow( $langResults ) ) {
@@ -353,7 +349,7 @@ class SpecialExportTSV extends SpecialPage {
 	}
 
 	function createIsoLookup( $languages ) {
-		$lookup = array();
+		$lookup = [];
 		foreach ( $languages as $language ) {
 			$lookup['id' . $language['language_id']] = $language['iso639_3'];
 		}
@@ -368,8 +364,9 @@ class SpecialExportTSV extends SpecialPage {
 		$fileName = "destit_";
 		for ( $i = 0; $i < count( $isoCodes ); $i++ ) {
 			$isoCode = $isoCodes[$i];
-			if ( $i > 0 )
+			if ( $i > 0 ) {
 				$fileName .= '-';
+			}
 			$fileName .= $isoCode;
 		}
 		$fileName .= ".txt";

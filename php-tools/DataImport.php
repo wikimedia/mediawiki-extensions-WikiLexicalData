@@ -2,18 +2,18 @@
 
 define( 'MEDIAWIKI', true );
 
-require_once( "../../../includes/Defines.php" );
-require_once( "../../../includes/ProfilerStub.php" );
-require_once( "../../../LocalSettings.php" );
-require_once( "Setup.php" );
-require_once( "../OmegaWiki/WikiDataAPI.php" );
-require_once( "../OmegaWiki/Transaction.php" );
-require_once( 'SwissProtImport.php' );
-require_once( 'XMLImport.php' );
-require_once( '2GoMappingImport.php' );
-require_once( "UMLSImport.php" );
-require_once( "../Console/CommandLine.php" );
-require_once( "../../../includes/Namespace.php" );
+require_once "../../../includes/Defines.php";
+require_once "../../../includes/ProfilerStub.php";
+require_once "../../../LocalSettings.php";
+require_once "Setup.php";
+require_once "../OmegaWiki/WikiDataAPI.php";
+require_once "../OmegaWiki/Transaction.php";
+require_once 'SwissProtImport.php';
+require_once 'XMLImport.php';
+require_once '2GoMappingImport.php';
+require_once "UMLSImport.php";
+require_once "../Console/CommandLine.php";
+require_once "../../../includes/Namespace.php";
 
 ob_end_flush();
 
@@ -25,13 +25,12 @@ function getUserId( $real_name ) {
 	$queryResult = $dbr->query( "SELECT user_id FROM user where user_real_name = '$real_name'" );
 	if ( $row = $dbr->fetchObject( $queryResult ) ) {
 		return( $row->user_id );
-	}
-	else {
+	} else {
 		return( - 1 );
 	}
 }
 
-$options = parseCommandLine( array( new CommandLineOption( "dataset", true ) ) );
+$options = parseCommandLine( [ new CommandLineOption( "dataset", true ) ] );
 $datasetName = $options["dataset"];
 
 $beginTime = time();
@@ -43,9 +42,9 @@ global
 
 $dataSet = new WikiDataSet( wdGetDataSetContext() );
 
-// $arg = reset( $argv ); 
+// $arg = reset( $argv );
 // if ( $arg !== false ){
-// 	$wdDefaultViewDataSet = next( $argv );
+// $wdDefaultViewDataSet = next( $argv );
 // }
 
 /*
@@ -63,7 +62,7 @@ if ( $sibUserId == - 1 ) {
 // $linkEC2GoFileName = "LinksEC2Go.txt";
 // $linkSwissProtKeyWord2GoFileName = "LinksSP2Go.txt";
 // $swissProtXMLFileName =  "C:\Documents and Settings\mulligen\Bureaublad\uniprot_sprot.xml";
-$swissProtXMLFileName =  "C:\Documents and Settings\mulligen\Bureaublad\uniprot_sprot.xml";
+$swissProtXMLFileName = "C:\Documents and Settings\mulligen\Bureaublad\uniprot_sprot.xml";
 // $swissProtXMLFileName =  "100000lines.xml";
 // $swissProtXMLFileName =  "C:\Documents and Settings\mulligen\Bureaublad\SPentriesForWPTest.xml";
 // $swissProtXMLFileName =  "C:\Users\mulligen\Desktop\SPentriesForWPTest.xml";
@@ -90,7 +89,7 @@ echo "\nImporting Swiss-Prot\n";
 
 // $umlsImport = new UMLSImportResult;
 // $umlsImport->umlsCollectionId = 5;
-// $umlsImport->sourceAbbreviations['GO'] = 30; 
+// $umlsImport->sourceAbbreviations['GO'] = 30;
 // $umlsImport->sourceAbbreviations['HUGO'] = 69912;
 
 // importSwissProt($swissProtXMLFileName, $umlsImport->umlsCollectionId, $umlsImport->sourceAbbreviations['GO'], $umlsImport->sourceAbbreviations['HUGO'], $EC2GoMapping, $SP2GoMapping);
@@ -100,25 +99,23 @@ $endTime = time();
 echo "\n\nTime elapsed: " . durationToString( $endTime - $beginTime );
 
 // function echoNofLines($fileHandle, $numberOfLines) {
-//	$i = 0;
-//	do {
-//		$buffer = fgets($fileHandle);
-//		$buffer = rtrim($buffer,"\n");
-//		echo $buffer;
-//		$i += 1;
-//	} while($i < $numberOfLines || strpos($buffer, '</entry>') === false);
-//	echo "</uniprot>";
+// $i = 0;
+// do {
+// $buffer = fgets($fileHandle);
+// $buffer = rtrim($buffer,"\n");
+// echo $buffer;
+// $i += 1;
+// } while($i < $numberOfLines || strpos($buffer, '</entry>') === false);
+// echo "</uniprot>";
 // }
 //
 // function echoLinesUntilText($fileHandle, $text) {
-//	$found = false;
-//	do {
-//		$buffer = fgets($fileHandle);
-//		$buffer = rtrim($buffer,"\n");
-//		echo $buffer;
-//		$found = strpos($buffer, $text) !== false;		
-//	} while(!$found || strpos($buffer, '</entry>') === false);
-//	echo "</uniprot>";
+// $found = false;
+// do {
+// $buffer = fgets($fileHandle);
+// $buffer = rtrim($buffer,"\n");
+// echo $buffer;
+// $found = strpos($buffer, $text) !== false;
+// } while(!$found || strpos($buffer, '</entry>') === false);
+// echo "</uniprot>";
 // }
-
-

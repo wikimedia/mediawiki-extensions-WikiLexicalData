@@ -1,11 +1,10 @@
 <?php
 header( "Content-type: text/html; charset=UTF-8" );
 
-
 $dc = "umls";
 
 define( 'MEDIAWIKI', true );
-include_once( "../../../../LocalSettings.php" );
+include_once "../../../../LocalSettings.php";
 global $wgDBserver, $wgDBuser, $wgDBpassword, $wgDBname;
 
 $db1 = $wgDBserver;  # hostname
@@ -14,7 +13,9 @@ $db3 = $wgDBpassword;  # pass
 $db4 = $wgDBname;  # db-name
 
 $connection = MySQL_connect( $db1, $db2, $db3 );
-if ( !$connection )die( "Cannot connect to SQL server. Try again later." );
+if ( !$connection ) {
+	die( "Cannot connect to SQL server. Try again later." );
+}
 MySQL_select_db( $db4 ) or die( "Cannot open database" );
 mysql_query( "SET NAMES 'utf8'" );
 
@@ -25,15 +26,13 @@ body {font-family:arial,sans-serif}
 ";
 
 function stopwatch() {
-   list( $usec, $sec ) = explode( " ", microtime() );
-   return ( (float)$usec + (float)$sec );
+	list( $usec, $sec ) = explode( " ", microtime() );
+	return ( (float)$usec + (float)$sec );
 }
-
 
 $start = stopwatch();
 
-
-echo"
+echo "
 <h1>Collections</h1>
 <hr width=950 size=1 noshade><br />
 ";
@@ -57,9 +56,7 @@ $result = mysql_query( "
 	) AS counts
 		ON spellings.id=counts.id
 		ORDER BY spelling
-" ) or die ( "error " . mysql_error() );
-
-
+" ) or die( "error " . mysql_error() );
 
 print "<ul>";
 while ( $row = mysql_fetch_array( $result, MYSQL_NUM ) ) {
@@ -70,7 +67,7 @@ while ( $row = mysql_fetch_array( $result, MYSQL_NUM ) ) {
 }
 print "</ul>";
 
-echo"<hr><div align=\"right\"><small>Page time: " . substr( ( stopwatch() - $start ), 0, 5 ) . " seconds</small></div>";
+echo "<hr><div align=\"right\"><small>Page time: " . substr( ( stopwatch() - $start ), 0, 5 ) . " seconds</small></div>";
 ?>
 
 <p align="left">

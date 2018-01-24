@@ -1,7 +1,7 @@
 <?php
 
-require_once( "settings.php" );
-require_once( "i18n/language.php" );
+require_once "settings.php";
+require_once "i18n/language.php";
 
 $header_printed = false;
 
@@ -21,7 +21,7 @@ function _displayLogin( $username = null, $status = null, &$auth = null ) {
 
 	$language->i18nprint( "<h1><|Log in|>. <|Omegawiki vocabulary trainer|></h1>" );
 	if ( isset( $_REQUEST["defaultCollection"] ) ) {
-		$defaultCollection = (int) $_REQUEST["defaultCollection"];
+		$defaultCollection = (int)$_REQUEST["defaultCollection"];
 		echo "<form method=\"post\" action=\"trainer.php?defaultCollection=$defaultCollection\">";
 	} else {
 		echo "<form method=\"post\" action=\"trainer.php\">";
@@ -34,7 +34,7 @@ function _displayLogin( $username = null, $status = null, &$auth = null ) {
 	</fieldset>
 	<fieldset class="settings">
 	<div class="datarow">
-		<input type="submit" value="<|Login|>"/> 
+		<input type="submit" value="<|Login|>"/>
 		<input type="submit" value="<|Create new user|>" name="new_user">
 		<!--<input type="submit" value="<|Switch language|>" name="switch_language">-->
 	</div>
@@ -47,7 +47,7 @@ function _langSelect( $default = "eng" ) {
 	asort( $names );
 	$select = "<select name='userLanguage'>\n";
 	foreach ( $names as $iso639_3 => $name ) {
-		$select .= "	
+		$select .= "
 			<option
 				value='$iso639_3' ";
 
@@ -57,17 +57,14 @@ function _langSelect( $default = "eng" ) {
 		}
 
 		$select .= "
-			> 
-				" . $name . " 
+			>
+				" . $name . "
 			</option>
 			";
 	}
 	$select .= "</select>\n";
 	return $select;
-
 }
-
-
 
 /** ~MVC:  Generate html for user interface */
 class View {
@@ -86,26 +83,26 @@ class View {
 	public function hello() {
 		$this->language->i18nprint( "<h1><|Hello World|></h1>" );
 	}
-	
+
 	/** @deprecated */
 	public function permissionDenied() {
 		$this->language->i18nprint( "<h1><|Permission Denied|></h1>" );
 		$this->language->i18nprint( "<a href='trainer.php'><|try again?|></a>" );
 	}
 
-	/** an action was provided, but we've never heard of it 
-	    "?action=UnintelligibleGibberish" */
+	/** an action was provided, but we've never heard of it
+		"?action=UnintelligibleGibberish"
+		*/
 	public function actionUnknown( $action ) {
 		$this->language->i18nprint( "<h1><|Action unknown|></h1>" );
-		$this->language->i18nprint( "<|I don't know what to do with '%action'.|>", array( "action" => $action ) );
+		$this->language->i18nprint( "<|I don't know what to do with '%action'.|>", [ "action" => $action ] );
 		$this->language->i18nprint( "<a href='trainer.php'><|try_again?|></a>" );
 	}
 
 	/** say hello to the new user */
 	public function userAdded( $username ) {
-
 		$this->language->i18nprint( "<h1><|User added|></h1>" );
-		$this->language->i18nprint( "<p><|Hello, %username, welcome to the omega language trainer|></p>", array( "username" => $username ) );
+		$this->language->i18nprint( "<p><|Hello, %username, welcome to the omega language trainer|></p>", [ "username" => $username ] );
 		$this->language->i18nprint( "<p><a href='trainer.php'><|continue|></a></p>" );
 	}
 
@@ -144,31 +141,30 @@ class View {
 		<div class='datarow'><label><|Answers|>: </label><input type='text' value='deu' name='answerLanguages'/></li></div><br />
 		<hr/>
 		</p>
-		<input type='submit' value='<|start exercise|>'/> 
+		<input type='submit' value='<|start exercise|>'/>
 		</form>
 		" );
 	}
 
 	public function collectionSelect( $collectionList, $defaultCollection = null ) {
-		
 		if ( $defaultCollection === null ) {
 			global $default_collection; # can be set in settings.php
 			$defaultCollection = $default_collection;
 		}
-		
+
 		$select = "<select name='collection'>\n";
 		foreach ( $collectionList as $collection ) {
 			$select .= "	<option
 						value='" . $collection["id"] . "' ";
 
-			if ( (int) $collection["id"] == $defaultCollection ) { # check-mark default collection
+			if ( (int)$collection["id"] == $defaultCollection ) { # check-mark default collection
 				$select .= "
 							selected";
 			}
 
 			$select .= "
-						> 
-					" . $collection->name . " 
+						>
+					" . $collection->name . "
 					(" . $collection->count . ")
 				</option>
 			";
@@ -177,8 +173,9 @@ class View {
 		return $select;
 	}
 
-	/** ask a question  (or peek at it)*/
-	public function ask( $exercise, $peek = false, $question = null, $unhides = array() ) { # throws NoMoreQuestionsException
+	/** ask a question  (or peek at it) */
+	public function ask( $exercise, $peek = false, $question = null, $unhides = [] ) {
+ # throws NoMoreQuestionsException
 		if ( $question === null ) {
 			$question = $exercise->nextQuestion();
 		}
@@ -195,10 +192,10 @@ class View {
 			<|There are %questions_remaining questions remaining, out of a total of %questions_total.|>
 			<h1><|Question|></h1>
 			<hr>",
-			array(
+			[
 				"questions_remaining" => $questions_remaining,
 				"questions_total" => $questions_total
-			)
+			]
 		);
 
 		if ( in_array( "words", $hides )
@@ -225,12 +222,12 @@ class View {
 			" );
 		} else {
 			$this->language->i18nprint( "
-				
+
 				<input type='hidden' name='unhide_definition' value='$questionDmid'/>
 				<h2><|Definition|></h2>
 				<p class='result'>
 				<i><|Dictionary definition to help you|>:</i><br />
-				$definitions 
+				$definitions
 				</p>
 			" );
 		}
@@ -285,7 +282,7 @@ class View {
 
 		$this->language->i18nprint( "<form method='post' action='?action=run_exercise'>
 			<h2>$result</h2>
-			<|Definitions|>: $definitions 
+			<|Definitions|>: $definitions
 			<hr>
 			<|Question|>: $words
 			<hr>
@@ -296,7 +293,6 @@ class View {
 			</form>
 		" );
 	}
-
 
 	public function vocview( $question ) {
 		# we only use questions and questionlanguages, we haven't set answerlanguages.
@@ -318,7 +314,7 @@ class View {
 			<h2><|Definition|></h2>
 			<p class='result'>
 			<i><|Dictionary definitions|>:</i><br />
-			$definitions 
+			$definitions
 			</p>
 			<hr>
 			<h2><|Translation|></h2>
@@ -331,7 +327,6 @@ class View {
 
 	/** show a nice final table on completion of the exercise */
 	public function complete( $exercise ) {
-		
 		$this->language->i18nprint( "<h1> <|Exercise complete|> </h1>" );
 		$this->allQuestionsTable( $exercise );
 		$this->language->i18nprint( "<a href='?action=create_exercise'><|Start a new exercise|></a>" );
@@ -340,13 +335,13 @@ class View {
 	public function listAnswers( $exercise ) {
 		$this->language->i18nprint( "<h1> <|list of questions and answers|> </h1>" );
 		$this->allQuestionsTable( $exercise );
-		print"<fieldset class='settings'>";
-		print"<form method='post' action='?action=run_exercise'>";
+		print "<fieldset class='settings'>";
+		print "<form method='post' action='?action=run_exercise'>";
 		print "<div style='float:right;'>";
 		$this->language->i18nprint( "<input type='submit' value='<|continue|> ->' name='continue' />" );
-		print"</div>";
-		print"</fieldset>";
-		print"</form>";
+		print "</div>";
+		print "</fieldset>";
+		print "</form>";
 	}
 
 	/** prints all questions out in a table.
@@ -366,15 +361,16 @@ class View {
 				print "</tr>";
 				flush();
 			}
-		} catch ( NoMoreQuestionsException $ignored ) { /*If this happens here, it's no problem*/ }
+		} catch ( NoMoreQuestionsException $ignored ) {
+			/*If this happens here, it's no problem*/
+		}
 		print "</table>";
 	}
 
-
 	/** Aborted the exercise. We don't show the nice table like in
 	 * complete(), because the lazy fetcher might take a long time to get
-	 * all the untouched questions 
-	*/
+	 * all the untouched questions
+	 */
 	public function aborted() {
 		$this->language->i18nprint( "<h1> <|Exercise terminated|> </h1>\n" );
 		$this->language->i18nprint( "<a href='?action=create_exercise'><|Start a new exercise|></a>" );
@@ -394,13 +390,13 @@ class View {
 		}
 		$direction = $this->language->getDirection();
 
-		print'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-		print"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='$lang' lang='$lang' dir='$direction'> ";
+		print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+		print "<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='$lang' lang='$lang' dir='$direction'> ";
 		# << de-indent so our layout matches html layout
-print'
+print '
         <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	
+
                 <link rel="stylesheet" type="text/css" media="screen" href="../ow/styles.css" />
                 <link rel="stylesheet" type="text/css" media="screen" href="http://www.omegawiki.org/extensions/Wikidata/OmegaWiki/tables.css" />
                 <link rel="shortcut icon" href="http://www.omegawiki.org/favicon.ico" />
@@ -432,7 +428,4 @@ print'
 ' );
 	}
 
-
 }
-
-?>

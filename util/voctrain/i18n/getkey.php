@@ -4,7 +4,7 @@
 # php getkey.php <"phrase to try"> [optional mediawiki language code]
 
 $phrase = $argv[1];
-require_once( "language.php" );
+require_once "language.php";
 
 print "phrase: $phrase\n";
 print "translatewiki.net key: " . WDLanguage::safe( $phrase ) . "\n";
@@ -15,5 +15,3 @@ if ( array_key_exists( 2, $argv ) ) {
 	$language = new WDLanguage( $argv[2] );
 	print "- " . $argv[2] . ": " . $language->translate( $phrase ) . "\n";
 }
-
-?>

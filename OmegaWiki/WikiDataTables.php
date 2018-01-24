@@ -15,7 +15,7 @@
  * 3) Table: represents a specific table in the database, meant as a base class for specific tables
  */
 
-require_once( "Wikidata.php" );
+require_once "Wikidata.php";
 
 interface DatabaseExpression {
 	public function toExpression();
@@ -97,10 +97,10 @@ class Table {
 	public function __construct( $identifier, $isVersioned ) {
 		$this->identifier = $identifier;
 		$this->isVersioned = $isVersioned;
-		$this->columns = array();
+		$this->columns = [];
 
-		$this->webSiteIndexes = array();
-		$this->massUpdateIndexes = array();
+		$this->webSiteIndexes = [];
+		$this->massUpdateIndexes = [];
 	}
 
 	public function getIdentifier() {
@@ -185,13 +185,13 @@ class VersionedTable extends Table {
 	 */
 
 	protected function createVersionedIndexes( $name, $versionedEnd, $versionedStart, $unversioned, array $columns ) {
-		$result = array();
+		$result = [];
 
 		if ( $versionedEnd ) {
-			$result[] = new TableIndex( "versioned_end_" . $name, array_merge( array( $this->removeTransactionId ), $columns ) );
+			$result[] = new TableIndex( "versioned_end_" . $name, array_merge( [ $this->removeTransactionId ], $columns ) );
 		}
 		if ( $versionedStart ) {
-			$result[] = new TableIndex( "versioned_start_" . $name, array_merge( array( $this->addTransactionId ), $columns ) );
+			$result[] = new TableIndex( "versioned_start_" . $name, array_merge( [ $this->addTransactionId ], $columns ) );
 		}
 		if ( $unversioned ) {
 			$result[] = new TableIndex( "unversioned_" . $name, $columns );
@@ -210,11 +210,11 @@ class BootstrappedDefinedMeaningsTable extends Table {
 		$this->name = $this->createColumn( "name", 255 );
 		$this->definedMeaningId = $this->createColumn( "defined_meaning_id" );
 
-		$this->setKeyColumns( array( $this->name ) );
-		$this->setWebSiteIndexes( array(
-			new TableIndex( "unversioned_meaning", array( $this->definedMeaningId ) ),
-			new TableIndex( "unversioned_name", array( $this->name, $this->definedMeaningId ) )
-		) );
+		$this->setKeyColumns( [ $this->name ] );
+		$this->setWebSiteIndexes( [
+			new TableIndex( "unversioned_meaning", [ $this->definedMeaningId ] ),
+			new TableIndex( "unversioned_name", [ $this->name, $this->definedMeaningId ] )
+		] );
 	}
 }
 
@@ -234,11 +234,11 @@ class TransactionsTable extends Table {
 		$this->timestamp = $this->createColumn( "timestamp" );
 		$this->comment = $this->createColumn( "comment" );
 
-		$this->setKeyColumns( array( $this->transactionId ) );
+		$this->setKeyColumns( [ $this->transactionId ] );
 
-		$this->setWebSiteIndexes( array(
-			new TableIndex( "user", array( $this->userId, $this->transactionId ) )
-		) );
+		$this->setWebSiteIndexes( [
+			new TableIndex( "user", [ $this->userId, $this->transactionId ] )
+		] );
 	}
 }
 
@@ -254,17 +254,17 @@ class DefinedMeaningTable extends VersionedTable {
 		$this->expressionId = $this->createColumn( "expression_id" );
 		$this->meaningTextTcid = $this->createColumn( "meaning_text_tcid" );
 
-		$this->setKeyColumns( array( $this->definedMeaningId ) );
+		$this->setKeyColumns( [ $this->definedMeaningId ] );
 
 		$this->setWebSiteIndexes( array_merge(
-			$this->createVersionedIndexes( "meaning", true, true, true, array( $this->definedMeaningId, $this->expressionId ) ),
-			$this->createVersionedIndexes( "expression", true, true, true, array( $this->expressionId, $this->definedMeaningId ) ),
-			$this->createVersionedIndexes( "meaning_text", true, true, false, array( $this->meaningTextTcid, $this->definedMeaningId ) )
+			$this->createVersionedIndexes( "meaning", true, true, true, [ $this->definedMeaningId, $this->expressionId ] ),
+			$this->createVersionedIndexes( "expression", true, true, true, [ $this->expressionId, $this->definedMeaningId ] ),
+			$this->createVersionedIndexes( "meaning_text", true, true, false, [ $this->meaningTextTcid, $this->definedMeaningId ] )
 		) );
 
-		$this->setMassUpdateIndexes( array(
-			new TableIndex( "defined_meaning", array( $this->definedMeaningId ) )
-		) );
+		$this->setMassUpdateIndexes( [
+			new TableIndex( "defined_meaning", [ $this->definedMeaningId ] )
+		] );
 	}
 }
 
@@ -280,17 +280,17 @@ class AlternativeDefinitionsTable extends VersionedTable {
 		$this->meaningTextTcid = $this->createColumn( "meaning_text_tcid" );
 		$this->sourceId = $this->createColumn( "source_id" );
 
-		$this->setKeyColumns( array( $this->meaningMid, $this->meaningTextTcid ) );
+		$this->setKeyColumns( [ $this->meaningMid, $this->meaningTextTcid ] );
 
 		$this->setWebSiteIndexes( array_merge(
 			$this->createVersionedIndexes( "meaning", true, true, false,
-				array( $this->meaningMid, $this->meaningTextTcid, $this->sourceId )
+				[ $this->meaningMid, $this->meaningTextTcid, $this->sourceId ]
 			),
 			$this->createVersionedIndexes( "text", true, true, false,
-				array( $this->meaningTextTcid, $this->meaningMid, $this->sourceId )
+				[ $this->meaningTextTcid, $this->meaningMid, $this->sourceId ]
 			),
 			$this->createVersionedIndexes( "source", true, true, false,
-				array( $this->sourceId, $this->meaningMid, $this->meaningTextTcid )
+				[ $this->sourceId, $this->meaningMid, $this->meaningTextTcid ]
 			)
 		) );
 	}
@@ -308,24 +308,24 @@ class ExpressionTable extends VersionedTable {
 		$this->spelling = $this->createColumn( "spelling", 255 );
 		$this->languageId = $this->createColumn( "language_id" );
 
-		$this->setKeyColumns( array( $this->expressionId ) );
+		$this->setKeyColumns( [ $this->expressionId ] );
 
 		$this->setWebSiteIndexes( array_merge(
 			$this->createVersionedIndexes( "expression", true, true, true,
-				array( $this->expressionId, $this->languageId )
+				[ $this->expressionId, $this->languageId ]
 			),
 			$this->createVersionedIndexes( "language", true, true, false,
-				array( $this->languageId, $this->expressionId )
+				[ $this->languageId, $this->expressionId ]
 			),
 			$this->createVersionedIndexes( "spelling", true, true, false,
-				array( $this->spelling, $this->languageId, $this->expressionId )
+				[ $this->spelling, $this->languageId, $this->expressionId ]
 			)
 		) );
 
-		$this->setMassUpdateIndexes( array(
-			new TableIndex( "spelling", array( $this->spelling, $this->languageId, $this->expressionId ) ),
-			new TableIndex( "expression", array( $this->expressionId ) )
-		) );
+		$this->setMassUpdateIndexes( [
+			new TableIndex( "spelling", [ $this->spelling, $this->languageId, $this->expressionId ] ),
+			new TableIndex( "expression", [ $this->expressionId ] )
+		] );
 	}
 }
 
@@ -345,17 +345,17 @@ class ClassAttributesTable extends VersionedTable {
 		$this->attributeMid = $this->createColumn( "attribute_mid" );
 		$this->attributeType = $this->createColumn( "attribute_type" );
 
-		$this->setKeyColumns( array( $this->objectId ) );
+		$this->setKeyColumns( [ $this->objectId ] );
 
 		$this->setWebSiteIndexes( array_merge(
 			$this->createVersionedIndexes( "class", true, true, false,
-				array( $this->classMid, $this->attributeMid, $this->objectId )
+				[ $this->classMid, $this->attributeMid, $this->objectId ]
 			),
 			$this->createVersionedIndexes( "attribute", true, true, false,
-				array( $this->attributeMid, $this->classMid, $this->objectId )
+				[ $this->attributeMid, $this->classMid, $this->objectId ]
 			),
 			$this->createVersionedIndexes( "object", true, true, false,
-				array( $this->objectId )
+				[ $this->objectId ]
 			)
 		) );
 	}
@@ -373,17 +373,17 @@ class ClassMembershipsTable extends VersionedTable {
 		$this->classMid = $this->createColumn( "class_mid" );
 		$this->classMemberMid = $this->createColumn( "class_member_mid" );
 
-		$this->setKeyColumns( array( $this->classMembershipId ) );
+		$this->setKeyColumns( [ $this->classMembershipId ] );
 
 		$this->setWebSiteIndexes( array_merge(
-			$this->createVersionedIndexes( "class", true, true, false, array( $this->classMid, $this->classMemberMid ) ),
-			$this->createVersionedIndexes( "class_member", true, true, false, array( $this->classMemberMid, $this->classMid ) ),
-			$this->createVersionedIndexes( "class_membership", true, true, false, array( $this->classMembershipId ) )
+			$this->createVersionedIndexes( "class", true, true, false, [ $this->classMid, $this->classMemberMid ] ),
+			$this->createVersionedIndexes( "class_member", true, true, false, [ $this->classMemberMid, $this->classMid ] ),
+			$this->createVersionedIndexes( "class_membership", true, true, false, [ $this->classMembershipId ] )
 		) );
 
-		$this->setMassUpdateIndexes( array(
-			new TableIndex( "class", array( $this->classMid, $this->classMemberMid, $this->classMembershipId ) )
-		) );
+		$this->setMassUpdateIndexes( [
+			new TableIndex( "class", [ $this->classMid, $this->classMemberMid, $this->classMembershipId ] )
+		] );
 	}
 }
 
@@ -399,12 +399,12 @@ class CollectionTable extends VersionedTable {
 		$this->collectionMid = $this->createColumn( "collection_mid" );
 		$this->collectionType = $this->createColumn( "collection_type", 4 );
 
-		$this->setKeyColumns( array( $this->collectionId ) );
+		$this->setKeyColumns( [ $this->collectionId ] );
 
 		$this->setWebSiteIndexes( array_merge(
-			$this->createVersionedIndexes( "collection", true, true, false, array( $this->collectionId, $this->collectionMid ) ),
-			$this->createVersionedIndexes( "collection_meaning", true, true, false, array( $this->collectionMid, $this->collectionId ) ),
-			$this->createVersionedIndexes( "collection_type", true, true, false, array( $this->collectionType, $this->collectionId, $this->collectionMid ) )
+			$this->createVersionedIndexes( "collection", true, true, false, [ $this->collectionId, $this->collectionMid ] ),
+			$this->createVersionedIndexes( "collection_meaning", true, true, false, [ $this->collectionMid, $this->collectionId ] ),
+			$this->createVersionedIndexes( "collection_type", true, true, false, [ $this->collectionType, $this->collectionId, $this->collectionMid ] )
 		) );
 	}
 }
@@ -423,17 +423,17 @@ class CollectionMembershipsTable extends VersionedTable {
 		$this->internalMemberId = $this->createColumn( "internal_member_id", 255 );
 		$this->applicableLanguageId = $this->createColumn( "applicable_language_id" );
 
-		$this->setKeyColumns( array( $this->collectionId, $this->memberMid ) );
+		$this->setKeyColumns( [ $this->collectionId, $this->memberMid ] );
 
 		$this->setWebSiteIndexes( array_merge(
-			$this->createVersionedIndexes( "collection", true, true, true, array( $this->collectionId, $this->memberMid ) ),
-			$this->createVersionedIndexes( "collection_member", true, true, true, array( $this->memberMid, $this->collectionId ) ),
-			$this->createVersionedIndexes( "internal_id", true, true, false, array( $this->internalMemberId, $this->collectionId, $this->memberMid ) )
+			$this->createVersionedIndexes( "collection", true, true, true, [ $this->collectionId, $this->memberMid ] ),
+			$this->createVersionedIndexes( "collection_member", true, true, true, [ $this->memberMid, $this->collectionId ] ),
+			$this->createVersionedIndexes( "internal_id", true, true, false, [ $this->internalMemberId, $this->collectionId, $this->memberMid ] )
 		) );
 
-		$this->setMassUpdateIndexes( array(
-			new TableIndex( "collection_id", array( $this->collectionId, $this->memberMid ) )
-		) );
+		$this->setMassUpdateIndexes( [
+			new TableIndex( "collection_id", [ $this->collectionId, $this->memberMid ] )
+		] );
 	}
 }
 
@@ -451,23 +451,23 @@ class MeaningRelationsTable extends VersionedTable {
 		$this->meaning2Mid = $this->createColumn( "meaning2_mid" );
 		$this->relationTypeMid = $this->createColumn( "relationtype_mid" );
 
-		$this->setKeyColumns( array( $this->relationId ) );
+		$this->setKeyColumns( [ $this->relationId ] );
 
 		$this->setWebSiteIndexes( array_merge(
 			$this->createVersionedIndexes( "outgoing", true, true, false,
-				array( $this->meaning1Mid, $this->relationTypeMid, $this->meaning2Mid )
+				[ $this->meaning1Mid, $this->relationTypeMid, $this->meaning2Mid ]
 			),
 			$this->createVersionedIndexes( "incoming", true, true, false,
-				array( $this->meaning2Mid, $this->relationTypeMid, $this->meaning1Mid )
+				[ $this->meaning2Mid, $this->relationTypeMid, $this->meaning1Mid ]
 			),
 			$this->createVersionedIndexes( "relation", true, true, false,
-				array( $this->relationId )
+				[ $this->relationId ]
 			)
 		) );
 
-		$this->setMassUpdateIndexes( array(
-			new TableIndex( "relation", array( $this->meaning1Mid, $this->relationTypeMid, $this->meaning2Mid, $this->relationId ) )
-		) );
+		$this->setMassUpdateIndexes( [
+			new TableIndex( "relation", [ $this->meaning1Mid, $this->relationTypeMid, $this->meaning2Mid, $this->relationId ] )
+		] );
 	}
 }
 
@@ -485,17 +485,17 @@ class SyntransTable extends VersionedTable {
 		$this->expressionId = $this->createColumn( "expression_id" );
 		$this->identicalMeaning = $this->createColumn( "identical_meaning" );
 
-		$this->setKeyColumns( array( $this->syntransSid ) );
+		$this->setKeyColumns( [ $this->syntransSid ] );
 
 		$this->setWebSiteIndexes( array_merge(
-			$this->createVersionedIndexes( "syntrans", true, true, true, array( $this->syntransSid ) ),
-			$this->createVersionedIndexes( "expression", true, true, true, array( $this->expressionId, $this->identicalMeaning, $this->definedMeaningId ) ),
-			$this->createVersionedIndexes( "defined_meaning", true, true, true, array( $this->definedMeaningId, $this->identicalMeaning, $this->expressionId ) )
+			$this->createVersionedIndexes( "syntrans", true, true, true, [ $this->syntransSid ] ),
+			$this->createVersionedIndexes( "expression", true, true, true, [ $this->expressionId, $this->identicalMeaning, $this->definedMeaningId ] ),
+			$this->createVersionedIndexes( "defined_meaning", true, true, true, [ $this->definedMeaningId, $this->identicalMeaning, $this->expressionId ] )
 		) );
 
-		$this->setMassUpdateIndexes( array(
-			new TableIndex( "syntrans", array( $this->definedMeaningId, $this->expressionId, $this->syntransSid ) )
-		) );
+		$this->setMassUpdateIndexes( [
+			new TableIndex( "syntrans", [ $this->definedMeaningId, $this->expressionId, $this->syntransSid ] )
+		] );
 	}
 }
 
@@ -513,12 +513,12 @@ class TextAttributeValuesTable extends VersionedTable {
 		$this->attributeMid = $this->createColumn( "attribute_mid" );
 		$this->text = $this->createColumn( "text" );
 
-		$this->setKeyColumns( array( $this->valueId ) );
+		$this->setKeyColumns( [ $this->valueId ] );
 
 		$this->setWebSiteIndexes( array_merge(
-			$this->createVersionedIndexes( "object", true, true, false, array( $this->objectId, $this->attributeMid, $this->valueId ) ),
-			$this->createVersionedIndexes( "attribute", true, true, false, array( $this->attributeMid, $this->objectId, $this->valueId ) ),
-			$this->createVersionedIndexes( "value", true, true, false, array( $this->valueId ) )
+			$this->createVersionedIndexes( "object", true, true, false, [ $this->objectId, $this->attributeMid, $this->valueId ] ),
+			$this->createVersionedIndexes( "attribute", true, true, false, [ $this->attributeMid, $this->objectId, $this->valueId ] ),
+			$this->createVersionedIndexes( "value", true, true, false, [ $this->valueId ] )
 		) );
 	}
 }
@@ -537,13 +537,13 @@ class TranslatedContentAttributeValuesTable extends VersionedTable {
 		$this->attributeMid = $this->createColumn( "attribute_mid" );
 		$this->valueTcid = $this->createColumn( "value_tcid" );
 
-		$this->setKeyColumns( array( $this->valueId ) );
+		$this->setKeyColumns( [ $this->valueId ] );
 
 		$this->setWebSiteIndexes( array_merge(
-			$this->createVersionedIndexes( "object", true, true, false, array( $this->objectId, $this->attributeMid, $this->valueTcid ) ),
-			$this->createVersionedIndexes( "attribute", true, true, false, array( $this->attributeMid, $this->objectId, $this->valueTcid ) ),
-			$this->createVersionedIndexes( "translated_content", true, true, false, array( $this->valueTcid, $this->valueId ) ),
-			$this->createVersionedIndexes( "value", true, true, false, array( $this->valueId ) )
+			$this->createVersionedIndexes( "object", true, true, false, [ $this->objectId, $this->attributeMid, $this->valueTcid ] ),
+			$this->createVersionedIndexes( "attribute", true, true, false, [ $this->attributeMid, $this->objectId, $this->valueTcid ] ),
+			$this->createVersionedIndexes( "translated_content", true, true, false, [ $this->valueTcid, $this->valueId ] ),
+			$this->createVersionedIndexes( "value", true, true, false, [ $this->valueId ] )
 		) );
 	}
 }
@@ -562,14 +562,14 @@ class TranslatedContentTable extends VersionedTable {
 		$this->textId = $this->createColumn( "text_id" );
 		$this->originalLanguageId = $this->createColumn( "original_language_id" );
 
-		$this->setKeyColumns( array( $this->translatedContentId, $this->languageId ) );
+		$this->setKeyColumns( [ $this->translatedContentId, $this->languageId ] );
 
 		$this->setWebSiteIndexes( array_merge(
 			$this->createVersionedIndexes( "translated_content", true, true, false,
-				array( $this->translatedContentId, $this->languageId, $this->textId )
+				[ $this->translatedContentId, $this->languageId, $this->textId ]
 			),
 			$this->createVersionedIndexes( "text", true, true, false,
-				array( $this->textId, $this->translatedContentId, $this->languageId )
+				[ $this->textId, $this->translatedContentId, $this->languageId ]
 			)
 		) );
 	}
@@ -589,12 +589,12 @@ class OptionAttributeOptionsTable extends VersionedTable {
 		$this->optionMid = $this->createColumn( "option_mid" );
 		$this->languageId = $this->createColumn( "language_id" );
 
-		$this->setKeyColumns( array( $this->attributeId, $this->optionMid ) ); // TODO: is this the correct key?
+		$this->setKeyColumns( [ $this->attributeId, $this->optionMid ] ); // TODO: is this the correct key?
 
 		$this->setWebSiteIndexes( array_merge(
-			$this->createVersionedIndexes( "option", true, true, false, array( $this->optionMid, $this->attributeId, $this->optionId ) ),
-			$this->createVersionedIndexes( "atttribute", true, true, false, array( $this->attributeId, $this->optionId, $this->optionMid ) ),
-			$this->createVersionedIndexes( "id", true, true, false, array( $this->optionId ) )
+			$this->createVersionedIndexes( "option", true, true, false, [ $this->optionMid, $this->attributeId, $this->optionId ] ),
+			$this->createVersionedIndexes( "atttribute", true, true, false, [ $this->attributeId, $this->optionId, $this->optionMid ] ),
+			$this->createVersionedIndexes( "id", true, true, false, [ $this->optionId ] )
 		) );
 	}
 }
@@ -611,12 +611,12 @@ class OptionAttributeValuesTable extends VersionedTable {
 		$this->objectId = $this->createColumn( "object_id" );
 		$this->optionId = $this->createColumn( "option_id" );
 
-		$this->setKeyColumns( array( $this->valueId ) );
+		$this->setKeyColumns( [ $this->valueId ] );
 
 		$this->setWebSiteIndexes( array_merge(
-			$this->createVersionedIndexes( "object", true, true, false, array( $this->objectId, $this->optionId, $this->valueId ) ),
-			$this->createVersionedIndexes( "option", true, true, false, array( $this->optionId, $this->objectId, $this->valueId ) ),
-			$this->createVersionedIndexes( "value", true, true, false, array( $this->valueId ) )
+			$this->createVersionedIndexes( "object", true, true, false, [ $this->objectId, $this->optionId, $this->valueId ] ),
+			$this->createVersionedIndexes( "option", true, true, false, [ $this->optionId, $this->objectId, $this->valueId ] ),
+			$this->createVersionedIndexes( "value", true, true, false, [ $this->valueId ] )
 		) );
 	}
 }
@@ -637,12 +637,12 @@ class LinkAttributeValuesTable extends VersionedTable {
 		$this->url = $this->createColumn( "url" );
 		$this->label = $this->createColumn( "label" );
 
-		$this->setKeyColumns( array( $this->valueId ) );
+		$this->setKeyColumns( [ $this->valueId ] );
 
 		$this->setWebSiteIndexes( array_merge(
-			$this->createVersionedIndexes( "object", true, true, false, array( $this->objectId, $this->attributeMid, $this->valueId ) ),
-			$this->createVersionedIndexes( "attribute", true, true, false, array( $this->attributeMid, $this->objectId, $this->valueId ) ),
-			$this->createVersionedIndexes( "value", true, true, false, array( $this->valueId ) )
+			$this->createVersionedIndexes( "object", true, true, false, [ $this->objectId, $this->attributeMid, $this->valueId ] ),
+			$this->createVersionedIndexes( "attribute", true, true, false, [ $this->attributeMid, $this->objectId, $this->valueId ] ),
+			$this->createVersionedIndexes( "value", true, true, false, [ $this->valueId ] )
 		) );
 	}
 }
@@ -661,11 +661,11 @@ class ObjectsTable extends VersionedTable {
 		$this->originalId = $this->createColumn( "original_id" );
 		$this->uuid = $this->createColumn( "UUID", 36 );
 
-		$this->setKeyColumns( array( $this->objectId ) );
+		$this->setKeyColumns( [ $this->objectId ] );
 
-		$this->setWebSiteIndexes( array(
-			new TableIndex( "uuid", array( $this->uuid, $this->objectId ) )
-		) );
+		$this->setWebSiteIndexes( [
+			new TableIndex( "uuid", [ $this->uuid, $this->objectId ] )
+		] );
 	}
 }
 
@@ -694,10 +694,10 @@ class WikiDataSet {
 
 	public function __construct( $dataSetPrefix ) {
 	// added $wgDBprefix for wld and mw compatibility. Hopefully, I did not
-	//	break the code somewhere. ~he
+	// break the code somewhere. ~he
 		global $wgDBprefix;
-		$this->allTables = array();
-		$this->tableLookupMap = array();
+		$this->allTables = [];
+		$this->tableLookupMap = [];
 		$this->dataSetPrefix = "{$dataSetPrefix}";
 
 		$this->alternativeDefinitions = $this->add( new AlternativeDefinitionsTable( "{$wgDBprefix}{$dataSetPrefix}_alt_meaningtexts" ) );
@@ -712,7 +712,7 @@ class WikiDataSet {
 		$this->meaningRelations = $this->add( new MeaningRelationsTable( "{$wgDBprefix}{$dataSetPrefix}_meaning_relations" ) );
 		$this->syntrans = $this->add( new SyntransTable( "{$wgDBprefix}{$dataSetPrefix}_syntrans" ) );
 		$this->textAttributeValues = $this->add( new TextAttributeValuesTable( "{$wgDBprefix}{$dataSetPrefix}_text_attribute_values" ) );
-		$this->transactions = $this->add( new TransactionsTable( "{$wgDBprefix}{$dataSetPrefix}_transactions", false, array( "transaction_id" ) ) );
+		$this->transactions = $this->add( new TransactionsTable( "{$wgDBprefix}{$dataSetPrefix}_transactions", false, [ "transaction_id" ] ) );
 		$this->translatedContentAttributeValues = $this->add( new TranslatedContentAttributeValuesTable( "{$wgDBprefix}{$dataSetPrefix}_translated_content_attribute_values" ) );
 		$this->translatedContent = $this->add( new TranslatedContentTable( "{$wgDBprefix}{$dataSetPrefix}_translated_content" ) );
 		$this->optionAttributeOptions = $this->add( new OptionAttributeOptionsTable( "{$wgDBprefix}{$dataSetPrefix}_option_attribute_options" ) );
@@ -798,12 +798,10 @@ function selectLatestDistinct( array $expressions, array $tables, array $restric
 function expressionToSQL( $expression ) {
 	if ( is_int( $expression ) ) {
 		return $expression;
-	}
-	elseif ( is_string( $expression ) ) {
+	} elseif ( is_string( $expression ) ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		return $dbr->addQuotes( $expression );
-	}
-	elseif ( is_object( $expression ) && $expression instanceof DatabaseExpression ) {
+	} elseif ( is_object( $expression ) && $expression instanceof DatabaseExpression ) {
 		return $expression->toExpression();
 	} else {
 		throw new Exception( "Cannot convert expression to SQL: " . $expression );
@@ -819,13 +817,13 @@ function in( DatabaseExpression $expression1, $expression2 ) {
 }
 
 function inArray( DatabaseExpression $expression, $values ) {
-	$sqlValues = array();
+	$sqlValues = [];
 
 	foreach ( $values as $value ) {
 		$sqlValues[] = expressionToSQL( $value );
 	}
 	if ( count( $values ) > 0 ) {
-		return new DefaultDatabaseExpression( $expression->toExpression() . " IN (" . join( $sqlValues, ", " ) . ")" );
+		return new DefaultDatabaseExpression( $expression->toExpression() . " IN (" . implode( $sqlValues, ", " ) . ")" );
 	} else {
 		return new DefaultDatabaseExpression( 1 );
 	}

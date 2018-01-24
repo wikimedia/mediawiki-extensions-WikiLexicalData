@@ -4,10 +4,10 @@
  *
  */
 global $wgWldOwScriptPath, $wgWldIncludesScriptPath;
-require_once( $wgWldOwScriptPath . 'Expression.php' );
-require_once( $wgWldIncludesScriptPath . 'formatCSV.php' );
+require_once $wgWldOwScriptPath . 'Expression.php';
+require_once $wgWldIncludesScriptPath . 'formatCSV.php';
 
-Class CreateExpressionListJob extends Job {
+class CreateExpressionListJob extends Job {
 
 	public function __construct( $title, $params ) {
 		parent::__construct( 'CreateExpressionList', $title, $params );
@@ -63,7 +63,7 @@ Class CreateExpressionListJob extends Job {
 
 		$fh = fopen( $tempFileName, 'w' );
 		fwrite( $fh, '"Expression"' . "\n" );
-		foreach( $languageExpressions as $row ) {
+		foreach ( $languageExpressions as $row ) {
 			$spelling = $csv->formatCSVcolumn( $row->spelling );
 			$spelling = preg_replace( '/\\n/', ' ', $spelling );
 			fwrite( $fh, $spelling . "\n" );

@@ -38,19 +38,19 @@
  *		to see if their contribution was included.
  */
 
-require_once( 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php' );
+require_once 'extensions/WikiLexicalData/OmegaWiki/WikiDataAPI.php';
 
 class SynonymTranslation extends ApiBase {
 
 	public $languageId, $text, $spelling, $spellingLanguageId;
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, null );
+		parent::__construct( $main, $action, null );
 	}
 
 	public function execute() {
 		global $wgUser, $wgOut;
-		$options = array();
+		$options = [];
 
 		// Get the parameters
 		$params = $this->extractRequestParams();
@@ -67,7 +67,7 @@ class SynonymTranslation extends ApiBase {
 		}
 
 		// Optional parameter
-		$options = array();
+		$options = [];
 
 		if ( isset( $params['ver'] ) ) {
 			$options['ver'] = $params['ver'];
@@ -127,11 +127,11 @@ class SynonymTranslation extends ApiBase {
 			$this->dieUsage( 'parameter e for adding syntrans does not exist', 'param e does not exist' );
 		}
 
-	//	NOTE: I am thinking about adding a developer parameter to skip the
-	//	cache system. To check if their latest contribution is seem.
-	//	also, I am not sure how long should the cache stay, and if there is
-	//	really any benefit to cache it in the first place. ~ he
-	//	$syntrans = $this->synTrans( $params['dm'], $options );
+	// NOTE: I am thinking about adding a developer parameter to skip the
+	// cache system. To check if their latest contribution is seem.
+	// also, I am not sure how long should the cache stay, and if there is
+	// really any benefit to cache it in the first place. ~ he
+	// $syntrans = $this->synTrans( $params['dm'], $options );
 		$syntrans = $this->cacheSynTrans( $params['dm'], $options );
 
 		$this->getResult()->addValue( null, $this->getModuleName(), $syntrans );
@@ -140,29 +140,29 @@ class SynonymTranslation extends ApiBase {
 
 	// Parameters.
 	public function getAllowedParams() {
-		return array(
-			'dm' => array (
+		return [
+			'dm' => [
 				ApiBase::PARAM_TYPE => 'integer',
 				ApiBase::PARAM_REQUIRED => true
-			),
-			'lang' => array (
+			],
+			'lang' => [
 				ApiBase::PARAM_TYPE => 'integer',
-			),
-			'e' => array (
+			],
+			'e' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-			'part' => array (
+			],
+			'part' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-			'ver' => array (
+			],
+			'ver' => [
 				ApiBase::PARAM_TYPE => 'string',
-			),
-		);
+			],
+		];
 	}
 
 	// Get examples
 	public function getExamples() {
-		return array(
+		return [
 			' Returns all syntrans of the concept 8218 (alphabet)',
 			' api.php?action=ow_syntrans&dm=8218&ver=1.1&format=json',
 			' Returns the words (synonyms) that express the concept 8218 (alphabet) in Spanish (lang=87)',
@@ -177,7 +177,7 @@ class SynonymTranslation extends ApiBase {
 			' api.php?action=ow_syntrans&dm=8218&ver=1.1&e=字母&lang=107',
 			' Get the synonyms of a defined meaning id',
 			' api.php?action=ow_syntrans&dm=8218&ver=1.1&part=syn&e=aksara&lang=231',
-		);
+		];
 	}
 
 	// Additional Functions
@@ -187,18 +187,26 @@ class SynonymTranslation extends ApiBase {
 	 */
 	protected function cacheSynTrans( $dmid, $options = null ) {
 		$synTransCacheKey = 'API:ow_syntrans:dm=' . $dmid;
-		if ( isset( $options['lang'] ) ) $synTransCacheKey .= ":lang={$options['lang']}";
-		if ( isset( $options['e'] ) ) $synTransCacheKey .= ":e={$options['e']}";
-		if ( isset( $options['part'] ) ) $synTransCacheKey .= ":part={$options['part']}";
-		if ( isset( $options['ver'] ) ) $synTransCacheKey .= ":ver={$options['ver']}";
+		if ( isset( $options['lang'] ) ) {
+			$synTransCacheKey .= ":lang={$options['lang']}";
+		}
+		if ( isset( $options['e'] ) ) {
+			$synTransCacheKey .= ":e={$options['e']}";
+		}
+		if ( isset( $options['part'] ) ) {
+			$synTransCacheKey .= ":part={$options['part']}";
+		}
+		if ( isset( $options['ver'] ) ) {
+			$synTransCacheKey .= ":ver={$options['ver']}";
+		}
 
 		$cache = new CacheHelper();
 
-		$cache->setCacheKey( array( $synTransCacheKey ) );
+		$cache->setCacheKey( [ $synTransCacheKey ] );
 		$syntrans = $cache->getCachedValue(
 			function ( $dmid, $options = null ) {
 				return $this->synTrans( $dmid, $options );
-			}, array( $dmid, $options )
+			}, [ $dmid, $options ]
 		);
 		$cache->setExpiry( 3600 );
 		$cache->saveCache();
@@ -210,8 +218,8 @@ class SynonymTranslation extends ApiBase {
 	 * Returns an array of syntrans via defined meaning id
 	 * Returns array() when empty
 	 */
-	protected function synTrans ( $definedMeaningId, $options = array() ) {
-		$syntrans = array();
+	protected function synTrans( $definedMeaningId, $options = [] ) {
+		$syntrans = [];
 		$stList = getSynonymAndTranslation( $definedMeaningId );
 
 		$ctr = 1;
@@ -225,16 +233,17 @@ class SynonymTranslation extends ApiBase {
 
 			if ( isset( $options['ver'] ) ) {
 				if ( $options['ver'] == '1.1' ) {
-					$ctr = 'sid_' . $row[3]; $dot = '';
+					$ctr = 'sid_' . $row[3];
+					$dot = '';
 				}
 			}
 
-			$syntransRow = array (
+			$syntransRow = [
 				'langid' => $row[1],
 				'lang' => $language,
 				'e' => $row[0],
 				'im' => $row[2]
-			);
+			];
 
 			if ( isset( $options['part'] ) ) {
 				if ( $options['part'] == 'syn' and $options['lang'] == $row[1] ) {
@@ -270,8 +279,7 @@ class SynonymTranslation extends ApiBase {
 			}
 		}
 
-		return $this->returns( $syntrans, array( 'error' => 'no result' ) );
-
+		return $this->returns( $syntrans, [ 'error' => 'no result' ] );
 	}
 
 	protected function returns( $returning , $else ) {
@@ -299,38 +307,38 @@ function getSynonymAndTranslation( $definedMeaningId, $excludeSyntransId = null 
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$result = $dbr->select(
-		array(
+		[
 			'e' => "{$dc}_expression",
 			'st' => "{$dc}_syntrans"
-		),
-		array(
+		],
+		[
 			'spelling',
 			'language_id',
 			'identical_meaning',
 			'syntrans_sid'
-		),
-		array(
+		],
+		[
 			'defined_meaning_id' => $definedMeaningId,
 			'st.expression_id = e.expression_id',
 			'st.remove_transaction_id' => null
 
-		), __METHOD__,
-		array(
-			'ORDER BY' => array (
+		], __METHOD__,
+		[
+			'ORDER BY' => [
 				'identical_meaning DESC',
 				'language_id',
 				'spelling'
-			)
-		)
+			]
+		]
 	);
 
 	foreach ( $result as $row ) {
-		$syntrans[] = array(
+		$syntrans[] = [
 			0 => $row->spelling,
 			1 => $row->language_id,
 			2 => $row->identical_meaning,
 			3 => $row->syntrans_sid
-		);
+		];
 	}
 
 	if ( $syntrans ) {

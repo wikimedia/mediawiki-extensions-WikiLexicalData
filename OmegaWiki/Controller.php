@@ -1,6 +1,6 @@
 <?php
 
-require_once( "OmegaWikiAttributes.php" );
+require_once "OmegaWikiAttributes.php";
 
 interface UpdateController {
 	public function add( IdStack $idPath, $record );
@@ -21,12 +21,12 @@ interface PermissionController {
 class SimplePermissionController implements PermissionController {
 	protected $allowUpdate;
 	protected $allowRemove;
-	
+
 	public function __construct( $allowUpdate, $allowRemove = true ) {
 		$this->allowUpdate = $allowUpdate;
 		$this->allowRemove = $allowRemove;
 	}
-	
+
 	public function allowUpdateOfAttribute( $attribute ) {
 		return $this->allowUpdate;
 	}
@@ -34,7 +34,7 @@ class SimplePermissionController implements PermissionController {
 	public function allowUpdateOfValue( $idPath, $value ) {
 		return $this->allowUpdate;
 	}
-	
+
 	public function allowRemovalOfValue( $idPath, $value ) {
 		return $this->allowRemove;
 	}
@@ -43,7 +43,7 @@ class SimplePermissionController implements PermissionController {
 class DefaultUpdateController implements UpdateController {
 	public function add( IdStack $idPath, $record ) {
 	}
-	
+
 	public function remove( $keyPath ) {
 	}
 
@@ -81,7 +81,7 @@ class DefinedMeaningDefinitionController extends DefaultUpdateController {
 
 class DefinedMeaningAlternativeDefinitionsController extends DefaultUpdateController {
 
-	public function add( IdStack $idPath, $record )  {
+	public function add( IdStack $idPath, $record ) {
 		$definedMeaningId = $idPath->getKeyStack()->peek( 0 )->definedMeaningId;
 		$alternativeDefinition = $record->alternativeDefinition;
 		$sourceId = $record->source;
@@ -142,10 +142,10 @@ class SynonymTranslationController extends DefaultUpdateController {
 		}
 		$definedMeaningId = $idPath->getKeyStack()->peek( 0 )->definedMeaningId;
 		$expressionValue = $record->expression;
-		
+
 		$languageId = $expressionValue->language;
 		$spelling = $expressionValue->spelling;
-		
+
 		$identicalMeaning = $record->identicalMeaning;
 
 		if ( $languageId != 0 && $spelling != '' ) {
@@ -166,7 +166,7 @@ class SynonymTranslationController extends DefaultUpdateController {
 		$identicalMeaning = $record->identicalMeaning;
 
 		// check that the needed parameters exist
-		if ( ($syntransId != "") && ($identicalMeaning != "") ) {
+		if ( ( $syntransId != "" ) && ( $identicalMeaning != "" ) ) {
 			updateSynonymOrTranslationWithId( $syntransId, $identicalMeaning );
 		}
 	}
@@ -210,7 +210,7 @@ class DefinedMeaningCollectionController extends DefaultUpdateController {
 		$definedMeaningId = $idPath->getKeyStack()->peek( 0 )->definedMeaningId;
 		$collectionMeaningId = $record->collectionMeaning;
 		$internalId = $record->sourceIdentifier;
-		
+
 		if ( $collectionMeaningId != 0 ) {
 			addDefinedMeaningToCollectionIfNotPresent( $definedMeaningId, $collectionMeaningId, $internalId );
 		}
@@ -228,7 +228,7 @@ class DefinedMeaningCollectionController extends DefaultUpdateController {
 		$collectionId = $keyPath->peek( 0 )->collectionId;
 		$sourceId = $record->sourceIdentifier;
 
-//		if ($sourceId != "")
+		// if ($sourceId != "")
 		updateDefinedMeaningInCollection( $definedMeaningId, $collectionId, $sourceId );
 	}
 }
@@ -278,7 +278,7 @@ class ExpressionController extends DefaultUpdateController {
 
 			$definition = $expressionMeaning->definedMeaning->definition;
 			$translatedContent = $definition->translatedText;
-			
+
 			if ( $translatedContent->getRecordCount() > 0 ) {
 				$definitionRecord = $translatedContent->getRecord( 0 );
 
@@ -298,7 +298,7 @@ class ObjectAttributeValuesController extends DefaultUpdateController {
 	protected $objectIdFetcher;
 	protected $attributeIDFilter;
 	protected $levelName;
-	
+
 	public function __construct( ContextFetcher $objectIdFetcher, $levelName, AttributeIDFilter $attributeIDFilter ) {
 		$this->objectIdFetcher = $objectIdFetcher;
 		$this->attributeIDFilter = $attributeIDFilter;
@@ -307,22 +307,22 @@ class ObjectAttributeValuesController extends DefaultUpdateController {
 
 	protected function determineAttributeId( IdStack $idPath, $annotationType, $attributeIdFromRecord ) {
 		$result = $attributeIdFromRecord;
-		
+
 		if ( $this->attributeIDFilter->leavesOnlyOneOption() ) {
 			$classAttributes = $idPath->getClassAttributes()->filterClassAttributesOnLevelAndType( $this->levelName, $annotationType );
 			$classAttributes = $this->attributeIDFilter->filter( $classAttributes );
-		
+
 			if ( count( $classAttributes ) == 1 ) {
 				$result = $classAttributes[0];
 			}
 		}
-		
+
 		return $result;
 	}
 }
 
 class RelationValuesController extends ObjectAttributeValuesController {
-	public function add( IdStack $idPath, $record )  {
+	public function add( IdStack $idPath, $record ) {
 		$objectId = $this->objectIdFetcher->fetch( $idPath->getKeyStack() );
 
 		if ( $this->levelName == "DefinedMeaning" ) {
@@ -335,7 +335,7 @@ class RelationValuesController extends ObjectAttributeValuesController {
 
 		// $otherObjectId could be DMid or SyntransId
 		$otherObjectId = $record->otherObject;
-		
+
 		if ( $attributeId != 0 && $otherObjectId != 0 ) {
 			addRelation( $objectId, $attributeId, $otherObjectId );
 		}
@@ -348,7 +348,7 @@ class RelationValuesController extends ObjectAttributeValuesController {
 }
 
 class TextAttributeValuesController extends ObjectAttributeValuesController {
-	public function add( IdStack $idPath, $record )  {
+	public function add( IdStack $idPath, $record ) {
 		$objectId = $this->objectIdFetcher->fetch( $idPath->getKeyStack() );
 		$textAttributeId = $this->determineAttributeId( $idPath, "TEXT", $record->textAttribute );
 		$text = $record->text;
@@ -368,9 +368,9 @@ class TextAttributeValuesController extends ObjectAttributeValuesController {
 
 	public function update( $keyPath, $record ) {
 		$textId = $keyPath->peek( 0 )->textAttributeId;
-		
+
 		$text = $record->text;
-		
+
 		if ( $text != "" ) {
 			updateTextAttributeValue( $text, $textId );
 		}
@@ -384,8 +384,8 @@ class LinkAttributeValuesController extends ObjectAttributeValuesController {
 		}
 		return $url;
 	}
-	
-	public function add( IdStack $idPath, $record )  {
+
+	public function add( IdStack $idPath, $record ) {
 		if ( ! $record->link ) {
 			return;
 		}
@@ -394,7 +394,7 @@ class LinkAttributeValuesController extends ObjectAttributeValuesController {
 		$linkValue = $record->link;
 		$label = $linkValue->linkLabel;
 		$url = $linkValue->linkURL;
-		
+
 		if ( $linkAttributeId != 0 && $url != "" ) {
 			addLinkAttributeValue( $objectId, $linkAttributeId, $this->validateURL( $url ), $label );
 		}
@@ -410,7 +410,7 @@ class LinkAttributeValuesController extends ObjectAttributeValuesController {
 		$linkValue = $record->link;
 		$label = $linkValue->linkLabel;
 		$url = $linkValue->linkURL;
-				
+
 		if ( $url != "" ) {
 			updateLinkAttributeValue( $linkId, $this->validateURL( $url ), $label );
 		}
@@ -419,7 +419,7 @@ class LinkAttributeValuesController extends ObjectAttributeValuesController {
 
 class TranslatedTextAttributeValuesController extends ObjectAttributeValuesController {
 
-	public function add( IdStack $idPath, $record )  {
+	public function add( IdStack $idPath, $record ) {
 		$objectId = $this->objectIdFetcher->fetch( $idPath->getKeyStack() );
 		$textValue = $record->translatedTextValue;
 		$textAttributeId = $this->determineAttributeId( $idPath, "TRNS", $record->translatedTextAttribute );
@@ -427,10 +427,10 @@ class TranslatedTextAttributeValuesController extends ObjectAttributeValuesContr
 		if ( $textAttributeId != 0 ) {
 			if ( $textValue->getRecordCount() > 0 ) {
 				$textValueRecord = $textValue->getRecord( 0 );
-	
+
 				$languageId = $textValueRecord->language;
 				$text = $textValueRecord->text;
-				
+
 				if ( $languageId != 0 && $text != '' ) {
 					addTranslatedTextAttributeValue( $objectId, $textAttributeId, $languageId, $text );
 				}
@@ -497,8 +497,8 @@ class OptionAttributeOptionsController extends DefaultUpdateController {
 		$attributeId = $idPath->getKeyStack()->peek( 0 )->classAttributeId;
 		$optionMeaningId = $record->optionAttributeOption;
 		$languageId = $record->language;
-		if ( $languageId == NULL ) {
-			$languageId = 0 ;
+		if ( $languageId == null ) {
+			$languageId = 0;
 		}
 		if ( $optionMeaningId ) {
 			addOptionAttributeOption( $attributeId, $optionMeaningId, $languageId );
@@ -522,18 +522,18 @@ class AlternativeDefinitionsPermissionController implements PermissionController
 	public function allowUpdateOfAttribute( $attribute ) {
 		return true;
 	}
-	
+
 	public function allowUpdateOfValue( $idPath, $value ) {
 		return $this->allowAnyChangeOfValue( $value );
 	}
-	
+
 	public function allowRemovalOfValue( $idPath, $value ) {
 		return $this->allowAnyChangeOfValue( $value );
 	}
 
 	protected function allowAnyChangeOfValue( $value ) {
 		$source = $value->source;
-			
+
 		return $source == null || $source == 0;
 	}
 }

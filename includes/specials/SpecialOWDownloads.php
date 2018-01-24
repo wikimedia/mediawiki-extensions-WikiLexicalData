@@ -12,8 +12,8 @@
  * and at the same time not run another job? ~he
  */
 global $wgWldJobsScriptPath;
-require_once( $wgWldJobsScriptPath . 'OWExpressionListJob.php');
-require_once( $wgWldJobsScriptPath . 'WldJobs.php');
+require_once $wgWldJobsScriptPath . 'OWExpressionListJob.php';
+require_once $wgWldJobsScriptPath . 'WldJobs.php';
 
 class SpecialOWDownloads extends SpecialPage {
 
@@ -28,8 +28,8 @@ class SpecialOWDownloads extends SpecialPage {
 	function execute( $par ) {
 		global $wgWldDownloadScriptPath, $wgWldOwScriptPath;
 
-		require_once( $wgWldOwScriptPath . 'Expression.php' );
-		require_once( $wgWldOwScriptPath . 'DefinedMeaning.php' );
+		require_once $wgWldOwScriptPath . 'Expression.php';
+		require_once $wgWldOwScriptPath . 'DefinedMeaning.php';
 
 		$this->Expressions = new Expressions;
 		$this->DefinedMeanings = new DefinedMeanings;
@@ -43,32 +43,32 @@ class SpecialOWDownloads extends SpecialPage {
 		$fileName = $request->getText( 'update' );
 
 		// This should change if non csv files will be produced.
-		$filePrefix = array(
+		$filePrefix = [
 			'def',
 			'exp',
 			'owd',
 			'lang'
-		);
+		];
 
 		$this->checkMode = false;
 		$this->checkLanguage = null;
 		$this->checkOwdFilename = null;
 
-		$htmlContents = array();
-		$this->definitions = array();
-		$this->expressions = array();
-		$this->translations = array();
-		$this->development = array();
+		$htmlContents = [];
+		$this->definitions = [];
+		$this->expressions = [];
+		$this->translations = [];
+		$this->development = [];
 		$this->downloadIniExist = false;
 
 		// scan directory for filenames
 		if ( ! is_dir( $wgWldDownloadScriptPath ) || ! is_readable( $wgWldDownloadScriptPath ) ) {
 			$output->addHTML( wfMessage( 'ow-downloads-directory-missing' )
-				->params( htmlentities( $wgWldDownloadScriptPath ) )->plain() ) ;
-			$downloadDir = array() ;
-			$this->updateCheckChecked = True;
+				->params( htmlentities( $wgWldDownloadScriptPath ) )->plain() );
+			$downloadDir = [];
+			$this->updateCheckChecked = true;
 		} else {
-			$downloadDir = scandir( $wgWldDownloadScriptPath ) ;
+			$downloadDir = scandir( $wgWldDownloadScriptPath );
 			$this->updateCheckChecked = false;
 		}
 
@@ -76,11 +76,11 @@ class SpecialOWDownloads extends SpecialPage {
 		$this->segregateGroups( $downloadDir );
 
 		$this->updateCheck = null;
-		$this->updateCheckList = array();
+		$this->updateCheckList = [];
 		$this->processingOwd = false;
 
 		// This should change if non csv files will be produced.
-		foreach( $filePrefix as $row ) {
+		foreach ( $filePrefix as $row ) {
 			// check if "create-" . $prefix in url, translate it to fileName
 			if ( $request->getInt( 'create-' . $row ) ) {
 				$langId = $request->getInt( 'create-' . $row );
@@ -89,7 +89,7 @@ class SpecialOWDownloads extends SpecialPage {
 			}
 			// check if "check-" . $prefix . "status" in url
 			if ( $request->getInt( 'check_' . $row . '_status' ) ) {
-				$langId = $request->getInt( 'check_' . $row . '_status');
+				$langId = $request->getInt( 'check_' . $row . '_status' );
 				$langCode = getLanguageIso639_3ForId( $langId );
 				$fileName = $wgWldDownloadScriptPath . $row . '_' . $langCode . '.csv';
 				if ( $row == 'owd' ) {
@@ -131,8 +131,8 @@ class SpecialOWDownloads extends SpecialPage {
 					$this->update_expression_notice = "\n$fileName does not have a valid language<br/>\n";
 				} else {
 					$this->update_expression_notice = "\n$fileName has been requested<br/>\n";
-					$jobParams = array( 'type' => 'exp', 'langcode' => $match[1], 'format' => $match[2] );
-					$title = Title::newFromText('User:JobQuery/exp_' . $match[1] . '.' . $match[2] );
+					$jobParams = [ 'type' => 'exp', 'langcode' => $match[1], 'format' => $match[2] ];
+					$title = Title::newFromText( 'User:JobQuery/exp_' . $match[1] . '.' . $match[2] );
 					$job = new CreateExpressionListJob( $title, $jobParams );
 					JobQueueGroup::singleton()->push( $job ); // mediawiki >= 1.21
 				}
@@ -147,7 +147,7 @@ class SpecialOWDownloads extends SpecialPage {
 				} else {
 					$this->update_definition_notice = "\n$fileName has been requested<br/>\n";
 					$jobName = 'JobQuery/' . $fileName;
-					$jobParams = array( 'type' => 'def', 'langcode' => $match[1], 'format' => $match[2], 'start' => '1' );
+					$jobParams = [ 'type' => 'def', 'langcode' => $match[1], 'format' => $match[2], 'start' => '1' ];
 					$jobExist = $wldJobs->downloadJobExist( $jobName );
 					if ( !$jobExist ) {
 						$title = Title::newFromText( 'User:' . $jobName );
@@ -167,7 +167,7 @@ class SpecialOWDownloads extends SpecialPage {
 				} else {
 					$this->update_owd_notice = "<br/>\n$fileName has been requested<br/>\n";
 					$jobName = 'JobQuery/' . $fileName;
-					$jobParams = array( 'type' => 'owd', 'langcode' => $match[1], 'format' => $match[2], 'start' => '1' );
+					$jobParams = [ 'type' => 'owd', 'langcode' => $match[1], 'format' => $match[2], 'start' => '1' ];
 					$jobExist = $wldJobs->downloadJobExist( $jobName );
 					if ( !$jobExist ) {
 						// Check if zip file exist, if not create an empty archive.
@@ -175,7 +175,7 @@ class SpecialOWDownloads extends SpecialPage {
 						if ( !file_exists( $zipName ) ) {
 							$zip = new ZipArchive();
 							$zip->open( $zipName, ZipArchive::CREATE );
-							$zip->addEmptyDir('.');
+							$zip->addEmptyDir( '.' );
 							$zip->close();
 						}
 						$title = Title::newFromText( 'User:' . $jobName );
@@ -216,7 +216,7 @@ class SpecialOWDownloads extends SpecialPage {
 		}
 
 		// output html
-		foreach( $htmlContents as $htmlLine ) {
+		foreach ( $htmlContents as $htmlLine ) {
 			$output->addHTML( $htmlLine );
 		}
 
@@ -235,15 +235,15 @@ class SpecialOWDownloads extends SpecialPage {
 		global $wgServer, $wgScriptPath, $wgScript, $wgWldDownloadScriptPath;
 
 		$presetMyLine = '<table class="wikitable">' . "\n" .
-		'<tr>' . "\n" .
-		'<th> Language </th>' . "\n" .
-		'<th> Date </th>' . "\n" .
-		'<th> Size (bytes) </th>' . "\n" .
-		'<th> Status </th>'	. "\n" .
-		'<th> Action </th></tr>' . "\n";
+			'<tr>' . "\n" .
+			'<th> Language </th>' . "\n" .
+			'<th> Date </th>' . "\n" .
+			'<th> Size (bytes) </th>' . "\n" .
+			'<th> Status </th>'	. "\n" .
+			'<th> Action </th></tr>' . "\n";
 		$myLine = $presetMyLine;
 
-		foreach( $text as $line ) {
+		foreach ( $text as $line ) {
 			if ( preg_match( '/^(exp)_(.+)\./', $line, $match ) ) {
 				$this->type = $match[1];
 				$language = $match[2];
@@ -263,7 +263,7 @@ class SpecialOWDownloads extends SpecialPage {
 			$languageName = getLanguageIdLanguageNameFromIds( $languageId, $nameLanguageId );
 
 			$theRow = '';
-			if( $myLine != $presetMyLine ) {
+			if ( $myLine != $presetMyLine ) {
 				$theRow = '<tr>' . "\n";
 			}
 			$myLink = '<a href="' . $wgServer . $wgScriptPath . '/downloads/' . $line . '">' . $languageName . '</a>';
@@ -272,7 +272,7 @@ class SpecialOWDownloads extends SpecialPage {
 
 			$date = new DateTime();
 			$date->setTimestamp( $filestats['mtime'] );
-			$dateTime = $date->format('Y-m-d H:i:s');
+			$dateTime = $date->format( 'Y-m-d H:i:s' );
 
 			$myLine .= '<td>' . $dateTime . '</td>' . "\n";
 			$myLine .= '<td align="right">' . $filestats['size'] . '</td>' . "\n";
@@ -285,7 +285,7 @@ class SpecialOWDownloads extends SpecialPage {
 			$wldJobs = new WldJobs();
 			$jobExist = $wldJobs->downloadJobExist( $jobName );
 			if ( !$jobExist ) {
-			//	$action = '<a href="' . "$wgServer$wgScript/Special:Ow_downloads?create-" . $this->type . '=' . $languageId . '">Regenerate</a>' . "\n";
+			// $action = '<a href="' . "$wgServer$wgScript/Special:Ow_downloads?create-" . $this->type . '=' . $languageId . '">Regenerate</a>' . "\n";
 				$action = $this->postAction( $this->type, $languageId );
 				$status = $this->getStatus( $languageId, $line );
 			} else {
@@ -302,7 +302,6 @@ class SpecialOWDownloads extends SpecialPage {
 	}
 
 	protected function getStatus( $languageId, $line ) {
-
 		// Create a check if latest if not make status 'outdated'
 		if ( preg_match( '/^owd_(.+)\./', $line, $match ) ) {
 			global $wgServer, $wgScript;
@@ -334,7 +333,7 @@ class SpecialOWDownloads extends SpecialPage {
 							return 'outdated(' . timestampAsText( $owdTransactionRecord->timestamp ) . ');new(' . timestampAsText( $owTransactionRecord->timestamp ) . ')';
 							return 'outdated( ' . timestampAsText( $owdTransactionRecord->timestamp ) . ' )';
 						}
-					//	return 'up-to-date(' . timestampAsText( $owdTransactionRecord->timestamp ) . ');new(' . timestampAsText( $owTransactionRecord->timestamp ) . ')';
+					// return 'up-to-date(' . timestampAsText( $owdTransactionRecord->timestamp ) . ');new(' . timestampAsText( $owTransactionRecord->timestamp ) . ')';
 						return 'up-to-date( ' . timestampAsText( $owdTransactionRecord->timestamp ) . ' )';
 					}
 				}
@@ -346,35 +345,35 @@ class SpecialOWDownloads extends SpecialPage {
 		return 'latest';
 	}
 
-//	$action = '<a href="' . "$wgServer$wgScript/Special:Ow_downloads?create-" . $this->type . '=' . $languageId . '">Regenerate</a>' . "\n";
-//	$action = postAction( $this->type, $languageId );
+// $action = '<a href="' . "$wgServer$wgScript/Special:Ow_downloads?create-" . $this->type . '=' . $languageId . '">Regenerate</a>' . "\n";
+// $action = postAction( $this->type, $languageId );
 
 	protected function postAction( $prefix, $languageId ) {
 		global $wgServer, $wgScript;
 
 		$form = '';
-		$formOptions = array(
+		$formOptions = [
 			'method' => 'POST',
 			'action' => "$wgServer$wgScript/Special:Ow_downloads"
-		);
+		];
 		$form .= Html::openElement( 'form', $formOptions );
 
 		$form .= Html::element(
 			'input',
-			array(
+			[
 				'type' => 'hidden',
 				'name' => 'create-' . $prefix,
 				'value' => $languageId
-			)
+			]
 		);
 
 		// submit button
 		$form .= Html::element(
 			'input',
-			array(
+			[
 				'type' => 'submit',
 				'value' => 'Regenerate'
-			)
+			]
 		);
 
 		$form .= Html::closeElement( 'form' );
@@ -382,29 +381,28 @@ class SpecialOWDownloads extends SpecialPage {
 	}
 
 	protected function createNewForm( $prefix ) {
-
 		global $wgServer, $wgScript;
 
 		$form = '';
-		$formOptions = array(
+		$formOptions = [
 			'method' => 'GET',
 			'action' => "$wgServer$wgScript/Special:Ow_downloads"
-		);
+		];
 		$form .= Html::openElement( 'form', $formOptions );
 
 		// suggest combobox
 		$form .= getSuggest(
 			'create' . "-$prefix", // name, parameter transmitted in url
 			'language', // query
-			array() // html parameters
+			[] // html parameters
 		);
 
 		// submit button
-		$form .= Html::element( 'input', array(
+		$form .= Html::element( 'input', [
 			'type' => 'submit',
-//			'name' => $prefix . '-submit',
+			// 'name' => $prefix . '-submit',
 			'value' => 'Generate'
-		) );
+		] );
 
 		$form .= Html::closeElement( 'form' );
 		return $form;
@@ -445,9 +443,9 @@ class SpecialOWDownloads extends SpecialPage {
 
 		$matchFound = false;
 		$latest = true;
-		$reconstructedLine = array();
+		$reconstructedLine = [];
 
-		foreach( $this->updateCheckList as $row ) {
+		foreach ( $this->updateCheckList as $row ) {
 			if ( $row[0] == $fnPattern ) {
 				$matchFound = true;
 
@@ -464,23 +462,23 @@ class SpecialOWDownloads extends SpecialPage {
 		}
 
 		if ( !$matchFound ) {
-			$fh = fopen( $downloadIni, 'a');
+			$fh = fopen( $downloadIni, 'a' );
 			fwrite( $fh, $fnPattern . "	" . $owdTransactionId . "	" . $owdVersionId  . "\n" );
 			fclose( $fh );
 		}
 
 		if ( $matchFound && !$latest ) {
-			$fh = fopen( $downloadIni, 'w');
-			foreach( $reconstructedLine as $row ) {
+			$fh = fopen( $downloadIni, 'w' );
+			foreach ( $reconstructedLine as $row ) {
 				fwrite( $fh, $row );
 			}
 			fclose( $fh );
 		}
-		$reconstructedLine = array();
+		$reconstructedLine = [];
 	}
 
 	protected function segregateGroups( $directory ) {
-		foreach( $directory as $files ) {
+		foreach ( $directory as $files ) {
 			// definitions
 			if ( preg_match( '/^def_/', $files ) ) {
 				$this->definitions[] = "$files";
@@ -510,7 +508,7 @@ class SpecialOWDownloads extends SpecialPage {
 		global $wgWldDownloadScriptPath;
 		$downloadIni = $wgWldDownloadScriptPath . 'downloads.ini';
 
-		$updateCheck = array();
+		$updateCheck = [];
 		if ( $this->downloadIniExist == true ) {
 			$contents = file_get_contents( $downloadIni );
 			$lines = explode( "\n", $contents );
@@ -520,15 +518,15 @@ class SpecialOWDownloads extends SpecialPage {
 					$this->updateCheck = $line[1];
 				}
 				if ( isset( $line[1] ) ) {
-					$this->updateCheckList[] = array (
+					$this->updateCheckList[] = [
 						$line[0],
 						$line[1],
 						$line[2]
-					);
+					];
 				}
 			}
 		} else {
-			$fh = fopen ( $downloadIni, 'w' );
+			$fh = fopen( $downloadIni, 'w' );
 			fclose( $fh );
 		}
 		$contents = null;

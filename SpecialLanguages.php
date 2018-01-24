@@ -1,5 +1,8 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
+
 /**
  * A Special Page extension to add languages, runnable by users with the 'addlanguage' right.
  *
@@ -13,11 +16,11 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 $wgAvailableRights[] = 'addlanguage';
 $wgGroupPermissions['bureaucrat']['addlanguage'] = true;
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'Language manager',
 	'author' => 'Erik Moeller',
 	'descmsg' => 'langman-desc',
-);
+];
 
 $wgSpecialPages['Languages'] = 'SpecialLanguages';
 

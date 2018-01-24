@@ -1,8 +1,8 @@
 <?php
 
-/* Read a .sql file and apply it to tables with the defined prefix. 
+/* Read a .sql file and apply it to tables with the defined prefix.
 
-NOTE: Since LocalSettings.php loads App.php, which depends on a whole lot of 
+NOTE: Since LocalSettings.php loads App.php, which depends on a whole lot of
 Wikidata crud, in some circumstances (when your code refers to tables that
 no longer exist) it may be wise to comment out the require_once line
 in LocalSettings.php which loads App.php before running this script.
@@ -16,21 +16,21 @@ $wgUseMasterForMaintenance = true;
 
 $sep = PATH_SEPARATOR;
 
-$IP = realpath( dirname( __FILE__ ) .  "/../../../../" );
-$currentdir = dirname( __FILE__ );
+$IP = realpath( __DIR__ .  "/../../../../" );
+$currentdir = __DIR__;
 chdir( $IP );
 
 ini_set( 'include_path', ".$sep$IP$sep$IP/extensions/Wikidata/OmegaWiki$sep$IP/includes$sep$IP/languages$sep$IP/maintenance" );
 
-require_once( "Defines.php" );
-require_once( "ProfilerStub.php" );
-require_once( "LocalSettings.php" );
-require_once( "Setup.php" );
-require_once( "StartProfiler.php" );
-require_once( "Exception.php" );
-require_once( "GlobalFunctions.php" );
-require_once( "Database.php" );
-include_once( "AdminSettings.php" );
+require_once "Defines.php";
+require_once "ProfilerStub.php";
+require_once "LocalSettings.php";
+require_once "Setup.php";
+require_once "StartProfiler.php";
+require_once "Exception.php";
+require_once "GlobalFunctions.php";
+require_once "Database.php";
+include_once "AdminSettings.php";
 
 global
 	$wgCommandLineMode, $wgUser, $numberOfBytes;
@@ -48,15 +48,21 @@ function ReadSQLFile( $database, $pattern, $prefix, $filename ) {
 		$line = trim( fgets( $fp, 1024 ) );
 		$sl = strlen( $line ) - 1;
 
-		if ( $sl < 0 ) { continue; }
-		if ( '-' == $line { 0 } && '-' == $line { 1 } ) { continue; }
+		if ( $sl < 0 ) {
+			continue;
+		}
+		if ( '-' == $line { 0 } && '-' == $line { 1 } ) {
+			continue;
+		}
 
 		if ( ';' == $line { $sl } && ( $sl < 2 || ';' != $line { $sl - 1 } ) ) {
 			$done = true;
 			$line = substr( $line, 0, $sl );
 		}
 
-		if ( '' != $cmd ) { $cmd .= ' '; }
+		if ( '' != $cmd ) {
+			$cmd .= ' ';
+		}
 		$cmd .= "$line\n";
 
 		if ( $done ) {
@@ -81,8 +87,7 @@ function getUserId( $userName ) {
 	$result = $dbr->query( "select user_id from user where user_name = '$userName'" );
 	if ( $row = $dbr->fetchObject( $result ) ) {
 		return $row->user_id;
-	}
-	else {
+	} else {
 		return - 1;
 	}
 }
@@ -103,8 +108,7 @@ function setDefaultDC( $dc ) {
 	$wdDefaultViewDataSet = $dc;
 }
 
-	
-$dbclass  = 'Database' . ucfirst( $wgDBtype ) ;
+$dbclass  = 'Database' . ucfirst( $wgDBtype );
 $database = $wgDBname;
 $user     = $wgDBadminuser;
 $password = $wgDBadminpassword;
@@ -115,20 +119,15 @@ for ( $arg = reset( $argv ); $arg !== false; $arg = next( $argv ) ) {
 	if ( substr( $arg, 0, 8 ) == '-dataset' ) {
 		$prefix = next( $argv );
 		$wdPrefix = $prefix . "_";
-	}
-	else if ( substr( $arg, 0, 9 ) == '-template' ) {
+	} elseif ( substr( $arg, 0, 9 ) == '-template' ) {
 		$wdTemplate = next( $argv );
-	}
-	else if ( substr( $arg, 0, 7 ) == '-server' ) {
+	} elseif ( substr( $arg, 0, 7 ) == '-server' ) {
 		$server = next( $argv );
-	}
-	else if ( substr( $arg, 0, 9 ) == '-database' ) {
+	} elseif ( substr( $arg, 0, 9 ) == '-database' ) {
 		$database = next( $argv );
-	}
-	else if ( substr( $arg, 0, 5 ) == '-user' ) {
+	} elseif ( substr( $arg, 0, 5 ) == '-user' ) {
 		$user = next( $argv );
-	}
-	else if ( substr( $arg, 0, 9 ) == '-password' ) {
+	} elseif ( substr( $arg, 0, 9 ) == '-password' ) {
 		$password = next( $argv );
 	} else {
 		$args[] = $arg;
@@ -167,11 +166,6 @@ if ( !$wdDatabase->isOpen() ) {
 	exit();
 }
 
-
-
 ReadSQLFile( $wdDatabase, "/*\$wdPrefix*/", $wdPrefix, $currentdir . DIRECTORY_SEPARATOR . $wdTemplate );
 
 $wdDatabase->close();
-
-
-?>

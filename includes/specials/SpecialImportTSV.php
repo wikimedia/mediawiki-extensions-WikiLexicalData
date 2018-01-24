@@ -3,9 +3,11 @@
 * Code is outdated and unused
 */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
-/** @brief Imports OmegaWiki data formatted as TSV (Tab Separated Values) files
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
+/**
+ * @brief Imports OmegaWiki data formatted as TSV (Tab Separated Values) files
  */
 class SpecialImportTSV extends SpecialPage {
 
@@ -18,9 +20,8 @@ class SpecialImportTSV extends SpecialPage {
 	}
 
 	function execute( $par ) {
-
 		global $wgWldOwScriptPath, $wgRequest, $wgVersion;
-		require_once( $wgWldOwScriptPath . "WikiDataAPI.php" );
+		require_once $wgWldOwScriptPath . "WikiDataAPI.php";
 
 		$output = $this->getOutput();
 		$request = $this->getRequest();
@@ -36,9 +37,8 @@ class SpecialImportTSV extends SpecialPage {
 		$output->setPageTitle( wfMessage( 'ow_importtsv_importing' )->text() );
 		setlocale( LC_ALL, 'en_US.UTF-8' );
 		if ( $request->getFileName( 'tsvfile' ) ) {
-
 			// *****************
-			//    process tsv
+			// process tsv
 			// *****************
 
 			$testRun = $request->getCheck( 'testrun' );
@@ -78,8 +78,7 @@ class SpecialImportTSV extends SpecialPage {
 						$output->addHTML( wfMessage( 'ow_impexptsv_unknown_lang', $langCode )->text() );
 						return false;
 					}
-				}
-				else { // column name does not start with definition or translations.
+				} else { // column name does not start with definition or translations.
 						$output->setPageTitle( wfMessage( 'ow_importtsv_import_failed' )->text() );
 						$output->addHTML( wfMessage( 'ow_importtsv_bad_columns', $columnName )->text() );
 						return false;
@@ -92,8 +91,7 @@ class SpecialImportTSV extends SpecialPage {
 
 			if ( $testRun ) {
 				$output->setPageTitle( wfMessage( 'ow_importtsv_test_run_title' )->text() );
-			}
-			else {
+			} else {
 				$output->setPageTitle( wfMessage( 'ow_importtsv_importing' )->text() );
 			}
 
@@ -112,20 +110,20 @@ class SpecialImportTSV extends SpecialPage {
 
 				// find the defined meaning record
 				$dmResult = $dbr->select(
-					array(
-					'dm' =>"{$dc}_defined_meaning",
+					[
+					'dm' => "{$dc}_defined_meaning",
 					'exp' => "{$dc}_expression"
-					),
-					array( 'dm.meaning_text_tcid', 'exp.spelling' ),
-					array(
+					],
+					[ 'dm.meaning_text_tcid', 'exp.spelling' ],
+					[
 						'dm.defined_meaning_id' => $dmid,
 						'dm.remove_transaction_id' => null,
 						'exp.remove_transaction_id' => null
-					),
+					],
 					__METHOD__, null,
-					array( 'exp' =>
-						array( 'INNER JOIN', 'dm.expression_id = exp.expression_id' )
-					)
+					[ 'exp' =>
+						[ 'INNER JOIN', 'dm.expression_id = exp.expression_id' ]
+					]
 				);
 
 				$dmRecord = null;
@@ -135,8 +133,7 @@ class SpecialImportTSV extends SpecialPage {
 						$output->addHTML( "Skipped line $line: defined meaning id $dmid does not match defining expression. Should be '{$dmRecord['spelling']}', found '$exp'.<br />" );
 						continue;
 					}
-				}
-				else {
+				} else {
 					$output->addHTML( "Skipped line $line: unknown defined meaning id $dmid. The id may have been altered in the imported file, or the defined meaning or defining expression was removed from the database.<br />" );
 					continue;
 				}
@@ -145,7 +142,6 @@ class SpecialImportTSV extends SpecialPage {
 				$tcid = $dmRecord['meaning_text_tcid'];
 
 				for ( $columnIndex = 2; $columnIndex < count( $columns ); $columnIndex++ ) {
-
 					// Google docs removes empty columns at the end of a row,
 					// so if column index is higher than the length of the row, we can break
 					// and move on to the next defined meaning.
@@ -180,8 +176,7 @@ class SpecialImportTSV extends SpecialPage {
 							if ( !$expression ) { // expression does not exist
 								if ( $testRun ) {
 									$output->addHTML( "Would add translation for $exp ($dmid) in $langCode: $spelling. Would also add new page.<br />" );
-								}
-								else {
+								} else {
 									$expression = createExpression( $spelling, $langId );
 									$expression->bindToDefinedMeaning( $dmid, 'true' );
 
@@ -198,13 +193,11 @@ class SpecialImportTSV extends SpecialPage {
 									$output->addHTML( "Added translation for $exp ($dmid) in $langCode: $spelling. Also added new page.<br />" );
 									$translations++;
 								}
-							}
-							else { // expression exists, but may not be bound to this defined meaning.
+							} else { // expression exists, but may not be bound to this defined meaning.
 								if ( !$expression->isBoundToDefinedMeaning( $dmid ) ) {
 									if ( $testRun ) {
 										$output->addHTML( "Would add translation for $exp ($dmid) in $langCode: $spelling.<br />" );
-									}
-									else {
+									} else {
 										$expression->bindToDefinedMeaning( $dmid, 'true' );
 										$output->addHTML( "Added translation for $exp ($dmid) in $langCode: $spelling.<br />" );
 										$translations++;
@@ -220,27 +213,24 @@ class SpecialImportTSV extends SpecialPage {
 				$output->addHTML( "<br />" );
 				if ( $testRun ) {
 					$output->addHTML( wfMessage( 'ow_importtsv_nothing_added_test' )->text() );
-				}
-				else {
+				} else {
 					$output->addHTML( wfMessage( 'ow_importtsv_nothing_added' )->text() );
 				}
 				$output->addHTML( "<br />" );
-			}
-			else {
+			} else {
 				$output->addHTML( "<br />" . wfMessage( 'ow_importtsv_results', $definitions, $translations )->text() . "<br />" );
 			}
 
-		}
-		else {
+		} else {
 			// render the page
 			$output->setPageTitle( wfMessage( 'ow_importtsv_title2' )->text() );
 			$output->addHTML( wfMessage( 'ow_importtsv_header' )->text() );
 
 			$output->addHTML( getOptionPanelForFileUpload(
-				array(
+				[
 					wfMessage( 'ow_importtsv_file' )->text() => getFileField( 'tsvfile' ),
 					wfMessage( 'ow_importtsv_test_run' )->text() => getCheckBox( 'testrun', true )
-				)
+				]
 			) );
 		}
 	}

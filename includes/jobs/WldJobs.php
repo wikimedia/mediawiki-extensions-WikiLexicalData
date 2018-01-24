@@ -22,9 +22,9 @@ class WldJobs {
 		$title = $dbr->selectField(
 			'job',
 			'job_title',
-			array(
+			[
 				'job_title' => $jobTitle
-			), __METHOD__
+			], __METHOD__
 		);
 
 		if ( $title ) {
@@ -34,4 +34,3 @@ class WldJobs {
 	}
 
 }
-

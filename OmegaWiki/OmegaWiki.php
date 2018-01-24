@@ -1,17 +1,17 @@
 <?php
 
-require_once( 'Wikidata.php' );
-require_once( 'Transaction.php' );
-require_once( 'WikiDataAPI.php' );
-require_once( 'forms.php' );
-require_once( 'Attribute.php' );
-require_once( 'type.php' );
-require_once( 'languages.php' );
-require_once( 'HTMLtable.php' );
-require_once( 'OmegaWikiRecordSets.php' );
-require_once( 'OmegaWikiEditors.php' );
-require_once( 'ViewInformation.php' );
-require_once( 'WikiDataGlobals.php' );
+require_once 'Wikidata.php';
+require_once 'Transaction.php';
+require_once 'WikiDataAPI.php';
+require_once 'forms.php';
+require_once 'Attribute.php';
+require_once 'type.php';
+require_once 'languages.php';
+require_once 'HTMLtable.php';
+require_once 'OmegaWikiRecordSets.php';
+require_once 'OmegaWikiEditors.php';
+require_once 'ViewInformation.php';
+require_once 'WikiDataGlobals.php';
 
 /**
  * Load and modify content in a OmegaWiki-enabled
@@ -30,7 +30,7 @@ class OmegaWiki extends DefaultWikidataApplication {
 		$this->outputViewHeader();
 
 		$spelling = $this->getTitle()->getText();
-		if ( existSpelling ( $spelling ) ) {
+		if ( existSpelling( $spelling ) ) {
 			$recordset = getExpressionsRecordSet( $spelling, $this->viewInformation );
 			$editor = getExpressionsEditor( $spelling, $this->viewInformation );
 			$wgOut->addHTML( $editor->view( $this->getIdStack(), $recordset ) );
@@ -54,11 +54,10 @@ class OmegaWiki extends DefaultWikidataApplication {
 	}
 
 	protected function save( $referenceQueryTransactionInformation ) {
-
 		parent::save( $referenceQueryTransactionInformation );
 
 		$spelling = $this->getTitle()->getText();
-		
+
 		getExpressionsEditor( $spelling, $this->viewInformation )->save(
 			$this->getIdStack(),
 			getExpressionsRecordSet( $spelling, $this->viewInformation )
@@ -89,5 +88,3 @@ class OmegaWiki extends DefaultWikidataApplication {
 		return new IdStack( WLD_EXPRESSION );
 	}
 }
-
-

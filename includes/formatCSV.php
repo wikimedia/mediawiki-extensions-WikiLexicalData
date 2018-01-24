@@ -9,15 +9,14 @@
 
 class WldFormatCSV {
 	function formatCSVcolumn( $column ) {
-
-		if( is_numeric( $column ) ) {
+		if ( is_numeric( $column ) ) {
 			return $column;
 		}
-		if( preg_match( '/\"/', $column ) ) {
+		if ( preg_match( '/\"/', $column ) ) {
 			$column = str_replace( '"', '""', $column );
 		}
 		$column = '"' . $column . '"';
-		if ( $column == '""') {
+		if ( $column == '""' ) {
 			return '';
 		}
 		$column = preg_replace( '/\t/', '\\t', $column );

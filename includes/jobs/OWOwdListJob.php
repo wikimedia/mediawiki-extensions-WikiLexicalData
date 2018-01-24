@@ -10,12 +10,12 @@
  */
 
 global $wgWldOwScriptPath, $wgWldIncludesScriptPath;
-require_once( $wgWldOwScriptPath . 'Attribute.php' );
-require_once( $wgWldOwScriptPath . 'DefinedMeaning.php' );
-require_once( $wgWldOwScriptPath . 'Expression.php' );
-require_once( $wgWldIncludesScriptPath . 'formatCSV.php' );
+require_once $wgWldOwScriptPath . 'Attribute.php';
+require_once $wgWldOwScriptPath . 'DefinedMeaning.php';
+require_once $wgWldOwScriptPath . 'Expression.php';
+require_once $wgWldIncludesScriptPath . 'formatCSV.php';
 
-Class CreateOwdListJob extends Job {
+class CreateOwdListJob extends Job {
 
 	public function __construct( $title, $params ) {
 		parent::__construct( 'CreateOwdList', $title, $params );
@@ -51,7 +51,6 @@ Class CreateOwdListJob extends Job {
 			return true;
 		}
 		return false;
-
 	}
 
 	protected function createList( $type, $code, $format, $start ) {
@@ -108,30 +107,29 @@ Class CreateOwdListJob extends Job {
 		$tempMiaFileName .= $miaZippedAs;
 
 		if ( $start == 1 ) {
-			$translations = array();
-			$fh = fopen ( $tempFileName, 'w' );
-			$fhsyn = fopen ( $tempSynFileName, 'w' );
-			$fhatt = fopen ( $tempAttFileName, 'w' );
-			$fhini = fopen ( $tempIniFileName, 'w' );
+			$translations = [];
+			$fh = fopen( $tempFileName, 'w' );
+			$fhsyn = fopen( $tempSynFileName, 'w' );
+			$fhatt = fopen( $tempAttFileName, 'w' );
+			$fhini = fopen( $tempIniFileName, 'w' );
 				fwrite( $fhini, $this->getIniFile() );
-			$fhmia = fopen ( $tempMiaFileName, 'w' );
+			$fhmia = fopen( $tempMiaFileName, 'w' );
 		} else {
-			$fh = fopen ( $tempFileName, 'a' );
-			$fhsyn = fopen ( $tempSynFileName, 'a' );
-			$fhatt = fopen ( $tempAttFileName, 'a' );
-			$fhini = fopen ( $tempIniFileName, 'a' );
-			$fhmia = fopen ( $tempMiaFileName, 'a' );
+			$fh = fopen( $tempFileName, 'a' );
+			$fhsyn = fopen( $tempSynFileName, 'a' );
+			$fhatt = fopen( $tempAttFileName, 'a' );
+			$fhini = fopen( $tempIniFileName, 'a' );
+			$fhmia = fopen( $tempMiaFileName, 'a' );
 		}
 		// Add data
 		$ctr = 0;
 		if ( $start != 0 ) {
-
 			$this->Attributes = new Attributes;
 			$this->Expressions = new Expressions;
 			$this->Transactions = new Transactions;
 			$this->ClassAttribute = new WLD_Class;
 			$this->Collections = new Collections;
-			$enId = array(
+			$enId = [
 				'IPA' => Attributes::getClassAttributeId( 'International Phonetic Alphabet', WLD_ENGLISH_LANG_ID ),
 				'pinyin' => Attributes::getClassAttributeId( 'pinyin', WLD_ENGLISH_LANG_ID ),
 				'hyphenation' => Attributes::getClassAttributeId( 'hyphenation', WLD_ENGLISH_LANG_ID ),
@@ -142,16 +140,15 @@ Class CreateOwdListJob extends Job {
 				'GP' => Attributes::getClassAttributeId( 'grammatical property', WLD_ENGLISH_LANG_ID ),
 				'number' => Attributes::getClassAttributeId( 'number', WLD_ENGLISH_LANG_ID ),
 				'gender' => Attributes::getClassAttributeId( 'gender', WLD_ENGLISH_LANG_ID )
-			);
+			];
 
-			if ( $code == 'fra') {
+			if ( $code == 'fra' ) {
 				$fraId['gender'] = Attributes::getClassAttributeId( 'genre', $languageId );
 				$fraId['gender2'] = Attributes::getClassAttributeId( 'sexe', $languageId );
 			}
 
 			$totalDefinedMeaning = count( $languageDefinedMeaningIds );
 			foreach ( $languageDefinedMeaningIds as $definedMeaningId ) {
-
 				$text = getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId );
 				$text = preg_replace( '/\n/', '\\n', $text );
 				$text = $csv->formatCSVcolumn( $text );
@@ -168,7 +165,7 @@ Class CreateOwdListJob extends Job {
 					$expressionId = getExpressionId( $spelling, $languageId );
 					$syntransId = getSynonymId( $definedMeaningId, $expressionId );
 
-					$textAttributes = Attributes::getTextAttributes( $syntransId, array( 'languageId' => $languageId ) );
+					$textAttributes = Attributes::getTextAttributes( $syntransId, [ 'languageId' => $languageId ] );
 					foreach ( $textAttributes as $row ) {
 						$row['text'] = preg_replace( '/\n/', '\\n', $row['text'] );
 						// Convert tabs to space
@@ -192,23 +189,23 @@ Class CreateOwdListJob extends Job {
 
 						if ( $row['attribute_id'] == $enId['IPA'] ) {
 							$IPA .= $row['text'] . ';';
-							$row = array( 'text' => null, 'attribute_name' => null, 'attribute_id' => null );
+							$row = [ 'text' => null, 'attribute_name' => null, 'attribute_id' => null ];
 						}
 						if ( $row['attribute_id'] == $enId['pinyin'] ) {
 							$pinyin .= $row['text'] . ';';
-							$row = array( 'text' => null, 'attribute_name' => null, 'attribute_id' => null );
+							$row = [ 'text' => null, 'attribute_name' => null, 'attribute_id' => null ];
 						}
 						if ( $row['attribute_id'] == $enId['hyphenation'] ) {
 							$hyphenation .= $row['text'] . ';';
-							$row = array( 'text' => null, 'attribute_name' => null, 'attribute_id' => null );
+							$row = [ 'text' => null, 'attribute_name' => null, 'attribute_id' => null ];
 						}
 						if ( $row['attribute_id'] == $enId['example'] ) {
 							$example .= $row['text'] . ';';
-							$row = array( 'text' => null, 'attribute_name' => null, 'attribute_id' => null );
+							$row = [ 'text' => null, 'attribute_name' => null, 'attribute_id' => null ];
 						}
 						if ( $row['attribute_id'] == $enId['usage'] ) {
 							$usage .= $row['text'] . ';';
-							$row = array( 'text' => null, 'attribute_name' => null, 'attribute_id' => null );
+							$row = [ 'text' => null, 'attribute_name' => null, 'attribute_id' => null ];
 						}
 						if ( $row['text'] != null ) {
 							fwrite(
@@ -220,7 +217,7 @@ Class CreateOwdListJob extends Job {
 						}
 
 					}
-					$textAttributes = array();
+					$textAttributes = [];
 					$IPA = $this->removeAllEndSemiColon( $IPA );
 					$pinyin = $this->removeAllEndSemiColon( $pinyin );
 					$hyphenation = $this->removeAllEndSemiColon( $hyphenation );
@@ -234,7 +231,7 @@ Class CreateOwdListJob extends Job {
 					$number = null;
 					$gender = null;
 
-					$optionAttributes = Attributes::getOptionAttributes( $syntransId, array( 'languageId' => $languageId ) );
+					$optionAttributes = Attributes::getOptionAttributes( $syntransId, [ 'languageId' => $languageId ] );
 					foreach ( $optionAttributes as $row ) {
 						$row['attribute_option_name'] = preg_replace( '/\n/', '\\n', $row['attribute_option_name'] );
 						// convert tabs to space
@@ -262,35 +259,35 @@ Class CreateOwdListJob extends Job {
 
 						if ( $row['attribute_id'] == $enId['POS'] ) {
 							$POS .= $row['attribute_option_name'] . ';';
-							$row = array( 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null );
+							$row = [ 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null ];
 						}
 						if ( $row['attribute_id'] == $enId['usage'] ) {
 							$oUsage .= $row['attribute_option_name'] . ';';
-							$row = array( 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null );
+							$row = [ 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null ];
 						}
 						if ( $row['attribute_id'] == $enId['area'] ) {
 							$area .= $row['attribute_option_name'] . ';';
-							$row = array( 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null );
+							$row = [ 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null ];
 						}
 						if ( $row['attribute_id'] == $enId['GP'] ) {
 							$grammaticalProperty .= $row['attribute_option_name'] . ';';
-							$row = array( 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null );
+							$row = [ 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null ];
 						}
 						if ( $row['attribute_id'] == $enId['number'] ) {
 							$number .= $row['attribute_option_name'] . ';';
-							$row = array( 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null );
+							$row = [ 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null ];
 						}
 						if ( $row['attribute_id'] == $enId['gender'] ) {
 							$gender .= $row['attribute_option_name'] . ';';
-							$row = array( 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null );
+							$row = [ 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null ];
 						}
 						if ( $code == 'fra' ) {
 							if (
-								$row['attribute_id'] == $fraId['gender'] OR
+								$row['attribute_id'] == $fraId['gender'] or
 								$row['attribute_id'] == $fraId['gender2']
 							) {
 								$gender .= $row['attribute_option_name'] . ';';
-								$row = array( 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null );
+								$row = [ 'attribute_option_name' => null, 'attribute_name' => null, 'attribute_id' => null ];
 							}
 						}
 						if ( $row['attribute_name'] != null ) {
@@ -303,7 +300,7 @@ Class CreateOwdListJob extends Job {
 						}
 
 					}
-					$optionAttributes = array();
+					$optionAttributes = [];
 					$POS = $this->removeAllEndSemiColon( $POS );
 					$oUsage = $this->removeAllEndSemiColon( $oUsage );
 					$area = $this->removeAllEndSemiColon( $area );
@@ -332,21 +329,21 @@ Class CreateOwdListJob extends Job {
 
 				}
 
-				$optionAttributes = Attributes::getOptionAttributes( $definedMeaningId, array( 'languageId' => $languageId ) );
+				$optionAttributes = Attributes::getOptionAttributes( $definedMeaningId, [ 'languageId' => $languageId ] );
 				$subject = null;
 
 				$attributeExpressionId = getExpressionId( 'topic', WLD_ENGLISH_LANG_ID );
 				$levelMeaningId = $dbr->selectField(
 					"{$dc}_bootstrapped_defined_meanings",
 					'defined_meaning_id',
-					array( 'name' => 'DefinedMeaning' ),
+					[ 'name' => 'DefinedMeaning' ],
 					__METHOD__
 				);
 				$attributeId = getOptionAttributeOptionsAttributeIdFromExpressionId( $attributeExpressionId, WLD_ENGLISH_LANG_ID, $levelMeaningId );
 				$attributeMid = $dbr->selectField(
 					"{$dc}_class_attributes",
 					'attribute_mid',
-					array( 'object_id' => $attributeId ),
+					[ 'object_id' => $attributeId ],
 					__METHOD__
 				);
 				foreach ( $optionAttributes as $row ) {
@@ -356,7 +353,7 @@ Class CreateOwdListJob extends Job {
 						} else {
 							$subject .= '<' . $row['option_id'] . '/>';
 						}
-						$row = array( 'attribute_option_name' => null, 'attribute_name' => null );
+						$row = [ 'attribute_option_name' => null, 'attribute_name' => null ];
 					}
 					if ( $row['attribute_name'] != null ) {
 						fwrite(
@@ -379,7 +376,7 @@ Class CreateOwdListJob extends Job {
 						$classAttribute .= '<' . $row['definedMeaningId'] . '/>;';
 					}
 				}
-				$classes = array();
+				$classes = [];
 				$classAttribute = trim( $this->removeAllEndSemiColon( $classAttribute ) );
 
 				// Get Collection Attributes
@@ -392,7 +389,7 @@ Class CreateOwdListJob extends Job {
 						$collection .= '<' . $row['definedMeaningId'] . '/>;';
 					}
 				}
-				$classes = array();
+				$classes = [];
 				$collection = trim( $this->removeAllEndSemiColon( $collection ) );
 
 				fwrite( $fh,
@@ -417,7 +414,7 @@ Class CreateOwdListJob extends Job {
 		// incomplete job
 		if ( $ctr == $sqlLimit ) {
 			fclose( $fhini );
-			$jobParams = array( 'type' => $type, 'langcode' => $code, 'format' => $format );
+			$jobParams = [ 'type' => $type, 'langcode' => $code, 'format' => $format ];
 			$jobParams['start'] = $start + $sqlLimit;
 			$jobName = 'User:JobQuery/' . $type . '_' . $code . '.' . $format;
 			$title = Title::newFromText( $jobName );
@@ -425,7 +422,7 @@ Class CreateOwdListJob extends Job {
 			JobQueueGroup::singleton()->push( $job ); // mediawiki >= 1.21
 		} else { // complete job
 			// record transaction_ids
-			$transactionId = Transactions::getLanguageIdLatestTransactionId( $languageId, array( 'is_the_job' => true ) );
+			$transactionId = Transactions::getLanguageIdLatestTransactionId( $languageId, [ 'is_the_job' => true ] );
 			fwrite( $fhini,
 				'transaction_id: ' . $transactionId . "\n"
 			);
@@ -434,7 +431,7 @@ Class CreateOwdListJob extends Job {
 			// insert transactionId to 'downloads.ini'
 			$fileName = $type . '_' . $code . '.' . $format;
 			$downloadIni = $wgWldDownloadScriptPath . 'downloads.ini';
-			$reconstructLine = array();
+			$reconstructLine = [];
 			$contents = null;
 
 			$contents = file_get_contents( $downloadIni );
@@ -474,7 +471,6 @@ Class CreateOwdListJob extends Job {
 			unlink( $tempIniFileName );
 			unlink( $tempMiaFileName );
 		}
-
 	}
 
 	protected function removeAllEndSemiColon( $line ) {
@@ -485,14 +481,12 @@ Class CreateOwdListJob extends Job {
 	}
 
 	protected function getIniFile() {
-		return
-		"version:" . $this->version . "\n" .
+		return "version:" . $this->version . "\n" .
 		"help: Contents:\n" .
 		"help: owd_<languageCode>.csv - contains definitions\n" .
 		"help: owd_syn_<languageCode>.csv - contains synonyms and translations with annotations\n" .
 		"help: owd_att_<languageCode>.csv - contains list of annotations that can be linked to other language files annotations.\n" .
-		"help: owd_<languageCode>.mia - contains attributes that were not included in this version\n"
-		;
+		"help: owd_<languageCode>.mia - contains attributes that were not included in this version\n";
 	}
 
 }

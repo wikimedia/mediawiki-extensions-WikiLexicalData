@@ -7,7 +7,7 @@
 # fallback array. English is default!
 # (although it's always nice to specify)
 # if set to false, there is no fallback
-$fallback = array(
+$fallback = [
 	'en'  => false,
 	'af'  => 'en',
 	'ar'  => 'en',
@@ -77,20 +77,20 @@ $fallback = array(
 	'vec' => 'en',
 	'vi'  => 'en',
 	'vo'  => 'en',
-);
+];
 
 # is this language rtl or ltr? assumes ltr as default
-$direction = array(
+$direction = [
 	"ar" => "rtl"
-);
+];
 
 # Words starting with '%' (ie %action, or %questions_total) are
 # "variable names", for use by the program. Don't translate those!
 
-$messages = array();
+$messages = [];
 
 /** English */
-$messages['en'] = array(
+$messages['en'] = [
 	"voctrain_Hello_World" => "HELLO WIKI!",
 	"voctrain_Permission_Denied" => "Permission Denied",
 	"voctrain_try_again_" => "try again?",
@@ -158,7 +158,7 @@ $messages['en'] = array(
 	"voctrain_hide_words_in_question_language" => "Hide words in question language",
 	"voctrain_Separate_values_by_commas_to_use_multiple_languages_" => "Separate values by commas to use multiple languages.",
 	"voctrain_other" => "other"
-);
+];
 
 /** Message documentation (Message documentation)
  * @author Aotake
@@ -169,7 +169,7 @@ $messages['en'] = array(
  * @author Malafaya
  * @author Тест
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'voctrain_Hello_World' => 'Test message',
 	'voctrain_Permission_Denied' => 'login: access is denied
 {{Identical|Permission denied}}',
@@ -244,20 +244,20 @@ i.e.:
 * '''other'''
 
 {{Identical|Other}}",
-);
+];
 
 /** Faeag Rotuma (Faeag Rotuma)
  * @author Jose77
  */
-$messages['rtm'] = array(
+$messages['rtm'] = [
 	'voctrain_logout' => 'hotof',
 	'voctrain_User_name' => 'Asa',
 	'voctrain_Login' => 'Surum',
 	'voctrain_Log_in' => 'Surum',
-);
+];
 
 /** Test (site admin only) (Test (site admin only)) */
-$messages['test'] = array(
+$messages['test'] = [
 	'voctrain_try_again_' => 'try again? %blah%',
 	'voctrain_Action_unknown' => 'Action unknown %fail',
 	'voctrain_I_don_t_know_what_to_do_with_action_' => "I don't know what to do with '% action'.",
@@ -269,12 +269,12 @@ $messages['test'] = array(
 	'voctrain_Answers' => '(Answers',
 	'voctrain_start_exercise' => '{start',
 	'voctrain_collection' => 'col[lection',
-);
+];
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$messages['af'] = array(
+$messages['af'] = [
 	'voctrain_Hello_World' => 'HALLO WIKI!',
 	'voctrain_Permission_Denied' => 'Toestemming geweier',
 	'voctrain_try_again_' => 'probeer weer?',
@@ -340,19 +340,19 @@ $messages['af'] = array(
 	'voctrain_hide_words_in_question_language' => 'Verberg woorde in brontaal',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Gebruik kommas tussen tale indien u meer as een taal wil gebruik.',
 	'voctrain_other' => 'ander',
-);
+];
 
 /** Aragonese (Aragonés)
  * @author Juanpabl
  */
-$messages['an'] = array(
+$messages['an'] = [
 	'voctrain_other' => 'atro',
-);
+];
 
 /** Arabic (العربية)
  * @author Meno25
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'voctrain_Hello_World' => 'أهلا ويكي!',
 	'voctrain_Permission_Denied' => 'السماح مرفوض',
 	'voctrain_try_again_' => 'حاول ثانية؟',
@@ -418,12 +418,12 @@ $messages['ar'] = array(
 	'voctrain_hide_words_in_question_language' => 'إخفاء الكلمات في لغة السؤال',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'افصل القيم بفواصل لاستخدام لغات متعددة.',
 	'voctrain_other' => 'آخر',
-);
+];
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
-$messages['arz'] = array(
+$messages['arz'] = [
 	'voctrain_Hello_World' => 'أهلا ويكى!',
 	'voctrain_Permission_Denied' => 'السماح مرفوض',
 	'voctrain_try_again_' => 'حاول ثانية؟',
@@ -489,12 +489,12 @@ $messages['arz'] = array(
 	'voctrain_hide_words_in_question_language' => 'إخفاء الكلمات فى لغة السؤال',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'افصل القيم بفواصل لاستخدام لغات متعددة.',
 	'voctrain_other' => 'آخر',
-);
+];
 
 /** Asturian (Asturianu)
  * @author Xuacu
  */
-$messages['ast'] = array(
+$messages['ast'] = [
 	'voctrain_Hello_World' => '¡HOLA WIKI!',
 	'voctrain_Permission_Denied' => 'Permisu refugáu',
 	'voctrain_try_again_' => 'probar otra vuelta?',
@@ -559,13 +559,13 @@ $messages['ast'] = array(
 	'voctrain_hide_words_in_question_language' => 'Anubrir les pallabres na llingua de la entruga',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Separta los valores con comes pa usar múltiples llingües.',
 	'voctrain_other' => 'otru',
-);
+];
 
 /** Azerbaijani (Azərbaycanca)
  * @author Cekli829
  * @author Sortilegus
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'voctrain_Hello_World' => 'SALAM VİKİ!',
 	'voctrain_continue' => 'davam et',
 	'voctrain_bye' => 'sağol',
@@ -584,20 +584,20 @@ $messages['az'] = array(
 	'voctrain_Language' => 'Dil',
 	'voctrain_hiding' => 'Gizlət',
 	'voctrain_other' => 'digər',
-);
+];
 
 /** Bavarian (Boarisch)
  * @author Man77
  */
-$messages['bar'] = array(
+$messages['bar'] = [
 	'voctrain_Question' => 'Fråg',
 	'voctrain_Language' => 'Språch',
-);
+];
 
 /** Southern Balochi (بلوچی مکرانی)
  * @author Mostafadaneshvar
  */
-$messages['bcc'] = array(
+$messages['bcc'] = [
 	'voctrain_Hello_World' => 'سلام ویکی!',
 	'voctrain_Permission_Denied' => 'اجازت رد بوت',
 	'voctrain_try_again_' => 'دگه جهد کن؟',
@@ -662,13 +662,13 @@ $messages['bcc'] = array(
 	'voctrain_hide_definitions_in_question_language' => 'پناه کن تعاریفء ته زبان سوال',
 	'voctrain_hide_words_in_question_language' => 'پناه کن کلمات ته زبان سوال',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'ارزشانء گون کاما دورا کنیت په استفاده کتن چه چنت زبان.',
-);
+];
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
  */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'voctrain_Hello_World' => 'ВІТАЮ, ВІКІ!',
 	'voctrain_Permission_Denied' => 'Доступ забаронены',
 	'voctrain_try_again_' => 'спрабаваць зноў?',
@@ -733,12 +733,12 @@ $messages['be-tarask'] = array(
 	'voctrain_hide_words_in_question_language' => 'Хаваць словы на мове пытаньняў',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Падзяляць значэньні коскамі, каб выкарыстоўваць некалькі моваў.',
 	'voctrain_other' => 'іншая',
-);
+];
 
 /** Bulgarian (Български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'voctrain_try_again_' => 'нов опит?',
 	'voctrain_continue' => 'продължаване',
 	'voctrain_Number_of_questions' => 'Брой въпроси',
@@ -764,13 +764,13 @@ $messages['bg'] = array(
 	'voctrain_Log_in' => 'Влизане',
 	'voctrain_Translation' => 'Превод',
 	'voctrain_hiding' => 'Скриване',
-);
+];
 
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'voctrain_Hello_World' => "DEMAT DEOC'H !",
 	'voctrain_Permission_Denied' => "Aotre nac'het",
 	'voctrain_try_again_' => 'Klask en-dro ?',
@@ -836,12 +836,12 @@ $messages['br'] = array(
 	'voctrain_hide_words_in_question_language' => 'Kuzhat ar gerioù e yezh ar goulenn',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Dispartiañ ar yezhoù dre skejoù a-benn gellout implijout meur a yezh.',
 	'voctrain_other' => 'un niver all',
-);
+];
 
 /** Bosnian (Bosanski)
  * @author CERminator
  */
-$messages['bs'] = array(
+$messages['bs'] = [
 	'voctrain_Hello_World' => 'ZDRAVO WIKI!',
 	'voctrain_Permission_Denied' => 'Zabranjen pristup',
 	'voctrain_try_again_' => 'pokušaj ponovno?',
@@ -906,12 +906,12 @@ $messages['bs'] = array(
 	'voctrain_hide_words_in_question_language' => 'Sakrij riječi u upitnom jeziku',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Odvojite vrijednosti zarezima za korištenje više jezika.',
 	'voctrain_other' => 'drugo',
-);
+];
 
 /** Буряад (Буряад)
  * @author Bjargal
  */
-$messages['bxr'] = array(
+$messages['bxr'] = [
 	'voctrain_Hello_World' => 'МЭНДЭ ЭЭ, ВИКИ!',
 	'voctrain_Permission_Denied' => 'Зүбшөөрхэһөө татагалзаба',
 	'voctrain_try_again_' => 'дахин үзэхэ гү?',
@@ -974,12 +974,12 @@ $messages['bxr'] = array(
 	'voctrain_hide_words_in_question_language' => 'Асуултын хэлэнэй үгэнүүдые нюуха',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Олон хэлэ хэрэглэхын тула удхануудые таһалалаар илгаха',
 	'voctrain_other' => 'ондоо',
-);
+];
 
 /** Catalan (Català)
  * @author Solde
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'voctrain_Hello_World' => 'HOLA WIKI!',
 	'voctrain_Permission_Denied' => 'Permís denegat',
 	'voctrain_try_again_' => 'provar altra vegada?',
@@ -995,14 +995,14 @@ $messages['ca'] = array(
 	'voctrain_Languages' => 'Idiomes',
 	'voctrain_Please_specify_the_languages_you_want_to_test_in' => 'Si us plau, especifiqui els idiomes amb els que vol provar',
 	'voctrain_eg_eng_for_English_deu_for_Deutch_German_' => "(ex, eng per l'anglès, deu per l'alemany).",
-);
+];
 
 /** Czech (Česky)
  * @author Kuvaly
  * @author Matěj Grabovský
  * @author Utar
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'voctrain_Hello_World' => 'AHOJ, WIKI!',
 	'voctrain_Permission_Denied' => 'Přístup odmítnut',
 	'voctrain_try_again_' => 'zkusit znovu?',
@@ -1067,12 +1067,12 @@ $messages['cs'] = array(
 	'voctrain_hide_words_in_question_language' => 'Skrýt slova v jazyce otázky',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Pro použití více jazyků je oddělte čárkami.',
 	'voctrain_other' => 'jiný',
-);
+];
 
 /** Danish (Dansk)
  * @author Erisos
  */
-$messages['da'] = array(
+$messages['da'] = [
 	'voctrain_Hello_World' => 'HEJ WIKI!',
 	'voctrain_Permission_Denied' => 'Adgang nægtet',
 	'voctrain_try_again_' => 'Prøv igen?',
@@ -1136,7 +1136,7 @@ $messages['da'] = array(
 	'voctrain_hide_words_in_question_language' => 'Skjul ord i spørgsmålssproget',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Adskil værdier med komma for at bruge flere sprog',
 	'voctrain_other' => 'Andet',
-);
+];
 
 /** German (Deutsch)
  * @author Als-Holder
@@ -1148,7 +1148,7 @@ $messages['da'] = array(
  * @author Umherirrender
  * @author Xqt
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'voctrain_Hello_World' => 'HALLO WIKI!',
 	'voctrain_Permission_Denied' => 'Zugriff verweigert',
 	'voctrain_try_again_' => 'nochmal versuchen?',
@@ -1214,12 +1214,12 @@ $messages['de'] = array(
 	'voctrain_hide_words_in_question_language' => 'Wörter in der gefragten Sprache verdecken',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Trenne Werte durch Kommas, wenn Du mehrere Sprachen verwenden möchtest',
 	'voctrain_other' => 'andere Anzahl',
-);
+];
 
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
-$messages['dsb'] = array(
+$messages['dsb'] = [
 	'voctrain_Hello_World' => 'HALO WIKI!',
 	'voctrain_Permission_Denied' => 'Dowólnosć zapowěźona',
 	'voctrain_try_again_' => 'hyšći raz wopytaś?',
@@ -1284,7 +1284,7 @@ $messages['dsb'] = array(
 	'voctrain_hide_words_in_question_language' => 'Słowa we wótpowědnej rěcy schowaś',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Gódnoty pśez komy wótźěliś, aby wužywał někotare rěcy',
 	'voctrain_other' => 'druga licba',
-);
+];
 
 /** Greek (Ελληνικά)
  * @author Consta
@@ -1292,7 +1292,7 @@ $messages['dsb'] = array(
  * @author Evropi
  * @author Omnipaedista
  */
-$messages['el'] = array(
+$messages['el'] = [
 	'voctrain_Hello_World' => 'ΓΕΙΑ ΣΟΥ WIKI!',
 	'voctrain_Permission_Denied' => 'Η άδεια δεν εδόθη',
 	'voctrain_try_again_' => 'μήπως να προσπαθήσετε πάλι;',
@@ -1334,13 +1334,13 @@ $messages['el'] = array(
 	'voctrain_Translation' => 'Μετάφραση',
 	'voctrain_hiding' => 'Απόκρυψη',
 	'voctrain_other' => 'άλλος',
-);
+];
 
 /** Esperanto (Esperanto)
  * @author Michawiki
  * @author Yekrats
  */
-$messages['eo'] = array(
+$messages['eo'] = [
 	'voctrain_Hello_World' => 'SALUTON, VIKIO!',
 	'voctrain_Permission_Denied' => 'Malpermesita',
 	'voctrain_try_again_' => 'ĉu reprovu?',
@@ -1405,14 +1405,14 @@ $messages['eo'] = array(
 	'voctrain_hide_words_in_question_language' => 'Kaŝi vortojn en demanda lingvo',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Apartigi valutojn de komoj por uzi plurajn lingvojn.',
 	'voctrain_other' => 'alia',
-);
+];
 
 /** Spanish (Español)
  * @author Crazymadlover
  * @author David0811
  * @author Sanbec
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'voctrain_Hello_World' => 'HOLA WIKI!',
 	'voctrain_Permission_Denied' => 'Permiso denegado',
 	'voctrain_try_again_' => 'Tratar nuevamente?',
@@ -1477,20 +1477,20 @@ $messages['es'] = array(
 	'voctrain_hide_words_in_question_language' => 'Ocultar palabras en lenguaje de pregunta',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Separar valores con comas para usar múltiples lenguajes.',
 	'voctrain_other' => 'Otro',
-);
+];
 
 /** Estonian (Eesti)
  * @author Silvar
  */
-$messages['et'] = array(
+$messages['et'] = [
 	'voctrain_User_name' => 'Kasutaja nimi',
-);
+];
 
 /** Basque (Euskara)
  * @author An13sa
  * @author Kobazulo
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'voctrain_Hello_World' => 'KAIXO WIKI!',
 	'voctrain_Permission_Denied' => 'Ez duzu baimenik',
 	'voctrain_try_again_' => 'berriz saiatu?',
@@ -1555,13 +1555,13 @@ $messages['eu'] = array(
 	'voctrain_hide_words_in_question_language' => 'Galdetzen ari den hizkuntzako hitzak ezkutatu',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Balioak komak erabiliz bereizi, hizkuntza anitz erabiltzeko.',
 	'voctrain_other' => 'bestelakoa',
-);
+];
 
 /** Persian (فارسی)
  * @author Ebraminio
  * @author Wayiran
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'voctrain_Hello_World' => 'سلام ویکی!',
 	'voctrain_Permission_Denied' => 'اجازه ممنوع',
 	'voctrain_try_again_' => 'تلاش دوباره؟',
@@ -1626,7 +1626,7 @@ $messages['fa'] = array(
 	'voctrain_hide_words_in_question_language' => 'کلمه‌ها را در زبان سوال مخفی کن',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'برای استفاده از زبان‌های مختلف، مقادیر را با ویرگول جدا کنید.',
 	'voctrain_other' => 'دیگر',
-);
+];
 
 /** Finnish (Suomi)
  * @author Cimon Avaro
@@ -1634,7 +1634,7 @@ $messages['fa'] = array(
  * @author Mobe
  * @author Nike
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'voctrain_Hello_World' => 'Terve WIKI!',
 	'voctrain_Permission_Denied' => 'Käyttö estetty',
 	'voctrain_try_again_' => 'yritä uudelleen?',
@@ -1699,7 +1699,7 @@ $messages['fi'] = array(
 	'voctrain_hide_words_in_question_language' => 'Piilota kyselykieliset sanat',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Valitse useita kieliä erottamalla arvot pilkuilla.',
 	'voctrain_other' => 'muu',
-);
+];
 
 /** French (Français)
  * @author Grondin
@@ -1707,7 +1707,7 @@ $messages['fi'] = array(
  * @author McDutchie
  * @author Verdy p
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'voctrain_Hello_World' => 'SALUT WIKI !',
 	'voctrain_Permission_Denied' => 'Permission refusée',
 	'voctrain_try_again_' => 'essayer à nouveau ?',
@@ -1773,19 +1773,19 @@ $messages['fr'] = array(
 	'voctrain_hide_words_in_question_language' => 'Cacher les mots dans la langue des questions',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Séparer les valeurs par des virgules pour utiliser plusieurs langues.',
 	'voctrain_other' => 'autre',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Snakesteuben
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'voctrain_User_name' => 'Meidoggernamme',
-);
+];
 
 /** Irish (Gaeilge)
  * @author Alison
  */
-$messages['ga'] = array(
+$messages['ga'] = [
 	'voctrain_try_again_' => 'déan iarracht arís?',
 	'voctrain_Languages' => 'Teangacha',
 	'voctrain_Questions' => 'Ceisteanna',
@@ -1797,12 +1797,12 @@ $messages['ga'] = array(
 	'voctrain_one_of' => 'ceann de',
 	'voctrain_Login' => 'Logáil',
 	'voctrain_Log_in' => 'Logáil isteach',
-);
+];
 
 /** Galician (Galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'voctrain_Hello_World' => 'OLA WIKI!',
 	'voctrain_Permission_Denied' => 'Permisos rexeitados',
 	'voctrain_try_again_' => 'intentalo de novo?',
@@ -1868,14 +1868,14 @@ $messages['gl'] = array(
 	'voctrain_hide_words_in_question_language' => 'Agochar as palabras na lingua da pregunta',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Separe os valores por comas para usar varias linguas.',
 	'voctrain_other' => 'outro',
-);
+];
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author Crazymadlover
  * @author LeighvsOptimvsMaximvs
  * @author Omnipaedista
  */
-$messages['grc'] = array(
+$messages['grc'] = [
 	'voctrain_Hello_World' => 'ΧΑΙΡΕ!',
 	'voctrain_continue' => 'Συνεχίζειν',
 	'voctrain_Languages' => 'Γλῶτται',
@@ -1896,12 +1896,12 @@ $messages['grc'] = array(
 	'voctrain_Definitions' => 'Ὁρισμοί',
 	'voctrain_hiding' => 'Κρύπτειν',
 	'voctrain_other' => 'ἄλλον',
-);
+];
 
 /** Swiss German (Alemannisch)
  * @author Als-Holder
  */
-$messages['gsw'] = array(
+$messages['gsw'] = [
 	'voctrain_Hello_World' => 'SALI WIKI!',
 	'voctrain_Permission_Denied' => 'Zuegriff verweigeret',
 	'voctrain_try_again_' => 'nomol versueche?',
@@ -1966,27 +1966,27 @@ $messages['gsw'] = array(
 	'voctrain_hide_words_in_question_language' => 'Werter in dr gfrogte Sproch verdecke',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Wärt dur Komma tränne, wänn Du mehreri Sproche witt bruuche.',
 	'voctrain_other' => 'anderi Aazahl',
-);
+];
 
 /** Gujarati (ગુજરાતી)
  * @author Dineshjk
  */
-$messages['gu'] = array(
+$messages['gu'] = [
 	'voctrain_User_name' => 'સભ્ય નામ',
-);
+];
 
 /** Hakka (Hak-kâ-fa)
  * @author Hakka
  */
-$messages['hak'] = array(
+$messages['hak'] = [
 	'voctrain_User_name' => 'Yung-fu-miàng',
-);
+];
 
 /** Hawaiian (Hawai`i)
  * @author Kalani
  * @author Kolonahe
  */
-$messages['haw'] = array(
+$messages['haw'] = [
 	'voctrain_Hello_World' => 'ALOHA WIKI!',
 	'voctrain_Permission_Denied' => 'Pale ʻia ka ʻae',
 	'voctrain_try_again_' => 'hana hou?',
@@ -2051,12 +2051,12 @@ $messages['haw'] = array(
 	'voctrain_hide_words_in_question_language' => 'Hoʻohūnā i nā huaʻolelo o ka ʻōlelo nīnau',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Kaʻawale i nā helu ma o ka hana koma no ka hana ʻana o kekahi mau ʻōlelo.',
 	'voctrain_other' => 'mau mea ʻē aʻe',
-);
+];
 
 /** Hebrew (עברית)
  * @author YaronSh
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'voctrain_Hello_World' => 'שלום ויקי!',
 	'voctrain_Permission_Denied' => 'הגישה נדחתה',
 	'voctrain_try_again_' => 'לנסות שוב?',
@@ -2122,12 +2122,12 @@ $messages['he'] = array(
 	'voctrain_hide_words_in_question_language' => 'הסתר מילים בשפת השאלה',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'הפרד ערכים בפסיקים לשימוש במספר שפות.',
 	'voctrain_other' => 'אחר',
-);
+];
 
 /** Croatian (Hrvatski)
  * @author Ex13
  */
-$messages['hr'] = array(
+$messages['hr'] = [
 	'voctrain_Hello_World' => 'POZDRAV WIKI!',
 	'voctrain_Permission_Denied' => 'Pristup odbijen.',
 	'voctrain_try_again_' => 'pokušaj ponovno?',
@@ -2192,12 +2192,12 @@ $messages['hr'] = array(
 	'voctrain_hide_words_in_question_language' => 'Sakrij riječi u upitnom jeziku',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Odvojite vrijednosti zarezima za uporabu više jezika.',
 	'voctrain_other' => 'drugo',
-);
+];
 
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
-$messages['hsb'] = array(
+$messages['hsb'] = [
 	'voctrain_Hello_World' => 'HALO WIKI!',
 	'voctrain_Permission_Denied' => 'Dowolnosć zapowědźena',
 	'voctrain_try_again_' => 'hišće raz spytać?',
@@ -2262,13 +2262,13 @@ $messages['hsb'] = array(
 	'voctrain_hide_words_in_question_language' => 'Słowa w rěči prašenjow schować',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Hódnoty přez komy wotdźělić, jeli so wjacore rěče wužiwali',
 	'voctrain_other' => 'druha ličba',
-);
+];
 
 /** Hungarian (Magyar)
  * @author Bdamokos
  * @author Glanthor Reviol
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'voctrain_Hello_World' => 'HELLÓ WIKI!',
 	'voctrain_Permission_Denied' => 'Hozzáférés megtagadva',
 	'voctrain_try_again_' => 'újrapróbáljuk?',
@@ -2333,21 +2333,21 @@ $messages['hu'] = array(
 	'voctrain_hide_words_in_question_language' => 'A kérdéssel azonos nyelvű szavak elrejtése',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Válaszd el vesszővel az értékeket több nyelv használatához.',
 	'voctrain_other' => 'egyéb',
-);
+];
 
 /** Armenian (Հայերեն)
  * @author Pandukht
  */
-$messages['hy'] = array(
+$messages['hy'] = [
 	'voctrain_Hello_World' => 'ԲԱՐԵՎ, ՎԻՔԻ',
 	'voctrain_Permission_Denied' => 'Մուտքը արգտլված է',
 	'voctrain_try_again_' => 'փորձ՞ել եվս մեկ անգամ',
-);
+];
 
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'voctrain_Hello_World' => 'SALUTE WIKI!',
 	'voctrain_Permission_Denied' => 'Permission refusate',
 	'voctrain_try_again_' => 'reprobar?',
@@ -2412,14 +2412,14 @@ $messages['ia'] = array(
 	'voctrain_hide_words_in_question_language' => 'Celar le parolas in le lingua de questiones',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Separa le valores per commas pro usar plure linguas.',
 	'voctrain_other' => 'altere',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
  * @author Farras
  * @author Rex
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'voctrain_Hello_World' => 'HALO WIKI!',
 	'voctrain_Permission_Denied' => 'Izin Ditolak',
 	'voctrain_try_again_' => 'coba lagi?',
@@ -2484,12 +2484,12 @@ $messages['id'] = array(
 	'voctrain_hide_words_in_question_language' => 'Sembunyikan kata dalam bahasa pertanyaan',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Pisahkan nilai dengan koma untuk menggunakan bahasa-bahasa lain.',
 	'voctrain_other' => 'lainnya',
-);
+];
 
 /** Interlingue (Interlingue)
  * @author Renan
  */
-$messages['ie'] = array(
+$messages['ie'] = [
 	'voctrain_Hello_World' => 'HALLÓ WIKI!',
 	'voctrain_Permission_Denied' => 'Permission Desaprobat',
 	'voctrain_try_again_' => 'prova denov?',
@@ -2554,21 +2554,21 @@ $messages['ie'] = array(
 	'voctrain_hide_words_in_question_language' => 'Ocultar paroles in lingue del question',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Separar valores per commas por usar multiplic lingues.',
 	'voctrain_other' => 'altri',
-);
+];
 
 /** Igbo (Igbo)
  * @author Ukabia
  */
-$messages['ig'] = array(
+$messages['ig'] = [
 	'voctrain_Password' => 'Okwúngáfè',
 	'voctrain_Login' => 'Banyé',
 	'voctrain_Log_in' => 'Banyé',
-);
+];
 
 /** Ingush (ГІалгІай Ğalğaj)
  * @author Sapral Mikail
  */
-$messages['inh'] = array(
+$messages['inh'] = [
 	'voctrain_try_again_' => 'Кха цхьацца хьажа',
 	'voctrain_Languages' => 'Метташ',
 	'voctrain_Questions' => 'Хаттараш',
@@ -2585,18 +2585,18 @@ $messages['inh'] = array(
 	'voctrain_Language' => 'Мотт',
 	'voctrain_Log_in' => 'Чувала/яла',
 	'voctrain_hiding' => 'Къайладаккхар',
-);
+];
 
 /** Ido (Ido)
  * @author Malafaya
  */
-$messages['io'] = array(
+$messages['io'] = [
 	'voctrain_Languages' => 'Lingui',
 	'voctrain_Questions' => 'Questioni',
 	'voctrain_Word' => 'Vorto',
 	'voctrain_Language' => 'Linguo',
 	'voctrain_other' => 'altra',
-);
+];
 
 /** Italian (Italiano)
  * @author Beta16
@@ -2604,7 +2604,7 @@ $messages['io'] = array(
  * @author Pietrodn
  * @author Rippitippi
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'voctrain_Hello_World' => 'CIAO WIKI!',
 	'voctrain_Permission_Denied' => 'Autorizzazione negata',
 	'voctrain_try_again_' => 'riprovare?',
@@ -2660,14 +2660,14 @@ $messages['it'] = array(
 	'voctrain_unhide_words' => 'scopri parola',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Separa i valori con e virgole per usare più lingue.',
 	'voctrain_other' => 'altro',
-);
+];
 
 /** Japanese (日本語)
  * @author Aotake
  * @author Fievarsty
  * @author Fryed-peach
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'voctrain_Hello_World' => 'こんにちは、はじめまして。',
 	'voctrain_Permission_Denied' => '不許可',
 	'voctrain_try_again_' => '再挑戦しますか？',
@@ -2732,14 +2732,14 @@ $messages['ja'] = array(
 	'voctrain_hide_words_in_question_language' => '問題となっている言語の語を隠す',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => '複数の言語を使うには値をコンマで区切ってください。',
 	'voctrain_other' => 'その他',
-);
+];
 
 /** Georgian (ქართული)
  * @author David1010
  * @author Malafaya
  * @author Temuri rajavi
  */
-$messages['ka'] = array(
+$messages['ka'] = [
 	'voctrain_Hello_World' => 'გამარჯობა ვიკი!',
 	'voctrain_Permission_Denied' => 'ნებართვა აკრძალულია',
 	'voctrain_try_again_' => 'კიდევ სცდით?',
@@ -2774,16 +2774,16 @@ $messages['ka'] = array(
 	'voctrain_Definitions' => 'განსაზღვრებები',
 	'voctrain_Translation' => 'თარგმანი',
 	'voctrain_other' => 'სხვა',
-);
+];
 
 /** Kirmanjki (Kırmancki)
  * @author Mirzali
  */
-$messages['kiu'] = array(
+$messages['kiu'] = [
 	'voctrain_Questions' => 'Perşi',
 	'voctrain_Answer' => 'Cüab',
 	'voctrain_Language' => 'Zon',
-);
+];
 
 /** Khmer (ភាសាខ្មែរ)
  * @author Lovekhmer
@@ -2791,7 +2791,7 @@ $messages['kiu'] = array(
  * @author គីមស៊្រុន
  * @author វ័ណថារិទ្ធ
  */
-$messages['km'] = array(
+$messages['km'] = [
 	'voctrain_Hello_World' => 'សួស្ដីវីគី!',
 	'voctrain_Permission_Denied' => 'ការអនុញ្ញាតត្រូវបានច្រានចោល',
 	'voctrain_try_again_' => 'សូមព្យាយាមម្តងទៀត?',
@@ -2856,37 +2856,37 @@ $messages['km'] = array(
 	'voctrain_hide_words_in_question_language' => 'លាក់ពាក្យក្នុង​ភាសាសំនួរ​',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'ខ័ណ្ឌតំលៃលេខដោយប្រើសញ្ញាក្បៀស​ដើម្បីប្រើច្រើនភាសា។',
 	'voctrain_other' => 'ផ្សេងទៀត',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'voctrain_Password' => 'ಪ್ರವೇಶಪದ',
 	'voctrain_Login' => 'ಲಾಗ್ ಇನ್',
 	'voctrain_Language' => 'ಭಾಷೆ',
 	'voctrain_Log_in' => 'ಲಾಗ್ ಇನ್',
 	'voctrain_other' => 'ಇತರ',
-);
+];
 
 /** Korean (한국어)
  * @author Wrightbus
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'voctrain_Log_in' => '로그인',
-);
+];
 
 /** Krio (Krio)
  * @author Jose77
  */
-$messages['kri'] = array(
+$messages['kri'] = [
 	'voctrain_logout' => 'kohmoh na di sait',
-);
+];
 
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'voctrain_Hello_World' => 'Hallo Wiki!',
 	'voctrain_Permission_Denied' => 'Do küß hee nit erėn!',
 	'voctrain_try_again_' => 'norr_ens fossööke?',
@@ -2952,12 +2952,12 @@ $messages['ksh'] = array(
 	'voctrain_hide_words_in_question_language' => 'Äklieronge en de Antwoote-Shprooch vershtëijshe',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => ' Don de Wääte met Kommas dozwesche zëije, öm ëtlije Shprooche ze nëmme.',
 	'voctrain_other' => 'en ander Zahl',
-);
+];
 
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'voctrain_Hello_World' => 'SILAV WIKI!',
 	'voctrain_Permission_Denied' => 'Destûr Hate Derewandin',
 	'voctrain_Action_unknown' => 'Xebat nayê zanîn',
@@ -3003,13 +3003,13 @@ $messages['ku-latn'] = array(
 	'voctrain_hide_definitions_in_question_language' => 'Wateyên di zimanê pirsîde veşêre',
 	'voctrain_hide_words_in_question_language' => 'Peyvên di zimanên pirsî de veşêre',
 	'voctrain_other' => 'yên din',
-);
+];
 
 /** Cornish (Kernowek)
  * @author Kernoweger
  * @author Kw-Moon
  */
-$messages['kw'] = array(
+$messages['kw'] = [
 	'voctrain_try_again_' => 'assaya arta?',
 	'voctrain_I_don_t_know_what_to_do_with_action_' => "Ny wora'vy pyth dhe wul gen '%action'.",
 	'voctrain_continue' => 'pesya',
@@ -3031,23 +3031,23 @@ $messages['kw'] = array(
 	'voctrain_Log_in' => 'Omgelmy',
 	'voctrain_Translation' => 'Treylyans',
 	'voctrain_other' => 'niver aral',
-);
+];
 
 /** Latin (Latina)
  * @author MissPetticoats
  */
-$messages['la'] = array(
+$messages['la'] = [
 	'voctrain_bye' => 'Vale',
 	'voctrain_Languages' => 'Linguae',
 	'voctrain_Switch_language' => 'Mutare linguam',
 	'voctrain_Language' => 'Lingua',
 	'voctrain_other' => 'alter',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'voctrain_Hello_World' => 'SALUT!',
 	'voctrain_Permission_Denied' => 'Erlaabness refuséiert',
 	'voctrain_try_again_' => 'nach eng Kéier probéieren?',
@@ -3113,12 +3113,12 @@ $messages['lb'] = array(
 	'voctrain_hide_words_in_question_language' => 'Wierder an der Sprooch vun der Fro verstoppen',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => "Trennt d'Werter mat Kommaen fir méi Sproochen ze gesinn.",
 	'voctrain_other' => 'aner Zuel',
-);
+];
 
 /** Lezghian (Лезги)
  * @author Namik
  */
-$messages['lez'] = array(
+$messages['lez'] = [
 	'voctrain_Hello_World' => 'САЛАМ ВИКИ!',
 	'voctrain_Number_of_questions' => 'Суалрин кьадар',
 	'voctrain_Languages' => 'Чlалар',
@@ -3127,12 +3127,12 @@ $messages['lez'] = array(
 	'voctrain_Login' => 'Гьахьун',
 	'voctrain_Language' => 'Чlал',
 	'voctrain_other' => 'масабур',
-);
+];
 
 /** Lingua Franca Nova (Lingua Franca Nova)
  * @author Malafaya
  */
-$messages['lfn'] = array(
+$messages['lfn'] = [
 	'voctrain_Hello_World' => 'ALO WIKI!',
 	'voctrain_bye' => 'adio',
 	'voctrain_Number_of_questions' => 'Numero de demandas',
@@ -3145,13 +3145,13 @@ $messages['lfn'] = array(
 	'voctrain_Answer_s_' => 'Responde(s)',
 	'voctrain_Language' => 'Lingua',
 	'voctrain_Translation' => 'Tradui',
-);
+];
 
 /** Lithuanian (Lietuvių)
  * @author Hugo.arg
  * @author Matasg
  */
-$messages['lt'] = array(
+$messages['lt'] = [
 	'voctrain_Hello_World' => 'LABAS WIKI!',
 	'voctrain_Permission_Denied' => 'Leidimas uždraustas',
 	'voctrain_try_again_' => 'bandyti iš naujo?',
@@ -3216,20 +3216,20 @@ $messages['lt'] = array(
 	'voctrain_hide_words_in_question_language' => 'Slėpti kalbos, kurios klausinėjama, žodžius',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Reikšmes atskirkite kableliais, jei norite naudoti kelias kalbas',
 	'voctrain_other' => 'kita',
-);
+];
 
 /** Eastern Mari (Олык Марий)
  * @author Сай
  */
-$messages['mhr'] = array(
+$messages['mhr'] = [
 	'voctrain_logout' => 'лекташ',
 	'voctrain_User_name' => 'Пайдаланышын лӱмжӧ',
-);
+];
 
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'voctrain_Hello_World' => 'ЗДРАВО ВИКИ!',
 	'voctrain_Permission_Denied' => 'Барањето за дозвола е одбиено',
 	'voctrain_try_again_' => 'повторно?',
@@ -3295,12 +3295,12 @@ $messages['mk'] = array(
 	'voctrain_hide_words_in_question_language' => 'Скриј ги зборовите на јазикот на прашањата',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Одделувајте ги  вредностите со запирки за да користите повеќе јазици',
 	'voctrain_other' => 'друго',
-);
+];
 
 /** Marathi (मराठी)
  * @author Htt
  */
-$messages['mr'] = array(
+$messages['mr'] = [
 	'voctrain_Hello_World' => 'नमस्कार विकी!',
 	'voctrain_try_again_' => 'पुनर्प्रयत्‍न?',
 	'voctrain_Action_unknown' => 'अज्ञात कृती',
@@ -3324,12 +3324,12 @@ $messages['mr'] = array(
 	'voctrain_Log_in' => 'प्रवेश',
 	'voctrain_Translation' => 'भाषांतर',
 	'voctrain_other' => 'इतर',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'voctrain_Hello_World' => 'HELLO WIKI!',
 	'voctrain_Permission_Denied' => 'Kebenaran Ditolak',
 	'voctrain_try_again_' => 'cuba lagi?',
@@ -3394,20 +3394,20 @@ $messages['ms'] = array(
 	'voctrain_hide_words_in_question_language' => 'Sorokkan perkataan dalam bahasa soalan',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Pisahkan nilai dengan tanda koma untuk menggunakan berbilang bahasa.',
 	'voctrain_other' => 'lain-lain',
-);
+];
 
 /** Maltese (Malti)
  * @author Roderick Mallia
  */
-$messages['mt'] = array(
+$messages['mt'] = [
 	'voctrain_User_name' => 'Isem l-utent',
 	'voctrain_Language' => 'Lingwa',
-);
+];
 
 /** Burmese (မြန်မာဘာသာ)
  * @author Erikoo
  */
-$messages['my'] = array(
+$messages['my'] = [
 	'voctrain_Hello_World' => 'ဟယ်လို ဝီကီ',
 	'voctrain_Permission_Denied' => 'ဝင်ရောက်၍ မရပါ',
 	'voctrain_try_again_' => 'ပြန်လုပ်ပါ',
@@ -3439,12 +3439,12 @@ $messages['my'] = array(
 	'voctrain_Log_in' => 'Log in ဝင်ရန်',
 	'voctrain_Definitions' => 'အဓိပ္ပယ်ဖွင့်ဆိုချက်',
 	'voctrain_other' => 'အခြား',
-);
+];
 
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
-$messages['myv'] = array(
+$messages['myv'] = [
 	'voctrain_Hello_World' => 'ШУМБРАТ ВИКИ!',
 	'voctrain_try_again_' => 'варчамс одов?',
 	'voctrain_Action_unknown' => 'Апак содань тев теемась',
@@ -3472,30 +3472,30 @@ $messages['myv'] = array(
 	'voctrain_Log_in' => 'Совамо',
 	'voctrain_Vocview' => 'Валкскень ванома потмо',
 	'voctrain_Translation' => 'Ютавтома',
-);
+];
 
 /** Mazanderani (مازِرونی)
  * @author محک
  */
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'voctrain_Language' => 'زوون',
-);
+];
 
 /** Nahuatl (Nāhuatl)
  * @author Fluence
  * @author Teòtlalili
  */
-$messages['nah'] = array(
+$messages['nah'] = [
 	'voctrain_Hello_World' => '¡NILTZE HUIQUI!',
 	'voctrain_logout' => 'tiquīzāz',
 	'voctrain_User_name' => 'Tlatequitiltilīltōcāitl',
 	'voctrain_Language' => 'Tlâtòlli',
-);
+];
 
 /** Neapolitan (Nnapulitano)
  * @author SabineCretella
  */
-$messages['nap'] = array(
+$messages['nap'] = [
 	'voctrain_Hello_World' => 'SALUTAMMO!',
 	'voctrain_Permission_Denied' => "Nun tieni 'e diritte",
 	'voctrain_try_again_' => "Vuò pruvà n'ata vota?",
@@ -3560,12 +3560,12 @@ $messages['nap'] = array(
 	'voctrain_hide_definitions_in_question_language' => "Anascùnne 'e defenezziòne 'int'â lengua 'e origgene",
 	'voctrain_hide_words_in_question_language' => "Annascùnne 'e pparole 'int'â llengua 'e origgene",
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => "Separa 'e valore cu comma pe ausà cciù llengue.",
-);
+];
 
 /** Nepali (नेपाली)
  * @author सरोज कुमार ढकाल
  */
-$messages['ne'] = array(
+$messages['ne'] = [
 	'voctrain_Hello_World' => 'नमस्ते विकि !',
 	'voctrain_Permission_Denied' => 'अनुमती अमान्य',
 	'voctrain_try_again_' => 'फेरि प्रयास गर्ने ?',
@@ -3630,7 +3630,7 @@ $messages['ne'] = array(
 	'voctrain_hide_words_in_question_language' => 'प्रश्न भाषाको शव्दहरु लुकाउने \\',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'धेरे भाषाहरु प्रयोगगर्नलाई नामहरुलाई कमाले छुट्याउनुहोस् \\',
 	'voctrain_other' => 'अरु',
-);
+];
 
 /** Dutch (Nederlands)
  * @author GerardM
@@ -3638,7 +3638,7 @@ $messages['ne'] = array(
  * @author Siebrand
  * @author Tvdm
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'voctrain_Hello_World' => 'HALLO WIKI!',
 	'voctrain_Permission_Denied' => 'Toestemming geweigerd',
 	'voctrain_try_again_' => 'opnieuw proberen?',
@@ -3704,13 +3704,13 @@ $messages['nl'] = array(
 	'voctrain_hide_words_in_question_language' => 'Woorden in brontaal verbergen',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Gebruik een komma als scheidingsteken om meerdere talen te gebruiken.',
 	'voctrain_other' => 'anders',
-);
+];
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Frokor
  * @author Harald Khan
  */
-$messages['nn'] = array(
+$messages['nn'] = [
 	'voctrain_Hello_World' => 'HALLO, WIKI!',
 	'voctrain_Permission_Denied' => 'Åtkomst nekta',
 	'voctrain_try_again_' => 'prøve igjen?',
@@ -3776,13 +3776,13 @@ $messages['nn'] = array(
 	'voctrain_hide_words_in_question_language' => 'Skjul ord i spørsmålsspråk',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Skil verdiar frå kvarandre med komma ved bruk av fleire språk.',
 	'voctrain_other' => 'anna',
-);
+];
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  * @author Nghtwlkr
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'voctrain_Hello_World' => 'HALLO, WIKI!',
 	'voctrain_Permission_Denied' => 'Adgang nektet',
 	'voctrain_try_again_' => 'prøve igjen?',
@@ -3848,12 +3848,12 @@ $messages['nb'] = array(
 	'voctrain_hide_words_in_question_language' => 'Skjul ord i spørsmålsspråk',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Skill verdier fra hverandre med komma ved bruk av flere språk.',
 	'voctrain_other' => 'annet',
-);
+];
 
 /** Occitan (Occitan)
  * @author Cedric31
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'voctrain_Hello_World' => 'ADIU !',
 	'voctrain_Permission_Denied' => 'Permission refusada',
 	'voctrain_try_again_' => 'ensajar tornamai ?',
@@ -3919,19 +3919,19 @@ $messages['oc'] = array(
 	'voctrain_hide_words_in_question_language' => 'Amagar los mots dins las lengas per las questions',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Separar las valors per de virgulas per utilizar mantuna lenga.',
 	'voctrain_other' => 'autre',
-);
+];
 
 /** Ossetic (Иронау)
  * @author Amikeco
  */
-$messages['os'] = array(
+$messages['os'] = [
 	'voctrain_logout' => 'номсусæг су',
-);
+];
 
 /** Deitsch (Deitsch)
  * @author Xqt
  */
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'voctrain_Hello_World' => 'HEIYA WIKI!',
 	'voctrain_continue' => 'weiter',
 	'voctrain_Languages' => 'Schprooche',
@@ -3942,21 +3942,21 @@ $messages['pdc'] = array(
 	'voctrain_Language' => 'Schprooch',
 	'voctrain_Log_in' => 'Kumm nei',
 	'voctrain_other' => 'annere',
-);
+];
 
 /** Plautdietsch (Plautdietsch)
  * @author Slomox
  */
-$messages['pdt'] = array(
+$messages['pdt'] = [
 	'voctrain_User_name' => 'Bruckernome',
-);
+];
 
 /** Polish (Polski)
  * @author Derbeth
  * @author Maikking
  * @author Sp5uhe
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'voctrain_Hello_World' => 'WITAJ WIKI!',
 	'voctrain_Permission_Denied' => 'Brak dostępu',
 	'voctrain_try_again_' => 'spróbować ponownie?',
@@ -4021,13 +4021,13 @@ $messages['pl'] = array(
 	'voctrain_hide_words_in_question_language' => 'Ukryj słowa w odpytywanym języku',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Rozdziel wartości w różnych językach przecinkami.',
 	'voctrain_other' => 'inna',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Dragonòt
  * @author Valter Bergesio
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'voctrain_Hello_World' => 'Cerea!',
 	'voctrain_Permission_Denied' => "A l'ha gnun drit",
 	'voctrain_try_again_' => "A preuvlo n'àutra vòlta?",
@@ -4093,12 +4093,12 @@ $messages['pms'] = array(
 	'voctrain_hide_words_in_question_language' => 'Stërma le paròle an lenga ëd domande',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Separa ij valor con vìrgole për dovré vàire lenghe.',
 	'voctrain_other' => 'àutr',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'voctrain_Hello_World' => 'سلامونه ويکي!',
 	'voctrain_Permission_Denied' => 'غوښتنه مو رد شوه',
 	'voctrain_try_again_' => 'بيا آزمويل يې غواړۍ؟',
@@ -4158,7 +4158,7 @@ $messages['ps'] = array(
 	'voctrain_unhide_words' => 'وييونه ښکاره کول',
 	'voctrain_hiding' => 'پټول',
 	'voctrain_other' => 'بل ګڼ',
-);
+];
 
 /** Portuguese (Português)
  * @author Helder.wiki
@@ -4166,7 +4166,7 @@ $messages['ps'] = array(
  * @author Malafaya
  * @author Waldir
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'voctrain_Hello_World' => 'OLÁ WIKI!',
 	'voctrain_Permission_Denied' => 'Permissão Negada',
 	'voctrain_try_again_' => 'tentar outra vez?',
@@ -4231,14 +4231,14 @@ $messages['pt'] = array(
 	'voctrain_hide_words_in_question_language' => 'Esconder palavras na língua da pergunta',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Separe os valores com vírgulas para usar múltiplas línguas.',
 	'voctrain_other' => 'outro',
-);
+];
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
  * @author Helder.wiki
  * @author Heldergeovane
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'voctrain_Hello_World' => 'OLÁ WIKI!',
 	'voctrain_Permission_Denied' => 'Permissão Negada',
 	'voctrain_try_again_' => 'tentar outra vez?',
@@ -4303,20 +4303,20 @@ $messages['pt-br'] = array(
 	'voctrain_hide_words_in_question_language' => 'Esconder palavras na língua da pergunta',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Separe os valores com vírgulas para usar múltiplas línguas.',
 	'voctrain_other' => 'outro',
-);
+];
 
 /** Tarifit (Tarifit)
  * @author Jose77
  */
-$messages['rif'] = array(
+$messages['rif'] = [
 	'voctrain_logout' => 'ffaɣ',
-);
+];
 
 /** Romanian (Română)
  * @author KlaudiuMihaila
  * @author Minisarm
  */
-$messages['ro'] = array(
+$messages['ro'] = [
 	'voctrain_Hello_World' => 'SALUT, WIKI!',
 	'voctrain_Permission_Denied' => 'Permisiune refuzată',
 	'voctrain_try_again_' => 'încercați din nou?',
@@ -4361,24 +4361,24 @@ $messages['ro'] = array(
 	'voctrain_Language' => 'Limbă',
 	'voctrain_Log_in' => 'Autentificare',
 	'voctrain_Definitions' => 'Definiții',
-);
+];
 
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'voctrain_Hello_World' => "CIA' UICCHI!",
 	'voctrain_try_again_' => "vuè cu prueve n'otra vote?",
 	'voctrain_ISO_639_3_format' => 'formete ISO-639-3',
 	'voctrain_skip' => 'zumbe',
-);
+];
 
 /** Russian (Русский)
  * @author Kaganer
  * @author Osd
  * @author Александр Сигачёв
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'voctrain_Hello_World' => 'ПРИВЕТ, ВИКИ!',
 	'voctrain_Permission_Denied' => 'Доступ запрещён',
 	'voctrain_try_again_' => 'попробовать ещё раз?',
@@ -4444,12 +4444,12 @@ $messages['ru'] = array(
 	'voctrain_hide_words_in_question_language' => 'Скрывать слова на языке вопросов',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Разделите значения запятыми, что бы использовать несколько языков.',
 	'voctrain_other' => 'Другой',
-);
+];
 
 /** Sakha (Саха тыла)
  * @author HalanTul
  */
-$messages['sah'] = array(
+$messages['sah'] = [
 	'voctrain_Hello_World' => 'АЛАМАЙ, БИИКИ!',
 	'voctrain_Permission_Denied' => 'Киирии хааччахтаммыт',
 	'voctrain_try_again_' => 'өссө төгүл?',
@@ -4464,12 +4464,12 @@ $messages['sah'] = array(
 	'voctrain_Number_of_questions' => 'Ыйытыы ахсаана',
 	'voctrain_Languages' => 'Тыллар',
 	'voctrain_Please_specify_the_languages_you_want_to_test_in' => 'Бука диэн, тургутууну барыахтаах тылларгын ый',
-);
+];
 
 /** Sinhala (සිංහල)
  * @author පසිඳු කාවින්ද
  */
-$messages['si'] = array(
+$messages['si'] = [
 	'voctrain_Hello_World' => 'කොහොමද විකී!',
 	'voctrain_Permission_Denied' => 'අවසරය ලබා නොදේ',
 	'voctrain_try_again_' => 'නැවත උත්සහ කරමුද?',
@@ -4495,13 +4495,13 @@ $messages['si'] = array(
 	'voctrain_Definitions' => 'නිර්වචන',
 	'voctrain_Translation' => 'පරිවර්තනය',
 	'voctrain_other' => 'වෙනත්',
-);
+];
 
 /** Slovak (Slovenčina)
  * @author Helix84
  * @author Utar
  */
-$messages['sk'] = array(
+$messages['sk'] = [
 	'voctrain_Hello_World' => 'AHOJ WIKI!',
 	'voctrain_Permission_Denied' => 'Nedostatočné oprávnenie',
 	'voctrain_try_again_' => 'skúsiť znova?',
@@ -4567,12 +4567,12 @@ $messages['sk'] = array(
 	'voctrain_hide_words_in_question_language' => 'Skryť slová v jazyku otázky',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Viac jazykov vyberiete tak, že ich oddelíte čiarkami.',
 	'voctrain_other' => 'iný',
-);
+];
 
 /** Slovenian (Slovenščina)
  * @author Dbc334
  */
-$messages['sl'] = array(
+$messages['sl'] = [
 	'voctrain_Hello_World' => 'POZDRAVLJEN WIKI!',
 	'voctrain_Permission_Denied' => 'Dovoljenje je zavrnjeno',
 	'voctrain_try_again_' => 'poskusi znova?',
@@ -4637,13 +4637,13 @@ $messages['sl'] = array(
 	'voctrain_hide_words_in_question_language' => 'Skrij besede v jeziku vprašanja',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Za uporabo več jezikov ločite vrednosti z vejicami.',
 	'voctrain_other' => 'drugo',
-);
+];
 
 /** Albanian (Shqip)
  * @author Marinari
  * @author Vinie007
  */
-$messages['sq'] = array(
+$messages['sq'] = [
 	'voctrain_Hello_World' => 'PËRSHËNDETJE WIKI !',
 	'voctrain_Permission_Denied' => 'Lejekalimi i Ndaluar',
 	'voctrain_try_again_' => 'provo përsëri ?',
@@ -4708,12 +4708,12 @@ $messages['sq'] = array(
 	'voctrain_hide_words_in_question_language' => 'fjalë Hide në fjalë gjuhën',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'vlera të veçanta me presje për të përdorur gjuhët e shumta.',
 	'voctrain_other' => 'të tjera',
-);
+];
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'voctrain_Hello_World' => 'Здраво, свете!',
 	'voctrain_Permission_Denied' => 'Приступ је одбијен.',
 	'voctrain_try_again_' => 'покушати поново?',
@@ -4778,12 +4778,12 @@ $messages['sr-ec'] = array(
 	'voctrain_hide_words_in_question_language' => 'Сакриј речи',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Одвоји вредности зарезима за коришћење више језика.',
 	'voctrain_other' => 'друго',
-);
+];
 
 /** Serbian Latin ekavian (‪Srpski (latinica)‬)
  * @author Rancher
  */
-$messages['sr-el'] = array(
+$messages['sr-el'] = [
 	'voctrain_Hello_World' => 'Zdravo, svete!',
 	'voctrain_Permission_Denied' => 'Pristup je odbijen.',
 	'voctrain_try_again_' => 'pokušati ponovo?',
@@ -4848,14 +4848,14 @@ $messages['sr-el'] = array(
 	'voctrain_hide_words_in_question_language' => 'Sakrij reči',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Odvoji vrednosti zarezima za korišćenje više jezika.',
 	'voctrain_other' => 'drugo',
-);
+];
 
 /** Swedish (Svenska)
  * @author M.M.S.
  * @author Najami
  * @author Sannab
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'voctrain_Hello_World' => 'HEJ WIKI!',
 	'voctrain_Permission_Denied' => 'Åtkomst nekas',
 	'voctrain_try_again_' => 'försök igen?',
@@ -4921,20 +4921,20 @@ $messages['sv'] = array(
 	'voctrain_hide_words_in_question_language' => 'Dölj ord i frågespråket',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'För att kunna använda flera språk så sätt ett komma mellan värdena',
 	'voctrain_other' => 'annat',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author TRYPPN
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'voctrain_Login' => 'புகுபதிகை',
 	'voctrain_Log_in' => 'புகுபதிகை',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'voctrain_Hello_World' => 'హలో వికీ!',
 	'voctrain_Permission_Denied' => 'అనుమతి నిరాకరించాం',
 	'voctrain_try_again_' => 'మళ్ళీ ప్రయత్నిస్తారా?',
@@ -4965,23 +4965,23 @@ $messages['te'] = array(
 	'voctrain_Definitions' => 'నిర్వచనాలు',
 	'voctrain_Translation' => 'అనువాదం',
 	'voctrain_other' => 'ఇతర',
-);
+];
 
 /** Tetum (Tetun)
  * @author MF-Warburg
  */
-$messages['tet'] = array(
+$messages['tet'] = [
 	'voctrain_Languages' => 'Lian sira',
 	'voctrain_logout' => 'husik',
 	'voctrain_User_name' => "Naran uza-na'in",
 	'voctrain_Language' => 'Lian',
 	'voctrain_Translation' => 'Tradusaun',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'voctrain_Hello_World' => 'MABUHAY WIKI!',
 	'voctrain_Permission_Denied' => 'Tinanggihan ang hinihinging Pahintulot',
 	'voctrain_try_again_' => 'subukin uli?',
@@ -5047,7 +5047,7 @@ $messages['tl'] = array(
 	'voctrain_hide_words_in_question_language' => 'Itago ang mga salitang nasa wika ng katanungan',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Paghiwalay-hiwalayin ang mga halaga sa pamamagitan ng kuwit para makagamit ng maramihang mga wika.',
 	'voctrain_other' => 'iba pa',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Emperyan
@@ -5055,7 +5055,7 @@ $messages['tl'] = array(
  * @author Joseph
  * @author Karduelis
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'voctrain_Hello_World' => 'MERHABA VİKİ!',
 	'voctrain_Permission_Denied' => 'İzin Reddedildi',
 	'voctrain_try_again_' => 'tekrar dene?',
@@ -5070,12 +5070,12 @@ $messages['tr'] = array(
 	'voctrain_Questions' => 'Sorular',
 	'voctrain_Answers' => 'Cevaplar',
 	'voctrain_other' => 'diğer',
-);
+];
 
 /** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
  * @author Zahidulla
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'voctrain_Hello_World' => 'СӘЛАМ, ВИКИ!',
 	'voctrain_Permission_Denied' => 'Керү тыелды',
 	'voctrain_try_again_' => 'кабат эшләп караргамы?',
@@ -5140,25 +5140,25 @@ $messages['tt-cyrl'] = array(
 	'voctrain_hide_words_in_question_language' => 'Сораулар телендәге сүзләрне качырырга',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Берничә тел кулланыр өчен мәгънәләрне өтер белән аерыгыз',
 	'voctrain_other' => 'Башка',
-);
+];
 
 /** Uighur (Latin) (ئۇيغۇرچە / Uyghurche‎ (Latin))
  * @author Jose77
  */
-$messages['ug-latn'] = array(
+$messages['ug-latn'] = [
 	'voctrain_logout' => 'chikish',
 	'voctrain_User_name' => 'Ishletkuchi ismi',
 	'voctrain_Login' => 'Kirish',
 	'voctrain_Language' => 'Til',
 	'voctrain_Log_in' => 'Kirish',
-);
+];
 
 /** Ukrainian (Українська)
  * @author AS
  * @author Prima klasy4na
  * @author Тест
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'voctrain_try_again_' => 'спробуєте ще раз?',
 	'voctrain_continue' => 'продовжити',
 	'voctrain_Number_of_questions' => 'Кількість питань',
@@ -5171,12 +5171,12 @@ $messages['uk'] = array(
 	'voctrain_Language' => 'Мова',
 	'voctrain_Log_in' => 'Вхід',
 	'voctrain_other' => 'інша',
-);
+];
 
 /** Vèneto (Vèneto)
  * @author Candalua
  */
-$messages['vec'] = array(
+$messages['vec'] = [
 	'voctrain_Hello_World' => 'CIAO WIKI!',
 	'voctrain_Permission_Denied' => 'Parmesso negà',
 	'voctrain_try_again_' => 'pròa da novo?',
@@ -5212,12 +5212,12 @@ $messages['vec'] = array(
 	'voctrain_Omegawiki_vocabulary_trainer' => 'Istrutor de vocabolario de Omegawiki',
 	'voctrain_Definitions' => 'Definissioni',
 	'voctrain_Translation' => 'Tradussion',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'voctrain_Hello_World' => 'CHÀO WIKI!',
 	'voctrain_try_again_' => 'thử lần nữa?',
 	'voctrain_Action_unknown' => 'Không hiểu tác động',
@@ -5265,13 +5265,13 @@ $messages['vi'] = array(
 	'voctrain_Translation' => 'Lời dịch',
 	'voctrain_hiding' => 'Ẩn',
 	'voctrain_other' => 'khác',
-);
+];
 
 /** Volapük (Volapük)
  * @author Malafaya
  * @author Smeira
  */
-$messages['vo'] = array(
+$messages['vo'] = [
 	'voctrain_Hello_World' => 'GLIDIS, O VÜK!',
 	'voctrain_Permission_Denied' => 'Däl perefudon',
 	'voctrain_try_again_' => 'steifülön dönu?',
@@ -5336,25 +5336,25 @@ $messages['vo'] = array(
 	'voctrain_hide_words_in_question_language' => 'Klänedön vödis in säkapük',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => 'Teilön völadis me liunüls ad gebön pükis mödik.',
 	'voctrain_other' => 'votik',
-);
+];
 
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
-$messages['yi'] = array(
+$messages['yi'] = [
 	'voctrain_logout' => 'אַרויסלאגירן',
 	'voctrain_User_name' => 'באַניצער נאָמען',
 	'voctrain_Login' => 'אַרײַנלאגירן',
 	'voctrain_Log_in' => 'אַרײַנלאגירן',
 	'voctrain_other' => 'אנדער',
-);
+];
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  * @author PhiLiP
  * @author 阿pp
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'voctrain_Hello_World' => 'HELLO WIKI!',
 	'voctrain_Permission_Denied' => '权限被拒绝',
 	'voctrain_try_again_' => '再试一次？',
@@ -5419,12 +5419,12 @@ $messages['zh-hans'] = array(
 	'voctrain_hide_words_in_question_language' => '隐藏文字的语言',
 	'voctrain_Separate_values_by_commas_to_use_multiple_languages_' => '用逗号，使用多种语言的不同值。',
 	'voctrain_other' => '其他',
-);
+];
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Wrightbus
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'voctrain_Questions' => '問題',
 	'voctrain_Answers' => '答案',
 	'voctrain_Question' => '問題',
@@ -5434,5 +5434,4 @@ $messages['zh-hant'] = array(
 	'voctrain_Log_in' => '登入',
 	'voctrain_Translation' => '翻譯',
 	'voctrain_other' => '其他',
-);
-
+];

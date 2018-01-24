@@ -1,7 +1,7 @@
 <?php
 
-require_once( 'Transaction.php' );
-require_once( 'WikiDataTables.php' );
+require_once 'Transaction.php';
+require_once 'WikiDataTables.php';
 
 class TableColumnsToAttribute {
 	protected $tableColumns;
@@ -33,7 +33,7 @@ class TableColumnsToAttributesMapping {
 	}
 
 	public function getSelectColumns() {
-		$result = array();
+		$result = [];
 
 		foreach ( $this->tableColumnsToAttributes as $tableColumnToAttribute ) {
 			foreach ( $tableColumnToAttribute->getTableColumns() as $tableColumn ) {
@@ -44,7 +44,7 @@ class TableColumnsToAttributesMapping {
 	}
 
 	public function getAttributes() {
-		$result = array();
+		$result = [];
 
 		foreach ( $this->tableColumnsToAttributes as $tableColumnToAttribute ) {
 			$result[] = $tableColumnToAttribute->getAttribute();
@@ -62,11 +62,11 @@ class TableColumnsToAttributesMapping {
 }
 
 /**
-* generates all the sql queries that are then used
-* to fill the hierarchical structures (html tables etc.)
-*/
-function getTransactedSQL( QueryTransactionInformation $transactionInformation, array $selectFields, Table $table, array $restrictions, array $orderBy = array(), $count = - 1, $offset = 0 ) {
-	$tableNames = array( $table->getIdentifier() );
+ * generates all the sql queries that are then used
+ * to fill the hierarchical structures (html tables etc.)
+ */
+function getTransactedSQL( QueryTransactionInformation $transactionInformation, array $selectFields, Table $table, array $restrictions, array $orderBy = [], $count = - 1, $offset = 0 ) {
+	$tableNames = [ $table->getIdentifier() ];
 
 	if ( $table->isVersioned ) {
 		$restrictions[] = $transactionInformation->getRestriction( $table );
@@ -74,9 +74,8 @@ function getTransactedSQL( QueryTransactionInformation $transactionInformation, 
 		$orderBy = array_merge( $orderBy, $transactionInformation->versioningOrderBy() );
 		$groupBy = $transactionInformation->versioningGroupBy( $table );
 		$selectFields = array_merge( $selectFields, $transactionInformation->versioningFields( $table->getIdentifier() ) );
-	}
-	else {
-		$groupBy = array();
+	} else {
+		$groupBy = [];
 	}
 
 	$query =
@@ -110,10 +109,10 @@ function getRecordFromRow( $row, $columnIndex, Structure $structure ) {
 	return $result;
 }
 
-function queryRecordSet( $recordSetStructureId, QueryTransactionInformation $transactionInformation, Attribute $keyAttribute, TableColumnsToAttributesMapping $tableColumnsToAttributeMapping, Table $table, array $restrictions, array $orderBy = array(), $count = - 1, $offset = 0 ) {
+function queryRecordSet( $recordSetStructureId, QueryTransactionInformation $transactionInformation, Attribute $keyAttribute, TableColumnsToAttributesMapping $tableColumnsToAttributeMapping, Table $table, array $restrictions, array $orderBy = [], $count = - 1, $offset = 0 ) {
 	$dbr = wfGetDB( DB_REPLICA );
 
-	$selectFields =  $tableColumnsToAttributeMapping->getSelectColumns();
+	$selectFields = $tableColumnsToAttributeMapping->getSelectColumns();
 	$attributes = $tableColumnsToAttributeMapping->getAttributes();
 
 	if ( $table->isVersioned ) {
@@ -163,7 +162,7 @@ function queryRecordSet( $recordSetStructureId, QueryTransactionInformation $tra
 }
 
 function getUniqueIdsInRecordSet( RecordSet $recordSet, array $idAttributes ) {
-	$ids = array();
+	$ids = [];
 
 	for ( $i = 0; $i < $recordSet->getRecordCount(); $i++ ) {
 		$record = $recordSet->getRecord( $i );
@@ -175,5 +174,3 @@ function getUniqueIdsInRecordSet( RecordSet $recordSet, array $idAttributes ) {
 
 	return array_unique( $ids );
 }
-
-

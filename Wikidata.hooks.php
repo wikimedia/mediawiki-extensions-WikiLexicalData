@@ -1,6 +1,6 @@
 <?php
 
-require_once( "OmegaWiki/WikiDataGlobals.php" );
+require_once "OmegaWiki/WikiDataGlobals.php";
 
 class WikiLexicalDataHooks {
 
@@ -18,7 +18,7 @@ class WikiLexicalDataHooks {
 
 		// remove Expression: from title. Looks better on Google
 		$action = $request->getText( "action", "view" );
-		if ( $action=='view') {
+		if ( $action == 'view' ) {
 			$namespace = $skin->getTitle()->getNamespace();
 			if ( $namespace == NS_EXPRESSION ) {
 				$namespaceText = $wgContLang->getNsText( $namespace );
@@ -42,7 +42,7 @@ class WikiLexicalDataHooks {
 		return array_key_exists( $title->getNamespace(), $wdHandlerClasses );
 	}
 
-	/**  @brief OmegaWiki-specific preferences
+	/** @brief OmegaWiki-specific preferences
 	 *
 	 */
 	public static function onGetPreferences( $user, &$preferences ) {
@@ -60,31 +60,31 @@ class WikiLexicalDataHooks {
 		);
 */
 		// allow the user to select the languages to display
-		$preferences['ow_alt_layout'] = array(
+		$preferences['ow_alt_layout'] = [
 			'type' => 'check',
 			'label' => 'Alternative layout',
 			'section' => 'omegawiki',
-		);
-		$preferences['ow_language_filter'] = array(
+		];
+		$preferences['ow_language_filter'] = [
 			'type' => 'check',
-			'label' =>  wfMessage( 'ow_pref_lang_switch' )->text(),
+			'label' => wfMessage( 'ow_pref_lang_switch' )->text(),
 			'section' => 'omegawiki/ow-lang',
-		);
-		$preferences['ow_language_filter_list'] = array(
+		];
+		$preferences['ow_language_filter_list'] = [
 			'type' => 'multiselect',
 			'label' => wfMessage( 'ow_pref_lang_select' )->text(),
-			'options' => array(), // to be filled later
+			'options' => [], // to be filled later
 			'section' => 'omegawiki/ow-lang',
-		);
+		];
 
 		$owLanguageNames = getOwLanguageNames();
 		// There are PHP that does not have the Collator class. ~he
 		if ( class_exists( 'Collator', false ) ) {
-			$col = new Collator('en_US.utf8');
+			$col = new Collator( 'en_US.utf8' );
 			$col->asort( $owLanguageNames );
 		}
 		foreach ( $owLanguageNames as $language_id => $language_name ) {
-			$preferences['ow_language_filter_list']['options'][$language_name] = $language_id ;
+			$preferences['ow_language_filter_list']['options'][$language_name] = $language_id;
 		}
 
 		return true;
@@ -146,32 +146,32 @@ class WikiLexicalDataHooks {
 	}
 
 	/**
-	* Replaces the proposition to "create new page" by a custom,
-	* allowing to create new expression as well
-	*/
+	 * Replaces the proposition to "create new page" by a custom,
+	 * allowing to create new expression as well
+	 */
 	public static function onNoGoMatchHook( &$title ) {
 		global $wgOut,$wgDisableTextSearch;
 		$wgOut->addWikiMsg( 'search-nonefound' );
 		$wgOut->addWikiMsg( 'ow_searchnoresult', wfEscapeWikiText( $title ) );
-	//	$wgOut->addWikiMsg( 'ow_searchnoresult', $title );
+	// $wgOut->addWikiMsg( 'ow_searchnoresult', $title );
 
-		$wgDisableTextSearch = true ;
+		$wgDisableTextSearch = true;
 		return true;
 	}
 
 	/**
-	* The Go button should search (first) in the Expression namespace instead of Article namespace
-	*/
+	 * The Go button should search (first) in the Expression namespace instead of Article namespace
+	 */
 	public static function onGoClicked( $allSearchTerms, &$title ) {
-		$term = $allSearchTerms[0] ;
-		$title = Title::newFromText( $term ) ;
-		if ( is_null( $title ) ){
+		$term = $allSearchTerms[0];
+		$title = Title::newFromText( $term );
+		if ( is_null( $title ) ) {
 			return true;
 		}
 
 		// Replace normal namespace with expression namespace
 		if ( $title->getNamespace() == NS_MAIN ) {
-			$title = Title::newFromText( $term, NS_EXPRESSION ) ;
+			$title = Title::newFromText( $term, NS_EXPRESSION );
 		}
 
 		if ( $title->exists() ) {
@@ -181,7 +181,7 @@ class WikiLexicalDataHooks {
 	}
 
 	/** @note There is a language code difference between globals $wgLang and $wgUser.
-	 *	I do not know if this issue affects this function. ~he
+	 * 	I do not know if this issue affects this function. ~he
 	 */
 	public static function onPageContentLanguage( $title, &$pageLang ) {
 		if ( $title->getNamespace() === NS_EXPRESSION || $title->getNamespace() === NS_DEFINEDMEANING ) {
@@ -192,9 +192,7 @@ class WikiLexicalDataHooks {
 		return true;
 	}
 
-
-	public static function onSkinTemplateNavigation ( &$skin, &$links ) {
-
+	public static function onSkinTemplateNavigation( &$skin, &$links ) {
 		// only for Expression and DefinedMeaning namespaces
 		if ( ! self::isWikidataNs( $skin->getTitle() ) ) {
 			return true;
@@ -206,18 +204,18 @@ class WikiLexicalDataHooks {
 		if ( $skin instanceof SkinVector ) {
 			if ( $skin->getUser()->getOption( 'ow_language_filter' ) ) {
 				// language filtering is on. The button is for disabling it
-				$links['views']['switch_lang_filter'] = array (
+				$links['views']['switch_lang_filter'] = [
 					'class' => 'wld_lang_filter_on',
 					'text' => '', // no text, just an image, see css
 					'href' => $skin->getTitle()->getLocalUrl( "langfilter=off" ),
-				);
+				];
 			} else {
 				// language filtering is off. The button is for enablingit
-				$links['views']['switch_lang_filter'] = array (
+				$links['views']['switch_lang_filter'] = [
 					'class' => 'wld_lang_filter_off',
 					'text' => '', // no text, just an image, see css
 					'href' => $skin->getTitle()->getLocalUrl( "langfilter=on" ),
-				);
+				];
 			}
 		}
 
@@ -231,10 +229,10 @@ class WikiLexicalDataHooks {
 
 	/** @brief load update schema
 	 * @note The base installation of WikiLexicalData's schema is performed
-	 *	by update.php's UpdateWikiLexicalData class on WikiLexical's maintenance folder.
-	 *	this will be used in the future for new tables/index etal.
+	 * 	by update.php's UpdateWikiLexicalData class on WikiLexical's maintenance folder.
+	 * 	this will be used in the future for new tables/index etal.
 	 *
-	 *	@see Preferably, use MediaWiki's https://www.mediawiki.org/wiki/Manual:Hooks/LoadExtensionSchemaUpdates
+	 * 	 @see Preferably, use MediaWiki's https://www.mediawiki.org/wiki/Manual:Hooks/LoadExtensionSchemaUpdates
 	 */
 	public static function loadSchema() {
 		return true;
@@ -245,9 +243,8 @@ class WikiLexicalDataHooks {
 	 */
 	public static function onSpecialStatsAddExtra( &$extraStats ) {
 		$extra = new SpecialOWStatistics;
-		$extraStats = $extra->getOverview( True );
+		$extraStats = $extra->getOverview( true );
 		return true;
 	}
 
 }
-

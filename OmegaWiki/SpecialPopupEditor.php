@@ -1,12 +1,12 @@
 <?php
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
-
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 /**
-* Creates and return the html code corresponding to a Popup editor
-* typically for annotations
-*/
+ * Creates and return the html code corresponding to a Popup editor
+ * typically for annotations
+ */
 class SpecialPopUpEditor extends SpecialPage {
 
 	// o = OmegaWikiAttributes::getInstance()
@@ -30,14 +30,13 @@ class SpecialPopUpEditor extends SpecialPage {
 	}
 
 	function execute( $par ) {
-
-		require_once( 'WikiDataGlobals.php' );
-		require_once( 'ViewInformation.php' );
-		require_once( 'OmegaWikiAttributes.php' );
-		require_once( 'OmegaWikiEditors.php' );
-		require_once( 'OmegaWikiRecordSets.php' );
-		require_once( 'Transaction.php' );
-		require_once( 'WikiDataTables.php' );
+		require_once 'WikiDataGlobals.php';
+		require_once 'ViewInformation.php';
+		require_once 'OmegaWikiAttributes.php';
+		require_once 'OmegaWikiEditors.php';
+		require_once 'OmegaWikiRecordSets.php';
+		require_once 'Transaction.php';
+		require_once 'WikiDataTables.php';
 
 		$this->o = OmegaWikiAttributes::getInstance();
 
@@ -58,10 +57,9 @@ class SpecialPopUpEditor extends SpecialPage {
 			die();
 		}
 
-		if ( $popupType == 'annotation') {
+		if ( $popupType == 'annotation' ) {
 			$this->annotation();
 		}
-
 	}
 
 	protected function annotation() {
@@ -93,14 +91,13 @@ class SpecialPopUpEditor extends SpecialPage {
 		$idPathLocal = $this->getDmSyntIdStack( $definedMeaningId, $syntransId );
 
 		// start building the output
-		$id = 'popup-' . $idPathFlat . '-toggleable' ;
-		$this->output .= Html::openElement ('div', array( 'class' => "popupToggleable", 'id' => $id ));
+		$id = 'popup-' . $idPathFlat . '-toggleable';
+		$this->output .= Html::openElement( 'div', [ 'class' => "popupToggleable", 'id' => $id ] );
 		if ( $this->action !== 'history' ) {
 			// show edit, save, cancel buttons in view and edit mode
 			// but not in history mode
 			$this->output .= $this->getHtmlButtons();
 		}
-
 
 		// ViewInformation and attributes
 		$viewInformation = new ViewInformation();
@@ -124,7 +121,6 @@ class SpecialPopUpEditor extends SpecialPage {
 				$viewInformation->showRecordLifeSpan = true;
 				break;
 		} // switch action
-
 
 		// Creating the editor
 		$syntransAttributesEditor = $this->getSyntransAttributesEditor( $viewInformation );
@@ -161,7 +157,7 @@ class SpecialPopUpEditor extends SpecialPage {
 			$this->output .= $syntransAttributesEditor->view( $idPathLocal, $recordArray );
 		}
 
-		$this->output .= Html::closeElement ('div');
+		$this->output .= Html::closeElement( 'div' );
 
 		echo $this->output;
 	}
@@ -187,10 +183,10 @@ class SpecialPopUpEditor extends SpecialPage {
 		$syntransIdStructure = new Structure( $this->o->syntransId );
 		$syntransIdRecord = new ArrayRecord( $syntransIdStructure );
 		$syntransIdRecord->syntransId = $syntransId;
-//		$idStack->pushAttribute( $this->o->syntransId );
+// $idStack->pushAttribute( $this->o->syntransId );
 		$idStack->pushAttribute( $this->o->synonymsAndTranslations );
 
-//		$idStack->pushKey( project( $syntransIdRecord, $this->o->synonymsTranslationsStructure ) );
+// $idStack->pushKey( project( $syntransIdRecord, $this->o->synonymsTranslationsStructure ) );
 		$idStack->pushKey( $syntransIdRecord );
 		$idStack->pushAttribute( $this->o->objectAttributes );
 
@@ -220,16 +216,16 @@ class SpecialPopUpEditor extends SpecialPage {
 	 * returns the html for the buttons edit, save, cancel
 	 */
 	protected function getHtmlButtons() {
-		$htmlButtons = Html::openElement ('div', array( 'class' => "popupButtons" ));
+		$htmlButtons = Html::openElement( 'div', [ 'class' => "popupButtons" ] );
 
-		$editButton = '[' . wfMessage('edit')->plain() . ']';
-		$saveButton = '[' . wfMessage('ow_save')->plain() . ']';
-		$cancelButton = '[' . wfMessage('cancel')->plain() . ']';
-		$htmlButtons .= Html::rawElement ('span', array( 'class' => "owPopupEdit" ), $editButton );
-		$htmlButtons .= Html::rawElement ('span', array( 'class' => "owPopupSave" ), $saveButton );
-		$htmlButtons .= Html::rawElement ('span', array( 'class' => "owPopupCancel" ), $cancelButton );
+		$editButton = '[' . wfMessage( 'edit' )->plain() . ']';
+		$saveButton = '[' . wfMessage( 'ow_save' )->plain() . ']';
+		$cancelButton = '[' . wfMessage( 'cancel' )->plain() . ']';
+		$htmlButtons .= Html::rawElement( 'span', [ 'class' => "owPopupEdit" ], $editButton );
+		$htmlButtons .= Html::rawElement( 'span', [ 'class' => "owPopupSave" ], $saveButton );
+		$htmlButtons .= Html::rawElement( 'span', [ 'class' => "owPopupCancel" ], $cancelButton );
 
-		$htmlButtons .= Html::closeElement ('div');
+		$htmlButtons .= Html::closeElement( 'div' );
 
 		return $htmlButtons;
 	}
@@ -245,7 +241,7 @@ class SpecialPopUpEditor extends SpecialPage {
 		$expressionId = getExpressionIdFromSyntrans( $syntransId );
 		$expression = getExpression( $expressionId );
 		$spelling = $expression->spelling;
-		$expressionTitle = Title::makeTitle( NS_EXPRESSION , $spelling );
+		$expressionTitle = Title::makeTitle( NS_EXPRESSION, $spelling );
 
 		RecentChange::notifyEdit( $now, $expressionTitle, false, $wgUser, $summary, 0, $now, false );
 	}

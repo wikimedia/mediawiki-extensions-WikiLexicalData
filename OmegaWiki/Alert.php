@@ -2,12 +2,12 @@
 /** @note this file is unused.
  */
 
-require_once( "WikiDataAPI.php" );
+require_once "WikiDataAPI.php";
 
 function ConvertIsoToEpoch( $iso ) {
 	// 01234567890123456789
 	// 2007-05-01-T00:00:00
-    return substr( $iso, 0, 4 ) . substr( $iso, 5, 2 ) . substr( $iso, 8, 2 ) . substr( $iso, 12, 2 ) . substr( $iso, 15, 2 ) . substr( $iso, 18, 2 );
+	return substr( $iso, 0, 4 ) . substr( $iso, 5, 2 ) . substr( $iso, 8, 2 ) . substr( $iso, 12, 2 ) . substr( $iso, 15, 2 ) . substr( $iso, 18, 2 );
 }
 
 function ConvertEpochToIso( $epoch ) {
@@ -17,13 +17,12 @@ function ConvertEpochToIso( $epoch ) {
 }
 
 function getDefinedMeaning( $dc, $textId ) {
-	// translate the text id to a translated text id	
+	// translate the text id to a translated text id
 	$dbr = wfGetDB( DB_REPLICA );
 	$queryResult = $dbr->query( "select translated_content_id from {$dc}_translated_content where text_id = $textId and remove_transaction_id is NULL" );
 	if ( $row = $dbr->fetchObject( $queryResult ) ) {
 		$tcid = $row->translated_content_id;
-	}
-	else {
+	} else {
 		return - 1;
 	}
 
@@ -33,7 +32,7 @@ function getDefinedMeaning( $dc, $textId ) {
 		$definedMeaningId = $row->defined_meaning_id;
 		return $definedMeaningId;
 	}
-	
+
 	// try the translated text attributes
 	$queryResult = $dbr->query( "select object_id from uw_translated_content_attribute_values where value_tcid = $tcid" );
 	if ( $row = $dbr->fetchObject( $queryResult ) ) {
@@ -75,11 +74,9 @@ function getInternalIdentifier( $dc, $definedMeaningId, $languageId ) {
 		}
 
 		return $collectionName . '/' . $internalMemberId;
-	}
-	else {
+	} else {
 		return "";
 	}
-	
 }
 
 function getTextForId( $dc, $text_id ) {
@@ -87,8 +84,7 @@ function getTextForId( $dc, $text_id ) {
 	$textResult = $dbr->query( "select text_text from {$dc}_text where text_id = $text_id" );
 	if ( $textRecord = $dbr->fetchObject( $textResult ) ) {
 		return $textRecord->text_text;
-	}
-	else {
+	} else {
 		return( "" );
 	}
 }
@@ -116,10 +112,10 @@ function getUser( $user_id ) {
 
 // XML Entity Mandatory Escape Characters
 function xmlentities( $string ) {
-   return str_replace ( array ( '&', '"', "'", '<', '>', '�' ), array ( '&amp;' , '&quot;', '&apos;' , '&lt;' , '&gt;', '&apos;' ), $string );
+   return str_replace( [ '&', '"', "'", '<', '>', '�' ], [ '&amp;' , '&quot;', '&apos;' , '&lt;' , '&gt;', '&apos;' ], $string );
 }
 
-require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
+require __DIR__ . '/includes/WebStart.php';
 global $wgSitename;
 
 // Verify that the API has not been disabled
@@ -130,7 +126,7 @@ if ( !$wgEnableAPI ) {
 }
 
 // indicate here the dataset that contains the community version
-$dc 			= "uw";
+$dc = "uw";
 
 // read the parameters passed as arguments to the alert program
 $responseType 	= $_GET["output"];
@@ -147,8 +143,7 @@ if ( $epochStartDate == "" ) {
 if ( $epochEndDate != "" ) {
 	$endDate = ConvertIsoToEpoch( $epochEndDate );
 	$endClause = " AND timestamp <= $endDate ";
-}
-else {
+} else {
 	$endClause = "";
 }
 
@@ -181,8 +176,7 @@ while ( $transactionRecord = $dbr->fetchObject( $transactionResult ) ) {
 			$epochDate = ConvertEpochToIso( $timestamp );
 			if ( $responseType == "xml" ) {
 				echo "<record><knowletid>$internalIdentifier</knowletid><text>$text</text><user>$user</user><timestamp>$epochDate</timestamp><definedmeaning>$definedMeaningTitle</definedmeaning><site>$wgSitename</site></record>";
-			}
-			else {
+			} else {
 				echo "$internalIdentifier|$text|$user|$epochDate|$definedMeaningTitle|$wgSitename\n";
 			}
 		}
@@ -191,6 +185,3 @@ while ( $transactionRecord = $dbr->fetchObject( $transactionResult ) ) {
 if ( $responseType == "xml" ) {
 	echo "</edits>";
 }
-
-
-?>
