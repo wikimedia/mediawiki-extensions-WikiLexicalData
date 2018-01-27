@@ -4,13 +4,15 @@
 			"Manop",
 			"Mopza",
 			"Octahedron80",
-			"Passawuth"
+			"Passawuth",
+			"Aefgh39622"
 		]
 	},
 	"langman_langname": "ชื่อภาษา:",
 	"langman_iso639-3": "รหัส ISO 639-3:",
 	"langman_iso639-2": "รหัส ISO 639-2:",
 	"langman_addlang": "เพิ่มภาษา",
+	"importlangnames_added": "เพิ่มชื่อภาษาสำหรับ \"$1\" แล้ว",
 	"ow_importtsv_import_failed": "การนำเข้าไม่สำเร็จ",
 	"ow_exporttsv_export_failed": "การส่งออกไม่สำเร็จ",
 	"ow_save": "บันทึก",
