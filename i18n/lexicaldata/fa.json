@@ -14,7 +14,8 @@
 			"ZxxZxxZ",
 			"Alirezaaa",
 			"MohandesWiki",
-			"Ommmmid"
+			"Ommmmid",
+			"Alifakoor"
 		]
 	},
 	"wikidata-desc": "پایگاه دادهٔ ویکی‌پیوند را برای انواع گوناگون محتواها می‌افزاید",
@@ -47,8 +48,8 @@
 	"datasearch_within_ext_ids": "در شناسه‌های بیرونی:",
 	"datasearch_showing_only": "تنها نمایش یک حداکثر از $1 {{PLURAL:$1|نتیجه|نتیجه}} (از میان $2).",
 	"datasearch_match_ext_ids": "شناسهٔ تطابق بیرونی <em>$1</em>",
-	"datasearch_match_words": "واژه‌های مطابق با <em>$1</em> و معنی‌های مرتبط",
-	"datasearch_match_words_lang": "واژه‌های موجود در <em>$1</em> مطابق با <em>$2</em> و معنی‌های مرتبط",
+	"datasearch_match_words": "عبارت‌های مطابق با <em>$1</em> و معنی‌ آنها",
+	"datasearch_match_words_lang": "عبارت‌های موجود در <em>$1</em> که با <em>$2</em> معنی‌های مرتبط با آن تطابق دارند",
 	"datasearch-match-expr": "عبارتها و معانی مرتبط شده آنها",
 	"importtsv": "درون‌ریزی تی‌اس‌وی",
 	"ow_importtsv_title1": "درون‌ریزی تی‌اس‌وی",
