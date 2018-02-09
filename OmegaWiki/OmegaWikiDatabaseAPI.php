@@ -241,7 +241,7 @@ class OwDatabaseAPI {
 	 * in any language
 	 */
 	public static function getDefinedMeaningSpellingForAnyLanguage( $definedMeaningId, $dc = null ) {
-		return self::getDefinedMeaningSpelling( $definedMeaningId, $dc = null );
+		return self::getDefinedMeaningSpelling( $definedMeaningId, $dc );
 	}
 
 	/** @brief a spelling that is one of the possible translations of a given DM
@@ -299,7 +299,7 @@ class OwDatabaseAPI {
 	public static function getParametersForLanguageNames( $lang_code, $lang_subset = [] ) {
 		$api = new OwDatabaseAPI;
 		$api->settings( 'language' );
-		return $api->Language->getParametersForNames( $lang_code, $lang_subset = [] );
+		return $api->Language->getParametersForNames( $lang_code, $lang_subset );
 	}
 
 	/** @brief returns the languageId
@@ -444,7 +444,7 @@ class OwDatabaseAPI {
 	public static function getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option = null ) {
 		$api = new OwDatabaseAPI;
 		$api->settings( 'attributes' );
-		return $api->Attributes->getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option );
+		return $api->Attributes->getOptionAttributeOptions( $attributeId, $optionMeaningId, $languageId, $option );
 	}
 
 	/** @return option id. If not exists, returns null.

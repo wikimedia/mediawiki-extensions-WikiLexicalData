@@ -267,7 +267,7 @@ function getDMIdForIso639_3( $code ) {
  */
 function getSQLForLanguageNames( $lang_code, $lang_subset = [] ) {
 	require_once 'OmegaWikiDatabaseAPI.php';
-	return OwDatabaseAPI::getSQLForLanguageNames( $lang_code, $lang_subset = [] );
+	return OwDatabaseAPI::getSQLForLanguageNames( $lang_code, $lang_subset );
 }
 
 function getLanguageIdLanguageNameFromIds( $languageId, $nameLanguageId ) {
