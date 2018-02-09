@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Justincheng12345"
+			"Justincheng12345",
+			"Kly"
 		]
 	},
-	"apiow-desc": "MediaWiki api.php中OmegaWiki的WikiLexicalData擴展"
+	"apiow-desc": "MediaWiki api.php 的 OmegaWiki WikiLexicalData 擴充"
 }
