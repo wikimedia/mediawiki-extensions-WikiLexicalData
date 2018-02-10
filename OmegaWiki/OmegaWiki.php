@@ -20,7 +20,6 @@ require_once 'WikiDataGlobals.php';
  */
 class OmegaWiki extends DefaultWikidataApplication {
 	public function view() {
-		wfProfileIn( __METHOD__ );
 		global $wgOut;
 
 		// some initializations, including viewInformation
@@ -35,7 +34,6 @@ class OmegaWiki extends DefaultWikidataApplication {
 			$editor = getExpressionsEditor( $spelling, $this->viewInformation );
 			$wgOut->addHTML( $editor->view( $this->getIdStack(), $recordset ) );
 		}
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function history() {

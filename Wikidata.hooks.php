@@ -198,7 +198,6 @@ class WikiLexicalDataHooks {
 			return true;
 		}
 
-		wfProfileIn( __METHOD__ );
 		// display an icon for enabling/disabling language filtering
 		// only available in Vector.
 		if ( $skin instanceof SkinVector ) {
@@ -221,8 +220,6 @@ class WikiLexicalDataHooks {
 
 		// removes the 'move' button for OmegaWiki namespaces
 		unset( $links['actions']['move'] );
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}

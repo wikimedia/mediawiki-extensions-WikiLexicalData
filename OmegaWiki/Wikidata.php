@@ -50,7 +50,6 @@ class DefaultWikidataApplication {
 	}
 
 	public function view() {
-		wfProfileIn( __METHOD__ );
 		global $wgOut, $wgUser;
 
 		$wgOut->enableClientCache( true );
@@ -75,7 +74,6 @@ class DefaultWikidataApplication {
 		// Not clear why this is here. Works well without.
 		// initializeOmegaWikiAttributes( $viewInformation );
 		// initializeObjectAttributeEditors( $viewInformation );
-		wfProfileOut( __METHOD__ );
 	}
 
 	protected function getDataSetPanel() {

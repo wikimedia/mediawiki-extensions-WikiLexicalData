@@ -2033,7 +2033,6 @@ class RecordSetListEditor extends RecordSetEditor {
 	}
 
 	public function view( IdStack $idPath, $arrayRecordSet ) {
-		wfProfileIn( __METHOD__ );
 		$recordCount = $arrayRecordSet->getRecordCount();
 
 		if ( $recordCount > 0 ) {
@@ -2102,10 +2101,8 @@ class RecordSetListEditor extends RecordSetEditor {
 			}
 
 			$result .= Html::closeElement( 'ul' );
-			wfProfileOut( __METHOD__ );
 			return $result;
 		}
-		wfProfileOut( __METHOD__ );
 		return "";
 	}
 
