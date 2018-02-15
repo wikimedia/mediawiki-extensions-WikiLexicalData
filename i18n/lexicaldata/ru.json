@@ -46,7 +46,7 @@
 	"datasearch_showing_only": "Показываются не более $1 {{PLURAL:$1|результата|результатов}} (из $2).",
 	"datasearch_match_ext_ids": "Внешние идентификаторы, соответствующие «$1»",
 	"datasearch_match_words": "Выражения, соответствующие «$1», и их связанные значения",
-	"datasearch_match_words_lang": "Слова на <em>$1</em>, соответствующие «$2», и связанные значения",
+	"datasearch_match_words_lang": "Выражения на <em>$1</em>, соответствующие <em>$2</em>, и их связанные значения",
 	"importtsv": "Импорт TSV",
 	"ow_importtsv_title1": "Импорт TSV",
 	"ow_importtsv_title2": "Импорт определений и переводов",
