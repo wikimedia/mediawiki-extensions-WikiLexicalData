@@ -22,7 +22,7 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 require_once "RecordHelper.php";
 
-class RecordHelperTest extends PHPUnit_Framework_TestCase {
+class RecordHelperTest extends PHPUnit\Framework\TestCase {
 
 	var $testRecord;
 

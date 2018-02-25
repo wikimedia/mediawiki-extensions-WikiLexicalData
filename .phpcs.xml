@@ -7,7 +7,6 @@
 		<exclude name="Generic.Files.OneObjectStructurePerFile.MultipleFound" />
 		<exclude name="Generic.NamingConventions.ConstructorName.OldStyle" />
 		<exclude name="Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase" />
-		<exclude name="Generic.PHP.DeprecatedFunctions.Deprecated" />
 		<exclude name="Generic.PHP.ForbiddenFunctions.FoundWithAlternative" />
 		<exclude name="Generic.PHP.NoSilencedErrors.Discouraged" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.DuplicateReturn" />
