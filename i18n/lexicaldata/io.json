@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Malafaya",
-			"Robin van der Vliet"
+			"Robin van der Vliet",
+			"Joao Xavier"
 		]
 	},
 	"langman_addlang": "Adjuntar linguo",
@@ -66,5 +67,8 @@
 	"ow_create": "Kreez",
 	"ow_suggest_previous": "Antea",
 	"ow_suggest_next": "Sequanta",
-	"ow_suggest_clear": "Vakuigar"
+	"ow_suggest_clear": "Vakuigar",
+	"ow_nstab_definedmeaning": "senco definita",
+	"ow-stat-meanings-link": "senci",
+	"ow-stat-meanings": "{{PLURAL:$1|senco|senci}}"
 }
