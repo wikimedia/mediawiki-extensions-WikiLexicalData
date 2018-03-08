@@ -7,7 +7,8 @@
 			"Yknok29",
 			"아라",
 			"IRTC1015",
-			"Ykhwong"
+			"Ykhwong",
+			"Garam"
 		]
 	},
 	"wikidata-desc": "내용의 다양한 종류에 대한 위키 데이터베이스를 추가합니다",
@@ -223,5 +224,6 @@
 	"ow_pref_lang_select": "표시할 언어:",
 	"ow_addFromExtAPI": "외부 API에서 데이터 추가하기",
 	"ow_statistics": "어휘 데이터 통계",
+	"ow-stat-languages": "{{PLURAL:$1|언어}}",
 	"specialpages-group-omegawiki": "오메가위키"
 }
