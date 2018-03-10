@@ -9,6 +9,7 @@
 		<exclude name="Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase" />
 		<exclude name="Generic.PHP.ForbiddenFunctions.FoundWithAlternative" />
 		<exclude name="Generic.PHP.NoSilencedErrors.Discouraged" />
+		<exclude name="Generic.PHP.DeprecatedFunctions.Deprecated" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.DuplicateReturn" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationProtected" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationPublic" />
