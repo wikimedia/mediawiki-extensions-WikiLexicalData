@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Bangin",
-			"George Animal"
+			"George Animal",
+			"Ghybu"
 		]
 	},
 	"langman_langname": "Navê ziman:",
@@ -22,5 +23,7 @@
 	"ow_User": "Bikarhêner",
 	"ow_class_attr_type_link": "Girêdan",
 	"ow_show": "Nîşan bide",
-	"ow_upload": "Bar bike"
+	"ow_upload": "Bar bike",
+	"prefs-ow-lang": "Ziman",
+	"ow-stat-languages": "{{PLURAL:$1|Ziman}}"
 }
