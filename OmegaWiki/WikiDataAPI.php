@@ -2171,7 +2171,7 @@ function getExpressionIdMeaningIds( $expressionId, $dc = null ) {
 /** Write a concept mapping to db
  * supply mapping as a valid
  * array("dataset_prefix"=>defined_meaning_id,...)
- * @returns: assoc array of uuids used for mapping. (typically you can just
+ * @return assoc array of uuids used for mapping. (typically you can just
  *           discard this, but it is used in copy.php for objects table support
  * 	     array values set to -1 were not mapped.
  */

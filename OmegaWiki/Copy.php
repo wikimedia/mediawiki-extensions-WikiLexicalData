@@ -796,7 +796,7 @@ class CopyTools {
 	}
 
 	/**
-	 * @returns: null if not a stub
+	 * @return null if not a stub
 	 *           else an array(original_dataset=>..., original_id=>...)
 	 */
 	public static function checkIfStub( $dataset, $id ) {
@@ -863,7 +863,7 @@ class CopyTools {
 	/** retrieve a single row from the database as an associative array
 	 * @param $dc		the dataset prefix we need
 	 * @param $table	the name of the table (minus dataset prefix)
-	 * @peram $where		the actual WHERE clause we need to uniquely find our row
+	 * @param $where		the actual WHERE clause we need to uniquely find our row
 	 * @return an associative array, representing our row. \
 	 * 	keys=column headers, values = row contents
 	 */
@@ -888,7 +888,7 @@ class CopyTools {
 	/** retrieve multiple rows from the database, as an array of associative arrays.
 	 * @param $dc		the dataset prefix we need
 	 * @param $table	the name of the table (minus dataset prefix)
-	 * @peram $where		the actual WHERE clause we need to uniquely find our row
+	 * @param $where		the actual WHERE clause we need to uniquely find our row
 	 * @return an array of associative arrays, representing our rows.  \
 	 * 	each associative array is structured with:		\
 	 * 	keys=column headers, values = row contents
