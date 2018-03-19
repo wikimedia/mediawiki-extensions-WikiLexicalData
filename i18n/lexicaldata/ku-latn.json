@@ -10,6 +10,7 @@
 	"langman_addlang": "Ziman lê zêde bike",
 	"datasearch_language": "Ziman:",
 	"ow_exporttsv_languages": "Ziman:",
+	"ow_save": "Tomar bike",
 	"ow_history": "Dîrok",
 	"ow_transaction_user": "Navê bikarhêner:",
 	"ow_dm_OK": "Baş e",
@@ -24,6 +25,7 @@
 	"ow_class_attr_type_link": "Girêdan",
 	"ow_show": "Nîşan bide",
 	"ow_upload": "Bar bike",
+	"ow_suggest_next": "Pêşve",
 	"prefs-ow-lang": "Ziman",
 	"ow-stat-languages": "{{PLURAL:$1|Ziman}}"
 }
