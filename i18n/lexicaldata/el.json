@@ -10,7 +10,8 @@
 			"Omnipaedista",
 			"ZaDiak",
 			"Protnet",
-			"KATRINE1992"
+			"KATRINE1992",
+			"Nikosgranturismogt"
 		]
 	},
 	"wikidata-desc": "Προσθέτει μία wiki βάση δεδομένων διαφόρων τυπών περιεχομένου",
@@ -201,5 +202,5 @@
 	"ow_nstab_edit_copy": "αντίγραφο αλλαγής",
 	"right-addlanguage": "Προσθήκη και αλλαγή των γλωσσικών ρυθμίσεων",
 	"ow_shown_datasets": "Προβεβλημένα σύνολα δεδομένων",
-	"ow_statistics": "Βικιδεδομένα:Στατιστικά"
+	"ow_statistics": "Στατιστικά λεξικολογικών δεδομένων"
 }
