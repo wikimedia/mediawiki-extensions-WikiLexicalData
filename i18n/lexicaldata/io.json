@@ -13,6 +13,7 @@
 	"datasearch_meaning": "Senco",
 	"datasearch_search_text": "Sercho-texto:",
 	"ow_importtsv_nothing_added": "Nulo adjuntesas.",
+	"ow_importtsv_results": "Adjuntita $1 {{PLURAL:$1|defino|defini}} e $2 {{PLURAL:$2|tradukuro|tradukuri}}.",
 	"ow_exporttsv_languages": "Linguo:",
 	"ow_save": "Registragar",
 	"ow_history": "Versionaro",
