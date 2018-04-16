@@ -374,7 +374,7 @@ class SpecialSuggest extends SpecialPage {
 		$insertSQL = preg_replace( '/,$/', '', $insertSQL );
 
 		if ( count( $classMids ) > 0 ) {
-			$finalConds = "OR clatt.class_mid IN (" . implode( $classMids, ", " ) . ")";
+			$finalConds = "OR clatt.class_mid IN (" . implode( ", ", $classMids ) . ")";
 		}
 		$this->conds[] = "{$iniConds}{$insertSQL} ) {$finalConds}";
 
@@ -462,7 +462,7 @@ class SpecialSuggest extends SpecialPage {
 			$filteredAttributes = $propertyToColumnFilter->attributeIDs;
 
 			if ( count( $filteredAttributes ) > 0 ) {
-				$this->conds[] = "clatt.attribute_mid IN (" . implode( $filteredAttributes, ", " ) . ")";
+				$this->conds[] = "clatt.attribute_mid IN (" . implode( ", ", $filteredAttributes ) . ")";
 			} else {
 				$this->conds[] = '0';
 			}
@@ -470,7 +470,7 @@ class SpecialSuggest extends SpecialPage {
 			$allFilteredAttributes = $this->getAllFilteredAttributes();
 
 			if ( count( $allFilteredAttributes ) > 0 ) {
-				$this->conds[] = "clatt.attribute_mid NOT IN (" . implode( $allFilteredAttributes, ", " ) . ")";
+				$this->conds[] = "clatt.attribute_mid NOT IN (" . implode( ", ", $allFilteredAttributes ) . ")";
 			}
 		}
 	}

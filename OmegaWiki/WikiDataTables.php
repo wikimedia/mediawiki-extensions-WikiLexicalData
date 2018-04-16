@@ -823,7 +823,7 @@ function inArray( DatabaseExpression $expression, $values ) {
 		$sqlValues[] = expressionToSQL( $value );
 	}
 	if ( count( $values ) > 0 ) {
-		return new DefaultDatabaseExpression( $expression->toExpression() . " IN (" . implode( $sqlValues, ", " ) . ")" );
+		return new DefaultDatabaseExpression( $expression->toExpression() . " IN (" . implode( ", ", $sqlValues ) . ")" );
 	} else {
 		return new DefaultDatabaseExpression( 1 );
 	}
