@@ -4,11 +4,12 @@
 			"Дзяніс Тутэйшы",
 			"Тест",
 			"Хомелка",
-			"Чаховіч Уладзіслаў"
+			"Чаховіч Уладзіслаў",
+			"Artsiom91"
 		]
 	},
 	"wikidata-desc": "Дадае вікі-падобную базу даных для розных відаў кантэнту",
-	"wikidata-handler-namespace-move-error": "Старонкі ў прасторы імёнаў, які апрацоўваюцца пашырэннем Вікідадзеныя (Wikidata) не могуць быць пераназваны.",
+	"wikidata-handler-namespace-move-error": "Старонкі ў прасторы назваў, які апрацоўваюцца пашырэннем Вікідадзеныя (Wikidata) не могуць быць пераназваны.",
 	"languages": "Моўны менеджар",
 	"langman-desc": "Даданне і змяненне моўных настаўленняў з дапамогай [[Special:Languages]]",
 	"langman_title": "Моўны менеджар",
@@ -84,9 +85,9 @@
 	"ow_transaction_restore": "Аднавіць",
 	"ow_transaction_remove": "Выдаліць",
 	"ow_transaction_operation": "Аперацыя",
-	"ow_transaction_is_latest": "з'яўляецца апошнім",
+	"ow_transaction_is_latest": "з’яўляецца апошнім",
 	"ow_transaction_class_member": "Член класа",
-	"ow_transaction_object": "Аб'ект",
+	"ow_transaction_object": "Аб’ект",
 	"ow_transaction_first_dm": "Першае вызначанае значэнне",
 	"ow_transaction_second_dm": "Другое вызначанае значэнне",
 	"ow_transaction_summary": "Тлумачэнне",
