@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nikosgranturismogt"
+		]
+	},
+	"apihelp-ow_add_annotation-param-e": "Έκφραση για επεξεργασία.",
+	"apihelp-ow_add_annotation-param-lang": "Γλώσσα έκφρασης για επεξεργασία.",
+	"apihelp-ow_add_annotation-param-text": "Κείμενο προς επεξεργασία.",
+	"apihelp-ow_add_annotation-param-option": "Επιλογή προς επεξεργασία.",
+	"apihelp-ow_add_annotation-param-option_lang": "Επιλογή προς επεξεργασία."
+}
