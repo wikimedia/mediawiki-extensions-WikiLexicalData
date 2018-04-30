@@ -101,7 +101,6 @@ class SpecialDatasearch extends SpecialPage {
 	function displayForm() {
 		global $wgWldSearchExternalIDDefault,
 			$wgWldSearchWordsDefault,
-			$wgWldSearchExternalIDOption,
 			$wgWldSearchWordsOption;
 
 		if ( ! $this->withinWords && ! $this->withinExternalIdentifiers ) {

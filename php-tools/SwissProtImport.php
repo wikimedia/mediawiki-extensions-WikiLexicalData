@@ -349,9 +349,6 @@ class SwissProtXMLParser extends BaseXMLParser {
 	}
 
 	public function startElement( $parser, $name, $attributes ) {
-		global
-			$numberOfBytes;
-
 		if ( count( $this->stack ) == 0 ) {
 			$handler = new UniProtXMLElementHandler();
 			$handler->name = $name;
