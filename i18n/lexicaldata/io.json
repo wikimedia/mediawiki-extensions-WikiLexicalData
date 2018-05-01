@@ -71,6 +71,7 @@
 	"ow_suggest_next": "Sequanta",
 	"ow_suggest_clear": "Vakuigar",
 	"ow_nstab_definedmeaning": "senco definita",
+	"ow_addFromExtAPI_title": "Adjuntez informo de API",
 	"ow-stat-meanings-link": "senci",
 	"ow-stat-meanings": "{{PLURAL:$1|senco|senci}}"
 }
