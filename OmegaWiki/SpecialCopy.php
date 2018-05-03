@@ -131,8 +131,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 	/* Using Copy.php; perform a copy of a defined meaning from one dataset to another,
 	   provided the user has permission to do so,*/
 	protected function _doCopy( $dmid_dirty, $dc1_dirty, $dc2_dirty ) {
-		global
-			$wgCommunityEditPermission, $wgOut, $wgUser, $wgCommunity_dc;
+		global $wgOut, $wgUser, $wgCommunity_dc;
 
 		# escape parameters
 		$dmid = mysql_real_escape_string( $dmid_dirty );
