@@ -13,12 +13,14 @@
 	"importlangnames_title": "Tinyé shi ébéozor áhạ asụsụ",
 	"ow_importtsv_file": "Usòrò TSV:",
 	"ow_importtsv_nothing_added": "Ọ díghì ihe tìrì.",
-	"ow_save": "Domá",
+	"ow_save": "Dònye",
 	"ow_dm_OK": "Ngwanu",
 	"ow_Time": "Ógẹ",
 	"ow_TranslatedTextAttributeValue": "Mkpurụ edemede",
-	"ow_Link": "Jikodo",
-	"ow_LinkAttributeValues": "Jikodo",
+	"ow_Link": "Òjikọ",
+	"ow_LinkAttributeValues": "Òjikọ",
+	"ow_User": "Òjìème",
+	"ow_class_attr_type_link": "Òjikọ",
 	"ow_show": "Zi",
 	"ow_create": "Ké"
 }
