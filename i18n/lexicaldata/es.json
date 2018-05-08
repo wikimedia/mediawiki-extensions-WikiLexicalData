@@ -23,6 +23,7 @@
 	},
 	"wikidata-desc": "Agrega base de datos tipo wiki para varios tipos de contenido",
 	"wikidata-handler-namespace-move-error": "Las páginas en el espacio de nombres manejado por la extensión WikiLexicalData no pueden trasladarse.",
+	"wikidata-handler-namespace-move-to-error": "No es posible trasladar ninguna página a ningún espacio de nombres que gestione la extensión WikiLexicalData.",
 	"languages": "Gestor de idiomas",
 	"langman-desc": "Agrega y cambia configuraciones de idioma con [[Special:Languages]]",
 	"langman_title": "Gestor de idiomas",
@@ -91,7 +92,7 @@
 	"ow_none_selected": "No hay nada seleccionado",
 	"transaction": "Registro de transacciones",
 	"ow_transaction_from_transaction": "De la transacción:",
-	"ow_transaction_count": "Conteo:",
+	"ow_transaction_count": "Recuento:",
 	"ow_transaction_user": "Nombre de usuario:",
 	"ow_transaction_show_rollback": "Mostrar controles de retrotraer:",
 	"ow_transaction_rollback_button": "Retrotraer",
@@ -266,5 +267,6 @@
 	"ow-stat-text-annotations": "{{PLURAL:$1|Anotación de texto|Anotaciones de texto}}",
 	"ow-stat-option-annotations": "{{PLURAL:$1|Anotación de opción|Anotaciones de opción}}",
 	"ow-stat-all-is": "todos = $1",
+	"ow-stat-percent": "$1&nbsp;%",
 	"specialpages-group-omegawiki": "Omegawiki"
 }
