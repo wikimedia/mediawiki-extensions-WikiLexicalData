@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Malafaya"
+			"Malafaya",
+			"Robin van der Vliet"
 		]
 	},
 	"langman_addlang": "Ajunta lingua",
+	"datasearch_language": "Lingua:",
 	"ow_exporttsv_languages": "Linguas:",
 	"ow_save": "Fisa",
 	"ow_history": "Istoria",
@@ -18,6 +20,7 @@
 	"ow_Expression": "Espresa",
 	"ow_Language": "Lingua",
 	"ow_OptionAttribute": "Propria",
+	"ow_OtherLanguages": "Otra linguas:",
 	"ow_PopupAnnotation": "Nota",
 	"ow_Relations": "Relatas",
 	"ow_RelationType": "Tipo de relata",
@@ -28,10 +31,13 @@
 	"ow_TextAttribute": "Propria",
 	"ow_TranslatedTextAttribute": "Propria",
 	"ow_TranslatedTextAttributeValue": "Testo",
+	"ow_Label": "Eticeta",
 	"ow_LinkAttribute": "Propria",
 	"ow_LinkAttributeValues": "Lias",
 	"ow_Property": "Propria",
 	"ow_Value": "Valua",
 	"ow_meaningsoftitle": "Sinifias de \"$1\"",
-	"ow_meaningsofsubtitle": "<em>Lia vici:</em> [[$1]]"
+	"ow_meaningsofsubtitle": "<em>Lia vici:</em> [[$1]]",
+	"prefs-ow-lang": "Linguas",
+	"ow-stat-languages": "{{PLURAL:$1|Lingua|Linguas}}"
 }
