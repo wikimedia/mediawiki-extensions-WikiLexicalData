@@ -20,7 +20,7 @@
 	"wikidata-desc": "為各種類型的內容加入 wiki 資料庫",
 	"wikidata-handler-namespace-move-error": "在由 WikiLexicalData 擴展處理的名字空間中的頁面不能被移動。",
 	"languages": "語言管理員",
-	"langman-desc": "增加與更改 [[Special:Languages]] 的語言設定",
+	"langman-desc": "增加與變更 [[Special:Languages]] 的語言設定",
 	"langman_title": "語言管理員",
 	"langman_not_allowed": "您沒有修改語言設定的權限",
 	"langman_header": "輸入語言代碼和其英語名稱：",

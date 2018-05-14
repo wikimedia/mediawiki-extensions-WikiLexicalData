@@ -144,6 +144,7 @@
 	"ow_OtherLanguages": "Άλλες γλώσσες:",
 	"ow_PopupAnnotation": "Σχολιασμός",
 	"ow_RecordLifeSpan": "Διάρκεια ζωής εγγραφής",
+	"ow_RelatedTo": "Σχετιζόμενο με",
 	"ow_Relations": "Σχέσεις",
 	"ow_RelationType": "Τύπος σχέσης",
 	"ow_Remove": "Αφαίρεση",
@@ -202,5 +203,14 @@
 	"ow_nstab_edit_copy": "αντίγραφο αλλαγής",
 	"right-addlanguage": "Προσθήκη και αλλαγή των γλωσσικών ρυθμίσεων",
 	"ow_shown_datasets": "Προβεβλημένα σύνολα δεδομένων",
-	"ow_statistics": "Στατιστικά λεξικολογικών δεδομένων"
+	"prefs-ow-lang": "Γλώσσες",
+	"ow_pref_lang_select": "Γλώσσες προς εμφάνιση:",
+	"ow_api_source": "Εξωτερική πηγή API:",
+	"ow-special-stat-languages-avail": "Διαθέσιμες {{PLURAL:$1|γλώσσα|γλώσσες}}",
+	"ow_statistics": "Στατιστικά λεξικολογικών δεδομένων",
+	"ow-stat-overview-link": "Επισκόπηση",
+	"ow-stat-expressions-link": "Εκφράσεις",
+	"ow-stat-meanings-link": "Σημασίες",
+	"ow-stat-all-is": "όλα = $1",
+	"specialpages-group-omegawiki": "Omegawiki"
 }

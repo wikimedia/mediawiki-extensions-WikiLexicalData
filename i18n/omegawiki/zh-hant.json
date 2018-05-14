@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Justincheng12345",
-			"Kly"
+			"Kly",
+			"LNDDYL"
 		]
 	},
 	"apiow-desc": "MediaWiki api.php 的 OmegaWiki WikiLexicalData 擴充",
@@ -20,14 +21,14 @@
 	"apihelp-ow_add_annotation-param-relation_lang": "要處理的關聯。",
 	"apihelp-ow_add_annotation-param-dm_relation": "用於處理定義含義關聯的定義含義 ID 關聯，會是用於兩者帶有不同定義含義 ID 之同義詞關聯的定義含義 ID。",
 	"apihelp-ow_add_annotation-param-wikipage": "要處理的 wiki 頁面（tsv 格式，使用 wiki 頁面）。",
-	"apihelp-ow_add_annotation-param-test": "測試模式。不會做出更改。",
+	"apihelp-ow_add_annotation-param-test": "測試模式。不會做出變更。",
 	"apihelp-ow_add_definition-summary": "添加定義至 Omegawiki。",
 	"apihelp-ow_add_definition-param-d": "要添加的定義。",
 	"apihelp-ow_add_definition-param-dm": "會添加定義的已定義含義 ID。",
 	"apihelp-ow_add_definition-param-lang": "新定義的語言 ID。",
 	"apihelp-ow_add_definition-param-file": "要處理的檔案（csv 格式）。",
 	"apihelp-ow_add_definition-param-wikipage": "要處理的 wiki 頁面（csv 格式，使用 wiki 頁面）。",
-	"apihelp-ow_add_definition-param-test": "測試模式。不會做出更改。",
+	"apihelp-ow_add_definition-param-test": "測試模式。不會做出變更。",
 	"apihelp-ow_add_syntrans-summary": "添加表達式、同義詞/翻譯至 Omegawiki。",
 	"apihelp-ow_add_syntrans-param-e": "要添加的表達式。",
 	"apihelp-ow_add_syntrans-param-dm": "會添加表達式的已定義含義 ID。",
@@ -35,7 +36,7 @@
 	"apihelp-ow_add_syntrans-param-im": "相同含義值。",
 	"apihelp-ow_add_syntrans-param-file": "要處理的檔案（csv 格式）。",
 	"apihelp-ow_add_syntrans-param-wikipage": "要處理的 wiki 頁面（csv 格式，使用 wiki 頁面）。",
-	"apihelp-ow_add_syntrans-param-test": "測試模式。不會做出更改。",
+	"apihelp-ow_add_syntrans-param-test": "測試模式。不會做出變更。",
 	"apihelp-ow_add_syntrans-param-tid": "使用此執行 ID 來取代另建一個新的。",
 	"apihelp-ow_add_syntrans-param-ver": "模組版本。",
 	"apihelp-ow_add_to_collection-summary": "添加註解至 Omegawiki。",
@@ -43,7 +44,7 @@
 	"apihelp-ow_add_to_collection-param-coll_mid": "定義收藏的含義 ID。",
 	"apihelp-ow_add_to_collection-param-int_memb_id": "內部成員 ID，可用於識別包含在收藏內成員的進階字元。",
 	"apihelp-ow_add_to_collection-param-wikipage": "要處理的 wiki 頁面（csv 格式，使用 wiki 頁面）。",
-	"apihelp-ow_add_to_collection-param-test": "測試模式。不會做出更改。",
+	"apihelp-ow_add_to_collection-param-test": "測試模式。不會做出變更。",
 	"apihelp-ow_define-summary": "取得含義定義的定義。",
 	"apihelp-ow_define-param-dm": "要定義的含義定義 ID。",
 	"apihelp-ow_define-param-lang": "要定義的語言 ID。",
