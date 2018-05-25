@@ -207,10 +207,18 @@
 	"ow_pref_lang_select": "Γλώσσες προς εμφάνιση:",
 	"ow_api_source": "Εξωτερική πηγή API:",
 	"ow-special-stat-languages-avail": "Διαθέσιμες {{PLURAL:$1|γλώσσα|γλώσσες}}",
+	"ow-special-stat-collections": "{{PLURAL:$1|Συλλογή|Συλλογές}}",
+	"ow-special-stat-classes": "{{PLURAL:$1|Τάξη|Τάξεις}}",
 	"ow_statistics": "Στατιστικά λεξικολογικών δεδομένων",
+	"ow-stat-header": "Στατιστικά λεξικολογικών δεδομένων",
 	"ow-stat-overview-link": "Επισκόπηση",
+	"ow-stat-annotations-link": "Σημειώσεις",
 	"ow-stat-expressions-link": "Εκφράσεις",
+	"ow-stat-expressions": "{{PLURAL:$1|Έκφραση|Εκφράσεις}}",
 	"ow-stat-meanings-link": "Σημασίες",
+	"ow-stat-meanings": "{{PLURAL:$1|Σημασία|Σημασίες}}",
+	"ow-stat-languages": "{{PLURAL:$1|Γλώσσα|Γλώσσες}}",
+	"ow-stat-collections": "{{PLURAL:$1|Συλλογή|Συλλογές}}",
 	"ow-stat-all-is": "όλα = $1",
 	"specialpages-group-omegawiki": "Omegawiki"
 }
