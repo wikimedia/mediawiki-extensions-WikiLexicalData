@@ -9,7 +9,6 @@
 		<exclude name="Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase" />
 		<exclude name="Generic.PHP.ForbiddenFunctions.FoundWithAlternative" />
 		<exclude name="Generic.PHP.NoSilencedErrors.Discouraged" />
-		<exclude name="Generic.PHP.DeprecatedFunctions.Deprecated" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.DuplicateReturn" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationProtected" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationPublic" />
@@ -28,6 +27,7 @@
 		<exclude name="MediaWiki.NamingConventions.ValidGlobalName.wgPrefix" />
 		<exclude name="MediaWiki.Usage.DbrQueryUsage.DbrQueryFound" />
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.assert" />
+		<exclude name="MediaWiki.Usage.ForbiddenFunctions.exec" />
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.extract" />
 		<exclude name="MediaWiki.Usage.SuperGlobalsUsage.SuperGlobals" />
 		<exclude name="MediaWiki.VariableAnalysis.ForbiddenGlobalVariables.ForbiddenGlobal$wgTitle" />

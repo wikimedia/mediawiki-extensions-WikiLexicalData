@@ -46,9 +46,9 @@ class Exercise implements Iterator {
 	private $hide = [];
 
 	/**
-	 * @param $fetcher class for retrieving xml for questions from some source
-	 * @param $fullSet a DOMDocument with all questions
-	 * @param $currentSubset: an array of dmids associated with questions (referring to the relevant entries in the $fullSet above)
+	 * @param OWFetcher|null $fetcher class for retrieving xml for questions from some source
+	 * @param DOMDocument|null $fullSet a DOMDocument with all questions
+	 * @param array|null $currentSubset an array of dmids associated with questions (referring to the relevant entries in the $fullSet above)
 	 */
 	public function __construct( $fetcher = null, $fullSet = null, $currentSubset = null ) {
 		$this->fetcher = $fetcher;

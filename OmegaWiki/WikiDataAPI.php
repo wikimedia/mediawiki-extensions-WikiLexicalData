@@ -483,10 +483,10 @@ function removeRelationWithId( $relationId ) {
  * left hand side, you'll get all relations that exist in which the dm you did specify
  * is involved.
  *
- * @param unknown_type $relationTypeId dmid of the relationtype, optional.
- * @param unknown_type $lhs dmid of the left hand side, optional.
- * @param unknown_type $dmId dmid of the right hand side, optional.
- * @param unknown_type $dc the dataset, optional
+ * @param unknown_type|null $relationTypeId dmid of the relationtype, optional.
+ * @param unknown_type|null $lhs dmid of the left hand side, optional.
+ * @param unknown_type|null $dmId dmid of the right hand side, optional.
+ * @param unknown_type|null $dc the dataset, optional
  */
 function getRelationDefinedMeanings( $relationTypeId = null, $lhs = null, $rhs = null, $dc = null ) {
 	$dc = wdGetDataSetContext( $dc );
@@ -2063,7 +2063,7 @@ function getCollectionContents( $collectionId ) {
  * with the given id.
  *
  * @param unknown_type $collectionId
- * @param unknown_type $dc
+ * @param unknown_type|null $dc
  */
 function getCollectionMembers( $collectionId, $dc = null ) {
 	$memberMids = [];
