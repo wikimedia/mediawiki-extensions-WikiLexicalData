@@ -11,7 +11,8 @@
 			"Waldir",
 			"Vitorvicentevalente",
 			"MokaAkashiyaPT",
-			"Athena in Wonderland"
+			"Athena in Wonderland",
+			"Eduardo Addad de Oliveira"
 		]
 	},
 	"wikidata-desc": "Adiciona uma base de dados tipo wiki para vários tipos de conteúdo",
@@ -69,7 +70,7 @@
 	"exporttsv": "Exportar TSV",
 	"ow_exporttsv_title": "Exportar uma coleção para TSV",
 	"ow_exporttsv_header": "<p>Exporte uma coleção para o formato de texto, delimitado por tabulações, que poderá importar no OpenOffice.org, Excel ou noutra folha de cálculo.<br />\nSelecione uma coleção para exportar. Introduza uma lista de códigos de língua ISO 639-3, delimitada por vírgulas, na caixa de texto das línguas. Comece pelas línguas a partir das quais irá traduzir (escolha tantas quantas quiser) e termine com aquelas para as quais irá traduzir. Depois, clique 'Criar' para criar o ficheiro.</p>",
-	"ow_exporttsv_languages": "Línguas:",
+	"ow_exporttsv_languages": "Idiomas:",
 	"ow_exporttsv_not_allowed": "Não tem permissões para fazer uma exportação para TSV.",
 	"ow_exporttsv_export_failed": "A exportação falhou",
 	"ow-downloads-directory-missing": "Falta o diretório de exportação <code>$1</code>.",
@@ -227,7 +228,7 @@
 	"ow_nstab_edit_copy": "editar cópia",
 	"right-addlanguage": "Adicionar e modificar configurações de línguas",
 	"ow_shown_datasets": "Conjuntos de dados mostrados",
-	"prefs-ow-lang": "Línguas",
+	"prefs-ow-lang": "Idiomas",
 	"ow_pref_lang_switch": "<strong>Mostrar apenas as línguas selecionadas</strong>",
 	"ow_pref_lang_select": "Línguas a mostrar:",
 	"ow_addFromExtAPI": "Acrescentar dados de API externas",
