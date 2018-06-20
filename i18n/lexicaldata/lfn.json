@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Malafaya",
-			"Robin van der Vliet"
+			"Robin van der Vliet",
+			"Mafcadio"
 		]
 	},
 	"langman_addlang": "Ajunta lingua",
@@ -32,12 +33,14 @@
 	"ow_TranslatedTextAttribute": "Propria",
 	"ow_TranslatedTextAttributeValue": "Testo",
 	"ow_Label": "Eticeta",
+	"ow_Link": "Lia",
 	"ow_LinkAttribute": "Propria",
 	"ow_LinkAttributeValues": "Lias",
 	"ow_Property": "Propria",
 	"ow_Value": "Valua",
 	"ow_meaningsoftitle": "Sinifias de \"$1\"",
 	"ow_meaningsofsubtitle": "<em>Lia vici:</em> [[$1]]",
+	"ow_class_attr_type_link": "Lia",
 	"prefs-ow-lang": "Linguas",
 	"ow-stat-languages": "{{PLURAL:$1|Lingua|Linguas}}"
 }
