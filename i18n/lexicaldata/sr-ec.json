@@ -8,7 +8,8 @@
 			"Жељко Тодоровић",
 			"Михајло Анђелковић",
 			"Сербијана",
-			"Acamicamacaraca"
+			"Acamicamacaraca",
+			"BadDog"
 		]
 	},
 	"languages": "Управљање језицима",
@@ -21,7 +22,7 @@
 	"langman_langname": "Назив језика:",
 	"langman_iso639-3": "ISO 639-3 код:",
 	"langman_iso639-2": "ISO 639-2 код:",
-	"langman_wikimedia": "Викимедија код:",
+	"langman_wikimedia": "Викимедија кôд:",
 	"langman_field_optional": "(необавезно)",
 	"langman_addlang": "Додај језик",
 	"importlangnames_title": "Увезите називе језика",
@@ -115,8 +116,8 @@
 	"ow_NewExactMeaning": "Ново тачно значење",
 	"ow_OptionAttribute": "Особина",
 	"ow_OptionAttributeOption": "Опција",
-	"ow_OptionAttributeOptions": "Подешавања",
-	"ow_OptionAttributeValues": "Вредности подешавања",
+	"ow_OptionAttributeOptions": "Опције",
+	"ow_OptionAttributeValues": "Вредности опција",
 	"ow_OtherDefinedMeaning": "(Неко) друго дефинисано значење",
 	"ow_PopupAnnotation": "Коментар",
 	"ow_Relations": "Односи",
