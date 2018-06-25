@@ -25,7 +25,7 @@ $wgExtensionCredits['specialpage'][] = [
 $wgSpecialPages['Languages'] = 'SpecialLanguages';
 
 class SpecialLanguages extends SpecialPage {
-	function SpecialLanguages() {
+	function __construct() {
 		parent::__construct( 'Languages' );
 	}
 
