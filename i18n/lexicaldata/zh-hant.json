@@ -14,7 +14,8 @@
 			"Liuxinyu970226",
 			"烈羽",
 			"Kly",
-			"Sanmosa"
+			"Sanmosa",
+			"A2093064"
 		]
 	},
 	"wikidata-desc": "為各種類型的內容加入 wiki 資料庫",
@@ -89,7 +90,7 @@
 	"transaction": "事務日誌",
 	"ow_transaction_from_transaction": "來自處理：",
 	"ow_transaction_count": "數量：",
-	"ow_transaction_user": "用戶名：",
+	"ow_transaction_user": "使用者名稱：",
 	"ow_transaction_show_rollback": "顯示回滾控制：",
 	"ow_transaction_rollback_button": "回滾",
 	"ow_transaction_rollback_header": "回滾",
@@ -187,7 +188,7 @@
 	"ow_Link": "連結",
 	"ow_LinkAttribute": "屬性",
 	"ow_LinkAttributeValues": "連結",
-	"ow_User": "用戶",
+	"ow_User": "使用者",
 	"ow_Property": "屬性",
 	"ow_Value": "值",
 	"ow_added": "已新增",
