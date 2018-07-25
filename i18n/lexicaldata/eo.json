@@ -8,7 +8,8 @@
 			"Michawiki",
 			"Yekrats",
 			"Robin van der Vliet",
-			"Psychoslave"
+			"Psychoslave",
+			"KuboF"
 		]
 	},
 	"wikidata-handler-namespace-move-error": "Paĝoj en nomspacoj traktataj de la etendilo \"Wikidata\" ne estas moveblaj.",
@@ -143,7 +144,7 @@
 	"ow_Permission_denied": "<h2>PERMESO NEITA</h2>",
 	"ow_copy_no_action_specified": "Bonvolu specifi agon",
 	"ow_copy_help": "Helpado ne estas jam funkciigita.",
-	"ow_copy_successful": "<h2>Kopio sukcesis</h2>\nViaj datenoj verŝajne estis kopiitaj sukcese.\nNe forgesu rekontroli por certigi!",
+	"ow_copy_successful": "<h2>Kopiado sukcesis</h2>\nViaj datenoj ŝajnas esti kopiitaj.\nNe forgesu rekontroli por certiĝi!",
 	"ow_copy_unsuccessful": "<h3>Kopio malsukcesis</h3>\nNeniu kopia operacio okazis.",
 	"ow_no_action_specified": "<h3>Neniu ago estis specifita</h3>\nĈu eble vi alvenis ĉi tiun paĝon rekte? Norme vi ne bezonus esti ĉi tie.",
 	"ow_class_attr_type_xlate": "Tradukebla teksto",
