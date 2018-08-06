@@ -54,7 +54,7 @@
 	"ow_history": "Историја",
 	"ow_datasets": "Одабир скупа података",
 	"ow_noedit_title": "Без дозволе за уређивање",
-	"ow_noedit": "Није ти дозвољено да мењаш стране у скупу података \"$1\". Види [[{{MediaWiki:Ow editing policy url}}|нашу уређивачку политику]].",
+	"ow_noedit": "Није вам дозвољено да уређујете странице у скупу података „$1”.\nПогледајте [[{{MediaWiki:Ow editing policy url}}|нашу политику уређивања]].",
 	"ow_uipref_datasets": "Подразумевани приказ:",
 	"ow_uiprefs": "WikiLexicalData",
 	"ow_none_selected": "Ништа није изабрано",
