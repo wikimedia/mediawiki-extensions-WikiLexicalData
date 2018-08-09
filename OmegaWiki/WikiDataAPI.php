@@ -2233,7 +2233,7 @@ function getUUID( $concepts ) {
 	return $uuid_array;
 }
 
-/** this funtion assumes that there is only a single mapping collection */
+/** this function assumes that there is only a single mapping collection */
 
 function getCollectionIdForDC( $dc ) {
 	$dbr = wfGetDB( DB_REPLICA );

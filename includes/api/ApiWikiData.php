@@ -427,8 +427,8 @@ class ApiWikiData extends ApiBase {
 				$query = $queryb;
 				$query .= "(
 					SELECT member_mid
-					FROM uw_collection_contents, uw_syntrans, uw_expression, language 
-					WHERE collection_id=$id_safe 
+					FROM uw_collection_contents, uw_syntrans, uw_expression, language
+					WHERE collection_id=$id_safe
 					AND uw_collection_contents.member_mid=uw_syntrans.defined_meaning_id
 					AND uw_syntrans.expression_id=uw_expression.expression_id
 					AND uw_expression.language_id=language.language_id
@@ -461,7 +461,7 @@ class ApiWikiData extends ApiBase {
 	# db structure:
 	# uw_defined_meaning.meaning_text_tcid -> uw_translated_content.translated_content_id
 	# uw_translated_content.text_id -> uw_text.text_id
-	# uw_translated_content.langauge_id -> languages.language_id
+	# uw_translated_content.language_id -> languages.language_id
 
 	/** return defined meaning xml, containing just translated_text and syntrans,
 	 * see also: any example full defined meaning xml output
@@ -542,7 +542,7 @@ class ApiWikiData extends ApiBase {
 		$body = $xml->addChild( 'body' );
 
 		# query
-		$query = "SELECT uw_collection.collection_id, collection_mid, spelling, counts.total FROM  
+		$query = "SELECT uw_collection.collection_id, collection_mid, spelling, counts.total FROM
 				uw_collection, uw_defined_meaning, uw_expression,
 				(
 				SELECT collection_id,count(*) AS total FROM uw_collection_contents
