@@ -23,7 +23,7 @@
 	"langman_iso639-3": "ISO 639-3 код:",
 	"langman_iso639-2": "ISO 639-2 код:",
 	"langman_wikimedia": "Викимедија код:",
-	"langman_field_optional": "(необавезно)",
+	"langman_field_optional": "(опционално)",
 	"langman_addlang": "Додај језик",
 	"importlangnames_title": "Увезите називе језика",
 	"importlangnames_not_allowed": "Ви немате права приступа потребна за увожење називе језика.",
