@@ -1,6 +1,6 @@
 <?php
 /** @file
- *  @brief This a part of the the WiKiLexicalData's PHP API
+ *  @brief This a part of the WiKiLexicalData's PHP API
  */
 require_once 'Expression.php';
 require_once 'Transaction.php';
