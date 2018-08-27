@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ninjastrikers"
+			"Ninjastrikers",
+			"Dr Lotus Black"
 		]
 	},
-	"ow_transaction_summary": "အကျဉ်းချုပ်"
+	"ow_transaction_summary": "အကျဉ်းချုပ်",
+	"ow_dm_OK": "အိုကေ"
 }
