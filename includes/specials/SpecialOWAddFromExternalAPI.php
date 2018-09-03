@@ -246,7 +246,7 @@ class ExternalResources {
 		$owlLineProcessed = false;
 		$ctr = 0;
 		$this->wgOut->addHTML(
-			'<form id="flexible_form">'.
+			'<form id="flexible_form">' .
 			'<input type="hidden" name="title" value="Special:Ow addFromExtAPI"/>'
 		);
 		$this->wgOut->addHTML(

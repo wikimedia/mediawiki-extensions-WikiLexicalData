@@ -99,7 +99,7 @@ foreach ( $meanings as $internalName => $meaningId ) {
 }
 
 $dbr->query( "INSERT INTO {$dc}_script_log (time, script_name, comment) " .
-			"VALUES (" . $timestamp . "," . $dbr->addQuotes( '23 - Bootstrap class attribute meanings.php' ) .  "," . $dbr->addQuotes( 'create bootstrap class attribute meanings' ) . ")" );
+			"VALUES (" . $timestamp . "," . $dbr->addQuotes( '23 - Bootstrap class attribute meanings.php' ) . "," . $dbr->addQuotes( 'create bootstrap class attribute meanings' ) . ")" );
 
 $endTime = time();
 echo "\n\nTime elapsed: " . durationToString( $endTime - $beginTime );

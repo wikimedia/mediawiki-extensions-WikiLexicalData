@@ -16,7 +16,7 @@ $wgUseMasterForMaintenance = true;
 
 $sep = PATH_SEPARATOR;
 
-$IP = realpath( __DIR__ .  "/../../../../" );
+$IP = realpath( __DIR__ . "/../../../../" );
 $currentdir = __DIR__;
 chdir( $IP );
 

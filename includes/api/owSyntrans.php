@@ -282,7 +282,7 @@ class SynonymTranslation extends ApiBase {
 		return $this->returns( $syntrans, [ 'error' => 'no result' ] );
 	}
 
-	protected function returns( $returning , $else ) {
+	protected function returns( $returning, $else ) {
 		if ( $returning ) {
 			return $returning;
 		}

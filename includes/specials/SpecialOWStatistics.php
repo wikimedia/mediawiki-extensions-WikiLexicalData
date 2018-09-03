@@ -69,7 +69,7 @@ class SpecialOWStatistics extends SpecialPage {
 		return $nbdm;
 	}
 
-	public function getOverview( $statspageformat=false ) {
+	public function getOverview( $statspageformat = false ) {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_REPLICA );
 		$output = "";
@@ -239,7 +239,7 @@ class SpecialOWStatistics extends SpecialPage {
 		return $this->getPerLanguageTable( $queryResult, 'ow-stat-syntranses' );
 	}
 
-	private function getPerLanguageTable( $queryResult, $headMessageKey, $doCount=true ) {
+	private function getPerLanguageTable( $queryResult, $headMessageKey, $doCount = true ) {
 		$languageNames = getOwLanguageNames();
 		$nblang = 0;
 		$nbDataArray = [];
@@ -400,7 +400,7 @@ A
 	 * msgkey is a message key, the message is output in the 1st row
 	 * value is a number to be output in the 2nd row
 	 */
-	private function addTableRow( $msgkey , $value ) {
+	private function addTableRow( $msgkey, $value ) {
 		$result = Html::openElement( 'tr' );
 		$result .= Html::element( 'td', [], wfMessage( $msgkey )->numparams( $value )->text() );
 		$result .= Html::element( 'td', [ 'align' => 'right' ], $value );

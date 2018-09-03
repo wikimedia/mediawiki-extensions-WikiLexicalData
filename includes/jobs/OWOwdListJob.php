@@ -439,7 +439,7 @@ class CreateOwdListJob extends Job {
 			foreach ( $lines as $line ) {
 				$checkLine = explode( "	", $line );
 				if ( preg_match( '/' . $fileName . '/', $checkLine[0] ) and isset( $checkLine[1] ) ) {
-					$reconstructLine[] = $fileName . "	" . $transactionId  . "	" . $this->version . "\n";
+					$reconstructLine[] = $fileName . "	" . $transactionId . "	" . $this->version . "\n";
 				} else {
 					if ( $line != '' ) {
 						$reconstructLine[] = $line . "\n";

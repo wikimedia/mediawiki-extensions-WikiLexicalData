@@ -169,7 +169,7 @@ class ExtensionDatabaseUpdater {
 			if ( $indexNameExistsAsTable ) {
 				$this->cmd = str_replace(
 					'CREATE INDEX ' . $indexName . ' ON',
-					'CREATE INDEX i_'. $indexName . ' ON',
+					'CREATE INDEX i_' . $indexName . ' ON',
 					$this->cmd
 				);
 			}

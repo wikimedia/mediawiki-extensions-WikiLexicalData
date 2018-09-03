@@ -52,12 +52,15 @@
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgWldTextValueObjectAttributesEditors" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgWldTranslatedTextValueObjectAttributesEditors" />
 		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
+		<exclude name="PSR2.Classes.ClassDeclaration.CloseBraceSameLine" />
 		<exclude name="PSR2.Classes.PropertyDeclaration.ScopeMissing" />
 		<exclude name="PSR2.Classes.PropertyDeclaration.Underscore" />
 		<exclude name="PSR2.Classes.PropertyDeclaration.VarUsed" />
 		<exclude name="PSR2.Methods.MethodDeclaration.Underscore" />
 		<exclude name="Squiz.Classes.ValidClassName.NotCamelCaps" />
 		<exclude name="Squiz.Operators.ValidLogicalOperators.NotAllowed" />
+		<exclude name="Squiz.PHP.NonExecutableCode.ReturnNotRequired" />
+		<exclude name="Squiz.PHP.NonExecutableCode.Unreachable" />
 		<exclude name="Squiz.Scope.MemberVarScope.Missing" />
 		<exclude name="Squiz.Scope.MethodScope.Missing" />
 	</rule>

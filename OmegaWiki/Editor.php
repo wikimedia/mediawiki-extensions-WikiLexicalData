@@ -612,7 +612,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 
 		if ( $this->allowRemove ) {
 			$thattr = [ 'class' => 'wld-remove-header', 'rowspan' => count( $headerRows ), 'title' => wfMessage( "ow_RemoveHint" )->text() ];
-			$headerRows[0] = Html::element( 'th', $thattr ).$headerRows[0];
+			$headerRows[0] = Html::element( 'th', $thattr ) . $headerRows[0];
 		}
 
 		if ( $this->repeatInput ) {
@@ -1184,7 +1184,7 @@ class DefinedMeaningHeaderEditor extends ScalarEditor {
 		$DMPageName = $definingExpression . " (" . $definedMeaningId . ")";
 		$DMTitle = Title::makeTitle( NS_DEFINEDMEANING, $DMPageName );
 		$editURL = $DMTitle->getLocalURL( 'action=edit' );
-		$editLinkContent = '['. createLink( $editURL, wfMessage( 'edit' )->text() ) . ']';
+		$editLinkContent = '[' . createLink( $editURL, wfMessage( 'edit' )->text() ) . ']';
 		$editLink = Html::rawElement( 'span', [ 'class' => 'dm_edit_link' ], $editLinkContent );
 
 		if ( $wgUser->getOption( 'ow_alt_layout' ) ) {

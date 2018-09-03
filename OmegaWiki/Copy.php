@@ -1659,7 +1659,7 @@ class URLAttributeCopier extends AttributeCopier {
 	}
 }
 
-class TranslatedContentAttributeCopier  extends AttributeCopier {
+class TranslatedContentAttributeCopier extends AttributeCopier {
 	protected $tableName = "translated_content_attribute_values"; 	// Name of the table this class operates on.
 
 	public function __construct( $dc1, $dc2, $src_object_id, $dst_object_id ) {

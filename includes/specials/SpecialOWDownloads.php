@@ -338,7 +338,7 @@ class SpecialOWDownloads extends SpecialPage {
 					}
 				}
 			}
-			return '<a href="' . "$wgServer$wgScript/Special:Ow_downloads" . '?' . 'check_owd_status=' . $languageId  . '">check status</a>';
+			return '<a href="' . "$wgServer$wgScript/Special:Ow_downloads" . '?' . 'check_owd_status=' . $languageId . '">check status</a>';
 			return 'check status';
 		}
 		// temporarily output this:
@@ -453,17 +453,17 @@ class SpecialOWDownloads extends SpecialPage {
 					$newLine = $fnPattern . "	" . $owdTransactionId . "	" . $owdVersionId . "\n";
 					$latest = false;
 				} else {
-					$newLine = $row[0] . "	" . $row[1] . "	" .  $row[2] . "\n";
+					$newLine = $row[0] . "	" . $row[1] . "	" . $row[2] . "\n";
 				}
 			} else {
-				$newLine = $row[0] . "	" . $row[1] . "	" .  $row[2] . "\n";
+				$newLine = $row[0] . "	" . $row[1] . "	" . $row[2] . "\n";
 			}
 			$reconstructedLine[] = $newLine;
 		}
 
 		if ( !$matchFound ) {
 			$fh = fopen( $downloadIni, 'a' );
-			fwrite( $fh, $fnPattern . "	" . $owdTransactionId . "	" . $owdVersionId  . "\n" );
+			fwrite( $fh, $fnPattern . "	" . $owdTransactionId . "	" . $owdVersionId . "\n" );
 			fclose( $fh );
 		}
 

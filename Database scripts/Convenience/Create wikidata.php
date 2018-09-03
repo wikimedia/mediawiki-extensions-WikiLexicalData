@@ -10,7 +10,7 @@ $wgUseMasterForMaintenance = true;
 
 $sep = PATH_SEPARATOR;
 
-$IP = realpath( __DIR__ .  "/../../../../" );
+$IP = realpath( __DIR__ . "/../../../../" );
 $currentdir = __DIR__;
 chdir( $IP );
 
@@ -137,7 +137,7 @@ function bootStrappedDefinedMeanings( $dc ) {
 
 	$timestamp = wfTimestampNow();
 	$dbr->query( "INSERT INTO {$dc}_script_log (time, script_name, comment) " .
-		"VALUES (" . $timestamp . "," . $dbr->addQuotes( '23 - Bootstrap class attribute meanings.php' ) .  "," . $dbr->addQuotes( 'create bootstrap class attribute meanings' ) . ")" );
+		"VALUES (" . $timestamp . "," . $dbr->addQuotes( '23 - Bootstrap class attribute meanings.php' ) . "," . $dbr->addQuotes( 'create bootstrap class attribute meanings' ) . ")" );
 }
 
 function bootstrapDefinedMeaning( $spelling, $languageId, $definition ) {
