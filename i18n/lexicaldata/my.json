@@ -5,9 +5,17 @@
 			"Dr Lotus Black"
 		]
 	},
+	"langman_langname": "ဘာသာစကား အမည်:",
+	"langman_field_optional": "(ထည့်လိုကထည့်နိုင်)",
+	"langman_addlang": "ဘာသာစကား ထည့်သွင်းရန်",
+	"datasearch_language": "ဘာသာစကား:",
+	"ow_exporttsv_languages": "ဘာသာစကားများ:",
+	"ow_save": "သိမ်းရန်",
+	"ow_history": "ရာဇဝင်",
 	"ow_transaction_remove": "ဖယ်ရှားရန်",
 	"ow_transaction_summary": "အကျဉ်းချုပ်",
 	"ow_dm_OK": "အိုကေ",
+	"ow_Language": "ဘာသာစကား",
 	"ow_Remove": "ဖယ်ရှားရန်",
 	"ow_Source": "ရင်းမြစ်",
 	"ow_create": "ဖန်တီးရန်"
