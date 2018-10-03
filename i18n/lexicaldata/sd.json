@@ -2,12 +2,15 @@
 	"@metadata": {
 		"authors": [
 			"Mehtab ahmed",
-			"Aursani"
+			"Aursani",
+			"Tweety"
 		]
 	},
 	"ow_save": "سانڍيو",
 	"ow_transaction_previous_version": "پويون ورزن",
+	"ow_TextAttributeValues": "سادا اکر",
 	"ow_TranslatedText": "ترجمايل متن",
+	"ow_class_attr_type_plain": "سادا اکر",
 	"ow_suggest_previous": "پويون",
 	"ow_suggest_next": "اڳيون",
 	"ow-special-stat-languages-avail": "موجود {{PLURAL:$1|ٻولي|ٻوليون}}",
