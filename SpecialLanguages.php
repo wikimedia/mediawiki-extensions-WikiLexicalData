@@ -43,7 +43,7 @@ class SpecialLanguages extends SpecialPage {
 		}
 		$action = $wgRequest->getText( 'action' );
 		if ( !$action ) {
-			$wgOut->addWikiText( wfMessage( 'langman_header' )->text() );
+			$wgOut->addWikiMsg( 'langman_header' );
 		} else {
 			$dbr = wfGetDB( DB_MASTER );
 			$langname = $wgRequest->getText( 'langname' );

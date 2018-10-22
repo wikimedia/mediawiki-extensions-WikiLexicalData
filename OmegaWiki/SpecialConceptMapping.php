@@ -54,8 +54,8 @@ class SpecialConceptMapping extends SpecialPage {
 		} elseif ( $action == "get_associated" ) {
 			$this->get_associated();
 		} else {
-			$wgOut->addWikiText( wfMessage( "ow_conceptmapping_no_action_specified", $action )->text() );
-			$wgOut->addWikiText( wfMessage( "ow_conceptmapping_help" )->text() );
+			$wgOut->addWikiMsg( "ow_conceptmapping_no_action_specified", $action );
+			$wgOut->addWikiMsg( "ow_conceptmapping_help" );
 		}
 	}
 
@@ -135,8 +135,8 @@ class SpecialConceptMapping extends SpecialPage {
 
 	protected function help() {
 		global $wgOut;
-		$wgOut->addWikiText( "<h2>Help</h2>" );
-		$wgOut->addWikiText( wfMessage( "ow_conceptmapping_help" )->text() );
+		$wgOut->addWikiTextAsInterface( "<h2>Help</h2>" );
+		$wgOut->addWikiMsg( "ow_conceptmapping_help" );
 	}
 
 	protected function insert() {
@@ -146,7 +146,7 @@ class SpecialConceptMapping extends SpecialPage {
 		# $wgRequest->getText( 'page' );
 		$sets = wdGetDataSets();
 		# $requests=$wgRequest->getValues();
-		$wgOut->addWikiText( "<h2>" . wfMessage( "ow_will_insert" )->text() . "</h2>" );
+		$wgOut->addWikiTextAsInterface( "<h2>" . wfMessage( "ow_will_insert" )->plain() . "</h2>" );
 		$map = [];
 		foreach ( $sets as $key => $set ) {
 			$dc = $set->getPrefix();
@@ -157,7 +157,7 @@ class SpecialConceptMapping extends SpecialPage {
 			if ( $dm_id_ui == null ) {
 				$dm_id_ui = "unset";
 			}
-			$wgOut->addWikiText( "$name ->$dm_id_ui" );
+			$wgOut->addWikiTextAsInterface( "$name ->$dm_id_ui" );
 			$map[$dc] = $dm_id;
 		# $dbr=&wfGetDB(DB_MASTER);
 		}
@@ -168,22 +168,22 @@ class SpecialConceptMapping extends SpecialPage {
 		global
 			$wgOut, $wgRequest;
 		$concept_id = $wgRequest->getText( "concept" );
-		$wgOut->addWikiText( "<h2>" . wfMessage( "ow_contents_of_mapping" )->text() . "</h2>" );
+		$wgOut->addWikiTextAsInterface( "<h2>" . wfMessage( "ow_contents_of_mapping" )->plain() . "</h2>" );
 		$map = readConceptMapping( $concept_id );
 		# $sets=wdGetDataSets();
 
 		foreach ( $map as $dc => $dm_id ) {
-			$wgOut->addWikiText( "$dc -> $dm_id" );
+			$wgOut->addWikiTextAsInterface( "$dc -> $dm_id" );
 		}
 	}
 
 	protected function list_sets() {
 		global $wgOut;
-		$wgOut->addWikiText( "<h2>" . wfMessage( "ow_available_contexts" )->text() . "</h2>" );
+		$wgOut->addWikiTextAsInterface( "<h2>" . wfMessage( "ow_available_contexts" )->plain() . "</h2>" );
 		$sets = wdGetDataSets();
 		foreach ( $sets as $key => $set ) {
 			$name = $set->fetchName();
-			$wgOut->addWikiText( "$key => $name" );
+			$wgOut->addWikiTextAsInterface( "$key => $name" );
 		}
 	}
 
@@ -193,7 +193,7 @@ class SpecialConceptMapping extends SpecialPage {
 		$dc = $wgRequest->getText( "dc" );
 		$map = getAssociatedByConcept( $dm_id, $dc );
 		foreach ( $map as $dc => $dm_id ) {
-			$wgOut->addWikiText( "$dc -> $dm_id" );
+			$wgOut->addWikiTextAsInterface( "$dc -> $dm_id" );
 		}
 	}
 

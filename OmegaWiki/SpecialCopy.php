@@ -47,15 +47,15 @@ class SpecialCopy extends UnlistedSpecialPage {
 		} elseif ( $action == "help" ) {
 			$this->help();
 		} else {
-			$wgOut->addWikiText( wfMessage( "ow_no_action_specified", $action )->text() );
-			$wgOut->addWikiText( wfMessage( "ow_copy_help" )->text() );
+			$wgOut->addWikiMsg( "ow_no_action_specified", $action );
+			$wgOut->addWikiMsg( "ow_copy_help" );
 		}
 	}
 
 	/** reserved for ui elements */
 	protected function ui() {
 		global $wgOut;
-		$wgOut->addWikiText( wfMessage( "ow_no_action_specified" )->text() );
+		$wgOut->addWikiMsg( "ow_no_action_specified" );
 	}
 
 	/** display a helpful help message.
@@ -63,8 +63,8 @@ class SpecialCopy extends UnlistedSpecialPage {
 	 */
 	protected function help() {
 		global $wgOut;
-		$wgOut->addWikiText( "<h2>Help</h2>" );
-		$wgOut->addWikiText( wfMessage( "ow_copy_help" )->text() );
+		$wgOut->addWikiTextAsInterface( "<h2>Help</h2>" );
+		$wgOut->addWikiMsg( "ow_copy_help" );
 	}
 
 	/** read in and partially validate parameters,
@@ -81,15 +81,15 @@ class SpecialCopy extends UnlistedSpecialPage {
 		$abort = false; 	# check all input before aborting
 
 		if ( is_null( $dmid_dirty ) ) {
-			$wgOut->addWikiText( wfMessage( "ow_please_provide_dmid" )->text() );
+			$wgOut->addWikiMsg( "ow_please_provide_dmid" );
 			$abort = true;
 		}
 		if ( is_null( $dc1_dirty ) ) {
-			$wgOut->addWikiText( wfMessage( "ow_please_provide_dc1" )->text() );
+			$wgOut->addWikiMsg( "ow_please_provide_dc1" );
 			$abort = true;
 		}
 		if ( is_null( $dc2_dirty ) ) {
-			$wgOut->addWikiText( wfMessage( "ow_please_provide_dc2" )->text() );
+			$wgOut->addWikiMsg( "ow_please_provide_dc2" );
 			$abort = true;
 		}
 
@@ -102,7 +102,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 		if ( $success ) {
 			$this->autoredir();
 		} else {
-			$wgOut->addWikiText( wfMessage( "ow_copy_unsuccessful" )->text() );
+			$wgOut->addWikiMsg( "ow_copy_unsuccessful" );
 		}
 	}
 

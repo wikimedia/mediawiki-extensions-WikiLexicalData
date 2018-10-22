@@ -281,7 +281,7 @@ class DefinedMeaningModel {
 			$wgUser, $wgOut;
 
 		if ( !$wgUser->isAllowed( 'wikidata-copy' ) ) {
-			$wgOut->addWikiText( wfMessage( "ow_noedit", $dc->fetchName() )->text() );
+			$wgOut->addWikiMsg( "ow_noedit", $dc->fetchName() );
 			$wgOut->setPageTitle( wfMessage( "ow_noedit_title" )->text() );
 			return false;
 		}

@@ -228,7 +228,7 @@ class SpecialOWDownloads extends SpecialPage {
 		$wikiText .= "==Help==\n";
 		$wikiText .= "*[[Help:Downloading_the_data#CSV_Files|About the OmegaWiki Special Downloads Page]]\n";
 		$wikiText .= "*[[Help:OmegaWiki's Development CSVs|OmegaWiki's Development CSVs]]\n";
-		$output->addWikiText( $wikiText );
+		$output->addWikiTextAsInterface( $wikiText );
 	}
 
 	protected function processText( $text ) {
