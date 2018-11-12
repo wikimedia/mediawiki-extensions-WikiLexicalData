@@ -214,5 +214,6 @@
 	"prefs-ow-lang": "Мовы",
 	"ow_pref_lang_switch": "Паказваць толькі вызначаныя мовы",
 	"ow_pref_lang_select": "Мовы для паказу",
-	"ow_statistics": "Вікідадзеныя: Статыстыка"
+	"ow_statistics": "Вікідадзеныя: Статыстыка",
+	"ow-stat-languages": "{{PLURAL:$1|Мова|Мовы}}"
 }
