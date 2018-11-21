@@ -5,6 +5,7 @@
 			"Dr Lotus Black"
 		]
 	},
+	"langman_not_allowed": "ဘာသာစကား အပြင်အဆင်များကို ပြောင်းလဲရန် ခွင့်ပြုချက်မရှိပါ။",
 	"langman_langname": "ဘာသာစကား အမည်:",
 	"langman_field_optional": "(ထည့်လိုကထည့်နိုင်)",
 	"langman_addlang": "ဘာသာစကား ထည့်သွင်းရန်",
@@ -16,7 +17,16 @@
 	"ow_transaction_summary": "အကျဉ်းချုပ်",
 	"ow_dm_OK": "အိုကေ",
 	"ow_Language": "ဘာသာစကား",
+	"ow_OtherLanguages": "အခြားဘာသာစကားများ:",
 	"ow_Remove": "ဖယ်ရှားရန်",
 	"ow_Source": "ရင်းမြစ်",
-	"ow_create": "ဖန်တီးရန်"
+	"ow_show": "ပြသရန်",
+	"ow_upload": "ဖိုင်တင်ရန်",
+	"ow_create": "ဖန်တီးရန်",
+	"ow_suggest_previous": "ယခင်",
+	"ow_suggest_next": "ရှေ့",
+	"ow_suggest_clear": "ရှင်းလင်း",
+	"prefs-ow-lang": "ဘာသာစကားများ",
+	"ow-special-stat-languages-avail": "ရရှိနိုင်သော {{PLURAL:$1|ဘာသာစကား|ဘာသာစကားများ}}",
+	"ow-stat-languages": "{{PLURAL:$1|ဘာသာစကား|ဘာသာစကားများ}}"
 }
