@@ -105,7 +105,7 @@ class AddDefinition extends ApiBase {
 	// Get examples
 	public function getExamples() {
 	return [
-		'Add a defintion in another language to the defined meaning.',
+		'Add a definition in another language to the defined meaning.',
 		'If a definition is already present for the language, nothing happens.',
 		'api.php?action=ow_add_definition&d=Not%20where%20something%20or%20someone%20usually%20is.&dm=334562&lang=85&format=xml',
 		'You can also add definitions from a CSV file.  The file must ',
