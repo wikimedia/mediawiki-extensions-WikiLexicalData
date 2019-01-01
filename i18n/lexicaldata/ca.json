@@ -36,6 +36,7 @@
 	"ow_importtsv_importing": "Important dades TSV",
 	"ow_importtsv_import_failed": "Importació fallida",
 	"ow_importtsv_file": "Fitxer TSV:",
+	"ow_importtsv_nothing_added": "No s'ha afegit res.",
 	"ow_exporttsv_languages": "Llengües:",
 	"ow_save": "Desa",
 	"ow_history": "Historial",
