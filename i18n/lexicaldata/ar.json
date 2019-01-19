@@ -77,6 +77,7 @@
 	"ow_datasets": "اختيار مجموعة البيانات",
 	"ow_noedit_title": "لا سماح للتعديل",
 	"ow_noedit": "أنت غير مسموح لك بتعديل الصفحات في مجموعة البيانات \"$1\".\nمن فضلك انظر [[{{MediaWiki:Ow editing policy url}}|سياسة التحرير الخاصة بنا]].",
+	"ow_editing_policy_url": "Project:سياسة السماح",
 	"ow_uipref_datasets": "عرض افتراضي:",
 	"ow_uiprefs": "ويكي لكسكل داتا",
 	"ow_none_selected": "لا شيء تم اختياره",
