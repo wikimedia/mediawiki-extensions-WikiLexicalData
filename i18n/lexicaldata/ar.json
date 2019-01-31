@@ -72,7 +72,7 @@
 	"ow-downloads-directory-missing": "دليل التصدير <code>$1</code> مفقود.",
 	"addcollection": "إضافة مجموعة",
 	"ow_searchnoresult": "<p>بإمكانك:<br />\n* '''إنشاء التعبير \"[[Expression:$1]]\"''' (وإضافة تعريف)<br />\n* '''إنشاء الصفحة \"[[:$1]]\"''' (صفحة ويكي قياسية)</p>",
-	"ow_save": "احفظ",
+	"ow_save": "حفظ",
 	"ow_history": "تاريخ",
 	"ow_datasets": "اختيار مجموعة البيانات",
 	"ow_noedit_title": "لا سماح للتعديل",
