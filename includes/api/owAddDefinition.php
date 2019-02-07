@@ -39,7 +39,7 @@ class AddDefinition extends ApiBase {
 		}
 
 		// limit non-test access to bots
-		if ( ! ( $this->test or $wgUser->isAllowed( 'bot' ) ) ) {
+		if ( !( $this->test or $wgUser->isAllowed( 'bot' ) ) ) {
 			$this->dieUsage( 'you must have a bot flag to use this API function', 'bot_only' );
 		}
 

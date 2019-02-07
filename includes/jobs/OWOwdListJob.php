@@ -401,7 +401,7 @@ class CreateOwdListJob extends Job {
 					',' . $csv->formatCSVcolumn( $collection ) .
 					"\n"
 				);
-				$ctr ++;
+				$ctr++;
 
 			}
 

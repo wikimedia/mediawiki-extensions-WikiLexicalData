@@ -268,7 +268,7 @@ function existSpelling( $spelling, $languageId = 0 ) {
  */
 function findExpression( $spelling, $languageId ) {
 	$expressionId = getExpressionId( $spelling, $languageId );
-	if ( ! is_null( $expressionId ) ) {
+	if ( !is_null( $expressionId ) ) {
 		return new Expression( $expressionId, $spelling, $languageId );
 	}
 	return null;
@@ -283,7 +283,7 @@ function findExpression( $spelling, $languageId ) {
  */
 function findRemovedExpression( $spelling, $languageId ) {
 	$expressionId = getRemovedExpressionId( $spelling, $languageId );
-	if ( ! is_null( $expressionId ) ) {
+	if ( !is_null( $expressionId ) ) {
 		reviveExpression( $expressionId );
 		createPage( NS_EXPRESSION, $spelling );
 		return new Expression( $expressionId, $spelling, $languageId );
@@ -303,12 +303,12 @@ function createExpression( $spelling, $languageId, $options = [] ) {
 
 function findOrCreateExpression( $spelling, $languageId, $options = [] ) {
 	$expression = findExpression( $spelling, $languageId );
-	if ( ! is_null( $expression ) ) {
+	if ( !is_null( $expression ) ) {
 		return $expression;
 	}
 	// else
 	$expression = findRemovedExpression( $spelling, $languageId );
-	if ( ! is_null( $expression ) ) {
+	if ( !is_null( $expression ) ) {
 		return $expression;
 	}
 	// else
@@ -2461,7 +2461,7 @@ function getExpressions( $spelling, $dc = null ) {
 		'spelling' => $spelling,
 		'exp.remove_transaction_id' => null
 	];
-	if ( ! empty( $langsubset ) ) {
+	if ( !empty( $langsubset ) ) {
 		$cond['language_id'] = $langsubset;
 	}
 

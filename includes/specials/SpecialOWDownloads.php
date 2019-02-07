@@ -62,7 +62,7 @@ class SpecialOWDownloads extends SpecialPage {
 		$this->downloadIniExist = false;
 
 		// scan directory for filenames
-		if ( ! is_dir( $wgWldDownloadScriptPath ) || ! is_readable( $wgWldDownloadScriptPath ) ) {
+		if ( !is_dir( $wgWldDownloadScriptPath ) || !is_readable( $wgWldDownloadScriptPath ) ) {
 			$output->addHTML( wfMessage( 'ow-downloads-directory-missing' )
 				->params( htmlentities( $wgWldDownloadScriptPath ) )->plain() );
 			$downloadDir = [];

@@ -32,7 +32,7 @@ class SpecialSelect extends SpecialPage {
 		if ( $attributeObject != 0 ) {
 			$objectLanguage = OwDatabaseAPI::getLanguageIdForSid( $attributeObject );
 			// language is not always defined, for example for a DM Option Attribute
-			if ( ! $objectLanguage ) {
+			if ( !$objectLanguage ) {
 				$objectLanguage = 0;
 			}
 		}

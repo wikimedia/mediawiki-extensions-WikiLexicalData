@@ -252,17 +252,17 @@ class SynonymTranslation extends ApiBase {
 						if ( $options['lang'] == $row[1] && $options['e'] == $row[0] ) {
 						} else {
 							$syntrans["{$ctr}{$dot}"] = $syntransRow;
-							$ctr ++;
+							$ctr++;
 						}
 					} else {
 						$syntrans["{$ctr}{$dot}"] = $syntransRow;
-						$ctr ++;
+						$ctr++;
 					}
 				}
 
 				if ( $options['part'] == 'trans' and $options['lang'] != $row[1] ) {
 					$syntrans["{$ctr}{$dot}"] = $syntransRow;
-					$ctr ++;
+					$ctr++;
 				}
 			} else {
 				if ( isset( $options['lang'] ) && isset( $options['e'] ) ) {
@@ -270,11 +270,11 @@ class SynonymTranslation extends ApiBase {
 					if ( $options['lang'] == $row[1] && $options['e'] == $row[0] ) {
 					} else {
 						$syntrans["{$ctr}{$dot}"] = $syntransRow;
-						$ctr ++;
+						$ctr++;
 					}
 				} else {
 					$syntrans["{$ctr}{$dot}"] = $syntransRow;
-					$ctr ++;
+					$ctr++;
 				}
 			}
 		}

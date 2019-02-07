@@ -27,7 +27,7 @@ class SpecialImportLangNames extends SpecialPage {
 
 		$output->setPageTitle( wfMessage( 'importlangnames_title' )->text() );
 
-		if ( ! $this->getUser()->isAllowed( 'languagenames' ) ) {
+		if ( !$this->getUser()->isAllowed( 'languagenames' ) ) {
 			$output->addHTML( wfMessage( 'importlangnames_not_allowed' )->text() );
 			return false;
 		}

@@ -408,7 +408,7 @@ function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInfor
 		], __METHOD__
 	);
 
-	if ( ! is_null( $wgWldSortingAnnotationDM ) ) {
+	if ( !is_null( $wgWldSortingAnnotationDM ) ) {
 		$sortArray = [];
 	}
 	foreach ( $queryResult as $syntrans ) {
@@ -425,7 +425,7 @@ function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInfor
 			]
 		);
 
-		if ( ! is_null( $wgWldSortingAnnotationDM ) ) {
+		if ( !is_null( $wgWldSortingAnnotationDM ) ) {
 			// create the sortArray for sorting the records according to some annotations
 			// we sort according to syntrans_attributes (lexical annotations) and among
 			// them we use only the option attributes (i.e. annotations from a closed list)
@@ -456,7 +456,7 @@ function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInfor
 		} // if not null wgWldSortingAnnotationDM
 	} // foreachs $syntrans
 
-	if ( ! is_null( $wgWldSortingAnnotationDM ) ) {
+	if ( !is_null( $wgWldSortingAnnotationDM ) ) {
 		// here we can sort the recordSet according to annotations
 		$recordSet->sortRecord( $sortArray );
 	}
@@ -504,7 +504,7 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 		// else expressionLang is WLD_ENGLISH_LANG_ID , as defined above
 		$expressionId = getExpressionId( $spelling, $expressionLang );
 
-		if ( ! $expressionId ) {
+		if ( !$expressionId ) {
 			// nothing in the user language (or English). Find anything
 			$expression = getExpressionIdAnyLanguage( $spelling );
 			if ( is_null( $expression ) ) {
@@ -712,7 +712,7 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 	$vars = [ 'language_id', 'text_id' ];
 	$cond = [ 'translated_content_id' => $translatedContentId ];
 
-	if ( ! $viewInformation->showRecordLifeSpan ) {
+	if ( !$viewInformation->showRecordLifeSpan ) {
 		// not in history view: don't show deleted content
 		$cond['remove_transaction_id'] = null;
 	} else {
@@ -723,7 +723,7 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 
 	// filter on languages, if activated by the user
 	$langsubset = $viewInformation->getFilterLanguageList();
-	if ( ! empty( $langsubset ) ) {
+	if ( !empty( $langsubset ) ) {
 		$cond['language_id'] = $langsubset;
 	}
 
@@ -795,7 +795,7 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 		'exp.expression_id = synt.expression_id'
 	];
 
-	if ( ! $viewInformation->showRecordLifeSpan ) {
+	if ( !$viewInformation->showRecordLifeSpan ) {
 		// not in history view: don't show deleted content
 		$cond['synt.remove_transaction_id'] = null;
 	} else {
@@ -806,7 +806,7 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 
 	// filter on languages, if activated by the user
 	$langsubset = $viewInformation->getFilterLanguageList();
-	if ( ! empty( $langsubset ) ) {
+	if ( !empty( $langsubset ) ) {
 		$cond['language_id'] = $langsubset;
 	}
 

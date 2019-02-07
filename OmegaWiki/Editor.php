@@ -166,7 +166,7 @@ abstract class DefaultEditor implements Editor {
 	 * The other arrow (left or right) is shown when the editor is closed
 	 */
 	public function getExpansionPrefix( $class, $elementId ) {
-		if ( ! $this->isCollapsible ) {
+		if ( !$this->isCollapsible ) {
 			return '';
 		}
 
@@ -367,7 +367,7 @@ abstract class RecordSetEditor extends DefaultEditor {
 				$addValues = $editor->getAddValues( $idPath );
 				$i = 0;
 				foreach ( $addValues as $value ) {
-					if ( ! array_key_exists( $i, $results ) ) {
+					if ( !array_key_exists( $i, $results ) ) {
 						$results[$i] = new ArrayRecord( $structure );
 					}
 					$results[$i]->setAttributeValue( $attribute, $value );
@@ -802,7 +802,7 @@ abstract class RecordEditor extends DefaultEditor {
 				$addValues = $editor->getAddValues( $idPath );
 				$i = 0;
 				foreach ( $addValues as $value ) {
-					if ( ! array_key_exists( $i, $results ) ) {
+					if ( !array_key_exists( $i, $results ) ) {
 						$results[$i] = new ArrayRecord( $this->getAddStructure() );
 					}
 					$results[$i]->setAttributeValue( $attribute, $value );
@@ -1014,7 +1014,7 @@ class TabLanguageEditor extends ScalarEditor {
 			}
 		}
 
-		if ( ! empty( $languageIdList ) ) {
+		if ( !empty( $languageIdList ) ) {
 			// there might be duplicates
 			$languageIdList = array_unique( $languageIdList );
 
@@ -1272,7 +1272,7 @@ class TextEditor extends ScalarEditor {
 	public function getEditHTML( IdStack $idPath, $value ) {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
-		if ( ( $dc == "uw" ) and ( ! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+		if ( ( $dc == "uw" ) and ( !$wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
 		// disable
 			return getTextArea( $this->updateId( $idPath->getId() ), $value, 3, 80, true );
 		} else {
@@ -1325,7 +1325,7 @@ class ShortTextEditor extends ScalarEditor {
 	public function getEditHTML( IdStack $idPath, $value ) {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
-		if ( ( $dc == "uw" ) and ( ! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+		if ( ( $dc == "uw" ) and ( !$wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
 			// disable
 			return getTextBox( $this->updateId( $idPath->getId() ), $value, $this->onChangeHandler, true );
 		} else {
@@ -1383,7 +1383,7 @@ class BooleanEditor extends ScalarEditor {
 	public function getEditHTML( IdStack $idPath, $value ) {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
-		if ( ( $dc == "uw" ) and ( ! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+		if ( ( $dc == "uw" ) and ( !$wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
 			return getCheckBox( $this->updateId( $idPath->getId() ), $value, true );
 		} else {
 			return getCheckBox( $this->updateId( $idPath->getId() ), $value );
@@ -1439,7 +1439,7 @@ class IdenticalMeaningEditor extends ScalarEditor {
 
 	public function getEditHTML( IdStack $idPath, $value ) {
 		global $wgUser;
-		if ( ! $wgUser->isAllowed( 'deletewikidata-uw' ) ) {
+		if ( !$wgUser->isAllowed( 'deletewikidata-uw' ) ) {
 			return $this->getViewHTML( $idPath, $value );
 		}
 
@@ -2046,7 +2046,7 @@ class RecordSetListEditor extends RecordSetEditor {
 				// check if we have an extraHierarchyCaption to add
 				// this can happen for example if we sort by part of speeches and want to display that.
 				$extraLevelName = $arrayRecordSet->getExtraHierarchyCaption( $i );
-				if ( ! is_null( $extraLevelName ) ) {
+				if ( !is_null( $extraLevelName ) ) {
 					// close the previous extraHierarchy if needed
 					if ( $extraLevelUlOpen ) {
 						$result .= Html::closeElement( 'ul' );
