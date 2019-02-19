@@ -194,7 +194,7 @@ class WikiLexicalDataHooks {
 
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
 		// only for Expression and DefinedMeaning namespaces
-		if ( ! self::isWikidataNs( $skin->getTitle() ) ) {
+		if ( !self::isWikidataNs( $skin->getTitle() ) ) {
 			return true;
 		}
 

@@ -107,7 +107,7 @@ class WLDLanguage {
 
 		if ( $langCode == WLD_ENGLISH_LANG_WMKEY || is_null( $langId ) ) {
 			$cond = [ 'name_language_id' => WLD_ENGLISH_LANG_ID ];
-			if ( ! empty( $lang_subset ) ) {
+			if ( !empty( $lang_subset ) ) {
 				$cond['language_id'] = $lang_subset;
 			}
 			$table = 'language_names';
@@ -118,7 +118,7 @@ class WLDLanguage {
 			user's preferred language. */
 			$cond = [ 'eng.name_language_id' => WLD_ENGLISH_LANG_ID ];
 
-			if ( ! empty( $lang_subset ) ) {
+			if ( !empty( $lang_subset ) ) {
 				$cond['eng.language_id'] = $lang_subset;
 			}
 

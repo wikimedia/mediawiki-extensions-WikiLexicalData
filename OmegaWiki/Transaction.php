@@ -201,7 +201,7 @@ function startNewTransaction( $userID, $userIP, $comment, $dc = null ) {
 function getUpdateTransactionId() {
 	global $updateTransactionId, $wgRequest;
 
-	if ( ! isset( $updateTransactionId ) ) {
+	if ( !isset( $updateTransactionId ) ) {
 		// normally startNewTransaction is invoqued before this function
 		// but actually we can call it from here directly, it should work the same
 		global $wgUser;

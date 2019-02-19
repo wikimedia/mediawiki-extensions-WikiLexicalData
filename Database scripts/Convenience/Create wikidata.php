@@ -41,7 +41,7 @@ function ReadSQLFile( $database, $pattern, $prefix, $filename ) {
 	$cmd = "";
 	$done = false;
 
-	while ( ! feof( $fp ) ) {
+	while ( !feof( $fp ) ) {
 		$line = trim( fgets( $fp, 1024 ) );
 		$sl = strlen( $line ) - 1;
 

@@ -336,7 +336,7 @@ class InstallWikiLexicalData extends Maintenance {
 		$done = false;
 
 		// Check if language index exist
-		while ( ! feof( $fp ) ) {
+		while ( !feof( $fp ) ) {
 			$line = trim( fgets( $fp, 1024 ) );
 			$sl = strlen( $line ) - 1;
 

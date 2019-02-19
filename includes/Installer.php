@@ -52,7 +52,7 @@ class ExtensionDatabaseUpdater {
 	/** @brief reads the SQL file to process
 	 */
 	protected function readSQLFile() {
-		while ( ! feof( $this->fh ) ) {
+		while ( !feof( $this->fh ) ) {
 			$line = trim( fgets( $this->fh, 1024 ) );
 			$sl = strlen( $line ) - 1;
 

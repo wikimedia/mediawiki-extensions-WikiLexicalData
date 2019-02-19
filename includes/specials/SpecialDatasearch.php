@@ -103,7 +103,7 @@ class SpecialDatasearch extends SpecialPage {
 			$wgWldSearchWordsDefault,
 			$wgWldSearchWordsOption;
 
-		if ( ! $this->withinWords && ! $this->withinExternalIdentifiers ) {
+		if ( !$this->withinWords && !$this->withinExternalIdentifiers ) {
 			$this->withinWords = $wgWldSearchWordsDefault;
 			$this->withinExternalIdentifiers = $wgWldSearchExternalIDDefault;
 		}

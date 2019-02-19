@@ -62,7 +62,7 @@ function getCheckBoxWithClass( $name, $isChecked, $class, $disabled = false ) {
 function getRemoveCheckBox( $name ) {
 	global $wgUser;
 	$dc = wdGetDataSetContext();
-	if ( ( $dc == "uw" ) and ( ! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+	if ( ( $dc == "uw" ) and ( !$wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
 		// do not print the checkbox
 		return '';
 	} else {

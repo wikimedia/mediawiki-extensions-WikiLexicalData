@@ -98,7 +98,7 @@ class CreateDefinedExpressionListJob extends Job {
 					fwrite( $fh, $spelling . ',' . $csv->formatCSVcolumn( $text ) . "\n" );
 				}
 				$defineList = [];
-				$ctr ++;
+				$ctr++;
 			}
 		}
 		fclose( $fh );

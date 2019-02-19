@@ -137,7 +137,7 @@ class DefinedMeaningAlternativeDefinitionController extends DefaultUpdateControl
 class SynonymTranslationController extends DefaultUpdateController {
 
 	public function add( IdStack $idPath, $record ) {
-		if ( ! $record->expression ) {
+		if ( !$record->expression ) {
 			return;
 		}
 		$definedMeaningId = $idPath->getKeyStack()->peek( 0 )->definedMeaningId;
@@ -266,7 +266,7 @@ class ExpressionController extends DefaultUpdateController {
 	}
 
 	public function add( IdStack $idPath, $record ) {
-		if ( ! $record->expression ) {
+		if ( !$record->expression ) {
 			return;
 		}
 		$expressionLanguageId = $record->expression->language;
@@ -386,7 +386,7 @@ class LinkAttributeValuesController extends ObjectAttributeValuesController {
 	}
 
 	public function add( IdStack $idPath, $record ) {
-		if ( ! $record->link ) {
+		if ( !$record->link ) {
 			return;
 		}
 		$objectId = $this->objectIdFetcher->fetch( $idPath->getKeyStack() );

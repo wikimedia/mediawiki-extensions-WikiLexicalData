@@ -19,7 +19,7 @@ if ( !isset( $wgDBprefix ) ) {
 	global $wgDBprefix;
 	$wgDBprefix = null;
 }
-if ( ! isset( $wdHandlerPath ) ) {
+if ( !isset( $wdHandlerPath ) ) {
 	$wdHandlerPath = $dir . '/OmegaWiki/';
 }
 require_once $dir . 'OmegaWiki/WikiDataGlobals.php';

@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <ruleset>
 	<rule ref="./vendor/mediawiki/mediawiki-codesniffer/MediaWiki">
-		<exclude name="Generic.CodeAnalysis.ForLoopWithTestFunctionCall.NotAllowed" />
 		<exclude name="Generic.CodeAnalysis.UnconditionalIfStatement.Found" />
 		<exclude name="Generic.Files.LineLength.TooLong" />
 		<exclude name="Generic.Files.OneObjectStructurePerFile.MultipleFound" />
@@ -27,11 +26,12 @@
 		<exclude name="MediaWiki.NamingConventions.PrefixedGlobalFunctions.wfPrefix" />
 		<exclude name="MediaWiki.NamingConventions.ValidGlobalName.allowedPrefix" />
 		<exclude name="MediaWiki.Usage.DbrQueryUsage.DbrQueryFound" />
+		<exclude name="MediaWiki.Usage.DeprecatedGlobalVariables.Deprecated$wgContLang" />
+		<exclude name="MediaWiki.Usage.DeprecatedGlobalVariables.Deprecated$wgTitle" />
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.assert" />
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.exec" />
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.extract" />
 		<exclude name="MediaWiki.Usage.SuperGlobalsUsage.SuperGlobals" />
-		<exclude name="MediaWiki.VariableAnalysis.ForbiddenGlobalVariables.ForbiddenGlobal$wgTitle" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$myWordnikAPIKey" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$params" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$relationsObjectAttributesEditor" />

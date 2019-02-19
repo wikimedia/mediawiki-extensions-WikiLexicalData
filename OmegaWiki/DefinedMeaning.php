@@ -233,7 +233,6 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$ow_conceptpanel = wfMessage( "ow_concept_panel" )->text();
 
 		$html = "<div class=\"dataset-panel\">";
-;
 		$html .= "<table border=\"0\"><tr><th class=\"dataset-panel-heading\">$ow_conceptpanel</th></tr>";
 		$meanings = getDefinedMeaningDataAssociatedByConcept( $dmId, $dc );
 		if ( $meanings ) {
