@@ -24,6 +24,7 @@
 	"apihelp-ow_add_syntrans-param-test": "Testmodus. Es wurden keine Änderungen durchgeführt.",
 	"apihelp-ow_add_syntrans-param-ver": "Modulversion.",
 	"apihelp-ow_add_to_collection-param-test": "Testmodus. Es wurden keine Änderungen durchgeführt.",
+	"apihelp-ow_define-summary": "Ruft die Definition einer definierten Bedeutung ab.",
 	"apihelp-ow_define-param-lang": "Die zu definierende Sprachkennung.",
 	"apihelp-ow_define-param-e": "Der zu definierende Ausdruck.",
 	"apihelp-ow_express-param-search": "Der zu suchende Ausdruck.",
