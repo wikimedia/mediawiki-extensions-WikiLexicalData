@@ -9,7 +9,8 @@
 			"Михајло Анђелковић",
 			"Сербијана",
 			"Acamicamacaraca",
-			"BadDog"
+			"BadDog",
+			"Vlad5250"
 		]
 	},
 	"languages": "Управљање језицима",
@@ -122,7 +123,7 @@
 	"ow_PopupAnnotation": "Коментар",
 	"ow_Relations": "Односи",
 	"ow_RelationType": "Тип релације",
-	"ow_Remove": "Брисање",
+	"ow_Remove": "Уклони",
 	"ow_RemoveHint": "Обележи редове за брисање",
 	"ow_Spelling": "Правопис",
 	"ow_SuggestHint": "Кликните да бисте променили избор",

@@ -5,7 +5,8 @@
 			"Milicevic01",
 			"Rancher",
 			"Жељко Тодоровић",
-			"Сербијана"
+			"Сербијана",
+			"Vlad5250"
 		]
 	},
 	"languages": "Vikipodaci: Upravljanje jezicima",
@@ -116,7 +117,7 @@
 	"ow_PopupAnnotation": "Komentar",
 	"ow_Relations": "Odnosi",
 	"ow_RelationType": "Tip relacije",
-	"ow_Remove": "Brisanje",
+	"ow_Remove": "Ukloni",
 	"ow_RemoveHint": "Obeleži redove za brisanje",
 	"ow_Spelling": "Pravopis",
 	"ow_SuggestHint": "Kliknite da biste promenili izbor",
