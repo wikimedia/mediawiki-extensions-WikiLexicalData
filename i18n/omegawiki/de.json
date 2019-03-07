@@ -10,6 +10,7 @@
 	"apihelp-ow_add_annotation-param-type": "Art der Anmerkung.",
 	"apihelp-ow_add_annotation-param-e": "Zu verarbeitender Ausdruck.",
 	"apihelp-ow_add_annotation-param-lang": "Zu verarbeitende Ausdruckssprache.",
+	"apihelp-ow_add_annotation-param-dm": "Kennung der definierten Bedeutung, die verarbeitet werden soll.",
 	"apihelp-ow_add_annotation-param-attribute": "Zu verarbeitendes Attribut.",
 	"apihelp-ow_add_annotation-param-attrib_lang": "Zu verarbeitende Attributsprache.",
 	"apihelp-ow_add_annotation-param-text": "Zu verarbeitender Text.",
