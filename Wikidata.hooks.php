@@ -183,13 +183,11 @@ class WikiLexicalDataHooks {
 	/** @note There is a language code difference between globals $wgLang and $wgUser.
 	 * 	I do not know if this issue affects this function. ~he
 	 */
-	public static function onPageContentLanguage( $title, &$pageLang ) {
-		if ( $title->getNamespace() === NS_EXPRESSION || $title->getNamespace() === NS_DEFINEDMEANING ) {
-			global $wgLang;
+	public static function onPageContentLanguage( $title, &$pageLang, $userLang ) {
+		if ( $title->inNamespaces( NS_EXPRESSION, NS_DEFINEDMEANING ) ) {
 			// in this wiki, we try to deliver content in the user language
-			$pageLang = $wgLang;
+			$pageLang = $userLang;
 		}
-		return true;
 	}
 
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
