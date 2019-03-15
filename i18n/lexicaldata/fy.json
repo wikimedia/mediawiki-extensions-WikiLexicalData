@@ -3,7 +3,8 @@
 		"authors": [
 			"Snakesteuben",
 			"Robin0van0der0vliet",
-			"Robin van der Vliet"
+			"Robin van der Vliet",
+			"PiefPafPier"
 		]
 	},
 	"langman_field_optional": "(opsjoneel)",
@@ -11,7 +12,7 @@
 	"ow_exporttsv_languages": "Talen:",
 	"ow_save": "Bewarje",
 	"ow_history": "Skiednis",
-	"ow_transaction_user": "Brûkersnamme:",
+	"ow_transaction_user": "Meidochnamme:",
 	"ow_dm_OK": "OK",
 	"ow_Language": "Taal",
 	"ow_OptionAttribute": "Eigenskip",
@@ -23,7 +24,7 @@
 	"ow_TranslatedTextAttribute": "Eigenskip",
 	"ow_LinkAttribute": "Eigenskip",
 	"ow_URL": "URL",
-	"ow_User": "Brûker",
+	"ow_User": "Meidogger",
 	"ow_Property": "Eigenskip",
 	"ow_Value": "Wearde",
 	"ow_create": "Oanmeitsje",
