@@ -263,5 +263,6 @@
 	"ow-stat-text-annotations": "{{PLURAL:$1|شرح نص|شروح نصوص}}",
 	"ow-stat-option-annotations": "{{PLURAL:$1|شرح خيار|شروح خيارات}}",
 	"ow-stat-all-is": "الكل = $1",
+	"ow-stat-percent": "$1&nbsp;%",
 	"specialpages-group-omegawiki": "أوميجاويكي"
 }
