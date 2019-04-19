@@ -23,7 +23,7 @@ communicate with the core dev-team upfront! Otherwise, test your code
 before committing to avoid unexpected breakage in live sites.
 
 Make sure your SVN client is configured to auto-convert line endings:
-http://www.mediawiki.org/wiki/Subversion/auto-props
+https://www.mediawiki.org/wiki/Subversion/auto-props
 
 == Releases ==
 
