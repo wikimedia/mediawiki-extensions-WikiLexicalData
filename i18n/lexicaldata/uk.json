@@ -12,7 +12,8 @@
 			"Riwnodennyk",
 			"Тест",
 			"Ата",
-			"Piramidion"
+			"Piramidion",
+			"Vlad5250"
 		]
 	},
 	"wikidata-desc": "Додає вікі-подібну базу даних для різних типів контенту",
@@ -226,6 +227,7 @@
 	"ow_suggest_clear": "Очистити",
 	"ow_nstab_definedmeaning": "визначене значення",
 	"ow_nstab_edit_copy": "редагувати копію",
+	"action-addlanguage": "додавання і зміна мовних налаштувань",
 	"right-addlanguage": "додавання і зміна мовних налаштувань",
 	"ow_shown_datasets": "Показані набори даних",
 	"prefs-ow-lang": "Мови",
