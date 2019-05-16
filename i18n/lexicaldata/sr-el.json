@@ -6,7 +6,8 @@
 			"Rancher",
 			"Жељко Тодоровић",
 			"Сербијана",
-			"Vlad5250"
+			"Vlad5250",
+			"Toghrul Rahimli"
 		]
 	},
 	"languages": "Vikipodaci: Upravljanje jezicima",
@@ -51,7 +52,7 @@
 	"ow_noedit_title": "Bez dozvole za uređivanje",
 	"ow_noedit": "Nije ti dozvoljeno da menjaš strane u skupu podataka \"$1\". Vidi [[{{MediaWiki:Ow editing policy url}}|našu uređivačku politiku]].",
 	"ow_uipref_datasets": "Podrazumevani prikaz:",
-	"ow_uiprefs": "Vikidata",
+	"ow_uiprefs": "Vikiverilənlər",
 	"ow_none_selected": "Ništa nije izabrano",
 	"ow_transaction_count": "Broj:",
 	"ow_transaction_user": "Korisničko ime:",
