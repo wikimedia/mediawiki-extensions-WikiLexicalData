@@ -285,6 +285,7 @@ class DataSet {
 	public function setDefinedMeaningId( $dmid ) {
 		$this->dmId = $dmid;
 	}
+
 	public function getDefinedMeaningId() {
 		return $this->dmId;
 	}

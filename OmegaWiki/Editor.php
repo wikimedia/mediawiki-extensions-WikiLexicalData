@@ -24,6 +24,7 @@ class AllowAddController {
 	public function __construct( $value ) {
 		$this->value = $value;
 	}
+
 	public function check( $idPath ) {
 		return $this->value;
 	}
@@ -59,20 +60,29 @@ class ShowEditFieldForClassesChecker extends ShowEditFieldChecker {
 
 interface Editor {
 	public function getAttribute();
+
 	public function getUpdateAttribute();
+
 	public function getAddAttribute();
 
 	public function showsData( $value );
+
 	public function view( IdStack $idPath, $value );
+
 	public function showEditField( IdStack $idPath );
+
 	public function edit( IdStack $idPath, $value );
+
 	public function add( IdStack $idPath );
+
 	public function save( IdStack $idPath, $value );
 
 	public function getUpdateValue( IdStack $idPath );
+
 	public function getAddValues( IdStack $idPath );
 
 	public function getEditors();
+
 	public function getAttributeEditorMap();
 }
 
@@ -918,7 +928,9 @@ abstract class ScalarEditor extends DefaultEditor {
 	}
 
 	abstract public function getViewHTML( IdStack $idPath, $value );
+
 	abstract public function getEditHTML( IdStack $idPath, $value );
+
 	abstract public function getInputValue( $id );
 
 	public function getUpdateValue( IdStack $idPath ) {

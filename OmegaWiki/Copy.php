@@ -1338,6 +1338,7 @@ abstract class Copier {
 		$values = $this->read();
 		return $this->write( $values );
 	}
+
 	/** reads row or rows from table in source dataset (dc1)
 	 * @return row or array of rows for table in mysql_read_assoc() format
 	 */

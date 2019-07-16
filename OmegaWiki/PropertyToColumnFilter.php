@@ -4,6 +4,7 @@ require_once 'Attribute.php';
 
 interface AttributeIDFilter {
 	public function filter( array $attributeIDs );
+
 	public function leavesOnlyOneOption();
 }
 

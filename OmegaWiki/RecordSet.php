@@ -7,11 +7,16 @@ require_once 'Record.php';
 
 abstract class RecordSet {
 	abstract public function getStructure();
+
 	abstract public function getKey();
+
 	abstract public function getRecordCount();
+
 	abstract public function getRecord( $index );
+
 	protected $records;
 	# public function save(); # <- we first need to implement, then uncomment
+
 /**
 	* @return carriage return separated list of values
 	*/

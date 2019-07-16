@@ -4,7 +4,9 @@ require_once "OmegaWikiAttributes.php";
 
 interface UpdateController {
 	public function add( IdStack $idPath, $record );
+
 	public function remove( $keyPath );
+
 	public function update( $keyPath, $record );
 }
 
@@ -14,7 +16,9 @@ interface UpdateAttributeController {
 
 interface PermissionController {
 	public function allowUpdateOfAttribute( $attribute );
+
 	public function allowUpdateOfValue( $idPath, $value );
+
 	public function allowRemovalOfValue( $idPath, $value );
 }
 

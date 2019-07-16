@@ -161,6 +161,7 @@ class DefinedMeaningModel {
 		}
 		return $dc;
 	}
+
 	/**
 	 * Load the associated record object.
 	 *

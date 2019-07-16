@@ -26,11 +26,17 @@ require_once 'Wikidata.php';
 
 interface QueryTransactionInformation {
 	public function getRestriction( Table $table );
+
 	public function getTables();
+
 	public function versioningAttributes();
+
 	public function versioningFields( $tableName );
+
 	public function versioningOrderBy();
+
 	public function versioningGroupBy( Table $table );
+
 	public function setVersioningAttributes( Record $record, $row );
 }
 

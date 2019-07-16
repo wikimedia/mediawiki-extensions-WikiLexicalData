@@ -5,7 +5,9 @@ require_once 'OmegaWikiAttributes.php';
 
 interface Record {
 	public function getStructure();
+
 	public function getAttributeValue( $attribute );
+
 	public function project( Structure $structure );
 }
 

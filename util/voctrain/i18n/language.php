@@ -199,6 +199,7 @@ class WDLanguage {
 class I18Ncallback {
 	public $language;
 	public $replacements;
+
 	public function replace( $matches ) {
 		$match = substr( $matches[0], 2, - 2 );
 

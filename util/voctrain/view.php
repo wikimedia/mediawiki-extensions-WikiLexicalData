@@ -79,6 +79,7 @@ class View {
 	public function setLanguage_byCode( $code ) {
 		$this->language = new Language( $code );
 	}
+
 	/** print everyones favorite friendly message! */
 	public function hello() {
 		$this->language->i18nprint( "<h1><|Hello World|></h1>" );
