@@ -14,10 +14,10 @@ class RemoveDuplicateSyntrans extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Maintenance tool to remove duplicated Synonyms/Translations\n"
+		$this->addDescription( "Maintenance tool to remove duplicated Synonyms/Translations\n"
 			. 'Example usage: php removeDuplicateSyntrans.php --test=true ' . "\n"
 			. ' or simply' . "\n"
-			. 'php removeDuplicateSyntrans.php' . "\n";
+			. 'php removeDuplicateSyntrans.php' . "\n" );
 		$this->addOption( 'test', 'true for test mode. e.g. --test=true' );
 	}
 

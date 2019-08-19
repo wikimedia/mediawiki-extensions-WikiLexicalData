@@ -23,9 +23,9 @@ class InstallWikiLexicalData extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Installation by creating the tables and filling them with the minimal necessary data\n"
+		$this->addDescription( "Installation by creating the tables and filling them with the minimal necessary data\n"
 			. 'Example usage: php install.php --prefix=uw '
-			. '--template=wikidataTemplate.sql --datasetname="OmegaWiki community"';
+			. '--template=wikidataTemplate.sql --datasetname="OmegaWiki community"' );
 		$this->addOption( 'freshInstall', 'Drop all tables before creating new ones' );
 		$this->addOption( 'prefix', 'The prefix to use for the relational tables. e.g. --prefix=uw' );
 		$this->addOption( 'template', 'A sql template describing the relational tables. e.g. --template=databaseTemplate.sql' );
