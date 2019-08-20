@@ -19,8 +19,8 @@ class CreateDocumentation extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Generates the WikiLexicalData Document\n"
-			. 'Example usage: php createDocumentation.php --config=docTemplate.cfg ';
+		$this->addDescription( "Generates the WikiLexicalData Document\n"
+			. 'Example usage: php createDocumentation.php --config=docTemplate.cfg ' );
 		$this->addOption( 'config', 'A doxygen config file used to creating the documentation. e.g. --config=docTemplate.cfg' );
 	}
 

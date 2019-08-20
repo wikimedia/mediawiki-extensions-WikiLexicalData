@@ -14,10 +14,10 @@ class RemoveDuplicateExpressions extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Maintenance tool to remove duplicated expressions\n"
+		$this->addDescription( "Maintenance tool to remove duplicated expressions\n"
 			. 'Example usage: php removeDuplicateExpression.php --test=true ' . "\n"
 			. ' or simply' . "\n"
-			. 'php removeDuplicateExpression.php' . "\n";
+			. 'php removeDuplicateExpression.php' . "\n" );
 		$this->addOption( 'test', 'true for test mode. e.g. --test=true' );
 	}
 
