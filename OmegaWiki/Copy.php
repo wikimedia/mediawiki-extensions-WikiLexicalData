@@ -1135,8 +1135,6 @@ class ClassMembershipCopier extends Copier {
 	public function dup() {
 		$memberships = $this->read();
 		$this->write( $memberships );
-
-		return;
 	}
 
 	/** read all class memberships associated with the dmid */

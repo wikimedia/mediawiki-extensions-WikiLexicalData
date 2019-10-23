@@ -58,7 +58,6 @@ class CommandLineOption {
  * encountered or a required option is not specified, an error message will be displayed and
  * the application stops.
  */
-
 function parseCommandLine( array $options ) {
 	global
 		$argv;

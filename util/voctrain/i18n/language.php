@@ -1,9 +1,10 @@
 <?php
 
 class LocalisationException extends Exception {
-};
+}
+
 class NoSuchMessageFileException extends LocalisationException {
-};
+}
 
 /**loosely inspired on class of same name from mediawiki.
 * (mediawiki version is overkill for our purposes though)

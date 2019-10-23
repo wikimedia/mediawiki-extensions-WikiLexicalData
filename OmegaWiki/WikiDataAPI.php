@@ -485,7 +485,7 @@ function removeRelationWithId( $relationId ) {
  *
  * @param unknown_type|null $relationTypeId dmid of the relationtype, optional.
  * @param unknown_type|null $lhs dmid of the left hand side, optional.
- * @param unknown_type|null $dmId dmid of the right hand side, optional.
+ * @param unknown_type|null $rhs dmid of the right hand side, optional.
  * @param unknown_type|null $dc the dataset, optional
  */
 function getRelationDefinedMeanings( $relationTypeId = null, $lhs = null, $rhs = null, $dc = null ) {
@@ -2175,7 +2175,6 @@ function getExpressionIdMeaningIds( $expressionId, $dc = null ) {
  *           discard this, but it is used in copy.php for objects table support
  * 	     array values set to -1 were not mapped.
  */
-
 function createConceptMapping( $concepts, $override_transaction = null ) {
 	$uuid_map = getUUID( $concepts );
 	foreach ( $concepts as $dc => $dm_id ) {
@@ -2234,7 +2233,6 @@ function getUUID( $concepts ) {
 }
 
 /** this function assumes that there is only a single mapping collection */
-
 function getCollectionIdForDC( $dc ) {
 	$dbr = wfGetDB( DB_REPLICA );
 
@@ -2254,7 +2252,6 @@ function getCollectionIdForDC( $dc ) {
 }
 
 /** Write the dm to the correct collection for a particular dc */
-
 function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction = null ) {
 	global $wgUser, $wgRequest;
 	// if(is_null($dc)) {
@@ -2507,7 +2504,6 @@ class ClassAttributes {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_REPLICA );
 
-		global $wgDefaultClassMids, $wgWikidataDataSet;
 		$queryResult = $dbr->select(
 			[ 'ca' => "{$dc}_class_attributes", 'bdm' => "{$dc}_bootstrapped_defined_meanings" ],
 			[ 'DISTINCT ca.attribute_mid', 'ca.attribute_type', 'bdm.name' ],

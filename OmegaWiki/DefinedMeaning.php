@@ -307,8 +307,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 	 * something purdy and maintainable)
 	 */
 	protected function getCopyPanel2() {
-		global
-			$wgScriptPath, $wgCommunity_dc;
+		global $wgCommunity_dc;
 
 		$html = "Copy to:<br />\n";
 		$datasets = wdGetDatasets();

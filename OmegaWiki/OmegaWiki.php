@@ -63,7 +63,7 @@ class OmegaWiki extends DefaultWikidataApplication {
 	}
 
 	public function edit() {
-		global $wgOut, $wgUser;
+		global $wgOut;
 
 		if ( !parent::edit() ) {
 			return false;

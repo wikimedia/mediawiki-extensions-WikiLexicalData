@@ -703,8 +703,6 @@ function filterObjectAttributesRecord( Record $sourceRecord, array &$attributeId
 }
 
 function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $viewInformation ) {
-	global $wgWikidataDataSet;
-
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext();
 	$dbr = wfGetDB( DB_REPLICA );

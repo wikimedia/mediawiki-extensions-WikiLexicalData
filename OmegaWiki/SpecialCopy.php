@@ -29,7 +29,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgRequest, $wgUser, $wdTermDBDataSet;
+		global $wgOut, $wgRequest, $wgUser;
 
 		# $wgOut->setPageTitle("Special:Copy");
 		if ( !$wgUser->isAllowed( 'wikidata-copy' ) ) {

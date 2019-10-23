@@ -141,7 +141,6 @@ class WikiLexicalDataDatabaseUpdater extends ExtensionDatabaseUpdater {
 	protected function bootStrappedDefinedMeanings() {
 		// Admin user
 		$userId = 1;
-		global $wgDBprefix;
 
 		// check that it is really a fresh install
 		$hasCollection = $this->dbw->selectField(

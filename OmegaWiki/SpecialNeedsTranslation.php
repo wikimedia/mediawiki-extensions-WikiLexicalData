@@ -16,7 +16,7 @@ class SpecialNeedsTranslation extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgRequest;
+		global $wgOut;
 
 		require_once "forms.php";
 		require_once "type.php";

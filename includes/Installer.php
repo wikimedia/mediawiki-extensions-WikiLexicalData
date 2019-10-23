@@ -23,7 +23,6 @@ class ExtensionDatabaseUpdater {
 
 		$this->dbw = wfGetDB( DB_MASTER );
 		$this->dbr = wfGetDB( DB_MASTER );
-		global $wgDBtype;
 
 		$this->setInternalParameters();
 
@@ -90,7 +89,7 @@ class ExtensionDatabaseUpdater {
 	/** @brief process a table
 	 */
 	protected function processTable() {
-		global $wgSitename, $wgDBtype;
+		global $wgSitename;
 		$this->replacePatternWithPrefix();
 		$this->extractTableName();
 		// process table if not exists
@@ -106,7 +105,7 @@ class ExtensionDatabaseUpdater {
 	/** @brief process an index
 	 */
 	protected function processIndex() {
-		global $wgSitename, $wgDBtype;
+		global $wgSitename;
 		$this->replacePatternWithPrefix();
 		$this->extractIndexTableName();
 		// process table if not exists

@@ -270,7 +270,6 @@ class InstallWikiLexicalData extends Maintenance {
 	 * @param dc str The database being accessed.
 	 */
 	protected function dropTables( $dc ) {
-		global $wgDBprefix;
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete(
 			'page',

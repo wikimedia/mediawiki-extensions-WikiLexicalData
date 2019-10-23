@@ -22,8 +22,6 @@ class RemoveDuplicateExpressions extends Maintenance {
 	}
 
 	public function execute() {
-		global $wdCurrentContext;
-
 		$this->test = false;
 		if ( $this->hasOption( 'test' ) ) {
 			$this->test = true;

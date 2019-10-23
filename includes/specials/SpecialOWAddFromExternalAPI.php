@@ -97,7 +97,7 @@ class SpecialOWAddFromExternalAPI extends SpecialPage {
 	}
 
 	private function process() {
-		global $myWordnikAPIKey, $wgWldProcessExternalAPIClasses, $wgOut;
+		global $wgWldProcessExternalAPIClasses;
 
 		// limit access to wikidata editors
 		if ( !$this->getUser()->isAllowed( 'editwikidata-uw' ) ) {
@@ -325,7 +325,53 @@ class ExternalResources {
 
 		$this->owlLexicalDataJSON = json_encode( $this->owlLexicalData );
 		// Line below for testing. When there's no internet connection
-	// $this->owlLexicalDataJSON = '[{"processed":null,"dm_id":"5836","lang_id":"85","text":"A common, four-legged animal (Sus scrofa) that has cloven hooves, bristles and a nose adapted for digging and is farmed by humans for its meat.","syn":null},{"processed":null,"dm_id":"1499810","lang_id":"85","text":"(Pejorative) A fat or overweight person.","syn":[["butterball","85","1","1499814"],["chubster","85","1","1499816"],["chunker","85","1","1499818"],["fat-ass","85","1","1499825"],["fatass","85","1","1499827"],["fatfuck","85","1","1499820"],["fatshit","85","1","1499829"],["fatso","85","1","1499811"],["fattie","85","1","1499822"],["fatty","85","1","1499823"],["lardass","85","1","1499831"],["lardo","85","1","1499833"],["obeast","85","1","1499837"],["oinker","85","1","1499835"],["podge","85","1","1499840"],["porker","85","1","1499842"],["pudge","85","1","1499844"],["salad dodger","85","1","1499846"],["tub of lard","85","1","1499848"]]},{"processed":null,"dm_id":"583600","lang_id":"85","text":"A common, four-legged animal (Sus scrofa) that has cloven hooves, bristles and a nose adapted for digging and is farmed by humans for its meat.","syn":null}]';
+/*
+		$this->owlLexicalDataJSON = <<<JSON
+[
+	{
+		"processed":null,
+		"dm_id":"5836",
+		"lang_id":"85",
+		"text":"A common, four-legged animal (Sus scrofa) that has cloven hooves, bristles and a nose adapted for digging and is farmed by humans for its meat.",
+		"syn":null
+	},
+	{
+		"processed":null,
+		"dm_id":"1499810",
+		"lang_id":"85",
+		"text":"(Pejorative) A fat or overweight person.",
+		"syn":[
+			["butterball","85","1","1499814"],
+			["chubster","85","1","1499816"],
+			["chunker","85","1","1499818"],
+			["fat-ass","85","1","1499825"],
+			["fatass","85","1","1499827"],
+			["fatfuck","85","1","1499820"],
+			["fatshit","85","1","1499829"],
+			["fatso","85","1","1499811"],
+			["fattie","85","1","1499822"],
+			["fatty","85","1","1499823"],
+			["lardass","85","1","1499831"],
+			["lardo","85","1","1499833"],
+			["obeast","85","1","1499837"],
+			["oinker","85","1","1499835"],
+			["podge","85","1","1499840"],
+			["porker","85","1","1499842"],
+			["pudge","85","1","1499844"],
+			["salad dodger","85","1","1499846"],
+			["tub of lard","85","1","1499848"]
+		]
+	},
+	{
+		"processed":null,
+		"dm_id":"583600",
+		"lang_id":"85",
+		"text":"A common, four-legged animal (Sus scrofa) that has cloven hooves, bristles and a nose adapted for digging and is farmed by humans for its meat.",
+		"syn":null
+	}
+]
+JSON;
+*/
 
 		$this->wgOut->addHTML(
 			'<div id="owl-data">' . $this->owlLexicalDataJSON . '</div>'

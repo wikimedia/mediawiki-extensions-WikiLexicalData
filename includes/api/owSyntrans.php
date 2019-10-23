@@ -49,7 +49,6 @@ class SynonymTranslation extends ApiBase {
 	}
 
 	public function execute() {
-		global $wgUser, $wgOut;
 		$options = [];
 
 		// Get the parameters

@@ -313,8 +313,6 @@ function expandTransactionIdsInRecordSet( RecordSet $recordSet ) {
 }
 
 function getTransactionRecord( $transactionId ) {
-	global $wgDBprefix;
-
 	$o = OmegaWikiAttributes::getInstance();
 
 	$dc = wdGetDataSetContext();
