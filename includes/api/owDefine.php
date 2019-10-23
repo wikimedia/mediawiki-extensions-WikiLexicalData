@@ -38,7 +38,6 @@ class Define extends SynonymTranslation {
 	}
 
 	public function execute() {
-		global $wgUser, $wgOut;
 		$options = [];
 
 		// Get the parameters

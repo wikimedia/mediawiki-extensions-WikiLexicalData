@@ -32,7 +32,7 @@ class AddSyntrans extends ApiBase {
 	}
 
 	public function execute() {
-		global $wgUser, $wgOut;
+		global $wgUser;
 
 		// limit access to bots
 		if ( !$wgUser->isAllowed( 'bot' ) ) {
@@ -259,7 +259,6 @@ class AddSyntrans extends ApiBase {
 	}
 
 	public function owAddSynonymOrTranslation() {
-		global $wgUser;
 		$dc = wdGetDataSetContext();
 
 		// check that the language_id exists

@@ -100,9 +100,6 @@ function getFileField( $name, $onChangeHandler = "" ) {
  *
  */
 function getSuggest( $name, $query, $parameters = [], $value = 0, $label = '', $displayLabelColumns = [ 0 ], DataSet $dc = null ) {
-	global
-		$wgScriptPath;
-
 	if ( is_null( $dc ) ) {
 		$dc = wdGetDataSetContext();
 	}
@@ -370,8 +367,6 @@ class OmegaWikiForms extends GenericForms {
 	 *
 	 */
 	function getSuggest( $name, $query, $parameters = [], $value = 0, $label = '', $displayLabelColumns = [ 0 ], DataSet $dc = null ) {
-		global $wgScriptPath;
-
 		if ( is_null( $dc ) ) {
 			$dc = wdGetDataSetContext();
 		}

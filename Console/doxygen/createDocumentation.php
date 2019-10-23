@@ -27,7 +27,7 @@ class CreateDocumentation extends Maintenance {
 	/** \brief public function execute
 	 */
 	public function execute() {
-		global $wdCurrentContext, $wgDBprefix, $wgWldDownloadScriptPath;
+		global $wgWldDownloadScriptPath;
 
 		// checking that the needed parameters are given
 		// else use the default config file

@@ -13,7 +13,7 @@ class OmegaWikiHooks extends WikiLexicalDataHooks {
 	 * Target pages having invalid DefinedMeaning IDs are replaced by a link to (invalid) DefinedMeaning ID 0.
 	 */
 	public static function onInternalParseBeforeLinks( Parser &$parser, &$text ) {
-		global $wgExtraNamespaces, $wgWldOwScriptPath;
+		global $wgExtraNamespaces;
 		// FIXME: skip if not action=submit
 		// FIXME: skip if not page text
 		if ( true ) {

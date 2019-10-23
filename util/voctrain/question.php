@@ -1,7 +1,7 @@
 <?php
 
 class MissingWordsException extends Exception {
-};
+}
 
 class Question {
 

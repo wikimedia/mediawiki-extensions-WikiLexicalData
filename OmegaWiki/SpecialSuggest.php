@@ -272,7 +272,7 @@ class SpecialSuggest extends SpecialPage {
 	 * in the user language or in English
 	 */
 	private function getSQLToSelectPossibleAttributes( $definedMeaningId, $attributesLevel, $syntransId, $annotationAttributeId, $attributesType ) {
-		global $wgDefaultClassMids, $wgIso639_3CollectionId, $wgDBprefix;
+		global $wgDefaultClassMids, $wgIso639_3CollectionId;
 
 		$classMids = $wgDefaultClassMids;
 

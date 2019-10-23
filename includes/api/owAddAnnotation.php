@@ -432,8 +432,6 @@ class AddAnnotation extends ApiBase {
 	}
 
 	public function processBatch( $wikiPage ) {
-		global $params;
-
 		$csvWikiPageTitle = Title::newFromText( $wikiPage );
 		$csvWikiPage = new WikiPage( $csvWikiPageTitle );
 

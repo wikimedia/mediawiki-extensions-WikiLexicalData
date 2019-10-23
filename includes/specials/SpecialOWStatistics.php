@@ -12,7 +12,7 @@ class SpecialOWStatistics extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgRequest;
+		global $wgOut;
 
 		$wgOut->setPageTitle( wfMessage( 'ow-stat-header' )->text() );
 

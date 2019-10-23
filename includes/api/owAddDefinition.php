@@ -18,7 +18,7 @@ class AddDefinition extends ApiBase {
 	}
 
 	public function execute() {
-		global $wgUser, $wgOut;
+		global $wgUser;
 
 		// keep blocked user out
 		if ( $wgUser->isBlocked() ) {
@@ -120,8 +120,6 @@ class AddDefinition extends ApiBase {
 	}
 
 	public function processBatch( $wikiPage ) {
-		global $params;
-
 		$csvWikiPageTitle = Title::newFromText( $wikiPage );
 		$csvWikiPage = new WikiPage( $csvWikiPageTitle );
 
@@ -210,7 +208,6 @@ class AddDefinition extends ApiBase {
 	}
 
 	public function owAddDefinition( $definition, $languageId, $definedMeaningId ) {
-		global $wgUser;
 		$dc = wdGetDataSetContext();
 
 		// check that the language_id exists

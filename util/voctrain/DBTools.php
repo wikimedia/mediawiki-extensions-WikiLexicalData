@@ -72,7 +72,6 @@ class DBTools {
 	 * 	each associative array is structured with:		\
 	 * 	keys=column headers, values = row contents
 	 */
-
 	public static function doMultirowQuery( $query ) {
 		# var_dump($query);
 		$result = mysql_query( $query );

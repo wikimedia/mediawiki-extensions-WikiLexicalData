@@ -117,7 +117,7 @@ class SpecialConceptMapping extends SpecialPage {
 			}
 			$wgOut->addHTML( "<br />\n" );
 		}
-		if ( sizeOf( $mappings ) > 1 ) {
+		if ( count( $mappings ) > 1 ) {
 			createConceptMapping( $mappings );
 			$wgOut->addHTML( wfMessage( "ow_mapping_successful" )->text() );
 		} else {

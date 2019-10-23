@@ -50,7 +50,7 @@ class DefaultWikidataApplication {
 	}
 
 	public function view() {
-		global $wgOut, $wgUser;
+		global $wgOut;
 
 		$wgOut->enableClientCache( true );
 
@@ -77,7 +77,6 @@ class DefaultWikidataApplication {
 	}
 
 	protected function getDataSetPanel() {
-		global $wgUser;
 		$dc = wdGetDataSetContext();
 		$ow_datasets = wfMessage( "ow_datasets" )->text();
 		$html = "<div class=\"dataset-panel\">";
@@ -321,7 +320,6 @@ class DataSet {
 	}
 
 	public function setDBprefix( $cp ) {
-		global $wgDBprefix;
 		$fname = "DataSet::setDBprefix";
 		$this->mwPrefix = $cp;
 	}
