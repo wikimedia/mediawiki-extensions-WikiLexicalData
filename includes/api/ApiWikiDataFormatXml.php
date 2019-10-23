@@ -127,7 +127,7 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 		return $doc;
 	}
 
-	private function appendRecord( & $record, $elmName, & $parentElm ) {
+	private function appendRecord( &$record, $elmName, &$parentElm ) {
 		$aExcluded = & $this->excluded;
 		if ( isset( $aExcluded[$elmName] ) ) {
 			return;

@@ -33,7 +33,7 @@ class RecordHelperTest extends PHPUnit\Framework\TestCase {
 		$result = PHPUnit_TextUI_TestRunner::run( $suite );
 	}
 
-	function setUp() {
+	function setUp() : void {
 		global $wgCommandLineMode;
 		$wgCommandLineMode = true;
 		$dc = "uw";
@@ -45,7 +45,7 @@ class RecordHelperTest extends PHPUnit\Framework\TestCase {
 		$testRecord = $model->getRecord();
 	}
 
-	function tearDown() {
+	function tearDown() : void {
 		$testRecord = null;
 	}
 
