@@ -20,7 +20,7 @@ General Tidying (refactoring)
   Thought the functions used to generate the SQL is good, it is
   generally not ideal to use the generalized query() function.
 * There are mysql_query functions used in Copy.php are not currently
-  in use. If you decide to use them, kindly refactor the fuctions to
+  in use. If you decide to use them, kindly refactor the functions to
   use MediaWiki's database function.
 
 Deferred Items (take into account)
