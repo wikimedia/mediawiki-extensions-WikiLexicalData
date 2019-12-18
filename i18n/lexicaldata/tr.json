@@ -9,7 +9,8 @@
 			"Nyasar",
 			"Vito Genovese",
 			"Тест",
-			"HakanIST"
+			"HakanIST",
+			"BaRaN6161 TURK"
 		]
 	},
 	"wikidata-desc": "Farklı içerik türleri için viki benzeri bir veritabanı ekler",
@@ -43,8 +44,8 @@
 	"datasearch_within_ext_ids": "Harici tanımlayıcılar içinde:",
 	"datasearch_showing_only": "(Toplam $2 sonuçtan) azami $1 {{PLURAL:$1|eşleşme|eşleşme}} gösteriliyor.",
 	"datasearch_match_ext_ids": "<em>$1</em> ile eşleşen harici tanımlayıcılar",
-	"datasearch_match_words": "<em>$1</em> ile eşleşen kelimeler ve ilişkili anlamları",
-	"datasearch_match_words_lang": "<em>$1</em> dahilindeki <em>$2</em> ile eşleşen kelimeler ve ilişkili anlamları",
+	"datasearch_match_words": "<em>$1</em> ile eşleşen ifadeler ve bunların anlamları",
+	"datasearch_match_words_lang": "<em>$1</em> içindeki ve <em>$2</em> ile eşleşen ifadeler ve bunların anlamları",
 	"importtsv": "TSV’yi içe aktar",
 	"ow_importtsv_title1": "TSV'yi içe aktar",
 	"ow_importtsv_title2": "Tanım ve çevirileri içe aktar",
