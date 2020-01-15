@@ -1,8 +1,8 @@
 <?php
 
 /**
-* Maintenance script to remove duplicate expessions
-*/
+ * Maintenance script to remove duplicate expessions
+ */
 
 $baseDir = __DIR__ . '/../../..';
 require_once $baseDir . '/maintenance/Maintenance.php';
@@ -52,7 +52,7 @@ class RemoveDuplicateSyntrans extends Maintenance {
 						// correct the duplication
 						$this->correctSyntransDuplication( $syntrans );
 					if ( !$this->test ) {
-						if ( is_null( $dc ) ) {
+						if ( $dc === null ) {
 							$dc = wdGetDataSetContext();
 						}
 
@@ -117,7 +117,7 @@ class RemoveDuplicateSyntrans extends Maintenance {
 
 	protected function correctSyntransDuplication( $syntrans, $dc = null ) {
 		// find attributes with $syntrans[1] and replace them with $syntrans[0]
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -366,7 +366,7 @@ class RemoveDuplicateSyntrans extends Maintenance {
 	}
 
 	protected function getDuplicateSyntransSyntransToUpdate( $expressionId, $definedMeaningId, $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -399,7 +399,7 @@ class RemoveDuplicateSyntrans extends Maintenance {
 	}
 
 	protected function getDuplicateSyntrans( $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );

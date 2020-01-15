@@ -99,10 +99,10 @@ class DBTools {
 	 * (Namely, if either $key or $array is either null or false)
 	 */
 	public static function sane_key_exists( $key, $array ) {
-		if ( is_null( $key ) or $key == false ) {
+		if ( $key === null or $key == false ) {
 			return false;
 		}
-		if ( is_null( $array ) or $array == false ) {
+		if ( $array === null or $array == false ) {
 			return false;
 		}
 		return array_key_exists( $key, $array );
@@ -163,7 +163,7 @@ class DBTools {
 		$sql_comma = $sql;
 		foreach ( $my_array as $key => $value ) {
 			$sql = $sql_comma;
-			if ( is_null( $value ) ) {
+			if ( $value === null ) {
 				$value = "DEFAULT";
 			} else {
 				$value = '"' . mysql_real_escape_string( $value ) . '"';
@@ -200,7 +200,7 @@ class DBTools {
 		// we add the enclosing quotes at the same time
 		$sql_comma = $sql;
 		foreach ( $my_array as $key => $value ) {
-			if ( !is_null( $value ) ) {
+			if ( $value !== null ) {
 				$sql = $sql_comma;
 				$value = '"' . mysql_real_escape_string( $value ) . '"';
 				$sql .= " `$key`=$value";
@@ -219,7 +219,7 @@ class DBTools {
 
 		if ( !$result ) {
 			throw new Exception( "Mysql query failed: $sql with error message " . mysql_error() );
-		};
+		}
 
 		if ( $result ) {
 			return true;

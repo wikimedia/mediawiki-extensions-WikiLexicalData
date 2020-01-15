@@ -1,8 +1,8 @@
 <?php
 
 /**
-* Maintenance script to remove duplicate expessions
-*/
+ * Maintenance script to remove duplicate expessions
+ */
 
 $baseDir = __DIR__ . '/../../..';
 require_once $baseDir . '/maintenance/Maintenance.php';
@@ -89,7 +89,7 @@ class RemoveDuplicateExpressions extends Maintenance {
 	}
 
 	protected function deleteDuplicate( $expressionId, $languageId, $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -129,7 +129,7 @@ class RemoveDuplicateExpressions extends Maintenance {
 	}
 
 	protected function correctDuplication( $syntransSid, $expressionId, $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -152,7 +152,7 @@ class RemoveDuplicateExpressions extends Maintenance {
 	}
 
 	protected function getSyntransToUpdate( $expressionIds, $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -184,7 +184,7 @@ class RemoveDuplicateExpressions extends Maintenance {
 	}
 
 	protected function getSpellingExpressionId( $spelling, $languageId, $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -216,7 +216,7 @@ class RemoveDuplicateExpressions extends Maintenance {
 	}
 
 	protected function getDuplicateExpressions( $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );

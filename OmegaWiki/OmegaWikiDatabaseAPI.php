@@ -22,7 +22,7 @@ class OwDatabaseAPI {
 	}
 
 	/** @addtogroup OwDbAPIcomFn OwDatabaseAPI's Common database functions
-	 *	@{
+	 *	 @{
 	 */
 
 /**
@@ -46,7 +46,7 @@ class OwDatabaseAPI {
 	/*! @} group OwDbAPIcomFn ends here.*/
 
 	/** @addtogroup OwDbAPIeFn OwDatabaseAPI's Expression functions
-	 *	@{
+	 *	 @{
 	 */
 
 	/** @brief creates a new Expression entry.
@@ -161,7 +161,7 @@ class OwDatabaseAPI {
 	/*! @} group OwDbAPIeFn ends here.*/
 
 	/** @addtogroup OwDbAPIdmFn OwDatabaseAPI's Defined Meaning functions
-	 *	@{
+	 *	 @{
 	 */
 
 	/** @brief Returns the spelling of an expression used as
@@ -285,7 +285,7 @@ class OwDatabaseAPI {
 	/*! @} group OwDbAPIdmFn ends here.*/
 
 	/** @addtogroup OwDbAPIlangFn OwDatabaseAPI's language functions
-	 *	@{
+	 *	 @{
 	 */
 
 	/**
@@ -379,7 +379,7 @@ class OwDatabaseAPI {
 	 */
 	static function getOwLanguageNames( $purge = false, $code = null ) {
 		static $owLanguageNames = null;
-		if ( is_null( $owLanguageNames ) && !$purge ) {
+		if ( $owLanguageNames === null && !$purge ) {
 			// if code is not given, get user Language.
 			if ( !$code ) {
 				$code = self::getUserLanguage();
@@ -405,7 +405,7 @@ class OwDatabaseAPI {
 	/*! @} group OwDbAPIlangFn ends here.*/
 
 	/** @addtogroup OwDbAPIrelAttFn OwDatabaseAPI's relations Attribute functions
-	 *	@{
+	 *	 @{
 	 */
 
 	/**
@@ -429,7 +429,7 @@ class OwDatabaseAPI {
 	/*! @} group OwDbAPIrelAttFn ends here.*/
 
 	/** @addtogroup OwDbAPIoptAttFn OwDatabaseAPI's options Attribute functions
-	 *	@{
+	 *	 @{
 	 */
 
 	/** @brief getOptionsAttributeOption Template
@@ -468,7 +468,7 @@ class OwDatabaseAPI {
 	/*! @} group OwDbAPIoptAttFn ends here.*/
 
 	/** @addtogroup OwDbAPIsyntFn OwDatabaseAPI's Syntrans functions
-	 *	@{
+	 *	 @{
 	 */
 
 	/** @brief adds Syntrans
@@ -531,7 +531,7 @@ class OwDatabaseAPI {
 	/*! @} group OwDbAPIsyntFn ends here.*/
 
 	/** @addtogroup OwDbAPItransactFn OwDatabaseAPI's Transactions functions
-	 *	@{
+	 *	 @{
 	 */
 
 	/**
@@ -613,7 +613,7 @@ class OwDatabaseAPI {
 	 * @return string $dc
 	 */
 	protected function getDc( $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$this->dc = $dc;
@@ -742,16 +742,16 @@ class Syntrans {
 		// safety net.
 		if ( !isset( $options['transacted'] ) ) {
 			$options['transacted'] = false;
-		};
+		}
 		if ( !isset( $options['updateId'] ) ) {
 			$options['updateId'] = -1;
-		};
+		}
 		if ( !isset( $options['tid'] ) ) {
 			$options['tid'] = -1;
-		};
+		}
 		if ( !isset( $options['test'] ) ) {
 			$options['test'] = false;
-		};
+		}
 
 		// add note['tid'] from $options['tid'] (transaction id), if null, get value
 		// from $this->options['updateId'].
@@ -797,7 +797,7 @@ class Syntrans {
 	 *
 	 */
 	public static function getSpellingWithDM( $syntransId, $options = [], $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );

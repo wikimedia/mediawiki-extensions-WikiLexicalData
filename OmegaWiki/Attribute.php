@@ -37,10 +37,10 @@ class Attribute {
 
 		// Since the attribute is a structure and unnamed, we use
 		// the default label associated with it.
-		if ( is_null( $this->id ) && ( $this->type instanceof Structure ) ) {
+		if ( $this->id === null && ( $this->type instanceof Structure ) ) {
 			$this->id = $this->type->getStructureType();
 		// Override structure label with a more specific one
-		} elseif ( !is_null( $this->id ) && ( $this->type instanceof Structure ) ) {
+		} elseif ( $this->id !== null && ( $this->type instanceof Structure ) ) {
 			$this->type->setStructureType( $this->id );
 		}
 	}
@@ -183,7 +183,7 @@ class Attributes {
 	 * Note: $options can be used to introduce new variables
 	 */
 	public static function getTextAttributes( $objectId, $options = [], $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -256,7 +256,7 @@ class Attributes {
 	 * Note: $options can be used to introduce new variables
 	 */
 	public static function getOptionAttributes( $objectId, $options = [], $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -388,7 +388,7 @@ class Attributes {
 	 * @return if not exist, null
 	 */
 	public static function getAttributeName( $attributeId, $languageId = null, $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -431,7 +431,7 @@ class Attributes {
 	 * @return if not exist, null
 	 */
 	public static function getClassAttributeId( $attributeExpression, $languageId = null, $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -488,7 +488,7 @@ class Attributes {
 	 *
 	 */
 	public static function getRelationIdRelation( $objectId, $options, $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );

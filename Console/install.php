@@ -1,6 +1,6 @@
 <?php
 /** @file
- *  @brief WikiLexicalData install script
+ * @brief WikiLexicalData install script
  *
  * Maintenance script to create a WikiLexicalData extension for mediawiki
  * it generates the tables in a database (passed as parameter) with a defined prefix (passed as parameter)
@@ -383,7 +383,7 @@ class InstallWikiLexicalData extends Maintenance {
 						. 'Example usage: php install.php --prefix=uw '
 						. '--template=databaseTemplate.sql --datasetname="OmegaWiki community"  --freshInstall' . "\n\n";
 						die;
-					};
+					}
 
 				}
 

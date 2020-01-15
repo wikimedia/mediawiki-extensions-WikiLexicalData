@@ -14,15 +14,15 @@ require_once 'PropertyToColumnFilter.php';
 
 class ViewInformation {
 	/**
-	* array containing a list of languages that the user wants to display
-	* so that other languages are hidden.
-	* If the array is empty, all languages are displayed.
-	*/
+	 * array containing a list of languages that the user wants to display
+	 * so that other languages are hidden.
+	 * If the array is empty, all languages are displayed.
+	 */
 	public $filterLanguageList;
 
 	/**
-	* The language of the expression to display, according to the url &explang=...
-	*/
+	 * The language of the expression to display, according to the url &explang=...
+	 */
 	public $expressionLanguageId;
 
 	public $queryTransactionInformation;

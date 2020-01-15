@@ -105,7 +105,7 @@ class WLDLanguage {
 		$dbr = wfGetDB( DB_REPLICA );
 		$langId = getLanguageIdForCode( $langCode );
 
-		if ( $langCode == WLD_ENGLISH_LANG_WMKEY || is_null( $langId ) ) {
+		if ( $langCode == WLD_ENGLISH_LANG_WMKEY || $langId === null ) {
 			$cond = [ 'name_language_id' => WLD_ENGLISH_LANG_ID ];
 			if ( !empty( $lang_subset ) ) {
 				$cond['language_id'] = $lang_subset;
@@ -162,7 +162,7 @@ function getLangNames( $code ) {
 
 function getLanguageIdForCode( $code ) {
 	static $languages = null;
-	if ( is_null( $languages ) ) {
+	if ( $languages === null ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$id_res = $dbr->select(
 			'language',
@@ -186,7 +186,7 @@ function getLanguageIdForCode( $code ) {
 function getLanguageIdForIso639_3( $code ) {
 	static $languages = null;
 
-	if ( is_null( $languages ) ) {
+	if ( $languages === null ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$result = $dbr->select(
 			'language',
@@ -211,7 +211,7 @@ function getLanguageIdForIso639_3( $code ) {
 function getLanguageIso639_3ForId( $id ) {
 	static $languages = null;
 
-	if ( is_null( $languages ) ) {
+	if ( $languages === null ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$result = $dbr->select(
 			'language',

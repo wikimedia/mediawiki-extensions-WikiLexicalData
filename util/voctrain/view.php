@@ -92,8 +92,8 @@ class View {
 	}
 
 	/** an action was provided, but we've never heard of it
-		"?action=UnintelligibleGibberish"
-		*/
+	 * "?action=UnintelligibleGibberish"
+	 */
 	public function actionUnknown( $action ) {
 		$this->language->i18nprint( "<h1><|Action unknown|></h1>" );
 		$this->language->i18nprint( "<|I don't know what to do with '%action'.|>", [ "action" => $action ] );

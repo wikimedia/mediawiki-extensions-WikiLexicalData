@@ -178,7 +178,7 @@ function startNewTransaction( $userID, $userIP, $comment, $dc = null ) {
 	global
 		$updateTransactionId;
 
-	if ( is_null( $dc ) ) {
+	if ( $dc === null ) {
 		$dc = wdGetDataSetContext();
 	}
 
@@ -400,7 +400,7 @@ class Transactions {
 	 * Though you can access this function, it is highly recommended that you
 	 * use the static function OwDatabaseAPI::getLanguageIdLatestTransactionId instead.
 	 * Also note that this function currently includes all data, even removed ones.
-
+	 *
 	 */
 	public static function getLanguageIdLatestTransactionId( $languageId, $options = [], $dc = null ) {
 		// If non numeric, skip this function and return -1
@@ -429,7 +429,7 @@ class Transactions {
 			return -2;
 		}
 
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 
@@ -445,7 +445,7 @@ class Transactions {
 /** @see static function Transactions::getLanguageIdLatestTransactionId
  */
 	protected function getLanguageIdLatestSynonymsAndTranslationsTransactionId( $languageId, $options = [], $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -487,7 +487,7 @@ class Transactions {
 	 * Also note that this function currently includes all data, even removed ones.
 	 */
 	public static function getIdDetails( $transactionId, $options, $dc ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );

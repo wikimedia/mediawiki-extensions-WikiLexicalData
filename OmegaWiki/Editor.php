@@ -2058,7 +2058,7 @@ class RecordSetListEditor extends RecordSetEditor {
 				// check if we have an extraHierarchyCaption to add
 				// this can happen for example if we sort by part of speeches and want to display that.
 				$extraLevelName = $arrayRecordSet->getExtraHierarchyCaption( $i );
-				if ( !is_null( $extraLevelName ) ) {
+				if ( $extraLevelName !== null ) {
 					// close the previous extraHierarchy if needed
 					if ( $extraLevelUlOpen ) {
 						$result .= Html::closeElement( 'ul' );

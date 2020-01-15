@@ -15,7 +15,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  *
  * @author Erik Moeller <Eloquence@gmail.com>	(Possibly some remaining code)
  * @author Kim Bruning <kim@bruning.xs4all.nl>
- # @author Alan Smithee <Alan.Smithee@brown.paper.bag> (if code quality improves, may yet claim)
+ * @author Alan Smithee <Alan.Smithee@brown.paper.bag> (if code quality improves, may yet claim)
  * @license GPLv2 or later.
  */
 require_once "WikiDataAPI.php";
@@ -80,15 +80,15 @@ class SpecialCopy extends UnlistedSpecialPage {
 
 		$abort = false; 	# check all input before aborting
 
-		if ( is_null( $dmid_dirty ) ) {
+		if ( $dmid_dirty === null ) {
 			$wgOut->addWikiMsg( "ow_please_provide_dmid" );
 			$abort = true;
 		}
-		if ( is_null( $dc1_dirty ) ) {
+		if ( $dc1_dirty === null ) {
 			$wgOut->addWikiMsg( "ow_please_provide_dc1" );
 			$abort = true;
 		}
-		if ( is_null( $dc2_dirty ) ) {
+		if ( $dc2_dirty === null ) {
 			$wgOut->addWikiMsg( "ow_please_provide_dc2" );
 			$abort = true;
 		}

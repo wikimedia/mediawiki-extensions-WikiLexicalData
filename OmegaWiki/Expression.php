@@ -14,7 +14,7 @@ class Expression {
 		$this->id = $id;
 		$this->spelling = $spelling;
 		$this->languageId = $languageId;
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$this->dataset = wdGetDataSetContext();
 		} else {
 			$this->dataset = $dc;
@@ -221,7 +221,7 @@ class Expressions {
 	 * else returns null
 	 */
 	public static function getNumberOfExpressions( $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -258,7 +258,7 @@ class Expressions {
 	 * else returns null
 	 */
 	public static function getLanguageIdExpressions( $languageId, $options = [], $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -307,7 +307,7 @@ class Expressions {
 	 * else returns null
 	 */
 	public static function getDefinedMeaningIdAndLanguageIdExpressions( $languageId, $definedMeaningId, $options = [], $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );

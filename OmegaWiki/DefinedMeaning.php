@@ -24,7 +24,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$dmInfo = DefinedMeaningModel::splitTitleText( $titleText );
 
 		// WikiData compatibility. Using title with dmid only
-		if ( is_null( $dmInfo ) && is_numeric( $titleText ) ) {
+		if ( $dmInfo === null && is_numeric( $titleText ) ) {
 			$dmInfo = [
 				"expression" => null,
 				"id" => $titleText
@@ -34,7 +34,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		$dmNumber = $dmInfo["id"];
 
 		// Title doesn't have an ID in it (or ID 0)
-		if ( is_null( $dmInfo ) || !$dmNumber ) {
+		if ( $dmInfo === null || !$dmNumber ) {
 			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_badtitle' );
 			return false;
 		}
@@ -50,7 +50,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 		// The defining expression is likely incorrect for some reason. Let's just
 		// try looking up the number.
-		if ( is_null( $match ) && !empty( $dmInfo["expression"] ) ) {
+		if ( $match === null && !empty( $dmInfo["expression"] ) ) {
 			$this->definedMeaningModel->setDefiningExpression( null );
 			$dmInfo["expression"] = null;
 			$match = $this->definedMeaningModel->checkExistence( true, true );
@@ -58,7 +58,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 		// The defining expression is either bad or missing. Let's redirect
 		// to the correct URL.
-		if ( empty( $dmInfo["expression"] ) && !is_null( $match ) ) {
+		if ( empty( $dmInfo["expression"] ) && $match !== null ) {
 			$this->definedMeaningModel->loadRecord();
 			$title = Title::newFromText( $this->definedMeaningModel->getWikiTitle() );
 			$url = $title->getFullURL();
@@ -68,7 +68,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		}
 
 		// Bad defining expression AND bad ID! :-(
-		if ( is_null( $match ) ) {
+		if ( $match === null ) {
 			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_missing' );
 			return false;
 		}
@@ -121,12 +121,12 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 		// check that the constructed DM actually exists in the database
 		$match = $dmModel->checkExistence( true, true );
-		if ( is_null( $match ) ) {
+		if ( $match === null ) {
 			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_missing' );
 			return false;
 		}
 
-		if ( is_null( $dmModel->getRecord() ) ) {
+		if ( $dmModel->getRecord() === null ) {
 			$wgOut->addHTML( wfMessage( "ow_db_consistency__not_found" )->text() . " ID:$definedMeaningId" );
 			return;
 		}
@@ -156,7 +156,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 
 		// check that the constructed DM actually exists in the database
 		$match = $dmModel->checkExistence( true, true );
-		if ( is_null( $match ) ) {
+		if ( $match === null ) {
 			$wgOut->showErrorPage( 'errorpagetitle', 'ow_dm_missing' );
 			return false;
 		}
@@ -348,7 +348,7 @@ class DefinedMeanings {
 	 * @see use OwDatabaseAPI::definingExpression instead
 	 */
 	public static function definingExpression( $definedMeaningId, $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -379,7 +379,7 @@ class DefinedMeanings {
 	 * @see use OwDatabaseAPI::getDefinedMeaningSpelling instead
 	 */
 	public static function getSpelling( $definedMeaning, $languageId = null, $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -444,7 +444,7 @@ class DefinedMeanings {
 	 *
 	 */
 	public static function getTranslatedContentIdDefinedMeaningId( $translatedContentId, $options, $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );
@@ -486,7 +486,7 @@ class DefinedMeanings {
 	 * @return if not exists, null
 	 */
 	public static function getLanguageIdDefinedMeaningId( $languageId, $options = [], $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		$dbr = wfGetDB( DB_REPLICA );

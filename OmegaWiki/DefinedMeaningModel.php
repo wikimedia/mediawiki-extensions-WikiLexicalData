@@ -76,7 +76,7 @@ class DefinedMeaningModel {
 	public function checkExistence( $searchAllDataSets = false, $switchContext = false ) {
 		global $wdCurrentContext;
 		$match = $this->checkExistenceInDataSet( $this->dataset );
-		if ( !is_null( $match ) ) {
+		if ( $match !== null ) {
 			$this->exists = true;
 			return $match;
 		} else {
@@ -90,7 +90,7 @@ class DefinedMeaningModel {
 		foreach ( $datasets as $currentSet ) {
 			if ( $currentSet->getPrefix() != $this->dataset->getPrefix() ) {
 				$match = $this->checkExistenceInDataSet( $currentSet );
-				if ( !is_null( $match ) ) {
+				if ( $match !== null ) {
 					$this->exists = true;
 					if ( $switchContext ) {
 						$wdCurrentContext = $match;
@@ -107,10 +107,10 @@ class DefinedMeaningModel {
 	public function CheckIfStub() {
 		$dataset = $this->getDataset();
 		$id = $this->getId();
-		if ( is_null( $dataset ) ) {
+		if ( $dataset === null ) {
 			throw new Exception( "DefinedMeaningModel->isStub: Dataset is null." );
 		}
-		if ( is_null( $id ) ) {
+		if ( $id === null ) {
 			throw new Exception( "DefinedMeaningModel->isStub: Id is null." );
 		}
 		require_once "Copy.php";
@@ -144,12 +144,12 @@ class DefinedMeaningModel {
 		if ( !$dmRow || !$dmRow->defined_meaning_id ) {
 			return null;
 		}
-		if ( is_null( $definingExpression ) ) {
+		if ( $definingExpression === null ) {
 			return $dc;
 		} else {
 			$expid = (int)$dmRow->expression_id;
 			$storedExpression = getExpression( $expid, $dc );
-			if ( is_null( $storedExpression ) ) {
+			if ( $storedExpression === null ) {
 				return null;
 			}
 			if ( $storedExpression->spelling != $definingExpression ) {
@@ -168,7 +168,7 @@ class DefinedMeaningModel {
 	 * @return Boolean indicating success.
 	 */
 	public function loadRecord() {
-		if ( is_null( $this->exists ) ) {
+		if ( $this->exists === null ) {
 			$this->checkExistence();
 		}
 
@@ -179,7 +179,8 @@ class DefinedMeaningModel {
 		$id = $this->getId();
 		$view = $this->getViewInformation();
 		/** @todo FIXME: Records should be loaded using helpers rather than
-		  global functions! */
+		 * global functions!
+		 */
 		$o = OmegaWikiAttributes::getInstance();
 
 		$record = new ArrayRecord( $o->definedMeaning->type );
@@ -424,7 +425,7 @@ class DefinedMeaningModel {
 		}
 
 		$syntrans = getSpellingForLanguage( $this->getId(), $languageCode, $fallbackCode, $this->dataset );
-		if ( !is_null( $syntrans ) ) {
+		if ( $syntrans !== null ) {
 			$this->syntrans[$languageCode] = $syntrans;
 		}
 		return $syntrans;
@@ -439,7 +440,7 @@ class DefinedMeaningModel {
 			$definingExpression = $this->getDefiningExpression();
 			$id = $this->getId();
 
-			if ( is_null( $definingExpression ) or is_null( $id ) ) {
+			if ( $definingExpression === null or $id === null ) {
 				return null;
 			}
 
@@ -523,7 +524,7 @@ class DefinedMeaningModel {
 	 *
 	 */
 	public function getDefiningExpression() {
-		if ( is_null( $this->definingExpression ) ) {
+		if ( $this->definingExpression === null ) {
 			return OwDatabaseAPI::definingExpression( $this->getId(), $this->getDataset() );
 		}
 		return $this->definingExpression;

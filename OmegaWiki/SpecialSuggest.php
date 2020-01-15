@@ -276,7 +276,7 @@ class SpecialSuggest extends SpecialPage {
 
 		$classMids = $wgDefaultClassMids;
 
-		if ( ( !is_null( $syntransId ) ) && ( !is_null( $wgIso639_3CollectionId ) ) ) {
+		if ( ( $syntransId !== null ) && ( $wgIso639_3CollectionId !== null ) ) {
 			// find the language of the syntrans and add attributes of that language
 			// by adding the language DM to the list of default classes
 			// this first query returns the language_id
@@ -797,10 +797,10 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	/**
-	* returns a table with three columns for selecting a DM:
-	* spelling / language / definition
-	* The three together represent a specific (unique) defined_meaning_id
-	*/
+	 * returns a table with three columns for selecting a DM:
+	 * spelling / language / definition
+	 * The three together represent a specific (unique) defined_meaning_id
+	 */
 	private function getDefinedMeaningAsRecordSet( $queryResult ) {
 		$definitionAttribute = new Attribute( "definition", wfMessage( 'ow_Definition' )->text(), "definition" );
 
@@ -824,10 +824,10 @@ class SpecialSuggest extends SpecialPage {
 	}
 
 	/**
-	* returns a table with three columns for selecting a Syntrans:
-	* spelling / language / definition
-	* The three together represent a specific (unique) syntrans_sid
-	*/
+	 * returns a table with three columns for selecting a Syntrans:
+	 * spelling / language / definition
+	 * The three together represent a specific (unique) syntrans_sid
+	 */
 	private function getSyntransAsRecordSet( $queryResult ) {
 		$definitionAttribute = new Attribute( "definition", wfMessage( 'ow_Definition' )->text(), "definition" );
 

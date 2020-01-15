@@ -100,7 +100,7 @@ function getFileField( $name, $onChangeHandler = "" ) {
  *
  */
 function getSuggest( $name, $query, $parameters = [], $value = 0, $label = '', $displayLabelColumns = [ 0 ], DataSet $dc = null ) {
-	if ( is_null( $dc ) ) {
+	if ( $dc === null ) {
 		$dc = wdGetDataSetContext();
 	}
 	if ( $label == "" ) {
@@ -367,7 +367,7 @@ class OmegaWikiForms extends GenericForms {
 	 *
 	 */
 	function getSuggest( $name, $query, $parameters = [], $value = 0, $label = '', $displayLabelColumns = [ 0 ], DataSet $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = wdGetDataSetContext();
 		}
 		if ( $label == "" ) {

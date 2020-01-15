@@ -286,7 +286,7 @@ class ApiWikiData extends ApiBase {
 	}
 
 	public function & getCustomPrinter() {
-		if ( is_null( $this->printer ) ) {
+		if ( $this->printer === null ) {
 			$this->printer = new ApiWikiDataFormatXml( $this->getMain() );
 		}
 		return $this->printer;

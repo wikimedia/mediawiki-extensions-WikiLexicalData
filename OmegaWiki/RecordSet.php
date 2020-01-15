@@ -33,7 +33,7 @@ abstract class RecordSet {
 		foreach ( $this->records as $value ) {
 			$rv = $rv2;
 			$methods = get_class_methods( get_class( $value ) );
-			if ( !is_null( $methods ) ) {
+			if ( $methods !== null ) {
 				if ( in_array( "tostring_indent", $methods ) ) {
 					$value = $value->tostring_indent( $depth + 1 );
 				}

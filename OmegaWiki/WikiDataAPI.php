@@ -1,6 +1,6 @@
 <?php
 /** @file
- *  @brief This a part of the WiKiLexicalData's PHP API
+ * @brief This a part of the WiKiLexicalData's PHP API
  */
 require_once 'Expression.php';
 require_once 'Transaction.php';
@@ -51,7 +51,7 @@ class OmegaWikiDataBase {
  * @return null if not exists
  */
 function getExpression( $expressionId, $dc = null ) {
-	if ( is_null( $dc ) ) {
+	if ( $dc === null ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_REPLICA );
@@ -77,7 +77,7 @@ function getExpression( $expressionId, $dc = null ) {
  */
 function newObjectId( $table, $dc = null ) {
 	global $wgDBprefix;
-	if ( is_null( $dc ) ) {
+	if ( $dc === null ) {
 		$dc = wdGetDataSetContext();
 	}
 
@@ -142,7 +142,7 @@ function getRemovedExpressionId( $spelling, $languageId ) {
 }
 
 function getExpressionIdFromSyntrans( $syntransId, $dc = null ) {
-	if ( is_null( $dc ) ) {
+	if ( $dc === null ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_REPLICA );
@@ -268,7 +268,7 @@ function existSpelling( $spelling, $languageId = 0 ) {
  */
 function findExpression( $spelling, $languageId ) {
 	$expressionId = getExpressionId( $spelling, $languageId );
-	if ( !is_null( $expressionId ) ) {
+	if ( $expressionId !== null ) {
 		return new Expression( $expressionId, $spelling, $languageId );
 	}
 	return null;
@@ -283,7 +283,7 @@ function findExpression( $spelling, $languageId ) {
  */
 function findRemovedExpression( $spelling, $languageId ) {
 	$expressionId = getRemovedExpressionId( $spelling, $languageId );
-	if ( !is_null( $expressionId ) ) {
+	if ( $expressionId !== null ) {
 		reviveExpression( $expressionId );
 		createPage( NS_EXPRESSION, $spelling );
 		return new Expression( $expressionId, $spelling, $languageId );
@@ -303,12 +303,12 @@ function createExpression( $spelling, $languageId, $options = [] ) {
 
 function findOrCreateExpression( $spelling, $languageId, $options = [] ) {
 	$expression = findExpression( $spelling, $languageId );
-	if ( !is_null( $expression ) ) {
+	if ( $expression !== null ) {
 		return $expression;
 	}
 	// else
 	$expression = findRemovedExpression( $spelling, $languageId );
-	if ( !is_null( $expression ) ) {
+	if ( $expression !== null ) {
 		return $expression;
 	}
 	// else
@@ -881,10 +881,10 @@ function createTranslatedContent( $translatedContentId, $languageId, $textId ) {
 }
 
 function translatedTextExists( $textId, $languageId ) {
-	if ( is_null( $textId ) ) {
+	if ( $textId === null ) {
 		throw new Exception( "translatedTextExists - textId is null" );
 	}
-	if ( is_null( $languageId ) ) {
+	if ( $languageId === null ) {
 		throw new Exception( "translatedTextExists - languageId is null" );
 	}
 	$dc = wdGetDataSetContext();
@@ -1744,7 +1744,7 @@ function getLanguageIdForDefinedMeaningAndExpression( $definedMeaningId, $spelli
  * @param $dc
  */
 function getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId, $dc = null ) {
-	if ( is_null( $dc ) ) {
+	if ( $dc === null ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_REPLICA );
@@ -1930,7 +1930,7 @@ function checkLanguageCode( $languageCode ) {
  * null if not found
  */
 function getSpellingForLanguageId( $definedMeaningId, $userLanguageId, $fallbackLanguageId = WLD_ENGLISH_LANG_ID, $dc = null, $options = [] ) {
-	if ( is_null( $dc ) ) {
+	if ( $dc === null ) {
 		$dc = wdGetDataSetContext( $dc );
 	}
 	$dbr = wfGetDB( DB_REPLICA );
@@ -2140,7 +2140,7 @@ function getExpressionMeaningIdsForLanguages( $spelling, $languageIds, $dc = nul
 /** Get Defined Meaning Ids from Expression Id
  */
 function getExpressionIdMeaningIds( $expressionId, $dc = null ) {
-	if ( is_null( $dc ) ) {
+	if ( $dc === null ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_REPLICA );
@@ -2260,7 +2260,7 @@ function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction
 	$dbw = wfGetDB( DB_MASTER );
 
 	$add_transaction_id = $override_transaction;
-	if ( is_null( $add_transaction_id ) ) {
+	if ( $add_transaction_id === null ) {
 		startNewTransaction( $wgUser->getId(), $wgRequest->getIP(), "inserting collection $collid", $dc );
 		$add_transaction_id = getUpdateTransactionId();
 	}
@@ -2314,7 +2314,7 @@ function &readConceptMapping( $concept_id ) {
 }
 
 function getConceptId( $dm, $dc ) {
-	if ( is_null( $dc ) ) {
+	if ( $dc === null ) {
 		$dc = wdGetDataSetContext();
 	}
 	$collection_id = getCollectionIdForDC( $dc );
@@ -2364,7 +2364,7 @@ function &getDefinedMeaningDataAssociatedByConcept( $dm, $dc ) {
 }
 
 function definingExpressionRow( $definedMeaningId, $dc = null ) {
-	if ( is_null( $dc ) ) {
+	if ( $dc === null ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_REPLICA );
@@ -2444,7 +2444,7 @@ function getTextValue( $textId ) {
  * that correspond to the same $spelling (max 1 per language)
  */
 function getExpressions( $spelling, $dc = null ) {
-	if ( is_null( $dc ) ) {
+	if ( $dc === null ) {
 		$dc = wdGetDataSetContext();
 	}
 	$dbr = wfGetDB( DB_REPLICA );

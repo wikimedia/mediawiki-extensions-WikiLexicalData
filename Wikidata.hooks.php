@@ -165,7 +165,7 @@ class WikiLexicalDataHooks {
 	public static function onGoClicked( $allSearchTerms, &$title ) {
 		$term = $allSearchTerms[0];
 		$title = Title::newFromText( $term );
-		if ( is_null( $title ) ) {
+		if ( $title === null ) {
 			return true;
 		}
 

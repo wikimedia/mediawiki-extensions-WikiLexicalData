@@ -123,7 +123,7 @@ $wgPropertyToColumnFilters = [];
  * - there can be defaults for different user groups
  * @param $dc	optional, for convenience.
  * 		if the dataset context is already set, will
-		return that value, else will find the relevant value
+ * 		return that value, else will find the relevant value
  * @return prefix (without underscore)
  */
 function wdGetDataSetContext( $dc = null ) {
@@ -131,10 +131,10 @@ function wdGetDataSetContext( $dc = null ) {
 		$wdCurrentContext;
 
 	# overrides
-	if ( !is_null( $dc ) ) {
+	if ( $dc !== null ) {
 		return $dc; # local override
 	}
-	if ( !is_null( $wdCurrentContext ) ) {
+	if ( $wdCurrentContext !== null ) {
 		return $wdCurrentContext; # global override
 	}
 

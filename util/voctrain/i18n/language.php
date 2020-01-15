@@ -6,10 +6,10 @@ class LocalisationException extends Exception {
 class NoSuchMessageFileException extends LocalisationException {
 }
 
-/**loosely inspired on class of same name from mediawiki.
-* (mediawiki version is overkill for our purposes though)
-* also, unlike mediawiki, we always use ISO 639-3 for language codes.
-*/
+/** loosely inspired on class of same name from mediawiki.
+ * (mediawiki version is overkill for our purposes though)
+ * also, unlike mediawiki, we always use ISO 639-3 for language codes.
+ */
 class WDLanguage {
 
 	private $code; # language code, mostly for debugging purposes
@@ -127,9 +127,9 @@ class WDLanguage {
 	# (see also: php documentation for non-i18nified versions)
 
 	/** i18nsprint is a simpler way to go about things, will do i18n replacement
-	on antyhing enclosed in <|  |>, any %signs in these substrings
-		will be substituted with items from the array
-		*/
+	 * on antyhing enclosed in <|  |>, any %signs in these substrings
+	 * will be substituted with items from the array
+	 */
 	public function i18nsprint( $string, $replacements = [] ) {
 		$callback = new I18Ncallback();
 		$callback->replacements = $replacements;

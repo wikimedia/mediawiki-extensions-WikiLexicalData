@@ -135,10 +135,10 @@ class ObjectCopier {
 	protected function read() {
 		$dc1 = $this->dc1;
 		$id = $this->id;
-		if ( is_null( $dc1 ) ) {
+		if ( $dc1 === null ) {
 			throw new Exception( "ObjectCopier: provided source dataset(dc1) is null" );
 		}
-		if ( is_null( $id ) ) {
+		if ( $id === null ) {
 			throw new Exception( "ObjectCopier: provided identifier is null" );
 		}
 
@@ -152,7 +152,7 @@ class ObjectCopier {
 	 */
 	protected function identical() {
 		$uuid = mysql_escape_string( $this->object["UUID"] );
-		if ( is_null( $uuid ) ) {
+		if ( $uuid === null ) {
 			throw new Exception( "ObjectCopier: UUID is null" );
 		}
 		$dc2 = $this->dc2;
@@ -172,7 +172,7 @@ class ObjectCopier {
 	 * Perhaps would be wiser to get the target table as an (override) parameter.
 	 */
 	function write( $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = $this->dc2;
 		}
 
@@ -194,14 +194,14 @@ class ObjectCopier {
 	 * dataset prefix)
 	 */
 	function create_key( $uuid = null ) {
-		if ( is_null( $this->tableName ) ) {
+		if ( $this->tableName === null ) {
 			throw new Exception( "ObjectCopier: Object autovivification requires a table name to assist in creating an object. No table name was provided." );
 		}
 		$this->object["object_id"] = null; # just to be on some kind of safe side.
 		$this->object["table"] = "unset_" . $this->tableName; # slightly hackish, this
 		$this->object["original_id"] = 0;	# no idea what this is for.
 
-		if ( is_null( $uuid ) ) {
+		if ( $uuid === null ) {
 			$uuid_query = CopyTools::doQuery( "SELECT UUID()" );
 			$uuid = $uuid_query["UUID()"];
 		}
@@ -230,7 +230,7 @@ class ObjectCopier {
 	/** Duplicate thds object ientry in the destination (dc2) dataset
 	 */
 	public function dup() {
-		if ( is_null( $this->id ) ) {
+		if ( $this->id === null ) {
 			if ( $this->autovivify ) {
 				$this->create_key();
 			} else {
@@ -245,7 +245,7 @@ class ObjectCopier {
 			} else {
 				$id = $this->id;
 				$table = $this->object["table"];
-				if ( is_null( $table ) ) {
+				if ( $table === null ) {
 					$table = $this->tableName;
 				}
 				$dc1 = $this->dc1;
@@ -351,15 +351,15 @@ function write_translated_content( $dc1, $dc2, $tcid, $content ) {
  *      possible issues with UMLS
  */
 function dup_translated_content( $dc1, $dc2, $tcid ) {
-	if ( is_null( $dc1 ) ) {
+	if ( $dc1 === null ) {
 		throw new Exception( "dup_translated_content: dc1 is null" );
 	}
 
-	if ( is_null( $dc2 ) ) {
+	if ( $dc2 === null ) {
 		throw new Exception( "dup_translated_content: dc2 is null" );
 	}
 
-	if ( is_null( $tcid ) ) {
+	if ( $tcid === null ) {
 		throw new Exception( "dup_translated_content: tcid is null" );
 	}
 	/* XXX UMLS problem? Knewcode tickets #258, #330
@@ -482,7 +482,7 @@ class CollectionCopier extends Copier {
 	}
 
 	public function read( $dc = null ) {
-		if ( is_null( $dc ) ) {
+		if ( $dc === null ) {
 			$dc = $this->dc1;
 		}
 		$dmid = $this->dmid;
@@ -558,7 +558,7 @@ class CollectionCopier extends Copier {
 			return $row["object_id"];
 		}
 
-		if ( is_null( $srcrow["object_id"] ) ) {
+		if ( $srcrow["object_id"] === null ) {
 			$srcrow["object_id"] = $this->objectCopier->getId();
 			$collection_id = $srcrow["collection_id"];
 			$member_mid = $srcrow["member_mid"];
@@ -607,10 +607,10 @@ class DefinedMeaningCopier {
 
 	protected function read() {
 		$dmid = $this->dmid;
-		if ( is_null( $dmid ) ) {
+		if ( $dmid === null ) {
 			throw new Exception( "DefinedMeaningCopier: read(): cannot read a dmid that is null" );
 		}
-		if ( is_null( $this->dc1 ) ) {
+		if ( $this->dc1 === null ) {
 			throw new Exception( "DefinedMeaningCopier: read(): cannot read from dc1: is null. " );
 		}
 		$this->defined_meaning = CopyTools::getRow( $this->dc1, "defined_meaning", "where defined_meaning_id=$dmid", true );
@@ -619,7 +619,7 @@ class DefinedMeaningCopier {
 
 	public function getDM() {
 		$dm = $this->defined_meaning;
-		if ( is_null( $dm ) ) {
+		if ( $dm === null ) {
 			$dm = $this->read();
 		}
 		return $this->defined_meaning;
@@ -802,19 +802,19 @@ class CopyTools {
 	public static function checkIfStub( $dataset, $id ) {
 		$dmcopier = new DefinedMeaningCopier( $id, $dataset, null );
 		$dm1 = $dmCopier->read();
-		if ( is_null( $dm1 ) ) {
+		if ( $dm1 === null ) {
 			throw new Exception( "Could not find a defined meaning with id '$id' in dataset '$dataset'" );
 		}
 		$original_dataset = $dm1["stub"];
 
-		if ( is_null( $original_dataset ) ) {
+		if ( $original_dataset === null ) {
 			return null;
 		}
 
 		$obcopier = new ObjectCopier( $id, $dataset, $original_dataset );
 		$original_id = $obcopier->getIdenticalId();
 
-		if ( is_null( $original_id ) ) {
+		if ( $original_id === null ) {
 			throw new Exception( "CopyTools::checkIfStub: Database integrity failed: item marked as stub, but no original entry found." );
 		}
 
@@ -849,7 +849,7 @@ class CopyTools {
 		}
 
 		# The id might exist, but still be null.
-		if ( is_null( $virtual_user_id ) ) {
+		if ( $virtual_user_id === null ) {
 			$virtual_user_id = 0;
 		}
 
@@ -998,10 +998,10 @@ class CopyTools {
 	 * (Namely, if either $key or $array is either null or false)
 	 */
 	public static function sane_key_exists( $key, $array ) {
-		if ( is_null( $key ) or $key == false ) {
+		if ( $key === null or $key == false ) {
 			return false;
 		}
-		if ( is_null( $array ) or $array == false ) {
+		if ( $array === null or $array == false ) {
 			return false;
 		}
 		return array_key_exists( $key, $array );
@@ -1011,7 +1011,7 @@ class CopyTools {
 	 * inverse of mysql_fetch_assoc
 	 * takes an associative array as parameter, and inserts data
 	 * into table as a single row (keys=column names, values = data to be inserted)
-	/* see: http://www.php.net/mysql_fetch_assoc (Comment by R. Bradly, 14-Sep-2006)
+	 * /* see: http://www.php.net/mysql_fetch_assoc (Comment by R. Bradly, 14-Sep-2006)
 	 */
 	public static function mysql_insert_assoc( $my_table, $my_array ) {
 		$start = self::stopwatch();
@@ -1025,7 +1025,7 @@ class CopyTools {
 		$sql_comma = $sql;
 		foreach ( $my_array as $key => $value ) {
 			$sql = $sql_comma;
-			if ( is_null( $value ) ) {
+			if ( $value === null ) {
 				$value = "DEFAULT";
 			} else {
 				$value = '"' . mysql_real_escape_string( $value ) . '"';
@@ -1063,7 +1063,7 @@ class CopyTools {
 		// we add the enclosing quotes at the same time
 		$sql_comma = $sql;
 		foreach ( $my_array as $key => $value ) {
-			if ( !is_null( $value ) ) {
+			if ( $value !== null ) {
 				$sql = $sql_comma;
 				$value = '"' . mysql_real_escape_string( $value ) . '"';
 				$sql .= " `$key`=$value";
@@ -1113,7 +1113,7 @@ class CopyTools {
 
 }
 
-/**Copying uw_class_membership*/
+/** Copying uw_class_membership */
 class ClassMembershipCopier extends Copier {
 
 	protected $old_class_member_mid;
@@ -1199,7 +1199,7 @@ class ClassAttributesCopier extends Copier {
 	 * because in this case, the class_mid is the key characteristic
 	 */
 	public function dup() {
-		if ( is_null( $this->src_class_mid ) ) {
+		if ( $this->src_class_mid === null ) {
 			throw new Exception( "ClassAttributesCopier: Can't copy class; is null!" );
 		}
 		$attributes = $this->read();
@@ -1261,7 +1261,7 @@ class ClassAttributesCopier2 extends Copier {
 	 * because in this case, the class_mid is the key characteristic
 	 */
 	public function dup() {
-		if ( is_null( $this->object_id ) ) {
+		if ( $this->object_id === null ) {
 			throw new Exception( "ClassAttributesCopier2: Can't copy class by object_id: is null!" );
 		}
 		$attributes = $this->read();
@@ -1381,7 +1381,7 @@ abstract class Copier {
 	 * 	   false if it did not, and we just created it
 	 */
 	protected function doDM( &$row, $dmid_column, $full = false ) {
-		if ( $row[$dmid_column] == 0 or is_null( $row[$dmid_column] ) ) {
+		if ( $row[$dmid_column] == 0 or $row[$dmid_column] === null ) {
 			return true;
 		}
 
@@ -1442,11 +1442,11 @@ abstract class AttributeCopier extends Copier {
 	}
 
 	public static function copy( $dc1, $dc2, $src_object_id, $dst_object_id ) {
-		if ( is_null( $src_object_id ) ) {
+		if ( $src_object_id === null ) {
 			throw new Exception( "AttributeCopier: cannot copy: source object_id=null" );
 		}
 
-		if ( is_null( $dst_object_id ) ) {
+		if ( $dst_object_id === null ) {
 			throw new Exception( "AttributeCopier: cannot copy: destination object_id=null" );
 		}
 		$optionAttributeCopier = new OptionAttributeCopier( $dc1, $dc2, $src_object_id, $dst_object_id );
@@ -1474,12 +1474,12 @@ abstract class AttributeCopier extends Copier {
 
 	protected function read() {
 		$src_object_id = $this->src_object_id;
-		if ( is_null( $src_object_id ) ) {
+		if ( $src_object_id === null ) {
 			throw new Exception( "*AttributeCopier: cannot read: source object_id is null" );
 		}
 
 		$tableName = $this->tableName;
-		if ( is_null( $tableName ) ) {
+		if ( $tableName === null ) {
 			throw new Exception( "*AttributeCopier: cannot read: table name is null" );
 		}
 
@@ -1539,7 +1539,7 @@ class OptionAttributeOptionsCopier extends Copier {
 	protected $tableName = "option_attribute_options"; // Name of the table this class operates on.
 
 	public function __construct( $option_id, $dc1, $dc2 ) {
-		if ( is_null( $option_id ) ) {
+		if ( $option_id === null ) {
 			throw new Exception( "OptionAttributeOptionsCopier: trying to construct with null option_id. No can do compadre." );
 		}
 

@@ -23,9 +23,9 @@ require_once "Utilities.php";
  * data, but can't actually commit them to the database again. To achieve
  * proper separation of architectural layers, the Records should learn
  * to talk directly with the DB layer.
- # - This is not a pure singleton, because it relies on the existence of
- #   of viewInformation, and a message cache. We now defer lookups in these
- #   to as late as possible, to make sure these items are actually initialized.
+ * # - This is not a pure singleton, because it relies on the existence of
+ * #   of viewInformation, and a message cache. We now defer lookups in these
+ * #   to as late as possible, to make sure these items are actually initialized.
  */
 function initializeOmegaWikiAttributes( ViewInformation $viewInformation ) {
 	$init_and_discard_this = OmegaWikiAttributes::getInstance( $viewInformation );
@@ -36,7 +36,7 @@ class OmegaWikiAttributes {
 	/** pseudo-Singleton, if viewinformation changes, will construct new instance */
 	static function getInstance( ViewInformation $viewInformation = null ) {
 		static $instance = [];
-		if ( !is_null( $viewInformation ) ) {
+		if ( $viewInformation !== null ) {
 			if ( !array_key_exists( $viewInformation->hashCode(), $instance ) ) {
 				$instance["last"] = new OmegaWikiAttributes( $viewInformation );
 				$instance[$viewInformation->hashCode()] = $instance["last"];
@@ -62,12 +62,12 @@ class OmegaWikiAttributes {
 			return true;
 		}
 
-		if ( !is_null( $viewInformation ) ) {
+		if ( $viewInformation !== null ) {
 			$this->viewInformation = $viewInformation;
 		}
 		$viewInformation = $this->viewInformation;
 
-		if ( !is_null( $viewInformation ) ) {
+		if ( $viewInformation !== null ) {
 			if ( !$this->setup_completed ) {
 				$this->hardValues( $viewInformation );
 			}
@@ -81,9 +81,9 @@ class OmegaWikiAttributes {
 	 *
 	 * Naming: keys are previous name minus -"Attribute"
 	 * 	(-"Structure" is retained, -"Attributes" is retained)
-	*/
+	 */
 	private function hardValues( viewInformation $viewInformation ) {
-		assert( !is_null( $viewInformation ) );
+		assert( $viewInformation !== null );
 
 		global $wgWlddefinedMeaningReferenceType;
 
