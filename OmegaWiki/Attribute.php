@@ -12,10 +12,10 @@ class Attribute {
 	public $type = "";
 
 	/**
-	 * @param id   (String) or null if type is Structure
-	 * @param name (String)
-	 * @param type (String or Structure)
-	 *  If String, can be "language", "spelling", "boolean",
+	 * @param string|null $id (string) or null if type is Structure
+	 * @param string $name
+	 * @param string|Structure $type
+	 *  If string, can be "language", "spelling", "boolean",
 	 *  "defined-meaning", "defining-expression", "relation-type", "attribute",
 	 *  "collection", "short-text", "text"
 	 *
