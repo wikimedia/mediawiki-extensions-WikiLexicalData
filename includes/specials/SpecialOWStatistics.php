@@ -16,7 +16,7 @@ class SpecialOWStatistics extends SpecialPage {
 
 		$wgOut->setPageTitle( wfMessage( 'ow-stat-header' )->text() );
 
-		$showstat = array_key_exists( 'showstat', $_GET ) ? $_GET['showstat'] : $par;
+		$showstat = $_GET['showstat'] ?? $par;
 
 		$headerText = Html::openElement( 'div', [ 'class' => 'owstatmainheader' ] )
 			. $this->linkHeader( wfMessage( 'ow-stat-overview-link' )->text(), "", $showstat ) . " — "
