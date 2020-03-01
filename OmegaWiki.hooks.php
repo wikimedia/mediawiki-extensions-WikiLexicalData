@@ -12,7 +12,7 @@ class OmegaWikiHooks extends WikiLexicalDataHooks {
 	 * Target pages with valid DefinedMeaning IDs in links are replaced by their canonical titles.
 	 * Target pages having invalid DefinedMeaning IDs are replaced by a link to (invalid) DefinedMeaning ID 0.
 	 */
-	public static function onInternalParseBeforeLinks( Parser &$parser, &$text ) {
+	public static function onInternalParseBeforeLinks( Parser $parser, &$text ) {
 		global $wgExtraNamespaces;
 		// FIXME: skip if not action=submit
 		// FIXME: skip if not page text
