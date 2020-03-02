@@ -31,9 +31,6 @@ class ViewInformation {
 
 	protected $propertyToColumnFilters;
 
-	/**
-	 * Constructor
-	 */
 	public function __construct() {
 		global $wgRequest, $wgUser;
 
