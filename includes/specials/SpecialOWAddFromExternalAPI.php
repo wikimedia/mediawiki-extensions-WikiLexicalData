@@ -60,13 +60,13 @@ class SpecialOWAddFromExternalAPI extends SpecialPage {
 	 *
 	 */
 	private function saveSynonym() {
-		$definedMeaningId = array_key_exists( 'dm-id', $_POST )	? $_POST['dm-id'] : '';
-		$languageId = array_key_exists( 'lang-id', $_POST )	? $_POST['lang-id'] : '';
-		$spelling = array_key_exists( 'e', $_POST )	? $_POST['e'] : '';
-		$identicalMeaning = array_key_exists( 'im', $_POST ) ? $_POST['im'] : 1;
-		$transactionId = array_key_exists( 'tid', $_POST ) ? $_POST['tid'] : '';
-		$transacted = array_key_exists( 'transacted', $_POST )	? $_POST['transacted'] : false;
-		$source = array_key_exists( 'src', $_POST )	? $_POST['src'] : '';
+		$definedMeaningId = $_POST['dm-id'] ?? '';
+		$languageId = $_POST['lang-id'] ?? '';
+		$spelling = $_POST['e'] ?? '';
+		$identicalMeaning = $_POST['im'] ?? 1;
+		$transactionId = $_POST['tid'] ?? '';
+		$transacted = $_POST['transacted'] ?? false;
+		$source = $_POST['src'] ?? '';
 
 		// @todo create checks for correctness
 		if ( $identicalMeaning === true ) {
@@ -109,10 +109,10 @@ class SpecialOWAddFromExternalAPI extends SpecialPage {
 			$this->dieUsage( 'your account is blocked.', 'blocked' );
 		}
 
-		$sourceLanguageId	= array_key_exists( 'from-lang', $_GET ) ? $_GET['from-lang'] : '';
-		$source				= array_key_exists( 'api', $_GET )	? $_GET['api'] : '';
-		$search				= array_key_exists( 'search-ext', $_GET ) ? $_GET['search-ext'] : '';
-		$collectionId		= array_key_exists( 'collection', $_GET ) ? $_GET['collection'] : '';
+		$sourceLanguageId = $_GET['from-lang'] ?? '';
+		$source = $_GET['api'] ?? '';
+		$search = $_GET['search-ext'] ?? '';
+		$collectionId = $_GET['collection'] ?? '';
 
 		switch ( $source ) {
 			case 'Wordnik':
@@ -150,7 +150,7 @@ class SpecialOWAddFromExternalAPI extends SpecialPage {
 	 * separates the save from the process functions
 	 */
 	function execute( $par ) {
-		$this->saveType = array_key_exists( 'save-data', $_POST ) ? $_POST['save-data'] : '';
+		$this->saveType = $_POST['save-data'] ?? '';
 		if ( $this->saveType ) {
 			$this->save();
 		} else {

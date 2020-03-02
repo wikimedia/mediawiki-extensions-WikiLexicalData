@@ -26,9 +26,9 @@ class SpecialNeedsTranslation extends SpecialPage {
 		initializeOmegaWikiAttributes( new ViewInformation() );
 		$wgOut->setPageTitle( wfMessage( 'ow_needs_xlation_title' )->text() );
 
-		$destinationLanguageId = array_key_exists( 'to-lang', $_GET ) ? $_GET['to-lang'] : '';
-		$collectionId = array_key_exists( 'collection', $_GET ) ? $_GET['collection'] : '';
-		$sourceLanguageId = array_key_exists( 'from-lang', $_GET ) ? $_GET['from-lang'] : '';
+		$destinationLanguageId = $_GET['to-lang'] ?? '';
+		$collectionId = $_GET['collection'] ?? '';
+		$sourceLanguageId = $_GET['from-lang'] ?? '';
 
 		$wgOut->addHTML( getOptionPanel(
 			[
