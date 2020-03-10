@@ -349,10 +349,6 @@ class GenericForms {
  */
 class OmegaWikiForms extends GenericForms {
 
-	public function __construct() {
-		parent::__construct();
-	}
-
 	/**
 	 *
 	 * @return HTML for an autocompleted form field.
