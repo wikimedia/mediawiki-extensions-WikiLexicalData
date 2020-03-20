@@ -82,9 +82,7 @@ class OmegaWikiAttributes {
 	 * Naming: keys are previous name minus -"Attribute"
 	 * 	(-"Structure" is retained, -"Attributes" is retained)
 	 */
-	private function hardValues( viewInformation $viewInformation ) {
-		assert( $viewInformation !== null );
-
+	private function hardValues( ViewInformation $viewInformation ) {
 		global $wgWlddefinedMeaningReferenceType;
 
 		$this->in_setup = true;

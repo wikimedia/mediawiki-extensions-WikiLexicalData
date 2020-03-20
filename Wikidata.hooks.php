@@ -4,6 +4,11 @@ require_once "OmegaWiki/WikiDataGlobals.php";
 
 class WikiLexicalDataHooks {
 
+	/**
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return true
+	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
 		global $wgContLang;
 

@@ -25,20 +25,16 @@
 		<exclude name="MediaWiki.Usage.DbrQueryUsage.DbrQueryFound" />
 		<exclude name="MediaWiki.Usage.DeprecatedGlobalVariables.Deprecated$wgContLang" />
 		<exclude name="MediaWiki.Usage.DeprecatedGlobalVariables.Deprecated$wgTitle" />
-		<exclude name="MediaWiki.Usage.ForbiddenFunctions.assert" />
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.exec" />
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.extract" />
 		<exclude name="MediaWiki.Usage.NullableType.PHP71NullableStyle" />
 		<exclude name="MediaWiki.Usage.SuperGlobalsUsage.SuperGlobals" />
 		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
-		<exclude name="PSR2.Classes.PropertyDeclaration.ScopeMissing" />
 		<exclude name="PSR2.Classes.PropertyDeclaration.Underscore" />
-		<exclude name="PSR2.Classes.PropertyDeclaration.VarUsed" />
 		<exclude name="PSR2.Methods.MethodDeclaration.Underscore" />
 		<exclude name="Squiz.Classes.ValidClassName.NotCamelCaps" />
 		<exclude name="Squiz.Operators.ValidLogicalOperators.NotAllowed" />
 		<exclude name="Squiz.PHP.NonExecutableCode.Unreachable" />
-		<exclude name="Squiz.Scope.MemberVarScope.Missing" />
 		<exclude name="Squiz.Scope.MethodScope.Missing" />
 	</rule>
 	<rule ref="Generic.Files.LineLength">

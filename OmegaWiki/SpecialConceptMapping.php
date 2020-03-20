@@ -11,7 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  *
  * @author Erik Moeller <Eloquence@gmail.com>
  * @author Kim Bruning <kim@bruning.xs4all.nl>
- * @license  GPLv2 or later
+ * @license GPL-2.0-or-later
  */
 require_once "WikiDataAPI.php";
 require_once "Utilities.php";
