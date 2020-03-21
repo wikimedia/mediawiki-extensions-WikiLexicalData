@@ -35,9 +35,9 @@ class SpecialLanguages extends SpecialPage {
 
 	function execute( $par ) {
 		// added $wgDBprefix for wld and mw prefix compatibility
-		global $wgOut, $wgRequest, $wgUser, $wgDBprefix;
+		global $wgOut, $wgRequest, $wgDBprefix;
 		$wgOut->setPageTitle( wfMessage( 'langman_title' )->text() );
-		if ( !$wgUser->isAllowed( 'addlanguage' ) ) {
+		if ( !$this->getUser()->isAllowed( 'addlanguage' ) ) {
 			$wgOut->addHTML( wfMessage( 'langman_not_allowed' )->text() );
 			return false;
 		}

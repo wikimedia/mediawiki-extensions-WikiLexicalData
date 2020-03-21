@@ -29,10 +29,11 @@ class SpecialCopy extends UnlistedSpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgRequest, $wgUser;
+		global $wgOut, $wgRequest;
 
 		# $wgOut->setPageTitle("Special:Copy");
-		if ( !$wgUser->isAllowed( 'wikidata-copy' ) ) {
+
+		if ( !$this->getUser()->isAllowed( 'wikidata-copy' ) ) {
 			$wgOut->addHTML( wfMessage( "ow_Permission_denied" )->text() );
 			return false;
 		}
@@ -131,7 +132,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 	/* Using Copy.php; perform a copy of a defined meaning from one dataset to another,
 	   provided the user has permission to do so,*/
 	protected function _doCopy( $dmid_dirty, $dc1_dirty, $dc2_dirty ) {
-		global $wgOut, $wgUser, $wgCommunity_dc;
+		global $wgOut, $wgCommunity_dc;
 
 		# escape parameters
 		$dmid = mysql_real_escape_string( $dmid_dirty );
@@ -139,7 +140,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 		$dc2 = mysql_real_escape_string( $dc2_dirty );
 
 		# check permission
-		if ( !( $wgUser->isAllowed( 'wikidata-copy' ) ) or $dc2 != $wgCommunity_dc ) {
+		if ( !( $this->getUser()->isAllowed( 'wikidata-copy' ) ) or $dc2 != $wgCommunity_dc ) {
 			$wgOut->addHTML( wfMessage( "ow_Permission_denied" )->text() );
 			return false; # we didn't perform the copy.
 		}
