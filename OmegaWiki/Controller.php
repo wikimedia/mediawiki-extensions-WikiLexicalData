@@ -257,7 +257,7 @@ class ExpressionMeaningController extends DefaultUpdateController {
 	}
 }
 
-/*
+/**
  * Controller to add a new expression directly
  * i.e. not by translating an existing DM,
  * but by adding a new word + language + definition

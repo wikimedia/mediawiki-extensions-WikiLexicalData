@@ -441,7 +441,6 @@ class DefinedMeanings {
 	 * Though you can access this function, it is highly recommended that you
 	 * use the static function OwDatabaseAPI::getTranslatedContentIdDefinedMeaningId instead.
 	 * Also note that this function currently includes all data, even removed ones.
-	 *
 	 */
 	public static function getTranslatedContentIdDefinedMeaningId( $translatedContentId, $options, $dc = null ) {
 		if ( $dc === null ) {

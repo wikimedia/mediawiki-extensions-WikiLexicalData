@@ -57,7 +57,6 @@ class SpecialOWAddFromExternalAPI extends SpecialPage {
 	}
 
 	/** @brief This is the save function that handles adding Synonyms.
-	 *
 	 */
 	private function saveSynonym() {
 		$definedMeaningId = $_POST['dm-id'] ?? '';
@@ -173,7 +172,6 @@ class SpecialOWAddFromExternalAPI extends SpecialPage {
  *
  * @note: To extend this class, the extended class needs its own __construct, execute,
  *	checkExternalDefinition, setExternalDefinition functions.
- *
  */
 class ExternalResources {
 
@@ -273,8 +271,6 @@ class ExternalResources {
 		) );
 	}
 
-	/**
-	 */
 	function checkConnectionStatus() {
 		$this->connection = false;
 		if ( connection_status() === CONNECTION_NORMAL ) {

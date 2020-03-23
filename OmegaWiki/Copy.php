@@ -940,7 +940,6 @@ class CopyTools {
 	 * @param $query	a valid SQL query
 	 * @return an associative array, representing our row. \
 	 * 	keys=column headers, values = row contents
-	 *
 	 */
 	public static function doQuery( $query ) {
 		# $start=CopyTools::stopwatch();

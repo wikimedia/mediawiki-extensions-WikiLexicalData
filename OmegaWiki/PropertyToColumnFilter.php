@@ -99,7 +99,6 @@ class ExcludeAttributeIDsFilter implements AttributeIDFilter {
  *   | PubMed       | ...           |
  *   +--------------+---------------+
  */
-
 class PropertyToColumnFilter {
 	public $attributeIDs;   	// Array containing the defined meaning ids of the attributes that should be filtered
 	protected $attribute;   	// Attribute

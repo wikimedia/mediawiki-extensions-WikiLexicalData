@@ -794,7 +794,6 @@ class Syntrans {
 	 * Though you can access this function, it is highly recommended that you
 	 * use the static function OwDatabaseAPI::getSyntransSpellingWithDM instead.
 	 * Also note that this function currently includes all data, even removed ones.
-	 *
 	 */
 	public static function getSpellingWithDM( $syntransId, $options = [], $dc = null ) {
 		if ( $dc === null ) {

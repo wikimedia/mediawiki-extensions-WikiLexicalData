@@ -2,7 +2,6 @@
 # this is still very dirty, since I snarfed most of this from elsewhere. I wrote it, so it's mine :-P
 # released under GPL v2
 
-
 /** provide a namespace for database tools (so we don't clutter up the main namespace with
  * all our utility and tool functions) All functions here are public+static.
  */
@@ -43,7 +42,6 @@ class DBTools {
 	 * @param $query	a valid SQL query
 	 * @return an associative array, representing our row. \
 	 * 	keys=column headers, values = row contents
-	 *
 	 */
 	public static function doQuery( $query ) {
 		# var_dump($query);

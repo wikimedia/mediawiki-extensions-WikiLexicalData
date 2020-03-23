@@ -16,7 +16,6 @@ require_once 'WikiDataGlobals.php';
 /**
  * Load and modify content in a OmegaWiki-enabled
  * namespace.
- *
  */
 class OmegaWiki extends DefaultWikidataApplication {
 	public function view() {

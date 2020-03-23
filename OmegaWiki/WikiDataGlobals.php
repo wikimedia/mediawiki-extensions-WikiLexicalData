@@ -111,7 +111,6 @@ $wgWldSearchWordsOption = false;
  *   $wgPropertyToColumnFilters = array(
  *     new PropertyToColumnFilter("references", "References", array(1000, 2000, 3000)) // Defined meaning ids are the attribute ids to filter
  *   )
- *
  */
 $wgPropertyToColumnFilters = [];
 

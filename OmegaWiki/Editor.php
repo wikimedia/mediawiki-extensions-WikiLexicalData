@@ -1,7 +1,5 @@
 <?php
-/** @file
- *
- */
+
 require_once "WikiDataGlobals.php";
 require_once 'IdStack.php';
 require_once "HTMLtable.php";
@@ -14,7 +12,6 @@ require_once "OmegaWikiDatabaseAPI.php";
 # End of line string for readable HTML, set to "\n" for testing
 define( 'EOL', "\n" ); # Makes human (and vim :-p) readable output (somewhat...)
 # define('EOL',""); # Output only readable by browsers
-
 
 // added the "allow add controller" to be able to control the usage of the add field in different circumstances
 // instances of this class are used instead of the boolean "allowAdd" in the editors
@@ -1416,13 +1413,13 @@ class BooleanEditor extends ScalarEditor {
 	}
 }
 
-/*
-* IdenticalMeaningEditor
-* in view mode, shows either = or ≈
-* in edit mode, shows a combobox to choose.
-* for html we use strings "true" and "false" instead of "0" and "1"
-* to be sure that an undefined value will not be considered as a "0".
-*/
+/**
+ * IdenticalMeaningEditor
+ * in view mode, shows either = or ≈
+ * in edit mode, shows a combobox to choose.
+ * for html we use strings "true" and "false" instead of "0" and "1"
+ * to be sure that an undefined value will not be considered as a "0".
+ */
 class IdenticalMeaningEditor extends ScalarEditor {
 	protected $defaultValue;
 	// textValues is an array of "value" => "how the value is displayed"

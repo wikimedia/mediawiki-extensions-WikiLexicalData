@@ -71,7 +71,6 @@ class DefinedMeaningModel {
 	 * @param Boolean Switch dataset context if match outside default is found.
 	 *
 	 * @return DataSet object in which the DM was found, or null.
-	 *
 	 */
 	public function checkExistence( $searchAllDataSets = false, $switchContext = false ) {
 		global $wdCurrentContext;
@@ -123,7 +122,6 @@ class DefinedMeaningModel {
 	 * @param String  Spelling
 	 * @return DataSet or null
 	 * @see checkExistence
-	 *
 	 */
 	public function checkExistenceInDataSet( DataSet $dc ) {
 		$definingExpression = $this->definingExpression;
@@ -218,7 +216,6 @@ class DefinedMeaningModel {
 
 	/**
 	 * @todo FIXME - work in progress
-	 *
 	 */
 	public function save() {
 		initializeOmegaWikiAttributes( $this->viewInformation );
@@ -417,7 +414,6 @@ class DefinedMeaningModel {
 	 * @return Spelling or null if not found at all
 	 *
 	 * @todo make fallback optional
-	 *
 	 */
 	public function getSyntransByLanguageCode( $languageCode, $fallbackCode = WLD_ENGLISH_LANG_WMKEY ) {
 		if ( array_key_exists( $languageCode, $this->syntrans ) ) {
@@ -476,13 +472,11 @@ class DefinedMeaningModel {
 	}
 
 	/**
-	 *
 	 * Splits title of the form "Abc (123)" into text and number
 	 * components.
 	 *
 	 * @param titleText str the title to analyze
 	 * @return Array of the two components or null.
-	 *
 	 */
 	public static function splitTitleText( $titleText ) {
 		$bracketPosition = strrpos( $titleText, "(" );
@@ -521,7 +515,6 @@ class DefinedMeaningModel {
 
 	/**
 	 * Fetch from DB if necessary
-	 *
 	 */
 	public function getDefiningExpression() {
 		if ( $this->definingExpression === null ) {

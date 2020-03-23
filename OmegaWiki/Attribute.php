@@ -86,7 +86,6 @@ class Structure {
 	 *                        a single Attribute object, in which case the structure
 	 *                        will inherit its ID. Do not pass null.
 	 * @param $structure (Array or Parameter list) One or more Attribute objects.
-	 *
 	 */
 	public function __construct( $argumentList ) {
 		# We're trying to be clever.
@@ -485,7 +484,6 @@ class Attributes {
 	 * Though you can access this function, it is highly recommended that you
 	 * use the static function OwDatabaseAPI::getRelationIdRelationAttribute instead.
 	 * Also note that this function currently includes all data, even removed ones.
-	 *
 	 */
 	public static function getRelationIdRelation( $objectId, $options, $dc = null ) {
 		if ( $dc === null ) {

@@ -87,9 +87,7 @@ class ArrayRecord implements Record {
 	}
 
 	/**
-	 *
 	 * @param $values Array to write into the record, by order of the structure
-	 *
 	 */
 	public function setAttributeValuesByOrder( $values ) {
 		$atts = $this->structure->getAttributes();
@@ -100,10 +98,8 @@ class ArrayRecord implements Record {
 		}
 	}
 
-	/*
-	 *
+	/**
 	 * @param $record Another record object whose values get written into this one
-	 *
 	 */
 	public function setSubRecord( Record $record ) {
 		foreach ( $record->getStructure()->getAttributes() as $attribute ) {

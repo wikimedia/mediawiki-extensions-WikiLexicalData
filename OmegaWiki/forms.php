@@ -88,7 +88,6 @@ function getFileField( $name, $onChangeHandler = "" ) {
 }
 
 /**
- *
  * Returns HTML for an autocompleted form field.
  *
  * @param String unique identifier for this form field
@@ -97,7 +96,6 @@ function getFileField( $name, $onChangeHandler = "" ) {
  * @param String How default value will be shown
  * @param Array Override column titles
  * @param DataSet Override standard dataset
- *
  */
 function getSuggest( $name, $query, $parameters = [], $value = 0, $label = '', $displayLabelColumns = [ 0 ], DataSet $dc = null ) {
 	if ( $dc === null ) {

@@ -48,7 +48,6 @@ class WikiLexicalDataHooks {
 	}
 
 	/** @brief OmegaWiki-specific preferences
-	 *
 	 */
 	public static function onGetPreferences( $user, &$preferences ) {
 /*
@@ -239,7 +238,6 @@ class WikiLexicalDataHooks {
 	}
 
 	/** @brief basic lexical statistic data for Special:Statistics
-	 *
 	 */
 	public static function onSpecialStatsAddExtra( &$extraStats ) {
 		$extra = new SpecialOWStatistics;

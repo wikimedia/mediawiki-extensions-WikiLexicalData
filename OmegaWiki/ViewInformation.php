@@ -11,7 +11,6 @@ require_once 'PropertyToColumnFilter.php';
  * use ViewInformation do not care about this. They are supposed to respect the settings provided wherever
  * possible.
  */
-
 class ViewInformation {
 	/**
 	 * array containing a list of languages that the user wants to display

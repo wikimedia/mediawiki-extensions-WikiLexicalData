@@ -65,7 +65,6 @@ class Express extends Define {
 	}
 
 	/** Cache!
-	 *
 	 */
 	protected function cacheExpress( $spelling, $options = [] ) {
 		$expressCacheKey = 'API:ow_express:dm=' . $spelling;

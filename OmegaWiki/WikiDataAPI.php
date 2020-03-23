@@ -7,7 +7,6 @@ require_once 'Transaction.php';
 require_once 'WikiDataGlobals.php';
 
 /** @brief non specific entity class that access the database directly
- *
  */
 class OmegaWikiDataBase {
 
@@ -2656,7 +2655,6 @@ function getDefinedMeaningIdFromExpressionIdAndLanguageId( $expressionId, $langu
  *	This class is a collection of functions to retrieve information from
  *	the collection table.
  */
-
 class Collections {
 
 	/** returns the concept's (Defined Meaning ) Expression of a Collection in a language

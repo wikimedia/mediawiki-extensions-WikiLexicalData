@@ -6,7 +6,6 @@ require_once "ViewInformation.php";
 require_once "Utilities.php";
 
 /**
- *
  * This file models the structure of the OmegaWiki database in a
  * database-independent fashion. To do so, it follows a simplified
  * relational model, consisting of Attribute objects which are hierarchically

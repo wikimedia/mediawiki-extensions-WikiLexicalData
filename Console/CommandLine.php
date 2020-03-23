@@ -7,7 +7,6 @@
  * with values are possible for the option. By specifying null for $possibleValues
  * no check will be performed on possible values.
  */
-
 class CommandLineOption {
 	protected $name;
 	protected $isRequired;

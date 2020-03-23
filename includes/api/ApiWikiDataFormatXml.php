@@ -22,7 +22,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
-
 class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 
 	private $mRootElemName = 'wikidata';

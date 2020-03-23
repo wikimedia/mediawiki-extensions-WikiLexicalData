@@ -182,7 +182,6 @@ class SynonymTranslation extends ApiBase {
 	// Additional Functions
 
 	/** Cache!
-	 *
 	 */
 	protected function cacheSynTrans( $dmid, $options = null ) {
 		$synTransCacheKey = 'API:ow_syntrans:dm=' . $dmid;
