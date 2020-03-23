@@ -31,8 +31,8 @@ class DefinedMeaningModel {
 	 * Construct a new DefinedMeaningModel for a particular DM.
 	 * You need to call loadRecord() to load the actual data.
 	 *
-	 * @param $definedMeaningId Integer: the database ID of the DM
-	 * @param $params Array: optional parameters to pass to the constructor
+	 * @param int $definedMeaningId the database ID of the DM
+	 * @param array $params optional parameters to pass to the constructor
 	 * can be "viewinformation" of type ViewInformation, or "dataset" of type DataSet
 	 * or "syntransid" which is an integer
 	 */
@@ -340,7 +340,7 @@ class DefinedMeaningModel {
 	/** Copy this defined meaning to specified dataset-context
 	 * Warning: This is somewhat new  code, which still needs
 	 * shoring up.
-	 * @param $dataset	dataset to copy to.
+	 * @param string $dataset dataset to copy to.
 	 * @return 	defined meaning id in the new dataset
 	 */
 	public function copyTo( $dataset ) {

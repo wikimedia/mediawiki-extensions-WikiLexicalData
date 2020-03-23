@@ -13,9 +13,9 @@ class Question {
 	private $answerLanguages;
 
 	/** constructor
-	 * @param $exercise	the exercuse this question is associated with
+	 * @param Exercise $exercise the Exercise this question is associated with
 	 * 			(for easy callback).
-	 * $param $questionNode	a raw DOMElement with our defined meaning
+	 * @param DOMElement $questionNode	a raw DOMElement with our defined meaning
 	 */
 	public function __construct( $exercise, $questionNode ) {
 		$this->exercise = $exercise;

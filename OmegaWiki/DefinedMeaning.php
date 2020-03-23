@@ -609,7 +609,7 @@ class DefinedMeanings {
 
 	/** @brief Returns one spelling of an expression corresponding to a given DM in any language
 	 *
-	 * @param $definedMeaningId
+	 * @param int $definedMeaningId
 	 * @return string spelling
 	 * @return if not exists, ""
 	 *

@@ -692,7 +692,7 @@ class SpecialSuggest extends SpecialPage {
 	 * Writes an html table from a sql table corresponding to the list of classes, as shown by
 	 * http://www.omegawiki.org/index.php?title=Special:Suggest&query=class
 	 *
-	 * @param $queryResult the result of a SQL query to be made into an html table
+	 * @param stdClass[] $queryResult the result of a SQL query to be made into an html table
 	 */
 	function getClassAsRecordSet( $queryResult ) {
 		// Setting the two column, with titles

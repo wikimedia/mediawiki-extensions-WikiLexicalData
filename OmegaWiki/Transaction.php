@@ -392,7 +392,7 @@ class Transactions {
 	 * @param array $options optional parameters
 	 * @param string|null $dc WikiLexical dataset
 	 *
-	 * @return $transaction_id integer The latest transaction_id.
+	 * @return int $transaction_id The latest transaction_id.
 	 * @return -1 If the language_id is non numeric or no transaction_id was found
 	 * @return -2 if a there are any current jobs pending, this function is skipped
 	 *

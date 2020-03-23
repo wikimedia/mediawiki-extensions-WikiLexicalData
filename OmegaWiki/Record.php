@@ -99,7 +99,7 @@ class ArrayRecord implements Record {
 	}
 
 	/**
-	 * @param $record Another record object whose values get written into this one
+	 * @param Record $record Another Record object whose values get written into this one
 	 */
 	public function setSubRecord( Record $record ) {
 		foreach ( $record->getStructure()->getAttributes() as $attribute ) {

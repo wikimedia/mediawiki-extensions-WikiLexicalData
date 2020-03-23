@@ -212,8 +212,8 @@ class ObjectCopier {
 
 	/**
 	 * create a valid object key in the objects table, and return it
-	 * @param $dc	the dataset (prefix) to create the object in
-	 * @param $table	which table is the object originally from? (minus dataset prefix)
+	 * @param string $dc the dataset (prefix) to create the object in
+	 * @param string $table which table is the object originally from? (minus dataset prefix)
 	 * @param $uuid  (optional) : override the auto-generated uuid with this one.
 	 */
 	public static function makeObjectId( $dc, $table, $uuid = null ) {
@@ -267,8 +267,8 @@ class ObjectCopier {
 }
 
 /** obtain an expression definition from the database
- * @param $expression_id	the id of the expression
- * @param $dc1			dataset to READ expression FROM
+ * @param int $expression_id the id of the expression
+ * @param string $dc1 dataset to READ expression FROM
  */
 function expression( $expression_id, $dc1 ) {
 	return CopyTools::getRow( $dc1, "expression", "WHERE expression_id=$expression_id", true );
@@ -861,9 +861,9 @@ class CopyTools {
 	}
 
 	/** retrieve a single row from the database as an associative array
-	 * @param $dc		the dataset prefix we need
-	 * @param $table	the name of the table (minus dataset prefix)
-	 * @param $where		the actual WHERE clause we need to uniquely find our row
+	 * @param string $dc the dataset prefix we need
+	 * @param string $table the name of the table (minus dataset prefix)
+	 * @param string $where the actual WHERE clause we need to uniquely find our row
 	 * @return an associative array, representing our row. \
 	 * 	keys=column headers, values = row contents
 	 */
@@ -886,9 +886,9 @@ class CopyTools {
 	}
 
 	/** retrieve multiple rows from the database, as an array of associative arrays.
-	 * @param $dc		the dataset prefix we need
-	 * @param $table	the name of the table (minus dataset prefix)
-	 * @param $where		the actual WHERE clause we need to uniquely find our row
+	 * @param string $dc the dataset prefix we need
+	 * @param string $table the name of the table (minus dataset prefix)
+	 * @param string $where the actual WHERE clause we need to uniquely find our row
 	 * @return an array of associative arrays, representing our rows.  \
 	 * 	each associative array is structured with:		\
 	 * 	keys=column headers, values = row contents
@@ -903,8 +903,8 @@ class CopyTools {
 	}
 
 	/** utility function, maps bootstrapped defined meanings across multiple datasets.
-	 * @param $key_dataset: any dataset which has a known-good bootstrap table. We assume all others are the same.
-	 * @param $datasets: an array with the datasets to map (eg: array("uw", "sp", "umls") ).
+	 * @param string $key_dataset any dataset which has a known-good bootstrap table. We assume all others are the same.
+	 * @param string[] $datasets an array with the datasets to map (eg: array("uw", "sp", "umls") ).
 	 */
 	public static function map_bootstraps( $key_dataset, $datasets ) {
 		$bootstrap_raw = self::getRows( $key_dataset, "bootstrapped_defined_meanings", "" );
@@ -922,9 +922,9 @@ class CopyTools {
 	}
 
 	/** Takes two 2 columns from getRows, and forms them into an associative array.
-	 * @param $table	output from getRows
-	 * @param $key_column	string, name of column to use as keys
-	 * @param $value_column	string, name of column to use as values
+	 * @param string $table output from getRows
+	 * @param string $key_column name of column to use as keys
+	 * @param string $value_column name of column to use as values
 	 * @return an associative array, made from teh 2 columns specified
 	 */
 	protected static function _table_to_assoc( $table, $key_column, $value_column ) {
@@ -1373,9 +1373,9 @@ abstract class Copier {
 	 * - make sure that the row refers to the dmid in the *destination* dataset (dc2),
 	 *   instead of the source dataset (dc1).
 	 * - returns True if the defined meaning was already_there().
-	 * @param &$row : row to operate on, passed by reference
-	 * @param $dmid_colum: a column in said row, containing the dmid to operate on
-	 * @param $full=false (optional) : if true, does a dup instead of a dup_stub
+	 * @param array &$row row to operate on, passed by reference
+	 * @param string $dmid_column a column in said row, containing the dmid to operate on
+	 * @param bool $full (optional) if true, does a dup instead of a dup_stub
 	 * @return true if the updated dmid already existed in the destination (dc2) dataset before now
 	 * 	   false if it did not, and we just created it
 	 */
@@ -1401,8 +1401,8 @@ abstract class Copier {
 	 * updates the row(passed by reference) with the relevant object_id in the destination
 	 *   dataset (dc2)
 	 *
-	 * @param &$row : row to operate on, passed by reference
-	 * @param $object_column: a column in said row, containing the object reference to operate on
+	 * @param array &$row row to operate on, passed by reference
+	 * @param string $object_column a column in said row, containing the object reference to operate on
 	 * @return true if examination of the objects table reveals that this particular row should already
 	 * 			exist in the destination dataset
 	 * 		false if this particular row does not yet exist in the table in the destination dataset.

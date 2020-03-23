@@ -482,10 +482,10 @@ function removeRelationWithId( $relationId ) {
  * left hand side, you'll get all relations that exist in which the dm you did specify
  * is involved.
  *
- * @param unknown_type|null $relationTypeId dmid of the relationtype, optional.
- * @param unknown_type|null $lhs dmid of the left hand side, optional.
- * @param unknown_type|null $rhs dmid of the right hand side, optional.
- * @param unknown_type|null $dc the dataset, optional
+ * @param int|null $relationTypeId dmid of the relationtype, optional.
+ * @param int|null $lhs dmid of the left hand side, optional.
+ * @param int|null $rhs dmid of the right hand side, optional.
+ * @param int|null $dc the dataset, optional
  */
 function getRelationDefinedMeanings( $relationTypeId = null, $lhs = null, $rhs = null, $dc = null ) {
 	$dc = wdGetDataSetContext( $dc );
@@ -1738,9 +1738,9 @@ function getLanguageIdForDefinedMeaningAndExpression( $definedMeaningId, $spelli
 
 /**
  * Returns the definition of a definedMeaning in a given language
- * @param $definedMeaningId
- * @param $languageId
- * @param $dc
+ * @param int $definedMeaningId
+ * @param int $languageId
+ * @param int|null $dc
  */
 function getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId, $dc = null ) {
 	if ( $dc === null ) {
@@ -1774,7 +1774,7 @@ function getDefinedMeaningDefinitionForLanguage( $definedMeaningId, $languageId,
 /**
  * Returns the definition of a definedMeaning in any language
  * according to which definition comes up first in the SQL query
- * @param $definedMeaningId
+ * @param int $definedMeaningId
  */
 function getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId ) {
 	$dc = wdGetDataSetContext();
@@ -1805,7 +1805,7 @@ function getDefinedMeaningDefinitionForAnyLanguage( $definedMeaningId ) {
 /**
  * Returns the definition of a definedMeaning in the user language, or in English, or in any other
  * according to what is available
- * @param $definedMeaningId
+ * @param int $definedMeaningId
  */
 function getDefinedMeaningDefinition( $definedMeaningId ) {
 	require_once 'OmegaWikiDatabaseAPI.php';
@@ -2061,8 +2061,8 @@ function getCollectionContents( $collectionId ) {
  * Returns an array containing the ids of the defined meanings belonging to the collection
  * with the given id.
  *
- * @param unknown_type $collectionId
- * @param unknown_type|null $dc
+ * @param int $collectionId
+ * @param int|null $dc
  */
 function getCollectionMembers( $collectionId, $dc = null ) {
 	$memberMids = [];
@@ -2713,8 +2713,8 @@ class WLD_Class {
 
 	/** Get a list of Class Expressions where the Defined Meaning Id is a member of.
 	 *
-	 * @param $definedMeaningId
-	 * @param $languageId
+	 * @param int $definedMeaningId
+	 * @param int $languageId
 	 *
 	 * @return list of array expressions
 	 * @return array() when none

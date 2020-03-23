@@ -8,8 +8,8 @@
 class DBTools {
 
 	/** retrieve a single row from the database as an associative array
-	 * @param $table	the name of the table (minus dataset prefix)
-	 * @param $where		the actual WHERE clause we need to uniquely find our row
+	 * @param string $table the name of the table (minus dataset prefix)
+	 * @param string $where the actual WHERE clause we need to uniquely find our row
 	 * @return an associative array, representing our row. \
 	 * 	keys=column headers, values = row contents
 	 */

@@ -80,12 +80,13 @@ class Structure {
 	/**
 	 * Construct named Structure which contains Attribute objects
 	 *
-	 * @param $type (String)  Identifying string that describes the structure.
+	 * @param string|Attribute[]|Attribute $argumentList
+	 *  Can be an identifying string that describes the structure.
 	 *                        Optional; if not specified, will be considered
 	 *                        'anonymous-structure' unless there is only a
 	 *                        a single Attribute object, in which case the structure
 	 *                        will inherit its ID. Do not pass null.
-	 * @param $structure (Array or Parameter list) One or more Attribute objects.
+	 *  Can be an array or parameter list of one or more Attribute objects.
 	 */
 	public function __construct( $argumentList ) {
 		# We're trying to be clever.

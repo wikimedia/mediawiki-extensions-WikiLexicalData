@@ -190,10 +190,10 @@ class Exercise implements Iterator {
 	 * Calling this routine takes care of both of these tasks.
 	 * If a question  element is empty, we fill it, and return the filled element.
 	 * If the question element is already filled, we can return it right away.
-	 * @param $dmid 	the dmid to fetch
-	 * @param $targetDOM 	the DOM to work with
-	 * @param $_depth  	traps recursion, $_depth may not be larger than 1.
-	 * @param $fetch
+	 * @param int $dmid the dmid to fetch
+	 * @param DOMDocument $targetDOM the DOM to work with
+	 * @param int $_depth traps recursion, $_depth may not be larger than 1.
+	 * @param bool $fetch
 	 */
 	private function _getQuestionNode( $dmid, $targetDOM, $_depth = 0, $fetch = true ) {
 		if ( !is_int( $dmid ) ) {
@@ -231,7 +231,7 @@ class Exercise implements Iterator {
 	/**
 	 * Perform actual fetch for getQuestionMode, and cahce it in $this->full_set as well.
 	 * recursively calls back _getQuestionNode ONCE to parse out node
-	 * @param dmid	defined meaning id to fetch
+	 * @param int $dmid defined meaning id to fetch
 	 * @param the old empty node to replace
 	 */
 	private function _fetchQuestionNode( $dmid, $oldNode ) {

@@ -215,7 +215,7 @@ class OwDatabaseAPI {
 
 	/** @brief Returns one spelling of an expression corresponding to a given DM in any language
 	 *
-	 * @param $definedMeaningId
+	 * @param int $definedMeaningId
 	 * @return string spelling
 	 * @return if not exists, ""
 	 *
@@ -290,7 +290,7 @@ class OwDatabaseAPI {
 
 	/**
 	 * Returns a SQL query string for fetching language names in a given language.
-	 * @param $lang_code the language in which to retrieve the language names
+	 * @param string $lang_code the language in which to retrieve the language names
 	 * @param $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
 	 * this array can be generated with ViewInformation->getFilterLanguageList() according to user preferences
 	 *
@@ -364,8 +364,8 @@ class OwDatabaseAPI {
 	}
 
 	/**
-	 * @param $purge purge cache
-	 * @param $code the language code
+	 * @param bool $purge purge cache
+	 * @param string|null $code the language code
 	 *
 	 * @return an array containing all language names translated into the language
 	 * 	indicated by $code ( if it exists ), with a fallback in English where the language
