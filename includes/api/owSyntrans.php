@@ -290,8 +290,8 @@ class SynonymTranslation extends ApiBase {
 
 /** getSynonymAndTranslation function
  *
- * @param definedMeaningId	int	req'd
- * @param excludeSyntransId	int opt'l
+ * @param int $definedMeaningId req'd
+ * @param int|null $excludeSyntransId opt'l
  *
  * returns an array of the following:
  * - spelling

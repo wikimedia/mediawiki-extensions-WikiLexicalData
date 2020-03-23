@@ -409,8 +409,8 @@ class DefinedMeaningModel {
 	 * specified by language code. Caches the syntrans records
 	 * in an array.
 	 *
-	 * @param languageCode str Language code of the synonym/translation to look for
-	 * @param fallbackCode str Fallback to use if not found
+	 * @param string $languageCode Language code of the synonym/translation to look for
+	 * @param string $fallbackCode Fallback to use if not found
 	 * @return Spelling or null if not found at all
 	 *
 	 * @todo make fallback optional
@@ -475,7 +475,7 @@ class DefinedMeaningModel {
 	 * Splits title of the form "Abc (123)" into text and number
 	 * components.
 	 *
-	 * @param titleText str the title to analyze
+	 * @param string $titleText the title to analyze
 	 * @return Array of the two components or null.
 	 */
 	public static function splitTitleText( $titleText ) {

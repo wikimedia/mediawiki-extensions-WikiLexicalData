@@ -16,7 +16,7 @@ class OmegaWikiDataBase {
  * @param table  table name
  * @param column column nane
  * @param value  column value
- * @param isDc   if has DataSet Context(boolean)
+ * @param bool $isDc if has DataSet Context
  */
 	public static function verifyColumn( $table, $column, $value, $isDc ) {
 		if ( $isDc == 1 ) {
@@ -44,8 +44,8 @@ class OmegaWikiDataBase {
 
 /** @brief returns an expression ( spelling/word )
  *
- * @param expressionId req'd int The expression id.
- * @param dc           opt'l str The database being accessed.
+ * @param int $expressionId req'd The expression id.
+ * @param string|null $dc opt'l The database being accessed.
  *
  * @return null if not exists
  */
@@ -71,8 +71,8 @@ function getExpression( $expressionId, $dc = null ) {
 
 /** @brief Creates a new object id for the Object table
  *
- * @param table req'd str The name of the new object's table.
- * @param dc    opt'l str The database being accessed.
+ * @param string $table req'd The name of the new object's table.
+ * @param string|null $dc opt'l The database being accessed.
  */
 function newObjectId( $table, $dc = null ) {
 	global $wgDBprefix;
@@ -1685,7 +1685,7 @@ function getDefinedMeaningSpellingForAnyLanguage( $definedMeaning ) {
 /**
  * Returns the language id of a definedMeaning in any language
  * according to which definition comes up first in the SQL query
- * @param definedMeaning str the defined meaning id
+ * @param string $definedMeaning the defined meaning id
  */
 function getDefinedMeaningSpellingLanguageId( $definedMeaning ) {
 	$dc = wdGetDataSetContext();

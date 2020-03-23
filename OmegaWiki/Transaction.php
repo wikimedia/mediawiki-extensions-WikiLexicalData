@@ -388,9 +388,9 @@ class Transactions {
 	 * faster (since the latest ids are already set) and accurate ( since it would
 	 * not be limited to added syntrans only ).
 	 *
-	 * @param languageId int language Id
-	 * @param options    arr optional parameters
-	 * @param dc         str WikiLexical dataset
+	 * @param int $languageId
+	 * @param array $options optional parameters
+	 * @param string|null $dc WikiLexical dataset
 	 *
 	 * @return $transaction_id integer The latest transaction_id.
 	 * @return -1 If the language_id is non numeric or no transaction_id was found
@@ -473,9 +473,9 @@ class Transactions {
 	}
 
 	/**
-	 * @param transactionId req'd int The transaction id
-	 * @param options       opt'l arr Optional parameters
-	 * @param dc            opt'l str The WikiLexicalData dataset
+	 * @param int $transactionId req'd The transaction id
+	 * @param array $options Optional parameters
+	 * @param string $dc opt'l The WikiLexicalData dataset
 	 *
 	 * @return array( int user_id, str user_ip, str timestamp, str comment )
 	 * @return if not exists, array()

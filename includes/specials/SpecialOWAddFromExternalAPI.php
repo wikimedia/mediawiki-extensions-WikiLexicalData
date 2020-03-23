@@ -188,12 +188,11 @@ class ExternalResources {
 	protected $owlExists = false;			// bool
 
 	/**
-	 * @param spTitle          str Special Page Title
-	 * @param source           str the source dictionary
-	 * @param sourceLabel      str the source dictionary name that will appear.
-	 * @param sourceLanguageId int The languageId of the source dictionary
-	 * @param search           str The expression/spelling( word ) to be searched
-	 * @param collectionId     int The Collection Id
+	 * @param string $spTitle Special Page Title
+	 * @param string $source the source dictionary
+	 * @param int $sourceLanguageId The languageId of the source dictionary
+	 * @param string $search The expression/spelling( word ) to be searched
+	 * @param int $collectionId The Collection Id
 	 */
 	function __construct( $spTitle, $source, $sourceLanguageId, $search, $collectionId ) {
 		global $wgOut;

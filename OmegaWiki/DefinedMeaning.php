@@ -339,10 +339,10 @@ class DefinedMeanings {
 	/** @brief Returns the spelling of an expression used as
 	 * the definedMeaning namespace of a given DM
 	 *
-	 * @param definedMeaningId int
-	 * @param dc               str
+	 * @param int $definedMeaningId
+	 * @param string|null $dc
 	 *
-	 * @return expression str
+	 * @return string expression
 	 * @return if not exists, null
 	 *
 	 * @see use OwDatabaseAPI::definingExpression instead
@@ -429,10 +429,10 @@ class DefinedMeanings {
 	/**
 	 * @brief Returns the defined_meaning table's DefinedMeaning id via translatedContentId
 	 *
-	 * @param translatedContentId req'd int The object id
-	 * @param $options            opt'l arr An optional parameters
+	 * @param int $translatedContentId req'd The object id
+	 * @param array $options opt'l An optional parameters
 	 * * "option['test'] = true" used to test the function
-	 * @param $dc                 opt'l str The WikiLexicalData dataset
+	 * @param string|null $dc opt'l The WikiLexicalData dataset
 	 *
 	 * @return array( int defined_meaning_id )
 	 * @return if not exists, array()
@@ -476,10 +476,10 @@ class DefinedMeanings {
 	}
 
 	/**
-	 * @param languageId req'd int The language id
-	 * @param options    opt'l arr An optional parameters
+	 * @param int $languageId req'd The language id
+	 * @param array $options opt'l An optional parameters
 	 * * "option['test'] = true" used to test the function
-	 * @param dc         opt'l str The WikiLexicalData dataset
+	 * @param string|null $dc opt'l The WikiLexicalData dataset
 	 *
 	 * @return an array of "Defined Meaning Id" objects for a language
 	 * @return if not exists, null
@@ -538,8 +538,8 @@ class DefinedMeanings {
 	 * 	- or else in English
 	 * 	- or else in any language
 	 *
-	 * @param definedMeaningId int
-	 * @return spelling str
+	 * @param int $definedMeaningId
+	 * @return string spelling
 	 *
 	 * @note Though you can access this function, it is highly recommended that you
 	 * use the static function OwDatabaseAPI::getDefinedMeaningExpression instead.
@@ -573,9 +573,9 @@ class DefinedMeanings {
 
 	/** @brief Returns one spelling of an expression corresponding to a given DM in a given language
 	 *
-	 * @param definedMeaningId int
-	 * @param languageId       int
-	 * @return spelling str
+	 * @param int $definedMeaningId
+	 * @param int $languageId
+	 * @return string spelling
 	 * @return if not exists, ""
 	 *
 	 * @note Though you can access this function, it is highly recommended that you
@@ -610,7 +610,7 @@ class DefinedMeanings {
 	/** @brief Returns one spelling of an expression corresponding to a given DM in any language
 	 *
 	 * @param $definedMeaningId
-	 * @return spelling str
+	 * @return string spelling
 	 * @return if not exists, ""
 	 *
 	 * @note Though you can access this function, it is highly recommended that you

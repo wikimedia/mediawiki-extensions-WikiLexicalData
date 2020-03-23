@@ -51,9 +51,9 @@ class OwDatabaseAPI {
 
 	/** @brief creates a new Expression entry.
 	 *
-	 * @param spelling   req'd str
-	 * @param languageId req'd int
-	 * @param option     opt'l arr
+	 * @param string $spelling req'd
+	 * @param int $languageId req'd
+	 * @param array $options opt'l
 	 *
 	 * 	options:
 	 * 		updateId int Inserts a transaction id instead of the updated one.
@@ -73,7 +73,7 @@ class OwDatabaseAPI {
 
 	/** @brief Returns the expressionId corresponding to $spelling and $languageId
 	 *
-	 * @return str  The expressionId
+	 * @return string The expressionId
 	 * @return null if not exist
 	 * @see OwDatabaseAPI::getTheExpressionId
 	 */
@@ -94,8 +94,8 @@ class OwDatabaseAPI {
 
 	/** @brief returns a list of DefinedMeaning ids
 	 *
-	 * @return arr list of defined meaning ids.
-	 * @return arr if empty, an empty array.
+	 * @return array list of defined meaning ids.
+	 * @return array if empty, an empty array.
 	 * @see OwDatabaseAPI::getExpressionMeaningIds
 	 */
 	public static function getExpressionMeaningIds( $spelling, $options = [] ) {
@@ -104,8 +104,8 @@ class OwDatabaseAPI {
 
 	/** @brief returns a list of DefinedMeaning ids for languages contained in the array languageIds
 	 *
-	 * @return arr list of defined meaning ids.
-	 * @return arr if empty, an empty array.
+	 * @return array list of defined meaning ids.
+	 * @return array if empty, an empty array.
 	 * @see OwDatabaseAPI::getExpressionMeaningIds
 	 */
 	public static function getExpressionMeaningIdsForLanguages( $spelling, $languageIds, $options = [] ) {
@@ -114,12 +114,12 @@ class OwDatabaseAPI {
 
 	/** @brief the core getExpression function
 	 *
-	 * @param spelling   req'd str
-	 * @param languageId opt'l int
-	 * @param option     opt'l arr
+	 * @param string $spelling req'd
+	 * @param int|null $languageId opt'l
+	 * @param array $options opt'l
 	 *
-	 * @return str expression id for the languageId indicated.
-	 * @return arr The first expressionId/languageId [array( expessionId, languageId )] when languageId is skipped.
+	 * @return string expression id for the languageId indicated.
+	 * @return array The first expressionId/languageId [array( expessionId, languageId )] when languageId is skipped.
 	 * 	options:
 	 * 		dc           str The data set
 	 *
@@ -137,12 +137,12 @@ class OwDatabaseAPI {
 
 	/** @brief the core getMeaningIds function
 	 *
-	 * @param spelling   req'd str
-	 * @param languageId opt'l arr
-	 * @param option     opt'l arr
+	 * @param string $spelling req'd
+	 * @param array $languageIds opt'l
+	 * @param array $options opt'l
 	 *
-	 * @return arr list of defined meaning ids.
-	 * @return arr if not exists, an empty array.
+	 * @return array list of defined meaning ids.
+	 * @return array if not exists, an empty array.
 	 * 	options:
 	 * 		dc           str The data set
 	 *
@@ -167,10 +167,10 @@ class OwDatabaseAPI {
 	/** @brief Returns the spelling of an expression used as
 	 * the definedMeaning namespace of a given DM
 	 *
-	 * @param definedMeaningId int
-	 * @param dc               str
+	 * @param int $definedMeaningId
+	 * @param string|null $dc
 	 *
-	 * @return expression str
+	 * @return string expression
 	 * @return if not exists, null
 	 *
 	 * @see DefinedMeanings::definingExpression
@@ -187,8 +187,8 @@ class OwDatabaseAPI {
 	 * 	- or else in English
 	 * 	- or else in any language
 	 *
-	 * @param definedMeaningId int
-	 * @return expression str
+	 * @param int $definedMeaningId
+	 * @return string expression
 	 *
 	 * @see DefinedMeanings::getExpression
 	 */
@@ -200,9 +200,9 @@ class OwDatabaseAPI {
 
 	/** @brief Returns one spelling of an expression corresponding to a given DM in a given language
 	 *
-	 * @param definedMeaningId int
-	 * @param languageId       int
-	 * @return spelling str
+	 * @param int $definedMeaningId
+	 * @param int $languageId
+	 * @return string spelling
 	 * @return if not exists, ""
 	 *
 	 * @see DefinedMeanings::getExpressionForLanguage
@@ -216,7 +216,7 @@ class OwDatabaseAPI {
 	/** @brief Returns one spelling of an expression corresponding to a given DM in any language
 	 *
 	 * @param $definedMeaningId
-	 * @return spelling str
+	 * @return string spelling
 	 * @return if not exists, ""
 	 *
 	 * @see DefinedMeanings::getExpressionForAnyLanguage instead.
@@ -263,9 +263,9 @@ class OwDatabaseAPI {
 	/**
 	 * @brief Returns the defined_meaning table's DefinedMeaning id via translatedContentId
 	 *
-	 * @param translatedContentId req'd int The object id
-	 * @param options             opt'l arr An optional parameters
-	 * @param dc                  opt'l str The WikiLexicalData dataset
+	 * @param int $translatedContentId req'd The object id
+	 * @param array $options Optional parameters
+	 * @param string|null $dc opt'l The WikiLexicalData dataset
 	 *
 	 * @return array( int meaning1_id, int relationtype_mid, int meaning2_mid )
 	 * @return if not exists, array()
@@ -303,7 +303,7 @@ class OwDatabaseAPI {
 	}
 
 	/** @brief returns the languageId
-	 * @param options req'd arr
+	 * @param array $options req'd
 	 * 	- options:
 	 * 		- sid   str return the language Id using the syntrans id
 	 * 		- wmkey str return the language Id for the wikimedia key
@@ -392,7 +392,7 @@ class OwDatabaseAPI {
 	}
 
 	/**
-	 * @param iso639_3 int OmegaWiki's improvised iso
+	 * @param int $iso639_3 OmegaWiki's improvised iso
 	 * @return the wikimedia code corresponding to the iso639_3 $code
 	 * @see OwDatabaseAPI::getCodeForIso639_3
 	 */
@@ -411,9 +411,9 @@ class OwDatabaseAPI {
 	/**
 	 * @brief Returns the meaning_relations table's details via relation_id
 	 *
-	 * @param objectId req'd int The object id
-	 * @param options  opt'l arr An optional parameters
-	 * @param dc       opt'l str The WikiLexicalData dataset
+	 * @param int $relationId req'd The object id
+	 * @param array $options Optional parameters
+	 * @param string|null $dc opt'l The WikiLexicalData dataset
 	 *
 	 * @return array( int defined_meaning_id )
 	 * @return if not exists, array()
@@ -433,10 +433,10 @@ class OwDatabaseAPI {
 	 */
 
 	/** @brief getOptionsAttributeOption Template
-	 * @param attributeId     req'd int
+	 * @param int $attributeId req'd
 	 * @param optionMeaningId opt'l int/nul
 	 * @param languageId      req'd str/arr
-	 * @param option          opt'l str
+	 * @param string|null $option opt'l
 	 * 	- multiple multiple lines
 	 * 	- exists   returns boolean, depending whether the queried values exists or not.
 	 * @see uses Attributes::getOptionAttributeOptions.
@@ -472,12 +472,12 @@ class OwDatabaseAPI {
 	 */
 
 	/** @brief adds Syntrans
-	 * @param spelling         req'd str The expression
-	 * @param languageId       req'd int The language Id
-	 * @param definedMeaningId req'd int The defined Meaning Id of the concept
-	 * @param identicalMeaning req'd str If the word has an identical meaning or not
+	 * @param string $spelling req'd The expression
+	 * @param int $languageId req'd The language Id
+	 * @param int $definedMeaningId req'd The defined Meaning Id of the concept
+	 * @param string $identicalMeaning req'd If the word has an identical meaning or not
 	 * 	to the concept. 'true' or 'false' only.
-	 * @param options          opt'l arr
+	 * @param array $options opt'l
 	 * @see Expressions::createId for options.
 	 *
 	 * @see Syntrans::add
@@ -492,9 +492,9 @@ class OwDatabaseAPI {
 	}
 
 	/**
-	 * @param syntransId req'd int The syntrans id
-	 * @param options    opt'l arr An optional parameters
-	 * @param dc         opt'l str The WikiLexicalData dataset
+	 * @param int $syntransId req'd The syntrans id
+	 * @param array $options Optional parameters
+	 * @param string|null $dc opt'l The WikiLexicalData dataset
 	 *
 	 * @return array( str spelling, int defined_meaning_id )
 	 * @return if not exists, array()
@@ -508,9 +508,9 @@ class OwDatabaseAPI {
 	}
 
 	/**
-	 * @param definedMeaningId req'd int The defined meaning id
-	 * @param languageId       req'd int language id
-	 * @param spelling         req'd str The Expression
+	 * @param int $definedMeaningId req'd The defined meaning id
+	 * @param int $languageId req'd language id
+	 * @param string $spelling req'd The Expression
 	 *
 	 * @return array( str spelling, int language_id, int identical_meaning )
 	 * @return if not exists, null
@@ -535,9 +535,9 @@ class OwDatabaseAPI {
 	 */
 
 	/**
-	 * @param transactionId req'd int The transaction id
-	 * @param options       opt'l arr Optional parameters
-	 * @param dc            opt'l str The WikiLexicalData dataset
+	 * @param int $transactionId req'd The transaction id
+	 * @param array $options Optional parameters
+	 * @param string|null $dc opt'l The WikiLexicalData dataset
 	 *
 	 * @return array( int user_id, str user_ip, str timestamp, str comment )
 	 * @return if not exists, array()
@@ -551,9 +551,9 @@ class OwDatabaseAPI {
 	}
 
 	/**
-	 * @param languageId req'd int The language id
-	 * @param options    opt'l arr Optional parameters
-	 * @param dc         opt'l str The WikiLexicalData dataset
+	 * @param int $languageId req'd The language id
+	 * @param array $options Optional parameters
+	 * @param string|null $dc opt'l The WikiLexicalData dataset
 	 *
 	 * @return array( int user_id, str user_ip, str timestamp, str comment )
 	 * @return if not exists, array()
@@ -571,8 +571,8 @@ class OwDatabaseAPI {
 	/**
 	 * @brief sets the initial settings for static functions
 	 *
-	 * @param class req'd str The database class to access
-	 * @param dc    opt'l str The WikiLexicalData dataset
+	 * @param string $class req'd The database class to access
+	 * @param string|null $dc opt'l The WikiLexicalData dataset
 	 */
 	protected function settings( $class, $dc = null ) {
 		$this->getDc( $dc );
@@ -610,7 +610,7 @@ class OwDatabaseAPI {
 
 	/**
 	 * @brief sets the dc.
-	 * @return string $dc
+	 * @return string|null $dc
 	 */
 	protected function getDc( $dc = null ) {
 		if ( $dc === null ) {
@@ -632,12 +632,12 @@ class Syntrans {
 	}
 
 	/** @brief adds Syntrans
-	 * @param spelling         req'd str The expression
-	 * @param languageId       req'd int The language Id
-	 * @param definedMeaningId req'd int The defined Meaning Id of the concept
-	 * @param identicalMeaning req'd str If the word has an identical meaning or not
+	 * @param string $spelling req'd The expression
+	 * @param int $languageId req'd The language Id
+	 * @param int $definedMeaningId req'd The defined Meaning Id of the concept
+	 * @param string $identicalMeaning req'd If the word has an identical meaning or not
 	 * 	to the concept. 'true' or 'false' only.
-	 * @param options          opt'l arr
+	 * @param array $options opt'l
 	 * @see Expressions::createId for options.
 	 *
 	 * @note Though you can access this function, it is highly recommended that you
@@ -782,10 +782,10 @@ class Syntrans {
 	}
 
 	/**
-	 * @param syntransId req'd int The syntrans id
-	 * @param options    opt'l arr  An optional parameters
+	 * @param int $syntransId req'd The syntrans id
+	 * @param array $options Optional parameters
 	 * * "option['test'] = true" used to test the function
-	 * @param dc         opt'l str The WikiLexicalData dataset
+	 * @param string|null $dc opt'l The WikiLexicalData dataset
 	 *
 	 * @return if exist, array( str spelling, int defined_meaning_id )
 	 * @return if not, array()
@@ -837,8 +837,8 @@ class Syntrans {
 
 	/** @brief core get syntrans function
 	 *
-	 * @param definedMeaningId	int	req'd
-	 * @param options			int opt'l
+	 * @param int $definedMeaningId req'd
+	 * @param int $options opt'l
 	 *
 	 * @return array( str spelling, int language_id, int identical_meaning )
 	 * @return if not exists, null

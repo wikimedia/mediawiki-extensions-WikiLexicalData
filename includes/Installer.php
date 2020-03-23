@@ -12,7 +12,7 @@ class ExtensionDatabaseUpdater {
 	}
 
 	/** @brief creates table and index
-	 * @return this->processed boolean whether any queries were processed.
+	 * @return bool whether any queries were processed.
 	 */
 	function addExtensionSCHEMA( $pattern, $prefix, $path, $freshInstall = false ) {
 		$this->pattern = $pattern;

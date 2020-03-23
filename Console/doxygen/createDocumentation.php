@@ -58,8 +58,8 @@ class CreateDocumentation extends Maintenance {
 
 	/** \brief Read, interpret and create the configuration to use
 	 *
-	 * @param $filename str The template config file.
-	 * @param $configFinal str The config file to produce.
+	 * @param string $filename The template config file.
+	 * @param string $configFinal The config file to produce.
 	 */
 	protected function readTemplateConfigFile( $filename, $configFinal ) {
 		global $wgWldDownloadScriptPath;

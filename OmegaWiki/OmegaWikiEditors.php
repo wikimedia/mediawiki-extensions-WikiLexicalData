@@ -649,7 +649,8 @@ function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 
 /**
  * The corresponding RecordSet function is loadRecord in DefinedMeaningModel.php
- * @param $insideExpression boolean, indicates if the DM Editor is called inside an Expression Editor
+ * @param ViewInformation $viewInformation
+ * @param bool|null $insideExpression indicates if the DM Editor is called inside an Expression Editor
  */
 function getDefinedMeaningEditor( ViewInformation $viewInformation, $insideExpression = null ) {
 	global $wdDefinedMeaningAttributesOrder, $wgUser;

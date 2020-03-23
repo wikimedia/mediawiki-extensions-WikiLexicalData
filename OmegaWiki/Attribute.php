@@ -168,9 +168,9 @@ class Attributes {
 	}
 
 	/**
-	 * @param objectId req'd int the object id
-	 * @param option   opt'l arr optional array
-	 * @param dc       opt'l str the dataset to use
+	 * @param int $objectId req'd the object id
+	 * @param array $options opt'l
+	 * @param string|null $dc opt'l the dataset to use
 	 *
 	 * @return array(
 	 * 	'text' => $string,
@@ -239,9 +239,9 @@ class Attributes {
 	}
 
 	/**
-	 * @param objectId req'd int the object id
-	 * @param option   opt'l arr optional array
-	 * @param dc       opt'l str the dataset to use
+	 * @param int $objectId req'd the object id
+	 * @param array $options opt'l
+	 * @param string|null $dc opt'l the dataset to use
 	 *
 	 * @return array(
 	 * 	'attribute_name' => $string,
@@ -317,10 +317,10 @@ class Attributes {
 	}
 
 	/** @brief getOptionsAttributeOption Template
-	 * @param attributeId     req'd int
+	 * @param int $attributeId req'd
 	 * @param optionMeaningId opt'l int/nul
 	 * @param languageId      req'd str/arr
-	 * @param option          opt'l str
+	 * @param string|null $option opt'l
 	 * 	- multiple multiple lines
 	 * 	- exists   returns boolean, depending whether the queried values exists or not.
 	 * @see use OwDatabaseAPI::getOptionAttributeOptions instead.
@@ -379,11 +379,11 @@ class Attributes {
 	}
 
 	/**
-	 * @param attributeId req'd int the attribute id
-	 * @param languageId  opt'l int optional array
-	 * @param dc          opt'l str the dataset to use
+	 * @param int $attributeId req'd the attribute id
+	 * @param int|null $languageId opt'l
+	 * @param string|null $dc opt'l the dataset to use
 	 *
-	 * @return str The Attribute Name
+	 * @return string The Attribute Name
 	 * @return if not exist, null
 	 */
 	public static function getAttributeName( $attributeId, $languageId = null, $dc = null ) {
@@ -422,9 +422,9 @@ class Attributes {
 	/**
 	 * @brief Returns the Attribute Id of an Expression and/or a language id
 	 *
-	 * @param attributeExpression req'd int The expression
-	 * @param languageId          opt'l int The language id
-	 * @param dc                  opt'l str The dataset to use
+	 * @param int $attributeExpression req'd The expression
+	 * @param int|null $languageId opt'l The language id
+	 * @param string|null $dc opt'l The dataset to use
 	 *
 	 * @return int the Option Attribute Id
 	 * @return if not exist, null
@@ -472,10 +472,10 @@ class Attributes {
 	/**
 	 * @brief Returns the meaning_relations table's details via relation_id
 	 *
-	 * @param objectId req'd int The object id
-	 * @param options  opt'l arr An optional parameters
+	 * @param int $objectId req'd The object id
+	 * @param array $options Optional parameters
 	 * * "option['test'] = true" used to test the function
-	 * @param dc       opt'l str The WikiLexicalData dataset
+	 * @param string|null $dc opt'l The WikiLexicalData dataset
 	 *
 	 * @return if exist, array( meaning1_id, relationtype_mid, meaning2_mid)
 	 * @return if not, array()

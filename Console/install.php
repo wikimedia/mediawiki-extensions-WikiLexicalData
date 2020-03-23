@@ -172,7 +172,7 @@ class InstallWikiLexicalData extends Maintenance {
 
 	/** @brief Fills table bootstrapped_defined_meanings with relevant data
 	 *
-	 * @param dc str The database being accessed.
+	 * @param string $dc The database being accessed.
 	 */
 	protected function bootStrappedDefinedMeanings( $dc ) {
 		// Admin user
@@ -225,7 +225,7 @@ class InstallWikiLexicalData extends Maintenance {
 
 	/** @brief Add some more data to enable annotations
 	 *
-	 * @param dc str The database being accessed.
+	 * @param string $dc The database being accessed.
 	 */
 	protected function enableAnnotations( $dc ) {
 		// Admin user
@@ -267,7 +267,7 @@ class InstallWikiLexicalData extends Maintenance {
 
 	/** @brief Drop Tables
 	 *
-	 * @param dc str The database being accessed.
+	 * @param string $dc The database being accessed.
 	 */
 	protected function dropTables( $dc ) {
 		$dbw = wfGetDB( DB_MASTER );
@@ -296,7 +296,7 @@ class InstallWikiLexicalData extends Maintenance {
 
 	/** @brief Displays drop tables commands.
 	 *
-	 * @param dc str The database being accessed.
+	 * @param string $dc The database being accessed.
 	 */
 	protected function printDropTablesCommand( $dc ) {
 		global $wgDBprefix;
@@ -317,9 +317,9 @@ class InstallWikiLexicalData extends Maintenance {
 
 	/** @brief Read, interpret and execute the database template
 	 *
-	 * @param pattern  arr An array of pattern to find.
-	 * @param prefix   arr An array of prefix to replace \a find with.
-	 * @param filename str the database template name.
+	 * @param array $pattern An array of pattern to find.
+	 * @param array $prefix An array of prefix to replace \a find with.
+	 * @param string $filename the database template name.
 	 */
 	protected function ReadTemplateSQLFile( $pattern, $prefix, $filename ) {
 		$dbw = wfGetDB( DB_MASTER );
@@ -441,7 +441,7 @@ class InstallWikiLexicalData extends Maintenance {
 
 	/** @brief SQLite compatibility
 	 *
-	 * @param string str The string to parse.
+	 * @param string $string The string to parse.
 	 */
 	protected function sqliteLineReplace( $string ) {
 		$string = preg_replace( '/ int(eger|) /i', ' INTEGER ', $string );

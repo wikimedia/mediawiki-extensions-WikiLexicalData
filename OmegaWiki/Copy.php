@@ -937,7 +937,7 @@ class CopyTools {
 
 	/** Performs an arbitrary SQL query and returns an associative array
 	 * Assumes that only 1 row can be returned!
-	 * @param $query	a valid SQL query
+	 * @param string $query a valid SQL query
 	 * @return an associative array, representing our row. \
 	 * 	keys=column headers, values = row contents
 	 */
@@ -964,7 +964,7 @@ class CopyTools {
 
 	/** Perform an arbitrary SQL query
 	 *
-	 * @param $query	a valid SQL query
+	 * @param string $query a valid SQL query
 	 * @return an array of associative arrays, representing our rows.  \
 	 * 	each associative array is structured with:		\
 	 * 	keys=column headers, values = row contents

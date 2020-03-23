@@ -149,7 +149,7 @@ abstract class DefaultEditor implements Editor {
 
 	/**
 	 * set the editor as collapsible or not collapsible
-	 * @param $value boolean
+	 * @param bool $value
 	 */
 	public function setCollapsible( $value ) {
 		$this->isCollapsible = $value;

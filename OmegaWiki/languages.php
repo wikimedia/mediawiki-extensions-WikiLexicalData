@@ -13,7 +13,7 @@ class WLDLanguage {
 	}
 
 	/** @brief returns the languageId
-	 * @param options req'd arr
+	 * @param array $options req'd
 	 * 	- options:
 	 * 		- sid   str return the language Id using the syntrans id
 	 * 		- wmkey str return the language Id for the wikimedia key
@@ -72,7 +72,7 @@ class WLDLanguage {
 	}
 
 	/**
-	 * @param iso639_3 int OmegaWiki's improvised iso
+	 * @param int $iso639_3 OmegaWiki's improvised iso
 	 * @return the wikimedia code corresponding to the iso639_3 $code
 	 * @see use OwDatabaseAPI::getLanguageCodeForIso639_3 instead
 	 */
