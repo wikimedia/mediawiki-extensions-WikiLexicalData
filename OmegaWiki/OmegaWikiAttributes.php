@@ -50,7 +50,11 @@ class OmegaWikiAttributes {
 	protected $attributes = [];
 	protected $setup_completed = false;
 	protected $in_setup = false; # for use by functions doing the setup itself (currently hardValues)
-	protected $viewInformation = null;
+
+	/**
+	 * @var ViewInformation
+	 */
+	protected $viewInformation;
 
 	function __construct( ViewInformation $viewInformation ) {
 		$this->setup( $viewInformation );
@@ -308,6 +312,9 @@ class OmegaWikiAttributes {
 		$this->in_setup = false;
 	}
 
+	/**
+	 * @return ViewInformation
+	 */
 	public function getViewInformation() {
 		return $this->viewInformation;
 	}

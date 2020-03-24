@@ -18,6 +18,21 @@
  */
 class OwDatabaseAPI {
 
+	/** @var Attributes|null */
+	private $Attributes;
+	/** @var DefinedMeanings|null */
+	private $DefinedMeaning;
+	/** @var Expressions|null */
+	private $Expression;
+	/** @var WLDLanguage|null */
+	private $Language;
+	/** @var Syntrans|null */
+	private $Syntrans;
+	/** @var Transactions|null */
+	private $Transaction;
+	/** @var OmegaWikiDataBase|null */
+	private $OmegaWiki;
+
 	public function __construct() {
 	}
 
@@ -25,14 +40,13 @@ class OwDatabaseAPI {
 	 *	 @{
 	 */
 
-/**
- * returns the value of column if exist
- * null if not found
- * @param table  table name
- * @param column column nane
- * @param value  column value
- * @param isDc   if has DataSet Context(boolean)
- */
+	/**
+	 * @param string $table table name
+	 * @param string $column column name
+	 * @param mixed $value
+	 * @param int $isDc if has DataSet Context
+	 * @return mixed|null value of column, or null if not found
+	 */
 	public static function verifyColumn( $table, $column, $value, $isDc ) {
 		$api = new OwDatabaseAPI;
 		$dc = null;
@@ -291,8 +305,9 @@ class OwDatabaseAPI {
 	/**
 	 * Returns a SQL query string for fetching language names in a given language.
 	 * @param string $lang_code the language in which to retrieve the language names
-	 * @param $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
+	 * @param int[] $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
 	 * this array can be generated with ViewInformation->getFilterLanguageList() according to user preferences
+	 * @return array
 	 *
 	 * @see WLDLanguage::getParametersForNames
 	 */
@@ -434,8 +449,8 @@ class OwDatabaseAPI {
 
 	/** @brief getOptionsAttributeOption Template
 	 * @param int $attributeId req'd
-	 * @param optionMeaningId opt'l int/nul
-	 * @param languageId      req'd str/arr
+	 * @param int|null $optionMeaningId opt'l
+	 * @param int|int[] $languageId req'd
 	 * @param string|null $option opt'l
 	 * 	- multiple multiple lines
 	 * 	- exists   returns boolean, depending whether the queried values exists or not.

@@ -123,7 +123,7 @@ $wgPropertyToColumnFilters = [];
  * @param int|null $dc optional, for convenience.
  * 		if the dataset context is already set, will
  * 		return that value, else will find the relevant value
- * @return prefix (without underscore)
+ * @return string prefix (without underscore)
  */
 function wdGetDataSetContext( $dc = null ) {
 	global $wgRequest, $wdDefaultViewDataSet, $wdGroupDefaultView, $wgUser,

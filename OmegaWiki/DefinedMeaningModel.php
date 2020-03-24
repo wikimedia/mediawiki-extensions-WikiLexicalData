@@ -65,12 +65,12 @@ class DefinedMeaningModel {
 	 * If $this->definingExpression is set, it will also check if the spelling
 	 * of the defining expression matches
 	 *
-	 * @param Boolean If true, checks beyond the dataset context and will
+	 * @param bool $searchAllDataSets If true, checks beyond the dataset context and will
 	 *                return the first match. Always searches current
 	 *                context first.
-	 * @param Boolean Switch dataset context if match outside default is found.
+	 * @param bool $switchContext Switch dataset context if match outside default is found.
 	 *
-	 * @return DataSet object in which the DM was found, or null.
+	 * @return DataSet|null object in which the DM was found, or null.
 	 */
 	public function checkExistence( $searchAllDataSets = false, $switchContext = false ) {
 		global $wdCurrentContext;
@@ -117,10 +117,8 @@ class DefinedMeaningModel {
 	}
 
 	/**
-	 * @param DataSet where to look
-	 * @param Integer Defined Meaning Id
-	 * @param String  Spelling
-	 * @return DataSet or null
+	 * @param DataSet $dc where to look
+	 * @return DataSet|null
 	 * @see checkExistence
 	 */
 	public function checkExistenceInDataSet( DataSet $dc ) {
@@ -449,10 +447,10 @@ class DefinedMeaningModel {
 	}
 
 	/**
-	 * @return HTML link including the wrapping tag
-	 * @param String Language code of synonym/translation to show
-	 * @param String Fallback code
+	 * @param string $languageCode Language code of synonym/translation to show
+	 * @param string $fallbackCode Fallback code
 	 * @throws Exception If title object is missing
+	 * @return string HTML link including the wrapping tag
 	 */
 	public function getHTMLLink( $languageCode, $fallbackCode = WLD_ENGLISH_LANG_WMKEY ) {
 		$titleObject = $this->getTitleObject();

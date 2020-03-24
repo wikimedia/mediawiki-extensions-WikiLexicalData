@@ -90,12 +90,14 @@ function getFileField( $name, $onChangeHandler = "" ) {
 /**
  * Returns HTML for an autocompleted form field.
  *
- * @param String unique identifier for this form field
- * @param String type of query to run
- * @param Integer Default value
- * @param String How default value will be shown
- * @param Array Override column titles
- * @param DataSet Override standard dataset
+ * @param string $name unique identifier for this form field
+ * @param string $query type of query to run
+ * @param array $parameters
+ * @param int $value Default value
+ * @param string $label How default value will be shown
+ * @param string[] $displayLabelColumns Override column titles
+ * @param DataSet|null $dc Override standard dataset
+ * @return string HTML
  */
 function getSuggest( $name, $query, $parameters = [], $value = 0, $label = '', $displayLabelColumns = [ 0 ], DataSet $dc = null ) {
 	if ( $dc === null ) {
@@ -288,12 +290,11 @@ class GenericForms {
 	}
 
 	/**
-	 * @return HTML string for HTML tag select
-	 *
 	 * @param string $name req'd unique identifier for this form field
 	 * @param array $options req'd list of options, [value => text] pairs
 	 * @param string $selectedValue opt'l in case a value is present
 	 * @param string $onChangeHandler js
+	 * @return string HTML
 	 */
 	function getSelect( $name, $options, $selectedValue = "", $onChangeHandler = "" ) {
 		if ( $onChangeHandler != "" ) {
@@ -320,11 +321,11 @@ class GenericForms {
 	}
 
 	/**
-	 * @return HTML string for HTML input type text
 	 * @param string $name req'd unique identifier for this form field
 	 * @param string $value opt'l input value
 	 * @param string $onChangeHandler opt'l js
 	 * @param bool $disabled opt'l to disable editing of the field
+	 * @return string HTML
 	 */
 	public function getTextBox( $name, $value = "", $onChangeHandler = "", $disabled = false ) {
 		if ( $onChangeHandler != "" ) {
@@ -348,9 +349,6 @@ class GenericForms {
 class OmegaWikiForms extends GenericForms {
 
 	/**
-	 *
-	 * @return HTML for an autocompleted form field.
-	 *
 	 * @param string $name unique identifier for this form field
 	 * @param string $query type of query to run
 	 * @param array $parameters span options (parameters and values )
@@ -358,7 +356,7 @@ class OmegaWikiForms extends GenericForms {
 	 * @param string $label How default value will be shown
 	 * @param array $displayLabelColumns Override column titles
 	 * @param DataSet|null $dc Override standard dataset
-	 *
+	 * @return string HTML for an autocompleted form field.
 	 */
 	function getSuggest( $name, $query, $parameters = [], $value = 0, $label = '', $displayLabelColumns = [ 0 ], DataSet $dc = null ) {
 		if ( $dc === null ) {

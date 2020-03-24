@@ -319,8 +319,8 @@ class Attributes {
 
 	/** @brief getOptionsAttributeOption Template
 	 * @param int $attributeId req'd
-	 * @param optionMeaningId opt'l int/nul
-	 * @param languageId      req'd str/arr
+	 * @param int|null $optionMeaningId opt'l
+	 * @param int|int[] $languageId req'd
 	 * @param string|null $option opt'l
 	 * 	- multiple multiple lines
 	 * 	- exists   returns boolean, depending whether the queried values exists or not.

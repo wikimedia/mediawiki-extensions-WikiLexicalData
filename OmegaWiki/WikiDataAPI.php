@@ -10,14 +10,13 @@ require_once 'WikiDataGlobals.php';
  */
 class OmegaWikiDataBase {
 
-/**
- * returns the value of column if exist
- * null if not found
- * @param table  table name
- * @param column column nane
- * @param value  column value
- * @param bool $isDc if has DataSet Context
- */
+	/**
+	 * @param string $table table name
+	 * @param string $column column name
+	 * @param mixed $value
+	 * @param int $isDc if has DataSet Context
+	 * @return mixed|null value of column, or null if not found
+	 */
 	public static function verifyColumn( $table, $column, $value, $isDc ) {
 		if ( $isDc == 1 ) {
 			$dc = wdGetDataSetContext() . '_';
@@ -2170,7 +2169,7 @@ function getExpressionIdMeaningIds( $expressionId, $dc = null ) {
 /** Write a concept mapping to db
  * supply mapping as a valid
  * array("dataset_prefix"=>defined_meaning_id,...)
- * @return assoc array of uuids used for mapping. (typically you can just
+ * @return (string|int)[] Assoc array of uuids used for mapping. (typically you can just
  *           discard this, but it is used in copy.php for objects table support
  * 	     array values set to -1 were not mapped.
  */
@@ -2185,6 +2184,12 @@ function createConceptMapping( $concepts, $override_transaction = null ) {
 	return $uuid_map;
 }
 
+/**
+ * @param string $dc
+ * @param int $collid
+ * @param int $dm_id
+ * @return string|int -1 if not found
+ */
 function getMapping( $dc, $collid, $dm_id ) {
 	$dbr = wfGetDB( DB_REPLICA );
 
@@ -2204,6 +2209,9 @@ function getMapping( $dc, $collid, $dm_id ) {
 }
 
 /** ask db to provide a universally unique id
+ *
+ * @param int[] $concepts
+ * @return (string|int)[] -1 if not found
  */
 function getUUID( $concepts ) {
 	$dbr = wfGetDB( DB_REPLICA );

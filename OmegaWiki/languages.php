@@ -96,8 +96,9 @@ class WLDLanguage {
 	/**
 	 * Returns the SQL parameters needed for fetching language names in a given language.
 	 * @param string $langCode the language in which to retrieve the language names
-	 * @param $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
+	 * @param int[] $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
 	 * this array can be generated with ViewInformation->getFilterLanguageList() according to user preferences
+	 * @return array
 	 */
 	static function getParametersForNames( $langCode, $lang_subset = [] ) {
 		/* Use a simpler query if the user's language is English. */
@@ -182,6 +183,8 @@ function getLanguageIdForCode( $code ) {
 /**
  * returns the language_id corresponding to the
  * iso639_3 $code
+ *
+ * @return int
  */
 function getLanguageIdForIso639_3( $code ) {
 	static $languages = null;
@@ -260,7 +263,7 @@ function getDMIdForIso639_3( $code ) {
 /* @return Return an array containing all language names translated into the language
  * Returns a SQL query string for fetching language names in a given language.
  * @param string $lang_code the language in which to retrieve the language names
- * @param $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
+ * @param int[] $lang_subset an array in the form ( 85, 89, ...) that restricts the language_id that are returned
  * this array can be generated with ViewInformation->getFilterLanguageList() according to user preferences
  *
  * @todo for deprecation, use OwDatabaseAPI::getSQLForLanguageNames instead

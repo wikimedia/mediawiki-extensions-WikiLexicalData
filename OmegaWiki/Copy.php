@@ -170,6 +170,8 @@ class ObjectCopier {
 	 * possible TODO: Currently induces the target table from the original
 	 * destination table name.
 	 * Perhaps would be wiser to get the target table as an (override) parameter.
+	 *
+	 * @return int
 	 */
 	function write( $dc = null ) {
 		if ( $dc === null ) {
@@ -192,6 +194,9 @@ class ObjectCopier {
 	 * See also database schema documentation (insofar available) or
 	 * do sql statement DESC <dc>_objects for table format (where <dc> is a valid
 	 * dataset prefix)
+	 *
+	 * @param string|null $uuid
+	 * @return int
 	 */
 	function create_key( $uuid = null ) {
 		if ( $this->tableName === null ) {
@@ -214,7 +219,8 @@ class ObjectCopier {
 	 * create a valid object key in the objects table, and return it
 	 * @param string $dc the dataset (prefix) to create the object in
 	 * @param string $table which table is the object originally from? (minus dataset prefix)
-	 * @param $uuid  (optional) : override the auto-generated uuid with this one.
+	 * @param string|null $uuid (optional) : override the auto-generated uuid with this one.
+	 * @return string
 	 */
 	public static function makeObjectId( $dc, $table, $uuid = null ) {
 		# Sorta Exploiting internals, because -hey- we're internal
@@ -716,6 +722,10 @@ class DefinedMeaningCopier {
 		return ( $dst_dmid > 0 ) ? $dst_dmid : null;
 	}
 
+	/**
+	 * @param string $dc
+	 * @param string|int $uuid
+	 */
 	public static function finishConceptMapping( $dc, $uuid ) {
 		if ( $uuid == - 1 ) {  # CreateConceptMapping did not create a new mapping,
 			return; # You can't finish that which was never started.
@@ -1348,7 +1358,9 @@ abstract class Copier {
 	 */
 	// public abstract function write();
 
-	/** @return true if the copied item was already present in the other dataset, false if it wasn't (and we just copied it over) , or null if don't know/error/other.
+	/**
+	 * @return bool|null True if the copied item was already present in the other dataset, false if
+	 *  it wasn't (and we just copied it over) , or null if don't know/error/other.
 	 */
 	public function already_there() {
 		return $this->already_there;
