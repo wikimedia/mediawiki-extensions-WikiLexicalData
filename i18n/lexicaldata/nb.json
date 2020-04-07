@@ -1,12 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Danmichaelo",
 			"Harald Khan",
+			"Jon Harald Søby",
 			"Nghtwlkr",
 			"Njardarlogar",
-			"Simny",
-			"Danmichaelo",
-			"Jon Harald Søby"
+			"Simny"
 		]
 	},
 	"wikidata-desc": "Legger til en wiki-liknende database for ulike typer innhold.",
