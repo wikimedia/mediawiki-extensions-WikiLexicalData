@@ -184,7 +184,7 @@ class SynonymTranslation extends ApiBase {
 	/** Cache!
 	 */
 	protected function cacheSynTrans( $dmid, $options = null ) {
-		$synTransCacheKey = 'API:ow_syntrans:dm=' . $dmid;
+		$synTransCacheKey = 'dm=' . $dmid;
 		if ( isset( $options['lang'] ) ) {
 			$synTransCacheKey .= ":lang={$options['lang']}";
 		}
@@ -198,18 +198,14 @@ class SynonymTranslation extends ApiBase {
 			$synTransCacheKey .= ":ver={$options['ver']}";
 		}
 
-		$cache = new CacheHelper();
-
-		$cache->setCacheKey( [ $synTransCacheKey ] );
-		$syntrans = $cache->getCachedValue(
-			function ( $dmid, $options = null ) {
+		$cache = ObjectCache::getInstance( CACHE_ANYTHING );
+		return $cache->getWithSetCallback(
+			$cache->makeKey( 'ow_api_syntrans', $synTransCacheKey ),
+			BagOStuff::TTL_HOUR,
+			function () use ( $dmid, $options ) {
 				return $this->synTrans( $dmid, $options );
-			}, [ $dmid, $options ]
+			}
 		);
-		$cache->setExpiry( 3600 );
-		$cache->saveCache();
-
-		return $syntrans;
 	}
 
 	/**
