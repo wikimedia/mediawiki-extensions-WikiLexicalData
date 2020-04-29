@@ -25,7 +25,7 @@
 	"importlangnames_title": "Увези имиња на јазици",
 	"importlangnames_not_allowed": "Немате дозвола да увезувате имиња на јазици.",
 	"importlangnames_added": "Додадени се  имиња на јазици за „$1“.",
-	"importlangnames_not_found": "<strong>Нема пронајдено јазичен заис за „$1“!</strong>",
+	"importlangnames_not_found": "<strong>Не пронајдов јазичен заис за „$1“!</strong>",
 	"datasearch": "Пребарување на податоци",
 	"datasearch_language": "Јазик:",
 	"datasearch_found_word": "Зборот е пронајден",
