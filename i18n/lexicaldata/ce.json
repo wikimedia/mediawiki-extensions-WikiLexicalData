@@ -22,7 +22,7 @@
 	"ow_transaction_from_transaction": "Транзакцин чура:",
 	"ow_transaction_user": "Декъашхочун цӀе:",
 	"ow_transaction_rollback_button": "Юхаяккха",
-	"ow_transaction_previous_version": "Хьалха йоьду верси",
+	"ow_transaction_previous_version": "Хьалхара верси",
 	"ow_transaction_remove": "ДӀаяккхар",
 	"ow_transaction_summary": "Цунах лаьцна",
 	"ow_ClassAttributeAttribute": "Билгало",
@@ -50,7 +50,8 @@
 	"ow_class_attr_type_link": "Хьажорг",
 	"ow_show": "Гайта",
 	"ow_upload": "Чуяккха",
-	"ow_suggest_previous": "Хьалха хиларг",
+	"ow_suggest_previous": "Хьалхара",
+	"ow_suggest_next": "РогӀера",
 	"ow_suggest_clear": "ЦӀанъян",
 	"ow_nstab_edit_copy": "нисъе копи",
 	"prefs-ow-lang": "Меттанаш"
