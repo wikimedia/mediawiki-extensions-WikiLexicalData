@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Omnipaedista"
+			"Omnipaedista",
+			"Unbrutal"
 		]
 	},
 	"langman_langname": "Nomen linguae:",
@@ -12,7 +13,7 @@
 	"datasearch_language": "Lingua:",
 	"datasearch_found_word": "Verbum repertum",
 	"ow_importtsv_file": "Fasciculus TSV:",
-	"ow_importtsv_test_run": "Effectus expertus:",
+	"ow_importtsv_test_run": "Experimentum:",
 	"ow_exporttsv_languages": "Linguae:",
 	"ow_save": "Servare",
 	"ow_history": "Historia",
