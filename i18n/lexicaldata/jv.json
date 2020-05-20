@@ -2,15 +2,16 @@
 	"@metadata": {
 		"authors": [
 			"Meursault2004",
+			"N219",
 			"NoiX180",
 			"Pras"
 		]
 	},
 	"wikidata-handler-namespace-move-error": "Kaca ing mandhala aran kang diopèni èstènsi WikiLexicalData ora bisa ingalihan.",
 	"wikidata-handler-namespace-move-to-error": "Ora ana kaca kang bisa ingalihan menyang mandhala aran kang diopèni èstènsi WikiLexicalData.",
-	"languages": "Pangurus basa",
+	"languages": "Panata basa",
 	"langman-desc": "Tambah lan owahi setèlan basa sarana [[Special:Languages]]",
-	"langman_title": "Pangurus basa",
+	"langman_title": "Panata basa",
 	"langman_not_allowed": "Panjenengan ora kawogan ngowahi setèlan basa.",
 	"langman_header": "Tulisen kodhe basa lan jeneng Inggrisé ing ngisor iki:",
 	"langman_req_fields": "Butuh jeneng basa lan kodhe ISO 639-3!",
@@ -154,7 +155,7 @@
 	"ow_Link": "Pranala",
 	"ow_LinkAttribute": "Properti",
 	"ow_LinkAttributeValues": "Pranala",
-	"ow_User": "Panganggo",
+	"ow_User": "Naraguna",
 	"ow_Property": "Properti",
 	"ow_Value": "Aji",
 	"ow_added": "Ditambahaké",
