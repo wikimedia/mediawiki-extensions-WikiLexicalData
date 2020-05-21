@@ -172,7 +172,7 @@
 	"ow_copy_successful": "<h2>Kopi suksès</h2>\nData panjenengan katoné wis dikopi sacara suksès.\nAja lali mriksa manèh supaya pasti!",
 	"ow_copy_unsuccessful": "<h3>Kopi ora suksès</h3>\nOra ana operasi kopi sing wis dumadi.",
 	"ow_no_action_specified": "<h3>Ora ana aksi sing dispésifikasi</h3>\nMbok-menawa panjenengan langsung tekan kaca iki? Biasané panjenengan ora perlu ing kéné.",
-	"ow_db_consistency_not_found": "<h2>Kasalahan</h2>\nAna masalah bab konsistènsi basis data, wikidata ora bisa nemokaké data valid sing kagandhèng karo makna iki ID.\nManawa ilang.\nMangga hubungi operator server utawa pangurus.",
+	"ow_db_consistency_not_found": "<h2>Kasalahan</h2>\nAna masalah bab konsistènsi sasana data, wikidata ora bisa nemokaké data valid sing kagandhèng karo makna iki ID.\nManawa ilang.\nMangga hubungi operator peladén utawa panata.",
 	"ow_history_transaction": "Transaksi:",
 	"ow_class_attr_type_dm": "Werdi sing diwedharaké",
 	"ow_class_attr_type_xlate": "Tèks sing bisa dipertal",
