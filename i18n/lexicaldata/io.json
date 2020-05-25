@@ -69,6 +69,7 @@
 	"ow_Permission_denied": "<h2>Nepermisata</h2>",
 	"ow_copy_help": "La helpo ne existas ankore.",
 	"ow_class_attr_type_link": "Ligilo",
+	"ow_needs_xlation_source_lang": "Fonto-linguo:",
 	"ow_show": "Montrez",
 	"ow_upload": "Kargez",
 	"ow_create": "Kreez",
