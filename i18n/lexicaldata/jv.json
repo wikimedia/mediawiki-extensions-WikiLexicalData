@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Diki Ananta",
 			"Meursault2004",
 			"N219",
 			"NoiX180",
@@ -57,7 +58,7 @@
 	"transaction": "Log transaksi",
 	"ow_transaction_from_transaction": "Saka transaksi:",
 	"ow_transaction_count": "Cacah:",
-	"ow_transaction_user": "Jeneng panganggo:",
+	"ow_transaction_user": "Jeneng naraguna:",
 	"ow_transaction_show_rollback": "Tuduhaké kontrol pamulihan:",
 	"ow_transaction_rollback_button": "Balèkaké",
 	"ow_transaction_rollback_header": "Balèkaké",
