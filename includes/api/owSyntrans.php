@@ -3,11 +3,11 @@
 /** O m e g a W i k i   A P I ' s   S y n t r a n s   c l a s s
  *
  * PARAMETERS
- *	 @param	req'd	int	dm	'the defined meaning id'
- *	 @param	opt'l	int	lang	'the defined meaning's language id'
- *	 @param	opt'l	int	e	'the defined meaning's expression'
- *	 @param	opt'l	str	part	'synonym or translation'
- *	 @param	opt'l	str	ver		'the module version'
+ * @param	req'd	int	dm	'the defined meaning id'
+ * @param	opt'l	int	lang	'the defined meaning's language id'
+ * @param	opt'l	int	e	'the defined meaning's expression'
+ * @param	opt'l	str	part	'synonym or translation'
+ * @param	opt'l	str	ver		'the module version'
  *
  * HISTORY
  * - 2014-03-05: version 1.1 display added. substitute '{$ctr}.' with 'sid$sid'.
@@ -21,10 +21,10 @@
  *		* renamed part_lang_id to lang
  *		* added option to exclude an expression from synonyms
  * - 2013-06-08: Added
- *		 @param	opt'l	str	part	'synonym or translation'
- *		 @param	opt'l	int	prtlangid	'the param part's language id'
+ * @param	opt'l	str	part	'synonym or translation'
+ * @param	opt'l	int	prtlangid	'the param part's language id'
  * - 2013-06-04: Added basic structure
- *		 @param	req'd	int	dm	'the defined meaning id'
+ * @param	req'd	int	dm	'the defined meaning id'
  * - 2013-06-04: Creation date ~he
  *
  * TODO

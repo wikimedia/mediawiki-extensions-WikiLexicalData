@@ -546,8 +546,9 @@ class CollectionCopier extends Copier {
 		if ( $mapping_here == false ) {
 			return false;
 
-  } else { return true; # if anything is actually returned, we know the score.
-  }
+		} else {
+			return true; # if anything is actually returned, we know the score.
+		}
 	}
 
 	/** write a single collection_contents row,
@@ -639,7 +640,7 @@ class DefinedMeaningCopier {
 	 * WARNING: relations are also defined meanings, so you can end up with a
 	 * runaway recursion. Use the safer dup_stub anywhere you can get away with it.
 	 */
-	public	function dup() {
+	public function dup() {
 		$this->dup_stub();
 		$this->dup_rest();
 		return $this->save_meaning["defined_meaning_id"];

@@ -277,13 +277,15 @@ class AddSyntrans extends ApiBase {
 
 		if ( $this->identicalMeaning == 1 ) {
 			$this->identicalMeaningStr = "true";
-			if ( $this->ver == '1' ) { $this->identicalMeaning = "true";
-   }
+			if ( $this->ver == '1' ) {
+				$this->identicalMeaning = "true";
+			}
 		} else {
 			$this->identicalMeaningStr = "false";
 			$this->identicalMeaning = 0;
-			if ( $this->ver == '1' ) { $this->identicalMeaning = "false";
-   }
+			if ( $this->ver == '1' ) {
+				$this->identicalMeaning = "false";
+			}
 		}
 
 		// first check if it exists, then create the transaction and put it in db

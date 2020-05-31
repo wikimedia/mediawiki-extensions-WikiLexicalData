@@ -161,7 +161,7 @@ class DefinedMeaningModel {
 	/**
 	 * Load the associated record object.
 	 *
-	 * @return Boolean indicating success.
+	 * @return bool indicating success.
 	 */
 	public function loadRecord() {
 		if ( $this->exists === null ) {

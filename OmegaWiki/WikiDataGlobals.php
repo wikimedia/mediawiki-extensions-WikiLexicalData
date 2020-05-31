@@ -156,9 +156,7 @@ function wdGetDataSetContext( $dc = null ) {
 	# User preference
 	} elseif ( !empty( $pref ) && array_key_exists( $pref, $datasets ) ) {
 		return $datasets[$pref];
-	}
-	# Group preference
- elseif ( !empty( $trydefault ) && array_key_exists( $trydefault, $datasets ) ) {
+	} elseif ( !empty( $trydefault ) && array_key_exists( $trydefault, $datasets ) ) { # Group preference
 		return $datasets[$trydefault];
 	} else {
 		return $datasets[$wdDefaultViewDataSet];

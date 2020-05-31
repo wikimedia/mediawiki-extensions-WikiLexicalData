@@ -17,9 +17,9 @@ abstract class RecordSet {
 	protected $records;
 	# public function save(); # <- we first need to implement, then uncomment
 
-/**
-	* @return carriage return separated list of values
-	*/
+	/**
+	 * @return carriage return separated list of values
+	 */
 	public function __tostring() {
 		return $this->tostring_indent();
 	}
