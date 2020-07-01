@@ -4,7 +4,8 @@
 			"Htt",
 			"Kaustubh",
 			"Mahitgar",
-			"V.narsikar"
+			"V.narsikar",
+			"ज्ञानदा गद्रे-फडके"
 		]
 	},
 	"wikidata-handler-namespace-move-to-error": "WikiLexicalData विस्तारकाद्वारे हाताळण्यात येणाऱ्या कोणत्याही नामविश्वात कोणतीही पाने स्थानांतरीत केल्या जाऊ शकत नाहीत.",
@@ -77,9 +78,9 @@
 	"ow_TextAttribute": "मालमत्ता",
 	"ow_TextAttributeValues": "केवळ साधा मजकुर",
 	"ow_TranslatedTextAttribute": "वैशिष्ट्य",
-	"ow_TranslatedText": "भाषांतरीत मजकुर",
-	"ow_TranslatedTextAttributeValue": "मजकुर",
-	"ow_TranslatedTextAttributeValues": "भाशांतरकरण्या योग्य मजकुर",
+	"ow_TranslatedText": "भाषांतरीत मजकूर",
+	"ow_TranslatedTextAttributeValue": "मजकूर",
+	"ow_TranslatedTextAttributeValues": "भाषांतर करण्यायोग्य मजकूर",
 	"ow_LinkAttribute": "वैशिष्ट्य",
 	"ow_LinkAttributeValues": "दुवे",
 	"ow_Property": "मालमत्ता",
