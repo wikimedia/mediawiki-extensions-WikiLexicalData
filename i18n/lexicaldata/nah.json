@@ -8,8 +8,9 @@
 			"Teòtlalili"
 		]
 	},
+	"datasearch_language": "Tlahtolli",
 	"ow_save": "Ticpiyāz",
-	"ow_history": "Tlahtōllōtl",
+	"ow_history": "Tlahtollotl",
 	"ow_uiprefs": "Huiquidatah",
 	"ow_dm_OK": "Cayecualli",
 	"ow_Language": "Tlahtolli",
@@ -20,6 +21,7 @@
 	"ow_TranslatedText": "Tlatlahtolcuepilli tlahcuiloliztli",
 	"ow_TranslatedTextAttributeValue": "Tlahcuilōlli",
 	"ow_LinkAttributeValues": "Tzonhuiliztli",
+	"ow_User": "Tequitiuhqui",
 	"ow_meaningsofsubtitle": "<em>Huiquitzonhuiliztli:</em> [[$1]]",
 	"ow_copy_help": "In tēpalēhuiliztli aya chīhualo.",
 	"ow_show": "Monextiz"
