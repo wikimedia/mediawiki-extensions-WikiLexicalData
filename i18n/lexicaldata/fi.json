@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"01miki10",
 			"Centerlink",
 			"Cimon Avaro",
 			"Crt",
@@ -78,7 +79,7 @@
 	"ow_none_selected": "Ei yhtään valittu",
 	"transaction": "Transaktioloki",
 	"ow_transaction_count": "Määrä:",
-	"ow_transaction_user": "Käyttäjätunnus:",
+	"ow_transaction_user": "Käyttäjänimi:",
 	"ow_transaction_rollback_button": "Palauta",
 	"ow_transaction_rollback_header": "Palauta",
 	"ow_transaction_no_action": "Älä tee mitään",
