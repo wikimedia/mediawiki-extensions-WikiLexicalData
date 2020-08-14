@@ -85,7 +85,7 @@
 	"ow_datasets": "Used as table header",
 	"ow_noedit_title": "Used as page title.\n\nThe page body for this message is {{msg-mw|Ow noedit}}.",
 	"ow_noedit": "Used as page body.\n\nUses the message {{msg-mw|Ow editing policy url}}.\n\nThe title for this message is {{msg-mw|Ow noedit title}}.\n\nParameters:\n* $1 - dataset name",
-	"ow_editing_policy_url": "{{notranslate}}\nUsed as link target in {{msg-mw|Ow noedit}}",
+	"ow_editing_policy_url": "{{optional}}\nUsed as link target in {{msg-mw|Ow noedit}}",
 	"ow_uipref_datasets": "Used as label for a preference",
 	"ow_uiprefs": "Maybe unused",
 	"ow_none_selected": "{{Identical|None selected}}",
@@ -271,6 +271,6 @@
 	"ow-stat-text-annotations": "\n* $1 - The number of text annotations for PLURAL use. Not to be dispayed here, since the figure is shown elsewhere.",
 	"ow-stat-option-annotations": "\n* $1 - The number of option annotations for PLURAL use. Not to be dispayed here, since the figure is shown elsewhere.",
 	"ow-stat-all-is": "Shown after the 100% bar in headers of the statistics pages of Lexical Data having bar diagrams. This is used to tell that this bar symbolizes 100% and that this is all of the underlying data. Keep this very short. If you cannot do so, leave the 'all =' part out, and let it be only $1.\nParameter:\n* $1 - the localized version of 100% formatted using {{msg-mw|ow-stat-percent}}.",
-	"ow-stat-percent": "Shown after the bars in the statistics pages of Lexical Data having bar diagrams. Keep this very short.\nParameter:\n* - $1 an integer in the range from 0 to 100 inclusive.\n\nThis message is also used to insert the localized version of 100% in {{msg-mw|ow-stat-all-is}}.",
+	"ow-stat-percent": "{{optional}}\nShown after the bars in the statistics pages of Lexical Data having bar diagrams. Keep this very short.\nParameter:\n* - $1 an integer in the range from 0 to 100 inclusive.\n\nThis message is also used to insert the localized version of 100% in {{msg-mw|ow-stat-all-is}}.",
 	"specialpages-group-omegawiki": "{{doc-special-group|omegawiki}}"
 }
