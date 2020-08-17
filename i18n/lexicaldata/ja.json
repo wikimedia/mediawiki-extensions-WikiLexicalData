@@ -229,5 +229,6 @@
 	"ow-special-stat-languages-avail": "利用可能な{{PLURAL:$1|言語}}",
 	"ow_statistics": "lexical dataの統計",
 	"ow-stat-overview-link": "概要",
-	"ow-stat-annotations-link": "注釈"
+	"ow-stat-annotations-link": "注釈",
+	"ow-stat-languages": "{{PLURAL:$1|言語}}"
 }
