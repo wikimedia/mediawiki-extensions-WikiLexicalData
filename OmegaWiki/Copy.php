@@ -145,9 +145,10 @@ class ObjectCopier {
 		$this->object = CopyTools::getRow( $dc1, "objects", "WHERE object_id=$id" );
 	}
 
-	/* tries to retrieve the identical UUID from the destination
+	/**
+	 * tries to retrieve the identical UUID from the destination
 	 * (dc2) dataset, if it exists.
-	 * @return the associative array representing this object,
+	 * @return array|null The associative array representing this object,
 	 *  if successful. Else returns an empty array.
 	 */
 	protected function identical() {
@@ -875,7 +876,7 @@ class CopyTools {
 	 * @param string $dc the dataset prefix we need
 	 * @param string $table the name of the table (minus dataset prefix)
 	 * @param string $where the actual WHERE clause we need to uniquely find our row
-	 * @return an associative array, representing our row. \
+	 * @return array|null An associative array, representing our row. \
 	 * 	keys=column headers, values = row contents
 	 */
 	public static function getRow( $dc, $table, $where, $checkremove = false ) {
@@ -949,7 +950,7 @@ class CopyTools {
 	/** Performs an arbitrary SQL query and returns an associative array
 	 * Assumes that only 1 row can be returned!
 	 * @param string $query a valid SQL query
-	 * @return an associative array, representing our row. \
+	 * @return array|null An associative array, representing our row. \
 	 * 	keys=column headers, values = row contents
 	 */
 	public static function doQuery( $query ) {
