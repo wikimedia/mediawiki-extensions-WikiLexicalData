@@ -15,7 +15,7 @@ require_once "Utilities.php";
  * the database query functions to select functions. Thanks ~he
  */
 class SpecialTransaction extends SpecialPage {
-	function SpecialTransaction() {
+	public function __construct() {
 		parent::__construct( 'Transaction' );
 	}
 

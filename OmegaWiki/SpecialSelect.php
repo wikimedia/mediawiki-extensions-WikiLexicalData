@@ -12,7 +12,7 @@ require_once "WikiDataGlobals.php";
  * semicolon via parameters options attribute id and attribute object id.
  */
 class SpecialSelect extends SpecialPage {
-	function SpecialSelect() {
+	public function __construct() {
 		parent::__construct( 'Select', 'UnlistedSpecialPage' );
 	}
 

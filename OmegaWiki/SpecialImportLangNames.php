@@ -9,7 +9,7 @@ require_once 'Transaction.php';
 require_once 'languages.php';
 
 class SpecialImportLangNames extends SpecialPage {
-	function SpecialImportLangNames() {
+	public function __construct() {
 		parent::__construct( 'ImportLangNames' );
 	}
 

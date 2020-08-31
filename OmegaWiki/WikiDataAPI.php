@@ -1492,7 +1492,7 @@ function optionAttributeOptionExists( $attributeId, $optionMeaningId, $languageI
 
 /** @todo for deprecation. Use OwDatabaseAPI::getOptionAttributeOptions instead.
  */
-function getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option = null ) {
+function getOptionAttributeOptions( $attributeId, $optionMeaningId, $languageId, $option = null ) {
 	require_once 'OmegaWikiDatabaseAPI.php';
 	return OwDatabaseAPI::getOptionAttributeOptions( $attributeId, null, $languageId, $options );
 }

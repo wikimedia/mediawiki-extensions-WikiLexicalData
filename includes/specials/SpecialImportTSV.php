@@ -11,7 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class SpecialImportTSV extends SpecialPage {
 
-	function SpecialImportTSV() {
+	public function __construct() {
 		parent::__construct( 'ImportTSV' );
 	}
 
