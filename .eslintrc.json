@@ -1,0 +1,36 @@
+{
+	"root": true,
+	"extends": [
+		"wikimedia/client",
+		"wikimedia/jquery"
+	],
+	"globals": {
+		"OO": false,
+		"mw": false
+	},
+	"rules": {
+		"one-var": "off",
+		"vars-on-top": "off",
+		"camelcase": "off",
+		"prefer-regex-literals": "off",
+		"max-statements-per-line": "off",
+		"no-useless-escape": "off",
+		"no-undef": "off",
+		"no-bitwise": "off",
+		"no-shadow": "off",
+		"no-console": "off",
+		"no-alert": "off",
+		"no-global-assign": "off",
+		"no-useless-concat": "off",
+		"no-unused-vars": "off",
+		"no-use-before-define": "off",
+		"no-implicit-globals": "off",
+		"no-jquery/variable-pattern": "off",
+		"no-jquery/no-animate-toggle": "off",
+		"no-jquery/no-fade": "off",
+		"no-jquery/no-slide": "off",
+		"no-jquery/no-class-state": "off",
+		"no-jquery/no-sizzle": "off",
+		"no-jquery/no-global-selector": "off"
+	}
+}
