@@ -480,8 +480,6 @@ function getUpdatedDefinedMeaningDefinitionRecordSet( $transactionId ) {
 
 	$o = OmegaWikiAttributes::getInstance();
 
-	$o = OmegaWikiAttributes::getInstance();
-
 	$dc = wdGetDataSetContext();
 
 	$dbr = wfGetDB( DB_REPLICA );
@@ -552,8 +550,6 @@ function getUpdatedAlternativeDefinitionsRecordSet( $transactionId ) {
 }
 
 function getUpdatedAlternativeDefinitionTextRecordSet( $transactionId ) {
-	$o = OmegaWikiAttributes::getInstance();
-
 	$o = OmegaWikiAttributes::getInstance();
 
 	$dc = wdGetDataSetContext();
@@ -930,8 +926,6 @@ function getUpdatedTranslatedTextRecordSet( $transactionId ) {
 function getTranslatedContentHistorySelector( $attribute ) {
 	$o = OmegaWikiAttributes::getInstance();
 
-	$o = OmegaWikiAttributes::getInstance();
-
 	$result = createSuggestionsTableViewer( $attribute );
 	$result->addEditor( createLongTextViewer( $o->text ) );
 	$result->addEditor( createTableLifeSpanEditor( $o->recordLifeSpan ) );
@@ -1096,8 +1090,6 @@ function getUpdatedLinkEditor( $attribute, $showRollBackOptions ) {
 }
 
 function getUpdatedTextEditor( $attribute, $showRollBackOptions ) {
-	$o = OmegaWikiAttributes::getInstance();
-
 	$o = OmegaWikiAttributes::getInstance();
 
 	$editor = createTableViewer( $attribute );
