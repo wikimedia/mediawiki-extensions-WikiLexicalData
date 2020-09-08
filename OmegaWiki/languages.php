@@ -53,7 +53,8 @@ class WLDLanguage {
 		return null;
 	}
 
-	/* @return Return an array containing all language names translated into the language
+	/**
+	 * @return string[] Return an array containing all language names translated into the language
 	 *	indicated by $code, with fallbacks in English where the language names
 	 *	aren't present in that language.
 	 * @see use OwDatabaseAPI::getOwLanguageNames instead
