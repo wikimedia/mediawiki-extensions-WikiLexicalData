@@ -46,7 +46,7 @@ class SpecialDatasearch extends SpecialPage {
 
 	private $resultCount = 0;
 
-	function SpecialDatasearch() {
+	public function __construct() {
 		parent::__construct( 'ow_data_search' );
 
 		$request = $this->getRequest();

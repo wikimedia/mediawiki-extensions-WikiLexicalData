@@ -7,7 +7,7 @@ require_once "WikiDataAPI.php"; // for bootstrapCollection
 require_once "Utilities.php";
 
 class SpecialAddCollection extends SpecialPage {
-	function SpecialAddCollection() {
+	public function __construct() {
 		parent::__construct( 'AddCollection' );
 	}
 

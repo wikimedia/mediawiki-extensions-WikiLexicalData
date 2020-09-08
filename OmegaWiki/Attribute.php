@@ -326,7 +326,7 @@ class Attributes {
 	 * 	- exists   returns boolean, depending whether the queried values exists or not.
 	 * @see use OwDatabaseAPI::getOptionAttributeOptions instead.
 	 */
-	public static function getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option = null ) {
+	public static function getOptionAttributeOptions( $attributeId, $optionMeaningId, $languageId, $option = null ) {
 		$dc = wdGetDataSetContext();
 		$dbr = wfGetDB( DB_REPLICA );
 

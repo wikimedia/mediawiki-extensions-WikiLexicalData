@@ -585,7 +585,7 @@ class AddAnnotation extends ApiBase {
 		return true;
 	}
 
-	private function processAddTextAttributeValues( $spelling = null, $language = null, $definedMeaningId, $attribute, $attribLang, $text ) {
+	private function processAddTextAttributeValues( $spelling, $language, $definedMeaningId, $attribute, $attribLang, $text ) {
 		$dc = wdGetDataSetContext();
 
 		// if spelling is not null, process object as syntrans

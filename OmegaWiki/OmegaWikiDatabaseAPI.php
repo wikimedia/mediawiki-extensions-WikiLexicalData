@@ -456,7 +456,7 @@ class OwDatabaseAPI {
 	 * 	- exists   returns boolean, depending whether the queried values exists or not.
 	 * @see uses Attributes::getOptionAttributeOptions.
 	 */
-	public static function getOptionAttributeOptions( $attributeId, $optionMeaningId = null, $languageId, $option = null ) {
+	public static function getOptionAttributeOptions( $attributeId, $optionMeaningId, $languageId, $option = null ) {
 		$api = new OwDatabaseAPI;
 		$api->settings( 'attributes' );
 		return $api->Attributes->getOptionAttributeOptions( $attributeId, $optionMeaningId, $languageId, $option );
