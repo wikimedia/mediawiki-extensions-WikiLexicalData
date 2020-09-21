@@ -3,7 +3,8 @@
 		"authors": [
 			"Asoxor",
 			"Calak",
-			"Marmzok"
+			"Marmzok",
+			"ئارام بکر"
 		]
 	},
 	"wikidata-handler-namespace-move-error": "پەڕەکانی بۆشایی ناوێک کە لە لایەن پێوەکراوەی WikiLexicalDataەوە کۆنترۆڵ دەکرێن ناگوازرێنەوە.",
@@ -23,7 +24,7 @@
 	"importlangnames": "ھاوردەکردنی ناوی زمانەکان",
 	"importlangnames_not_allowed": "ڕێگەت پێ‌نەدراوە بۆ گۆڕانی هەڵبژاردەکانی زمان.",
 	"importlangnames_added": "ناوه‌کانی زمان بۆ \"$1\" زیاد کرا.",
-	"datasearch": "گەڕانی داتا",
+	"datasearch": "گەڕانی دراوە",
 	"datasearch_language": "زمان:",
 	"datasearch_search_text": "بۆ ئەم دەقە بگەڕێ:",
 	"datasearch_within_words": "بریتی بێت له‌م وشانه‌:",
