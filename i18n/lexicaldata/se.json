@@ -4,5 +4,8 @@
 			"Yupik"
 		]
 	},
-	"ow_OtherLanguages": "Eará gielat:"
+	"ow_OtherLanguages": "Eará gielat:",
+	"ow_Link": "Liŋka",
+	"ow_LinkAttributeValues": "Liŋkkat",
+	"ow_class_attr_type_link": "Liŋka"
 }
