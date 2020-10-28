@@ -8,6 +8,7 @@
 			"IvanLanin",
 			"Iwan Novirion",
 			"Kandar",
+			"RXerself",
 			"Rex",
 			"Shirayuki"
 		]
@@ -86,7 +87,7 @@
 	"ow_transaction_rollback_header": "Kembalikan",
 	"ow_transaction_no_action": "Jangan lakukan apa pun",
 	"ow_transaction_previous_version": "Versi sebelumnya",
-	"ow_transaction_restore": "Kembalikan",
+	"ow_transaction_restore": "Pulihkan",
 	"ow_transaction_remove": "Hapus",
 	"ow_transaction_operation": "Pengerjaan",
 	"ow_transaction_is_latest": "mutakhir",
