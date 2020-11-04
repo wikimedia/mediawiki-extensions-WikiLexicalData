@@ -24,7 +24,7 @@ function getUserId( $real_name ) {
 	if ( $row = $dbr->fetchObject( $queryResult ) ) {
 		return( $row->user_id );
 	} else {
-		return( - 1 );
+		return( -1 );
 	}
 }
 
@@ -41,7 +41,7 @@ if ( $arg !== false ) {
  * User IDs to use during the import of both UMLS and Swiss-Prot
  */
 $nlmUserID = getUserId( $wdDefaultViewDataSet );
-if ( $nlmUserId == - 1 ) {
+if ( $nlmUserId == -1 ) {
 	echo "Swiss-Prot user not defined in the database.\n";
 	die;
 }

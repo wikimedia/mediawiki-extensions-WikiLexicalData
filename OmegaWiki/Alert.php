@@ -23,7 +23,7 @@ function getDefinedMeaning( $dc, $textId ) {
 	if ( $row = $dbr->fetchObject( $queryResult ) ) {
 		$tcid = $row->translated_content_id;
 	} else {
-		return - 1;
+		return -1;
 	}
 
 	// try the definition first
@@ -47,7 +47,7 @@ function getDefinedMeaning( $dc, $textId ) {
 		return $definedMeaningId;
 	}
 
-	return - 1;
+	return -1;
 }
 
 function getInternalIdentifier( $dc, $definedMeaningId, $languageId ) {
@@ -122,7 +122,7 @@ global $wgSitename;
 if ( !$wgEnableAPI ) {
 	echo 'MediaWiki API is not enabled for this site. Add the following line to your LocalSettings.php';
 	echo '<pre><b>$wgEnableAPI=true;</b></pre>';
-	die( - 1 );
+	die( -1 );
 }
 
 // indicate here the dataset that contains the community version
@@ -137,7 +137,7 @@ $epochEndDate 	= $_GET["endDate"];
 if ( $epochStartDate == "" ) {
 	echo 'This alert utility requires a start date in ISO format to be specified as parameter<br />';
 	echo 'Usage: alert.php?startDate=2007-05-01-T00:00:00[&endDate=2007-06-31-T00:00:00][&output=(xml|raw)]<br />';
-	die( - 1 );
+	die( -1 );
 }
 
 if ( $epochEndDate != "" ) {

@@ -202,7 +202,7 @@ class I18Ncallback {
 	public $replacements;
 
 	public function replace( $matches ) {
-		$match = substr( $matches[0], 2, - 2 );
+		$match = substr( $matches[0], 2, -2 );
 
 		return $this->language->vsprintf2( $match, $this->replacements );
 	}

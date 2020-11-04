@@ -26,7 +26,7 @@ function getUserId( $real_name ) {
 	if ( $row = $dbr->fetchObject( $queryResult ) ) {
 		return( $row->user_id );
 	} else {
-		return( - 1 );
+		return( -1 );
 	}
 }
 
@@ -54,7 +54,7 @@ $dataSet = new WikiDataSet( wdGetDataSetContext() );
 // check the user ids as provided in the database
 
 $sibUserID = getUserId( $wdDefaultViewDataSet );
-if ( $sibUserId == - 1 ) {
+if ( $sibUserId == -1 ) {
 	echo "Swiss-Prot user not defined in the database.\n";
 	die;
 }

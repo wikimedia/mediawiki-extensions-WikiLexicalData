@@ -2177,7 +2177,7 @@ function createConceptMapping( $concepts, $override_transaction = null ) {
 	$uuid_map = getUUID( $concepts );
 	foreach ( $concepts as $dc => $dm_id ) {
 		$collid = getCollectionIdForDC( $dc );
-		if ( $uuid_map[$dc] != - 1 ) {
+		if ( $uuid_map[$dc] != -1 ) {
 			writeDmToCollection( $dc, $collid, $uuid_map[$dc], $dm_id, $override_transaction );
 		}
 	}
@@ -2205,7 +2205,7 @@ function getMapping( $dc, $collid, $dm_id ) {
 	if ( $internalMemberId ) {
 		return $internalMemberId;
 	}
-	return - 1;
+	return -1;
 }
 
 /** ask db to provide a universally unique id
@@ -2217,22 +2217,22 @@ function getUUID( $concepts ) {
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$uuid_array = [];
-	$uuid = - 1;
+	$uuid = -1;
 
 	foreach ( $concepts as $dc => $dm_id ) {
 		$collid = getCollectionIdForDC( $dc );
 		$uuid_array[$dc] = getMapping( $dc, $collid, $dm_id );
-		if ( ( $uuid == - 1 ) && ( $uuid_array[$dc] != - 1 ) ) {
+		if ( ( $uuid == -1 ) && ( $uuid_array[$dc] != -1 ) ) {
 			$uuid = $uuid_array[$dc];
 		}
 	}
 
-	if ( $uuid == - 1 ) {
+	if ( $uuid == -1 ) {
 		$uuid = UIDGenerator::newUUIDv4();
 	}
 
 	foreach ( $concepts as $dc => $dm_id ) {
-		if ( $uuid_array[$dc] == - 1 ) {
+		if ( $uuid_array[$dc] == -1 ) {
 			$uuid_array[$dc] = $uuid;
 		}
 	}

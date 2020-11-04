@@ -85,7 +85,7 @@ function getUserId( $userName ) {
 	if ( $row = $dbr->fetchObject( $result ) ) {
 		return $row->user_id;
 	} else {
-		return - 1;
+		return -1;
 	}
 }
 
@@ -106,7 +106,7 @@ function bootStrappedDefinedMeanings( $dc ) {
 			`defined_meaning_id` INT NOT NULL);" );
 
 	$userId = getUserId( 'Root' );
-	if ( $userId == - 1 ) {
+	if ( $userId == -1 ) {
 		echo "root user undefined\n";
 		return;
 	}

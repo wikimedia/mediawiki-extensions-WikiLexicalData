@@ -729,7 +729,7 @@ class DefinedMeaningCopier {
 	 * @param string|int $uuid
 	 */
 	public static function finishConceptMapping( $dc, $uuid ) {
-		if ( $uuid == - 1 ) {  # CreateConceptMapping did not create a new mapping,
+		if ( $uuid == -1 ) {  # CreateConceptMapping did not create a new mapping,
 			return; # You can't finish that which was never started.
 		}
 		$object_id = ObjectCopier::makeObjectID( $dc, "collection_contents", $uuid );

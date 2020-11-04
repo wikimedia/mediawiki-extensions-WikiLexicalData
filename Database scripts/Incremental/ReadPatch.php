@@ -88,7 +88,7 @@ function getUserId( $userName ) {
 	if ( $row = $dbr->fetchObject( $result ) ) {
 		return $row->user_id;
 	} else {
-		return - 1;
+		return -1;
 	}
 }
 

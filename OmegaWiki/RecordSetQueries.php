@@ -65,7 +65,7 @@ class TableColumnsToAttributesMapping {
  * generates all the sql queries that are then used
  * to fill the hierarchical structures (html tables etc.)
  */
-function getTransactedSQL( QueryTransactionInformation $transactionInformation, array $selectFields, Table $table, array $restrictions, array $orderBy = [], $count = - 1, $offset = 0 ) {
+function getTransactedSQL( QueryTransactionInformation $transactionInformation, array $selectFields, Table $table, array $restrictions, array $orderBy = [], $count = -1, $offset = 0 ) {
 	$tableNames = [ $table->getIdentifier() ];
 
 	if ( $table->isVersioned ) {
@@ -91,7 +91,7 @@ function getTransactedSQL( QueryTransactionInformation $transactionInformation, 
 	if ( count( $orderBy ) > 0 ) {
 		$query .= " ORDER BY " . implode( ', ', $orderBy );
 	}
-	if ( $count != - 1 ) {
+	if ( $count != -1 ) {
 		$query .= " LIMIT " . $offset . ", " . $count;
 	}
 
@@ -109,7 +109,7 @@ function getRecordFromRow( $row, $columnIndex, Structure $structure ) {
 	return $result;
 }
 
-function queryRecordSet( $recordSetStructureId, QueryTransactionInformation $transactionInformation, Attribute $keyAttribute, TableColumnsToAttributesMapping $tableColumnsToAttributeMapping, Table $table, array $restrictions, array $orderBy = [], $count = - 1, $offset = 0 ) {
+function queryRecordSet( $recordSetStructureId, QueryTransactionInformation $transactionInformation, Attribute $keyAttribute, TableColumnsToAttributesMapping $tableColumnsToAttributeMapping, Table $table, array $restrictions, array $orderBy = [], $count = -1, $offset = 0 ) {
 	$dbr = wfGetDB( DB_REPLICA );
 
 	$selectFields = $tableColumnsToAttributeMapping->getSelectColumns();

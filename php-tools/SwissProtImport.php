@@ -376,7 +376,7 @@ class SwissProtXMLParser extends BaseXMLParser {
 			$geneMeaningId = $this->addGene( $entry->gene );
 			$organismSpecificGene = $this->addOrganismSpecificGene( $organismSpeciesMeaningId, $geneMeaningId, $entry->organism, $entry->gene, $entry->geneSynonyms, $entry->HGNCReference );
 		} else {
-			$organismSpecificGene = - 1;
+			$organismSpecificGene = -1;
 		}
 
 		$entryMeaningId = $this->addEntry( $entry, $proteinMeaningId, $organismSpecificGene, $organismSpeciesMeaningId );
@@ -416,7 +416,7 @@ class SwissProtXMLParser extends BaseXMLParser {
 			$component->name,
 			$organismName,
 			$proteinMeaningId,
-			- 1,
+			-1,
 			$organismSpeciesMeaningId
 		);
 

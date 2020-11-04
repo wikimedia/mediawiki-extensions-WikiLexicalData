@@ -474,7 +474,7 @@ class DefinedMeaningModel {
 	 * components.
 	 *
 	 * @param string $titleText the title to analyze
-	 * @return Array of the two components or null.
+	 * @return array of the two components or null.
 	 */
 	public static function splitTitleText( $titleText ) {
 		$bracketPosition = strrpos( $titleText, "(" );

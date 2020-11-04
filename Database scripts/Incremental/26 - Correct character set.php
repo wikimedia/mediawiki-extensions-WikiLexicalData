@@ -35,7 +35,7 @@
 						' AND COLUMN_NAME LIKE "' . $col_row->Field . '"';
 				$collation_res = $dbr->query( $sql );
 				$collation_row = $dbr->fetchObject( $collation_res );
-				if ( substr( $collation_row->COLLATION_NAME, - 3 ) == "bin" ) {
+				if ( substr( $collation_row->COLLATION_NAME, -3 ) == "bin" ) {
 					$collate = ' COLLATE utf8_bin';
 				} else {
 					$collate = '';
