@@ -223,6 +223,7 @@
 	"ow_pref_lang_switch": "<strong>선택한 언어만 보이기</strong>",
 	"ow_pref_lang_select": "표시할 언어:",
 	"ow_addFromExtAPI": "외부 API에서 데이터 추가하기",
+	"ow_api_source": "외부 API 출처:",
 	"ow_statistics": "어휘 데이터 통계",
 	"ow-stat-languages": "{{PLURAL:$1|언어}}",
 	"specialpages-group-omegawiki": "오메가위키"
