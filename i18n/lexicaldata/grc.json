@@ -3,7 +3,8 @@
 		"authors": [
 			"Crazymadlover",
 			"LeighvsOptimvsMaximvs",
-			"Omnipaedista"
+			"Omnipaedista",
+			"PastelKos"
 		]
 	},
 	"langman_langname": "Ὄνομα γλώττης:",
@@ -26,7 +27,7 @@
 	"ow_save": "Γράφειν",
 	"ow_history": "Αἱ προτέραι",
 	"ow_datasets": "Ἐκλογὴ συνόλου δεδομένων",
-	"ow_uiprefs": "Βικιδεδομένα",
+	"ow_uiprefs": "Οὐικιδεδομένα",
 	"ow_transaction_count": "Μέτρησις:",
 	"ow_transaction_user": "Ὄνομα χρωμένου:",
 	"ow_transaction_rollback_button": "Ἀναστροφή",
