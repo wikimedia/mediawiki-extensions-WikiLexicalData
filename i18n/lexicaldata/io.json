@@ -20,6 +20,8 @@
 	"ow_uiprefs": "WikiLexicalData",
 	"ow_none_selected": "Nulo selektesis",
 	"ow_transaction_user": "Uzantonomo:",
+	"ow_transaction_rollback_button": "Restaurar",
+	"ow_transaction_rollback_header": "Restaurar",
 	"ow_transaction_object": "Objekto",
 	"ow_transaction_summary": "Rezumo",
 	"ow_conceptmapping_no_action_specified": "Pardonez! Me ne savas quale \"$1\".",
