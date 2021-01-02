@@ -26,8 +26,8 @@ class RecordHelperTest extends PHPUnit\Framework\TestCase {
 	public static function main() {
 		require_once "PHPUnit/TextUI/TestRunner.php";
 
-		$suite  = new PHPUnit_Framework_TestSuite( "somethingTest" );
-		$result = PHPUnit_TextUI_TestRunner::run( $suite );
+		$suite  = new PHPUnit\Framework\TestSuite( "somethingTest" );
+		$result = PHPUnit\TextUI\TestRunner::run( $suite );
 	}
 
 	function setUp() : void {
