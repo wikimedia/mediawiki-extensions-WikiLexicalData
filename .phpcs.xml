@@ -9,7 +9,7 @@
 		<exclude name="Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase" />
 		<exclude name="Generic.PHP.ForbiddenFunctions.FoundWithAlternative" />
 		<exclude name="Generic.PHP.NoSilencedErrors.Discouraged" />
-		<exclude name="Generic.PHP.DeprecatedFunctions.Deprecated" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.DefaultNullTypeParam" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.DuplicateReturn" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationProtected" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationPublic" />
@@ -28,14 +28,17 @@
 		<exclude name="MediaWiki.NamingConventions.ValidGlobalName.wgPrefix" />
 		<exclude name="MediaWiki.Usage.DbrQueryUsage.DbrQueryFound" />
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.assert" />
+		<exclude name="MediaWiki.Usage.ForbiddenFunctions.exec" />
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.extract" />
 		<exclude name="MediaWiki.Usage.SuperGlobalsUsage.SuperGlobals" />
 		<exclude name="MediaWiki.VariableAnalysis.ForbiddenGlobalVariables.ForbiddenGlobal$wgTitle" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$myWordnikAPIKey" />
+		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$numberOfBytes" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$params" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$relationsObjectAttributesEditor" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wdCurrentContext" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wdTermDBDataSet" />
+		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgCommunityEditPermission" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgDBprefix" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgDBtype" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgDefaultClassMids" />
@@ -48,6 +51,7 @@
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgWldDMValueObjectAttributesEditors" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgWldOptionValueObjectAttributesEditors" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgWldOwScriptPath" />
+		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgWldSearchExternalIDOption" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgWldTextValueObjectAttributesEditors" />
 		<exclude name="MediaWiki.VariableAnalysis.UnusedGlobalVariables.UnusedGlobal$wgWldTranslatedTextValueObjectAttributesEditors" />
 		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
@@ -61,6 +65,6 @@
 		<exclude name="Squiz.Scope.MethodScope.Missing" />
 	</rule>
 	<file>.</file>
-	<arg name="extensions" value="php,php5,inc" />
+	<arg name="extensions" value="php" />
 	<arg name="encoding" value="UTF-8" />
 </ruleset>
