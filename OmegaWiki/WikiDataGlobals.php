@@ -173,7 +173,7 @@ function wdGetDataSetContext( $dc = null ) {
 function &wdGetDataSets() {
 	global $wgDBprefix;
 
-	static $datasets, $wgGroupPermissions;
+	static $datasets;
 	if ( empty( $datasets ) ) {
 		// Load defs from the DB
 		$dbs = wfGetDB( DB_REPLICA );

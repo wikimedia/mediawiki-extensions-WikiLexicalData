@@ -20,9 +20,6 @@ class WordnikExtension extends ExternalResources {
 
 		global $myWordnikAPIKey;
 		require_once __DIR__ . '/../../external/wordnik/wordnik/Swagger.php';
-		$wgWldExtenalResourceLanguages = [
-			85 => 'English'
-		];
 		$WordnikClient = new APIClient( $myWordnikAPIKey, 'http://api.wordnik.com/v4' );
 		$this->wordApi = new WordApi( $WordnikClient );
 		$this->sourceDictionary = 'all';

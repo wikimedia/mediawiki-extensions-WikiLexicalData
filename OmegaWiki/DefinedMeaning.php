@@ -168,8 +168,7 @@ class DefinedMeaning extends DefaultWikidataApplication {
 	}
 
 	protected function save( $referenceQueryTransactionInformation ) {
-		global
-			$wgTitle;
+		global $wgOut, $wgTitle;
 
 		parent::save( $referenceQueryTransactionInformation );
 
