@@ -331,15 +331,12 @@ class SpecialOWDownloads extends SpecialPage {
 
 						if ( $old == true ) {
 							return 'outdated(' . timestampAsText( $owdTransactionRecord->timestamp ) . ');new(' . timestampAsText( $owTransactionRecord->timestamp ) . ')';
-							return 'outdated( ' . timestampAsText( $owdTransactionRecord->timestamp ) . ' )';
 						}
-					// return 'up-to-date(' . timestampAsText( $owdTransactionRecord->timestamp ) . ');new(' . timestampAsText( $owTransactionRecord->timestamp ) . ')';
 						return 'up-to-date( ' . timestampAsText( $owdTransactionRecord->timestamp ) . ' )';
 					}
 				}
 			}
 			return '<a href="' . "$wgServer$wgScript/Special:Ow_downloads" . '?' . 'check_owd_status=' . $languageId . '">check status</a>';
-			return 'check status';
 		}
 		// temporarily output this:
 		return 'latest';

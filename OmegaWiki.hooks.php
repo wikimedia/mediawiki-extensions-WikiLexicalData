@@ -16,6 +16,7 @@ class OmegaWikiHooks extends WikiLexicalDataHooks {
 		global $wgExtraNamespaces;
 		// FIXME: skip if not action=submit
 		// FIXME: skip if not page text
+		// phpcs:ignore Generic.CodeAnalysis.UnconditionalIfStatement.Found
 		if ( true ) {
 			$nspace = 'DefinedMeaning';	// FIXME: compute the standard (english) name, do not use a constant.
 			$namspce = $wgExtraNamespaces[NS_DEFINEDMEANING];

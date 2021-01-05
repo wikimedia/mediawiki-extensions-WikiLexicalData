@@ -57,8 +57,10 @@ class Search extends DefaultWikidataApplication {
 		);
 		var_dump( $queryResult );
 		die;
+		// phpcs:ignore Squiz.PHP.NonExecutableCode.Unreachable
 		list( $recordSet, $editor ) = getSearchResultAsRecordSet( $queryResult );
 		// return $sql;
+		// phpcs:ignore Squiz.PHP.NonExecutableCode.Unreachable
 		return $editor->view( new IdStack( "expression" ), $recordSet );
 	}
 }

@@ -501,9 +501,6 @@ class OwDatabaseAPI {
 		$api = new OwDatabaseAPI;
 		$api->settings( 'syntrans' );
 		return $api->Syntrans->add( $spelling, $languageId, $definedMeaningId, $identicalMeaning, $options );
-
-		$expression = findOrCreateExpression( $spelling, $languageId, $options );
-		$expression->assureIsBoundToDefinedMeaning( $definedMeaningId, $identicalMeaning );
 	}
 
 	/**
