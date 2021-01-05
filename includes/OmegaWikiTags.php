@@ -26,44 +26,42 @@ function owStatsTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 }
 
 function owExpStats( $input ) {
-	$cache = new CacheHelper();
-
-	$cache->setCacheKey( [ 'ow_stats_exp' ] );
-	$number = $cache->getCachedValue( function () {
-		$Expressions = new Expressions;
-		return $Expressions->getNumberOfExpressions();
-	} );
-	$cache->setExpiry( 86400 );
-	$cache->saveCache();
-
+	$cache = ObjectCache::getInstance( CACHE_ANYTHING );
+	$number = $cache->getWithSetCallback(
+		$cache->makeKey( 'ow_stats_exp' ),
+		BagOStuff::TTL_DAY,
+		function () {
+			$Expressions = new Expressions;
+			return $Expressions->getNumberOfExpressions();
+		}
+	);
 	$number = preg_replace( '/\D $/', '', "$number " );
 	return htmlspecialchars( $number . $input );
 }
 
 function owDefinedMeaningStats( $input ) {
-	$cache = new CacheHelper();
-
-	$cache->setCacheKey( [ 'ow_stats_dm' ] );
-	$number = $cache->getCachedValue( function () {
-		return getNumberOfDefinedMeanings();
-	} );
-	$cache->setExpiry( 86400 );
-	$cache->saveCache();
+	$cache = ObjectCache::getInstance( CACHE_ANYTHING );
+	$number = $cache->getWithSetCallback(
+		$cache->makeKey( 'ow_stats_dm' ),
+		BagOStuff::TTL_DAY,
+		function () {
+			return getNumberOfDefinedMeanings();
+		}
+	);
 
 	$number = preg_replace( '/\D $/', '', "$number " );
 	return htmlspecialchars( $number . $input );
 }
 
 function wldLanguageStats( $input ) {
-	$cache = new CacheHelper();
-
-	$cache->setCacheKey( [ 'wld_stats_lang' ] );
-	$number = $cache->getCachedValue( function () {
-		return getNumberOfLanguages();
-	} );
-	$cache->setExpiry( 86400 );
-	$cache->saveCache();
-
+	$cache = ObjectCache::getInstance( CACHE_ANYTHING );
+	$number = $cache->getWithSetCallback(
+		$cache->makeKey( 'wld_stats_lang' ),
+		BagOStuff::TTL_DAY,
+		function () {
+			return getNumberOfLanguages();
+		}
+	);
 	$number = preg_replace( '/\D $/', '', "$number " );
 	return htmlspecialchars( $number . $input );
 }

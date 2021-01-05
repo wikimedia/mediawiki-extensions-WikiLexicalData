@@ -67,16 +67,16 @@ class Express extends Define {
 	/** Cache!
 	 */
 	protected function cacheExpress( $spelling, $options = [] ) {
-		$expressCacheKey = 'API:ow_express:dm=' . $spelling;
+		$expressCacheKey = 'dm=' . $spelling;
 		if ( isset( $options['ver'] ) ) {
 			$expressCacheKey .= ":ver={$options['ver']}";
 		}
 
-		$cache = new CacheHelper();
-
-		$cache->setCacheKey( [ $expressCacheKey ] );
-		$express = $cache->getCachedValue(
-			function ( $spelling, $options = [] ) {
+		$cache = ObjectCache::getInstance( CACHE_ANYTHING );
+		return $cache->getWithSetCallback(
+			$cache->makeKey( 'ow_api_express', $expressCacheKey ),
+			BagOStuff::TTL_HOUR * 3,
+			function () use ( $spelling, $options ) {
 				$dmlist = getExpressionMeaningIds( $spelling );
 				$options['e'] = $spelling;
 				// There are duplicates using getExpressionMeaningIds !!!
@@ -97,12 +97,8 @@ class Express extends Define {
 					$dmlistCtr += 1;
 				}
 				return $express;
-			}, [ $spelling, $options ]
+			}
 		);
-		$cache->setExpiry( 10800 ); // 3 hours
-		$cache->saveCache();
-
-		return $express;
 	}
 
 	// Parameters.

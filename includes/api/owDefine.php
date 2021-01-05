@@ -53,7 +53,7 @@ class Define extends SynonymTranslation {
 	 * 		next time it is accessed.
 	 */
 	protected function cacheDefine( $params ) {
-		$defineCacheKey = 'API:ow_define:dm=' . $params['dm'];
+		$defineCacheKey = 'dm=' . $params['dm'];
 		if ( isset( $params['lang'] ) ) {
 			$defineCacheKey .= ":ver={$params['lang']}";
 		}
@@ -67,11 +67,11 @@ class Define extends SynonymTranslation {
 			$defineCacheKey .= ":ver={$params['ver']}";
 		}
 
-		$cache = new CacheHelper();
-
-		$cache->setCacheKey( [ $defineCacheKey ] );
-		$define = $cache->getCachedValue(
-			function ( $params ) {
+		$cache = ObjectCache::getInstance( CACHE_ANYTHING );
+		$define = $cache->getWithSetCallback(
+			$cache->makeKey( 'ow_api_define', $defineCacheKey ),
+			BagOStuff::TTL_HOUR * 3,
+			function () use ( $params ) {
 				// Required parameter
 				// Check if dm is valid
 				if ( isset( $params['dm'] ) ) {
@@ -137,10 +137,8 @@ class Define extends SynonymTranslation {
 				}
 
 				return $defined[ $this->getModuleName() ];
-			}, [ $params ]
+			}
 		);
-		$cache->setExpiry( 10800 ); // 3 hours
-		$cache->saveCache();
 
 		// catch errors here
 		if ( isset( $define['error'] ) ) {
