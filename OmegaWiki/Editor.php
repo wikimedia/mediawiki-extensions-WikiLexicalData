@@ -113,7 +113,7 @@ abstract class DefaultEditor implements Editor {
 	protected $isCollapsible;
 	protected $displayHeader;
 
-	public function __construct( Attribute $attribute = null ) {
+	public function __construct( ?Attribute $attribute ) {
 		$this->attribute = $attribute;
 		$this->editors = [];
 		$this->attributeEditorMap = new AttributeEditorMap();
@@ -232,7 +232,7 @@ abstract class RecordSetEditor extends DefaultEditor {
 	protected $isAddField;
 	protected $controller;
 
-	public function __construct( Attribute $attribute = null, PermissionController $permissionController, ShowEditFieldChecker $showEditFieldChecker, AllowAddController $allowAddController, $allowRemove, $isAddField, UpdateController $controller = null ) {
+	public function __construct( ?Attribute $attribute, PermissionController $permissionController, ShowEditFieldChecker $showEditFieldChecker, AllowAddController $allowAddController, $allowRemove, $isAddField, ?UpdateController $controller ) {
 		parent::__construct( $attribute );
 
 		$this->permissionController = $permissionController;
@@ -892,7 +892,7 @@ abstract class ScalarEditor extends DefaultEditor {
 	protected $permissionController;
 	protected $isAddField;
 
-	public function __construct( Attribute $attribute = null, PermissionController $permissionController, $isAddField ) {
+	public function __construct( ?Attribute $attribute, PermissionController $permissionController, $isAddField ) {
 		parent::__construct( $attribute );
 
 		$this->permissionController = $permissionController;
@@ -1259,7 +1259,7 @@ class TextEditor extends ScalarEditor {
 	protected $addText = "";
 	protected $controller;
 
-	public function __construct( Attribute $attribute = null, PermissionController $permissionController, $isAddField, $truncate = false, $truncateAt = 0, UpdateAttributeController $controller = null ) {
+	public function __construct( ?Attribute $attribute, PermissionController $permissionController, $isAddField, $truncate = false, $truncateAt = 0, UpdateAttributeController $controller = null ) {
 		parent::__construct( $attribute, $permissionController, $isAddField );
 
 		$this->truncate = $truncate;
@@ -1321,7 +1321,7 @@ class TextEditor extends ScalarEditor {
 class ShortTextEditor extends ScalarEditor {
 	protected $onChangeHandler;
 
-	public function __construct( Attribute $attribute = null, PermissionController $permissionController, $isAddField, $onChangeHandler = "" ) {
+	public function __construct( ?Attribute $attribute, PermissionController $permissionController, $isAddField, $onChangeHandler = "" ) {
 		parent::__construct( $attribute, $permissionController, $isAddField );
 
 		$this->onChangeHandler = $onChangeHandler;
@@ -1379,7 +1379,7 @@ class LinkEditor extends ShortTextEditor {
 class BooleanEditor extends ScalarEditor {
 	protected $defaultValue;
 
-	public function __construct( Attribute $attribute = null, PermissionController $permissionController, $isAddField, $defaultValue ) {
+	public function __construct( ?Attribute $attribute, PermissionController $permissionController, $isAddField, $defaultValue ) {
 		parent::__construct( $attribute, $permissionController, $isAddField );
 
 		$this->defaultValue = $defaultValue;
@@ -1427,7 +1427,7 @@ class IdenticalMeaningEditor extends ScalarEditor {
 	protected $textValuesView;
 	protected $textValuesEdit;
 
-	public function __construct( Attribute $attribute = null, PermissionController $permissionController, $isAddField ) {
+	public function __construct( ?Attribute $attribute, PermissionController $permissionController, $isAddField ) {
 		parent::__construct( $attribute, $permissionController, $isAddField );
 
 		$this->defaultValue = "true";
@@ -1627,7 +1627,7 @@ class AttributeEditor extends DefinedMeaningReferenceEditor {
 	protected $attributesLevelName;
 	protected $attributeIDFilter;
 
-	public function __construct( Attribute $attribute = null, PermissionController $permissionController, $isAddField, AttributeIDFilter $attributeIDFilter, $attributesLevelName ) {
+	public function __construct( ?Attribute $attribute, PermissionController $permissionController, $isAddField, AttributeIDFilter $attributeIDFilter, $attributesLevelName ) {
 		parent::__construct( $attribute, $permissionController, $isAddField );
 
 		$this->attributeIDFilter = $attributeIDFilter;
@@ -1736,7 +1736,7 @@ class RecordListEditor extends RecordEditor {
 	protected $headerLevel = 1;
 	protected $htmlTag;
 
-	public function __construct( Attribute $attribute = null, $headerLevel, $htmlTag ) {
+	public function __construct( ?Attribute $attribute, $headerLevel, $htmlTag ) {
 		parent::__construct( $attribute );
 
 		$this->htmlTag = $htmlTag;
@@ -1952,7 +1952,7 @@ class RecordListEditor extends RecordEditor {
 }
 
 class RecordUnorderedListEditor extends RecordListEditor {
-	public function __construct( Attribute $attribute = null, $headerLevel ) {
+	public function __construct( ?Attribute $attribute, $headerLevel ) {
 		parent::__construct( $attribute, $headerLevel, "li" );
 	}
 
@@ -1995,7 +1995,7 @@ class RecordUnorderedListEditor extends RecordListEditor {
 }
 
 class RecordDivListEditor extends RecordListEditor {
-	public function __construct( Attribute $attribute = null ) {
+	public function __construct( ?Attribute $attribute ) {
 		parent::__construct( $attribute, 0, "div" );
 	}
 
@@ -2025,7 +2025,7 @@ class RecordSetListEditor extends RecordSetEditor {
 	protected $captionEditor;
 	protected $valueEditor;
 
-	public function __construct( Attribute $attribute = null, PermissionController $permissionController, ShowEditFieldChecker $showEditFieldChecker, AllowAddController $allowAddController, $allowRemove, $isAddField, UpdateController $controller = null, $headerLevel ) {
+	public function __construct( ?Attribute $attribute, PermissionController $permissionController, ShowEditFieldChecker $showEditFieldChecker, AllowAddController $allowAddController, $allowRemove, $isAddField, ?UpdateController $controller, $headerLevel ) {
 		parent::__construct( $attribute, $permissionController, $showEditFieldChecker, $allowAddController, $allowRemove, $isAddField, $controller );
 
 		$this->headerLevel = $headerLevel;
@@ -2277,7 +2277,7 @@ class RecordSpanEditor extends RecordEditor {
 	protected $valueSeparator;
 	protected $showAttributeNames;
 
-	public function __construct( Attribute $attribute = null, $valueSeparator, $attributeSeparator, $showAttributeNames = true ) {
+	public function __construct( ?Attribute $attribute, $valueSeparator, $attributeSeparator, $showAttributeNames = true ) {
 		parent::__construct( $attribute );
 
 		$this->attributeSeparator = $attributeSeparator;
@@ -2411,7 +2411,7 @@ class RollBackEditor extends ScalarEditor {
 	protected $hasValueFields;
 	protected $suggestionsEditor;
 
-	public function __construct( Attribute $attribute = null, $hasValueFields ) {
+	public function __construct( ?Attribute $attribute, $hasValueFields ) {
 		parent::__construct( $attribute, new SimplePermissionController( false ), false, false );
 
 		$this->hasValueFields = $hasValueFields;
