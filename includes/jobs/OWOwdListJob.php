@@ -282,7 +282,7 @@ class CreateOwdListJob extends Job {
 						}
 						if ( $code == 'fra' ) {
 							if (
-								$row['attribute_id'] == $fraId['gender'] or
+								$row['attribute_id'] == $fraId['gender'] ||
 								$row['attribute_id'] == $fraId['gender2']
 							) {
 								$gender .= $row['attribute_option_name'] . ';';
@@ -437,7 +437,7 @@ class CreateOwdListJob extends Job {
 			$lines = explode( "\n", $contents );
 			foreach ( $lines as $line ) {
 				$checkLine = explode( "	", $line );
-				if ( preg_match( '/' . $fileName . '/', $checkLine[0] ) and isset( $checkLine[1] ) ) {
+				if ( preg_match( '/' . $fileName . '/', $checkLine[0] ) && isset( $checkLine[1] ) ) {
 					$reconstructLine[] = $fileName . "	" . $transactionId . "	" . $this->version . "\n";
 				} else {
 					if ( $line != '' ) {

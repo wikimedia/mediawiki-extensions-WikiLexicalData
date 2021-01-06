@@ -8,7 +8,7 @@ function loadEC2GoMapping( $fileName ) {
 		$buffer = fgets( $fileHandle );
 		$buffer = rtrim( $buffer, "\n" );
 		$currentPrefix = substr( $buffer, 0, 1 );
-		if ( ( $currentPrefix != "!" ) and ( substr( $buffer, 0, 2 ) == "EC" ) ) {
+		if ( ( $currentPrefix != "!" ) && ( substr( $buffer, 0, 2 ) == "EC" ) ) {
 			$startPositionEC = strpos( $buffer, "EC:" );
 			$endPositionEC = strpos( $buffer, ">" );
 			$startPositionGO = strpos( $buffer, "; GO:" );
@@ -39,7 +39,7 @@ function loadSwissProtKeyWord2GoMapping( $fileName ) {
 		$buffer = fgets( $fileHandle );
 		$buffer = rtrim( $buffer, "\n" );
 		$currentPrefix = substr( $buffer, 0, 1 );
-		if ( ( $currentPrefix != "!" ) and ( substr( $buffer, 0, 5 ) == "SP_KW" ) ) {
+		if ( ( $currentPrefix != "!" ) && ( substr( $buffer, 0, 5 ) == "SP_KW" ) ) {
 			$startPositionSP_KW = strpos( $buffer, "SP_KW:" );
 			$endPositionSP_KW = strpos( $buffer, ">" );
 			$startPositionGO = strpos( $buffer, "; GO:" );

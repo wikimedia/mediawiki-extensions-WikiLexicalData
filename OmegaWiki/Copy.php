@@ -1009,10 +1009,10 @@ class CopyTools {
 	 * (Namely, if either $key or $array is either null or false)
 	 */
 	public static function sane_key_exists( $key, $array ) {
-		if ( $key === null or $key == false ) {
+		if ( $key === null || $key == false ) {
 			return false;
 		}
-		if ( $array === null or $array == false ) {
+		if ( $array === null || $array == false ) {
 			return false;
 		}
 		return array_key_exists( $key, $array );
@@ -1394,7 +1394,7 @@ abstract class Copier {
 	 * 	   false if it did not, and we just created it
 	 */
 	protected function doDM( &$row, $dmid_column, $full = false ) {
-		if ( $row[$dmid_column] == 0 or $row[$dmid_column] === null ) {
+		if ( $row[$dmid_column] == 0 || $row[$dmid_column] === null ) {
 			return true;
 		}
 

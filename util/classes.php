@@ -1,5 +1,5 @@
 <?php
-// phpcs:ignoreFile Squiz.PHP.NonExecutableCode.Unreachable
+// phpcs:disable Squiz.PHP.NonExecutableCode.Unreachable
 die( "Unsafe script -- no error checking, may be vulnerable to attacks." );
 header( "Content-type: text/html; charset=UTF-8" );
 $dc = "uw";
@@ -19,7 +19,9 @@ $connection = MySQL_connect( $db1, $db2, $db3 );
 if ( !$connection ) {
 	die( "Cannot connect to SQL server. Try again later." );
 }
-MySQL_select_db( $db4 ) or die( "Cannot open database" );
+if ( !MySQL_select_db( $db4 ) ) {
+	die( "Cannot open database" );
+}
 mysql_query( "SET NAMES 'utf8'" );
 
 echo "
@@ -60,8 +62,10 @@ $result = mysql_query( "
   ) AS counts
     ON classes.id=counts.id
     ORDER BY spelling
-
-" ) or die( "error " . mysql_error() );
+" );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 print "<ul>";
 while ( $row = mysql_fetch_array( $result, MYSQL_NUM ) ) {

@@ -99,7 +99,7 @@ class Define extends SynonymTranslation {
 
 				// get syntrans
 				// When returning synonyms or translation only
-				if ( $options['part'] == 'syn' or $options['part'] == 'trans' or $options['part'] == 'all' ) {
+				if ( $options['part'] == 'syn' || $options['part'] == 'trans' || $options['part'] == 'all' ) {
 					$partIsValid = true;
 					if ( !isset( $params['lang'] ) ) {
 						return [ 'error' => 'nolang' ];
@@ -130,7 +130,7 @@ class Define extends SynonymTranslation {
 						return [ 'error' => 'lang not found' ];
 					}
 				} else {
-					if ( $options['part'] == 'syn' or $options['part'] == 'trans' or $options['part'] == 'all' ) {
+					if ( $options['part'] == 'syn' || $options['part'] == 'trans' || $options['part'] == 'all' ) {
 						return [ 'error' => 'nulllang' ];
 					}
 					$defined = $this->definingForAnyLanguage( $params['dm'], $options, $this->getModuleName() );

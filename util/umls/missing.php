@@ -16,7 +16,9 @@ $connection = MySQL_connect( $db1, $db2, $db3 );
 if ( !$connection ) {
 	die( "Cannot connect to SQL server. Try again later." );
 }
-MySQL_select_db( $db4 ) or die( "Cannot open database" );
+if ( !MySQL_select_db( $db4 ) ) {
+	die( "Cannot open database" );
+}
 mysql_query( "SET NAMES 'utf8'" );
 
 echo "
@@ -45,7 +47,10 @@ AND collection_mid=defined_meaning_id
 AND {$dc}_defined_meaning.expression_id={$dc}_expression.expression_id
 ";
 echo $query;
-$result = mysql_query( $query ) or die( "error " . mysql_error() );
+$result = mysql_query( $query );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 $row = mysql_fetch_array( $result, MYSQL_NUM );
 $collection = $row[0];
 
@@ -53,7 +58,10 @@ $result = mysql_query( "SELECT language_name
 FROM language_names
 where name_language_id = 85
 and language_id=$language_id
-" ) or die( "error " . mysql_error() );
+" );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 $row = mysql_fetch_array( $result, MYSQL_NUM );
 $language = $row[0];
@@ -95,7 +103,10 @@ $result = mysql_query("
 	) as actual
 	ON en.id=actual.id
 	WHERE actual.id IS NULL
-")or die ("error ".mysql_error());
+");
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 */
 
 # Malafaya: This is my query (performance must be checked live) for missing expressions based on
@@ -170,7 +181,10 @@ $result = mysql_query( "
 		translation_dm.defined_meaning_id = member.id
 		WHERE translation.spelling IS NULL
 		ORDER BY spelling_dm
-" ) or die( "error " . mysql_error() );
+" );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 while ( $row = mysql_fetch_array( $result, MYSQL_NUM ) ) {
 	$id = $row[0];
@@ -218,7 +232,10 @@ $result = mysql_query("
 	) as actual
 	ON en.id=actual.id
 	WHERE actual.id IS NOT NULL
-")or die ("error ".mysql_error());
+");
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 */
 
 # Malafaya: my new query, not counting deleted stuff; just select target language expression for DMs in collection (whether translated to English or not, it's not relevant)
@@ -237,7 +254,10 @@ $result = mysql_query( "
 		 AND remove_transaction_id IS NULL
 		)
 		ORDER BY spelling
-" ) or die( "error " . mysql_error() );
+" );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 while ( $row = mysql_fetch_array( $result, MYSQL_NUM ) ) {
 	$id = $row[0];

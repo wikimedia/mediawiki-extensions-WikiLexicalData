@@ -147,7 +147,7 @@ class ApiWikiData extends ApiBase {
 				$printer->addDefinedMeaningRecord( $record );
 			}
 
-		} elseif ( $type == 'randomdm' or $type == 'dump' ) {
+		} elseif ( $type == 'randomdm' || $type == 'dump' ) {
 			// **********************
 			// RANDOM DEFINED MEANING
 			// **********************

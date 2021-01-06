@@ -16,7 +16,9 @@ $connection = MySQL_connect( $db1, $db2, $db3 );
 if ( !$connection ) {
 	die( "Cannot connect to SQL server. Try again later." );
 }
-MySQL_select_db( $db4 ) or die( "Cannot open database" );
+if ( !MySQL_select_db( $db4 ) ) {
+	die( "Cannot open database" );
+}
 mysql_query( "SET NAMES 'utf8'" );
 
 echo "
@@ -56,7 +58,10 @@ $result = mysql_query( "
 	) AS counts
 		ON spellings.id=counts.id
 		ORDER BY spelling
-" ) or die( "error " . mysql_error() );
+" );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 print "<ul>";
 while ( $row = mysql_fetch_array( $result, MYSQL_NUM ) ) {

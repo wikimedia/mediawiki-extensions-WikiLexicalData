@@ -140,10 +140,10 @@ class SpecialSuggest extends SpecialPage {
 				$this->conds[] = $rowText . $this->dbr->buildLike( $this->dbr->anyString(), $search, $this->dbr->anyString() );
 			} elseif ( $query == 'class' ) {
 				$this->conds[] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
-			} elseif ( $query == WLD_RELATIONS or
-				$query == WLD_LINK_ATTRIBUTE or
-				$query == WLD_OPTION_ATTRIBUTE or
-				$query == 'translated-text-attribute' or
+			} elseif ( $query == WLD_RELATIONS ||
+				$query == WLD_LINK_ATTRIBUTE ||
+				$query == WLD_OPTION_ATTRIBUTE ||
+				$query == 'translated-text-attribute' ||
 				$query == 'text-attribute' ) {
 				$this->options['HAVING'] = $rowText . $this->dbr->buildLike( $search, $this->dbr->anyString() );
 			} elseif ( $query == 'language' ) {

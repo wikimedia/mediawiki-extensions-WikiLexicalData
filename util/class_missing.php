@@ -1,5 +1,5 @@
 <?php
-// phpcs:ignoreFile Squiz.PHP.NonExecutableCode.Unreachable
+// phpcs:disable Squiz.PHP.NonExecutableCode.Unreachable
 die( "Unsafe script -- no error checking, may be vulnerable to attacks." );
 header( "Content-type: text/html; charset=UTF-8" );
 $dc = "uw";
@@ -19,7 +19,9 @@ $connection = MySQL_connect( $db1, $db2, $db3 );
 if ( !$connection ) {
 	die( "Cannot connect to SQL server. Try again later." );
 }
-MySQL_select_db( $db4 ) or die( "Cannot open database" );
+if ( !MySQL_select_db( $db4 ) ) {
+	die( "Cannot open database" );
+}
 mysql_query( "SET NAMES 'utf8'" );
 
 echo "
@@ -46,7 +48,10 @@ FROM  ${dc}_defined_meaning, ${dc}_expression
 WHERE defined_meaning_id=$class_id
 AND ${dc}_defined_meaning.expression_id=${dc}_expression.expression_id
 AND ${dc}_expression.remove_transaction_id is NULL
-" ) or die( "error " . mysql_error() );
+" );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 $row = mysql_fetch_array( $result, MYSQL_NUM );
 $class_name = $row[0];
@@ -55,7 +60,10 @@ $result = mysql_query( "SELECT language_name
 FROM language_names
 where name_language_id = 85
 and language_id=$language_id
-" ) or die( "error " . mysql_error() );
+" );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 $row = mysql_fetch_array( $result, MYSQL_NUM );
 $language = $row[0];
@@ -134,7 +142,10 @@ $result = mysql_query( "
 		translation_dm.defined_meaning_id = member.id
 		WHERE translation.spelling IS NULL
 		ORDER BY spelling_dm
-" ) or die( "error " . mysql_error() );
+" );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 while ( $row = mysql_fetch_array( $result, MYSQL_NUM ) ) {
 	$id = $row[0];
@@ -169,7 +180,10 @@ $result = mysql_query( "
 		 AND remove_transaction_id IS NULL
 		)
 		ORDER BY spelling
-" ) or die( "error " . mysql_error() );
+" );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 while ( $row = mysql_fetch_array( $result, MYSQL_NUM ) ) {
 	$id = $row[0];

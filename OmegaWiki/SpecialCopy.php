@@ -140,7 +140,7 @@ class SpecialCopy extends UnlistedSpecialPage {
 		$dc2 = mysql_real_escape_string( $dc2_dirty );
 
 		# check permission
-		if ( !( $this->getUser()->isAllowed( 'wikidata-copy' ) ) or $dc2 != $wgCommunity_dc ) {
+		if ( !$this->getUser()->isAllowed( 'wikidata-copy' ) || $dc2 != $wgCommunity_dc ) {
 			$wgOut->addHTML( wfMessage( "ow_Permission_denied" )->text() );
 			return false; # we didn't perform the copy.
 		}

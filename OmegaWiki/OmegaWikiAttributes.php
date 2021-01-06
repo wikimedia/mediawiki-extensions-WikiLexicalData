@@ -61,7 +61,7 @@ class OmegaWikiAttributes {
 	}
 
 	protected function setup( ViewInformation $viewInformation = null ) {
-		if ( $this->in_setup or $this->setup_completed ) {
+		if ( $this->in_setup || $this->setup_completed ) {
 			return true;
 		}
 

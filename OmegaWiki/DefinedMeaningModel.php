@@ -434,7 +434,7 @@ class DefinedMeaningModel {
 			$definingExpression = $this->getDefiningExpression();
 			$id = $this->getId();
 
-			if ( $definingExpression === null or $id === null ) {
+			if ( $definingExpression === null || $id === null ) {
 				return null;
 			}
 

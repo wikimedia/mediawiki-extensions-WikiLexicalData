@@ -33,7 +33,9 @@ function connect() {
 	if ( !$connection ) {
 		die( "Cannot connect to SQL server. Try again later." );
 	}
-	MySQL_select_db( $db4 ) or die( "Cannot open database" );
+	if ( !MySQL_select_db( $db4 ) ) {
+		die( "Cannot open database" );
+	}
 	mysql_query( "SET NAMES 'utf8'" );
 }
 

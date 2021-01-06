@@ -38,7 +38,7 @@ class AddAnnotation extends ApiBase {
 		$this->transacted = false;
 
 		if ( isset( $params['test'] ) ) {
-			if ( $params['test'] == '1' or $params['test'] == null ) {
+			if ( $params['test'] == '1' || $params['test'] == null ) {
 				$this->test = true;
 			}
 		}
@@ -480,14 +480,14 @@ class AddAnnotation extends ApiBase {
 			// Check if TSV
 			$inputMatch = preg_match( "/	/", $inputData, $match );
 
-			if ( $inputMatch and $this->continue ) {
+			if ( $inputMatch && $this->continue ) {
 				$inputData = explode( "	", $inputData );
 				$inputDataCount = count( $inputData );
 
 				// set type variables
 				if ( $this->type == 'text' ) {
 					$noOfCol = 6;
-					if ( $inputDataCount == 4 and $this->continue ) {
+					if ( $inputDataCount == 4 && $this->continue ) {
 						$inputData[] = null;
 						$inputData[] = null;
 						$inputDataCount = count( $inputData );
@@ -495,7 +495,7 @@ class AddAnnotation extends ApiBase {
 				}
 				if ( $this->type == 'option' ) {
 					$noOfCol = 7;
-					if ( $inputDataCount == 5 and $this->continue ) {
+					if ( $inputDataCount == 5 && $this->continue ) {
 						$inputData[] = null;
 						$inputData[] = null;
 						$inputDataCount = count( $inputData );
@@ -503,13 +503,13 @@ class AddAnnotation extends ApiBase {
 				}
 				if ( $this->type == 'relation' ) {
 					$noOfCol = 8;
-					if ( $inputDataCount == 7 and $this->continue ) {
+					if ( $inputDataCount == 7 && $this->continue ) {
 						$inputData[7] = $inputData[0];
 						$inputDataCount = count( $inputData );
 					}
 				}
 
-				if ( $inputDataCount < $noOfCol or $inputDataCount > $noOfCol and $this->continue ) {
+				if ( $inputDataCount < $noOfCol || $inputDataCount > $noOfCol && $this->continue ) {
 					$result = [ 'note' => "invalid column count. {$inputDataCount} instead of {$noOfCol}" ];
 					$this->getResult()->addValue( null, $this->getModuleName(),
 						[ 'result' . $ctr => $result ]

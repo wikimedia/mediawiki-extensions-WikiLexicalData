@@ -90,15 +90,15 @@ function build_api_query_url() {
 
 	if (
 		( $_REQUEST['expression'] )
-		or ( ( $_REQUEST['trainer_step'] == '0' ) and ( $_REQUEST['wdcollection'] ) )
-		or ( $_REQUEST['definedmeaning'] )
+		|| ( ( $_REQUEST['trainer_step'] == '0' ) && ( $_REQUEST['wdcollection'] ) )
+		|| ( $_REQUEST['definedmeaning'] )
 	) {
 		$ow_api_url = $ow_api_url . "&wdsections=def|syntrans";
 
 		if ( $_REQUEST['definedmeaning'] ) {
 			$ow_api_url = build_get_uri_2( 'wdtype', 'definedmeaning', $ow_api_url );
 			$ow_api_url = build_get_uri_2( 'wddmid', $_REQUEST['definedmeaning'], $ow_api_url );
-		} elseif ( $_REQUEST['trainer_step'] == '0' and ( !( $_REQUEST['expression'] ) ) ) {
+		} elseif ( $_REQUEST['trainer_step'] == '0' && ( !( $_REQUEST['expression'] ) ) ) {
 			$ow_api_url = build_get_uri_2( 'wdtype', 'randomdm', $ow_api_url );
 			$ow_api_url = build_get_uri_2( 'wdcollection', $_REQUEST['wdcollection'], $ow_api_url );
 			$ow_api_url = build_get_uri_2( 'wdexplanguage', $_REQUEST['wdexplanguage'], $ow_api_url );

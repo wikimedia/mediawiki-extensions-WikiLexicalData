@@ -1281,7 +1281,7 @@ class TextEditor extends ScalarEditor {
 	public function getEditHTML( IdStack $idPath, $value ) {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
-		if ( ( $dc == "uw" ) and ( !$wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+		if ( ( $dc == "uw" ) && ( !$wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
 		// disable
 			return getTextArea( $this->updateId( $idPath->getId() ), $value, 3, 80, true );
 		} else {
@@ -1334,7 +1334,7 @@ class ShortTextEditor extends ScalarEditor {
 	public function getEditHTML( IdStack $idPath, $value ) {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
-		if ( ( $dc == "uw" ) and ( !$wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+		if ( ( $dc == "uw" ) && ( !$wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
 			// disable
 			return getTextBox( $this->updateId( $idPath->getId() ), $value, $this->onChangeHandler, true );
 		} else {
@@ -1392,7 +1392,7 @@ class BooleanEditor extends ScalarEditor {
 	public function getEditHTML( IdStack $idPath, $value ) {
 		global $wgUser;
 		$dc = wdGetDataSetContext();
-		if ( ( $dc == "uw" ) and ( !$wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+		if ( ( $dc == "uw" ) && ( !$wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
 			return getCheckBox( $this->updateId( $idPath->getId() ), $value, true );
 		} else {
 			return getCheckBox( $this->updateId( $idPath->getId() ), $value );

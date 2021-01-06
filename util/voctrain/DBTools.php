@@ -33,7 +33,9 @@ class DBTools {
 		if ( !$connection ) {
 			die( "Cannot connect to SQL server. Try again later." );
 		}
-		MySQL_select_db( $dbname ) or die( "Cannot open database" );
+		if ( !MySQL_select_db( $dbname ) ) {
+			die( "Cannot open database" );
+		}
 		mysql_query( "SET NAMES 'utf8'" );
 	}
 
@@ -97,10 +99,10 @@ class DBTools {
 	 * (Namely, if either $key or $array is either null or false)
 	 */
 	public static function sane_key_exists( $key, $array ) {
-		if ( $key === null or $key == false ) {
+		if ( $key === null || $key == false ) {
 			return false;
 		}
-		if ( $array === null or $array == false ) {
+		if ( $array === null || $array == false ) {
 			return false;
 		}
 		return array_key_exists( $key, $array );

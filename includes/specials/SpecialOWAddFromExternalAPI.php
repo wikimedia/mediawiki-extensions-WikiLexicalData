@@ -219,7 +219,7 @@ class ExternalResources {
 				case true:
 					$this->checkExternalDefinition();
 					$this->checkOmegaWikiDefinition();
-					if ( $this->externalExists and $this->owlExists ) {
+					if ( $this->externalExists && $this->owlExists ) {
 						$this->setExternalDefinition();
 						$this->setOmegaWikiDefinition();
 						$this->createChoice();

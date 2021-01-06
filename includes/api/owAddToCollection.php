@@ -37,7 +37,7 @@ class AddToCollection extends ApiBase {
 		$this->transacted = false;
 
 		if ( isset( $params['test'] ) ) {
-			if ( $params['test'] == '1' or $params['test'] == null ) {
+			if ( $params['test'] == '1' || $params['test'] == null ) {
 				$this->test = true;
 			}
 		}

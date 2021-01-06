@@ -48,7 +48,7 @@ class AddSyntrans extends ApiBase {
 		$this->params = $this->extractRequestParams();
 
 		if ( isset( $this->params['test'] ) ) {
-			if ( $this->params['test'] == '1' or $this->params['test'] == null ) {
+			if ( $this->params['test'] == '1' || $this->params['test'] == null ) {
 				$this->test = true;
 			}
 		}

@@ -86,7 +86,7 @@ class SynonymTranslation extends ApiBase {
 
 		// get syntrans
 		// When returning synonyms or translation only
-		if ( $params['part'] == 'syn' or $params['part'] == 'trans' ) {
+		if ( $params['part'] == 'syn' || $params['part'] == 'trans' ) {
 			if ( !isset( $params['lang'] ) ) {
 				$this->dieUsage( 'parameter lang for adding syntrans is missing', 'param lang is missing' );
 			}
@@ -104,12 +104,12 @@ class SynonymTranslation extends ApiBase {
 			if ( $trueOrFalse == true ) {
 				$options['lang'] = $params['lang'];
 			} else {
-				if ( $params['part'] == 'syn' or $params['part'] == 'trans' ) {
+				if ( $params['part'] == 'syn' || $params['part'] == 'trans' ) {
 					$this->dieUsage( 'parameter lang for adding syntrans does not exist', 'param lang does not exist' );
 				}
 			}
 		} else {
-			if ( $params['part'] == 'syn' or $params['part'] == 'trans' ) {
+			if ( $params['part'] == 'syn' || $params['part'] == 'trans' ) {
 				$this->dieUsage( 'parameter lang for adding syntrans is empty', 'param lang empty' );
 			}
 		}
@@ -240,7 +240,7 @@ class SynonymTranslation extends ApiBase {
 			];
 
 			if ( isset( $options['part'] ) ) {
-				if ( $options['part'] == 'syn' and $options['lang'] == $row[1] ) {
+				if ( $options['part'] == 'syn' && $options['lang'] == $row[1] ) {
 					if ( isset( $options['e'] ) ) {
 						// skip the expression for the language id
 						if ( $options['lang'] == $row[1] && $options['e'] == $row[0] ) {
@@ -254,7 +254,7 @@ class SynonymTranslation extends ApiBase {
 					}
 				}
 
-				if ( $options['part'] == 'trans' and $options['lang'] != $row[1] ) {
+				if ( $options['part'] == 'trans' && $options['lang'] != $row[1] ) {
 					$syntrans["{$ctr}{$dot}"] = $syntransRow;
 					$ctr++;
 				}

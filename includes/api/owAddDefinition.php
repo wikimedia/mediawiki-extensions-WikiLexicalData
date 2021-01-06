@@ -33,13 +33,13 @@ class AddDefinition extends ApiBase {
 		$this->transacted = false;
 
 		if ( isset( $params['test'] ) ) {
-			if ( $params['test'] == '1' or $params['test'] == null ) {
+			if ( $params['test'] == '1' || $params['test'] == null ) {
 				$this->test = true;
 			}
 		}
 
 		// limit non-test access to bots
-		if ( !( $this->test or $user->isAllowed( 'bot' ) ) ) {
+		if ( !( $this->test || $user->isAllowed( 'bot' ) ) ) {
 			$this->dieUsage( 'you must have a bot flag to use this API function', 'bot_only' );
 		}
 

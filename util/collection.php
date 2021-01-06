@@ -1,5 +1,5 @@
 <?php
-// phpcs:ignoreFile Squiz.PHP.NonExecutableCode.Unreachable
+// phpcs:disable Squiz.PHP.NonExecutableCode.Unreachable
 die( "Unsafe script -- no error checking, may be vulnerable to attacks." );
 header( "Content-type: text/html; charset=UTF-8" );
 
@@ -17,7 +17,9 @@ $connection = MySQL_connect( $db1, $db2, $db3 );
 if ( !$connection ) {
 	die( "Cannot connect to SQL server. Try again later." );
 }
-MySQL_select_db( $db4 ) or die( "Cannot open database" );
+if ( !MySQL_select_db( $db4 ) ) {
+	die( "Cannot open database" );
+}
 mysql_query( "SET NAMES 'utf8'" );
 
 echo "
@@ -37,8 +39,10 @@ uw_defined_meaning.defined_meaning_id , uw_expression.spelling
 FROM uw_defined_meaning, uw_expression
 where uw_defined_meaning.defined_meaning_id=1446
 and uw_defined_meaning.expression_id=uw_expression.expression_id
-limit 0,40")or die ("error ".mysql_error());
-
+limit 0,40");
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 */
 
 $start = stopwatch();
@@ -51,7 +55,10 @@ FROM uw_collection, uw_defined_meaning, uw_expression
 WHERE collection_id=$collection_id
 AND collection_mid=defined_meaning_id 
 AND uw_defined_meaning.expression_id=uw_expression.expression_id
-" ) or die( "error " . mysql_error() );
+" );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 $row = mysql_fetch_array( $result, MYSQL_NUM );
 $collection = $row[0];
@@ -65,7 +72,10 @@ echo "<center>
 $result = mysql_query( "SELECT *
 FROM language_names 
 where name_language_id = 85
-" ) or die( "error " . mysql_error() );
+" );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 while ( $row = mysql_fetch_array( $result, MYSQL_NUM ) ) {
 	// echo $row[0]." - ".$row[1]." - ".$row[2]."<br />";
@@ -85,7 +95,10 @@ AND uw_syntrans.remove_transaction_id IS NULL
 AND uw_collection_contents.remove_transaction_id is NULL
 GROUP BY language_id
 ORDER BY counts DESC
- " ) or die( "error " . mysql_error() );
+ " );
+if ( !$result ) {
+	die( "error " . mysql_error() );
+}
 
 echo ' 
 <table cellpadding=0 width=950><tr><td width=200><b>Language</b></td><td align=right><b>Expressions</b></td><td width=30></td><td></td></tr>';
