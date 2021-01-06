@@ -34,7 +34,7 @@ global
 
 function ReadSQLFile( $database, $pattern, $prefix, $filename ) {
 	$fp = fopen( $filename, 'r' );
-	if ( false === $fp ) {
+	if ( $fp === false ) {
 		return "Could not open \"{$filename}\".\n";
 	}
 
@@ -48,16 +48,16 @@ function ReadSQLFile( $database, $pattern, $prefix, $filename ) {
 		if ( $sl < 0 ) {
 			continue;
 		}
-		if ( '-' == $line [ 0 ] && '-' == $line [ 1 ] ) {
+		if ( $line[0] == '-' && $line[1] == '-' ) {
 			continue;
 		}
 
-		if ( ';' == $line [ $sl ] && ( $sl < 2 || ';' != $line [ $sl - 1 ] ) ) {
+		if ( $line[$sl] == ';' && ( $sl < 2 || $line[$sl - 1] != ';' ) ) {
 			$done = true;
 			$line = substr( $line, 0, $sl );
 		}
 
-		if ( '' != $cmd ) {
+		if ( $cmd != '' ) {
 			$cmd .= ' ';
 		}
 		$cmd .= "$line\n";
@@ -67,7 +67,7 @@ function ReadSQLFile( $database, $pattern, $prefix, $filename ) {
 			$cmd = trim( str_replace( $pattern, $prefix, $cmd ) );
 			$res = $database->query( $cmd );
 
-			if ( false === $res ) {
+			if ( $res === false ) {
 				return "Query \"{$cmd}\" failed with error code \".\n";
 			}
 

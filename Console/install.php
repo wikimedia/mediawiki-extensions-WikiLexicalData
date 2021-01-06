@@ -327,7 +327,7 @@ class InstallWikiLexicalData extends Maintenance {
 		global $wgDBtype;
 
 		$fp = fopen( $filename, 'r' );
-		if ( false === $fp ) {
+		if ( $fp === false ) {
 			return "Could not open \"{$filename}\".\n";
 		}
 
@@ -342,16 +342,16 @@ class InstallWikiLexicalData extends Maintenance {
 			if ( $sl < 0 ) {
 				continue;
 			}
-			if ( '-' == $line [ 0 ] && '-' == $line [ 1 ] ) {
+			if ( $line[0] == '-' && $line[1] == '-' ) {
 				continue;
 			}
 
-			if ( ';' == $line [ $sl ] && ( $sl < 2 || ';' != $line [ $sl - 1 ] ) ) {
+			if ( $line[$sl] == ';' && ( $sl < 2 || $line[$sl - 1] != ';' ) ) {
 				$done = true;
 				$line = substr( $line, 0, $sl );
 			}
 
-			if ( '' != $cmd ) {
+			if ( $cmd != '' ) {
 				$cmd .= ' ';
 			}
 			$cmd .= "$line\n";
@@ -427,7 +427,7 @@ class InstallWikiLexicalData extends Maintenance {
 
 				$res = $dbw->query( $cmd );
 
-				if ( false === $res ) {
+				if ( $res === false ) {
 					return "Query \"{$cmd}\" failed with error code \".\n";
 				}
 

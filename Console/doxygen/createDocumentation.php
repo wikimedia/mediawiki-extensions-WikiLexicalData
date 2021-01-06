@@ -79,7 +79,7 @@ class CreateDocumentation extends Maintenance {
 		$str = trim( str_replace( '/*$wgWLDdir*/', $wldBase, $str ) );
 		$str = trim( str_replace( '/*$wgWLDdownload*/', $wgWldDownloadScriptPath, $str ) );
 		$fp = fopen( $configFinal, 'w' );
-		if ( false === $fp ) {
+		if ( $fp === false ) {
 			return "Could not open \"{$filename}\".\n";
 		}
 		echo "Configuring {$configFinal}\n\n";

@@ -493,7 +493,7 @@ class SpecialOWDownloads extends SpecialPage {
 				$this->development[] = "$files";
 			}
 			// check if 'downloads.ini' exists
-			if ( 'downloads.ini' == $files ) {
+			if ( $files == 'downloads.ini' ) {
 				$this->downloadIniExist = true;
 			}
 		}
