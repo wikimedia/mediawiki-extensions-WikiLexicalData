@@ -32,26 +32,27 @@ class ApiWikiData extends ApiBase {
 	}
 
 	public function execute() {
-		$type = null;
-		$expression = null;
-		$dmid = null;
-		$dataset = null;
-		$languages = null;
-		$explanguage = null;
-		$deflanguage = null;
-		$resplanguage = null;
-		$sections = null;
-		$format = null;
-		$collection = null;
-		$collection_id = null;
-		$relation = null;
-		$relleft = null;
-		$relright = null;
-		$translanguage = null;
-		$deflanguage = null;
-
 		// read the request parameters
-		extract( $this->extractRequestParams() );
+		$params = $this->extractRequestParams();
+
+		$type = $params['type'];
+		$expression = $params['expression'];
+		$dmid = $params['dmid'];
+		$dataset = $params['dataset'];
+		$languages = $params['languages'];
+		$explanguage = $params['explanguage'];
+		$deflanguage = $params['deflanguage'];
+		$resplanguage = $params['resplanguage'];
+		$sections = $params['sections'];
+		$format = $params['format'];
+		$collection = $params['collection'];
+		$collection_id = $params['collection_id'];
+		$relation = $params['relation'];
+		$relleft = $params['relleft'];
+		$relright = $params['relright'];
+		$translanguage = $params['translanguage'];
+		$dump_start = $params['dump_start'];
+		$dump_items = $params['dump_items'];
 
 		$datasets = wdGetDataSets();
 		if ( !isset( $datasets[$dataset] ) ) {
