@@ -27,7 +27,7 @@
 	"ow_exporttsv_export_failed": "Izvoz ni uspel",
 	"ow_save": "Shrani",
 	"ow_history": "Zgodovina",
-	"ow_uipref_datasets": "Privzeti pogled:",
+	"ow_uipref_datasets": "Privzeti prikaz:",
 	"ow_transaction_user": "Uporabniško ime:",
 	"ow_transaction_rollback_button": "Vrni",
 	"ow_transaction_rollback_header": "Vrnitev",
