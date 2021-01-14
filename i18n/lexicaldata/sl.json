@@ -13,7 +13,7 @@
 	"langman_iso639-3": "Koda ISO 639-3:",
 	"langman_iso639-2": "Koda ISO 639-2:",
 	"langman_wikimedia": "Koda Wikimedie:",
-	"langman_field_optional": "(neobvezno)",
+	"langman_field_optional": "(izbirno)",
 	"langman_addlang": "Dodaj jezik",
 	"datasearch_language": "Jezik:",
 	"datasearch_found_word": "Najdena beseda:",
