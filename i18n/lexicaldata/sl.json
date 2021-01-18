@@ -36,5 +36,9 @@
 	"ow_transaction_restore": "Obnovi",
 	"ow_transaction_summary": "Povzetek",
 	"ow_dm_OK": "V redu",
-	"ow_Language": "Jezik"
+	"ow_Language": "Jezik",
+	"ow_Source": "Vir",
+	"ow_User": "Uporabnik",
+	"prefs-ow-lang": "Jeziki",
+	"ow-stat-languages": "{{PLURAL:$1|Jezik|Jezika|Jeziki|Jeziki}}"
 }
