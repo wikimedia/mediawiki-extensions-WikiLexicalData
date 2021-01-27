@@ -39,6 +39,7 @@
 	"ow_Language": "Jezik",
 	"ow_Source": "Vir",
 	"ow_User": "Uporabnik",
+	"ow_suggest_next": "Naprej",
 	"prefs-ow-lang": "Jeziki",
 	"ow-stat-languages": "{{PLURAL:$1|Jezik|Jezika|Jeziki}}"
 }
