@@ -20,7 +20,8 @@ module.exports = function ( grunt ) {
 				'**/*.{js,json}',
 				'!node_modules/**',
 				'!vendor/**',
-				'!resources/wforms.js' // # upstream lib
+				// upstream lib
+				'!resources/wforms.js'
 			]
 		}
 	} );
