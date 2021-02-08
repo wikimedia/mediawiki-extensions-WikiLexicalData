@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Cainamarques",
-			"Eduardo Addad de Oliveira"
+			"Eduardo Addad de Oliveira",
+			"Eduardoaddad"
 		]
 	},
 	"apiow-desc": "Implementação pela OmegaWiki da extensão WikiLexicalData da api.php do MediaWiki",
