@@ -132,7 +132,7 @@
 	"ow_db_consistency_not_found": "<h2>Errorea</h2>\nErrore bat dago datu-base koherentziarekin, wikidata ez da zehazturiko esanahi IDarekin konektaturiko baliozko daturik aurkitzeko gai.\nGaldu egingo ziren.\nMesedez harremanetan ipini zerbitzari operadore edo administratzailearekin.",
 	"ow_class_attr_type_xlate": "Itzul daitekeen testua",
 	"ow_class_attr_type_plain": "Testu laua",
-	"ow_class_attr_type_link": "Lotura",
+	"ow_class_attr_type_link": "Esteka",
 	"ow_class_attr_type_option": "Aukera zerrenda",
 	"needstranslation": "Itzulpena behar duten espresioak",
 	"ow_needs_xlation_title": "Itzulpena behar duten espresioak",
