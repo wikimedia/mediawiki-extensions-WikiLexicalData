@@ -270,5 +270,6 @@
 	"ow-stat-text-annotations": "{{PLURAL:$1|Annotation de texte|Annotations de texte}}",
 	"ow-stat-option-annotations": "{{PLURAL:$1|Annotation d’option|Annotations d’option}}",
 	"ow-stat-all-is": "tous = $1",
+	"ow-stat-percent": "$1 %",
 	"specialpages-group-omegawiki": "Omegawiki"
 }
