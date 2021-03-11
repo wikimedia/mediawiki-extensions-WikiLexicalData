@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Andrei Stroe",
+			"Andreyyshore",
 			"Danutz",
 			"Emily",
 			"Firilacroco",
@@ -110,7 +111,7 @@
 	"ow_PopupAnnotation": "Adnotare",
 	"ow_Relations": "Relații",
 	"ow_RelationType": "Tipul relației",
-	"ow_Remove": "Şterge",
+	"ow_Remove": "Șterge",
 	"ow_Spelling": "Pronunție",
 	"ow_SuggestHint": "Dați click pentru a selecta din nou",
 	"ow_Synonyms": "Sinonime",
@@ -133,7 +134,7 @@
 	"ow_Property": "Proprietate",
 	"ow_Value": "Valoare",
 	"ow_added": "Adaugat",
-	"ow_removed": "Şters",
+	"ow_removed": "Șters",
 	"ow_meaningsoftitle": "Înțelesurile lui „$1”",
 	"ow_Permission_denied": "<h2>Permisiune refuzată</h2>",
 	"copy": "Wikidata:Copiază",
