@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"J budissin",
 			"Michawiki"
 		]
 	},
@@ -210,10 +211,18 @@
 	"ow_suggest_clear": "Wuprózdnić",
 	"ow_nstab_definedmeaning": "definowany woznam",
 	"ow_nstab_edit_copy": "kopiju wobdźěłać",
+	"action-addlanguage": "rěčne nastajenje přidać a změnić",
 	"right-addlanguage": "Rěčne nastajenja přidać a změnić",
 	"ow_shown_datasets": "Pokazane datowe sadźby",
 	"prefs-ow-lang": "Rěče",
 	"ow_pref_lang_switch": "Jenož wubrane rěče pokazać",
 	"ow_pref_lang_select": "Rěče za zwobraznjenje:",
-	"ow_statistics": "Statistika WikiLexicalData"
+	"ow-special-stat-languages-avail": "{{PLURAL:$1|Wužiwajomna rěč|Wužiwajomnej rěči|Wužiwajomne rěče}}",
+	"ow_statistics": "Statistika WikiLexicalData",
+	"ow-stat-overview-link": "Přehlad",
+	"ow-stat-annotations-link": "Anotacije",
+	"ow-stat-expressions-link": "Wurazy",
+	"ow-stat-expressions": "{{PLURAL:$1|Wuraz|Wurazaj|Wurazy}}",
+	"ow-stat-meanings-link": "Woznamy",
+	"ow-stat-languages": "{{PLURAL:$1|Rěč|Rěči|Rěče|Rěčow}}"
 }
