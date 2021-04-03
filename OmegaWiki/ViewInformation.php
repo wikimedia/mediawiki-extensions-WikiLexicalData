@@ -2,6 +2,8 @@
 
 require_once 'PropertyToColumnFilter.php';
 
+use MediaWiki\MediaWikiServices;
+
 /**
  * ViewInformation is used to capture various settings that influence the way a page will be viewed
  * depending on different use case scenarios.
@@ -45,12 +47,25 @@ class ViewInformation {
 		// check if language filtering is changed from the url
 		// and modify the user options accordingly. Cf. onSkinTemplateNavigation hook
 		$langFilterRequest = $wgRequest->getVal( 'langfilter' );
-		if ( $langFilterRequest == "on" ) {
-			$wgUser->setOption( 'ow_language_filter', true );
-			$wgUser->saveSettings();
-		} elseif ( $langFilterRequest == "off" ) {
-			$wgUser->setOption( 'ow_language_filter', false );
-			$wgUser->saveSettings();
+		$services = MediaWikiServices::getInstance();
+		if ( method_exists( $services, 'getUserOptionsManager' ) ) {
+			// MW 1.35+
+			$userOptionsManager = $services->getUserOptionsManager();
+			if ( $langFilterRequest == "on" ) {
+				$userOptionsManager->setOption( $wgUser, 'ow_language_filter', true );
+				$userOptionsManager->saveOptions( $wgUser );
+			} elseif ( $langFilterRequest == "off" ) {
+				$userOptionsManager->setOption( $wgUser, 'ow_language_filter', false );
+				$userOptionsManager->saveOptions( $wgUser );
+			}
+		} else {
+			if ( $langFilterRequest == "on" ) {
+				$wgUser->setOption( 'ow_language_filter', true );
+				$wgUser->saveSettings();
+			} elseif ( $langFilterRequest == "off" ) {
+				$wgUser->setOption( 'ow_language_filter', false );
+				$wgUser->saveSettings();
+			}
 		}
 
 		// set filterLanguageList according to the user preferences
