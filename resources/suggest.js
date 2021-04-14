@@ -1,4 +1,4 @@
-jQuery( document ).ready( function ( $ ) {
+$( function ( $ ) {
 
 	var suggestionTimeOut = null;
 

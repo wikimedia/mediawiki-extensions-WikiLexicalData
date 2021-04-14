@@ -1,4 +1,4 @@
-jQuery( document ).ready( function ( $ ) {
+$( function ( $ ) {
 	/*
 	 * Some javascript that is run when the page finished loading
 	 */

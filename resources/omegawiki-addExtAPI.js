@@ -7,7 +7,7 @@ $( '#flexible_form' ).hide();
 $( '#inputSelectButton' ).hide();
 $( '#inputSkipSelectButton' ).hide();
 
-jQuery( document ).ready( function ( $ ) {
+$( function ( $ ) {
 
 	$( '#flexible_form' ).slideDown( 'slow' );
 	createExternalAPIDataChoice();

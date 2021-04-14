@@ -1,4 +1,4 @@
-jQuery( document ).ready( function ( $ ) {
+$( function ( $ ) {
 
 	// automatically fills in the label when a url is pasted.
 	$( 'body' ).on( 'paste', 'td.url', function () {
