@@ -27,7 +27,7 @@
 	"datasearch_meaning": "అర్ధము",
 	"datasearch_search_text": "పాఠ్యంలో వెతకండి:",
 	"datasearch_within_words": "పదముల లోపల:",
-	"ow_importtsv_title2": "నిర్వచనాలను మరియు అనువాదాలను దిగుమతించు",
+	"ow_importtsv_title2": "నిర్వచనాలను, అనువాదాలను దిగుమతించు",
 	"ow_importtsv_not_allowed": "TSV దిగుమతి చేయడానికి మీకు అనుమతి లేదు.",
 	"ow_importtsv_import_failed": "దిగుమతి జరగలేదు",
 	"ow_importtsv_file": "TSV ఫైలు:",
@@ -100,7 +100,7 @@
 	"ow_RemoveHint": "తీసివేతకు లైనులను గుర్తుపెట్టు",
 	"ow_Spelling": "వర్ణక్రమం",
 	"ow_Synonyms": "సమానార్థాలు",
-	"ow_SynonymsAndTranslations": "సమానార్థాలు మరియు అనువాదాలు",
+	"ow_SynonymsAndTranslations": "సమానార్థాలు, అనువాదాలు",
 	"ow_Source": "మూలం",
 	"ow_SourceIdentifier": "మూలము గుర్తింపుదారు",
 	"ow_Text": "పాఠ్యం",
@@ -142,6 +142,6 @@
 	"ow_suggest_next": "తర్వాతి",
 	"ow_suggest_clear": "తుడిచివేయి",
 	"ow_nstab_definedmeaning": "నిర్వచిత అర్థం",
-	"right-addlanguage": "భాషా అమరికలని చేర్చడం మరియు మార్చడం",
+	"right-addlanguage": "భాషా అమరికలని చేర్చడం, మార్చడం",
 	"ow_statistics": "Wikidata: గణాంకాలు"
 }
