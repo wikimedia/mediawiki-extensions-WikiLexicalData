@@ -880,9 +880,9 @@ class Syntrans {
 		if ( isset( $options['scope'] ) ) {
 			switch ( $options['scope'] ) {
 				case 'syn':
-				$opt['language_id'] = $languageId;
-				$opt[] = 'spelling not in (' . "'" . $spelling . "'" . ')';
-				break;
+					$opt['language_id'] = $languageId;
+					$opt[] = 'spelling not in (' . "'" . $spelling . "'" . ')';
+					break;
 			}
 		}
 

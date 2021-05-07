@@ -9,7 +9,7 @@
 	global $wgCommandLineMode;
 	$wgCommandLineMode = true;
 
-	$dbr = wfGetDB( DB_MASTER );
+	$dbr = wfGetDB( DB_PRIMARY );
 
 	/* Fetch the name of the database. */
 	$sql = 'SELECT DATABASE()';

@@ -79,7 +79,7 @@ function newObjectId( $table, $dc = null ) {
 		$dc = wdGetDataSetContext();
 	}
 
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$uuid = UIDGenerator::newUUIDv4();
 	$dbw->insert(
 		"{$dc}_objects",
@@ -167,7 +167,7 @@ function createExpressionId( $spelling, $languageId, $options = [] ) {
 
 function reviveExpression( $expressionId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$dbw->update( "{$dc}_expression",
 		[ /* SET */
 			'remove_transaction_id' => null
@@ -188,14 +188,14 @@ function createPage( $namespace, $title ) {
 	if ( $wikipage->exists() ) {
 		return $wikipage;
 	} else {
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 		$wikipage->insertOn( $dbw );
 		return $wikipage;
 	}
 }
 
 function setPageLatestRevision( $pageId, $latestRevision ) {
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$dbw->update( 'page',
 		[ /* SET */
 			'page_latest' => $latestRevision
@@ -207,7 +207,7 @@ function setPageLatestRevision( $pageId, $latestRevision ) {
 
 function createInitialRevisionForPage( $wikipage, $comment ) {
 	global $wgUser;
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$userId = $wgUser->getID();
 	$userName = $wgUser->getName();
 	$timestamp = $dbw->timestamp();
@@ -340,7 +340,7 @@ function createSynonymOrTranslation( $definedMeaningId, $expressionId, $identica
 		$synonymId = newObjectId( "{$dc}_syntrans" );
 	}
 
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	if ( $identicalMeaning == "true" ) {
 		$identicalMeaningInteger = 1;
 	} else {
@@ -418,7 +418,7 @@ function relationExists( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id
 
 function createRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 
 	$relationId = getRelationId( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id );
 	if ( $relationId == 0 ) {
@@ -445,7 +445,7 @@ function addRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) 
 
 function removeRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_meaning_relations",
 		[ /* SET */
@@ -461,7 +461,7 @@ function removeRelation( $definedMeaning1Id, $relationTypeId, $definedMeaning2Id
 
 function removeRelationWithId( $relationId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_meaning_relations",
 		[ /* SET */
@@ -619,7 +619,7 @@ function classAttributeExists( $classMeaningId, $levelMeaningId, $attributeMeani
 
 function createClassAttribute( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 
 	$objectId = getClassAttributeId( $classMeaningId, $levelMeaningId, $attributeMeaningId, $attributeType );
 	if ( $objectId == 0 ) {
@@ -640,7 +640,7 @@ function createClassAttribute( $classMeaningId, $levelMeaningId, $attributeMeani
 
 function removeClassAttributeWithId( $classAttributeId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_class_attributes",
@@ -679,7 +679,7 @@ function classMembershipExists( $classMemberId, $classId ) {
 
 function createClassMembership( $classMemberId, $classId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 
 	$classMembershipId = getClassMembershipId( $classMemberId, $classId );
 	if ( $classMembershipId == 0 ) {
@@ -704,7 +704,7 @@ function addClassMembership( $classMemberId, $classId ) {
 
 function removeClassMembership( $classMemberId, $classId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_class_membership",
 		[ /* SET */
@@ -719,7 +719,7 @@ function removeClassMembership( $classMemberId, $classId ) {
 
 function removeClassMembershipWithId( $classMembershipId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_class_membership",
 		[ /* SET */
@@ -737,7 +737,7 @@ function removeClassMembershipWithId( $classMembershipId ) {
  */
 function removeSynonymOrTranslation( $definedMeaningId, $expressionId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_syntrans",
 		[ /* SET */
@@ -760,7 +760,7 @@ function removeSynonymOrTranslation( $definedMeaningId, $expressionId ) {
  */
 function removeSynonymOrTranslationWithId( $syntransId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_syntrans",
 		[ /* SET */
@@ -853,7 +853,7 @@ function updateTranslatedText( $setId, $languageId, $text ) {
 
 function createText( $text ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 
 	$dbw->insert( "{$dc}_text",
 		[ 'text_text' => $text ],
@@ -864,7 +864,7 @@ function createText( $text ) {
 
 function createTranslatedContent( $translatedContentId, $languageId, $textId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert( "{$dc}_translated_content",
@@ -931,7 +931,7 @@ function getDefinedMeaningDefinitionId( $definedMeaningId ) {
 }
 
 function updateDefinedMeaningDefinitionId( $definedMeaningId, $definitionId ) {
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$dc = wdGetDataSetContext();
 	$dbw->update( "{$dc}_defined_meaning",
 		[ /* SET */
@@ -966,7 +966,7 @@ function addDefinedMeaningDefinition( $definedMeaningId, $languageId, $text ) {
 
 function createDefinedMeaningAlternativeDefinition( $definedMeaningId, $translatedContentId, $sourceMeaningId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert( "{$dc}_alt_meaningtexts",
 		[
@@ -987,7 +987,7 @@ function addDefinedMeaningAlternativeDefinition( $definedMeaningId, $languageId,
 
 function removeTranslatedText( $translatedContentId, $languageId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_translated_content",
 		[ /* SET */
@@ -1002,7 +1002,7 @@ function removeTranslatedText( $translatedContentId, $languageId ) {
 
 function removeTranslatedTexts( $translatedContentId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_translated_content",
 		[ /* SET */
@@ -1023,7 +1023,7 @@ function removeDefinedMeaningAlternativeDefinition( $definedMeaningId, $definiti
 // removeTranslatedTexts($definitionId);
 
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_alt_meaningtexts",
 		[ /* SET */
@@ -1064,7 +1064,7 @@ function definedMeaningInCollection( $definedMeaningId, $collectionId ) {
 
 function addDefinedMeaningToCollection( $definedMeaningId, $collectionId, $internalId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert( "{$dc}_collection_contents",
 		[
@@ -1100,7 +1100,7 @@ function getDefinedMeaningFromCollection( $collectionId, $internalMemberId ) {
 
 function removeDefinedMeaningFromCollection( $definedMeaningId, $collectionId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_collection_contents",
 		[ /* SET */
@@ -1161,7 +1161,7 @@ function getCollectionId( $collectionMeaningId ) {
 
 function addCollection( $definedMeaningId, $collectionType ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$collectionId = newObjectId( "{$dc}_collection" );
 	$transactionId = getUpdateTransactionId();
 
@@ -1178,7 +1178,7 @@ function addCollection( $definedMeaningId, $collectionType ) {
 
 function addDefinedMeaning( $definingExpressionId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$definedMeaningId = newObjectId( "{$dc}_defined_meaning" );
 	$transactionId = getUpdateTransactionId();
 
@@ -1216,7 +1216,7 @@ function addTextAttributeValue( $objectId, $textAttributeId, $text ) {
 
 function createTextAttributeValue( $textValueAttributeId, $objectId, $textAttributeId, $text ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert( "{$dc}_text_attribute_values",
 		[
@@ -1231,7 +1231,7 @@ function createTextAttributeValue( $textValueAttributeId, $objectId, $textAttrib
 
 function removeTextAttributeValue( $textValueAttributeId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->update( "{$dc}_text_attribute_values",
 		[ /* SET */
@@ -1310,7 +1310,7 @@ function addLinkAttributeValue( $objectId, $linkAttributeId, $url, $label = "" )
 
 function createLinkAttributeValue( $linkValueAttributeId, $objectId, $linkAttributeId, $url, $label = "" ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 	$dbw->insert( "{$dc}_url_attribute_values",
 		[
@@ -1326,7 +1326,7 @@ function createLinkAttributeValue( $linkValueAttributeId, $objectId, $linkAttrib
 
 function removeLinkAttributeValue( $linkValueAttributeId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 
 	$dbw->update( "{$dc}_url_attribute_values",
@@ -1360,7 +1360,7 @@ function getLinkValueAttribute( $linkValueAttributeId ) {
 
 function createTranslatedTextAttributeValue( $valueId, $objectId, $attributeId, $translatedContentId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 
 	$dbw->insert( "{$dc}_translated_content_attribute_values",
@@ -1399,7 +1399,7 @@ function getTranslatedTextAttribute( $valueId ) {
 
 function removeTranslatedTextAttributeValue( $valueId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$translatedTextAttribute = getTranslatedTextAttribute( $valueId );
 	$transactionId = getUpdateTransactionId();
 
@@ -1448,7 +1448,7 @@ function addOptionAttributeValue( $objectId, $optionId ) {
 
 function createOptionAttributeValue( $objectId, $optionId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$valueId = newObjectId( "{$dc}_option_attribute_values" );
 	$transactionId = getUpdateTransactionId();
 
@@ -1464,7 +1464,7 @@ function createOptionAttributeValue( $objectId, $optionId ) {
 
 function removeOptionAttributeValue( $valueId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$transactionId = getUpdateTransactionId();
 
 	$dbw->update( "{$dc}_option_attribute_values",
@@ -1505,7 +1505,7 @@ function addOptionAttributeOption( $attributeId, $optionMeaningId, $languageId )
 
 function createOptionAttributeOption( $attributeId, $optionMeaningId, $languageId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$optionId = newObjectId( "{$dc}_option_attribute_options" );
 	$transactionId = getUpdateTransactionId();
 
@@ -1522,7 +1522,7 @@ function createOptionAttributeOption( $attributeId, $optionMeaningId, $languageI
 
 function removeOptionAttributeOption( $optionId ) {
 	$dc = wdGetDataSetContext();
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 
 	// first check if the option attribute option is still in use
 	$valueId = $dbw->selectField(
@@ -2264,7 +2264,7 @@ function writeDmToCollection( $dc, $collid, $uuid, $dm_id, $override_transaction
 	// if(is_null($dc)) {
 	// $dc=wdGetDataSetContext();
 	// }
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 
 	$add_transaction_id = $override_transaction;
 	if ( $add_transaction_id === null ) {

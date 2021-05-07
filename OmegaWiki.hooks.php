@@ -43,14 +43,14 @@ class OmegaWikiHooks extends WikiLexicalDataHooks {
 						if ( trim( $match[3][$index] ) != $title ) {
 							// alter only if it would change
 							switch ( strlen( trim( $match[6][$index] ) ) ) {
-							  case 0:	// there was no "|" in the link
-								$replace = '|' . $match[1][$index];
-								break;
-							  case 1:	// there was an "|" not followed by text
-								$replace = '|' . $match[3][$index];
-								break;
-							  default:	// there was an "|" followed by text
-								$replace = $match[6][$index];
+								case 0: // there was no "|" in the link
+									$replace = '|' . $match[1][$index];
+									break;
+								case 1: // there was an "|" not followed by text
+									$replace = '|' . $match[3][$index];
+									break;
+								default: // there was an "|" followed by text
+									$replace = $match[6][$index];
 							}
 							$replace = '[[' . $namspce . ':' . $title . $replace . ']]';
 							$text = str_replace( $link, $replace, $text );

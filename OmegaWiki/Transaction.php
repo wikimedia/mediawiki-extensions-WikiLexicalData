@@ -182,7 +182,7 @@ function startNewTransaction( $userID, $userIP, $comment, $dc = null ) {
 		$dc = wdGetDataSetContext();
 	}
 
-	$dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_PRIMARY );
 	$timestamp = wfTimestampNow();
 
 	// do not store IP for logged in users

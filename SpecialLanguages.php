@@ -45,7 +45,7 @@ class SpecialLanguages extends SpecialPage {
 		if ( !$action ) {
 			$wgOut->addWikiMsg( 'langman_header' );
 		} else {
-			$dbr = wfGetDB( DB_MASTER );
+			$dbr = wfGetDB( DB_PRIMARY );
 			$langname = $wgRequest->getText( 'langname' );
 			$langiso6393 = $wgRequest->getText( 'langiso6393' );
 			$langiso6392 = $wgRequest->getText( 'langiso6392' );

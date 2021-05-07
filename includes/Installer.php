@@ -21,8 +21,8 @@ class ExtensionDatabaseUpdater {
 		$this->freshInstall = $freshInstall;
 		$this->processed = false;
 
-		$this->dbw = wfGetDB( DB_MASTER );
-		$this->dbr = wfGetDB( DB_MASTER );
+		$this->dbw = wfGetDB( DB_PRIMARY );
+		$this->dbr = wfGetDB( DB_PRIMARY );
 
 		$this->setInternalParameters();
 

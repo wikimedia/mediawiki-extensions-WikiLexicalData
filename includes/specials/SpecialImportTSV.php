@@ -32,7 +32,7 @@ class SpecialImportTSV extends SpecialPage {
 			return false;
 		}
 
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_PRIMARY );
 		$dc = wdGetDataSetcontext();
 		$output->setPageTitle( wfMessage( 'ow_importtsv_importing' )->text() );
 		setlocale( LC_ALL, 'en_US.UTF-8' );

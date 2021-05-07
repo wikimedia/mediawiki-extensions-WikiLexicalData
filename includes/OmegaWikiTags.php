@@ -30,7 +30,7 @@ function owExpStats( $input ) {
 	$number = $cache->getWithSetCallback(
 		$cache->makeKey( 'ow_stats_exp' ),
 		BagOStuff::TTL_DAY,
-		function () {
+		static function () {
 			$Expressions = new Expressions;
 			return $Expressions->getNumberOfExpressions();
 		}
@@ -44,7 +44,7 @@ function owDefinedMeaningStats( $input ) {
 	$number = $cache->getWithSetCallback(
 		$cache->makeKey( 'ow_stats_dm' ),
 		BagOStuff::TTL_DAY,
-		function () {
+		static function () {
 			return getNumberOfDefinedMeanings();
 		}
 	);
@@ -58,7 +58,7 @@ function wldLanguageStats( $input ) {
 	$number = $cache->getWithSetCallback(
 		$cache->makeKey( 'wld_stats_lang' ),
 		BagOStuff::TTL_DAY,
-		function () {
+		static function () {
 			return getNumberOfLanguages();
 		}
 	);

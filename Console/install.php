@@ -84,7 +84,7 @@ class InstallWikiLexicalData extends Maintenance {
 		 * it should be fine. If not, this must be worked upon later, since
 		 * I am not familiar with the table usage. ~ he
 		 */
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 
 		$this->output( "Delete and recreate empty set {$wdCurrentContext}...\n" );
 		$dbw->delete(
@@ -118,7 +118,7 @@ class InstallWikiLexicalData extends Maintenance {
 	/** @brief Adds the English language to enable editing
 	 */
 	protected function createLanguageEnglish() {
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 		global $wgDBtype;
 
 		// check if already exists
@@ -177,7 +177,7 @@ class InstallWikiLexicalData extends Maintenance {
 	protected function bootStrappedDefinedMeanings( $dc ) {
 		// Admin user
 		$userId = 1;
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 		global $wgDBprefix;
 
 		// check that it is really a fresh install
@@ -270,7 +270,7 @@ class InstallWikiLexicalData extends Maintenance {
 	 * @param string $dc The database being accessed.
 	 */
 	protected function dropTables( $dc ) {
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 		$dbw->delete(
 			'page',
 			[ 'page_namespace' => NS_EXPRESSION ],
@@ -322,8 +322,8 @@ class InstallWikiLexicalData extends Maintenance {
 	 * @param string $filename the database template name.
 	 */
 	protected function ReadTemplateSQLFile( $pattern, $prefix, $filename ) {
-		$dbw = wfGetDB( DB_MASTER );
-		$dbr = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
+		$dbr = wfGetDB( DB_PRIMARY );
 		global $wgDBtype;
 
 		$fp = fopen( $filename, 'r' );

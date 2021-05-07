@@ -69,7 +69,7 @@ class Expressions {
 		} else {
 			$dc = wdGetDataSetContext();
 		}
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 
 		$expressionId = newObjectId( "{$dc}_expression" );
 		if ( isset( $options['updateId'] ) ) {

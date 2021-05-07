@@ -26,7 +26,7 @@ class SpecialAddCollection extends SpecialPage {
 			return false;
 		}
 
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_PRIMARY );
 
 		if ( $wgRequest->getText( 'collection' ) ) {
 			require_once 'WikiDataAPI.php';
