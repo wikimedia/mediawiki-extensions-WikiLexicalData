@@ -2,6 +2,8 @@
 
 require_once "OmegaWiki/WikiDataGlobals.php";
 
+use MediaWiki\MediaWikiServices;
+
 class WikiLexicalDataHooks {
 
 	/**
@@ -10,8 +12,6 @@ class WikiLexicalDataHooks {
 	 * @return true
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
-		global $wgContLang;
-
 		$request = $out->getRequest();
 
 		$out->addModules( 'ext.Wikidata.css' );
@@ -26,7 +26,7 @@ class WikiLexicalDataHooks {
 		if ( $action == 'view' ) {
 			$namespace = $skin->getTitle()->getNamespace();
 			if ( $namespace == NS_EXPRESSION ) {
-				$namespaceText = $wgContLang->getNsText( $namespace );
+				$namespaceText = MediaWikiServices::getInstance()->getContentLanguage()->getNsText( $namespace );
 				// cut the namespaceText from the title
 				$out->setPageTitle( mb_substr( $out->getPageTitle(), mb_strlen( $namespaceText ) + 1 ) );
 			}
