@@ -18,6 +18,9 @@
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingReturn" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.ParamNameNoMatch" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.SpacingAfter" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.SpacingDocTag" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.SyntaxAlignedDocClose" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.SyntaxAlignedDocStar" />
 		<exclude name="MediaWiki.Commenting.FunctionComment.WrongStyle" />
 		<exclude name="MediaWiki.Commenting.LicenseComment.InvalidLicenseTag" />
 		<exclude name="MediaWiki.ControlStructures.AssignmentInControlStructures.AssignmentInControlStructures" />
@@ -63,6 +66,9 @@
 		<exclude name="Squiz.Operators.ValidLogicalOperators.NotAllowed" />
 		<exclude name="Squiz.Scope.MemberVarScope.Missing" />
 		<exclude name="Squiz.Scope.MethodScope.Missing" />
+		<exclude name="Squiz.WhiteSpace.OperatorSpacing.SpacingBefore" />
+		<exclude name="Squiz.WhiteSpace.ScopeClosingBrace.Indent" />
+		<exclude name="Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect" />
 	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php" />
