@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Kareyac",
 			"Сай"
 		]
 	},
 	"ow_save": "Аралаш",
 	"ow_history": "Историй",
-	"ow_LinkAttributeValues": "Ссылке-влак"
+	"ow_LinkAttributeValues": "Ссылке-влак",
+	"ow_User": "Пайдаланыше"
 }
