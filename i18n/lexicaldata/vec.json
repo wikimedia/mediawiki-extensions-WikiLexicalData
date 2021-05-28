@@ -6,5 +6,6 @@
 	},
 	"ow_transaction_rollback_button": "Trar indrio",
 	"ow_transaction_rollback_header": "Trar indrio",
-	"ow_OtherLanguages": "Altre łéngue:"
+	"ow_OtherLanguages": "Altre łéngue:",
+	"ow-stat-languages": "{{PLURAL:$1|łéngua|łéngue}}"
 }
