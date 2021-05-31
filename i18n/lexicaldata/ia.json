@@ -58,7 +58,7 @@
 	"ow_impexptsv_unknown_lang": "<p>Lingua incognite o incorrecte: $1.<br />\nLe linguas debe esser codices de lingua ISO 639-3.</p>",
 	"exporttsv": "Exportar TSV",
 	"ow_exporttsv_title": "Exportar un collection in TSV",
-	"ow_exporttsv_header": "<p>Isto es pro exportar un collection a un formato de texto delimitate con tabulationes. Iste formato es importabile in OpenOffice.org, Excel o altere software a folio de calculo.<br />\nSelige un collection a exportar. In le quadro de texto a linguas, entra un lista de codices de lingua ISO 639-3, separate per commas. Comencia con le linguas ex le quales tu traducera (selige tantes como tu vole) e fini con le linguas in le quales tu traducera. Alora clicca super 'Crear' pro crear le file.</p>",
+	"ow_exporttsv_header": "<p>Isto es pro exportar un collection a un formato de texto delimitate con tabulationes. Iste formato es importabile in OpenOffice.org, Excel o altere software a folio de calculo.<br />\nSelige un collection a exportar. In le quadro de texto a linguas, entra un lista de codices de lingua ISO 639-3, separate per commas. Comencia con le linguas ex le quales tu traducera (selige tantes como tu vole) e fini con le linguas in le quales tu traducera. Alora clicca sur 'Crear' pro crear le file.</p>",
 	"ow_exporttsv_languages": "Linguas:",
 	"ow_exporttsv_not_allowed": "Tu non ha le permission de facer un exportation in TSV.",
 	"ow_exporttsv_export_failed": "Exportation fallite",

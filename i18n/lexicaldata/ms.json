@@ -66,6 +66,7 @@
 	"ow_GotoSource": "Pergi ke sumber",
 	"ow_Language": "Bahasa",
 	"ow_OptionAttributeOptions": "Pilihan",
+	"ow_OtherLanguages": "Bahasa lain:",
 	"ow_Remove": "Buang",
 	"ow_Source": "Sumber",
 	"ow_Time": "Waktu",
@@ -84,5 +85,9 @@
 	"ow_upload": "Muat naik",
 	"ow_create": "Cipta",
 	"ow_suggest_previous": "Sebelumnya",
-	"ow_suggest_next": "Berikutnya"
+	"ow_suggest_next": "Berikutnya",
+	"prefs-ow-lang": "Bahasa",
+	"ow_pref_lang_switch": "<strong>Tunjukkan bahasa terpilih sahaja</strong>",
+	"ow-special-stat-languages-avail": "{{PLURAL:$1|Bahasa|Bahasa-bahasa}} yang tersedia",
+	"ow-stat-languages": "{{PLURAL:$1|Bahasa}}"
 }
