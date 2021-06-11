@@ -38,7 +38,7 @@
 	"datasearch_within_ext_ids": "בתוך מזהים חיצוניים:",
 	"datasearch_showing_only": "{{PLURAL:$1|מוצגת תוצאה מתאימה אחת|מוצגות $1 תוצאות מתאימות}} לכל היותר (מתוך $2).",
 	"datasearch_match_ext_ids": "מזהים חיצוניים שתואמים את <em>$1</em>.",
-	"datasearch_match_words": "מילים שתואמות את <em>$1</em> ואת המשמעויות המשויכות",
+	"datasearch_match_words": "ביטויים שתואמים את <em>$1</em> ואת המשמעויות המשויכות",
 	"datasearch_match_words_lang": "מילים מתוך <em>$1</em> שתואמות את <em>$2</em> ואת המשמעויות המשויכות",
 	"importtsv": "ייבוא TSV",
 	"ow_importtsv_title1": "ייבוא TSV",
