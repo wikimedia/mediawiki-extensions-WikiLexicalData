@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Ajeje Brazorf",
 			"Gmelfi",
 			"Melos",
 			"Sarvaturi"
@@ -38,5 +39,6 @@
 	"ow_CollectionMembership": "Appartinenza â collezioni",
 	"ow_Definition": "Difinizioni",
 	"ow_Expression": "Espressioni",
-	"ow_OtherLanguages": "Àutri lingui"
+	"ow_OtherLanguages": "Àutri lingui",
+	"ow_show": "Ammustra"
 }
