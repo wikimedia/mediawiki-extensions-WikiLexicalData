@@ -5,10 +5,13 @@
 		]
 	},
 	"datasearch_language": "Kielâ:",
+	"ow_exporttsv_languages": "Kielah:",
+	"ow_Language": "Kielâ",
 	"ow_OtherLanguages": "Eres kielah:",
 	"ow_Link": "Liŋkkâ",
 	"ow_LinkAttributeValues": "Liiŋkah",
 	"ow_class_attr_type_link": "Liŋkkâ",
 	"ow_show": "Čääiti",
-	"ow_suggest_next": "Čuávuvâš"
+	"ow_suggest_next": "Čuávuvâš",
+	"prefs-ow-lang": "Kielah"
 }

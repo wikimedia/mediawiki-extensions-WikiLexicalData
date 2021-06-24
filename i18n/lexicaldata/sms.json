@@ -4,9 +4,13 @@
 			"Yupik"
 		]
 	},
+	"datasearch_language": "Ǩiõll:",
+	"ow_exporttsv_languages": "Ǩiõl:",
+	"ow_Language": "Ǩiõll",
 	"ow_OtherLanguages": "Jeeʹres ǩiõl:",
 	"ow_Link": "Liŋkk",
 	"ow_LinkAttributeValues": "Liiŋk",
 	"ow_class_attr_type_link": "Liŋkk",
-	"ow_show": "Čuäʹjet"
+	"ow_show": "Čuäʹjet",
+	"prefs-ow-lang": "Ǩiõl"
 }
