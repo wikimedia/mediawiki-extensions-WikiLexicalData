@@ -34,8 +34,8 @@ class WikiLexicalDataHooks {
 
 		// SpecialPage Add from External API
 		if (
-			$skin->getTitle()->mNamespace === -1 &&
-			$skin->getTitle()->mTextform === 'Ow addFromExtAPI'
+			$skin->getTitle()->getNamespace() === -1 &&
+			$skin->getTitle()->getText() === 'Ow addFromExtAPI'
 		) {
 			$out->addModules( 'ext.OwAddFromExtAPI.js' );
 		}
